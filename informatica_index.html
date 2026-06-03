@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Informática Técnica — Prof. Marcos Cruz</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#060a06;--card:#101710;--card-h:#151f15;--border:rgba(255,255,255,.06);--border-h:rgba(255,255,255,.12);--green:#00e676;--green2:#69f0ae;--green-glow:rgba(0,230,118,.25);--green-dim:rgba(0,230,118,.12);--amber:#ffca28;--blue:#64b5f6;--purple:#ce93d8;--red:#ef9a9a;--cyan:#80cbc4;--txt:#e8f5e9;--txt2:#81c784;--txt3:#388e3c;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Arial,sans-serif;background:var(--bg);color:var(--txt);overflow-x:hidden;line-height:1.6}
+.bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(0,230,118,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,230,118,.04) 1px,transparent 1px);background-size:48px 48px}
+.bg-orb{position:fixed;z-index:0;pointer-events:none;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(0,230,118,.05) 0%,transparent 65%);top:-200px;right:-100px}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(6,10,6,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.nav-emblem{width:38px;height:38px;background:linear-gradient(135deg,var(--green),var(--green2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 0 20px var(--green-glow)}
+.nav-name{font-weight:700;font-size:.9rem;color:var(--txt);line-height:1.2}
+.nav-domain{font-size:.7rem;color:var(--txt3)}
+.nav-back{display:flex;align-items:center;gap:8px;color:var(--txt3);text-decoration:none;font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;transition:color .2s}
+.nav-back:hover{color:var(--green)}
+
+.hero{position:relative;z-index:1;padding:140px 48px 80px;max-width:1160px;margin:0 auto}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:.75rem;color:var(--txt3);margin-bottom:28px}
+.breadcrumb a{color:var(--txt3);text-decoration:none;transition:color .2s}
+.breadcrumb a:hover{color:var(--green)}
+.breadcrumb span{opacity:.4}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--green-dim);border:1px solid rgba(0,230,118,.2);color:var(--green);padding:6px 16px;border-radius:30px;font-size:.72rem;font-weight:700;letter-spacing:.12em;margin-bottom:24px}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,6vw,4.5rem);font-weight:900;line-height:1.05;letter-spacing:-.02em;margin-bottom:20px}
+.hero-title span{color:var(--green);font-style:italic}
+.hero-sub{color:var(--txt2);font-size:1rem;max-width:580px;line-height:1.75;margin-bottom:48px}
+.hero-stats{display:flex;gap:32px;flex-wrap:wrap}
+.hstat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 24px;display:flex;align-items:center;gap:12px}
+.hstat-ico{font-size:1.4rem}
+.hstat-val{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--green)}
+.hstat-lbl{font-size:.72rem;color:var(--txt3);letter-spacing:.06em;text-transform:uppercase}
+
+.section{position:relative;z-index:1;max-width:1160px;margin:0 auto;padding:80px 48px}
+.sec-label{display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--green);letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px}
+.sec-label::before{content:'';width:24px;height:1px;background:var(--green)}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:900;letter-spacing:-.02em;line-height:1.1;margin-bottom:12px}
+.sec-sub{color:var(--txt2);font-size:.92rem;max-width:500px;line-height:1.7;margin-bottom:48px}
+
+/* GRID DE MÓDULOS */
+.mod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+.mod-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:28px;text-decoration:none;color:inherit;transition:all .3s cubic-bezier(.16,1,.3,1);display:flex;flex-direction:column;position:relative;overflow:hidden;cursor:pointer}
+.mod-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--mc-a) 0%,transparent 55%);opacity:0;transition:opacity .3s;border-radius:18px}
+.mod-card:hover{transform:translateY(-5px);border-color:var(--mc-b);box-shadow:0 20px 50px rgba(0,0,0,.4),0 0 30px var(--mc-g)}
+.mod-card:hover::before{opacity:1}
+.mod-card.g{--mc-a:rgba(0,230,118,.07);--mc-b:rgba(0,230,118,.35);--mc-g:rgba(0,230,118,.07);--mc:var(--green)}
+.mod-card.b{--mc-a:rgba(100,181,246,.07);--mc-b:rgba(100,181,246,.35);--mc-g:rgba(100,181,246,.07);--mc:var(--blue)}
+.mod-card.p{--mc-a:rgba(206,147,216,.07);--mc-b:rgba(206,147,216,.35);--mc-g:rgba(206,147,216,.07);--mc:var(--purple)}
+.mod-card.a{--mc-a:rgba(255,202,40,.07);--mc-b:rgba(255,202,40,.35);--mc-g:rgba(255,202,40,.07);--mc:var(--amber)}
+.mod-card.r{--mc-a:rgba(239,154,154,.07);--mc-b:rgba(239,154,154,.35);--mc-g:rgba(239,154,154,.07);--mc:var(--red)}
+.mod-card.c{--mc-a:rgba(128,203,196,.07);--mc-b:rgba(128,203,196,.35);--mc-g:rgba(128,203,196,.07);--mc:var(--cyan)}
+
+.mod-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px;position:relative;z-index:1}
+.mod-ico{width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:24px;transition:all .3s}
+.mod-card:hover .mod-ico{background:var(--mc-a);border-color:var(--mc-b);box-shadow:0 0 20px var(--mc-g);transform:scale(1.05)}
+.mod-status{font-size:.65rem;font-weight:700;letter-spacing:.08em;padding:3px 10px;border-radius:20px;border:1px solid}
+.s-on{background:rgba(0,230,118,.1);color:var(--green);border-color:rgba(0,230,118,.25)}
+.s-new{background:rgba(255,202,40,.1);color:var(--amber);border-color:rgba(255,202,40,.25)}
+.s-soon{background:rgba(255,255,255,.05);color:var(--txt3);border-color:var(--border)}
+
+.mod-name{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--mc);margin-bottom:8px;position:relative;z-index:1}
+.mod-desc{color:var(--txt2);font-size:.83rem;line-height:1.6;flex:1;position:relative;z-index:1;margin-bottom:20px}
+.mod-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:20px;position:relative;z-index:1}
+.mtag{padding:2px 9px;border-radius:20px;font-size:.65rem;font-weight:700;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--txt3);transition:all .2s}
+.mod-card:hover .mtag{border-color:var(--mc-b);color:var(--mc)}
+.mod-foot{display:flex;align-items:center;justify-content:space-between;padding-top:16px;border-top:1px solid var(--border);font-size:.72rem;color:var(--txt3);position:relative;z-index:1;transition:border-color .3s}
+.mod-card:hover .mod-foot{border-color:var(--mc-b)}
+.mod-arrow{width:26px;height:26px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.75rem;transition:all .3s}
+.mod-card:hover .mod-arrow{background:var(--mc);border-color:var(--mc);color:#060a06;transform:translateX(3px)}
+
+footer{position:relative;z-index:1;padding:36px 48px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-top:60px}
+.footer-l{font-size:.78rem;color:var(--txt3)}.footer-l strong{color:var(--txt2)}
+.footer-r{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--txt3)}.footer-r span{color:var(--green)}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+@media(max-width:768px){nav{padding:0 20px}.hero{padding:120px 20px 60px}.section{padding:60px 20px}}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-orb"></div>
+
+<nav>
+  <a href="../index.html" class="nav-brand">
+    <div class="nav-emblem">🎓</div>
+    <div><div class="nav-name">Prof. Marcos Cruz</div><div class="nav-domain">portmarcos.github.io/aulas</div></div>
+  </a>
+  <a href="../index.html" class="nav-back">← Voltar ao início</a>
+</nav>
+
+<div class="hero">
+  <div class="breadcrumb reveal">
+    <a href="../index.html">Início</a><span>/</span><span>Informática Técnica</span>
+  </div>
+  <div class="hero-badge reveal">💻 CURSO TÉCNICO EM INFORMÁTICA</div>
+  <h1 class="hero-title reveal">Informática<br><span>Técnica</span></h1>
+  <p class="hero-sub reveal">Módulos completos com conteúdo teórico, atividades práticas no laboratório e avaliações interativas. Do sistema operacional às redes e à segurança digital.</p>
+  <div class="hero-stats reveal">
+    <div class="hstat"><div class="hstat-ico">📦</div><div><div class="hstat-val">6</div><div class="hstat-lbl">Módulos</div></div></div>
+    <div class="hstat"><div class="hstat-ico">⚙</div><div><div class="hstat-val">20+</div><div class="hstat-lbl">Atividades</div></div></div>
+    <div class="hstat"><div class="hstat-ico">🎮</div><div><div class="hstat-val">4</div><div class="hstat-lbl">Jogos/Escape</div></div></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="sec-label reveal">Módulos</div>
+  <h2 class="sec-title reveal">Conteúdos disponíveis</h2>
+  <p class="sec-sub reveal">Escolha o módulo para acessar o material completo e as atividades.</p>
+
+  <div class="mod-grid">
+
+    <div class="mod-card g reveal" onclick="location.href='linux/avaliacao.html'">
+      <div class="mod-top">
+        <div class="mod-ico">🐧</div>
+        <div class="mod-status s-new">🟡 NOVO</div>
+      </div>
+      <div class="mod-name">Linux Mint</div>
+      <p class="mod-desc">Do básico ao avançado: sistema de arquivos, terminal, permissões, shell script, APT e servidor Apache. Inclui apostila, 10 questões fechadas, 15 abertas e 6 práticas.</p>
+      <div class="mod-tags"><span class="mtag">Terminal</span><span class="mtag">chmod</span><span class="mtag">Shell Script</span><span class="mtag">Apache</span><span class="mtag">APT</span></div>
+      <div class="mod-foot"><span>Apostila + Avaliação completa</span><div class="mod-arrow">→</div></div>
+    </div>
+
+    <div class="mod-card b reveal" onclick="location.href='redes/apostila.html'">
+      <div class="mod-top">
+        <div class="mod-ico">🌐</div>
+        <div class="mod-status s-on">✅ DISPONÍVEL</div>
+      </div>
+      <div class="mod-name">Redes de Computadores</div>
+      <p class="mod-desc">IP, DNS, DHCP, Gateway, Protocolos, Modelo OSI, Comandos CMD, Hardware de rede e Segurança. Apostila completa + trabalho em grupo e atividades práticas.</p>
+      <div class="mod-tags"><span class="mtag">IP/DNS</span><span class="mtag">DHCP</span><span class="mtag">Protocolos</span><span class="mtag">CMD</span><span class="mtag">Segurança</span></div>
+      <div class="mod-foot"><span>Apostila + Trabalho em grupo</span><div class="mod-arrow">→</div></div>
+    </div>
+
+    <div class="mod-card p reveal" onclick="location.href='malware/escape.html'">
+      <div class="mod-top">
+        <div class="mod-ico">🔐</div>
+        <div class="mod-status s-on">✅ DISPONÍVEL</div>
+      </div>
+      <div class="mod-name">Segurança & Malware</div>
+      <p class="mod-desc">Tipos de malware, ataques digitais, boas práticas de segurança e proteção de dados. Escape room interativo e questões Kahoot para revisão gamificada.</p>
+      <div class="mod-tags"><span class="mtag">Vírus</span><span class="mtag">Ransomware</span><span class="mtag">Phishing</span><span class="mtag">Escape Room</span></div>
+      <div class="mod-foot"><span>Escape Room + Quiz Kahoot</span><div class="mod-arrow">→</div></div>
+    </div>
+
+    <div class="mod-card a reveal" onclick="location.href='ip/atividade.html'">
+      <div class="mod-top">
+        <div class="mod-ico">🔍</div>
+        <div class="mod-status s-on">✅ DISPONÍVEL</div>
+      </div>
+      <div class="mod-name">Endereçamento IP</div>
+      <p class="mod-desc">Detetive de IP, Batalha de Ping e Escape Room usando comandos CMD. Atividade gamificada que une teoria e prática de redes de forma divertida.</p>
+      <div class="mod-tags"><span class="mtag">IPv4</span><span class="mtag">Sub-rede</span><span class="mtag">ping</span><span class="mtag">CMD</span><span class="mtag">Gamificado</span></div>
+      <div class="mod-foot"><span>Atividade prática gamificada</span><div class="mod-arrow">→</div></div>
+    </div>
+
+    <div class="mod-card r reveal">
+      <div class="mod-top">
+        <div class="mod-ico">🖥</div>
+        <div class="mod-status s-soon">🔜 EM BREVE</div>
+      </div>
+      <div class="mod-name">Hardware & Montagem</div>
+      <p class="mod-desc">Componentes do computador, identificação de peças, montagem e manutenção. Atividades práticas no laboratório com identificação visual.</p>
+      <div class="mod-tags"><span class="mtag">CPU</span><span class="mtag">RAM</span><span class="mtag">HD/SSD</span><span class="mtag">Montagem</span></div>
+      <div class="mod-foot"><span>Em desenvolvimento</span><div class="mod-arrow">→</div></div>
+    </div>
+
+    <div class="mod-card c reveal">
+      <div class="mod-top">
+        <div class="mod-ico">📡</div>
+        <div class="mod-status s-soon">🔜 EM BREVE</div>
+      </div>
+      <div class="mod-name">Cabeamento Estruturado</div>
+      <p class="mod-desc">Tipos de cabo (UTP, STP, fibra), conectorização RJ-45, padrões TIA/EIA e certificação de redes. Inclui prática de crimpagem.</p>
+      <div class="mod-tags"><span class="mtag">RJ-45</span><span class="mtag">UTP</span><span class="mtag">Fibra</span><span class="mtag">TIA/EIA</span></div>
+      <div class="mod-foot"><span>Em desenvolvimento</span><div class="mod-arrow">→</div></div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-l"><strong>Prof. Marcos Cruz</strong> · Informática Técnica · E.E. Prefeito Odílio Fernandes Costa</div>
+  <div class="footer-r"><span>portmarcos</span>.github.io/aulas/informatica</div>
+</footer>
+
+<script>
+const io=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{threshold:.08,rootMargin:'0px 0px -20px 0px'});
+document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%4)*60+'ms';io.observe(el)});
+</script>
+</body>
+</html>
