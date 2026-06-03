@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Língua Portuguesa — Prof. Marcos Cruz</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#060806;--card:#100f10;--border:rgba(255,255,255,.06);--border-h:rgba(255,255,255,.12);--amber:#ffca28;--amber2:#ffe082;--amber-glow:rgba(255,202,40,.2);--amber-dim:rgba(255,202,40,.1);--green:#00e676;--blue:#64b5f6;--purple:#ce93d8;--red:#ef9a9a;--txt:#fff8e8;--txt2:#d4b86a;--txt3:#7a6230;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Arial,sans-serif;background:var(--bg);color:var(--txt);overflow-x:hidden;line-height:1.6}
+.bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(255,202,40,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,202,40,.03) 1px,transparent 1px);background-size:48px 48px}
+.bg-orb{position:fixed;z-index:0;pointer-events:none;width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(255,202,40,.05) 0%,transparent 65%);top:-250px;left:-150px}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(6,8,6,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.nav-emblem{width:38px;height:38px;background:linear-gradient(135deg,var(--amber),var(--amber2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 0 20px var(--amber-glow)}
+.nav-name{font-weight:700;font-size:.9rem;color:var(--txt);line-height:1.2}
+.nav-domain{font-size:.7rem;color:var(--txt3)}
+.nav-back{color:var(--txt3);text-decoration:none;font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;transition:color .2s}
+.nav-back:hover{color:var(--amber)}
+
+.hero{position:relative;z-index:1;padding:140px 48px 80px;max-width:1160px;margin:0 auto}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:.75rem;color:var(--txt3);margin-bottom:28px}
+.breadcrumb a{color:var(--txt3);text-decoration:none;transition:color .2s}.breadcrumb a:hover{color:var(--amber)}.breadcrumb span{opacity:.4}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--amber-dim);border:1px solid rgba(255,202,40,.2);color:var(--amber);padding:6px 16px;border-radius:30px;font-size:.72rem;font-weight:700;letter-spacing:.12em;margin-bottom:24px}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,6vw,4.5rem);font-weight:900;line-height:1.05;letter-spacing:-.02em;margin-bottom:20px}
+.hero-title span{color:var(--amber);font-style:italic}
+.hero-sub{color:var(--txt2);font-size:1rem;max-width:580px;line-height:1.75;margin-bottom:48px}
+.hero-stats{display:flex;gap:24px;flex-wrap:wrap}
+.hstat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 22px;display:flex;align-items:center;gap:12px}
+.hstat-val{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--amber)}
+.hstat-lbl{font-size:.72rem;color:var(--txt3);letter-spacing:.06em;text-transform:uppercase}
+
+.section{position:relative;z-index:1;max-width:1160px;margin:0 auto;padding:80px 48px}
+.sec-label{display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--amber);letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px}
+.sec-label::before{content:'';width:24px;height:1px;background:var(--amber)}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:900;letter-spacing:-.02em;line-height:1.1;margin-bottom:12px}
+.sec-sub{color:var(--txt2);font-size:.92rem;max-width:500px;line-height:1.7;margin-bottom:48px}
+
+.mod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.mod-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:26px;text-decoration:none;color:inherit;transition:all .3s cubic-bezier(.16,1,.3,1);display:flex;flex-direction:column;position:relative;overflow:hidden;cursor:pointer}
+.mod-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--mc-a) 0%,transparent 55%);opacity:0;transition:opacity .3s;border-radius:18px}
+.mod-card:hover{transform:translateY(-5px);border-color:var(--mc-b);box-shadow:0 20px 50px rgba(0,0,0,.4),0 0 30px var(--mc-g)}
+.mod-card:hover::before{opacity:1}
+.mc-am{--mc-a:rgba(255,202,40,.07);--mc-b:rgba(255,202,40,.35);--mc-g:rgba(255,202,40,.07);--mc:var(--amber)}
+.mc-gr{--mc-a:rgba(0,230,118,.07);--mc-b:rgba(0,230,118,.35);--mc-g:rgba(0,230,118,.07);--mc:#00e676}
+.mc-bl{--mc-a:rgba(100,181,246,.07);--mc-b:rgba(100,181,246,.35);--mc-g:rgba(100,181,246,.07);--mc:var(--blue)}
+.mc-pu{--mc-a:rgba(206,147,216,.07);--mc-b:rgba(206,147,216,.35);--mc-g:rgba(206,147,216,.07);--mc:var(--purple)}
+.mc-re{--mc-a:rgba(239,154,154,.07);--mc-b:rgba(239,154,154,.35);--mc-g:rgba(239,154,154,.07);--mc:var(--red)}
+
+.mod-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;position:relative;z-index:1}
+.mod-ico{width:50px;height:50px;border-radius:13px;background:rgba(255,255,255,.04);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:22px;transition:all .3s}
+.mod-card:hover .mod-ico{background:var(--mc-a);border-color:var(--mc-b);box-shadow:0 0 18px var(--mc-g);transform:scale(1.05)}
+.mod-status{font-size:.62rem;font-weight:700;letter-spacing:.08em;padding:3px 9px;border-radius:20px;border:1px solid}
+.s-on{background:rgba(0,230,118,.1);color:#00e676;border-color:rgba(0,230,118,.25)}
+.s-new{background:rgba(255,202,40,.1);color:var(--amber);border-color:rgba(255,202,40,.25)}
+.s-soon{background:rgba(255,255,255,.04);color:var(--txt3);border-color:var(--border)}
+.mod-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--mc);margin-bottom:8px;position:relative;z-index:1}
+.mod-desc{color:var(--txt2);font-size:.82rem;line-height:1.6;flex:1;position:relative;z-index:1;margin-bottom:18px}
+.mod-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:18px;position:relative;z-index:1}
+.mtag{padding:2px 9px;border-radius:20px;font-size:.64rem;font-weight:700;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--txt3);transition:all .2s}
+.mod-card:hover .mtag{border-color:var(--mc-b);color:var(--mc)}
+.mod-foot{display:flex;align-items:center;justify-content:space-between;padding-top:14px;border-top:1px solid var(--border);font-size:.72rem;color:var(--txt3);position:relative;z-index:1;transition:border-color .3s}
+.mod-card:hover .mod-foot{border-color:var(--mc-b)}
+.mod-arrow{width:24px;height:24px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.72rem;transition:all .3s}
+.mod-card:hover .mod-arrow{background:var(--mc);border-color:var(--mc);color:#060806;transform:translateX(3px)}
+
+/* TURMAS */
+.turma-section{margin-top:0}
+.turma-tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:36px}
+.turma-tab{padding:8px 20px;border-radius:30px;font-size:.78rem;font-weight:700;cursor:pointer;border:1px solid var(--border);color:var(--txt3);background:var(--card);transition:all .2s;letter-spacing:.04em}
+.turma-tab:hover,.turma-tab.active{background:var(--amber-dim);border-color:rgba(255,202,40,.35);color:var(--amber)}
+
+footer{position:relative;z-index:1;padding:36px 48px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-top:60px}
+.footer-l{font-size:.78rem;color:var(--txt3)}.footer-l strong{color:var(--txt2)}
+.footer-r{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--txt3)}.footer-r span{color:var(--amber)}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}.reveal.in{opacity:1;transform:none}
+@media(max-width:768px){nav{padding:0 20px}.hero{padding:120px 20px 60px}.section{padding:60px 20px}}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div><div class="bg-orb"></div>
+
+<nav>
+  <a href="../index.html" class="nav-brand">
+    <div class="nav-emblem">📜</div>
+    <div><div class="nav-name">Prof. Marcos Cruz</div><div class="nav-domain">portmarcos.github.io/aulas</div></div>
+  </a>
+  <a href="../index.html" class="nav-back">← Voltar ao início</a>
+</nav>
+
+<div class="hero">
+  <div class="breadcrumb reveal"><a href="../index.html">Início</a><span>/</span><span>Língua Portuguesa</span></div>
+  <div class="hero-badge reveal">📜 LÍNGUA PORTUGUESA</div>
+  <h1 class="hero-title reveal">Língua<br><span>Portuguesa</span></h1>
+  <p class="hero-sub reveal">Gramática, literatura, produção textual e preparação para o ENEM. Materiais para o 6º ano ao 3º ano do Ensino Médio, com foco em aprendizado significativo.</p>
+  <div class="hero-stats reveal">
+    <div class="hstat"><span style="font-size:1.3rem">📚</span><div><div class="hstat-val">8</div><div class="hstat-lbl">Módulos</div></div></div>
+    <div class="hstat"><span style="font-size:1.3rem">✍</span><div><div class="hstat-val">30+</div><div class="hstat-lbl">Atividades</div></div></div>
+    <div class="hstat"><span style="font-size:1.3rem">🎓</span><div><div class="hstat-val">ENEM</div><div class="hstat-lbl">Preparação</div></div></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="sec-label reveal">Módulos</div>
+  <h2 class="sec-title reveal">Conteúdos disponíveis</h2>
+  <p class="sec-sub reveal">Selecione o módulo para acessar materiais, atividades e gabarito.</p>
+
+  <div class="mod-grid">
+    <div class="mod-card mc-am reveal">
+      <div class="mod-top"><div class="mod-ico">📝</div><div class="mod-status s-on">✅ DISPONÍVEL</div></div>
+      <div class="mod-name">Crase</div>
+      <p class="mod-desc">Regras de uso da crase, exercícios contextualizados, avaliação com 30 questões e gabarito. Inclui texto temático para prática.</p>
+      <div class="mod-tags"><span class="mtag">Gramática</span><span class="mtag">30 questões</span><span class="mtag">Gabarito</span></div>
+      <div class="mod-foot"><span>6º ao 9º · EM</span><div class="mod-arrow">→</div></div>
+    </div>
+    <div class="mod-card mc-gr reveal">
+      <div class="mod-top"><div class="mod-ico">🔗</div><div class="mod-status s-on">✅ DISPONÍVEL</div></div>
+      <div class="mod-name">Conectivos e Conjunções</div>
+      <p class="mod-desc">Quadro de referência, atividades de classificação e uso de conectivos aditivos, adversativos, causais, conclusivos e mais.</p>
+      <div class="mod-tags"><span class="mtag">Conectivos</span><span class="mtag">Conjunções</span><span class="mtag">Tabela</span></div>
+      <div class="mod-foot"><span>8º ao 3º EM</span><div class="mod-arrow">→</div></div>
+    </div>
+    <div class="mod-card mc-bl reveal">
+      <div class="mod-top"><div class="mod-ico">✍</div><div class="mod-status s-on">✅ DISPONÍVEL</div></div>
+      <div class="mod-name">Redação ENEM</div>
+      <p class="mod-desc">Estrutura da redação dissertativo-argumentativa, parágrafo argumentativo, repertório cultural e proposta de intervenção. Focado no ENEM.</p>
+      <div class="mod-tags"><span class="mtag">ENEM</span><span class="mtag">Dissertação</span><span class="mtag">Argumentação</span></div>
+      <div class="mod-foot"><span>3º EM</span><div class="mod-arrow">→</div></div>
+    </div>
+    <div class="mod-card mc-pu reveal">
+      <div class="mod-top"><div class="mod-ico">🎭</div><div class="mod-status s-on">✅ DISPONÍVEL</div></div>
+      <div class="mod-name">Pré-Modernismo</div>
+      <p class="mod-desc">Euclides da Cunha, Lima Barreto, Augusto dos Anjos, Monteiro Lobato e Graça Aranha. Quiz interativo + jogo de tabuleiro com questões ENEM.</p>
+      <div class="mod-tags"><span class="mtag">1902–1922</span><span class="mtag">Lima Barreto</span><span class="mtag">Quiz</span><span class="mtag">Jogo</span></div>
+      <div class="mod-foot"><span>3º EM · ENEM/Vestibular</span><div class="mod-arrow">→</div></div>
+    </div>
+    <div class="mod-card mc-am reveal">
+      <div class="mod-top"><div class="mod-ico">📖</div><div class="mod-status s-on">✅ DISPONÍVEL</div></div>
+      <div class="mod-name">Romantismo & Realismo</div>
+      <p class="mod-desc">Machado de Assis, Memórias Póstumas de Brás Cubas, Dom Casmurro. Banco de questões ENEM/vestibular com gabarito comentado.</p>
+      <div class="mod-tags"><span class="mtag">Machado de Assis</span><span class="mtag">Realismo</span><span class="mtag">Vestibular</span></div>
+      <div class="mod-foot"><span>3º EM · ENEM/Vestibular</span><div class="mod-arrow">→</div></div>
+    </div>
+    <div class="mod-card mc-re reveal">
+      <div class="mod-top"><div class="mod-ico">🏛</div><div class="mod-status s-soon">🔜 EM BREVE</div></div>
+      <div class="mod-name">Modernismo Brasileiro</div>
+      <p class="mod-desc">Semana de Arte Moderna de 1922, fases do Modernismo, Carlos Drummond, Guimarães Rosa e Clarice Lispector. Questões ENEM.</p>
+      <div class="mod-tags"><span class="mtag">1922</span><span class="mtag">Drummond</span><span class="mtag">Guimarães Rosa</span></div>
+      <div class="mod-foot"><span>Em desenvolvimento</span><div class="mod-arrow">→</div></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-l"><strong>Prof. Marcos Cruz</strong> · Língua Portuguesa · E.E. Prefeito Odílio Fernandes Costa</div>
+  <div class="footer-r"><span>portmarcos</span>.github.io/aulas/portugues</div>
+</footer>
+<script>
+const io=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{threshold:.08,rootMargin:'0px 0px -20px 0px'});
+document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%4)*60+'ms';io.observe(el)});
+</script>
+</body>
+</html>
