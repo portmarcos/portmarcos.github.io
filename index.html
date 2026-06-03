@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salas de Aula — Prof. Marcos Cruz</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #0a0f0a;
+  --bg2:       #0f160f;
+  --card:      #131a13;
+  --card2:     #182018;
+  --border:    #1e2e1e;
+  --green:     #4ade80;
+  --green2:    #22c55e;
+  --green-dim: #166534;
+  --amber:     #fbbf24;
+  --blue:      #60a5fa;
+  --purple:    #a78bfa;
+  --red:       #f87171;
+  --cyan:      #34d399;
+  --txt:       #e2f5e2;
+  --txt2:      #86a886;
+  --txt3:      #4a6a4a;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background: var(--bg);
+  color: var(--txt);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── GRID DE FUNDO ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: .4;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── BRILHO CENTRAL ── */
+body::after {
+  content: '';
+  position: fixed;
+  top: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 600px;
+  background: radial-gradient(ellipse, rgba(74,222,128,.07) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── TOPO ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 40px;
+  background: rgba(10,15,10,.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Syne', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--green);
+  letter-spacing: -.01em;
+}
+.nav-logo span { color: var(--txt2); font-weight: 400; font-family: 'Space Grotesk', sans-serif; font-size: .85rem; }
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+}
+.nav-links a {
+  color: var(--txt2);
+  text-decoration: none;
+  font-size: .85rem;
+  font-weight: 500;
+  letter-spacing: .04em;
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--green); }
+
+.nav-badge {
+  background: var(--green-dim);
+  color: var(--green);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  border: 1px solid rgba(74,222,128,.2);
+}
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 24px 80px;
+}
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(74,222,128,.08);
+  border: 1px solid rgba(74,222,128,.2);
+  color: var(--green);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  margin-bottom: 32px;
+  animation: fadeUp .8s ease both;
+}
+.hero-tag::before { content: '●'; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.8rem, 8vw, 5.5rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -.03em;
+  margin-bottom: 24px;
+  animation: fadeUp .8s .1s ease both;
+}
+
+.hero h1 .linha1 { color: var(--txt); display: block; }
+.hero h1 .linha2 {
+  display: block;
+  background: linear-gradient(90deg, var(--green) 0%, var(--cyan) 50%, var(--blue) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  color: var(--txt2);
+  font-size: 1.05rem;
+  max-width: 520px;
+  line-height: 1.7;
+  margin-bottom: 48px;
+  animation: fadeUp .8s .2s ease both;
+}
+
+.hero-btns {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  animation: fadeUp .8s .3s ease both;
+}
+
+.btn-prim {
+  background: var(--green);
+  color: #0a0f0a;
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: .95rem;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all .2s;
+  letter-spacing: -.01em;
+}
+.btn-prim:hover { background: var(--green2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(74,222,128,.25); }
+
+.btn-sec {
+  background: transparent;
+  color: var(--txt);
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: .95rem;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all .2s;
+}
+.btn-sec:hover { border-color: var(--green); color: var(--green); transform: translateY(-2px); }
+
+/* STATS */
+.hero-stats {
+  display: flex;
+  gap: 48px;
+  margin-top: 72px;
+  animation: fadeUp .8s .4s ease both;
+}
+.stat { text-align: center; }
+.stat-num { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--green); }
+.stat-lbl { font-size: .78rem; color: var(--txt3); letter-spacing: .06em; margin-top: 4px; }
+
+/* ── SEÇÃO ── */
+section {
+  position: relative;
+  z-index: 1;
+  padding: 100px 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.sec-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .72rem;
+  color: var(--green);
+  letter-spacing: .14em;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sec-label::before { content: '//'; opacity: .5; }
+
+.sec-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -.02em;
+  margin-bottom: 16px;
+  line-height: 1.1;
+}
+
+.sec-sub {
+  color: var(--txt2);
+  font-size: .95rem;
+  max-width: 540px;
+  line-height: 1.7;
+  margin-bottom: 56px;
+}
+
+/* ── GRID DE DISCIPLINAS ── */
+.disc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.disc-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  text-decoration: none;
+  color: inherit;
+  transition: all .3s;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.disc-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity .3s;
+  border-radius: 16px;
+}
+
+.disc-card:hover { transform: translateY(-4px); border-color: var(--card-accent); }
+.disc-card:hover::before { opacity: 1; }
+
+.disc-card.green  { --card-accent: var(--green); }
+.disc-card.amber  { --card-accent: var(--amber); }
+.disc-card.blue   { --card-accent: var(--blue);  }
+.disc-card.purple { --card-accent: var(--purple);}
+.disc-card.red    { --card-accent: var(--red);   }
+.disc-card.cyan   { --card-accent: var(--cyan);  }
+
+.disc-card.green::before  { background: linear-gradient(135deg, rgba(74,222,128,.06) 0%, transparent 60%); }
+.disc-card.amber::before  { background: linear-gradient(135deg, rgba(251,191,36,.06) 0%, transparent 60%); }
+.disc-card.blue::before   { background: linear-gradient(135deg, rgba(96,165,250,.06) 0%, transparent 60%); }
+.disc-card.purple::before { background: linear-gradient(135deg, rgba(167,139,250,.06) 0%, transparent 60%); }
+.disc-card.red::before    { background: linear-gradient(135deg, rgba(248,113,113,.06) 0%, transparent 60%); }
+.disc-card.cyan::before   { background: linear-gradient(135deg, rgba(52,211,153,.06) 0%, transparent 60%); }
+
+.disc-icon {
+  font-size: 2.2rem;
+  margin-bottom: 18px;
+  display: block;
+}
+
+.disc-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+  letter-spacing: -.01em;
+}
+.disc-card.green  .disc-name { color: var(--green); }
+.disc-card.amber  .disc-name { color: var(--amber); }
+.disc-card.blue   .disc-name { color: var(--blue);  }
+.disc-card.purple .disc-name { color: var(--purple);}
+.disc-card.red    .disc-name { color: var(--red);   }
+.disc-card.cyan   .disc-name { color: var(--cyan);  }
+
+.disc-desc {
+  color: var(--txt2);
+  font-size: .88rem;
+  line-height: 1.65;
+  margin-bottom: 20px;
+}
+
+.disc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+.tag {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+  border: 1px solid;
+}
+.disc-card.green  .tag { border-color: rgba(74,222,128,.3);  color: var(--green);  background: rgba(74,222,128,.08); }
+.disc-card.amber  .tag { border-color: rgba(251,191,36,.3);  color: var(--amber);  background: rgba(251,191,36,.08); }
+.disc-card.blue   .tag { border-color: rgba(96,165,250,.3);  color: var(--blue);   background: rgba(96,165,250,.08); }
+.disc-card.purple .tag { border-color: rgba(167,139,250,.3); color: var(--purple); background: rgba(167,139,250,.08);}
+.disc-card.red    .tag { border-color: rgba(248,113,113,.3); color: var(--red);    background: rgba(248,113,113,.08);}
+.disc-card.cyan   .tag { border-color: rgba(52,211,153,.3);  color: var(--cyan);   background: rgba(52,211,153,.08); }
+
+.disc-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+  font-size: .8rem;
+  color: var(--txt3);
+}
+.disc-arrow { font-size: 1rem; transition: transform .2s; }
+.disc-card:hover .disc-arrow { transform: translateX(4px); }
+
+/* ── ATIVIDADES RECENTES ── */
+.ativ-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.ativ-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  text-decoration: none;
+  color: inherit;
+  transition: all .25s;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.ativ-card:hover { border-color: var(--green); transform: translateY(-2px); }
+
+.ativ-header { display: flex; align-items: center; gap: 12px; }
+.ativ-emoji { font-size: 1.6rem; }
+.ativ-meta { flex: 1; }
+.ativ-titulo { font-weight: 700; font-size: .92rem; margin-bottom: 2px; }
+.ativ-disciplina { font-size: .75rem; color: var(--txt3); }
+
+.ativ-desc { font-size: .83rem; color: var(--txt2); line-height: 1.6; }
+
+.ativ-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: .72rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  width: fit-content;
+}
+.badge-novo    { background: rgba(74,222,128,.1);  color: var(--green);  border: 1px solid rgba(74,222,128,.2);  }
+.badge-jogo    { background: rgba(251,191,36,.1);  color: var(--amber);  border: 1px solid rgba(251,191,36,.2);  }
+.badge-pratica { background: rgba(96,165,250,.1);  color: var(--blue);   border: 1px solid rgba(96,165,250,.2);  }
+.badge-apostila{ background: rgba(167,139,250,.1); color: var(--purple); border: 1px solid rgba(167,139,250,.2); }
+
+/* ── TERMINAL DECORATIVO ── */
+.terminal-demo {
+  background: #0d1117;
+  border: 1px solid #21262d;
+  border-radius: 14px;
+  overflow: hidden;
+  margin: 56px 0;
+  box-shadow: 0 24px 64px rgba(0,0,0,.5);
+}
+.term-bar {
+  background: #161b22;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid #21262d;
+}
+.dot { width: 10px; height: 10px; border-radius: 50%; }
+.dot.r { background: #f47174; } .dot.y { background: #f0b429; } .dot.g { background: #3fb950; }
+.term-title { color: rgba(255,255,255,.3); font-size: .75rem; font-family: 'JetBrains Mono', monospace; margin-left: 8px; }
+.term-body {
+  padding: 24px 28px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .85rem;
+  line-height: 2;
+  color: #8b949e;
+}
+.term-body .cmd   { color: #3fb950; }
+.term-body .out   { color: #58a6ff; }
+.term-body .str   { color: #a5d6ff; }
+.term-body .cmt   { color: #484f58; }
+.term-body .warn  { color: #f0b429; }
+.term-body .err   { color: #f87171; }
+.term-body .succ  { color: #3fb950; }
+.cursor { display: inline-block; width: 8px; height: 16px; background: var(--green); animation: blink .8s step-end infinite; vertical-align: middle; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* ── SOBRE ── */
+.sobre-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+.sobre-txt h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  margin-bottom: 16px;
+  line-height: 1.1;
+}
+.sobre-txt p { color: var(--txt2); line-height: 1.8; margin-bottom: 14px; font-size: .95rem; }
+
+.sobre-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px;
+}
+.sobre-escola {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--green);
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.info-item {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 16px;
+  align-items: flex-start;
+}
+.info-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
+.info-label { font-size: .75rem; color: var(--txt3); margin-bottom: 2px; font-weight: 600; letter-spacing: .04em; }
+.info-val { font-size: .88rem; color: var(--txt); font-weight: 500; }
+
+/* ── FOOTER ── */
+footer {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--border);
+  padding: 40px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.footer-left { font-size: .82rem; color: var(--txt3); }
+.footer-left strong { color: var(--txt2); }
+.footer-right {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .75rem;
+  color: var(--txt3);
+}
+.footer-right span { color: var(--green); }
+
+/* ── ANIMAÇÕES ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  nav { padding: 14px 20px; }
+  .nav-links { display: none; }
+  .hero-stats { gap: 28px; }
+  .sobre-grid { grid-template-columns: 1fr; }
+  section { padding: 70px 20px; }
+  footer { padding: 28px 20px; flex-direction: column; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <span>⬡</span>
+    portmarcos.github.io
+    <span>/ aulas</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#disciplinas">Disciplinas</a></li>
+    <li><a href="#atividades">Atividades</a></li>
+    <li><a href="#sobre">Sobre</a></li>
+  </ul>
+  <div class="nav-badge">🟢 ONLINE</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">SITE EDUCATIVO INTERATIVO</div>
+  <h1>
+    <span class="linha1">Salas de Aula</span>
+    <span class="linha2">Prof. Marcos Cruz</span>
+  </h1>
+  <p class="hero-sub">
+    Atividades interativas, avaliações, jogos e materiais didáticos para o Curso Técnico em Informática e aulas de Língua Portuguesa.
+  </p>
+  <div class="hero-btns">
+    <a href="#disciplinas" class="btn-prim">Ver disciplinas →</a>
+    <a href="#sobre" class="btn-sec">Sobre o professor</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">6+</div>
+      <div class="stat-lbl">DISCIPLINAS</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">∞</div>
+      <div class="stat-lbl">ATIVIDADES</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">100%</div>
+      <div class="stat-lbl">INTERATIVO</div>
+    </div>
+  </div>
+</div>
+
+<!-- TERMINAL DECORATIVO -->
+<div style="position:relative;z-index:1;max-width:860px;margin:0 auto;padding:0 24px">
+  <div class="terminal-demo reveal">
+    <div class="term-bar">
+      <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+      <span class="term-title">portmarcos@github.io ~ aulas</span>
+    </div>
+    <div class="term-body">
+      <span class="cmt">## Bem-vindo ao site de aulas do Prof. Marcos Cruz</span><br>
+      <span class="cmd">$</span> ls disciplinas/<br>
+      <span class="out">informatica/&nbsp;&nbsp; portugues/&nbsp;&nbsp; artes/&nbsp;&nbsp; matematica/&nbsp;&nbsp; jogos/</span><br>
+      <span class="cmd">$</span> ls informatica/<br>
+      <span class="out">linux-mint/&nbsp;&nbsp; redes/&nbsp;&nbsp; malware/&nbsp;&nbsp; ip-enderecamento/</span><br>
+      <span class="cmd">$</span> cat status.txt<br>
+      <span class="succ">✓ Site no ar · GitHub Pages · portmarcos.github.io/aulas</span><br>
+      <span class="succ">✓ Atividades interativas com envio para Google Sheets</span><br>
+      <span class="warn">⚡ Novas atividades sendo adicionadas regularmente</span><br>
+      <span class="cmd">$</span> <span class="cursor"></span>
+    </div>
+  </div>
+</div>
+
+<!-- DISCIPLINAS -->
+<section id="disciplinas">
+  <div class="sec-label reveal">DISCIPLINAS</div>
+  <h2 class="sec-title reveal">Escolha sua turma</h2>
+  <p class="sec-sub reveal">Acesse os materiais, atividades e avaliações de cada disciplina. Tudo interativo, direto no navegador.</p>
+
+  <div class="disc-grid">
+
+    <div class="disc-card green reveal" onclick="window.location.href='informatica/linux/index.html'">
+      <span class="disc-icon">🐧</span>
+      <div class="disc-name">Informática Técnica</div>
+      <p class="disc-desc">Linux Mint, Redes de Computadores, Segurança da Informação, Hardware e muito mais.</p>
+      <div class="disc-tags">
+        <span class="tag">Linux</span>
+        <span class="tag">Redes</span>
+        <span class="tag">Segurança</span>
+        <span class="tag">CMD</span>
+      </div>
+      <div class="disc-footer">
+        <span>Curso Técnico em Informática</span>
+        <span class="disc-arrow">→</span>
+      </div>
+    </div>
+
+    <div class="disc-card amber reveal" onclick="window.location.href='portugues/index.html'">
+      <span class="disc-icon">📖</span>
+      <div class="disc-name">Língua Portuguesa</div>
+      <p class="disc-desc">Gramática, produção de texto, literatura brasileira e preparação para o ENEM e vestibulares.</p>
+      <div class="disc-tags">
+        <span class="tag">Crase</span>
+        <span class="tag">Redação ENEM</span>
+        <span class="tag">Literatura</span>
+      </div>
+      <div class="disc-footer">
+        <span>6º ao 9º · 3º EM</span>
+        <span class="disc-arrow">→</span>
+      </div>
+    </div>
+
+    <div class="disc-card blue reveal" onclick="window.location.href='artes/index.html'">
+      <span class="disc-icon">🎨</span>
+      <div class="disc-name">Artes</div>
+      <p class="disc-desc">Op Art, Barroco, Land Art, Arte Rupestre, tipos de plano cinematográfico e muito mais.</p>
+      <div class="disc-tags">
+        <span class="tag">Op Art</span>
+        <span class="tag">Barroco</span>
+        <span class="tag">Land Art</span>
+      </div>
+      <div class="disc-footer">
+        <span>6º ao 9º ano</span>
+        <span class="disc-arrow">→</span>
+      </div>
+    </div>
+
+    <div class="disc-card purple reveal" onclick="window.location.href='jogos/index.html'">
+      <span class="disc-icon">🎮</span>
+      <div class="disc-name">Jogos Educativos</div>
+      <p class="disc-desc">Escape rooms, quiz interativos, bingo, jogo de tabuleiro e caça ao tesouro digital.</p>
+      <div class="disc-tags">
+        <span class="tag">Escape Room</span>
+        <span class="tag">Quiz</span>
+        <span class="tag">Bingo</span>
+      </div>
+      <div class="disc-footer">
+        <span>Todas as turmas</span>
+        <span class="disc-arrow">→</span>
+      </div>
+    </div>
+
+    <div class="disc-card red reveal" onclick="window.location.href='matematica/index.html'">
+      <span class="disc-icon">📐</span>
+      <div class="disc-name">Matemática</div>
+      <p class="disc-desc">Materiais de apoio para Licenciatura em Matemática e EJA — Matemática Financeira e mais.</p>
+      <div class="disc-tags">
+        <span class="tag">UFVJM</span>
+        <span class="tag">EJA</span>
+        <span class="tag">Financeira</span>
+      </div>
+      <div class="disc-footer">
+        <span>EJA · Licenciatura</span>
+        <span class="disc-arrow">→</span>
+      </div>
+    </div>
+
+    <div class="disc-card cyan reveal" onclick="window.location.href='avaliacoes/index.html'">
+      <span class="disc-icon">📊</span>
+      <div class="disc-name">Avaliações</div>
+      <p class="disc-desc">Provas interativas com envio automático de respostas para a planilha do professor.</p>
+      <div class="disc-tags">
+        <span class="tag">Google Sheets</span>
+        <span class="tag">Tempo real</span>
+        <span class="tag">Gabarito auto</span>
+      </div>
+      <div class="disc-footer">
+        <span>Todas as turmas</span>
+        <span class="disc-arrow">→</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ATIVIDADES RECENTES -->
+<section id="atividades" style="padding-top:0">
+  <div class="sec-label reveal">ATIVIDADES RECENTES</div>
+  <h2 class="sec-title reveal">Últimos materiais</h2>
+  <p class="sec-sub reveal">Materiais criados recentemente e disponíveis para acesso imediato.</p>
+
+  <div class="ativ-grid">
+
+    <a class="ativ-card reveal" href="informatica/linux/avaliacao.html">
+      <div class="ativ-header">
+        <div class="ativ-emoji">🐧</div>
+        <div class="ativ-meta">
+          <div class="ativ-titulo">Avaliação — Linux Mint</div>
+          <div class="ativ-disciplina">Informática Técnica</div>
+        </div>
+      </div>
+      <p class="ativ-desc">10 questões fechadas + 15 abertas + 6 práticas no laboratório. Do básico ao avançado.</p>
+      <div class="ativ-badge badge-novo">🟢 NOVO</div>
+    </a>
+
+    <a class="ativ-card reveal" href="informatica/redes/apostila.html">
+      <div class="ativ-header">
+        <div class="ativ-emoji">🌐</div>
+        <div class="ativ-meta">
+          <div class="ativ-titulo">Apostila — Redes de Computadores</div>
+          <div class="ativ-disciplina">Informática Técnica</div>
+        </div>
+      </div>
+      <p class="ativ-desc">IP, DNS, DHCP, Gateway, Protocolos, Comandos CMD e Segurança em Redes.</p>
+      <div class="ativ-badge badge-apostila">📚 APOSTILA</div>
+    </a>
+
+    <a class="ativ-card reveal" href="jogos/premodernismo/index.html">
+      <div class="ativ-header">
+        <div class="ativ-emoji">🎲</div>
+        <div class="ativ-meta">
+          <div class="ativ-titulo">Jogo — Pré-Modernismo</div>
+          <div class="ativ-disciplina">Língua Portuguesa · 3º EM</div>
+        </div>
+      </div>
+      <p class="ativ-desc">Jogo de tabuleiro com questões ENEM/vestibular sobre Euclides da Cunha, Lima Barreto e mais.</p>
+      <div class="ativ-badge badge-jogo">🎮 JOGO</div>
+    </a>
+
+    <a class="ativ-card reveal" href="informatica/malware/escape.html">
+      <div class="ativ-header">
+        <div class="ativ-emoji">🔐</div>
+        <div class="ativ-meta">
+          <div class="ativ-titulo">Escape Room — Malware</div>
+          <div class="ativ-disciplina">Informática Técnica</div>
+        </div>
+      </div>
+      <p class="ativ-desc">Escape room interativo sobre tipos de malware, segurança e ameaças digitais.</p>
+      <div class="ativ-badge badge-jogo">🎮 ESCAPE ROOM</div>
+    </a>
+
+    <a class="ativ-card reveal" href="artes/arte-rupestre/atividade.html">
+      <div class="ativ-header">
+        <div class="ativ-emoji">🦣</div>
+        <div class="ativ-meta">
+          <div class="ativ-titulo">Atividade — Arte Rupestre</div>
+          <div class="ativ-disciplina">Artes · 6º ano</div>
+        </div>
+      </div>
+      <p class="ativ-desc">Atividade interativa sobre arte rupestre com bingo temático para sala de aula.</p>
+      <div class="ativ-badge badge-pratica">⚙ PRÁTICA</div>
+    </a>
+
+    <a class="ativ-card reveal" href="informatica/linux/avaliacao.html">
+      <div class="ativ-header">
+        <div class="ativ-emoji">🖥</div>
+        <div class="ativ-meta">
+          <div class="ativ-titulo">Trabalho em Grupo — Redes</div>
+          <div class="ativ-disciplina">Informática Técnica</div>
+        </div>
+      </div>
+      <p class="ativ-desc">"Como a Internet Chega até Você?" — 3 grupos, temas complementares, apresentação e avaliação.</p>
+      <div class="ativ-badge badge-apostila">📋 PROJETO</div>
+    </a>
+
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="sobre-grid">
+    <div class="sobre-txt reveal">
+      <div class="sec-label" style="margin-bottom:16px">SOBRE</div>
+      <h2>Prof. Marcos Cruz</h2>
+      <p>Professor de Língua Portuguesa, Artes e Informática Técnica, comprometido com uma educação dinâmica, interativa e alinhada à realidade digital dos alunos.</p>
+      <p>Este site reúne todos os materiais produzidos para as turmas — de jogos e escape rooms a apostilas e avaliações com correção automática.</p>
+      <p style="color:var(--green);font-weight:600;font-size:.9rem">🎯 Objetivo: tornar o aprendizado mais engajante, mensurável e conectado ao mundo real.</p>
+    </div>
+    <div class="sobre-card reveal">
+      <div class="sobre-escola">🏫 E.E. Prefeito Odílio Fernandes Costa</div>
+      <div class="info-item">
+        <div class="info-icon">📍</div>
+        <div>
+          <div class="info-label">ENDEREÇO</div>
+          <div class="info-val">Praça Sete de Setembro, 84 — Centro<br>Santo Antônio do Retiro — MG</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">📚</div>
+        <div>
+          <div class="info-label">DISCIPLINAS</div>
+          <div class="info-val">Língua Portuguesa · Artes · Informática Técnica</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🎓</div>
+        <div>
+          <div class="info-label">TURMAS</div>
+          <div class="info-val">6º ao 9º ano · 3º EM · Curso Técnico em Informática</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🌐</div>
+        <div>
+          <div class="info-label">SITE</div>
+          <div class="info-val" style="color:var(--green)">portmarcos.github.io/aulas</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">✉️</div>
+        <div>
+          <div class="info-label">ESCOLA</div>
+          <div class="info-val">escola.82325@educacao.mg.gov.br</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    <strong>Prof. Marcos Cruz</strong> · E.E. Prefeito Odílio Fernandes Costa · Santo Antônio do Retiro — MG
+  </div>
+  <div class="footer-right">
+    <span>portmarcos</span>.github.io/aulas · 2025
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    el.style.transitionDelay = (i % 4) * 80 + 'ms';
+    observer.observe(el);
+  });
+
+  // Terminal typewriter
+  const lines = [
+    { el: null, text: '$ ls disciplinas/', delay: 800 },
+    { el: null, text: 'informatica/   portugues/   artes/   jogos/', delay: 1200 },
+  ];
+</script>
+</body>
+</html>
