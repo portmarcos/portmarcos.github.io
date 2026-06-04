@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jogos Educativos — Prof. Marcos Cruz</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#06060a;--card:#10101a;--border:rgba(255,255,255,.06);--border-h:rgba(255,255,255,.14);--purple:#ce93d8;--purple2:#e1bee7;--purple-glow:rgba(206,147,216,.2);--purple-dim:rgba(206,147,216,.1);--green:#00e676;--amber:#ffca28;--blue:#64b5f6;--red:#ef9a9a;--cyan:#80cbc4;--txt:#f3e8ff;--txt2:#b39ddb;--txt3:#6a4a7a;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Arial,sans-serif;background:var(--bg);color:var(--txt);overflow-x:hidden;line-height:1.6}
+.bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(206,147,216,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(206,147,216,.03) 1px,transparent 1px);background-size:48px 48px}
+.bg-orb{position:fixed;z-index:0;pointer-events:none;width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(206,147,216,.06) 0%,transparent 65%);bottom:-200px;right:-150px}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(6,6,10,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.nav-emblem{width:38px;height:38px;background:linear-gradient(135deg,var(--purple),var(--purple2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 0 20px var(--purple-glow)}
+.nav-name{font-weight:700;font-size:.9rem;color:var(--txt);line-height:1.2}
+.nav-domain{font-size:.7rem;color:var(--txt3)}
+.nav-back{color:var(--txt3);text-decoration:none;font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;transition:color .2s}
+.nav-back:hover{color:var(--purple)}
+
+.hero{position:relative;z-index:1;padding:140px 48px 80px;max-width:1160px;margin:0 auto;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--purple-dim);border:1px solid rgba(206,147,216,.25);color:var(--purple);padding:6px 16px;border-radius:30px;font-size:.72rem;font-weight:700;letter-spacing:.12em;margin-bottom:28px}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,7vw,5.5rem);font-weight:900;line-height:1.0;letter-spacing:-.02em;margin-bottom:20px}
+.hero-title span{color:var(--purple);font-style:italic}
+.hero-sub{color:var(--txt2);font-size:1rem;max-width:560px;line-height:1.75;margin:0 auto 56px}
+
+/* CARDS DE JOGO — especiais */
+.games-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:22px;max-width:1160px;margin:0 auto;padding:0 48px}
+.game-card{background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;text-decoration:none;color:inherit;transition:all .35s cubic-bezier(.16,1,.3,1);display:flex;flex-direction:column;cursor:pointer;position:relative}
+.game-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--gc-a) 0%,transparent 55%);opacity:0;transition:opacity .35s}
+.game-card:hover{transform:translateY(-6px);border-color:var(--gc-b);box-shadow:0 24px 60px rgba(0,0,0,.5),0 0 40px var(--gc-g)}
+.game-card:hover::after{opacity:1}
+.gc-pu{--gc-a:rgba(206,147,216,.08);--gc-b:rgba(206,147,216,.4);--gc-g:rgba(206,147,216,.1);--gc:var(--purple)}
+.gc-am{--gc-a:rgba(255,202,40,.08);--gc-b:rgba(255,202,40,.4);--gc-g:rgba(255,202,40,.1);--gc:var(--amber)}
+.gc-gr{--gc-a:rgba(0,230,118,.08);--gc-b:rgba(0,230,118,.4);--gc-g:rgba(0,230,118,.1);--gc:#00e676}
+.gc-bl{--gc-a:rgba(100,181,246,.08);--gc-b:rgba(100,181,246,.4);--gc-g:rgba(100,181,246,.1);--gc:var(--blue)}
+.gc-re{--gc-a:rgba(239,154,154,.08);--gc-b:rgba(239,154,154,.4);--gc-g:rgba(239,154,154,.1);--gc:var(--red)}
+.gc-cy{--gc-a:rgba(128,203,196,.08);--gc-b:rgba(128,203,196,.4);--gc-g:rgba(128,203,196,.1);--gc:var(--cyan)}
+
+.game-banner{height:100px;display:flex;align-items:center;justify-content:center;font-size:3rem;position:relative;z-index:1;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(255,255,255,.04) 0%,transparent 100%)}
+.game-body{padding:24px 24px 20px;display:flex;flex-direction:column;flex:1;position:relative;z-index:1}
+.game-type{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--gc);letter-spacing:.16em;text-transform:uppercase;margin-bottom:10px}
+.game-name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--txt);margin-bottom:10px;line-height:1.2}
+.game-desc{color:var(--txt2);font-size:.82rem;line-height:1.6;flex:1;margin-bottom:18px}
+.game-meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.gmeta{display:flex;align-items:center;gap:5px;font-size:.7rem;color:var(--txt3)}
+.game-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:18px}
+.gtag{padding:2px 9px;border-radius:20px;font-size:.64rem;font-weight:700;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--txt3);transition:all .2s}
+.game-card:hover .gtag{border-color:var(--gc-b);color:var(--gc)}
+.game-foot{display:flex;align-items:center;justify-content:space-between;padding-top:14px;border-top:1px solid var(--border);transition:border-color .3s}
+.game-card:hover .game-foot{border-color:var(--gc-b)}
+.game-btn{background:var(--gc);color:#06060a;padding:7px 16px;border-radius:8px;font-size:.75rem;font-weight:700;letter-spacing:.04em;transition:all .2s;opacity:.85}
+.game-card:hover .game-btn{opacity:1;transform:scale(1.03)}
+.game-disc{font-size:.72rem;color:var(--txt3)}
+
+.section-hdr{max-width:1160px;margin:80px auto 0;padding:0 48px 40px}
+.sec-label{display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--purple);letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px}
+.sec-label::before{content:'';width:24px;height:1px;background:var(--purple)}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.4rem);font-weight:900;letter-spacing:-.02em;line-height:1.1;margin-bottom:10px}
+.sec-sub{color:var(--txt2);font-size:.9rem;max-width:500px;line-height:1.7}
+
+footer{position:relative;z-index:1;padding:36px 48px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-top:80px}
+.footer-l{font-size:.78rem;color:var(--txt3)}.footer-l strong{color:var(--txt2)}
+.footer-r{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--txt3)}.footer-r span{color:var(--purple)}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}.reveal.in{opacity:1;transform:none}
+@media(max-width:768px){nav{padding:0 20px}.hero{padding:120px 20px 60px}.games-grid,.section-hdr{padding:0 20px}}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div><div class="bg-orb"></div>
+
+<nav>
+  <a href="../index.html" class="nav-brand">
+    <div class="nav-emblem">🕹️</div>
+    <div><div class="nav-name">Prof. Marcos Cruz</div><div class="nav-domain">portmarcos.github.io/aulas</div></div>
+  </a>
+  <a href="../index.html" class="nav-back">← Voltar ao início</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge reveal">🕹️ JOGOS EDUCATIVOS INTERATIVOS</div>
+  <h1 class="hero-title reveal">Aprender<br><span>Jogando</span></h1>
+  <p class="hero-sub reveal">Escape rooms, quiz interativos, bingo temático e jogos de tabuleiro para todas as disciplinas. Aprendizado ativo, engajador e divertido.</p>
+</div>
+
+<div class="section-hdr reveal">
+  <div class="sec-label">Jogos</div>
+  <h2 class="sec-title">Escolha seu jogo</h2>
+  <p class="sec-sub">Todos os jogos rodam direto no navegador. Sem instalação, sem cadastro.</p>
+</div>
+
+<div class="games-grid">
+
+  <a class="game-card gc-pu reveal" href="../informatica/malware/escape.html">
+    <div class="game-banner">🔐</div>
+    <div class="game-body">
+      <div class="game-type">// Escape Room</div>
+      <div class="game-name">Operação Firewall — Escape Room de Malware</div>
+      <p class="game-desc">Você é um técnico preso em um sistema infectado. Resolva puzzles sobre tipos de malware, ataques digitais e segurança para escapar.</p>
+      <div class="game-meta"><span class="gmeta">👤 Individual ou dupla</span><span class="gmeta">⏱ 20–35 min</span></div>
+      <div class="game-tags"><span class="gtag">Segurança</span><span class="gtag">Malware</span><span class="gtag">Puzzles</span></div>
+      <div class="game-foot"><div class="game-disc">Informática Técnica</div><div class="game-btn">Jogar →</div></div>
+    </div>
+  </a>
+
+  <a class="game-card gc-am reveal" href="../jogos/premodernismo/index.html">
+    <div class="game-banner">🎲</div>
+    <div class="game-body">
+      <div class="game-type">// Jogo de Tabuleiro</div>
+      <div class="game-name">Trilha do Pré-Modernismo</div>
+      <p class="game-desc">Jogo de tabuleiro para até 4 equipes com questões ENEM/vestibular sobre Euclides da Cunha, Lima Barreto, Augusto dos Anjos e mais.</p>
+      <div class="game-meta"><span class="gmeta">👥 2–4 equipes</span><span class="gmeta">⏱ 30–50 min</span></div>
+      <div class="game-tags"><span class="gtag">Literatura</span><span class="gtag">ENEM</span><span class="gtag">Equipes</span></div>
+      <div class="game-foot"><div class="game-disc">Língua Portuguesa · 3º EM</div><div class="game-btn">Jogar →</div></div>
+    </div>
+  </a>
+
+  <a class="game-card gc-gr reveal" href="../informatica/ip/atividade.html">
+    <div class="game-banner">🔍</div>
+    <div class="game-body">
+      <div class="game-type">// Atividade Gamificada</div>
+      <div class="game-name">Detetive de IP + Batalha de Ping</div>
+      <p class="game-desc">Descubra IPs suspeitos na rede, vença a Batalha de Ping e complete o Escape Room usando comandos reais do CMD. Teoria na prática!</p>
+      <div class="game-meta"><span class="gmeta">👤 Individual</span><span class="gmeta">⏱ 30–45 min</span></div>
+      <div class="game-tags"><span class="gtag">Redes</span><span class="gtag">CMD</span><span class="gtag">IP</span></div>
+      <div class="game-foot"><div class="game-disc">Informática Técnica</div><div class="game-btn">Jogar →</div></div>
+    </div>
+  </a>
+
+  <a class="game-card gc-bl reveal" href="../portugues/pre-modernismo/quiz.html">
+    <div class="game-banner">⚡</div>
+    <div class="game-body">
+      <div class="game-type">// Quiz Interativo</div>
+      <div class="game-name">Quiz Pré-Modernismo — Estilo Kahoot</div>
+      <p class="game-desc">Quiz rápido com contagem de pontos, alternativas coloridas e tempo por questão. Perfeito para revisão antes de provas e vestibulares.</p>
+      <div class="game-meta"><span class="gmeta">👥 Turma toda</span><span class="gmeta">⏱ 15–20 min</span></div>
+      <div class="game-tags"><span class="gtag">Quiz</span><span class="gtag">Kahoot-style</span><span class="gtag">Pontuação</span></div>
+      <div class="game-foot"><div class="game-disc">Língua Portuguesa · 3º EM</div><div class="game-btn">Jogar →</div></div>
+    </div>
+  </a>
+
+  <a class="game-card gc-cy reveal" href="../artes/arte-rupestre/bingo.html">
+    <div class="game-banner">🦣</div>
+    <div class="game-body">
+      <div class="game-type">// Bingo Temático</div>
+      <div class="game-name">Bingo — Arte Rupestre</div>
+      <p class="game-desc">20 cartelas únicas com imagens e conceitos sobre arte rupestre para imprimir e jogar em sala. O professor lê as definições e os alunos marcam.</p>
+      <div class="game-meta"><span class="gmeta">👥 Turma toda</span><span class="gmeta">⏱ 20–30 min</span></div>
+      <div class="game-tags"><span class="gtag">Artes</span><span class="gtag">Bingo</span><span class="gtag">Imprimível</span></div>
+      <div class="game-foot"><div class="game-disc">Artes · 6º ano</div><div class="game-btn">Acessar →</div></div>
+    </div>
+  </a>
+
+  <div class="game-card gc-re reveal" style="opacity:.6;cursor:default">
+    <div class="game-banner">🏆</div>
+    <div class="game-body">
+      <div class="game-type">// Em Desenvolvimento</div>
+      <div class="game-name">Quiz — Redes de Computadores</div>
+      <p class="game-desc">Quiz interativo sobre IP, DNS, DHCP, protocolos e segurança em redes. Com ranking em tempo real integrado ao Google Sheets.</p>
+      <div class="game-meta"><span class="gmeta">👥 Turma toda</span><span class="gmeta">⏱ 20 min</span></div>
+      <div class="game-tags"><span class="gtag">Redes</span><span class="gtag">Google Sheets</span><span class="gtag">Ranking</span></div>
+      <div class="game-foot"><div class="game-disc">Informática Técnica</div><div style="font-size:.72rem;color:var(--txt3)">🔜 Em breve</div></div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-l"><strong>Prof. Marcos Cruz</strong> · Jogos Educativos · E.E. Prefeito Odílio Fernandes Costa</div>
+  <div class="footer-r"><span>portmarcos</span>.github.io/aulas/jogos</div>
+</footer>
+<script>
+const io=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{threshold:.08,rootMargin:'0px 0px -20px 0px'});
+document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%4)*60+'ms';io.observe(el)});
+</script>
+</body>
+</html>
