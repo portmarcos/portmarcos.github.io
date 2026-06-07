@@ -790,77 +790,123 @@ function normalize(s) {
 }
 
 /* ═══════════════════════════════════════════════
-   API  — BRÁS CUBAS
+   BRÁS CUBAS — respostas pré-escritas (sem API)
 ═══════════════════════════════════════════════ */
-async function bras(situation, extra={}) {
+function bras(situation, extra={}) {
   const pi  = Math.min(G.phase, PHASES.length-1);
   const ph  = PHASES[pi];
+  const pick = arr => arr[Math.floor(Math.random()*arr.length)];
 
-  const instructions = {
-    intro:
-      `Apresente-se como Brás Cubas, o "defunto autor" de Machado de Assis. Diga que vem do além para testar os alunos em crase e que, conforme o jogo avançar, revelará pistas sobre livros que eles devem encontrar na biblioteca — mas jamais dirá o nome diretamente. Seja misterioso, elegante, levemente irônico. 5 frases.`,
-    phase_intro:
-      `Inicie o desafio ${G.phase+1} de 4. Conteúdo literário desta fase: ${ph.strip}. Faça uma referência elegante e breve ao conteúdo (um personagem, uma cena, uma imagem). Anuncie que virão 3 perguntas de crase. Crie suspense sobre o livro misterioso. 4-5 frases.`,
-    q_intro:
-      `Apresente a questão ${G.qIdx+1} de ${G.phase<PHASES.length?PHASES[G.phase].qs.length:3} com uma frase curta, no estilo de Brás Cubas. Diga que vai mostrar uma frase e eles devem escolher a forma correta para a lacuna. 1-2 frases.`,
-    correct:
-      `O aluno ACERTOU. A frase: "${extra.b} ___ ${extra.a}" → correto: "${extra.label}". Regra: ${extra.rule}. Parabenize com ironia elegante e explique a regra brevemente. 3-4 frases.`,
-    wrong:
-      `O aluno ERROU. A frase: "${extra.b} ___ ${extra.a}". Ele escolheu "${extra.chose}" mas o correto é "${extra.label}". Regra: ${extra.rule}. Corrija com ironia gentil e explique a regra. 3-4 frases.`,
-    qs_done:
-      `As ${G.phase<PHASES.length?PHASES[G.phase].qs.length:3} questões de crase desta fase acabaram. Comente brevemente o desempenho (sem julgamento duro) e anuncie com dramaticidade que vai revelar pistas sobre um livro misterioso que eles devem encontrar. Crie suspense. 3-4 frases.`,
-    hint:
-      `Revele a pista nº ${G.hints+1} de 3. A pista é EXATAMENTE esta, não invente nada além: "${ph.hints[G.hints]}". Apresente com voz dramática e misteriosa de Brás Cubas. Ao final, peça que digitem o título sem revelar a resposta. 4-5 frases.`,
-    wrong_book:
-      `O aluno tentou adivinhar o livro e errou. Ele disse: "${extra.guess}". Responda com ironia elegante sem revelar o título correto. ${G.hints<3 ? 'Diga que há mais pistas a revelar.' : 'Incentive a pensar nas pistas já dadas.'} 2-3 frases.`,
-    right_book:
-      `O aluno acertou! O livro é "${ph.book}". Confirme com entusiasmo irônico. Faça uma conexão literária entre este livro e os capítulos estudados (${ph.strip}). Diga que o bilhete da próxima pista está escondido DENTRO desse livro na biblioteca. ${G.phase<3 ? 'Anuncie que o próximo desafio se aproxima.' : 'Diga que os 4 livros foram encontrados e que um enigma final — o maior de todos — está por vir.'} 4-5 frases.`,
-    reveal_book:
-      `Os alunos não adivinharam o livro. Revele que é "${ph.book}" com ironia característica. Diga que o bilhete está dentro do livro na biblioteca. ${G.phase<3 ? 'Anuncie o próximo desafio.' : 'Encerre o jogo com elegância.'} 3-4 frases.`,
-    final_enigma_intro:
-      `Os 4 livros foram descobertos. Agora apresente com dramaticidade o enigma final: quatro livros, quatro segredos, cada um com uma resposta. Diga apenas que NAS RESPOSTAS encontrarão o enigma de 4 letras — não explique como, deixe que descubram sozinhos o padrão. A palavra deve ser escrita num papel e passada por baixo da porta. Seja solene e enigmático. 4-5 frases.`,
-    final_wrong:
-      `O aluno errou a palavra final do enigma. Disse "${extra.guess||'?'}". Dê uma pista irônica sem revelar a resposta: lembre que A=Alienados (O Alienista), M=Mel (Iracema), O=Olhos (Dom Casmurro), R=Rita (O Cortiço). 3-4 frases.`,
-    victory:
-      `Os alunos desvendaram o enigma final — a palavra é AMOR! Parabenize-os no estilo de Brás Cubas — irônico, filosófico, genuinamente satisfeito. Reflita que amor é o motor de todos os 4 livros e da própria vida. Seja eloquente e memorável. 5-6 frases.`
+  /* ── Intro ── */
+  const INTRO = `Sou Brás Cubas — o defunto autor, como me intitulei nas minhas Memórias Póstumas. Escrevi do além-túmulo com a liberdade de quem nada tem a temer, e é dessa liberdade que me valho agora para vos testar. Ao longo deste jogo, farei perguntas sobre crase — essa pequena marca que tantos ignoram. A cada fase superada, revelarei pistas sobre um livro que devereis encontrar na biblioteca. O nome jamais direi diretamente. Isso seria demasiado simples para um defunto do meu calibre.`;
+
+  /* ── Intro de cada fase ── */
+  const PHASE_INTRO = [
+    `Iniciemos pelo começo — ou pelo fim, que no meu caso é a mesma coisa. Morri numa bela manhã de novembro e tive o requinte de escrever sobre isso com alguma ironia. Esses primeiros capítulos falam do óbito e do que ficou para trás: uma vida medíocre embelezada pela vaidade. Testem agora os vossos conhecimentos de crase — são questões, e o livro misterioso aguarda nas prateleiras.`,
+    `Ah, Marcela! Amei-a durante quinze meses e despensei por ela doze contos de réis — não incluídos os jantares e as flores. Que mestre fui eu na arte de me arruinar por uma mulher bela e indiferente. Mas deixemos a saudade de lado. As questões de crase aguardam, e nas pistas que revelarei depois encontrareis o caminho para outro grande amor da literatura brasileira.`,
+    `Meu pai decidiu que eu seria padre. Eu decidi que não. Partimos para Coimbra num acordo tácito entre a vontade paterna e a minha resignação momentânea. Coimbra ensinou-me pouco de teologia e muito de vida. As questões de crase virão, e depois darei pistas sobre um narrador que, assim como eu, tentou reconstruir o passado com palavras — e não tem certeza se conseguiu.`,
+    `Chegamos ao último desafio. Da janela de Botafogo, eu via o mar e fingia não ver a miséria. Era um privilégio de classe que eu exercia com elegância. As pistas desta fase levarão a um escritor que enxergou o que eu preferia ignorar — e escreveu sobre isso com crueza que me constrange até hoje.`,
+  ];
+
+  /* ── Intro de cada questão ── */
+  const Q_INTRO = [
+    `Atenção, mortais. Observem a frase abaixo e escolham a forma correta para a lacuna.`,
+    `Do alto do meu caixão, apresento-vos mais uma sentença. Escolham com cuidado — a crase não perdoa o descuido.`,
+    `Uma nova frase se apresenta. Lembrem-se: há crase apenas quando a preposição A encontra o artigo A feminino — ou certos pronomes demonstrativos. Escolham.`,
+    `Contemplem esta frase com atenção. A resposta errada tem consequências — como tudo na vida e na morte.`,
+    `Mais uma questão. Concentrem-se e escolham a forma correta para a lacuna.`,
+  ];
+
+  /* ── Acerto ── */
+  function correctR() { return pick([
+    `Muito bem! ${extra.label} — exatamente. ${extra.rule} Vejo que a gramática ainda não vos é completamente estranha, o que é reconfortante para um defunto como eu.`,
+    `Correto! ${extra.label}. ${extra.rule} Há esperança para vocês ainda.`,
+    `Acertastes! ${extra.label} — forma correta. ${extra.rule} Que satisfação rara, a de ver a gramática respeitada.`,
+    `Exato. ${extra.label}. ${extra.rule} Não é difícil quando se para para pensar — o problema é que raramente se para.`,
+  ]); }
+
+  /* ── Erro ── */
+  function wrongR() { return pick([
+    `Incorreto. A forma correta é ${extra.label}. ${extra.rule} Não se envergonhem — o erro é da condição humana. A penitência, porém, é minha prerrogativa.`,
+    `Engano. ${extra.label} seria o correto. ${extra.rule} Cometestes o erro mais comum entre os vivos: a pressa.`,
+    `Lamentável. A resposta certa é ${extra.label}. ${extra.rule} Do além, vejo o erro com mais clareza do que vós.`,
+    `Não. A forma correta é ${extra.label}. ${extra.rule} A crase tem regras — e as regras existem para ser aprendidas, não ignoradas.`,
+  ]); }
+
+  /* ── Fim das questões ── */
+  const QS_DONE = [
+    `As questões desta fase estão encerradas. Erraram o que erraram, acertaram o que acertaram — a vida é assim, e a morte também. Agora a parte mais intrigante: revelarei pistas sobre um livro que devereis encontrar na biblioteca. Prestem atenção — não sou dado a repetições.`,
+    `Encerramos as questões desta fase. Agora começa a verdadeira caçada: revelarei, em pistas, a identidade de um livro escondido nas prateleiras. Sejam perspicazes — o óbvio raramente é a resposta.`,
+    `As questões terminaram. O que se segue é o exercício da dedução — competência que os vivos possuem mas raramente utilizam. Revelarei pistas sobre um livro. Prestem atenção em cada detalhe, pois serei deliberadamente vago.`,
+    `Última rodada de questões encerrada. As pistas que darei serão suficientes para quem pensa — e insuficientes para quem não pensa. Vós escolheis em qual categoria se encaixar.`,
+  ];
+
+  /* ── Pistas ── */
+  function hintR() {
+    const ini = pick([`Ouçam com atenção — esta pista não será repetida.`, `Do além, sussurro o seguinte.`, `Prestem atenção ao que revelarei agora.`]);
+    const fim = pick([`Digam-me o título do livro quando o descobrirem.`, `Já sabem o suficiente para tentar. Qual é o título?`, `Reflitam sobre isso. Qual livro estou descrevendo?`]);
+    return `${ini} ${ph.hints[G.hints]} ${fim}`;
+  }
+
+  /* ── Livro errado ── */
+  const WRONG_BOOK = [
+    `"${extra.guess||'?'}" — não é esse. ${G.hints<3?'Há mais pistas a revelar. Aguardem.':'Releiam as pistas com atenção.'}`,
+    `Não. "${extra.guess||'?'}" não é o livro que procuro. ${G.hints<3?'Revelarei mais uma pista.':'As respostas estão nas pistas. Pensem.'}`,
+    `Incorreto. Não é "${extra.guess||'?'}". ${G.hints<3?'Ainda há pistas por vir.':'Releiam com mais cuidado.'}`,
+  ];
+
+  /* ── Livro certo ── */
+  const RIGHT_BOOK = [
+    `Exatamente! O Alienista, de Machado de Assis — meu colega de além. Simão Bacamarte perdeu a razão tentando estudar a razão alheia — ironia digna da melhor literatura. O bilhete com a próxima pista está escondido dentro desse livro, na biblioteca. O próximo desafio aguarda.`,
+    `Correto! Iracema, de José de Alencar — "lábio de mel", a índia que amou Martim e pagou com a vida o preço desse amor. Assim como Marcela me custou doze contos de réis, o amor de Iracema custou tudo. O bilhete está dentro do livro. Preparem-se para o próximo desafio.`,
+    `Muito bem! Dom Casmurro, de Machado de Assis — outro narrador que não é de se fiar, como eu. Bentinho passou a vida tentando reatar as duas pontas da vida, e não tenho certeza se conseguiu. O bilhete está dentro do livro. Quase chegamos ao fim — mas o maior desafio ainda está por vir.`,
+    `Correto! O Cortiço, de Aluísio Azevedo — o Rio de Janeiro que eu fingia não ver da janela de Botafogo. O bilhete está dentro do livro. Os quatro livros foram encontrados. Mas o jogo não terminou — reservei para o final o enigma que exige não apenas memória, mas inteligência.`,
+  ];
+
+  /* ── Revelar livro ── */
+  const REVEAL_BOOK = [
+    `O livro é O Alienista, de Machado de Assis. O bilhete está escondido dentro dele, na biblioteca. Busquem-no — o próximo desafio aguarda.`,
+    `O livro é Iracema, de José de Alencar — a índia cujo nome significa "lábio de mel". O bilhete está dentro do livro. Sigam em frente.`,
+    `O livro é Dom Casmurro, de Machado de Assis. Bentinho, o narrador ciumento, dá nome ao livro com o apelido que os vizinhos lhe puseram. O bilhete está lá dentro.`,
+    `O livro é O Cortiço, de Aluísio Azevedo — a habitação coletiva que eu preferia ignorar. O bilhete está dentro do livro. E agora — o enigma final.`,
+  ];
+
+  /* ── Enigma final ── */
+  const FINAL_ENIGMA = `Quatro livros percorridos, quatro segredos arrancados do silêncio. Mas o jogo ainda não terminou — reservei para o final o enigma que exige não apenas memória, mas inteligência. Cada livro guarda uma resposta. Nas respostas, encontrareis o enigma de 4 letras. Descobri-lo. Escrevam-no num papel — e passem-no por baixo da porta.`;
+
+  /* ── Enigma errado ── */
+  const FINAL_WRONG = [
+    `"${extra.guess||'?'}" — não é essa a palavra. Releiam as quatro perguntas. Cada livro tem uma resposta simples, de uma palavra. Pensem: o alienista tratava de quê? O nome da índia significava o quê? Os olhos de Capitu eram comparados ao quê? E quem seduziu Jerônimo?`,
+    `Não. Observem melhor: quatro perguntas, quatro respostas, cada uma com uma palavra. O enigma está nelas. Não procurem complicar o que é simples.`,
+    `Incorreto. Quatro respostas, quatro palavras. O enigma está nelas — não preciso dizer mais do que isso.`,
+  ];
+
+  /* ── Vitória ── */
+  const VICTORY = `E assim — com inteligência que me orgulha — descobristes a palavra. AMOR. O amor que enlouquece Bacamarte pelo saber, que mata Iracema pelo guerreiro branco, que obceca Bentinho pelos olhos de Capitu, que transforma Jerônimo pela dança de Rita. O amor, meus caros, é o motor de toda grande literatura — e talvez de toda grande loucura. Parabéns. Podeis abrir a porta.`;
+
+  const MAP = {
+    intro: INTRO,
+    phase_intro: PHASE_INTRO[pi],
+    q_intro: pick(Q_INTRO),
+    correct: correctR(),
+    wrong: wrongR(),
+    qs_done: QS_DONE[pi],
+    hint: hintR(),
+    wrong_book: pick(WRONG_BOOK),
+    right_book: RIGHT_BOOK[pi],
+    reveal_book: REVEAL_BOOK[pi],
+    final_enigma_intro: FINAL_ENIGMA,
+    final_wrong: pick(FINAL_WRONG),
+    victory: VICTORY,
   };
 
-  const sys = `Você é Brás Cubas, o "defunto autor" do romance Memórias Póstumas de Brás Cubas, de Machado de Assis.
-
-PERSONALIDADE:
-— Irônico, filosófico, elegante, levemente egocêntrico.
-— Fala do além-túmulo com distância e humor melancólico.
-— Usa linguagem culta do século XIX, com breves digressões filosóficas.
-— Conhece os capítulos I a XVII: óbito, viagem ao Sumidouro, Marcela, partida para Coimbra.
-— NUNCA quebra o personagem. NUNCA usa markdown, asteriscos, emojis nem formatação especial.
-— Ao se dirigir aos alunos, use "vocês" ou "vós". Respostas de 2 a 6 frases.
-
-CONTEXTO:
-— Guia alunos do Ensino Médio num escape room literário.
-— Eles respondem questões de crase e descobrem livros para achar na biblioteca.
-— Fase atual: ${G.phase+1} de 4. Conteúdo: ${ph.strip}.
-— O TÍTULO DO LIVRO DESTA FASE É SECRETO — nunca o revele antes do momento correto.
-
-TAREFA:
-${instructions[situation]}`;
-
-  try {
-    const r = await fetch('https://api.anthropic.com/v1/messages', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:800,
-        system: sys,
-        messages:[{role:'user',content:'Prossiga.'}]
-      })
-    });
-    const d = await r.json();
-    return d.content?.[0]?.text || 'Uma interferência entre os mundos…';
-  } catch(e) {
-    return 'Perdoe-me… o além apresenta dificuldades técnicas. Aguarde.';
-  }
+  // Simula pequeno delay para manter o ritmo do jogo
+  return new Promise(resolve =>
+    setTimeout(() => resolve(MAP[situation] || 'Brás Cubas pondera em silêncio.'),
+    500 + Math.random()*700)
+  );
 }
+
 
 /* ═══════════════════════════════════════════════
    FLUXO DO JOGO
