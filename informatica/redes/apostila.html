@@ -236,7 +236,7 @@ footer a{color:var(--p);text-decoration:none;font-weight:500}
     <a class="nl" href="#enviar">📤 Enviar</a>
   </div>
   <div class="nav-right">
-    <span id="prog-txt">0 / 30 respondidas</span>
+    <span id="prog-txt">0 / 15 respondidas</span>
     <div id="prog-bar"><div id="prog-fill"></div></div>
     <button class="btn-sm btn-outline" onclick="window.print()">🖨 Imprimir</button>
   </div>
@@ -659,196 +659,135 @@ footer a{color:var(--p);text-decoration:none;font-weight:500}
 
 <!-- ══ QUESTÕES ══ -->
 <section class="page-sec" id="questoes">
-  <div class="sec-hdr animate-in">
-    <div class="sec-eyebrow">📝 Questões</div>
-    <h2 class="sec-title">30 Questões Situacionais</h2>
-    <p class="sec-desc">Fechadas · Abertas · Discursivas · Fácil · Médio · Difícil</p>
-  </div>
+
 
   <!-- FÁCIL -->
   <div class="qdiff animate-in">
-    <div class="qdiff-hdr e"><div class="qdiff-ico e">F</div><div>
-      <div class="qdiff-label e">Nível Fácil</div>
-      <div class="qdiff-sub e">QUESTÕES 01–10 · IDENTIFICAÇÃO E CONCEITOS BÁSICOS</div></div></div>
+    <div class="qdiff-hdr e"><div class="qico e">F</div>
+    <div><div class="qtitle e">Nível Fácil</div>
+    <div class="qmeta">QUESTÕES 01–05 · CONCEITOS FUNDAMENTAIS EM CONTEXTO</div></div></div>
 
     <div class="qc fc"><div class="qh"><span class="qnum">01</span><span class="qbadge fc">Fechada</span></div>
     <div class="qt">João trabalha em casa e precisa acessar os sistemas da empresa com segurança e criptografia, como se estivesse no escritório. Qual tecnologia resolve?</div>
-    <div class="opts"><label class="opt"><input type="radio" name="q1" value="a" onchange="upd()"> a) DNS — traduz nomes de domínio em endereços IP</label>
-    <label class="opt"><input type="radio" name="q1" value="b" onchange="upd()"> b) DHCP — distribui endereços IP automaticamente</label>
-    <label class="opt"><input type="radio" name="q1" value="c" onchange="upd()"> c) VPN — cria túnel criptografado pela internet</label>
-    <label class="opt"><input type="radio" name="q1" value="d" onchange="upd()"> d) Gateway — conecta redes distintas</label></div></div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q1" value="a" onchange="upd()"> a) DNS — traduz nomes de domínio em endereços IP</label>
+      <label class="opt"><input type="radio" name="q1" value="b" onchange="upd()"> b) DHCP — distribui endereços IP automaticamente</label>
+      <label class="opt"><input type="radio" name="q1" value="c" onchange="upd()"> c) VPN — cria túnel criptografado pela internet</label>
+      <label class="opt"><input type="radio" name="q1" value="d" onchange="upd()"> d) Gateway — conecta redes distintas</label>
+    </div></div>
 
-    <div class="qc ab"><div class="qh"><span class="qnum">02</span><span class="qbadge ab">Aberta</span></div>
-    <div class="qt">Maria liga um computador novo na rede da escola. Sem configurar nada, ele já recebe IP, máscara, gateway e DNS automaticamente. Qual serviço é responsável?</div>
-    <input class="ans-in" id="ans2" type="text" placeholder="Escreva sua resposta aqui…" oninput="upd()"></div>
-
-    <div class="qc fc"><div class="qh"><span class="qnum">03</span><span class="qbadge fc">Fechada</span></div>
+    <div class="qc fc"><div class="qh"><span class="qnum">02</span><span class="qbadge fc">Fechada</span></div>
     <div class="qt">O computador de Pedro exibe o endereço IP <strong>192.168.1.20</strong>. Esse endereço é:</div>
-    <div class="opts"><label class="opt"><input type="radio" name="q3" value="a" onchange="upd()"> a) IP público, acessível diretamente por qualquer dispositivo na internet</label>
-    <label class="opt"><input type="radio" name="q3" value="b" onchange="upd()"> b) IP privado, válido apenas dentro da rede local</label>
-    <label class="opt"><input type="radio" name="q3" value="c" onchange="upd()"> c) Endereço IPv6 em formato simplificado</label>
-    <label class="opt"><input type="radio" name="q3" value="d" onchange="upd()"> d) Endereço reservado exclusivamente para servidores DNS</label></div></div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q2" value="a" onchange="upd()"> a) IP público, acessível diretamente por qualquer dispositivo na internet</label>
+      <label class="opt"><input type="radio" name="q2" value="b" onchange="upd()"> b) IP privado, válido apenas dentro da rede local</label>
+      <label class="opt"><input type="radio" name="q2" value="c" onchange="upd()"> c) Endereço IPv6 em formato simplificado</label>
+      <label class="opt"><input type="radio" name="q2" value="d" onchange="upd()"> d) Endereço reservado exclusivamente para servidores DNS</label>
+    </div></div>
 
-    <div class="qc ab"><div class="qh"><span class="qnum">04</span><span class="qbadge ab">Aberta</span></div>
+    <div class="qc ab"><div class="qh"><span class="qnum">03</span><span class="qbadge ab">Aberta</span></div>
     <div class="qt">Ana digita <strong>www.youtube.com</strong> no navegador. O computador precisa encontrar o IP correspondente para se conectar. Qual serviço faz essa tradução de nome para IP?</div>
-    <input class="ans-in" id="ans4" type="text" placeholder="Escreva sua resposta aqui…" oninput="upd()"></div>
+    <input class="ans-in" id="ans3" type="text" placeholder="Escreva sua resposta aqui…" oninput="upd()"></div>
+
+    <div class="qc fc"><div class="qh"><span class="qnum">04</span><span class="qbadge fc">Fechada</span></div>
+    <div class="qt">Carlos não acessa a internet, mas acessa normalmente outros computadores da mesma rede. IP, máscara e DNS estão corretos. Qual configuração deve verificar primeiro?</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q4" value="a" onchange="upd()"> a) Endereço DNS</label>
+      <label class="opt"><input type="radio" name="q4" value="b" onchange="upd()"> b) Gateway padrão</label>
+      <label class="opt"><input type="radio" name="q4" value="c" onchange="upd()"> c) Servidor DHCP</label>
+      <label class="opt"><input type="radio" name="q4" value="d" onchange="upd()"> d) Endereço IPv6</label>
+    </div></div>
 
     <div class="qc fc"><div class="qh"><span class="qnum">05</span><span class="qbadge fc">Fechada</span></div>
-    <div class="qt">A empresa Alfa conectou todos os computadores do escritório em uma rede, permitindo compartilhamento de arquivos e impressoras. Todos estão no mesmo prédio. Que tipo de rede é essa?</div>
-    <div class="opts"><label class="opt"><input type="radio" name="q5" value="a" onchange="upd()"> a) WAN — Wide Area Network</label>
-    <label class="opt"><input type="radio" name="q5" value="b" onchange="upd()"> b) VPN — rede privada virtual</label>
-    <label class="opt"><input type="radio" name="q5" value="c" onchange="upd()"> c) LAN — Local Area Network</label>
-    <label class="opt"><input type="radio" name="q5" value="d" onchange="upd()"> d) MAN — Metropolitan Area Network</label></div></div>
-
-    <div class="qc ab"><div class="qh"><span class="qnum">06</span><span class="qbadge ab">Aberta</span></div>
-    <div class="qt">Analise: <strong>2001:0db8:85a3:0000:0000:8a2e:0370:7334</strong>. A qual versão do protocolo IP pertence? Cite uma característica que permitiu a identificação.</div>
-    <input class="ans-in" id="ans6" type="text" placeholder="Escreva sua resposta aqui…" oninput="upd()"></div>
-
-    <div class="qc fc"><div class="qh"><span class="qnum">07</span><span class="qbadge fc">Fechada</span></div>
-    <div class="qt">Carlos não acessa a internet, mas acessa normalmente outros computadores da mesma rede. IP, máscara e DNS estão corretos. Qual configuração deve verificar primeiro?</div>
-    <div class="opts"><label class="opt"><input type="radio" name="q7" value="a" onchange="upd()"> a) Endereço DNS</label>
-    <label class="opt"><input type="radio" name="q7" value="b" onchange="upd()"> b) Gateway padrão</label>
-    <label class="opt"><input type="radio" name="q7" value="c" onchange="upd()"> c) Servidor DHCP</label>
-    <label class="opt"><input type="radio" name="q7" value="d" onchange="upd()"> d) Endereço IPv6</label></div></div>
-
-    <div class="qc ab"><div class="qh"><span class="qnum">08</span><span class="qbadge ab">Aberta</span></div>
-    <div class="qt">Quatro dispositivos conectados ao roteador recebem IPs automáticos na faixa <strong>192.168.0.x</strong>. Qual componente distribui esses endereços? Eles são públicos ou privados?</div>
-    <input class="ans-in" id="ans8" type="text" placeholder="Escreva sua resposta aqui…" oninput="upd()"></div>
-
-    <div class="qc fc"><div class="qh"><span class="qnum">09</span><span class="qbadge fc">Fechada</span></div>
     <div class="qt">Com o crescimento de smartphones, câmeras e geladeiras conectadas, qual afirmação sobre o IPv6 está CORRETA?</div>
-    <div class="opts"><label class="opt"><input type="radio" name="q9" value="a" onchange="upd()"> a) Usa endereços de 32 bits, igual ao IPv4, porém com novo formato</label>
-    <label class="opt"><input type="radio" name="q9" value="b" onchange="upd()"> b) Foi criado antes do IPv4, na década de 1970</label>
-    <label class="opt"><input type="radio" name="q9" value="c" onchange="upd()"> c) Permite uma quantidade vastamente maior de endereços que o IPv4</label>
-    <label class="opt"><input type="radio" name="q9" value="d" onchange="upd()"> d) Não é compatível com roteadores modernos</label></div></div>
-
-    <div class="qc ab"><div class="qh"><span class="qnum">10</span><span class="qbadge ab">Aberta</span></div>
-    <div class="qt">Você está em um café. Seu celular recebe <strong>10.0.0.8</strong> e o notebook do colega <strong>10.0.0.9</strong>. Quando alguém de fora tenta descobrir o IP de vocês, qual endereço aparece? Por quê?</div>
-    <input class="ans-in" id="ans10" type="text" placeholder="Escreva sua resposta aqui…" oninput="upd()"></div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q5" value="a" onchange="upd()"> a) Usa endereços de 32 bits, igual ao IPv4, porém com novo formato</label>
+      <label class="opt"><input type="radio" name="q5" value="b" onchange="upd()"> b) Foi criado antes do IPv4, na década de 1970</label>
+      <label class="opt"><input type="radio" name="q5" value="c" onchange="upd()"> c) Permite uma quantidade vastamente maior de endereços que o IPv4</label>
+      <label class="opt"><input type="radio" name="q5" value="d" onchange="upd()"> d) Não é compatível com roteadores modernos</label>
+    </div></div>
   </div>
 
   <!-- MÉDIO -->
   <div class="qdiff animate-in">
-    <div class="qdiff-hdr m"><div class="qdiff-ico m">M</div><div>
-      <div class="qdiff-label m">Nível Médio</div>
-      <div class="qdiff-sub m">QUESTÕES 11–20 · ANÁLISE E APLICAÇÃO</div></div></div>
+    <div class="qdiff-hdr m"><div class="qico m">M</div>
+    <div><div class="qtitle m">Nível Médio</div>
+    <div class="qmeta">QUESTÕES 06–10 · ANÁLISE E APLICAÇÃO</div></div></div>
 
-    <div class="qc fc"><div class="qh"><span class="qnum">11</span><span class="qbadge fc">Fechada</span></div>
+    <div class="qc fc"><div class="qh"><span class="qnum">06</span><span class="qbadge fc">Fechada</span></div>
     <div class="qt">Uma empresa com 200 funcionários quer que cada computador receba <strong>sempre o mesmo IP automaticamente</strong>, sem configuração manual. Qual recurso do DHCP resolve?</div>
-    <div class="opts"><label class="opt"><input type="radio" name="q11" value="a" onchange="upd()"> a) DNS reverso</label>
-    <label class="opt"><input type="radio" name="q11" value="b" onchange="upd()"> b) Reserva de IP (DHCP Reservation) — associa IP fixo ao MAC address</label>
-    <label class="opt"><input type="radio" name="q11" value="c" onchange="upd()"> c) NAT</label>
-    <label class="opt"><input type="radio" name="q11" value="d" onchange="upd()"> d) Split tunneling</label></div></div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q6" value="a" onchange="upd()"> a) DNS reverso</label>
+      <label class="opt"><input type="radio" name="q6" value="b" onchange="upd()"> b) Reserva de IP (DHCP Reservation) — associa IP fixo ao MAC address</label>
+      <label class="opt"><input type="radio" name="q6" value="c" onchange="upd()"> c) NAT</label>
+      <label class="opt"><input type="radio" name="q6" value="d" onchange="upd()"> d) Split tunneling</label>
+    </div></div>
 
-    <div class="qc di"><div class="qh"><span class="qnum">12</span><span class="qbadge di">Discursiva</span></div>
-    <div class="qt">Uma escola instalou uma rede com <strong>80 computadores</strong>. O técnico decide entre IPs manuais ou DHCP. Explique vantagens e desvantagens de cada abordagem e indique qual é mais adequada.</div>
-    <div class="dhint">💡 Considere manutenção, erros humanos, escalabilidade e rotatividade de dispositivos.</div>
-    <textarea class="ans-ta" id="ans12" placeholder="Desenvolva sua resposta aqui…" oninput="upd()"></textarea></div>
-
-    <div class="qc fc"><div class="qh"><span class="qnum">13</span><span class="qbadge fc">Fechada</span></div>
+    <div class="qc fc"><div class="qh"><span class="qnum">07</span><span class="qbadge fc">Fechada</span></div>
     <div class="qt">Um sistema de internet banking precisa garantir que <strong>nenhum pacote seja perdido</strong> e que os dados cheguem na ordem correta. Qual protocolo é obrigatório?</div>
-    <div class="opts"><label class="opt"><input type="radio" name="q13" value="a" onchange="upd()"> a) UDP — mais rápido, sem controle de erros</label>
-    <label class="opt"><input type="radio" name="q13" value="b" onchange="upd()"> b) TCP — garante entrega, ordem e integridade</label>
-    <label class="opt"><input type="radio" name="q13" value="c" onchange="upd()"> c) DNS — protocolo de resolução de nomes</label>
-    <label class="opt"><input type="radio" name="q13" value="d" onchange="upd()"> d) ICMP — protocolo de mensagens de controle</label></div></div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q7" value="a" onchange="upd()"> a) UDP — mais rápido, sem controle de erros</label>
+      <label class="opt"><input type="radio" name="q7" value="b" onchange="upd()"> b) TCP — garante entrega, ordem e integridade</label>
+      <label class="opt"><input type="radio" name="q7" value="c" onchange="upd()"> c) DNS — protocolo de resolução de nomes</label>
+      <label class="opt"><input type="radio" name="q7" value="d" onchange="upd()"> d) ICMP — protocolo de mensagens de controle</label>
+    </div></div>
 
-    <div class="qc ab"><div class="qh"><span class="qnum">14</span><span class="qbadge ab">Aberta</span></div>
-    <div class="qt">Ana recebe <em>"Servidor DNS não encontrado"</em>, mas o site abre ao digitar o IP diretamente. O que está com problema? Como confirmar esse diagnóstico?</div>
-    <input class="ans-in" id="ans14" type="text" placeholder="Escreva sua resposta aqui…" oninput="upd()"></div>
-
-    <div class="qc fc"><div class="qh"><span class="qnum">15</span><span class="qbadge fc">Fechada</span></div>
+    <div class="qc fc"><div class="qh"><span class="qnum">08</span><span class="qbadge fc">Fechada</span></div>
     <div class="qt">Quando um funcionário acessa a internet, o roteador substitui o IP privado dele pelo IP público da empresa. Esse mecanismo chama-se:</div>
-    <div class="opts"><label class="opt"><input type="radio" name="q15" value="a" onchange="upd()"> a) DNS</label>
-    <label class="opt"><input type="radio" name="q15" value="b" onchange="upd()"> b) DHCP</label>
-    <label class="opt"><input type="radio" name="q15" value="c" onchange="upd()"> c) NAT — Network Address Translation</label>
-    <label class="opt"><input type="radio" name="q15" value="d" onchange="upd()"> d) VPN</label></div></div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q8" value="a" onchange="upd()"> a) DNS</label>
+      <label class="opt"><input type="radio" name="q8" value="b" onchange="upd()"> b) DHCP</label>
+      <label class="opt"><input type="radio" name="q8" value="c" onchange="upd()"> c) NAT — Network Address Translation</label>
+      <label class="opt"><input type="radio" name="q8" value="d" onchange="upd()"> d) VPN</label>
+    </div></div>
 
-    <div class="qc di"><div class="qh"><span class="qnum">16</span><span class="qbadge di">Discursiva</span></div>
-    <div class="qt">Um usuário reclama que a internet "trava" apenas ao assistir vídeos em HD. Navegar em sites e enviar e-mails funciona normalmente. Considerando TCP e UDP, explique por que isso ocorre e qual protocolo é usado para streaming.</div>
-    <div class="dhint">💡 Pense nas prioridades — velocidade vs. confiabilidade.</div>
-    <textarea class="ans-ta" id="ans16" placeholder="Desenvolva sua resposta aqui…" oninput="upd()"></textarea></div>
-
-    <div class="qc ab"><div class="qh"><span class="qnum">17</span><span class="qbadge ab">Aberta</span></div>
+    <div class="qc ab"><div class="qh"><span class="qnum">09</span><span class="qbadge ab">Aberta</span></div>
     <div class="qt">Três computadores: <strong>A</strong> (192.168.1.10/24), <strong>B</strong> (192.168.1.50/24), <strong>C</strong> (192.168.2.10/24). Quais se comunicam diretamente sem gateway? C precisa do gateway para falar com as demais? Justifique.</div>
-    <input class="ans-in" id="ans17" type="text" placeholder="Escreva sua resposta aqui…" oninput="upd()"></div>
+    <input class="ans-in" id="ans9" type="text" placeholder="Escreva sua resposta aqui…" oninput="upd()"></div>
 
-    <div class="qc fc"><div class="qh"><span class="qnum">18</span><span class="qbadge fc">Fechada</span></div>
-    <div class="qt">Uma empresa com filiais em três cidades precisa interligá-las com segurança, como uma única rede, sem links físicos dedicados. Qual solução é mais adequada?</div>
-    <div class="opts"><label class="opt"><input type="radio" name="q18" value="a" onchange="upd()"> a) Expandir a LAN de cada filial com mais switches</label>
-    <label class="opt"><input type="radio" name="q18" value="b" onchange="upd()"> b) Criar uma VPN site-to-site entre as três unidades</label>
-    <label class="opt"><input type="radio" name="q18" value="c" onchange="upd()"> c) Configurar servidores DNS em cada filial</label>
-    <label class="opt"><input type="radio" name="q18" value="d" onchange="upd()"> d) Aumentar o número de IPs públicos contratados</label></div></div>
-
-    <div class="qc ab"><div class="qh"><span class="qnum">19</span><span class="qbadge ab">Aberta</span></div>
+    <div class="qc ab"><div class="qh"><span class="qnum">10</span><span class="qbadge ab">Aberta</span></div>
     <div class="qt">O servidor DHCP da empresa foi desligado. Um novo computador é ligado e tenta obter IP automaticamente. O que acontece? Ele terá acesso à rede?</div>
-    <input class="ans-in" id="ans19" type="text" placeholder="Escreva sua resposta aqui…" oninput="upd()"></div>
-
-    <div class="qc fc"><div class="qh"><span class="qnum">20</span><span class="qbadge fc">Fechada</span></div>
-    <div class="qt">Qual das opções abaixo NÃO é uma faixa de IP privado?</div>
-    <div class="opts"><label class="opt"><input type="radio" name="q20" value="a" onchange="upd()"> a) 10.0.0.0 – 10.255.255.255</label>
-    <label class="opt"><input type="radio" name="q20" value="b" onchange="upd()"> b) 172.16.0.0 – 172.31.255.255</label>
-    <label class="opt"><input type="radio" name="q20" value="c" onchange="upd()"> c) 192.168.0.0 – 192.168.255.255</label>
-    <label class="opt"><input type="radio" name="q20" value="d" onchange="upd()"> d) 200.200.100.0 – 200.200.100.255</label></div></div>
+    <input class="ans-in" id="ans10" type="text" placeholder="Escreva sua resposta aqui…" oninput="upd()"></div>
   </div>
 
   <!-- DIFÍCIL -->
   <div class="qdiff animate-in">
-    <div class="qdiff-hdr d"><div class="qdiff-ico d">D</div><div>
-      <div class="qdiff-label d">Nível Difícil</div>
-      <div class="qdiff-sub d">QUESTÕES 21–30 · ANÁLISE CRÍTICA E SÍNTESE</div></div></div>
+    <div class="qdiff-hdr d"><div class="qico d">D</div>
+    <div><div class="qtitle d">Nível Difícil</div>
+    <div class="qmeta">QUESTÕES 11–15 · ANÁLISE CRÍTICA E SÍNTESE</div></div></div>
 
-    <div class="qc di"><div class="qh"><span class="qnum">21</span><span class="qbadge di">Discursiva</span></div>
+    <div class="qc di"><div class="qh"><span class="qnum">11</span><span class="qbadge di">Discursiva</span></div>
     <div class="qt">Uma empresa de jogos online precisa escolher protocolo para: <strong>posição dos personagens</strong> (30x/segundo) e <strong>chat de voz em tempo real</strong>. Analise TCP e UDP para cada tipo de dado e justifique a melhor escolha.</div>
     <div class="dhint">💡 Considere latência e tolerância à perda de pacotes.</div>
-    <textarea class="ans-ta" id="ans21" style="min-height:100px" placeholder="Desenvolva sua resposta aqui…" oninput="upd()"></textarea></div>
+    <textarea class="ans-ta" id="ans11" style="min-height:90px" placeholder="Desenvolva sua resposta aqui…" oninput="upd()"></textarea></div>
 
-    <div class="qc ab"><div class="qh"><span class="qnum">22</span><span class="qbadge ab">Aberta</span></div>
-    <div class="qt">Um servidor DNS interno resolve apenas nomes corporativos. Para domínios externos (google.com), repassa automaticamente ao DNS do provedor. Como se chama esse comportamento? Explique brevemente.</div>
-    <input class="ans-in" id="ans22" type="text" placeholder="Escreva sua resposta aqui…" oninput="upd()"></div>
-
-    <div class="qc fc"><div class="qh"><span class="qnum">23</span><span class="qbadge fc">Fechada</span></div>
+    <div class="qc fc"><div class="qh"><span class="qnum">12</span><span class="qbadge fc">Fechada</span></div>
     <div class="qt">Um administrador quer bloquear Instagram e TikTok pelo nome do domínio (não pelo IP, que muda frequentemente). Qual serviço configurar?</div>
-    <div class="opts"><label class="opt"><input type="radio" name="q23" value="a" onchange="upd()"> a) DHCP</label>
-    <label class="opt"><input type="radio" name="q23" value="b" onchange="upd()"> b) Gateway</label>
-    <label class="opt"><input type="radio" name="q23" value="c" onchange="upd()"> c) DNS — configurado para não resolver os domínios bloqueados</label>
-    <label class="opt"><input type="radio" name="q23" value="d" onchange="upd()"> d) NAT</label></div></div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q12" value="a" onchange="upd()"> a) DHCP</label>
+      <label class="opt"><input type="radio" name="q12" value="b" onchange="upd()"> b) Gateway</label>
+      <label class="opt"><input type="radio" name="q12" value="c" onchange="upd()"> c) DNS — configurado para não resolver os domínios bloqueados</label>
+      <label class="opt"><input type="radio" name="q12" value="d" onchange="upd()"> d) NAT</label>
+    </div></div>
 
-    <div class="qc di"><div class="qh"><span class="qnum">24</span><span class="qbadge di">Discursiva</span></div>
+    <div class="qc di"><div class="qh"><span class="qnum">13</span><span class="qbadge di">Discursiva</span></div>
     <div class="qt">Todos os computadores têm IP, máscara, DNS e gateway corretos, mas <strong>nenhum acessa a internet</strong>. A LAN funciona normalmente. Descreva passo a passo o diagnóstico que você faria.</div>
     <div class="dhint">💡 Se a LAN funciona mas internet não, onde está a fronteira?</div>
-    <textarea class="ans-ta" id="ans24" style="min-height:100px" placeholder="Descreva seu diagnóstico passo a passo…" oninput="upd()"></textarea></div>
+    <textarea class="ans-ta" id="ans13" style="min-height:90px" placeholder="Descreva seu diagnóstico passo a passo…" oninput="upd()"></textarea></div>
 
-    <div class="qc ab"><div class="qh"><span class="qnum">25</span><span class="qbadge ab">Aberta</span></div>
-    <div class="qt">Compare IPv4 e IPv6: <strong>(a)</strong> quantidade máxima de endereços, <strong>(b)</strong> tamanho em bits, <strong>(c)</strong> uma vantagem nativa do IPv6 que o IPv4 não possui.</div>
-    <input class="ans-in" id="ans25" type="text" placeholder="Escreva sua resposta aqui…" oninput="upd()"></div>
-
-    <div class="qc fc"><div class="qh"><span class="qnum">26</span><span class="qbadge fc">Fechada</span></div>
+    <div class="qc fc"><div class="qh"><span class="qnum">14</span><span class="qbadge fc">Fechada</span></div>
     <div class="qt">Um funcionário conectado à VPN com <strong>split tunneling DESATIVADO</strong> acessa um portal de notícias. Como o tráfego é roteado?</div>
-    <div class="opts"><label class="opt"><input type="radio" name="q26" value="a" onchange="upd()"> a) O acesso vai direto para a internet, sem passar pela empresa</label>
-    <label class="opt"><input type="radio" name="q26" value="b" onchange="upd()"> b) Todo o tráfego passa pela rede da empresa, incluindo o site de notícias</label>
-    <label class="opt"><input type="radio" name="q26" value="c" onchange="upd()"> c) Apenas sites externos são bloqueados pelo firewall</label>
-    <label class="opt"><input type="radio" name="q26" value="d" onchange="upd()"> d) O DNS redireciona para uma cópia local do site</label></div></div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q14" value="a" onchange="upd()"> a) O acesso vai direto para a internet, sem passar pela empresa</label>
+      <label class="opt"><input type="radio" name="q14" value="b" onchange="upd()"> b) Todo o tráfego passa pela rede da empresa, incluindo o site de notícias</label>
+      <label class="opt"><input type="radio" name="q14" value="c" onchange="upd()"> c) Apenas sites externos são bloqueados pelo firewall</label>
+      <label class="opt"><input type="radio" name="q14" value="d" onchange="upd()"> d) O DNS redireciona para uma cópia local do site</label>
+    </div></div>
 
-    <div class="qc di"><div class="qh"><span class="qnum">27</span><span class="qbadge di">Discursiva</span></div>
+    <div class="qc di"><div class="qh"><span class="qnum">15</span><span class="qbadge di">Discursiva</span></div>
     <div class="qt">Uma empresa tem <strong>1 IP público</strong> e <strong>40 computadores</strong> que acessam a internet simultaneamente. O dono pergunta: <em>"Como é possível com um único IP?"</em> Escreva a explicação de forma clara e didática.</div>
     <div class="dhint">💡 Explique para alguém sem conhecimento técnico profundo.</div>
-    <textarea class="ans-ta" id="ans27" style="min-height:100px" placeholder="Escreva a explicação aqui…" oninput="upd()"></textarea></div>
-
-    <div class="qc ab"><div class="qh"><span class="qnum">28</span><span class="qbadge ab">Aberta</span></div>
-    <div class="qt">Dois clientes acessam o mesmo servidor web (mesmo IP, porta 80) simultaneamente. Como o TCP garante que cada resposta chegue ao cliente correto? O que diferencia as duas conexões?</div>
-    <input class="ans-in" id="ans28" type="text" placeholder="Escreva sua resposta aqui…" oninput="upd()"></div>
-
-    <div class="qc fc"><div class="qh"><span class="qnum">29</span><span class="qbadge fc">Fechada</span></div>
-    <div class="qt">Um técnico configura IP, máscara e gateway manualmente, mas esquece o <strong>DNS</strong>. Qual será o sintoma?</div>
-    <div class="opts"><label class="opt"><input type="radio" name="q29" value="a" onchange="upd()"> a) Os computadores não receberão endereço IP</label>
-    <label class="opt"><input type="radio" name="q29" value="b" onchange="upd()"> b) Os computadores perderão a comunicação com a LAN</label>
-    <label class="opt"><input type="radio" name="q29" value="c" onchange="upd()"> c) Os computadores acessarão sites pelo IP, mas não pelo nome de domínio</label>
-    <label class="opt"><input type="radio" name="q29" value="d" onchange="upd()"> d) O gateway será ignorado</label></div></div>
-
-    <div class="qc di"><div class="qh"><span class="qnum">30</span><span class="qbadge di">Discursiva</span></div>
-    <div class="qt">O gerente pergunta: <em>"O IPv4 funciona há décadas. Por que migrar para IPv6?"</em> Elabore uma resposta técnica e convincente abordando escassez de endereços, crescimento IoT e pelo menos <strong>duas vantagens técnicas</strong> do IPv6.</div>
-    <div class="dhint">💡 Combine argumentos técnicos com impacto prático.</div>
-    <textarea class="ans-ta" id="ans30" style="min-height:100px" placeholder="Elabore sua resposta aqui…" oninput="upd()"></textarea></div>
+    <textarea class="ans-ta" id="ans15" style="min-height:90px" placeholder="Escreva a explicação aqui…" oninput="upd()"></textarea></div>
   </div>
 </section>
 
@@ -856,11 +795,7 @@ footer a{color:var(--p);text-decoration:none;font-weight:500}
 
 <!-- ══ ENVIO ══ -->
 <section class="page-sec" id="enviar" style="padding-bottom:80px">
-  <div class="sec-hdr animate-in">
-    <div class="sec-eyebrow">📤 Envio</div>
-    <h2 class="sec-title">Enviar Respostas</h2>
-    <p class="sec-desc">Revise suas respostas e clique em enviar. O professor receberá tudo automaticamente.</p>
-  </div>
+
   <div class="submit-card animate-in" style="max-width:600px;margin:0 auto">
     <div class="sub-title">📊 Resumo das Respostas</div>
     <p class="sub-note">Verifique se respondeu todas as questões antes de enviar.</p>
@@ -881,9 +816,9 @@ footer a{color:var(--p);text-decoration:none;font-weight:500}
 
 <script>
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxKepf4_nyDROjmMq0cNJZzaU5T-u3zqa-3qd9Bxe7AMQAdpjJDzJAP7Xs6Stz5xjLD/exec";
-const FC=[1,3,5,7,9,11,13,15,18,20,23,26,29];
-const AB=[2,4,6,8,10,14,17,19,22,25,28];
-const DI=[12,16,21,24,27,30];
+const FC=[1,2,4,5,6,7,8,12,14];
+const AB=[3,9,10];
+const DI=[11,13,15];
 
 function toggleDetail(id){
   const d=document.getElementById('det-'+id);
@@ -897,12 +832,12 @@ function upd(){
   AB.forEach(n=>{const e=document.getElementById('ans'+n);if(e&&e.value.trim())ab++;});
   DI.forEach(n=>{const e=document.getElementById('ans'+n);if(e&&e.value.trim())di++;});
   const t=fc+ab+di;
-  document.getElementById('ct').textContent=t+'/30';
-  document.getElementById('cf').textContent=fc+'/12';
-  document.getElementById('ca').textContent=ab+'/11';
-  document.getElementById('cd').textContent=di+'/7';
-  document.getElementById('prog-fill').style.width=(t/30*100)+'%';
-  document.getElementById('prog-txt').textContent=t+' / 30 respondidas';
+  document.getElementById('ct').textContent=t+'/15';
+  document.getElementById('cf').textContent=fc+'/9';
+  document.getElementById('ca').textContent=ab+'/3';
+  document.getElementById('cd').textContent=di+'/3';
+  document.getElementById('prog-fill').style.width=(t/15*100)+'%';
+  document.getElementById('prog-txt').textContent=t+' / 15 respondidas';
 }
 function collect(){
   const a={};
@@ -919,9 +854,7 @@ async function send(){
   const btn=document.getElementById('bsend');
   btn.disabled=true; msg('loading','⏳ Enviando respostas…');
   try{
-    await fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({nome,turma,data,...collect()})});
+    await fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({nome,turma,data,...collect()})});
     msg('ok','✅ Respostas enviadas com sucesso! O professor receberá na planilha.');
   }catch(e){msg('err','❌ Erro ao enviar. Tente novamente.');btn.disabled=false;}
 }
