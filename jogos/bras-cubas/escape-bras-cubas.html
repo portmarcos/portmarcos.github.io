@@ -640,9 +640,9 @@ function startPenalty() {
 
 const PHASES = [
   {
-    book: 'O Alienista',
-    aliases: ['alienista','o alienista','alienista de machado'],
-    strip: '📜 Capítulos I–II (Óbito do Autor)',
+    book: 'Triste Fim de Policarpo Quaresma',
+    aliases: ['triste fim de policarpo quaresma','policarpo quaresma','triste fim','quaresma','triste fim policarpo quaresma'],
+    strip: '📜 Lima Barreto · Triste Fim de Policarpo Quaresma',
     qs: [
       { b:'Brás Cubas escrevia', a:'maneira dos defuntos — com ironia e distância.', crase:true,
         label:'À MANEIRA', rule:'"à maneira": prep. A + artigo A feminino. Crase obrigatória.' },
@@ -652,9 +652,9 @@ const PHASES = [
         label:'À MELANCOLIA', rule:'"à melancolia": prep. A + artigo A feminino. Crase obrigatória.' }
     ],
     hints: [
-      'Eu, que me dei ao luxo de morrer antes de narrar, tenho um colega de ofício — não escritor, mas médico — que também perdeu a razão em nome da ciência. Ele fundou um estabelecimento em Itaguaí e chamava-o de Casa Verde.',
-      'Esse doutor internou a cidade inteira: os sábios, os tolos, os ricaços, os pobres — e no fim, internou a si próprio. Uma obra de Machado de Assis conta essa história.',
-      'O livro leva o nome desse médico e de sua função. Um médico de loucos. Procurem esse título nas prateleiras da biblioteca.'
+      'Há um personagem na literatura brasileira que amava tanto a pátria que quase chegou à loucura por ela. Enviou ao Parlamento um abaixo-assinado inteiro escrito em tupi-guarani — a língua que acreditava ser a verdadeira língua dos brasileiros. Seus contemporâneos o chamavam de excêntrico; eu o chamaria de ingênuo.',
+      'Esse personagem era um major do Arsenal de Guerra do Rio de Janeiro. Após a aventura linguística, tentou reformar uma fazenda no interior — e também fracassou. O escritor que o criou não era Machado de Assis. Vivia nos subúrbios cariocas e escrevia com a tinta da injustiça social.',
+      'O título do livro anuncia, sem piedade, o destino do protagonista. São três palavras: a primeira descreve como foi esse fim, a segunda é uma palavra muito curta, e a terceira é o nome completo do personagem — um prenome e um sobrenome. Procurem esse título nas prateleiras.'
     ]
   },
   {
@@ -802,7 +802,7 @@ function bras(situation, extra={}) {
 
   /* ── Intro de cada fase ── */
   const PHASE_INTRO = [
-    `Iniciemos pelo começo — ou pelo fim, que no meu caso é a mesma coisa. Morri numa bela manhã de novembro e tive o requinte de escrever sobre isso com alguma ironia. Esses primeiros capítulos falam do óbito e do que ficou para trás: uma vida medíocre embelezada pela vaidade. Testem agora os vossos conhecimentos de crase — são questões, e o livro misterioso aguarda nas prateleiras.`,
+    `Da janela do além, observo os patriotas com uma mistura de curiosidade e desdém. Eu dediquei minha existência à vaidade pessoal e mal me lembrava da pátria em dias de chuva. Mas há um personagem que a amou com uma dedicação que eu nunca fui capaz de sentir — e esse amor o destruiu. Esta fase testa os vossos conhecimentos de crase. As questões virão, e depois revelarei pistas sobre esse homem singular que acreditou no Brasil mais do que o Brasil merecia.`,
     `Ah, Marcela! Amei-a durante quinze meses e despensei por ela doze contos de réis — não incluídos os jantares e as flores. Que mestre fui eu na arte de me arruinar por uma mulher bela e indiferente. Mas deixemos a saudade de lado. As questões de crase aguardam, e nas pistas que revelarei depois encontrareis o caminho para outro grande amor da literatura brasileira.`,
     `Meu pai decidiu que eu seria padre. Eu decidi que não. Partimos para Coimbra num acordo tácito entre a vontade paterna e a minha resignação momentânea. Coimbra ensinou-me pouco de teologia e muito de vida. As questões de crase virão, e depois darei pistas sobre um narrador que, assim como eu, tentou reconstruir o passado com palavras — e não tem certeza se conseguiu.`,
     `Chegamos ao último desafio. Da janela de Botafogo, eu via o mar e fingia não ver a miséria. Era um privilégio de classe que eu exercia com elegância. As pistas desta fase levarão a um escritor que enxergou o que eu preferia ignorar — e escreveu sobre isso com crueza que me constrange até hoje.`,
@@ -857,7 +857,7 @@ function bras(situation, extra={}) {
 
   /* ── Livro certo ── */
   const RIGHT_BOOK = [
-    `Exatamente! O Alienista, de Machado de Assis — meu colega de além. Simão Bacamarte perdeu a razão tentando estudar a razão alheia — ironia digna da melhor literatura. O bilhete com a próxima pista está escondido dentro desse livro, na biblioteca. O próximo desafio aguarda.`,
+    `Exatamente! Triste Fim de Policarpo Quaresma, de Lima Barreto. Quaresma amou a pátria com uma intensidade que o levou ao hospício e ao pelotão de fuzilamento — um amor tão puro e ingênuo que o próprio Brasil não soube o que fazer com ele. O bilhete com a próxima pista está escondido dentro desse livro, na biblioteca. O próximo desafio aguarda.`,
     `Correto! Iracema, de José de Alencar — "lábio de mel", a índia que amou Martim e pagou com a vida o preço desse amor. Assim como Marcela me custou doze contos de réis, o amor de Iracema custou tudo. O bilhete está dentro do livro. Preparem-se para o próximo desafio.`,
     `Muito bem! Dom Casmurro, de Machado de Assis — outro narrador que não é de se fiar, como eu. Bentinho passou a vida tentando reatar as duas pontas da vida, e não tenho certeza se conseguiu. O bilhete está dentro do livro. Quase chegamos ao fim — mas o maior desafio ainda está por vir.`,
     `Correto! O Cortiço, de Aluísio Azevedo — o Rio de Janeiro que eu fingia não ver da janela de Botafogo. O bilhete está dentro do livro. Os quatro livros foram encontrados. Mas o jogo não terminou — reservei para o final o enigma que exige não apenas memória, mas inteligência.`,
@@ -865,7 +865,7 @@ function bras(situation, extra={}) {
 
   /* ── Revelar livro ── */
   const REVEAL_BOOK = [
-    `O livro é O Alienista, de Machado de Assis. O bilhete está escondido dentro dele, na biblioteca. Busquem-no — o próximo desafio aguarda.`,
+    `O livro é Triste Fim de Policarpo Quaresma, de Lima Barreto — o major que amou o Brasil com tanta paixão que o Brasil o matou por isso. O bilhete está escondido dentro do livro, na biblioteca. Busquem-no — o próximo desafio aguarda.`,
     `O livro é Iracema, de José de Alencar — a índia cujo nome significa "lábio de mel". O bilhete está dentro do livro. Sigam em frente.`,
     `O livro é Dom Casmurro, de Machado de Assis. Bentinho, o narrador ciumento, dá nome ao livro com o apelido que os vizinhos lhe puseram. O bilhete está lá dentro.`,
     `O livro é O Cortiço, de Aluísio Azevedo — a habitação coletiva que eu preferia ignorar. O bilhete está dentro do livro. E agora — o enigma final.`,
@@ -876,13 +876,13 @@ function bras(situation, extra={}) {
 
   /* ── Enigma errado ── */
   const FINAL_WRONG = [
-    `"${extra.guess||'?'}" — não é essa a palavra. Releiam as quatro perguntas. Cada livro tem uma resposta simples, de uma palavra. Pensem: o alienista tratava de quê? O nome da índia significava o quê? Os olhos de Capitu eram comparados ao quê? E quem seduziu Jerônimo?`,
+    `"${extra.guess||'?'}" — não é essa a palavra. Releiam as quatro perguntas. Cada livro tem uma resposta simples, de uma palavra. Pensem: que documento Quaresma enviou ao Parlamento em tupi? O nome da índia significava o quê? Os olhos de Capitu eram comparados ao quê? E quem seduziu Jerônimo?`,
     `Não. Observem melhor: quatro perguntas, quatro respostas, cada uma com uma palavra. O enigma está nelas. Não procurem complicar o que é simples.`,
     `Incorreto. Quatro respostas, quatro palavras. O enigma está nelas — não preciso dizer mais do que isso.`,
   ];
 
   /* ── Vitória ── */
-  const VICTORY = `E assim — com inteligência que me orgulha — descobristes a palavra. AMOR. O amor que enlouquece Bacamarte pelo saber, que mata Iracema pelo guerreiro branco, que obceca Bentinho pelos olhos de Capitu, que transforma Jerônimo pela dança de Rita. O amor, meus caros, é o motor de toda grande literatura — e talvez de toda grande loucura. Parabéns. Podeis abrir a porta.`;
+  const VICTORY = `E assim — com inteligência que me orgulha — descobristes a palavra. AMOR. O amor que leva Quaresma ao fuzilamento pela pátria, que mata Iracema pelo guerreiro branco, que obceca Bentinho pelos olhos de Capitu, que transforma Jerônimo pela dança de Rita. O amor, meus caros, é o motor de toda grande literatura — e talvez de toda grande loucura. Parabéns. Podeis abrir a porta.`;
 
   const MAP = {
     intro: INTRO,
@@ -1064,7 +1064,7 @@ async function startFinalEnigma() {
     <div class="enigma-subtitle">Quatro livros. Quatro segredos. Uma palavra vos libertará.</div>
     <div class="enigma-item">
       <span class="enigma-num">I</span>
-      <span class="enigma-text"><em>O Alienista</em> — O Dr. Bacamarte internava na Casa Verde quem havia perdido a razão. Como se chama, numa única palavra, quem perde a razão?</span>
+      <span class="enigma-text"><em>Triste Fim de Policarpo Quaresma</em> — Quaresma escreveu em língua tupi um pedido ao Parlamento para que o tupi fosse a língua oficial do Brasil. Como se chama esse tipo de documento — uma petição coletiva encaminhada a autoridades?</span>
     </div>
     <div class="enigma-item">
       <span class="enigma-num">II</span>
