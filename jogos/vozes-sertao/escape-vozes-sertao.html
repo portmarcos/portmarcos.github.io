@@ -3,22 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>O Defunto Mestre — Brás Cubas</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <title>Vozes do Sertão — Escape Room Literário</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --gold: #c9a227; --gold-lit: #e8c84a; --gold-dim: rgba(201,162,39,0.25);
-      --bg:   #060401; --bg2: #110b02; --bg3: #1c1205;
-      --cream:#f0ddb0; --cream2: rgba(240,221,176,0.75);
-      --blue: #4a6a8a; --blue-dim: rgba(74,106,138,0.25);
-      --red:  #7a1a1a;
+      --gold: #d97b29; --gold-dim: rgba(217,123,41,0.25);
+      --gold-lit: #f4a548;
+      --bg:   #1a1410; --bg2: #241a12; --bg3: #2e2117;
+      --cream:#f5e6cc; --cream2: rgba(245,230,204,0.75);
+      --blue: #5a8a6a; --blue-dim: rgba(90,138,106,0.25);
+      --red:  #a3471f;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; overflow: hidden; }
     body {
-      background: var(--bg);
+      background: linear-gradient(180deg, #1a1410 0%, #241a12 60%, #2e2014 100%);
       color: var(--cream);
-      font-family: 'IM Fell English', serif;
+      font-family: 'Bitter', Georgia, serif;
       display: flex;
       height: 100vh;
     }
@@ -26,7 +27,7 @@
     /* ═══════════════ LEFT PANEL ═══════════════ */
     #left {
       width: 220px; min-width: 220px;
-      background: linear-gradient(170deg, #060401 0%, #100900 100%);
+      background: linear-gradient(170deg, #241a12 0%, #1a1410 100%);
       border-right: 1px solid var(--gold-dim);
       display: flex; flex-direction: column; align-items: center;
       padding: 18px 14px; gap: 14px;
@@ -70,7 +71,7 @@
 
     /* PROGRESS — PHASES */
     .section-label {
-      font-family:'Cinzel',serif; font-size:.58rem;
+      font-family:'Oswald',sans-serif; font-size:.58rem;
       color:rgba(201,162,39,.5); letter-spacing:2.5px;
       text-align:center; text-transform:uppercase;
     }
@@ -97,9 +98,9 @@
 
     /* TIMER */
     #timer-wrap { margin-top:auto; text-align:center; }
-    #timer-lbl  { font-family:'Cinzel',serif; font-size:.55rem; color:rgba(201,162,39,.4); letter-spacing:2px; }
+    #timer-lbl  { font-family:'Oswald',sans-serif; font-size:.55rem; color:rgba(201,162,39,.4); letter-spacing:2px; }
     #timer {
-      font-family:'Cinzel Decorative',serif; font-size:1.55rem;
+      font-family:'Oswald',sans-serif; font-size:1.55rem;
       color:var(--gold); letter-spacing:3px;
       transition: color .5s;
     }
@@ -117,7 +118,7 @@
       display:flex; align-items:center; gap:14px;
     }
     #topbar h1 {
-      font-family:'Cinzel Decorative',serif; font-size:.88rem;
+      font-family:'Oswald',sans-serif; font-size:.88rem;
       color:var(--gold); letter-spacing:2px;
     }
     #topbar .sub { font-size:.72rem; color:rgba(201,162,39,.4); font-style:italic; }
@@ -126,7 +127,7 @@
       padding:5px 20px;
       border-bottom:1px solid var(--gold-dim);
       background:rgba(201,162,39,.04);
-      font-family:'Cinzel',serif; font-size:.65rem;
+      font-family:'Oswald',sans-serif; font-size:.65rem;
       color:rgba(201,162,39,.55); letter-spacing:1px;
     }
 
@@ -152,7 +153,7 @@
       width:30px; min-width:30px; height:30px;
       border:1px solid; border-radius:2px;
       display:flex; align-items:center; justify-content:center;
-      font-family:'Cinzel',serif; font-size:.55rem; letter-spacing:.5px;
+      font-family:'Oswald',sans-serif; font-size:.55rem; letter-spacing:.5px;
     }
     .bras   .avatar { border-color:var(--gold);  color:var(--gold); }
     .player .avatar { border-color:var(--blue);  color:var(--blue); }
@@ -224,14 +225,14 @@
     .btn-gold {
       flex:1; padding:13px; border:2px solid var(--gold);
       background:transparent; color:var(--gold);
-      font-family:'Cinzel',serif; font-size:.88rem; font-weight:700;
+      font-family:'Oswald',sans-serif; font-size:.88rem; font-weight:700;
       letter-spacing:2.5px; cursor:pointer; transition:.22s;
     }
     .btn-gold:hover { background:var(--gold); color:var(--bg); }
     .btn-blue {
       flex:1; padding:13px; border:2px solid var(--blue);
       background:transparent; color:var(--blue);
-      font-family:'Cinzel',serif; font-size:.88rem; font-weight:700;
+      font-family:'Oswald',sans-serif; font-size:.88rem; font-weight:700;
       letter-spacing:2.5px; cursor:pointer; transition:.22s;
     }
     .btn-blue:hover { background:var(--blue); color:var(--bg); }
@@ -239,7 +240,7 @@
       width:100%; max-width:440px; padding:11px;
       border:1px solid rgba(201,162,39,.35);
       background:rgba(201,162,39,.05);
-      color:var(--gold); font-family:'Cinzel',serif;
+      color:var(--gold); font-family:'Oswald',sans-serif;
       font-size:.75rem; letter-spacing:2px; cursor:pointer; transition:.22s;
     }
     .btn-ghost:hover { background:rgba(201,162,39,.12); border-color:var(--gold); }
@@ -249,14 +250,14 @@
     .book-row input {
       flex:1; padding:9px 13px;
       background:rgba(0,0,0,.5); border:1px solid rgba(201,162,39,.45);
-      color:var(--cream); font-family:'IM Fell English',serif; font-size:.88rem;
+      color:var(--cream); font-family:'Bitter',serif; font-size:.88rem;
       outline:none; transition:border-color .2s;
     }
     .book-row input:focus { border-color:var(--gold); }
     .book-row input::placeholder { color:rgba(201,162,39,.3); font-style:italic; }
     .btn-confirm {
       padding:9px 18px; background:var(--gold); color:var(--bg);
-      border:none; font-family:'Cinzel',serif; font-size:.78rem; font-weight:700;
+      border:none; font-family:'Oswald',sans-serif; font-size:.78rem; font-weight:700;
       letter-spacing:1px; cursor:pointer; transition:opacity .2s;
     }
     .btn-confirm:hover { opacity:.85; }
@@ -270,7 +271,7 @@
     }
     #victory.show { display:flex; }
     #victory h1 {
-      font-family:'Cinzel Decorative',serif; font-size:2rem;
+      font-family:'Oswald',sans-serif; font-size:2rem;
       color:var(--gold); letter-spacing:5px;
     }
     #victory p { font-size:1rem; color:var(--cream2); max-width:520px; line-height:1.75; }
@@ -307,15 +308,15 @@
       50%    { transform:scale(1.08) rotate(3deg); opacity:1; }
     }
     .pen-title {
-      font-family:'Cinzel Decorative',serif; font-size:1.3rem;
+      font-family:'Oswald',sans-serif; font-size:1.3rem;
       color:#c9a227; letter-spacing:4px;
     }
     .pen-quote {
-      font-family:'IM Fell English',serif; font-style:italic;
+      font-family:'Bitter',serif; font-style:italic;
       color:rgba(240,221,176,.75); max-width:440px; line-height:1.7; font-size:.95rem;
     }
     #pen-cd {
-      font-family:'Cinzel Decorative',serif; font-size:4rem;
+      font-family:'Oswald',sans-serif; font-size:4rem;
       color:#cc2222; letter-spacing:6px;
       animation: cdPulse 1s ease-in-out infinite;
     }
@@ -324,7 +325,7 @@
       50%    { text-shadow:0 0 30px #cc2222, 0 0 60px #880000; }
     }
     .pen-sub {
-      font-family:'Cinzel',serif; font-size:.65rem;
+      font-family:'Oswald',sans-serif; font-size:.65rem;
       color:rgba(201,162,39,.4); letter-spacing:3px;
     }
 
@@ -366,73 +367,79 @@
       <defs>
         <radialGradient id="vig" cx="50%" cy="50%" r="55%">
           <stop offset="55%" stop-color="transparent"/>
-          <stop offset="100%" stop-color="#060401" stop-opacity=".85"/>
+          <stop offset="100%" stop-color="#1a1208" stop-opacity=".85"/>
         </radialGradient>
         <radialGradient id="facelight" cx="42%" cy="38%" r="55%">
-          <stop offset="0%" stop-color="#7a5030"/>
-          <stop offset="100%" stop-color="#5a3820"/>
+          <stop offset="0%" stop-color="#a06838"/>
+          <stop offset="100%" stop-color="#7a4824"/>
         </radialGradient>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#c97a3a"/>
+          <stop offset="55%" stop-color="#8a5226"/>
+          <stop offset="100%" stop-color="#3e2814"/>
+        </linearGradient>
       </defs>
-      <rect width="136" height="170" fill="#060301"/>
-      <!-- coat / body -->
-      <path d="M 0,170 L 28,108 L 50,97 L 68,120 L 86,97 L 108,108 L 136,170 Z" fill="#160c03"/>
-      <!-- lapels -->
-      <path d="M 50,97 L 68,120 L 42,155 L 28,108 Z" fill="#231508"/>
-      <path d="M 86,97 L 68,120 L 94,155 L 108,108 Z" fill="#231508"/>
-      <!-- waistcoat stripe -->
-      <path d="M 63,97 L 73,97 L 70,116 L 68,119 L 66,116 Z" fill="#c8a030"/>
-      <!-- cravat knot -->
-      <path d="M 62,94 L 68,99 L 74,94 L 71,88 L 68,91 L 65,88 Z" fill="#8a1818"/>
-      <!-- collar -->
-      <polygon points="62,91 54,84 62,84" fill="#ddd0a0"/>
-      <polygon points="74,91 82,84 74,84" fill="#ddd0a0"/>
-      <!-- neck -->
-      <rect x="62" y="82" width="12" height="13" rx="3" fill="#6a4025"/>
-      <!-- head -->
-      <ellipse cx="68" cy="59" rx="28" ry="32" fill="url(#facelight)"/>
-      <!-- hair mass -->
-      <path d="M 41,51 Q 44,26 68,24 Q 92,26 95,51 Q 87,38 68,36 Q 49,38 41,51 Z" fill="#1a0b03"/>
-      <!-- sideburns -->
-      <path d="M 41,51 Q 37,63 39,78 L 44,70 L 47,58 Z" fill="#1a0b03"/>
-      <path d="M 95,51 Q 99,63 97,78 L 92,70 L 89,58 Z" fill="#1a0b03"/>
-      <!-- hair part line -->
-      <path d="M 68,24 Q 67,33 65,43" stroke="#0d0601" stroke-width="1.8" fill="none" opacity=".7"/>
-      <!-- eyebrows -->
-      <path d="M 50,52 Q 58,48 63,50" stroke="#2a1504" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-      <path d="M 86,52 Q 78,48 73,50" stroke="#2a1504" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-      <!-- left eye -->
-      <ellipse cx="58" cy="59" rx="6" ry="5" fill="#b08040"/>
-      <ellipse cx="58" cy="59" rx="3.3" ry="3.3" fill="#0c0600"/>
-      <ellipse cx="56.5" cy="57.5" rx="1.2" ry="1" fill="#fff" opacity=".45"/>
-      <!-- right eye -->
-      <ellipse cx="78" cy="59" rx="6" ry="5" fill="#b08040"/>
-      <ellipse cx="78" cy="59" rx="3.3" ry="3.3" fill="#0c0600"/>
-      <ellipse cx="76.5" cy="57.5" rx="1.2" ry="1" fill="#fff" opacity=".45"/>
-      <!-- eyelid shadows -->
-      <path d="M 52,57 Q 58,54 64,57" fill="#3a2010" opacity=".35"/>
-      <path d="M 72,57 Q 78,54 84,57" fill="#3a2010" opacity=".35"/>
-      <!-- nose -->
-      <path d="M 68,64 Q 64,72 66,76 Q 68,78 70,76 Q 72,72 68,64 Z" fill="#5a3018"/>
-      <ellipse cx="65.5" cy="75" rx="2.5" ry="1.4" fill="#3a1e0c" opacity=".7"/>
-      <ellipse cx="70.5" cy="75" rx="2.5" ry="1.4" fill="#3a1e0c" opacity=".7"/>
-      <!-- mustache -->
-      <path d="M 54,78 Q 60,84 68,82 Q 76,84 82,78" fill="#1a0a02" stroke="#1a0a02" stroke-width=".5"/>
-      <path d="M 54,78 Q 59,81 62,79 L 62,78 Q 58,77 54,78 Z" fill="#251206"/>
-      <path d="M 82,78 Q 77,81 74,79 L 74,78 Q 78,77 82,78 Z" fill="#251206"/>
-      <!-- chin -->
-      <path d="M 48,84 Q 68,96 88,84" stroke="#4a2810" stroke-width="1" fill="none" opacity=".4"/>
-      <!-- cheek flush -->
-      <ellipse cx="47" cy="66" rx="10" ry="8" fill="#7a2818" opacity=".12"/>
-      <ellipse cx="89" cy="66" rx="10" ry="8" fill="#7a2818" opacity=".12"/>
-      <!-- vignette -->
+      <!-- céu do sertão ao entardecer -->
+      <rect width="136" height="170" fill="url(#sky)"/>
+      <!-- sol baixo -->
+      <circle cx="100" cy="40" r="16" fill="#f0b25a" opacity=".55"/>
+      <!-- chão rachado -->
+      <rect x="0" y="120" width="136" height="50" fill="#5a3a1e"/>
+      <path d="M 0,128 L 136,128" stroke="#3e2814" stroke-width="1" opacity=".5"/>
+      <!-- mandacaru (cacto) à esquerda -->
+      <rect x="14" y="92" width="6" height="36" rx="3" fill="#3a5226"/>
+      <rect x="8" y="100" width="6" height="14" rx="3" fill="#3a5226"/>
+      <rect x="20" y="96" width="6" height="16" rx="3" fill="#3a5226"/>
+      <!-- corpo / gibão de couro -->
+      <path d="M 0,170 L 30,120 L 50,110 L 68,128 L 86,110 L 106,120 L 136,170 Z" fill="#5a3a1e"/>
+      <!-- gibão detalhes (peitoral de couro) -->
+      <path d="M 50,110 L 68,128 L 60,160 L 44,150 Z" fill="#6e4a26"/>
+      <path d="M 86,110 L 68,128 L 76,160 L 92,150 Z" fill="#6e4a26"/>
+      <!-- gola de couro -->
+      <polygon points="60,112 52,104 62,106" fill="#8a6038"/>
+      <polygon points="76,112 84,104 74,106" fill="#8a6038"/>
+      <!-- pescoço -->
+      <rect x="62" y="98" width="12" height="14" rx="3" fill="#8a5828"/>
+      <!-- rosto -->
+      <ellipse cx="68" cy="74" rx="26" ry="30" fill="url(#facelight)"/>
+      <!-- chapéu de couro de vaqueiro (gibão de aba larga) -->
+      <ellipse cx="68" cy="50" rx="40" ry="10" fill="#4a3018"/>
+      <ellipse cx="68" cy="48" rx="40" ry="9" fill="#5e3e20"/>
+      <path d="M 44,49 Q 44,24 68,22 Q 92,24 92,49 Z" fill="#5e3e20"/>
+      <path d="M 44,49 Q 44,26 68,24 Q 92,26 92,49 Z" fill="#6e4a26" opacity=".6"/>
+      <!-- faixa do chapéu -->
+      <path d="M 46,46 Q 68,40 90,46 L 90,49 Q 68,43 46,49 Z" fill="#3a2410"/>
+      <!-- sombra da aba no rosto -->
+      <ellipse cx="68" cy="56" rx="26" ry="6" fill="#3a2410" opacity=".3"/>
+      <!-- sobrancelhas -->
+      <path d="M 52,66 Q 59,63 64,65" stroke="#3a2410" stroke-width="2.3" fill="none" stroke-linecap="round"/>
+      <path d="M 84,66 Q 77,63 72,65" stroke="#3a2410" stroke-width="2.3" fill="none" stroke-linecap="round"/>
+      <!-- olho esquerdo -->
+      <ellipse cx="59" cy="72" rx="5.5" ry="4.5" fill="#d8b888"/>
+      <ellipse cx="59" cy="72" rx="3" ry="3" fill="#2a1808"/>
+      <ellipse cx="57.8" cy="70.8" rx="1" ry=".8" fill="#fff" opacity=".5"/>
+      <!-- olho direito -->
+      <ellipse cx="77" cy="72" rx="5.5" ry="4.5" fill="#d8b888"/>
+      <ellipse cx="77" cy="72" rx="3" ry="3" fill="#2a1808"/>
+      <ellipse cx="75.8" cy="70.8" rx="1" ry=".8" fill="#fff" opacity=".5"/>
+      <!-- nariz -->
+      <path d="M 68,76 Q 64,84 66,88 Q 68,90 70,88 Q 72,84 68,76 Z" fill="#6e4220"/>
+      <!-- bigode espesso de sertanejo -->
+      <path d="M 54,90 Q 61,96 68,94 Q 75,96 82,90 Q 75,93 68,92 Q 61,93 54,90 Z" fill="#2a1808"/>
+      <!-- barba rala -->
+      <path d="M 52,92 Q 68,108 84,92 Q 80,104 68,106 Q 56,104 52,92 Z" fill="#2a1808" opacity=".5"/>
+      <!-- maçãs do rosto marcadas (fome/sol) -->
+      <ellipse cx="50" cy="80" rx="7" ry="6" fill="#5a3418" opacity=".22"/>
+      <ellipse cx="86" cy="80" rx="7" ry="6" fill="#5a3418" opacity=".22"/>
+      <!-- vinheta -->
       <rect width="136" height="170" fill="url(#vig)"/>
-      <!-- name plate -->
-      <rect x="0" y="154" width="136" height="16" fill="#060301" opacity=".85"/>
-      <text x="68" y="165" text-anchor="middle" fill="#c9a227"
-            font-family="'IM Fell English', serif" font-size="7.5" letter-spacing="2.5">BRÁS CUBAS</text>
-      <!-- corners -->
-      <text x="3" y="12" fill="#c9a227" font-size="8" opacity=".55">✦</text>
-      <text x="123" y="12" fill="#c9a227" font-size="8" opacity=".55">✦</text>
+      <!-- placa de nome -->
+      <rect x="0" y="154" width="136" height="16" fill="#1a1208" opacity=".88"/>
+      <text x="68" y="165" text-anchor="middle" fill="#d97b29"
+            font-family="'Oswald', sans-serif" font-size="8" letter-spacing="3" font-weight="600">O SERTANEJO</text>
+      <!-- cantos -->
+      <text x="4" y="13" fill="#d97b29" font-size="9" opacity=".5">✷</text>
+      <text x="122" y="13" fill="#d97b29" font-size="9" opacity=".5">✷</text>
     </svg>
   </div>
 
@@ -464,9 +471,9 @@
 <div id="right">
   <div id="topbar">
     <h1>O DEFUNTO MESTRE</h1>
-    <span class="sub">— Escape Room Literário —</span>
+    <span class="sub">— Escape Room · Literatura do Sertão —</span>
   </div>
-  <div id="phase-strip">📜 &nbsp;MEMÓRIAS PÓSTUMAS DE BRÁS CUBAS · Capítulos I–XVII · Crase</div>
+  <div id="phase-strip">🌵 &nbsp;LITERATURA DO SERTÃO · PRÉ-MODERNISMO E REGIONALISMO · CRASE</div>
 
   <div id="chat">
     <div id="typing">
@@ -475,17 +482,17 @@
   </div>
 
   <div id="interact">
-    <span style="color:rgba(201,162,39,.3);font-style:italic;font-size:.82rem;">Invocando o defunto autor…</span>
+    <span style="color:rgba(201,162,39,.3);font-style:italic;font-size:.82rem;">Despertando a voz do sertão…</span>
   </div>
 </div>
 
 <!-- ═══════════ VICTORY ═══════════ -->
 <div id="victory">
-  <div class="ornament">✦ ✦ ✦</div>
-  <h1>BRAVO, MORTAIS!</h1>
-  <div class="ornament">◆</div>
+  <div class="ornament">✷ ✷ ✷</div>
+  <h1>A VOZ FOI OUVIDA!</h1>
+  <div class="ornament">✸</div>
   <p id="vtext"></p>
-  <div class="ornament">✦ ✦ ✦</div>
+  <div class="ornament">✷ ✷ ✷</div>
   <button class="btn-ghost" style="max-width:260px;margin-top:10px"
     onclick="location.reload()">▸ JOGAR NOVAMENTE</button>
 </div>
@@ -500,7 +507,7 @@
                 border:2px solid rgba(201,162,39,0.3);"/>
   </div>
   <div class="pen-title">PENITÊNCIA</div>
-  <p id="pen-time-lbl" style="font-family:'Cinzel',serif;font-size:.72rem;color:rgba(204,34,34,.75);letter-spacing:3px;margin:-8px 0 0"></p>
+  <p id="pen-time-lbl" style="font-family:'Oswald',sans-serif;font-size:.72rem;color:rgba(204,34,34,.75);letter-spacing:3px;margin:-8px 0 0"></p>
   <p class="pen-quote" id="pen-quote"></p>
   <div id="pen-cd">2:00</div>
   <p class="pen-sub">AGUARDE PARA PROSSEGUIR</p>
@@ -596,11 +603,11 @@ function playLoop() {
    PENALIDADE (2 minutos)
 ═══════════════════════════════════════════════ */
 const PEN_QUOTES = [
-  '"Engano digno de um vivo — e vivos, como sabemos, erram muito." — Brás Cubas',
-  '"A crase não perdoa a ignorância. Nem eu, do alto do meu caixão." — Brás Cubas',
-  '"Lamentável. Esperemos juntos que o tempo cure esta ferida gramatical." — Brás Cubas',
-  '"Do além, vejo vosso erro com clareza cristalina. Esperem." — Brás Cubas',
-  '"Errar é humano. Pagar a penitência, também." — Brás Cubas',
+  '"No sertão, quem erra o caminho paga com sede. Esperai." — A Voz do Sertão',
+  '"A crase não perdoa a ignorância, como a seca não perdoa o desavisado." — A Voz do Sertão',
+  '"Lamentável. Esperemos juntos que o tempo cure esta ferida gramatical." — A Voz do Sertão',
+  '"O erro custa caro a quem caminha sem atenção. Esperai." — A Voz do Sertão',
+  '"Errar é humano. Pagar a penitência, também." — A Voz do Sertão',
 ];
 let penInterval = null;
 
@@ -640,79 +647,75 @@ function startPenalty() {
 
 const PHASES = [
   {
+    book: 'Vidas Secas',
+    aliases: ['vidas secas','vida seca','vidas-secas'],
+    strip: '📜 Graciliano Ramos · Vidas Secas · O Sertão e a Família',
+    qs: [
+      { b:'Fabiano aspirava', a:'uma vida melhor, longe da seca e da miséria.', crase:false,
+        label:'A UMA VIDA', rule:'Antes do artigo indefinido "uma" não há crase. "a uma vida" = preposição A pura. Sem crase.' },
+      { b:'Sinhá Vitória sonhava acordada', a:'noite, desejando uma cama de couro legítimo.', crase:true,
+        label:'À NOITE', rule:'"à noite" é locução adverbial de tempo feminina. Crase obrigatória.' },
+      { b:'Baleia corria', a:'cata de preás magros pelo mato ressequido.', crase:true,
+        label:'À CATA', rule:'"à cata de" é locução prepositiva feminina (= à procura de). Crase obrigatória.' }
+    ],
+    hints: [
+      'Uma família caminha pela caatinga do Nordeste — um homem, sua mulher, dois filhos sem nome e uma cachorra. Fogem da seca em busca de terra e água. Um escritor alagoano narrou esse êxodo sem piedade e sem falsa esperança.',
+      'O protagonista é um vaqueiro que mal sabe se expressar. Sonha com palavras que nunca encontra. A cachorra da família tem um nome de peixe — e é talvez o ser mais humano da história. O romance foi publicado em 1938.',
+      'O título diz tudo sobre a terra e sobre as pessoas que ela resseca. São duas palavras. A primeira é um adjetivo que descreve tanto o ambiente quanto as existências retratadas. Procurem esse livro nas prateleiras.'
+    ]
+  },
+  {
     book: 'Triste Fim de Policarpo Quaresma',
     aliases: ['triste fim de policarpo quaresma','policarpo quaresma','triste fim','quaresma','triste fim policarpo quaresma'],
     strip: '📜 Lima Barreto · Triste Fim de Policarpo Quaresma',
     qs: [
-      { b:'Brás Cubas escrevia', a:'maneira dos defuntos — com ironia e distância.', crase:true,
-        label:'À MANEIRA', rule:'"à maneira": prep. A + artigo A feminino. Crase obrigatória.' },
-      { b:'Partiu', a:'Europa sem derramar uma única lágrima.', crase:true,
-        label:'À EUROPA', rule:'"à Europa": "Europa" é feminino e aceita o artigo "a" → prep. A + artigo A = À. Crase obrigatória.' },
-      { b:'Entregou-se', a:'melancolia com a elegância de quem nada mais tem a perder.', crase:true,
-        label:'À MELANCOLIA', rule:'"à melancolia": prep. A + artigo A feminino. Crase obrigatória.' }
+      { b:'Policarpo Quaresma dedicou-se', a:'pátria com um fervor que beirava a loucura.', crase:true,
+        label:'À PÁTRIA', rule:'"dedicar-se a" + "a pátria" (feminino) → prep. A + artigo A = À. Crase obrigatória.' },
+      { b:'O major enviou o abaixo-assinado', a:'Câmara dos Deputados, escrito em tupi.', crase:true,
+        label:'À CÂMARA', rule:'"enviar a" + "a Câmara" (feminino) → prep. A + artigo A = À. Crase obrigatória.' },
+      { b:'Quaresma começou', a:'estudar o tupi, convencido de que era a língua do Brasil.', crase:false,
+        label:'A ESTUDAR', rule:'Nunca há crase antes de verbo no infinitivo. "a estudar" = preposição A pura. Sem crase.' }
     ],
     hints: [
-      'Há um personagem na literatura brasileira que amava tanto a pátria que quase chegou à loucura por ela. Enviou ao Parlamento um abaixo-assinado inteiro escrito em tupi-guarani — a língua que acreditava ser a verdadeira língua dos brasileiros. Seus contemporâneos o chamavam de excêntrico; eu o chamaria de ingênuo.',
-      'Esse personagem era um major do Arsenal de Guerra do Rio de Janeiro. Após a aventura linguística, tentou reformar uma fazenda no interior — e também fracassou. O escritor que o criou não era Machado de Assis. Vivia nos subúrbios cariocas e escrevia com a tinta da injustiça social.',
+      'Há um personagem na literatura brasileira que amava tanto a pátria que quase chegou à loucura por ela. Enviou ao Parlamento um abaixo-assinado inteiro escrito em tupi-guarani — a língua que acreditava ser a verdadeira língua dos brasileiros. Seus contemporâneos o chamavam de excêntrico.',
+      'Esse personagem era um major do Arsenal de Guerra do Rio de Janeiro. Após a aventura linguística, tentou reformar uma fazenda no interior — e também fracassou. O escritor que o criou vivia nos subúrbios cariocas e escrevia com a tinta da injustiça social.',
       'O título do livro anuncia, sem piedade, o destino do protagonista. São três palavras: a primeira descreve como foi esse fim, a segunda é uma palavra muito curta, e a terceira é o nome completo do personagem — um prenome e um sobrenome. Procurem esse título nas prateleiras.'
     ]
   },
   {
-    book: 'Iracema',
-    aliases: ['iracema'],
-    strip: '📜 Capítulos XII–XIV (Marcela)',
+    book: 'Urupês',
+    aliases: ['urupês','urupes','urupe','urupé'],
+    strip: '📜 Monteiro Lobato · Urupês · O Brasil que Lobato viu',
     qs: [
-      { b:'Marcela amava', a:'sua maneira — e essa maneira era cara, muito cara.', crase:true,
-        label:'À SUA MANEIRA', rule:'"à sua maneira": prep. A + artigo A feminino. Crase obrigatória.' },
-      { b:'Fui', a:'ela como se vai ao sol — cegamente.', crase:false,
-        label:'A ELA', rule:'"a ela": pronome pessoal oblíquo. Nunca recebe crase.' },
-      { b:'Cedi', a:'cortesã como cede o vento à tempestade.', crase:true,
-        label:'À CORTESÃ', rule:'"à cortesã": prep. A + artigo A feminino. Crase obrigatória.' },
-      { b:'Brás Cubas voltou', a:'escrever do além — sem pedir licença a ninguém.', crase:false,
-        label:'A ESCREVER', rule:'Nunca há crase antes de verbo no infinitivo. "a escrever" = preposição A pura, sem artigo definido.' }
+      { b:'Jeca Tatu vivia agachado', a:'beira do caminho, indiferente ao mundo.', crase:true,
+        label:'À BEIRA', rule:'"à beira de" é locução prepositiva feminina. Crase obrigatória.' },
+      { b:'Lobato voltou', a:'sua fazenda e encontrou um Brasil que não conhecia.', crase:false,
+        label:'A SUA FAZENDA', rule:'Diante de pronome possessivo a crase é facultativa; aqui, sem o artigo explícito, predomina "a sua fazenda" sem crase. Sem crase.' },
+      { b:'O caipira permanecia indiferente', a:'escola e ao progresso que lhe ofereciam.', crase:true,
+        label:'À ESCOLA', rule:'"indiferente a" + "a escola" (feminino) → prep. A + artigo A = À. Crase obrigatória.' }
     ],
     hints: [
-      'Minha paixão por Marcela foi uma chama violenta — como a de um guerreiro português que atravessou o oceano e encontrou uma índia guardiã de segredos sagrados. Outro escritor, rival meu em algum sentido, também escreveu sobre amor impossível, mas com uma indígena como protagonista.',
-      'A índia desse romance guardava o segredo da jurema e amou um guerreiro branco chamado Martim. Seu nome vem do tupi e significa algo relacionado ao mel.',
-      'O título do livro é o nome dessa índia — uma palavra tupi que significa "lábio de mel". Seis letras. Procurem nas prateleiras.'
+      'Um escritor paulista publicou em 1918 uma coletânea de contos que chocou e encantou o Brasil. O título vem do nome de um fungo — um cogumelo que nasce em árvores mortas, símbolo de algo que vive às custas do que está podre e esquecido.',
+      'O conto mais famoso da coletânea criou um personagem que virou símbolo do homem rural brasileiro: um caipira do interior de São Paulo, encurvado, de cócoras, que vive sem fazer nada. Uma caricatura polêmica que o próprio autor revisou mais tarde.',
+      'O nome desse personagem é composto: um prenome de origem indígena e um sobrenome de animal. Mas o título do livro não é esse nome — é o nome do cogumelo. Um título incomum, de poucas letras, que começa com U. Procurem nas prateleiras.'
     ]
   },
   {
-    book: 'Dom Casmurro',
-    aliases: ['dom casmurro','casmurro'],
-    strip: '📜 Capítulos XV–XVII (A Partida para Coimbra)',
+    book: 'O Quinze',
+    aliases: ['o quinze','quinze'],
+    strip: '📜 Rachel de Queiroz · O Quinze · A Seca de 1915 no Ceará',
     qs: [
-      { b:'Cheguei', a:'cidade de Coimbra como quem chega ao exílio.', crase:true,
-        label:'À CIDADE', rule:'"à cidade": prep. A + artigo A feminino. Crase obrigatória.' },
-      { b:'Fui enviado', a:'Portugal pela vontade paterna.', crase:false,
-        label:'A PORTUGAL', rule:'"a Portugal": nome de país masculino, sem artigo antes. Sem crase.' },
-      { b:'Submetia-me', a:'saudade como se submete à inevitabilidade da chuva.', crase:true,
-        label:'À SAUDADE', rule:'"à saudade": prep. A + artigo A feminino. Crase obrigatória.' }
+      { b:'Conceição levava alimentos', a:'família de Chico Bento, atingida pela seca.', crase:true,
+        label:'À FAMÍLIA', rule:'"levar a" + "a família" (feminino) → prep. A + artigo A = À. Crase obrigatória.' },
+      { b:'Os retirantes caminhavam', a:'pé rumo à capital, em busca de água.', crase:false,
+        label:'A PÉ', rule:'"a pé" é locução adverbial de meio com palavra masculina. Não há crase diante de palavra masculina. Sem crase.' },
+      { b:'Vicente nunca declarou seu amor', a:'prima Conceição, e esse silêncio custou caro.', crase:true,
+        label:'À PRIMA', rule:'"declarar amor a" + "a prima" (feminino) → prep. A + artigo A = À. Crase obrigatória.' }
     ],
     hints: [
-      'Enquanto eu estudava em Coimbra, um outro narrador — tão pouco confiável quanto eu — tentava reconstruir o passado com palavras. Ele queria reatar as duas pontas da vida. Assim como eu, narrava de um futuro que já havia acontecido.',
-      'Esse narrador era atormentado pela dúvida. Bentinho era seu nome de criança. Os vizinhos o chamavam de outro jeito — um apelido que ficou para sempre e dá nome ao livro.',
-      'Dom Casmurro. O apelido que ele mesmo explica no primeiro capítulo. Procurem esse título na biblioteca.'
-    ]
-  },
-  {
-    book: 'O Cortiço',
-    aliases: ['o cortiço','cortiço','o cortico','cortico'],
-    strip: '📜 Síntese — O Rio de Janeiro que Brás Cubas ignorou',
-    qs: [
-      { b:'Aspirei', a:'glória literária como se aspira à imortalidade.', crase:true,
-        label:'À GLÓRIA', rule:'"à glória": prep. A + artigo A feminino. Crase obrigatória.' },
-      { b:'Escrevo', a:'todos que se dispõem a ler um defunto.', crase:false,
-        label:'A TODOS', rule:'"a todos": pronome indefinido. Nunca recebe crase.' },
-      { b:'O pobre se rende', a:'necessidade como eu me rendi à vaidade.', crase:true,
-        label:'À NECESSIDADE', rule:'"à necessidade": prep. A + artigo A feminino. Crase obrigatória.' },
-      { b:'O desejo de Jerônimo era superior', a:'quele que havia sentido em Portugal.', crase:true,
-        label:'ÀQUELE', rule:'"àquele": preposição A + pronome demonstrativo "aquele" = àquele. Regra: A + aquele/aquela/aquilo formam crase obrigatoriamente.' }
-    ],
-    hints: [
-      'Eu me dei ao luxo de ignorar o Rio de Janeiro pobre. Da minha janela em Botafogo, preferia a vista ao mar. Mas um contemporâneo meu — naturalista ao extremo — foi fundo nessa vida que eu fingia não ver.',
-      'Esse escritor mostrou imigrantes portugueses, trabalhadores, paixões animais e o calor sufocante do Rio. Tudo amontoado num mesmo lugar miserável — uma habitação coletiva com muitos quartos pequenos.',
-      'O título é o nome exato desse lugar onde os pobres vivem amontoados: um pátio fechado com muitos quartos. Três sílabas. Procurem na biblioteca.'
+      'Uma jovem escritora cearense publicou, em 1930, com apenas 19 anos, um romance sobre a grande seca de 1915 no Ceará. O livro causou espanto — como alguém tão jovem poderia escrever com tamanha maturidade? Alguns chegaram a duvidar que a obra fosse realmente dela.',
+      'O romance acompanha duas histórias paralelas: a de uma intelectual que distribui mantimentos e guarda um amor não correspondido; e a de um retirante que abandona a terra com a família, perdendo tudo pelo caminho.',
+      'O título do livro é simplesmente o ano em que ocorreu a grande seca que o inspirou — escrito por extenso em português. Um número formado por duas palavras. Procurem esse título nas prateleiras.'
     ]
   }
 ];
@@ -752,7 +755,7 @@ function addMsg(type, text, extra='') {
   const chat = $chat();
   const div  = document.createElement('div');
   div.className = `msg ${type}`;
-  const avatarMap = { bras:'B.C.', player:'VÓS' };
+  const avatarMap = { bras:'S', player:'VÓS' };
   const avatarColor = type==='player' ? 'border-color:var(--blue);color:var(--blue)' : '';
   const av = (type==='bras'||type==='player')
     ? `<div class="avatar" style="${avatarColor}">${avatarMap[type]}</div>` : '';
@@ -798,20 +801,20 @@ function bras(situation, extra={}) {
   const pick = arr => arr[Math.floor(Math.random()*arr.length)];
 
   /* ── Intro ── */
-  const INTRO = `Sou Brás Cubas — o defunto autor, como me intitulei nas minhas Memórias Póstumas. Escrevi do além-túmulo com a liberdade de quem nada tem a temer, e é dessa liberdade que me valho agora para vos testar. Ao longo deste jogo, farei perguntas sobre crase — essa pequena marca que tantos ignoram. A cada fase superada, revelarei pistas sobre um livro que devereis encontrar na biblioteca. O nome jamais direi diretamente. Isso seria demasiado simples para um defunto do meu calibre.`;
+  const INTRO = `Sou a voz do sertão — a memória de todos que caminharam pela terra rachada em busca de água e de palavra. Falo por Fabiano, que não sabia se expressar; por Quaresma, que gritou em tupi; pelo Jeca, que foi silenciado; pelos retirantes que Rachel deu a conhecer. Ao longo deste jogo, farei perguntas sobre crase — essa pequena marca que tantos ignoram. A cada fase superada, revelarei pistas sobre um livro que devereis encontrar na biblioteca. O nome jamais direi diretamente. Quem quer aprender, merece o esforço de descobrir.`;
 
   /* ── Intro de cada fase ── */
   const PHASE_INTRO = [
-    `Da janela de minha casa em Botafogo, eu via o mar e fingia não ver o sertão. Graciliano Ramos foi até lá e viu o que eu preferia ignorar — uma família que caminha sem destino, ressecada como a terra ao redor. Esta fase testa os vossos conhecimentos de crase. Respondam às questões e, depois, revelarei pistas sobre o livro que desafiou a minha consciência confortável.`,
-    `Há patriotas, e há Policarpo Quaresma. Eu amei a mim mesmo; ele amou o Brasil — com uma intensidade que o destruiu. Enquanto eu me perdia em vaidades europeias, ele aprendia tupi e escrevia abaixo-assinados ao Parlamento. Respondam às questões de crase desta fase. As pistas que darei depois levam a um homem que acreditou no Brasil mais do que o Brasil merecia.`,
-    `Sempre me considerei um europeu nascido no Brasil por acidente. Monteiro Lobato, ao contrário, foi ao interior de São Paulo e encontrou um Brasil que eu fingia não existir — o caipira encurvado, de pé no chão, olhos no vazio. Criou desse encontro um personagem que virou símbolo de um debate que o Brasil ainda não encerrou. Respondam às questões. As pistas revelarão a coletânea que escandalizou e encantou o Brasil de 1918.`,
-    `Chegamos ao último desafio. Uma jovem de 19 anos escreveu, em 1930, sobre uma seca que eu nunca precisei enfrentar da minha varanda. Ela deu voz a quem não tinha — os retirantes, os famintos, os invisíveis que eu escolhia não ver. Esta fase encerra o nosso jogo. Prestem atenção nas pistas — elas levam a uma das maiores vozes da literatura brasileira.`,
+    `Começamos pela terra mais dura. Graciliano Ramos foi ao coração da caatinga e narrou, sem piedade nem falsa esperança, uma família que caminha sem destino — ressecada como o chão que pisa. Esta fase testa os vossos conhecimentos de crase. Respondam às questões e, depois, revelarei pistas sobre esse livro implacável.`,
+    `Há patriotas, e há Policarpo Quaresma. Ele amou o Brasil com uma intensidade que o destruiu — aprendeu tupi, escreveu abaixo-assinados ao Parlamento, sonhou com uma nação que não existia. Respondam às questões de crase desta fase. As pistas que darei depois levam a esse homem que acreditou no Brasil mais do que o Brasil merecia.`,
+    `Monteiro Lobato foi ao interior de São Paulo e encontrou um Brasil que muitos fingiam não existir — o caipira encurvado, de pé no chão, olhos no vazio. Criou desse encontro um personagem que virou símbolo de um debate que o Brasil ainda não encerrou. Respondam às questões. As pistas revelarão a coletânea que escandalizou e encantou o Brasil de 1918.`,
+    `Chegamos ao último desafio. Uma jovem de apenas 19 anos escreveu, em 1930, sobre a grande seca de 1915 no Ceará. Ela deu voz a quem não tinha — os retirantes, os famintos, os invisíveis. Esta fase encerra o nosso jogo. Prestem atenção nas pistas — elas levam a uma das maiores vozes da literatura brasileira.`,
   ];
 
   /* ── Intro de cada questão ── */
   const Q_INTRO = [
     `Atenção, mortais. Observem a frase abaixo e escolham a forma correta para a lacuna.`,
-    `Do alto do meu caixão, apresento-vos mais uma sentença. Escolham com cuidado — a crase não perdoa o descuido.`,
+    `Do alto desta terra seca, apresento-vos mais uma sentença. Escolham com cuidado — a crase não perdoa o descuido.`,
     `Uma nova frase se apresenta. Lembrem-se: há crase apenas quando a preposição A encontra o artigo A feminino — ou certos pronomes demonstrativos. Escolham.`,
     `Contemplem esta frase com atenção. A resposta errada tem consequências — como tudo na vida e na morte.`,
     `Mais uma questão. Concentrem-se e escolham a forma correta para a lacuna.`,
@@ -819,7 +822,7 @@ function bras(situation, extra={}) {
 
   /* ── Acerto ── */
   function correctR() { return pick([
-    `Muito bem! ${extra.label} — exatamente. ${extra.rule} Vejo que a gramática ainda não vos é completamente estranha, o que é reconfortante para um defunto como eu.`,
+    `Muito bem! ${extra.label} — exatamente. ${extra.rule} Vejo que a gramática ainda não vos é completamente estranha.`,
     `Correto! ${extra.label}. ${extra.rule} Há esperança para vocês ainda.`,
     `Acertastes! ${extra.label} — forma correta. ${extra.rule} Que satisfação rara, a de ver a gramática respeitada.`,
     `Exato. ${extra.label}. ${extra.rule} Não é difícil quando se para para pensar — o problema é que raramente se para.`,
@@ -827,9 +830,9 @@ function bras(situation, extra={}) {
 
   /* ── Erro ── */
   function wrongR() { return pick([
-    `Incorreto. A forma correta é ${extra.label}. ${extra.rule} Não se envergonhem — o erro é da condição humana. A penitência, porém, é minha prerrogativa.`,
+    `Incorreto. A forma correta é ${extra.label}. ${extra.rule} Não se envergonhem — errar é da condição humana. Mas o erro tem seu preço.`,
     `Engano. ${extra.label} seria o correto. ${extra.rule} Cometestes o erro mais comum entre os vivos: a pressa.`,
-    `Lamentável. A resposta certa é ${extra.label}. ${extra.rule} Do além, vejo o erro com mais clareza do que vós.`,
+    `Lamentável. A resposta certa é ${extra.label}. ${extra.rule} A terra seca não perdoa o descuido; a crase também não.`,
     `Não. A forma correta é ${extra.label}. ${extra.rule} A crase tem regras — e as regras existem para ser aprendidas, não ignoradas.`,
   ]); }
 
@@ -902,7 +905,7 @@ function bras(situation, extra={}) {
 
   // Simula pequeno delay para manter o ritmo do jogo
   return new Promise(resolve =>
-    setTimeout(() => resolve(MAP[situation] || 'Brás Cubas pondera em silêncio.'),
+    setTimeout(() => resolve(MAP[situation] || 'A voz do sertão pondera em silêncio.'),
     500 + Math.random()*700)
   );
 }
@@ -917,7 +920,7 @@ async function init() {
   document.addEventListener('click', () => {
     if (!audioCtx) startMusic();
   }, { once: true });
-  setInteract('<span style="color:rgba(201,162,39,.3);font-style:italic;font-size:.82rem;">Invocando o defunto autor…</span>');
+  setInteract('<span style="color:rgba(201,162,39,.3);font-style:italic;font-size:.82rem;">Despertando a voz do sertão…</span>');
   showTyping();
   const txt = await bras('intro');
   hideTyping(); addMsg('bras', txt);
@@ -956,7 +959,7 @@ async function answer(chose) {
   const ok   = (chose === q.crase);
   addMsg('player', chose ? '— À (com crase)' : '— A (sem crase)');
   G.answered.push(ok); dots();
-  setInteract('<span style="color:rgba(201,162,39,.3);font-style:italic;font-size:.82rem;">Brás pondera…</span>');
+  setInteract('<span style="color:rgba(201,162,39,.3);font-style:italic;font-size:.82rem;">A voz pondera…</span>');
   showTyping();
   const txt = await bras(ok?'correct':'wrong',
     {b:q.b, a:q.a, label:q.label, rule:q.rule, chose: chose?'à':'a'});
@@ -974,7 +977,7 @@ async function answer(chose) {
 
 async function transHints() {
   if (G.busy) return; G.busy=true;
-  setInteract('<span style="color:rgba(201,162,39,.3);font-style:italic;font-size:.82rem;">Brás prepara a pista…</span>');
+  setInteract('<span style="color:rgba(201,162,39,.3);font-style:italic;font-size:.82rem;">A voz prepara a pista…</span>');
   showTyping();
   const txt = await bras('qs_done');
   hideTyping(); addMsg('bras', txt);
@@ -986,7 +989,7 @@ async function giveHint() {
   if (G.busy) return;
   if (G.hints >= 3) { revealBook(); return; }
   G.busy=true;
-  setInteract('<span style="color:rgba(201,162,39,.3);font-style:italic;font-size:.82rem;">Brás sussurra do além…</span>');
+  setInteract('<span style="color:rgba(201,162,39,.3);font-style:italic;font-size:.82rem;">A voz sussurra…</span>');
   showTyping();
   const txt = await bras('hint');
   hideTyping(); addMsg('bras', txt);
@@ -1017,7 +1020,7 @@ async function guessBook() {
   const ph   = PHASES[G.phase];
   const ok   = ph.aliases.some(a => normalize(a)===nrm || nrm.includes(normalize(a)) || normalize(a).includes(nrm));
   addMsg('player', `— "${raw}"`);
-  setInteract('<span style="color:rgba(201,162,39,.3);font-style:italic;font-size:.82rem;">Brás considera…</span>');
+  setInteract('<span style="color:rgba(201,162,39,.3);font-style:italic;font-size:.82rem;">A voz considera…</span>');
   showTyping();
   const txt = await bras(ok?'right_book':'wrong_book', {guess:raw});
   hideTyping(); addMsg('bras', txt);
@@ -1028,7 +1031,7 @@ async function guessBook() {
 
 async function revealBook() {
   G.busy=true;
-  setInteract('<span style="color:rgba(201,162,39,.3);font-style:italic;font-size:.82rem;">Brás revela o segredo…</span>');
+  setInteract('<span style="color:rgba(201,162,39,.3);font-style:italic;font-size:.82rem;">A voz revela o segredo…</span>');
   showTyping();
   const txt = await bras('reveal_book');
   hideTyping(); addMsg('bras', txt);
@@ -1040,12 +1043,12 @@ async function advance() {
   G.phase++;
   if (G.phase >= 4) {
     G.phase = 3;
-    addMsg('sys','✦ &nbsp; Os 4 livros foram descobertos — o enigma final aguarda &nbsp; ✦');
+    addMsg('sys','✷ &nbsp; Os 4 livros foram descobertos — o enigma final aguarda &nbsp; ✷');
     await delay(1400);
     await startFinalEnigma();
     return;
   }
-  addMsg('sys',`✦ &nbsp; Desafio ${G.phase} concluído — prepare-se para o próximo &nbsp; ✦`);
+  addMsg('sys',`✷ &nbsp; Desafio ${G.phase} concluído — prepare-se para o próximo &nbsp; ✷`);
   dots();
   await delay(1400); startPhase();
 }
@@ -1110,7 +1113,7 @@ async function checkAMOR() {
     clearInterval(G.timer); G.busy=false;
     setTimeout(()=>{ document.getElementById('vtext').textContent=txt; confetti(); document.getElementById('victory').classList.add('show'); }, 2000);
   } else {
-    setInteract('<span style="color:rgba(201,162,39,.3);font-style:italic;font-size:.82rem;">Brás considera…</span>');
+    setInteract('<span style="color:rgba(201,162,39,.3);font-style:italic;font-size:.82rem;">A voz considera…</span>');
     showTyping();
     const txt = await bras('final_wrong', {guess:raw});
     hideTyping(); addMsg('bras', txt);
@@ -1130,7 +1133,7 @@ async function checkAMOR() {
 }
 
 function timeUp() {
-  addMsg('sys','⧖ O tempo esgotou-se. Como a vida de Brás Cubas — chegou ao fim sem aviso.');
+  addMsg('sys','⧖ O tempo esgotou-se. Como a água no sertão — acabou sem aviso.');
   setInteract(`<button class="btn-ghost" style="max-width:260px" onclick="location.reload()">▸ TENTAR NOVAMENTE</button>`);
 }
 
