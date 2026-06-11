@@ -24,7 +24,9 @@
   <style>
     /* ── Masthead bicolor ── */
     .masthead {
-      background: linear-gradient(135deg, #0D1B2A 0%, #1565C0 100%);
+      background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='340' height='220'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='.07'%3E%3Ccircle cx='40' cy='40' r='2.2' fill='%23fff' fill-opacity='.14' stroke='none'/%3E%3Ccircle cx='150' cy='90' r='1.6' fill='%23fff' fill-opacity='.12' stroke='none'/%3E%3Ccircle cx='260' cy='30' r='2' fill='%23fff' fill-opacity='.13' stroke='none'/%3E%3Ccircle cx='90' cy='170' r='1.8' fill='%23fff' fill-opacity='.12' stroke='none'/%3E%3Ccircle cx='300' cy='150' r='2.4' fill='%23fff' fill-opacity='.1' stroke='none'/%3E%3Ccircle cx='210' cy='190' r='1.4' fill='%23fff' fill-opacity='.12' stroke='none'/%3E%3Cpath d='M40 40 L150 90 L260 30 M150 90 L90 170 M260 30 L300 150 L210 190'/%3E%3C/g%3E%3C/svg%3E"),
+        linear-gradient(120deg, #0A1828 0%, #11365F 55%, #1565C0 100%);
       color: #fff;
       text-align: center;
       padding: clamp(20px,3.5vw,30px) 18px clamp(16px,3vw,24px);
@@ -152,7 +154,7 @@
   <header class="masthead">
     <div class="circulo1" aria-hidden="true"></div>
     <div class="circulo2" aria-hidden="true"></div>
-    <img class="ilustracao" src="assets/img/header-ilustracao.png" alt="" aria-hidden="true">
+
 
     <img class="avatar" src="assets/img/professor.jpg" alt="Prof. Marcos Cruz"
          onerror="this.style.display='none';document.getElementById('av-fb').style.display='flex'">
@@ -183,6 +185,8 @@
       <a class="nav-cat" href="#arte"        style="--cor-cat:#E65100">Arte</a>
       <a class="nav-cat" href="#saeb"        style="--cor-cat:#6A1B9A">SAEB · SIMAVE</a>
       <a class="nav-cat" href="#bncc"        style="--cor-cat:#AD1457">BNCC · CRMG</a>
+      <a class="nav-cat" href="#enem"        style="--cor-cat:#C62828">ENEM</a>
+      <a class="nav-cat" href="obras.html"   style="--cor-cat:#8E24AA">📚 Obras</a>
     </div>
   </nav>
 
@@ -220,7 +224,8 @@ const SECOES = [
   { id:"informatica", rotulo:"Informática", cor:"#1565C0", breve:"Simulador de Terminal Linux · Montador de Rede" },
   { id:"arte",        rotulo:"Arte",        cor:"#E65100", breve:"Criador de Op Art · Galeria do Barroco Mineiro" },
   { id:"saeb",        rotulo:"SAEB · SIMAVE", cor:"#6A1B9A", breve:"Simulado completo · Questões por descritor · Caderno de treino" },
-  { id:"bncc",        rotulo:"BNCC · CRMG",   cor:"#AD1457", breve:"Atividades por habilidade · Sequências didáticas alinhadas" }
+  { id:"bncc",        rotulo:"BNCC · CRMG",   cor:"#AD1457", breve:"Atividades por habilidade · Sequências didáticas alinhadas" },
+  { id:"enem",        rotulo:"ENEM",          cor:"#C62828", breve:"Simulado Linguagens II · Redação nota 1000 · Cine-Leitura: novos vídeos" }
 ];
 
 const ATIVIDADES = [
@@ -290,7 +295,25 @@ const ATIVIDADES = [
   { secao:"bncc", titulo:"Planejamento CRMG — Planos de aula", tipo:"🔗 Site oficial",
     anos:["6º","7º","8º","9º"], tempo:"consulta", url:"https://planos.professormg.com.br/", ext:true, novo:false },
   { secao:"bncc", titulo:"BNCC — Documento completo (MEC)", tipo:"📄 Documento oficial",
-    anos:["6º","7º","8º","9º"], tempo:"consulta", url:"https://www.gov.br/mec/pt-br/cne/bncc_ensino_medio.pdf", ext:true, novo:false }
+    anos:["6º","7º","8º","9º"], tempo:"consulta", url:"https://www.gov.br/mec/pt-br/cne/bncc_ensino_medio.pdf", ext:true, novo:false },
+
+  /* SAEB avançado */
+  { secao:"saeb", titulo:"Simulado Avançado — Leitura de Textos", tipo:"🏆 Nível aprofundado",
+    anos:["9º"], tempo:"25 min", url:"atividades/simulado-saeb-avancado.html", novo:true },
+
+  /* ENEM */
+  { secao:"enem", titulo:"Simulado ENEM — Linguagens I", tipo:"📝 Simulado",
+    anos:["2EM","3EM"], tempo:"25 min", url:"atividades/simulado-enem.html", novo:true },
+  { secao:"enem", titulo:"Quiz — Obras Literárias do ENEM", tipo:"📚 Quiz",
+    anos:["2EM","3EM"], tempo:"15 min", url:"atividades/quiz-obras.html", novo:true },
+  { secao:"enem", titulo:"Biblioteca — 30 Obras que caem no ENEM", tipo:"🏛 Acervo",
+    anos:["1EM","2EM","3EM"], tempo:"consulta", url:"obras.html", novo:true },
+  { secao:"enem", titulo:"Cine-Leitura — Trailer: Central do Brasil", tipo:"🎬 Vídeo + questões",
+    anos:["9º","1EM","2EM"], tempo:"15 min", url:"atividades/video-central-brasil.html", novo:true },
+  { secao:"enem", titulo:"Música & Leitura — \"Cidadão\"", tipo:"🎵 Vídeo + questões",
+    anos:["9º","1EM","2EM"], tempo:"15 min", url:"atividades/video-cidadao.html", novo:true },
+  { secao:"enem", titulo:"Provas e gabaritos oficiais (INEP)", tipo:"📄 Site oficial",
+    anos:["3EM"], tempo:"consulta", url:"https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enem/provas-e-gabaritos", ext:true, novo:false }
 ];
 
 /* ── Render ── */
@@ -339,5 +362,6 @@ function desenhar(termo = "") {
 document.getElementById("campo-busca").addEventListener("input", e => desenhar(e.target.value));
 desenhar();
 </script>
+<script src="assets/js/marquinhos.js"></script>
 </body>
 </html>

@@ -416,3 +416,31 @@ main { padding-block: var(--esp-4) var(--esp-5); }
 :root { --roxo-saeb:#6A1B9A; --roxo-saeb-claro:#F1E6F7; --vinho-bncc:#AD1457; --vinho-bncc-claro:#FAE3EC; }
 .materia-saeb { --cor-materia: var(--roxo-saeb); --cor-materia-claro: var(--roxo-saeb-claro); }
 .materia-bncc { --cor-materia: var(--vinho-bncc); --cor-materia-claro: var(--vinho-bncc-claro); }
+
+/* Seção ENEM */
+:root { --enem:#C62828; --enem-claro:#FBE9E7; }
+.materia-enem { --cor-materia: var(--enem); --cor-materia-claro: var(--enem-claro); }
+
+/* Vídeo embutido (16:9 responsivo) */
+.video-wrap {
+  position: relative; padding-top: 56.25%;
+  border-radius: var(--raio); overflow: hidden;
+  box-shadow: var(--sombra-alta); margin-bottom: var(--esp-3);
+  background: #000;
+}
+.video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+/* Texto-base das questões (formato SAEB/ENEM) */
+.texto-base {
+  background: #FFFDF7;
+  border: 1px solid var(--linha);
+  border-left: 4px solid var(--cor-materia);
+  border-radius: 0 var(--raio) var(--raio) 0;
+  padding: var(--esp-3);
+  font-size: .96rem; line-height: 1.65;
+  max-height: 300px; overflow-y: auto;
+  margin-bottom: var(--esp-3);
+}
+.texto-base p { margin: 0 0 10px; }
+.texto-base p:last-child { margin: 0; }
+.texto-base .fonte { font-size: .78rem; color: var(--tinta-suave); font-style: italic; }

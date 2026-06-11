@@ -17,3 +17,8 @@ function doPost(e) {
                  d.acertos, d.total, d.pct + "%"]);
   return ContentService.createTextOutput("ok");
 }
+
+/** Permite testar a URL no navegador: deve mostrar a mensagem abaixo. */
+function doGet() {
+  return ContentService.createTextOutput("✅ Receptor funcionando! Pode fechar esta página.");
+}

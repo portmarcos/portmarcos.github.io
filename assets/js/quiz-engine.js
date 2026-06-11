@@ -23,7 +23,18 @@
   const CHAVE_PLACAR = "placar:" + d.id;
 
   /* Sheets configurado? */
-  const sheetsAtivo = typeof SHEETS_URL === "string" && SHEETS_URL.startsWith("https://");
+  const urlSheets = (typeof SHEETS_URL === "string" ? SHEETS_URL : "").trim();
+  const sheetsAtivo = urlSheets.startsWith("https://");
+
+  /* Vídeo da atividade (se houver) */
+  if (d.video) {
+    const wrap = document.createElement("div");
+    wrap.className = "video-wrap";
+    wrap.innerHTML = `<iframe src="https://www.youtube.com/embed/${d.video}"
+      title="Vídeo da atividade" allowfullscreen
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>`;
+    telaInicio.parentNode.insertBefore(wrap, telaInicio);
+  }
 
   /* Preenche a tela inicial */
   $("quiz-titulo").textContent = d.titulo;
@@ -88,6 +99,18 @@
   function desenharQuestao() {
     const q = d.questoes[indice];
     elProgresso.textContent = `Questão ${indice + 1} de ${d.questoes.length}`;
+    /* Texto-base (para questões com texto de apoio) */
+    let tb = document.getElementById("texto-base");
+    if (q.texto) {
+      if (!tb) {
+        tb = document.createElement("div");
+        tb.id = "texto-base";
+        tb.className = "texto-base";
+        elEnunciado.parentNode.insertBefore(tb, elEnunciado);
+      }
+      tb.innerHTML = q.texto;
+      tb.hidden = false;
+    } else if (tb) { tb.hidden = true; }
     elEnunciado.textContent = q.pergunta;
     elExplica.hidden = true; btnProxima.hidden = true;
     elOpcoes.innerHTML = "";
@@ -143,7 +166,7 @@
 
     /* ---------- Envio para o Google Sheets ---------- */
     if (sheetsAtivo) {
-      fetch(SHEETS_URL, {
+      fetch(urlSheets, {
         method: "POST",
         mode: "no-cors", /* Apps Script não devolve CORS; o envio funciona mesmo assim */
         headers: { "Content-Type": "text/plain;charset=utf-8" },

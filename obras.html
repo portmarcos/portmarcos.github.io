@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Biblioteca de Obras — Prof. Marcos Cruz</title>
+  <meta property="og:title" content="Biblioteca de Obras Literárias 📚">
+  <meta property="og:description" content="30 obras brasileiras cobradas no ENEM e vestibulares, com resumo em vídeo e quiz.">
+  <meta property="og:image" content="https://portmarcos.github.io/assets/img/og-capa.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/design-system.css">
+  <style>
+    .obra-card { display:flex;flex-direction:column;gap:7px;background:var(--superficie);
+      border:1px solid var(--linha);border-left:6px solid var(--cor-mov);
+      border-radius:var(--raio);padding:16px;box-shadow:var(--sombra); }
+    .obra-titulo { font-family:var(--fonte-titulo);font-weight:700;font-size:1.02rem;line-height:1.2; }
+    .obra-autor { font-size:.85rem;color:var(--tinta-suave); }
+    .obra-hook { font-size:.88rem;line-height:1.45; }
+    .obra-acoes { display:flex;gap:8px;margin-top:6px;flex-wrap:wrap; }
+    .obra-btn { font-size:.78rem;font-weight:700;text-decoration:none;
+      padding:6px 12px;border-radius:999px;border:1.5px solid var(--linha);color:var(--tinta); }
+    .obra-btn.video { background:var(--cor-mov);border-color:var(--cor-mov);color:#fff; }
+    .tag-mov { align-self:flex-start;font-size:.68rem;font-weight:800;letter-spacing:.05em;
+      text-transform:uppercase;color:var(--cor-mov); }
+    .tag-quiz { font-size:.68rem;font-weight:800;color:var(--certo); }
+  </style>
+</head>
+<body class="materia-portugues">
+  <div class="barra-tricolor"></div>
+  <header class="cabecalho">
+    <div class="container cabecalho-conteudo">
+      <span class="marca"><a href="index.html">Prof. Marcos Cruz</a></span>
+      <span class="sub">Biblioteca de Obras Literárias</span>
+    </div>
+  </header>
+
+  <main class="container">
+    <a class="voltar" href="index.html">← Voltar ao portal</a>
+    <h1>📚 30 Obras que caem no ENEM</h1>
+    <p style="color:var(--tinta-suave);max-width:640px">
+      As obras brasileiras mais cobradas no ENEM e nos vestibulares.
+      Cada card traz o resumo em vídeo no YouTube. As marcadas com
+      <strong style="color:var(--certo)">✓ no quiz</strong> têm questões no
+      <a href="atividades/quiz-obras.html">Quiz de Obras</a>.
+    </p>
+
+    <input id="campo-busca" class="busca" type="search" placeholder="Buscar obra ou autor…" style="margin-top:14px">
+    <div class="linha-chips" id="chips-mov" style="margin-top:10px"></div>
+    <div class="grade-cards" id="grade" style="margin-top:18px"></div>
+  </main>
+
+  <footer class="rodape"><div class="container">Portal do Professor Marcos Cruz</div></footer>
+
+<script>
+const MOVS = {
+  "Romantismo":          "#8E24AA",
+  "Realismo/Naturalismo":"#2E7D32",
+  "Pré-Modernismo":      "#5D4037",
+  "Modernismo":          "#1565C0",
+  "Pós-45":              "#E65100",
+  "Contemporânea":       "#C62828"
+};
+/* titulo | autor | ano | movimento | por que importa | está no quiz? */
+const OBRAS = [
+  ["O Guarani","José de Alencar",1857,"Romantismo","Peri e Ceci: o indianismo que fundou o mito do herói nacional.",false],
+  ["Iracema","José de Alencar",1865,"Romantismo","A 'virgem dos lábios de mel': alegoria da América entregue ao colonizador.",true],
+  ["Lucíola","José de Alencar",1862,"Romantismo","Perfil de mulher entre o amor e o julgamento da sociedade carioca.",false],
+  ["Senhora","José de Alencar",1875,"Romantismo","Aurélia compra o marido: o casamento como contrato comercial.",true],
+  ["A Moreninha","Joaquim M. de Macedo",1844,"Romantismo","O primeiro best-seller nacional: juras de amor na ilha.",false],
+  ["Memórias de um Sargento de Milícias","Manuel A. de Almeida",1854,"Romantismo","Leonardo, o anti-herói malandro no Rio de D. João VI.",false],
+  ["Memórias Póstumas de Brás Cubas","Machado de Assis",1881,"Realismo/Naturalismo","O defunto autor que inaugurou o Realismo com ironia genial.",true],
+  ["Dom Casmurro","Machado de Assis",1899,"Realismo/Naturalismo","Capitu traiu? O narrador ciumento nunca deixará você saber.",true],
+  ["Quincas Borba","Machado de Assis",1891,"Realismo/Naturalismo","'Ao vencedor, as batatas': o Humanitismo e a loucura de Rubião.",false],
+  ["O Cortiço","Aluísio Azevedo",1890,"Realismo/Naturalismo","O cortiço como personagem vivo: determinismo naturalista puro.",true],
+  ["O Ateneu","Raul Pompeia",1888,"Realismo/Naturalismo","O internato cruel visto pela memória ácida de Sérgio.",false],
+  ["Os Sertões","Euclides da Cunha",1902,"Pré-Modernismo","Canudos: a terra, o homem, a luta — jornalismo que virou monumento.",false],
+  ["Triste Fim de Policarpo Quaresma","Lima Barreto",1915,"Pré-Modernismo","O patriota ingênuo esmagado pela República que ele amava.",false],
+  ["Urupês","Monteiro Lobato",1918,"Pré-Modernismo","Nasce o Jeca Tatu: o caboclo esquecido pelo Estado.",true],
+  ["Eu","Augusto dos Anjos",1912,"Pré-Modernismo","Poesia de vermes e protoplasmas: o poeta mais estranho do Brasil.",false],
+  ["Macunaíma","Mário de Andrade",1928,"Modernismo","O herói sem nenhum caráter: rapsódia da identidade brasileira.",false],
+  ["Libertinagem","Manuel Bandeira",1930,"Modernismo","'Vou-me embora pra Pasárgada': o verso livre da vida inteira.",false],
+  ["O Quinze","Rachel de Queiroz",1930,"Modernismo","A seca de 1915 no Ceará pela primeira grande romancista do país.",false],
+  ["Capitães da Areia","Jorge Amado",1937,"Modernismo","Meninos de rua em Salvador: crime, ternura e denúncia.",true],
+  ["Vidas Secas","Graciliano Ramos",1938,"Modernismo","Fabiano, Baleia e a prosa seca como o sertão.",true],
+  ["Sentimento do Mundo","C. Drummond de Andrade",1940,"Modernismo","O poeta de Itabira diante da guerra e do mundo.",false],
+  ["Fogo Morto","José Lins do Rego",1943,"Modernismo","A decadência dos engenhos de açúcar na Paraíba.",false],
+  ["Sagarana","Guimarães Rosa",1946,"Pós-45","Nove novelas do sertão: a estreia da língua roseana.",false],
+  ["Romanceiro da Inconfidência","Cecília Meireles",1953,"Pós-45","A Inconfidência Mineira em romances líricos — Minas em versos.",false],
+  ["Morte e Vida Severina","João Cabral de Melo Neto",1955,"Pós-45","O auto do retirante Severino: poesia enxuta e social.",false],
+  ["Grande Sertão: Veredas","Guimarães Rosa",1956,"Pós-45","Riobaldo, Diadorim e o pacto: 'viver é muito perigoso'.",true],
+  ["Quarto de Despejo","Carolina Maria de Jesus",1960,"Contemporânea","O diário da favela que abalou a literatura brasileira.",true],
+  ["A Hora da Estrela","Clarice Lispector",1977,"Contemporânea","Macabéa, a nordestina invisível, e o narrador que se desfaz.",false],
+  ["Auto da Compadecida","Ariano Suassuna",1955,"Pós-45","João Grilo e Chicó: o riso nordestino que julga até o céu.",false],
+  ["Torto Arado","Itamar Vieira Junior",2019,"Contemporânea","Bibiana e Belonísia: terra, herança e silêncio no sertão baiano.",false]
+];
+
+const grade = document.getElementById("grade");
+const chips = document.getElementById("chips-mov");
+const norm = t => t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+let filtroMov = "todas", termo = "";
+
+chips.innerHTML = `<button class="chip ativo" data-mov="todas">Todas</button>` +
+  Object.keys(MOVS).map(m => `<button class="chip" data-mov="${m}">${m}</button>`).join("");
+chips.querySelectorAll(".chip").forEach(c => c.addEventListener("click", () => {
+  chips.querySelectorAll(".chip").forEach(x => x.classList.remove("ativo"));
+  c.classList.add("ativo");
+  filtroMov = c.dataset.mov;
+  desenhar();
+}));
+document.getElementById("campo-busca").addEventListener("input", e => { termo = e.target.value; desenhar(); });
+
+function desenhar() {
+  const t = norm(termo);
+  grade.innerHTML = OBRAS.filter(o =>
+    (filtroMov === "todas" || o[3] === filtroMov) &&
+    (t === "" || norm(o[0] + " " + o[1]).includes(t))
+  ).map(([tit, autor, ano, mov, hook, quiz]) => `
+    <div class="obra-card" style="--cor-mov:${MOVS[mov]}">
+      <span class="tag-mov">${mov}</span>
+      <div class="obra-titulo">${tit}</div>
+      <div class="obra-autor">${autor} · ${ano} ${quiz ? '<span class="tag-quiz">· ✓ no quiz</span>' : ""}</div>
+      <div class="obra-hook">${hook}</div>
+      <div class="obra-acoes">
+        <a class="obra-btn video" target="_blank" rel="noopener"
+           href="https://www.youtube.com/results?search_query=${encodeURIComponent("resumo " + tit + " " + autor)}">▶ Resumo no YouTube</a>
+        ${quiz ? '<a class="obra-btn" href="atividades/quiz-obras.html">🎮 Quiz</a>' : ""}
+      </div>
+    </div>`).join("");
+}
+desenhar();
+</script>
+</body>
+</html>
