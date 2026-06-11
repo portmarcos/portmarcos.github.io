@@ -3,208 +3,300 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Portal de Aulas — Prof. Marcos</title>
-  <meta name="description" content="Atividades interativas de Português, Informática Técnica e Artes.">
+  <title>Portal do Professor Marcos Cruz</title>
+  <meta name="description" content="Atividades interativas de Literatura, Gramática, Informática e Arte.">
 
-  <!-- Open Graph: preview bonito quando o link é enviado no WhatsApp -->
-  <meta property="og:title" content="Portal de Aulas — Prof. Marcos">
-  <meta property="og:description" content="Quizzes, flashcards, escape rooms e jogos de Português, Informática e Artes.">
+  <meta property="og:title" content="Portal do Professor Marcos Cruz">
+  <meta property="og:description" content="Quizzes, flashcards, escape rooms e avaliações de Literatura, Gramática, Informática e Arte.">
   <meta property="og:image" content="https://portmarcos.github.io/assets/img/og-capa.png">
   <meta property="og:url" content="https://portmarcos.github.io/">
   <meta property="og:type" content="website">
 
   <link rel="icon" href="favicon.ico">
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#1B2430">
+  <meta name="theme-color" content="#0D1B2A">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/design-system.css">
+
+  <style>
+    /* ── Masthead bicolor ── */
+    .masthead {
+      background: linear-gradient(135deg, #0D1B2A 0%, #1565C0 100%);
+      color: #fff;
+      text-align: center;
+      padding: clamp(28px,5vw,44px) 18px clamp(22px,4vw,34px);
+      position: relative;
+      overflow: hidden;
+    }
+    .masthead .circulo1 {
+      position:absolute;top:-60px;left:-80px;
+      width:320px;height:320px;border-radius:50%;
+      background:rgba(255,255,255,.04);pointer-events:none;
+    }
+    .masthead .circulo2 {
+      position:absolute;bottom:-90px;right:-60px;
+      width:280px;height:280px;border-radius:50%;
+      background:rgba(255,255,255,.05);pointer-events:none;
+    }
+    .masthead .avatar {
+      width:80px;height:80px;border-radius:50%;
+      margin:0 auto 14px;display:block;
+      border:2px solid rgba(255,255,255,.3);
+      object-fit:cover;
+    }
+    .masthead .avatar-fallback {
+      width:80px;height:80px;border-radius:50%;
+      margin:0 auto 14px;
+      background:rgba(255,255,255,.12);
+      border:2px solid rgba(255,255,255,.3);
+      display:flex;align-items:center;justify-content:center;
+      font-family:var(--fonte-titulo);font-weight:800;
+      font-size:1.9rem;color:#fff;
+    }
+    .masthead .portal-nome {
+      font-family:var(--fonte-titulo);font-weight:800;
+      font-size:clamp(1.6rem,6.5vw,2.75rem);
+      letter-spacing:.06em;text-transform:uppercase;line-height:1.05;
+    }
+    .masthead .portal-sub {
+      color:rgba(255,255,255,.6);font-size:.83rem;
+      margin-top:8px;letter-spacing:.02em;
+    }
+    .masthead blockquote {
+      font-family:var(--fonte-titulo);font-weight:700;
+      font-style:italic;
+      font-size:clamp(.92rem,3.2vw,1.25rem);
+      max-width:620px;margin:22px auto 0;
+      color:rgba(255,255,255,.85);line-height:1.45;
+      border-left:3px solid rgba(255,255,255,.3);
+      padding-left:14px;text-align:left;
+    }
+    .masthead .citacao-autor {
+      color:rgba(255,255,255,.5);margin-top:10px;
+      font-size:.82rem;font-style:italic;
+    }
+    .contador-visitas {
+      display:inline-flex;align-items:center;gap:8px;
+      margin-top:20px;
+      background:rgba(255,255,255,.1);
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:999px;padding:6px 16px;
+      font-size:.82rem;color:rgba(255,255,255,.75);
+    }
+    .contador-visitas strong { color:#fff;font-size:.95rem; }
+
+    /* ── Navegação por conteúdo ── */
+    .nav-categorias {
+      background:#152336;
+      position:sticky;top:0;z-index:50;
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .nav-categorias .trilho {
+      display:flex;overflow-x:auto;scrollbar-width:none;
+    }
+    .nav-categorias .trilho::-webkit-scrollbar { display:none; }
+    .nav-cat {
+      flex:0 0 auto;color:#9EAFC2;font-weight:700;font-size:.88rem;
+      text-decoration:none;padding:13px 16px;
+      border-bottom:3px solid transparent;
+      transition:color .15s,border-color .15s;
+    }
+    .nav-cat:hover { color:#fff;border-bottom-color:var(--cor-cat); }
+
+    /* ── Seções por conteúdo ── */
+    .secao { margin-top:44px;scroll-margin-top:64px; }
+    .secao-cabeca {
+      display:flex;align-items:center;gap:14px;margin-bottom:16px;
+    }
+    .secao-rotulo {
+      font-family:var(--fonte-titulo);font-weight:800;
+      letter-spacing:.1em;text-transform:uppercase;
+      font-size:.97rem;color:var(--cor-sec);
+      white-space:nowrap;
+    }
+    .secao-cabeca::after {
+      content:"";flex:1;height:3px;
+      background:var(--cor-sec);border-radius:99px;opacity:.2;
+    }
+
+    /* Card "em breve" */
+    .card-breve {
+      display:flex;flex-direction:column;gap:8px;justify-content:center;
+      border:2px dashed var(--linha);border-radius:var(--raio);
+      padding:var(--esp-3);color:var(--tinta-suave);
+      min-height:120px;
+    }
+    .card-breve .rotulo-breve {
+      font-weight:800;font-size:.72rem;letter-spacing:.06em;
+      text-transform:uppercase;color:var(--cor-sec);
+    }
+  </style>
 </head>
 <body>
-
   <div class="barra-tricolor"></div>
 
-  <header class="cabecalho">
-    <div class="container cabecalho-conteudo">
-      <span class="marca"><a href="./">Portal de Aulas</a></span>
-      <span class="sub">Prof. Marcos · Português · Informática · Artes</span>
+  <!-- Masthead -->
+  <header class="masthead">
+    <div class="circulo1" aria-hidden="true"></div>
+    <div class="circulo2" aria-hidden="true"></div>
+
+    <img class="avatar" src="assets/img/professor.jpg" alt="Prof. Marcos Cruz"
+         onerror="this.style.display='none';document.getElementById('av-fb').style.display='flex'">
+    <div class="avatar-fallback" id="av-fb" style="display:none" aria-hidden="true">M</div>
+
+    <div class="portal-nome">Prof. Marcos Cruz</div>
+    <div class="portal-sub">Português · Informática Técnica · Artes — Santo Antônio do Retiro, MG</div>
+
+    <blockquote>
+      "Chega mais perto e contempla as palavras. Cada uma tem mil faces secretas
+      sob a face neutra e te pergunta, sem interesse pela resposta,
+      pobre ou terrível que lhe deres: Trouxeste a chave?"
+    </blockquote>
+    <p class="citacao-autor">— Carlos Drummond de Andrade, <em>Procura da Poesia</em></p>
+
+    <div class="contador-visitas">
+      <span aria-hidden="true">👁</span>
+      <span id="contador-texto">carregando…</span>
     </div>
   </header>
 
+  <!-- Navegação por conteúdo -->
+  <nav class="nav-categorias">
+    <div class="container trilho">
+      <a class="nav-cat" href="#literatura"  style="--cor-cat:#2E7D32">Literatura</a>
+      <a class="nav-cat" href="#gramatica"   style="--cor-cat:#00695C">Gramática</a>
+      <a class="nav-cat" href="#informatica" style="--cor-cat:#1565C0">Informática</a>
+      <a class="nav-cat" href="#arte"        style="--cor-cat:#E65100">Arte</a>
+    </div>
+  </nav>
+
   <main class="container">
-
-    <!-- Busca -->
     <input id="campo-busca" class="busca" type="search"
-           placeholder="Buscar atividade… (ex.: crase, Linux, bingo)"
-           aria-label="Buscar atividade">
-
-    <!-- Filtro por matéria -->
-    <div class="linha-chips" role="group" aria-label="Filtrar por matéria" style="margin-top:14px">
-      <button class="chip ativo" data-filtro-materia="todas">Todas</button>
-      <button class="chip" data-filtro-materia="portugues"  data-cor="verde">Português</button>
-      <button class="chip" data-filtro-materia="informatica" data-cor="azul">Informática</button>
-      <button class="chip" data-filtro-materia="artes"       data-cor="laranja">Artes</button>
-    </div>
-
-    <!-- Filtro por ano/turma -->
-    <div class="linha-chips" role="group" aria-label="Filtrar por ano" style="margin-top:8px">
-      <button class="chip ativo" data-filtro-ano="todos">Todos os anos</button>
-      <button class="chip" data-filtro-ano="6º">6º</button>
-      <button class="chip" data-filtro-ano="7º">7º</button>
-      <button class="chip" data-filtro-ano="8º">8º</button>
-      <button class="chip" data-filtro-ano="9º">9º</button>
-      <button class="chip" data-filtro-ano="1EM">1º EM</button>
-      <button class="chip" data-filtro-ano="2EM">2º EM</button>
-      <button class="chip" data-filtro-ano="3EM">3º EM</button>
-    </div>
-
-    <!-- As atividades são desenhadas aqui pelo JavaScript -->
-    <div id="grade" class="grade-cards" style="margin-top:22px"></div>
-    <p id="vazio" class="estado-vazio" hidden>Nenhuma atividade encontrada. Tente outro filtro ou busca.</p>
-
+           placeholder="Buscar atividade… (ex.: crase, Linux, cinema)"
+           aria-label="Buscar atividade" style="margin-top:20px">
+    <div id="conteudo"></div>
+    <p id="vazio" class="estado-vazio" hidden>Nenhuma atividade encontrada.</p>
   </main>
 
   <footer class="rodape">
     <div class="container">
-      Portal de Aulas · Prof. Marcos · Santo Antônio do Retiro – MG
+      Portal do Professor Marcos Cruz · Santo Antônio do Retiro – MG<br>
+      E.E. Prefeito Odílio Fernandes Costa · E.M. Capão
     </div>
   </footer>
 
 <script>
-/* ============================================================
-   CATÁLOGO DE ATIVIDADES
-   Para adicionar uma atividade nova: copie um bloco { ... },
-   ajuste os campos e pronto — o card aparece sozinho.
+/* ── Contador de visitas ── */
+fetch("https://api.countapi.xyz/hit/portmarcos.github.io/portal-v2")
+  .then(r => r.json())
+  .then(d => {
+    const el = document.getElementById("contador-texto");
+    el.innerHTML = `<strong>${d.value.toLocaleString("pt-BR")}</strong> visita${d.value !== 1 ? "s" : ""}`;
+  })
+  .catch(() => {
+    document.getElementById("contador-texto").textContent = "visitas";
+  });
 
-   materia: "portugues" | "informatica" | "artes"
-   anos:    lista entre ["6º","7º","8º","9º","1EM","2EM","3EM"]
-   tipo:    texto livre com emoji (aparece no topo do card)
-   tempo:   duração estimada (texto livre)
-   url:     caminho do arquivo da atividade
-   novo:    true mostra o selo NOVO
-   ============================================================ */
-const ATIVIDADES = [
-  {
-    titulo: "Quiz — Pré-Modernismo Brasileiro",
-    materia: "portugues",
-    anos: ["2EM", "3EM"],
-    tipo: "🎮 Quiz cronometrado",
-    tempo: "10 min",
-    url: "atividades/quiz-premodernismo.html",
-    novo: true
-  },
-  {
-    titulo: "Flashcards — Comandos do Linux Mint",
-    materia: "informatica",
-    anos: ["1EM", "2EM", "3EM"],
-    tipo: "🃏 Flashcards",
-    tempo: "8 min",
-    url: "atividades/flashcards-linux.html",
-    novo: true
-  },
-
-  { titulo: "Escape Room — Malware e Cibersegurança",
-    materia: "informatica",
-    anos: ["1EM"],
-    tipo: "🔐 Escape room",
-    tempo: "30 min",
-    url: "informatica/",
-    novo: false
-  },
-  {
-    titulo: "Escape Room — Crase e Regência Verbal",
-    materia: "portugues",
-    anos: ["1EM", "2EM"],
-    tipo: "🔐 Escape room",
-    tempo: "30 min",
-    url: "portugues/",
-    novo: false
-  },
-  {
-    titulo: "Escape Room — Policarpo Quaresma",
-    materia: "portugues",
-    anos: ["2EM", "3EM"],
-    tipo: "🔐 Escape room",
-    tempo: "30 min",
-    url: "portugues/",
-    novo: false
-  },
-  {
-    titulo: "Bingo — Arte Rupestre",
-    materia: "artes",
-    anos: ["6º"],
-    tipo: "🎰 Bingo",
-    tempo: "25 min",
-    url: "artes/",
-    novo: false
-  },
-  {
-    titulo: "Fato ou Opinião?",
-    materia: "portugues",
-    anos: ["8º", "9º"],
-    tipo: "📋 Atividade guiada",
-    tempo: "20 min",
-    url: "portugues/",
-    novo: false
-  }
+/* ── Catálogo de atividades ── */
+const SECOES = [
+  { id:"literatura",  rotulo:"Literatura",  cor:"#2E7D32", breve:"Cronologia Interativa da Literatura · Duelo de Personagens" },
+  { id:"gramatica",   rotulo:"Gramática",   cor:"#00695C", breve:"Detetive Gramatical · Conectivos em Contexto" },
+  { id:"informatica", rotulo:"Informática", cor:"#1565C0", breve:"Simulador de Terminal Linux · Montador de Rede" },
+  { id:"arte",        rotulo:"Arte",        cor:"#E65100", breve:"Criador de Op Art · Galeria do Barroco Mineiro" }
 ];
 
-/* ---------- Estado dos filtros ---------- */
-let filtroMateria = "todas";
-let filtroAno = "todos";
-let textoBusca = "";
+const ATIVIDADES = [
+  /* Literatura */
+  { secao:"literatura", titulo:"Quiz — Pré-Modernismo Brasileiro", tipo:"🎮 Quiz cronometrado",
+    anos:["2EM","3EM"], tempo:"10 min", url:"atividades/quiz-premodernismo.html", novo:true },
+  { secao:"literatura", titulo:"Flashcards — Pré-Modernismo", tipo:"🃏 Flashcards",
+    anos:["2EM","3EM"], tempo:"8 min", url:"atividades/flashcards-premodernismo.html", novo:true },
+  { secao:"literatura", titulo:"Escape Room — Brás Cubas", tipo:"🔐 Escape room",
+    anos:["2EM"], tempo:"30 min", url:"jogos/bras-cubas/escape-bras-cubas.html", novo:false },
+  { secao:"literatura", titulo:"Escape Room — Vozes do Sertão", tipo:"🔐 Escape room",
+    anos:["3EM"], tempo:"30 min", url:"jogos/vozes-sertao/escape-vozes-sertao.html", novo:false },
+  { secao:"literatura", titulo:"Avaliação — Pré-Modernismo", tipo:"📋 Avaliação",
+    anos:["2EM","3EM"], tempo:"40 min", url:"portugues/pre-modernismo/avaliacao.html", novo:false },
+  { secao:"literatura", titulo:"Avaliação — Romantismo e Realismo", tipo:"📋 Avaliação",
+    anos:["1EM","2EM"], tempo:"40 min", url:"portugues/romantismo-realismo/avaliacao.html", novo:false },
 
-const grade = document.getElementById("grade");
-const vazio = document.getElementById("vazio");
+  /* Gramática */
+  { secao:"gramatica", titulo:"Quiz — Crase e Regência Verbal", tipo:"🎮 Quiz cronometrado",
+    anos:["1EM","2EM"], tempo:"10 min", url:"atividades/quiz-crase.html", novo:true },
+  { secao:"gramatica", titulo:"Escape Room — Orações Coordenadas", tipo:"🔐 Escape room",
+    anos:["2EM"], tempo:"30 min", url:"jogos/bras-cubas-2ano/escape-oracoes-coordenadas.html", novo:false },
+  { secao:"gramatica", titulo:"Avaliação — Crase", tipo:"📋 Avaliação",
+    anos:["1EM","2EM"], tempo:"40 min", url:"portugues/crase-gramatica/avaliacao.html", novo:false },
+  { secao:"gramatica", titulo:"Redação ENEM", tipo:"✍️ Produção textual",
+    anos:["3EM"], tempo:"60 min", url:"portugues/redacao-enem/avaliacao.html", novo:false },
 
-/* Remove acentos para a busca achar "pre" em "Pré" */
-const normalizar = t => t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  /* Informática */
+  { secao:"informatica", titulo:"Quiz — Redes: DNS, DHCP e IP", tipo:"🎮 Quiz cronometrado",
+    anos:["2EM","3EM"], tempo:"10 min", url:"atividades/quiz-redes.html", novo:true },
+  { secao:"informatica", titulo:"Flashcards — Comandos Linux Mint", tipo:"🃏 Flashcards",
+    anos:["1EM","2EM","3EM"], tempo:"8 min", url:"atividades/flashcards-linux.html", novo:true },
+  { secao:"informatica", titulo:"Avaliação — Linux Mint", tipo:"📋 Avaliação",
+    anos:["1EM","2EM"], tempo:"40 min", url:"informatica/linux/avaliacao.html", novo:false },
+  { secao:"informatica", titulo:"Apostila — Redes de Computadores", tipo:"📖 Apostila",
+    anos:["2EM","3EM"], tempo:"leitura", url:"informatica/redes/apostila.html", novo:false },
 
-/* ---------- Desenha os cards conforme os filtros ---------- */
-function desenhar() {
-  const termo = normalizar(textoBusca);
-  const visiveis = ATIVIDADES.filter(a =>
-    (filtroMateria === "todas" || a.materia === filtroMateria) &&
-    (filtroAno === "todos"     || a.anos.includes(filtroAno)) &&
-    (termo === ""              || normalizar(a.titulo).includes(termo))
-  );
+  /* Arte */
+  { secao:"arte", titulo:"Quiz — Linguagem do Cinema", tipo:"🎮 Quiz cronometrado",
+    anos:["9º","1EM"], tempo:"10 min", url:"atividades/quiz-cinema.html", novo:true },
+  { secao:"arte", titulo:"Flashcards — Arte Rupestre", tipo:"🃏 Flashcards",
+    anos:["6º"], tempo:"8 min", url:"atividades/flashcards-arte-rupestre.html", novo:true },
+  { secao:"arte", titulo:"Flashcards — Barroco Mineiro", tipo:"🃏 Flashcards",
+    anos:["7º","8º"], tempo:"8 min", url:"atividades/flashcards-barroco.html", novo:true },
+  { secao:"arte", titulo:"Atividade — Cinema e Audiovisual", tipo:"📋 Atividade",
+    anos:["9º","1EM"], tempo:"30 min", url:"artes/cinema/atividade.html", novo:false }
+];
 
-  grade.innerHTML = visiveis.map(a => `
-    <a class="card-atividade" data-materia="${a.materia}" href="${a.url}">
-      ${a.novo ? '<span class="badge-novo">NOVO</span>' : ""}
-      <div class="card-topo"><span class="card-tipo">${a.tipo}</span></div>
-      <div class="card-titulo">${a.titulo}</div>
-      <div class="card-meta">
-        ${a.anos.map(ano => `<span class="tag">${ano}</span>`).join("")}
-        <span class="tag">⏱ ${a.tempo}</span>
-      </div>
-    </a>
-  `).join("");
+/* ── Render ── */
+const conteudo = document.getElementById("conteudo");
+const vazio    = document.getElementById("vazio");
+const norm = t => t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
 
-  vazio.hidden = visiveis.length > 0;
+function cardHTML(a, cor) {
+  return `<a class="card-atividade" data-materia="${a.secao}"
+              style="--cor-card:${cor}" href="${a.url}">
+    ${a.novo ? `<span class="badge-novo" style="background:${cor}">NOVO</span>` : ""}
+    <div class="card-topo"><span class="card-tipo">${a.tipo}</span></div>
+    <div class="card-titulo">${a.titulo}</div>
+    <div class="card-meta">
+      ${a.anos.map(ano => `<span class="tag">${ano}</span>`).join("")}
+      <span class="tag">⏱ ${a.tempo}</span>
+    </div>
+  </a>`;
 }
 
-/* ---------- Liga os chips e a busca ---------- */
-function ligarChips(atributo, aoEscolher) {
-  document.querySelectorAll(`[${atributo}]`).forEach(chip => {
-    chip.addEventListener("click", () => {
-      document.querySelectorAll(`[${atributo}]`).forEach(c => c.classList.remove("ativo"));
-      chip.classList.add("ativo");
-      aoEscolher(chip.getAttribute(atributo));
-      desenhar();
-    });
-  });
+function desenhar(termo = "") {
+  const t = norm(termo);
+  let total = 0;
+  conteudo.innerHTML = SECOES.map(s => {
+    const itens = ATIVIDADES.filter(a =>
+      a.secao === s.id && (t === "" || norm(a.titulo).includes(t))
+    );
+    total += itens.length;
+    if (itens.length === 0 && t !== "") return "";
+    return `
+      <section class="secao" id="${s.id}" style="--cor-sec:${s.cor}">
+        <div class="secao-cabeca"><span class="secao-rotulo">${s.rotulo}</span></div>
+        <div class="grade-cards">
+          ${itens.map(a => cardHTML(a, s.cor)).join("")}
+          ${t === "" ? `<div class="card-breve" style="--cor-sec:${s.cor}">
+            <span class="rotulo-breve">Em breve</span>
+            <span>${s.breve}</span>
+          </div>` : ""}
+        </div>
+      </section>`;
+  }).join("");
+  vazio.hidden = total > 0;
 }
-ligarChips("data-filtro-materia", v => filtroMateria = v);
-ligarChips("data-filtro-ano",     v => filtroAno = v);
 
-document.getElementById("campo-busca").addEventListener("input", e => {
-  textoBusca = e.target.value;
-  desenhar();
-});
-
+document.getElementById("campo-busca").addEventListener("input", e => desenhar(e.target.value));
 desenhar();
 </script>
 </body>

@@ -336,3 +336,78 @@ main { padding-block: var(--esp-4) var(--esp-5); }
   .painel, .card-atividade { box-shadow: none; border: 1px solid #999; }
   a { color: #000; text-decoration: none; }
 }
+
+/* ============================================================
+   EXTENSÃO EDITORIAL (v2) — masthead estilo revista,
+   citação, seções por conteúdo e categoria Gramática
+   ============================================================ */
+
+/* Nova categoria: Gramática (família do Português, tom verde-petróleo) */
+:root { --teal: #00695C; --teal-claro: #E0F2F0; --roxo:#6A1B9A; }
+.materia-gramatica { --cor-materia: var(--teal); --cor-materia-claro: var(--teal-claro); }
+.card-atividade[data-materia="literatura"] { --cor-card: var(--verde); }
+.card-atividade[data-materia="gramatica"]  { --cor-card: var(--teal); }
+.card-atividade[data-materia="arte"]       { --cor-card: var(--laranja); }
+
+/* Masthead: cabeçalho centrado estilo revista */
+.masthead { background: var(--tinta); color: #fff; text-align: center; padding: 30px 16px 20px; }
+.masthead .nome {
+  font-family: var(--fonte-titulo); font-weight: 800;
+  font-size: clamp(1.6rem, 6.5vw, 2.9rem);
+  letter-spacing: .07em; text-transform: uppercase; line-height: 1.05;
+}
+.masthead .nome a { color: #fff; text-decoration: none; }
+.masthead .linha-fina { color: #9AA4B2; font-size: .85rem; margin-top: 8px; }
+
+/* Faixa de navegação por conteúdo (gruda no topo ao rolar) */
+.nav-categorias { background: #2A3442; position: sticky; top: 0; z-index: 50; }
+.nav-categorias .trilho { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; }
+.nav-categorias .trilho::-webkit-scrollbar { display: none; }
+.nav-cat {
+  flex: 0 0 auto; color: #E8EBF0; font-weight: 700; font-size: .9rem;
+  text-decoration: none; padding: 13px 15px;
+  border-bottom: 3px solid transparent; transition: border-color .15s;
+}
+.nav-cat:hover, .nav-cat:focus-visible { border-bottom-color: var(--cor-cat, #fff); color: #fff; }
+
+/* Bloco da citação com foto do professor */
+.citacao { text-align: center; padding: 36px 18px 6px; }
+.foto-prof {
+  width: 88px; height: 88px; border-radius: 50%; object-fit: cover;
+  border: 3px solid var(--superficie); box-shadow: var(--sombra-alta);
+  margin: 0 auto 14px; display: block;
+}
+.foto-prof-fallback {
+  width: 88px; height: 88px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--verde), var(--azul) 50%, var(--laranja));
+  color: #fff; align-items: center; justify-content: center;
+  font: 800 2rem var(--fonte-titulo); margin: 0 auto 14px;
+}
+.citacao blockquote {
+  font-family: var(--fonte-titulo); font-weight: 700;
+  font-size: clamp(1.1rem, 4.4vw, 1.65rem);
+  max-width: 660px; margin: 0 auto; line-height: 1.35; color: var(--tinta);
+}
+.citacao .autor { color: var(--tinta-suave); margin-top: 10px; font-size: .95rem; }
+
+/* Seções por conteúdo */
+.secao { margin-top: 44px; scroll-margin-top: 64px; }
+.secao-cabeca { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+.secao-rotulo {
+  font-family: var(--fonte-titulo); font-weight: 800;
+  letter-spacing: .1em; text-transform: uppercase;
+  font-size: 1rem; color: var(--cor-sec);
+}
+.secao-cabeca::after {
+  content: ""; flex: 1; height: 3px;
+  background: var(--cor-sec); border-radius: 99px; opacity: .25;
+}
+
+/* Card "em breve": espaço para futuras atividades */
+.card-breve {
+  display: flex; flex-direction: column; gap: 8px; justify-content: center;
+  border: 2px dashed var(--linha); border-radius: var(--raio);
+  padding: var(--esp-3); color: var(--tinta-suave);
+  background: transparent; min-height: 120px;
+}
+.card-breve .rotulo { font-weight: 800; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; }
