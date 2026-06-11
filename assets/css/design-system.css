@@ -411,3 +411,8 @@ main { padding-block: var(--esp-4) var(--esp-5); }
   background: transparent; min-height: 120px;
 }
 .card-breve .rotulo { font-weight: 800; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; }
+
+/* Seções SAEB e BNCC */
+:root { --roxo-saeb:#6A1B9A; --roxo-saeb-claro:#F1E6F7; --vinho-bncc:#AD1457; --vinho-bncc-claro:#FAE3EC; }
+.materia-saeb { --cor-materia: var(--roxo-saeb); --cor-materia-claro: var(--roxo-saeb-claro); }
+.materia-bncc { --cor-materia: var(--vinho-bncc); --cor-materia-claro: var(--vinho-bncc-claro); }
