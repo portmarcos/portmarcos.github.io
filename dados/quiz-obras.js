@@ -1,99 +1,99 @@
-/* QUIZ — Obras Literárias mais cobradas no ENEM e vestibulares */
+/* QUIZ — Obras Literárias I (revisado: alternativas equiparadas, nível aprofundado) */
 const QUIZ_DADOS = {
   id: "obras-enem",
   titulo: "Quiz — Obras Literárias do ENEM",
-  descricao: "10 questões sobre as obras brasileiras mais cobradas: de Machado de Assis a Carolina Maria de Jesus.",
-  tempoPorQuestao: 90,
+  descricao: "10 questões aprofundadas sobre as obras mais cobradas. Atenção: as alternativas são parecidas de propósito — leia todas antes de responder.",
+  tempoPorQuestao: 100,
   questoes: [
-    { pergunta: "Em \"Memórias Póstumas de Brás Cubas\" (Machado de Assis), a grande inovação narrativa é:",
+    { pergunta: "Em Memórias Póstumas de Brás Cubas, a condição de 'defunto autor' interessa menos como fantasia e mais como recurso porque:",
       opcoes: [
-        "O narrador é um defunto que conta a vida após a morte, com total liberdade e ironia",
-        "A história é narrada por uma criança",
-        "O livro não tem narrador",
-        "A narrativa é feita apenas por cartas"
+        "Liberta o narrador de qualquer conveniência social, permitindo a franqueza impiedosa sobre si e sua classe",
+        "Garante ao relato a objetividade científica que o Naturalismo da época exigia dos romancistas",
+        "Permite ao narrador prever o futuro das personagens e antecipar o desfecho de cada episódio",
+        "Aproxima o romance do gênero fantástico, principal filiação estética do Realismo machadiano"
       ],
-      correta: "O narrador é um defunto que conta a vida após a morte, com total liberdade e ironia",
-      explicacao: "O \"defunto autor\" rompe com o Romantismo: livre das convenções dos vivos, Brás Cubas expõe com ironia as hipocrisias da elite do século XIX." },
-    { pergunta: "A dúvida central que move \"Dom Casmurro\" é:",
+      correta: "Liberta o narrador de qualquer conveniência social, permitindo a franqueza impiedosa sobre si e sua classe",
+      explicacao: "Morto, Brás nada deve ao 'olhar da opinião': confessa mesquinharias e expõe a elite do Império sem medo. O recurso é irônico, não fantástico — e Machado manteve distância do cientificismo naturalista." },
+    { pergunta: "Sobre a célebre dúvida de Dom Casmurro — Capitu traiu Bentinho? —, a leitura mais sustentada pela construção do romance é a de que:",
       opcoes: [
-        "Se Capitu traiu ou não Bentinho — questão que o narrador parcial nunca permite resolver",
-        "Quem matou Escobar na praia",
-        "Se Bentinho será padre ou advogado",
-        "A herança da família Pádua"
+        "A pergunta é indecidível, pois só temos a versão de um narrador interessado em provar a culpa da ré",
+        "A traição é confirmada pela carta que Escobar deixa a Sancha e que Bentinho transcreve no final",
+        "A inocência de Capitu é atestada pelo narrador onisciente que corrige Bentinho nos últimos capítulos",
+        "A dúvida se resolve no exame de sangue que Ezequiel realiza ao voltar da Suíça, já adulto"
       ],
-      correta: "Se Capitu traiu ou não Bentinho — questão que o narrador parcial nunca permite resolver",
-      explicacao: "Bentinho narra já velho e enciumado: tudo que sabemos de Capitu passa pelo filtro dele. O \"narrador não confiável\" é o coração da obra." },
-    { pergunta: "Em \"Iracema\" (José de Alencar), a personagem-título representa alegoricamente:",
+      correta: "A pergunta é indecidível, pois só temos a versão de um narrador interessado em provar a culpa da ré",
+      explicacao: "Não há carta, exame nem narrador corretor: tudo passa pela memória do marido ciumento e advogado. A indecidibilidade não é falha — é o projeto do livro." },
+    { pergunta: "A alegoria de Iracema (Alencar) costuma ser lida a partir do anagrama do nome da heroína. Nessa chave, a morte de Iracema após gerar Moacir representa:",
       opcoes: [
-        "A América/o Brasil que se entrega ao colonizador europeu",
-        "A monarquia portuguesa",
-        "A escravidão africana",
-        "A República que viria"
+        "O sacrifício da terra americana na fundação do Brasil mestiço, embalado pelo lirismo da lenda",
+        "A punição religiosa imposta pelo deus Tupã à índia que revelou aos brancos o segredo da jurema",
+        "O triunfo definitivo do povo tabajara sobre os pitiguaras na guerra pelo litoral do Ceará",
+        "A recusa do colonizador português em reconhecer o filho nascido da união com a nativa"
       ],
-      correta: "A América/o Brasil que se entrega ao colonizador europeu",
-      explicacao: "Iracema (anagrama de América) ama Martim, o português, e morre ao gerar Moacir, o primeiro \"brasileiro\" — alegoria romântica da formação nacional." },
-    { pergunta: "Em \"Senhora\" (Alencar), Aurélia compra o próprio marido. A obra critica:",
+      correta: "O sacrifício da terra americana na fundação do Brasil mestiço, embalado pelo lirismo da lenda",
+      explicacao: "Iracema = América: a virgem que se entrega, sofre e morre gerando o 'filho da dor' encena a colonização como mito de origem — beleza que a leitura crítica deve saber desconfiar." },
+    { pergunta: "Os títulos das partes de Senhora (Alencar) — Preço, Quitação, Posse, Resgate — indicam que o romance organiza o enredo amoroso segundo:",
       opcoes: [
-        "O casamento tratado como transação comercial na sociedade burguesa",
-        "A vida no campo brasileiro",
-        "O sistema educacional do Império",
-        "A religiosidade popular"
+        "O vocabulário das transações comerciais, denunciando o casamento burguês como negócio",
+        "As etapas do processo judicial movido por Aurélia contra a família de Fernando Seixas",
+        "Os rituais católicos que marcavam os noivados da corte no Segundo Reinado",
+        "A ordem cronológica das cartas trocadas pelos noivos durante o longo período de separação"
       ],
-      correta: "O casamento tratado como transação comercial na sociedade burguesa",
-      explicacao: "Aurélia, rica, \"adquire\" Fernando Seixas em contrato de dote — Alencar expõe o casamento por interesse, ainda dentro do Romantismo urbano." },
-    { pergunta: "\"O Cortiço\" (Aluísio Azevedo) é a obra-símbolo do Naturalismo porque:",
+      correta: "O vocabulário das transações comerciais, denunciando o casamento burguês como negócio",
+      explicacao: "Aurélia literalmente compra o marido que a preterira por um dote maior; os títulos mercantis estendem a metáfora ao livro inteiro. Crítica social feita ainda dentro do Romantismo." },
+    { pergunta: "Dizer que, em O Cortiço (Aluísio Azevedo), a habitação coletiva é a verdadeira protagonista significa que:",
       opcoes: [
-        "Mostra o ser humano determinado pelo meio, pela raça e pelo momento, com o cortiço como personagem coletivo",
-        "Idealiza a vida dos trabalhadores",
-        "Narra a vida na corte de forma elegante",
-        "É escrito em versos"
+        "O espaço aparece como organismo vivo que nasce, cresce e molda o destino de seus moradores",
+        "A narrativa é contada do ponto de vista do prédio, em monólogo interior experimental",
+        "Nenhuma personagem humana recebe nome próprio ao longo de todo o romance naturalista",
+        "O cortiço resiste intacto ao final, enquanto todas as personagens humanas morrem ou partem"
       ],
-      correta: "Mostra o ser humano determinado pelo meio, pela raça e pelo momento, com o cortiço como personagem coletivo",
-      explicacao: "O determinismo naturalista trata as personagens quase como animais moldados pelo ambiente — e o cortiço \"vive\" como um organismo." },
-    { pergunta: "Em \"Vidas Secas\" (Graciliano Ramos), a linguagem enxuta e a fala quase ausente das personagens:",
+      correta: "O espaço aparece como organismo vivo que nasce, cresce e molda o destino de seus moradores",
+      explicacao: "O São Romão 'acorda', 'fervilha', devora: o determinismo naturalista faz do meio uma força que esmaga o indivíduo — Jerônimo 'abrasileirado' é o exemplo clássico." },
+    { pergunta: "Em Vidas Secas (Graciliano Ramos), a quase ausência de diálogos e o uso intenso do discurso indireto livre servem para:",
       opcoes: [
-        "Espelham a aridez do sertão e a desumanização da família retirante",
-        "Indicam que o autor não dominava a norma culta",
-        "Imitam o estilo dos romances românticos",
-        "Mostram a riqueza da vida urbana"
+        "Dar voz interior a personagens excluídas da linguagem, cuja mudez é parte da opressão que sofrem",
+        "Acelerar o ritmo do enredo, aproximando o romance da estrutura dinâmica do roteiro de cinema",
+        "Demonstrar a superioridade intelectual do narrador culto sobre os retirantes analfabetos",
+        "Reproduzir com exatidão fonética o falar regional nordestino, projeto central do autor"
       ],
-      correta: "Espelham a aridez do sertão e a desumanização da família retirante",
-      explicacao: "Forma e conteúdo se fundem: a secura da prosa é a secura da vida de Fabiano, Sinha Vitória, os meninos e a cachorra Baleia." },
-    { pergunta: "\"Grande Sertão: Veredas\" (Guimarães Rosa) revolucionou a literatura brasileira principalmente:",
+      correta: "Dar voz interior a personagens excluídas da linguagem, cuja mudez é parte da opressão que sofrem",
+      explicacao: "Fabiano 'não sabe se defender' porque as palavras lhe foram negadas; o indireto livre revela por dentro o que ele não consegue dizer — inclusive na consciência da cachorra Baleia." },
+    { pergunta: "Em Grande Sertão: Veredas, a revelação final sobre Diadorim ressignifica retrospectivamente:",
       opcoes: [
-        "Pela linguagem reinventada, que mistura fala sertaneja, neologismos e poesia na prosa",
-        "Por ser o primeiro romance ambientado em São Paulo",
-        "Pela narrativa em terceira pessoa objetiva",
-        "Por evitar qualquer tema filosófico"
+        "Todo o conflito interior de Riobaldo, que vivera o amor como tentação demoníaca e culpa",
+        "A geografia dos gerais, revelada no último capítulo como espaço puramente imaginário",
+        "O resultado da batalha do Paredão, que passa a ser narrado como vitória de Hermógenes",
+        "A linguagem do narrador, que abandona os neologismos e adota a norma culta no desfecho"
       ],
-      correta: "Pela linguagem reinventada, que mistura fala sertaneja, neologismos e poesia na prosa",
-      explicacao: "Riobaldo narra a travessia — jagunçagem, o pacto, o amor por Diadorim — numa língua única. \"Viver é muito perigoso\" virou síntese da obra." },
-    { pergunta: "O Jeca Tatu, de \"Urupês\" (Monteiro Lobato), tornou-se símbolo:",
+      correta: "Todo o conflito interior de Riobaldo, que vivera o amor como tentação demoníaca e culpa",
+      explicacao: "Descobrir que Diadorim era Maria Deodorina transforma a 'tentação do demo' em tragédia de amor impossível — e reabre a pergunta do pacto: o diabo existe ou 'o que existe é o homem humano'?" },
+    { pergunta: "A trajetória pública do Jeca Tatu (Urupês, Monteiro Lobato) inclui uma reviravolta importante: anos após criá-lo, o próprio Lobato:",
       opcoes: [
-        "Do caboclo abandonado pelo poder público, sem saúde e sem escola",
-        "Do fazendeiro rico do café",
-        "Do imigrante italiano em São Paulo",
-        "Do funcionário público da capital"
+        "Retratou-se, afirmando que o caboclo 'não é assim, está assim' — doente e abandonado pelo Estado",
+        "Transformou o personagem em herói militar das campanhas de vacinação do governo Vargas",
+        "Vendeu os direitos do personagem, que passou a símbolo oficial da reforma agrária no país",
+        "Reescreveu o conto ambientando-o na cidade, onde o Jeca enriquece como comerciante"
       ],
-      correta: "Do caboclo abandonado pelo poder público, sem saúde e sem escola",
-      explicacao: "O próprio Lobato depois reviu o personagem: o Jeca não é preguiçoso — é doente e esquecido. Crítica social do Pré-Modernismo." },
-    { pergunta: "\"Capitães da Areia\" (Jorge Amado) narra a vida de:",
+      correta: "Retratou-se, afirmando que o caboclo 'não é assim, está assim' — doente e abandonado pelo Estado",
+      explicacao: "A retratação (ligada às campanhas sanitaristas) muda o sentido do personagem: a 'preguiça' era verminose e abandono. O Jeca da propaganda do Biotônico nasceu daí." },
+    { pergunta: "Capitães da Areia (Jorge Amado) foi queimado em praça pública pelo Estado Novo em 1937. O incômodo do regime se explica porque o romance:",
       opcoes: [
-        "Meninos abandonados que vivem num trapiche em Salvador, entre o crime e a ternura",
-        "Pescadores idosos do litoral paulista",
-        "Estudantes ricos de um internato",
-        "Soldados da Guerra do Paraguai"
+        "Denuncia o abandono da infância pobre e aponta a desigualdade — não o caráter — como origem do crime",
+        "Defende abertamente a restauração da monarquia como solução para a pobreza urbana de Salvador",
+        "Retrata os meninos do trapiche como irrecuperáveis, contrariando a propaganda oficial de ordem",
+        "Revela documentos secretos do governo sobre o tratamento dado aos menores infratores na Bahia"
       ],
-      correta: "Meninos abandonados que vivem num trapiche em Salvador, entre o crime e a ternura",
-      explicacao: "Pedro Bala, Professor, Gato e os outros: o romance de 30 denuncia o abandono da infância — tema que segue atual nas provas." },
-    { pergunta: "\"Quarto de Despejo\" (Carolina Maria de Jesus) é um marco porque:",
+      correta: "Denuncia o abandono da infância pobre e aponta a desigualdade — não o caráter — como origem do crime",
+      explicacao: "Pedro Bala termina líder operário: o livro politiza a questão social num momento de censura. A fogueira só confirmou o alcance da denúncia." },
+    { pergunta: "Quarto de Despejo (Carolina Maria de Jesus) ocupa lugar singular na literatura brasileira porque:",
       opcoes: [
-        "Traz o diário real de uma catadora de papel da favela do Canindé, dando voz literária à fome e à exclusão",
-        "É o primeiro romance de ficção científica nacional",
-        "Narra a vida na corte imperial",
-        "Foi escrito originalmente em francês"
+        "Leva ao centro do sistema literário o testemunho direto de uma mulher negra e favelada, sem mediação ficcional",
+        "Inaugura no país o romance policial de ambientação urbana, escrito em linguagem jornalística",
+        "Adapta para a prosa brasileira as técnicas do nouveau roman francês dos anos cinquenta",
+        "Reúne crônicas publicadas em jornais cariocas sobre o cotidiano elegante da zona sul"
       ],
-      correta: "Traz o diário real de uma catadora de papel da favela do Canindé, dando voz literária à fome e à exclusão",
-      explicacao: "Publicado em 1960, o diário de Carolina rompeu o silêncio sobre a favela na literatura — obra cada vez mais presente no ENEM." }
+      correta: "Leva ao centro do sistema literário o testemunho direto de uma mulher negra e favelada, sem mediação ficcional",
+      explicacao: "O diário do Canindé — fome, trabalho, escrita como resistência — virou fenômeno mundial em 1960 e fundou uma linhagem que chega à literatura periférica de hoje." }
   ]
 };

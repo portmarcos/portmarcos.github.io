@@ -19,6 +19,7 @@
   const btnProxima  = $("btn-proxima");
 
   let indice = 0, acertos = 0, cronometro = null, restante = 0;
+  let abertas = [];   /* respostas dissertativas do aluno */
   const TEMPO = (d.tempoPorQuestao || 45) * 10;
   const CHAVE_PLACAR = "placar:" + d.id;
 
@@ -92,7 +93,7 @@
     if (!nome) { $("aluno-nome").focus(); $("aluno-nome").placeholder = "⚠ Digite seu nome para começar"; return; }
     localStorage.setItem("aluno-nome", nome);
     localStorage.setItem("aluno-turma", $("aluno-turma").value.trim());
-    indice = 0; acertos = 0;
+    indice = 0; acertos = 0; abertas = [];
     mostrar(telaQuestao); desenharQuestao();
   }
 
@@ -114,6 +115,16 @@
     elEnunciado.textContent = q.pergunta;
     elExplica.hidden = true; btnProxima.hidden = true;
     elOpcoes.innerHTML = "";
+    if (q.tipo === "aberta") {
+      /* ---------- Questão dissertativa ---------- */
+      elOpcoes.innerHTML = `
+        <textarea id="resposta-aberta" class="busca" rows="5"
+          placeholder="Escreva sua resposta aqui…" style="resize:vertical"></textarea>
+        <button id="btn-revelar" class="btn btn-secundario">📖 Ver resposta esperada</button>`;
+      document.getElementById("btn-revelar").addEventListener("click", revelarAberta);
+      iniciarTimer();
+      return;
+    }
     embaralhar(q.opcoes).forEach(texto => {
       const b = document.createElement("button");
       b.className = "opcao"; b.textContent = texto;
@@ -123,7 +134,32 @@
     iniciarTimer();
   }
 
+  function revelarAberta() {
+    pararTimer();
+    const q = d.questoes[indice];
+    const resp = (document.getElementById("resposta-aberta") || {}).value || "";
+    abertas.push({ q: q.pergunta.slice(0, 120), r: resp.slice(0, 400) });
+    document.getElementById("resposta-aberta").disabled = true;
+    document.getElementById("btn-revelar").remove();
+    elExplica.innerHTML = `<strong>📖 Resposta esperada:</strong> ${q.respostaModelo || ""}
+      <div style="margin-top:12px;font-weight:700">Compare com a sua resposta. Como você se saiu?</div>
+      <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+        <button class="btn btn-secundario" style="flex:1;padding:10px" data-av="1">✅ Acertei</button>
+        <button class="btn btn-secundario" style="flex:1;padding:10px" data-av="0.5">🟡 Parcial</button>
+        <button class="btn btn-secundario" style="flex:1;padding:10px" data-av="0">❌ Errei</button>
+      </div>`;
+    elExplica.hidden = false;
+    elExplica.querySelectorAll("[data-av]").forEach(b => b.addEventListener("click", () => {
+      acertos += Number(b.dataset.av);
+      elExplica.querySelectorAll("[data-av]").forEach(x => x.disabled = true);
+      b.style.borderColor = "var(--cor-materia)"; b.style.fontWeight = "800";
+      btnProxima.textContent = indice + 1 < d.questoes.length ? "Próxima questão →" : "Ver resultado 🏁";
+      btnProxima.hidden = false; btnProxima.focus();
+    }));
+  }
+
   function responder(escolha) {
+    if (d.questoes[indice].tipo === "aberta") { revelarAberta(); return; }
     pararTimer();
     const q = d.questoes[indice];
     const acertou = escolha === q.correta;
@@ -149,7 +185,8 @@
     mostrar(telaFinal);
     const total = d.questoes.length;
     const pct = Math.round((acertos / total) * 100);
-    $("nota-final").textContent = `${acertos}/${total}`;
+    const fmt = n => Number.isInteger(n) ? n : String(n.toFixed(1)).replace(".", ",");
+    $("nota-final").textContent = `${fmt(acertos)}/${total}`;
     $("nota-pct").textContent = pct + "% de acerto";
 
     const recorde = Number(localStorage.getItem(CHAVE_PLACAR) || 0);
@@ -157,7 +194,7 @@
       localStorage.setItem(CHAVE_PLACAR, acertos);
       $("nota-melhor").textContent = "🏆 Novo recorde pessoal!";
     } else if (recorde) {
-      $("nota-melhor").textContent = `Seu recorde: ${recorde}/${total}`;
+      $("nota-melhor").textContent = `Seu recorde: ${fmt(recorde)}/${total}`;
     }
 
     if (pct >= 70 && typeof confetti === "function") {
@@ -176,7 +213,8 @@
           turma: localStorage.getItem("aluno-turma") || "(sem turma)",
           acertos: acertos,
           total: total,
-          pct: pct
+          pct: pct,
+          abertas: abertas.map(a => "P: " + a.q + " | R: " + a.r).join("  •  ")
         })
       }).then(() => {
         const aviso = document.createElement("p");
