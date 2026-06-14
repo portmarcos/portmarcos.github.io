@@ -125,13 +125,63 @@
       iniciarTimer();
       return;
     }
-    embaralhar(q.opcoes).forEach(texto => {
+    elOpcoes.setAttribute("role", "group");
+    elOpcoes.setAttribute("aria-label", "Alternativas — use as setas para navegar e Enter para responder");
+    const letras = ["A", "B", "C", "D", "E", "F"];
+    embaralhar(q.opcoes).forEach((texto, i) => {
       const b = document.createElement("button");
-      b.className = "opcao"; b.textContent = texto;
+      b.className = "opcao";
+      b.type = "button";
+      b.textContent = texto;
+      // rótulo de letra para leitor de tela e para a tecla de atalho
+      const letra = letras[i] || String(i + 1);
+      b.setAttribute("aria-label", letra + ": " + texto);
+      b.dataset.letra = letra;
+      b.tabIndex = i === 0 ? 0 : -1; // navegação tipo "radiogroup": só um na ordem de tab
       b.addEventListener("click", () => responder(texto));
       elOpcoes.appendChild(b);
     });
+    // primeiro botão recebe foco para quem usa só teclado
+    const primeiro = elOpcoes.querySelector(".opcao");
+    if (primeiro) primeiro.focus();
+    // dica de teclado, mostrada só na 1ª questão de cada tentativa
+    if (indice === 0 && !document.getElementById("dica-teclado")) {
+      const dica = document.createElement("p");
+      dica.id = "dica-teclado";
+      dica.style.cssText = "font-size:.8rem;opacity:.6;margin:10px 0 0;text-align:center";
+      dica.textContent = "💡 Dica: use as teclas A, B, C… ou as setas + Enter para responder.";
+      elOpcoes.parentNode.insertBefore(dica, elOpcoes.nextSibling);
+    }
     iniciarTimer();
+  }
+
+  // ── Navegação por teclado nas alternativas ──────────────────
+  // Setas ↑↓←→ movem o foco; A–F (ou 1–6) respondem direto.
+  function tratarTeclado(e) {
+    if (telaQuestao.hidden) return;
+    const botoes = [...elOpcoes.querySelectorAll(".opcao:not([disabled])")];
+    if (!botoes.length) return;
+
+    // atalho por letra (A, B, C, D, E…)
+    const tecla = e.key.toUpperCase();
+    const porLetra = botoes.find(b => b.dataset.letra === tecla);
+    if (porLetra) { e.preventDefault(); porLetra.click(); return; }
+
+    const atual = document.activeElement;
+    let idx = botoes.indexOf(atual);
+    if (["ArrowDown", "ArrowRight"].includes(e.key)) {
+      e.preventDefault();
+      idx = (idx + 1) % botoes.length;
+      moverFoco(botoes, idx);
+    } else if (["ArrowUp", "ArrowLeft"].includes(e.key)) {
+      e.preventDefault();
+      idx = (idx - 1 + botoes.length) % botoes.length;
+      moverFoco(botoes, idx);
+    }
+  }
+  function moverFoco(botoes, idx) {
+    botoes.forEach((b, i) => b.tabIndex = i === idx ? 0 : -1);
+    botoes[idx].focus();
   }
 
   function revelarAberta() {
@@ -228,4 +278,5 @@
   $("btn-comecar").addEventListener("click", comecar);
   btnProxima.addEventListener("click", proxima);
   $("btn-refazer").addEventListener("click", comecar);
+  document.addEventListener("keydown", tratarTeclado);
 })();

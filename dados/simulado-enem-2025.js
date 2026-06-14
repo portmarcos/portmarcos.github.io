@@ -34,7 +34,7 @@ const QUIZ_DADOS = {
       opcoes: [
         "Diversidade de fontes tipográficas que estão disponíveis",
         "Utilização de tecnologias diversificadas",
-        "Possibilidade de interações mediadas por dispositivos, ao longo de toda a obra",
+        "Possibilidade de interações mediadas por dispositivos",
         "Padronização imposta pelos programas de edição",
         "Velocidade maior na produção de textos"
       ],
@@ -48,7 +48,7 @@ const QUIZ_DADOS = {
         "Superam definitivamente a escrita manuscrita",
         "Empobrecem a qualidade da comunicação cotidiana",
         "Tornam obsoletos os gêneros como o bilhete",
-        "Dependem exclusivamente do domínio da caligrafia, no desfecho da narrativa"
+        "Dependem exclusivamente do domínio da caligrafia"
       ],
       correta: "Coexistem com as formas anteriores, sem substituí-las",
       explicacao: "(ENEM 2025, Q09) “Nada dispensa nada” e “não adianta pensar como se tudo fosse excludente” sintetizam a tese da convivência: o digital não elimina o manual — eles se reposicionam e coexistem conforme a tarefa." },
@@ -58,7 +58,7 @@ const QUIZ_DADOS = {
       opcoes: [
         "Substituição da expressão “Do punho ao pixel” pela expressão “o punho e o pixel”",
         "Repetição da palavra “punho” ao longo de toda a crônica",
-        "Utilização de aspas para destacar termos técnicos da informática, segundo a leitura tradicional",
+        "Utilização de aspas para destacar termos técnicos da informática",
         "Presença de perguntas retóricas dirigidas ao leitor",
         "Emprego de adjetivos para qualificar as tecnologias de escrita"
       ],
@@ -82,7 +82,7 @@ const QUIZ_DADOS = {
       opcoes: [
         "A restrição de espaço imposta pelo suporte (o jornal)",
         "A ideologia do veículo em que ela é publicada",
-        "O perfil do público leitor que prefere certo jornal, conforme se costuma apontar",
+        "O perfil do público leitor que prefere certo jornal",
         "A densidade temática herdada do gênero conto",
         "A formação literária do narrador-repórter"
       ],

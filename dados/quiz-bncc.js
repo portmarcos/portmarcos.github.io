@@ -6,15 +6,15 @@ const QUIZ_DADOS = {
   tempoPorQuestao: 75,
   questoes: [
     { pergunta: "\"PROMOÇÃO RELÂMPAGO: só hoje, leve 2 e pague 1!\" — A finalidade principal desse texto é:",
-      opcoes: ["Convencer o leitor a comprar", "Informar uma notícia", "Ensinar um procedimento, ao longo de toda a obra", "Contar uma história"],
+      opcoes: ["Convencer o leitor a comprar", "Informar uma notícia", "Ensinar um procedimento", "Contar uma história"],
       correta: "Convencer o leitor a comprar",
       explicacao: "Habilidade: reconhecer a finalidade dos gêneros. A linguagem apelativa (\"só hoje\") e o imperativo (\"leve\") revelam a função persuasiva da propaganda." },
     { pergunta: "\"A bicicleta ficou dias encostada no muro. Quando João finalmente a lavou e calibrou os pneus, o portão da rua parecia mais convidativo do que nunca.\" — Pode-se concluir que João:",
-      opcoes: ["Está animado para voltar a pedalar", "Vai vender a bicicleta", "Quebrou a bicicleta", "Detesta andar de bicicleta, no desfecho da narrativa"],
+      opcoes: ["Está animado para voltar a pedalar", "Vai vender a bicicleta", "Quebrou a bicicleta", "Detesta andar de bicicleta"],
       correta: "Está animado para voltar a pedalar",
       explicacao: "Habilidade: inferência. Cuidar da bicicleta + achar o portão \"convidativo\" sugerem a vontade de sair pedalando." },
     { pergunta: "Em qual situação a linguagem FORMAL é mais adequada?",
-      opcoes: ["Numa carta de apresentação para emprego", "Numa conversa com amigos no recreio, segundo a leitura tradicional", "Num grupo de figurinhas da família", "Num bilhete para o colega de classe"],
+      opcoes: ["Numa carta de apresentação para emprego", "Numa conversa com amigos no recreio", "Num grupo de figurinhas da família", "Num bilhete para o colega de classe"],
       correta: "Numa carta de apresentação para emprego",
       explicacao: "Habilidade: adequação da linguagem à situação comunicativa — contextos profissionais pedem o registro formal." },
     { pergunta: "\"As alunas terminaram o cartaz. Elas o entregaram à diretora.\" — No segundo período, \"o\" substitui:",
@@ -24,7 +24,7 @@ const QUIZ_DADOS = {
     { pergunta: "Tese: \"A leitura diária melhora o desempenho escolar.\" — Qual argumento SUSTENTA essa tese?",
       opcoes: [
         "Pesquisas mostram que alunos que leem 30 min por dia tiram notas maiores",
-        "Existem bibliotecas em quase todas as cidades, conforme se costuma apontar",
+        "Existem bibliotecas em quase todas as cidades",
         "Os livros costumam ser caros e nem todas as famílias podem comprá-los",
         "Há pessoas que preferem assistir a filmes em vez de ler livros"
       ],
@@ -34,7 +34,7 @@ const QUIZ_DADOS = {
       opcoes: [
         "Respeitar, entendendo que há contextos para cada variedade",
         "Corrigir em público quem falou",
-        "Considerar que quem fala assim não sabe se comunicar, em diversos momentos",
+        "Considerar que quem fala assim não sabe se comunicar",
         "Proibir esse uso em qualquer situação"
       ],
       correta: "Respeitar, entendendo que há contextos para cada variedade",
@@ -44,7 +44,7 @@ const QUIZ_DADOS = {
       correta: "Ironia",
       explicacao: "Habilidade: efeitos de sentido dos sinais gráficos. As aspas marcam o uso irônico: ele é chamado de campeão justamente por perder." },
     { pergunta: "\"Beba mais água. Seu corpo agradece.\" — O verbo \"beba\" está no imperativo para:",
-      opcoes: ["Aconselhar/orientar o leitor", "Narrar um fato passado, de maneira evidente", "Expressar dúvida", "Indicar tempo futuro"],
+      opcoes: ["Aconselhar/orientar o leitor", "Narrar um fato passado", "Expressar dúvida", "Indicar tempo futuro"],
       correta: "Aconselhar/orientar o leitor",
       explicacao: "Habilidade: análise dos efeitos do modo verbal. O imperativo dirige-se ao leitor com conselho ou instrução — típico de campanhas." }
   ]

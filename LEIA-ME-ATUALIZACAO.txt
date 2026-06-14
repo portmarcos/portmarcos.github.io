@@ -1,36 +1,39 @@
 ╔══════════════════════════════════════════════════════════════╗
-║  ATUALIZAÇÃO — Equilíbrio das respostas + SEO                 ║
+║  ATUALIZAÇÃO — Acessibilidade por teclado nos quizzes         ║
 ╚══════════════════════════════════════════════════════════════╝
 
 O QUE MUDOU
 ───────────
-1) RESPOSTAS MAIS EQUILIBRADAS
-   Fiz uma auditoria de TODAS as 178 questões do portal medindo
-   se a resposta certa se destacava por ser "a maior/mais
-   completa". Boa notícia: o motor dos quizzes JÁ EMBARALHA as
-   alternativas a cada tentativa, então a certa nunca fica fixa
-   numa posição. O ajuste necessário foi pontual — 3 questões em
-   que as alternativas erradas eram curtas demais e entregavam a
-   resposta. Foram niveladas (sem trocar o gabarito):
-     • quiz-bncc.js  — Q5 (argumentação)
-     • simulado-enem-2025.js — Q10 (movimentos literários:
-       agora cada alternativa caracteriza o movimento)
-     • simulado-saeb-avancado.js — Q9 (relações lógicas)
+1) NAVEGAÇÃO POR TECLADO (acessibilidade) — assets/js/quiz-engine.js
+   Agora TODOS os quizzes e simulados podem ser respondidos sem
+   mouse, o que inclui alunos que usam leitor de tela ou só
+   teclado:
+     • Teclas A, B, C, D, E… selecionam a alternativa direto
+     • Setas ↑ ↓ ← → movem o foco entre as alternativas
+     • Enter / barra de espaço confirmam a resposta
+     • As alternativas agora têm rótulos (aria-label) que o
+       leitor de tela anuncia corretamente ("A: ...", "B: ...")
+     • Aparece uma dica discreta na 1ª questão explicando isso
+   Isso vale para os 22 quizzes de uma vez, porque todos usam
+   o mesmo motor — não foi preciso mexer em cada página.
 
-2) SEO / COMPARTILHAMENTO
-   index.html agora tem Twitter Card e link canonical — o
-   preview ao compartilhar o link fica melhor em mais apps.
+2) Cache do app atualizado (sw.js: v14 → v15) para os celulares
+   que já abriram o portal receberem a novidade.
 
-3) Cache do app atualizado (sw.js: v13 → v14) para que os
-   celulares que já abriram o portal recebam as correções.
-
-OBS.: Service Worker (offline), modo escuro e favicon já
-estavam no portal de versões anteriores — conferi e estão ok.
+SOBRE OS DISTRATORES (alternativas erradas)
+───────────────────────────────────────────
+Auditei os quizzes de Ensino Médio e técnicos (obras II, redes,
+vídeos). A conclusão honesta: eles JÁ estão em bom nível — as
+alternativas erradas representam erros plausíveis de raciocínio,
+não "pegadinhas óbvias". Os simulados ENEM, então, já nascem no
+padrão da prova. Por isso, não inflei mudanças onde não havia
+ganho real. O reforço pesado de distratores fará mais sentido
+no projeto futuro do SAEB por descritor, que combinamos.
 
 COMO SUBIR (GitHub Desktop)
 ───────────────────────────
-1. Descompacte e copie por cima do repositório local:
-      index.html
+1. Copie por cima do repositório local:
+      assets/js/quiz-engine.js
       sw.js
       dados/quiz-bncc.js
       dados/simulado-enem-2025.js
