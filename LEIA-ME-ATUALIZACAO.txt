@@ -1,0 +1,38 @@
+╔══════════════════════════════════════════════════════════════╗
+║  ATUALIZAÇÃO DO PORTAL — Simulados ENEM (Provas Reais)        ║
+║  + Correção de spoilers nos jogos                            ║
+╚══════════════════════════════════════════════════════════════╝
+
+O QUE MUDOU
+───────────
+1) 5 NOVOS SIMULADOS com 50 QUESTÕES REAIS do ENEM:
+   • ENEM 2025 — Linguagens (10 questões reais)
+   • ENEM 2024 — Leitura e Linguagem (10 reais)
+   • ENEM 2024 — Literatura e Arte (10 reais)
+   • ENEM 2023 — Leitura e Linguagem (10 reais)
+   • ENEM 2023 — Literatura Brasileira (10 reais)
+   Todas com texto-base, 5 alternativas e explicação com a
+   referência da prova (ex.: "ENEM 2023, Q07"). Algumas poucas
+   questões de contextualização autoral vêm marcadas como tal.
+
+2) JOGOS: removidos os nomes dos livros das tarjas de fase
+   (o cabeçalho não entrega mais a resposta das pistas).
+   Corrigidos: Vozes do Sertão, O Defunto Mestre (Brás Cubas)
+   e O Defunto Mestre 2.º Ano.
+
+COMO SUBIR (GitHub Desktop)
+───────────────────────────
+1. Descompacte este ZIP.
+2. Copie as pastas/arquivos por cima do repositório local
+   portmarcos.github.io (substituindo os existentes):
+      index.html
+      atividades/  (5 arquivos simulado-enem-*.html)
+      dados/       (5 arquivos simulado-enem-*.js)
+      jogos/       (vozes-sertao, bras-cubas, bras-cubas-2ano)
+3. No GitHub Desktop: Commit → Push origin.
+
+Pronto! Os 5 simulados aparecem na seção ENEM da página inicial
+com a etiqueta 🔴 Questões reais.
+
+Obs.: como as questões usam o mesmo motor (quiz-engine.js) já
+existente, nada mais precisa ser configurado.
