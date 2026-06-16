@@ -1,74 +1,256 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Quiz: Redes — Prof. Marcos</title>
+/* ============================================================
+   quiz-redes.js · Prof. Marcos · Redes de Computadores
+   20 questões · distratores técnicos · v2
+   ============================================================ */
 
-  <!-- Preview no WhatsApp -->
-  <meta property="og:title" content="Quiz: Redes — DNS, DHCP e IP 🌐">
-  <meta property="og:description" content="8 questões cronometradas sobre os protocolos que fazem a internet funcionar.">
-  <meta property="og:image" content="https://portmarcos.github.io/assets/img/og-capa.png">
+const QUIZ_CONFIG = {
+  titulo: "Quiz: Redes de Computadores",
+  descricao: "20 questões sobre equipamentos, protocolos, endereçamento e segurança em redes.",
+  tempoSegundos: 25,
+  embaralharQuestoes: true,
+  embaralharOpcoes: true,
+};
 
-  <link rel="icon" href="../favicon.ico">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/design-system.css">
-</head>
-<!-- A classe abaixo define a cor da página: Português = verde -->
-<body class="materia-informatica">
+const QUESTOES = [
 
-  <div class="barra-tricolor"></div>
-  <header class="cabecalho">
-    <div class="container cabecalho-conteudo">
-      <span class="marca"><a href="../index.html">Portal de Aulas</a></span>
-    </div>
-  </header>
+  /* ── 1 ── PORTA PADRÃO ─────────────────────────────────── */
+  {
+    enunciado: "Qual é a porta TCP padrão utilizada pelo protocolo HTTPS para comunicações seguras na web?",
+    opcoes: [
+      { texto: "443", correta: true },
+      { texto: "8443", correta: false },
+      { texto: "80",   correta: false },
+      { texto: "22",   correta: false },
+    ],
+    explicacao: "O HTTPS opera na porta 443. A porta 80 é reservada ao HTTP não cifrado; a 22, ao SSH; e a 8443 é uma porta alternativa comum em servidores de desenvolvimento, mas não o padrão oficial.",
+  },
 
-  <main class="container" style="max-width:760px">
-    <a class="voltar nao-imprimir" href="../index.html">← Voltar ao portal</a>
-    <span class="etiqueta-materia">Informática Técnica</span>
-    <h1 id="quiz-titulo" style="margin-top:10px">…</h1>
+  /* ── 2 ── IP PRIVADO ───────────────────────────────────── */
+  {
+    enunciado: "Qual dos endereços abaixo pertence ao bloco de endereços IP privados definido pela RFC 1918?",
+    opcoes: [
+      { texto: "172.16.5.200",  correta: true  },
+      { texto: "11.0.0.1",     correta: false },
+      { texto: "100.64.0.1",   correta: false },
+      { texto: "169.254.1.10", correta: false },
+    ],
+    explicacao: "A RFC 1918 define três blocos privados: 10.0.0.0/8, 172.16.0.0/12 e 192.168.0.0/16. O endereço 172.16.5.200 está no segundo bloco (172.16.0.0–172.31.255.255). Os demais são públicos, CGNAT (100.64/10) ou link-local (169.254/16).",
+  },
 
-    <!-- TELA 1: início -->
-    <section id="tela-inicio" class="painel">
-      <p id="quiz-descricao"></p>
-      <div class="info-chips">
-        <span class="tag" id="info-questoes"></span>
-        <span class="tag" id="info-tempo"></span>
-        <span class="tag" id="info-melhor" hidden>🏆</span>
-      </div>
-      <button id="btn-comecar" class="btn btn-primario btn-bloco">Começar ▶</button>
-    </section>
+  /* ── 3 ── HUB ──────────────────────────────────────────── */
+  {
+    enunciado: "Por qual razão o Hub (concentrador) é considerado obsoleto em redes modernas?",
+    opcoes: [
+      { texto: "Porque retransmite todos os pacotes para todas as portas, gerando colisões e congestionamento no domínio de colisão compartilhado.", correta: true  },
+      { texto: "Porque não suporta o protocolo Ethernet de 100 Mbps ou superior.",                                                                  correta: false },
+      { texto: "Porque opera exclusivamente na camada 3 do modelo OSI, tornando-o incompatível com LANs.",                                         correta: false },
+      { texto: "Porque exige endereço IP fixo em cada porta para encaminhar corretamente os quadros.",                                             correta: false },
+    ],
+    explicacao: "O hub é um dispositivo de camada 1 (física) que não distingue destinatários: copia o sinal em todas as portas. Isso cria um único domínio de colisão, causando degradação de desempenho com o aumento de dispositivos.",
+  },
 
-    <!-- TELA 2: questão -->
-    <section id="tela-questao" class="painel" hidden>
-      <p class="progresso-texto" id="progresso"></p>
-      <div class="timer-trilho" aria-hidden="true"><div class="timer-barra" id="timer-barra"></div></div>
-      <h2 class="enunciado" id="enunciado"></h2>
-      <div class="opcoes" id="opcoes"></div>
-      <div class="explicacao" id="explicacao" role="status" hidden></div>
-      <button id="btn-proxima" class="btn btn-primario btn-bloco" style="margin-top:18px" hidden></button>
-    </section>
+  /* ── 4 ── SWITCH ───────────────────────────────────────── */
+  {
+    enunciado: "Qual mecanismo o Switch utiliza para encaminhar quadros Ethernet apenas para a porta correta, sem inundação desnecessária?",
+    opcoes: [
+      { texto: "Tabela CAM (Content Addressable Memory) com mapeamento de endereços MAC por porta.",   correta: true  },
+      { texto: "Tabela de roteamento IP com máscara de sub-rede para segmentação de domínios.",        correta: false },
+      { texto: "Protocolo ARP de broadcast para descoberta dinâmica de endereços físicos na LAN.",     correta: false },
+      { texto: "Inspeção de pacotes na camada 4 para identificar o socket de destino de cada quadro.", correta: false },
+    ],
+    explicacao: "O switch aprende os endereços MAC de cada porta e os armazena na tabela CAM. Ao receber um quadro, consulta essa tabela e encaminha apenas para a porta associada ao MAC de destino, isolando o tráfego.",
+  },
 
-    <!-- TELA 3: resultado -->
-    <section id="tela-final" class="painel placar-final" hidden>
-      <h2>Resultado</h2>
-      <div class="nota" id="nota-final"></div>
-      <p id="nota-pct" style="font-weight:700"></p>
-      <p class="melhor" id="nota-melhor"></p>
-      <button id="btn-refazer" class="btn btn-primario btn-bloco">Refazer quiz 🔁</button>
-      <a class="btn btn-secundario btn-bloco" style="margin-top:8px" href="../index.html">Voltar ao portal</a>
-    </section>
-  </main>
+  /* ── 5 ── ROUTER ───────────────────────────────────────── */
+  {
+    enunciado: "O Router opera principalmente em qual camada do modelo OSI e qual informação ele analisa para tomar decisões de encaminhamento?",
+    opcoes: [
+      { texto: "Camada 3 (Rede), analisando o endereço IP de destino do pacote.",        correta: true  },
+      { texto: "Camada 2 (Enlace), analisando o endereço MAC de destino do quadro.",     correta: false },
+      { texto: "Camada 4 (Transporte), analisando a porta TCP/UDP de destino do segmento.", correta: false },
+      { texto: "Camada 1 (Física), regenerando o sinal elétrico entre os segmentos.",    correta: false },
+    ],
+    explicacao: "Roteadores trabalham na camada 3 do modelo OSI. Eles inspecionam o cabeçalho IP de cada pacote e consultam sua tabela de roteamento para determinar o próximo salto (next hop) até o destino.",
+  },
 
-  <footer class="rodape"><div class="container">Portal de Aulas · Prof. Marcos</div></footer>
+  /* ── 6 ── ACCESS POINT ─────────────────────────────────── */
+  {
+    enunciado: "Qual é a função principal de um Access Point (AP) em uma infraestrutura de rede corporativa?",
+    opcoes: [
+      { texto: "Converter o meio cabeado em sinal de rádio frequência para conectar clientes Wi-Fi à LAN existente.",            correta: true  },
+      { texto: "Atribuir endereços IP dinâmicos aos clientes sem fio por meio do protocolo DHCP integrado.",                     correta: false },
+      { texto: "Substituir o roteador ao rotear pacotes entre a rede interna e a internet via protocolo NAT.",                   correta: false },
+      { texto: "Filtrar pacotes maliciosos entre VLANs por meio de ACLs (Access Control Lists) na camada 3.",                   correta: false },
+    ],
+    explicacao: "O AP recebe conectividade via cabo (geralmente Ethernet) e a transmite em radiofrequência (padrões IEEE 802.11), permitindo que dispositivos sem fio ingressem na rede local.",
+  },
 
-  <!-- 1º: os dados · 2º: o confete (CDN) · 3º: o motor -->
-  <script src="../dados/quiz-redes.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.3/confetti.browser.min.js" defer></script>
-  <script src="../assets/js/config-sheets.js"></script>
-  <script src="../assets/js/quiz-engine.js"></script>
-</body>
-</html>
+  /* ── 7 ── GATEWAY ──────────────────────────────────────── */
+  {
+    enunciado: "Em uma rede doméstica típica com endereçamento 192.168.0.0/24, qual seria o endereço do gateway padrão?",
+    opcoes: [
+      { texto: "192.168.0.1",   correta: true  },
+      { texto: "255.255.255.0", correta: false },
+      { texto: "192.168.0.255", correta: false },
+      { texto: "0.0.0.0",       correta: false },
+    ],
+    explicacao: "O gateway padrão é o endereço do roteador que a rede local usa para alcançar outras redes. Convencionalmente utiliza-se o primeiro host da sub-rede (ex.: .1). O .255 é broadcast; o 255.255.255.0 é a máscara; e 0.0.0.0 representa rota padrão, não um host.",
+  },
+
+  /* ── 8 ── IP (CONCEITO) ────────────────────────────────── */
+  {
+    enunciado: "Qual característica diferencia um endereço IP público de um endereço IP privado?",
+    opcoes: [
+      { texto: "O IP público é roteável na internet global e único; o IP privado é reservado para uso interno e não roteável externamente sem NAT.", correta: true  },
+      { texto: "O IP público usa IPv6 e o IP privado usa IPv4 por padrão.",                                                                          correta: false },
+      { texto: "O IP público é estático e o IP privado é sempre atribuído dinamicamente pelo DHCP.",                                                 correta: false },
+      { texto: "O IP público pertence à camada 2 do modelo OSI, enquanto o IP privado pertence à camada 3.",                                        correta: false },
+    ],
+    explicacao: "IPs públicos são globalmente únicos e roteáveis na internet. IPs privados (RFC 1918) só existem dentro de redes locais e precisam de NAT (Network Address Translation) para se comunicar com a internet.",
+  },
+
+  /* ── 9 ── MÁSCARA DE SUB-REDE ──────────────────────────── */
+  {
+    enunciado: "Um host com IP 10.0.3.45 e máscara 255.255.255.0 pertence a qual sub-rede?",
+    opcoes: [
+      { texto: "10.0.3.0/24",   correta: true  },
+      { texto: "10.0.0.0/8",    correta: false },
+      { texto: "10.0.3.45/24",  correta: false },
+      { texto: "10.0.255.0/24", correta: false },
+    ],
+    explicacao: "A máscara 255.255.255.0 (equivalente a /24) preserva os três primeiros octetos como identificador de rede. Aplicando AND bit a bit entre 10.0.3.45 e a máscara, obtemos 10.0.3.0 como endereço de rede.",
+  },
+
+  /* ── 10 ── DHCP ────────────────────────────────────────── */
+  {
+    enunciado: "Qual é a sequência correta de mensagens no processo de negociação DHCP (DORA)?",
+    opcoes: [
+      { texto: "Discover → Offer → Request → Acknowledge",       correta: true  },
+      { texto: "Request → Offer → Discover → Acknowledge",       correta: false },
+      { texto: "Discover → Request → Offer → Acknowledge",       correta: false },
+      { texto: "Offer → Discover → Acknowledge → Request",       correta: false },
+    ],
+    explicacao: "DORA é o acrônimo do fluxo DHCP: o cliente envia um Discover em broadcast; o servidor responde com um Offer; o cliente confirma com um Request; e o servidor finaliza com um Acknowledge, entregando as configurações de rede.",
+  },
+
+  /* ── 11 ── DNS (TIPO DE REGISTRO) ──────────────────────── */
+  {
+    enunciado: "Qual tipo de registro DNS é responsável por mapear um nome de domínio a um endereço IPv4?",
+    opcoes: [
+      { texto: "Registro A",     correta: true  },
+      { texto: "Registro AAAA",  correta: false },
+      { texto: "Registro CNAME", correta: false },
+      { texto: "Registro MX",    correta: false },
+    ],
+    explicacao: "O registro A (Address) associa um nome de domínio a um IPv4. O AAAA faz o mesmo para IPv6; o CNAME cria um alias para outro domínio; e o MX define os servidores de e-mail responsáveis pelo domínio.",
+  },
+
+  /* ── 12 ── DNS (RESOLUÇÃO) ─────────────────────────────── */
+  {
+    enunciado: "Ao digitar 'www.exemplo.com.br' no navegador, qual é o papel do servidor DNS recursivo nesse processo?",
+    opcoes: [
+      { texto: "Consultar servidores raiz, TLD e autoritativos em nome do cliente, retornando o IP correspondente ao domínio.", correta: true  },
+      { texto: "Armazenar permanentemente todos os registros DNS da internet para acelerar consultas globais.",                  correta: false },
+      { texto: "Traduzir o endereço IP numérico de volta para o nome de domínio legível pelo usuário (DNS reverso).",          correta: false },
+      { texto: "Verificar a validade do certificado SSL do domínio antes de retornar o endereço IP ao cliente.",               correta: false },
+    ],
+    explicacao: "O servidor DNS recursivo atua como intermediário: percorre a hierarquia DNS (raiz → TLD → autoritativo) para encontrar a resposta e a entrega ao cliente, usando cache para otimizar consultas futuras.",
+  },
+
+  /* ── 13 ── HTTP vs HTTPS ───────────────────────────────── */
+  {
+    enunciado: "Qual é a principal vulnerabilidade do protocolo HTTP que o HTTPS corrige?",
+    opcoes: [
+      { texto: "O HTTP transmite dados em texto puro, permitindo ataques de interceptação (man-in-the-middle) e leitura do tráfego.",                correta: true  },
+      { texto: "O HTTP não suporta cookies de sessão, tornando impossível manter autenticação entre requisições.",                                   correta: false },
+      { texto: "O HTTP opera sobre UDP em vez de TCP, causando perda de pacotes sem retransmissão.",                                                 correta: false },
+      { texto: "O HTTP não permite compressão de conteúdo, tornando o carregamento de páginas significativamente mais lento que o HTTPS.",          correta: false },
+    ],
+    explicacao: "O HTTP não cifra o tráfego: qualquer dispositivo no mesmo segmento de rede pode capturar senhas, tokens e dados bancários. O HTTPS envelopa o HTTP com TLS, tornando o conteúdo ininteligível para interceptadores.",
+  },
+
+  /* ── 14 ── SSL/TLS ─────────────────────────────────────── */
+  {
+    enunciado: "Qual afirmação descreve corretamente a relação entre SSL e TLS?",
+    opcoes: [
+      { texto: "TLS é a evolução do SSL: mais seguro, com algoritmos modernos; o SSL está obsoleto e não deve ser utilizado.",           correta: true  },
+      { texto: "SSL e TLS são protocolos independentes que operam em camadas diferentes do modelo OSI.",                                correta: false },
+      { texto: "SSL é o protocolo atual e o TLS é sua versão legada, mantida apenas para compatibilidade retroativa.",                  correta: false },
+      { texto: "TLS é usado exclusivamente para e-mail seguro, enquanto o SSL é aplicado para conexões HTTPS na web.",                  correta: false },
+    ],
+    explicacao: "O TLS (Transport Layer Security) substituiu o SSL (Secure Sockets Layer), que apresentava vulnerabilidades conhecidas (POODLE, BEAST). Hoje, TLS 1.2 e 1.3 são os padrões utilizados; versões SSL são desativadas em servidores modernos.",
+  },
+
+  /* ── 15 ── VPN ─────────────────────────────────────────── */
+  {
+    enunciado: "Uma VPN corporativa é configurada entre a filial e a matriz. Qual é o principal benefício técnico dessa arquitetura?",
+    opcoes: [
+      { texto: "Criar um túnel cifrado sobre a internet pública, permitindo que a filial acesse recursos internos da matriz com segurança.",   correta: true  },
+      { texto: "Eliminar a necessidade de autenticação dos usuários ao acessar sistemas internos, agilizando o acesso remoto.",               correta: false },
+      { texto: "Aumentar a largura de banda disponível entre filial e matriz ao agregar múltiplos links de internet simultaneamente.",        correta: false },
+      { texto: "Substituir o firewall corporativo, pois o tunelamento VPN já filtra todo o tráfego malicioso de entrada.",                   correta: false },
+    ],
+    explicacao: "A VPN site-to-site cria um túnel IPSec ou TLS entre os gateways das duas redes. O tráfego é encriptado de ponta a ponta, garantindo confidencialidade e integridade mesmo ao trafegar pela internet pública.",
+  },
+
+  /* ── 16 ── PING / LATÊNCIA ─────────────────────────────── */
+  {
+    enunciado: "O comando 'ping 8.8.8.8' retornou tempo médio de 280 ms. O que esse valor indica sobre a conexão?",
+    opcoes: [
+      { texto: "Alta latência: o tempo de ida e volta (RTT) de 280 ms pode causar lentidão perceptível em aplicações sensíveis ao tempo, como VoIP e jogos online.", correta: true  },
+      { texto: "Velocidade de download inadequada: o link possui apenas 280 Kbps de capacidade de transmissão.",                                                      correta: false },
+      { texto: "Perda de pacotes de 280%: o servidor está descartando a maioria das requisições ICMP.",                                                               correta: false },
+      { texto: "O TTL (Time to Live) atingiu 280 saltos até o destino, indicando roteamento circular.",                                                              correta: false },
+    ],
+    explicacao: "O RTT (Round-Trip Time) de 280 ms representa o tempo que o pacote leva para ir ao destino e voltar. Valores abaixo de 50 ms são considerados bons; 280 ms indica latência elevada, impactando qualidade de voz e jogos em tempo real.",
+  },
+
+  /* ── 17 ── ICMP / FIREWALL ─────────────────────────────── */
+  {
+    enunciado: "Ao executar 'ping servidor.empresa.com', você recebe 'Request timed out' (100% de perda). Qual conclusão é mais tecnicamente correta?",
+    opcoes: [
+      { texto: "O servidor pode estar online, mas um firewall pode estar bloqueando requisições ICMP, ou o host está inacessível.",   correta: true  },
+      { texto: "O domínio não existe no DNS, pois se existisse o ping sempre retornaria resposta.",                                   correta: false },
+      { texto: "O servidor está definitivamente desligado, pois sistemas online sempre respondem a pings.",                           correta: false },
+      { texto: "O endereço IP do servidor é privado e não pode ser alcançado por ferramentas de diagnóstico externas.",              correta: false },
+    ],
+    explicacao: "Timeout no ping não garante que o host esteja offline. Firewalls modernos frequentemente bloqueiam ICMP como medida de segurança. É necessário usar outras ferramentas (traceroute, telnet na porta do serviço, curl) para diagnóstico completo.",
+  },
+
+  /* ── 18 ── NAT ─────────────────────────────────────────── */
+  {
+    enunciado: "Qual é a função do NAT (Network Address Translation) no roteador de uma rede doméstica?",
+    opcoes: [
+      { texto: "Traduzir os endereços IP privados dos dispositivos internos para o IP público do roteador ao acessar a internet, e vice-versa.", correta: true  },
+      { texto: "Criptografar o tráfego entre os dispositivos da rede local e o provedor de internet.",                                          correta: false },
+      { texto: "Atribuir endereços IP dinâmicos aos dispositivos da rede, substituindo o protocolo DHCP.",                                      correta: false },
+      { texto: "Filtrar e bloquear sites maliciosos por meio de inspeção profunda de pacotes (DPI) em tempo real.",                             correta: false },
+    ],
+    explicacao: "O NAT permite que múltiplos dispositivos com IPs privados compartilhem um único IP público. O roteador mantém uma tabela de tradução que associa conexões internas às externas, permitindo respostas da internet chegarem ao dispositivo correto.",
+  },
+
+  /* ── 19 ── VLAN ────────────────────────────────────────── */
+  {
+    enunciado: "Para que serve uma VLAN (Virtual LAN) em uma rede corporativa com switch gerenciável?",
+    opcoes: [
+      { texto: "Segmentar logicamente a rede em domínios de broadcast isolados, sem necessidade de separação física de cabos.",                   correta: true  },
+      { texto: "Aumentar a velocidade das portas do switch de 100 Mbps para 1 Gbps por meio de agregação de links.",                             correta: false },
+      { texto: "Substituir o endereçamento IP por endereçamento MAC em redes que não possuem servidor DHCP.",                                    correta: false },
+      { texto: "Criar redundância de link entre switches para garantir alta disponibilidade usando o protocolo STP.",                             correta: false },
+    ],
+    explicacao: "VLANs permitem dividir um switch físico em múltiplas redes lógicas independentes. Departamentos diferentes (RH, TI, Financeiro) podem estar no mesmo switch mas em domínios de broadcast separados, melhorando segurança e desempenho.",
+  },
+
+  /* ── 20 ── FIREWALL ────────────────────────────────────── */
+  {
+    enunciado: "Qual é a diferença entre um firewall de filtragem de pacotes (stateless) e um firewall de inspeção de estado (stateful)?",
+    opcoes: [
+      { texto: "O stateless analisa cada pacote de forma isolada; o stateful rastreia o estado das conexões e permite/bloqueia com base no contexto da sessão.", correta: true  },
+      { texto: "O stateless é mais seguro pois analisa o conteúdo completo da camada de aplicação; o stateful só verifica cabeçalhos IP.",                      correta: false },
+      { texto: "O stateful opera exclusivamente em hardware dedicado; o stateless pode ser implementado somente em software.",                                    correta: false },
+      { texto: "O stateless utiliza listas de ACL dinâmicas atualizadas em tempo real; o stateful usa regras estáticas pré-configuradas.",                       correta: false },
+    ],
+    explicacao: "Firewalls stateless aplicam regras a cada pacote individualmente, sem contexto. Firewalls stateful mantêm uma tabela de sessões ativas: ao verificar se um pacote pertence a uma conexão legítima já estabelecida, oferecem proteção mais inteligente contra ataques.",
+  },
+
+];
