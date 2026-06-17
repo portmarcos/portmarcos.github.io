@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ROOT — Protocolo de Rede</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=VT323&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:   #07090b; --bg2:  #0c1014; --bg3:  #11161b;
+  --amber:#ffb300; --amber-lit: #ffd166; --amber-dim: rgba(255,179,0,0.25);
+  --cyan: #4fd1ff; --cyan-dim:  rgba(79,209,255,0.25);
+  --text: #dbe7ea; --text-dim:  rgba(219,231,234,0.62);
+  --red:  #ff4d4d; --green-ok:  #3ddc84;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overflow: hidden; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'JetBrains Mono', monospace;
+  display: flex;
+  height: 100vh;
+  position: relative;
+}
+body::after {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:90;
+  background: repeating-linear-gradient(0deg, rgba(0,0,0,.22) 0px, rgba(0,0,0,.22) 1px, transparent 1px, transparent 3px);
+  opacity:.18;
+}
+:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+
+/* ═══════════════ LEFT PANEL ═══════════════ */
+#left {
+  width: 230px; min-width: 230px;
+  background: linear-gradient(170deg, #07090b 0%, #0c1014 100%);
+  border-right: 1px solid var(--amber-dim);
+  display: flex; flex-direction: column; align-items: center;
+  padding: 18px 14px; gap: 16px;
+}
+
+/* LED RACK */
+.led-row { display:flex; gap:7px; }
+.led { width:9px; height:9px; border-radius:50%; background:rgba(255,179,0,.15); transition:.3s; animation: ledBlink 2.2s ease-in-out infinite; }
+.led:nth-child(2){ animation-delay:.35s; }
+.led:nth-child(3){ animation-delay:.7s; }
+.led:nth-child(4){ animation-delay:1.05s; }
+@keyframes ledBlink {
+  0%,100% { background:rgba(255,179,0,.15); box-shadow:none; }
+  50%     { background:var(--amber); box-shadow:0 0 7px var(--amber); }
+}
+
+/* TERMINAL AVATAR */
+#term {
+  width: 100%; border:1px solid var(--amber-dim);
+  background:#050709; box-shadow:0 0 24px rgba(255,179,0,.08), inset 0 0 24px rgba(0,0,0,.6);
+}
+.term-bar { display:flex; gap:5px; padding:7px 9px; background:#0c1014; border-bottom:1px solid var(--amber-dim); }
+.term-dot { width:7px; height:7px; border-radius:50%; }
+.term-dot.r{ background:#ff4d4d } .term-dot.a{ background:#ffb300 } .term-dot.g{ background:#3ddc84 }
+.term-body { padding:11px 10px; font-size:.62rem; line-height:1.55; min-height:108px; color:var(--text-dim); }
+.term-body .prompt { color:var(--amber); }
+#term-line { color:var(--cyan); }
+.cursor { display:inline-block; animation: blink 1s step-end infinite; color:var(--cyan); }
+@keyframes blink { 0%,50%{opacity:1} 50.01%,100%{opacity:0} }
+
+/* PROGRESS — PHASES */
+.section-label {
+  font-size:.56rem; color:rgba(255,179,0,.5); letter-spacing:2.5px;
+  text-align:center; text-transform:uppercase; font-weight:700;
+}
+.phase-dots { display:flex; gap:8px; }
+.pdot { width:14px; height:14px; border:2px solid rgba(255,179,0,.3); border-radius:2px; transition: all .5s; }
+.pdot.active { border-color:var(--amber); background:var(--amber); box-shadow:0 0 8px var(--amber); }
+.pdot.done   { border-color:var(--green-ok); background:var(--green-ok); }
+
+/* PROGRESS — QUESTIONS */
+.qdots { display:flex; gap:6px; }
+.qdot { width:10px; height:10px; border:1px solid rgba(255,179,0,.25); border-radius:2px; transition:.4s; }
+.qdot.ok  { background:var(--green-ok); border-color:var(--green-ok); }
+.qdot.err { background:#7a2020; border-color:#7a2020; }
+.qdot.cur { border-color:var(--amber); box-shadow:0 0 6px var(--amber); }
+
+/* TIMER */
+#timer-wrap { margin-top:auto; text-align:center; }
+#timer-lbl  { font-size:.55rem; color:rgba(255,179,0,.4); letter-spacing:2px; font-weight:700; }
+#timer { font-family:'VT323',monospace; font-size:2rem; color:var(--amber); letter-spacing:3px; transition:color .5s; }
+#timer.warn   { color:#e07820; }
+#timer.danger { color:var(--red); animation: tblink 1s ease-in-out infinite; }
+@keyframes tblink { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+/* ═══════════════ RIGHT PANEL ═══════════════ */
+#right { flex:1; display:flex; flex-direction:column; overflow:hidden; }
+
+#topbar {
+  padding:11px 22px; border-bottom:1px solid var(--amber-dim);
+  background:rgba(0,0,0,.35); display:flex; align-items:baseline; gap:14px;
+}
+#topbar h1 { font-family:'VT323',monospace; font-size:1.55rem; color:var(--amber); letter-spacing:3px; }
+#topbar .sub { font-size:.68rem; color:rgba(255,179,0,.4); }
+
+#phase-strip {
+  padding:6px 22px; border-bottom:1px solid var(--amber-dim);
+  background:rgba(255,179,0,.04); font-size:.68rem; color:rgba(255,179,0,.6);
+  letter-spacing:.5px;
+}
+
+/* CHAT */
+#chat {
+  flex:1; overflow-y:auto; padding:20px 22px;
+  display:flex; flex-direction:column; gap:14px;
+  scrollbar-width:thin; scrollbar-color:var(--amber-dim) transparent;
+}
+#chat::-webkit-scrollbar { width:3px; }
+#chat::-webkit-scrollbar-thumb { background:var(--amber-dim); border-radius:2px; }
+
+.msg { display:flex; gap:9px; max-width:92%; animation:slideUp .3s ease; }
+.msg.root { align-self:flex-start; }
+.msg.team { align-self:flex-end; flex-direction:row-reverse; }
+.msg.sys  { align-self:center; max-width:78%; }
+@keyframes slideUp { from{opacity:0;transform:translateY(9px);} to{opacity:1;transform:translateY(0);} }
+
+.avatar {
+  width:32px; min-width:32px; height:32px; border:1px solid; border-radius:2px;
+  display:flex; align-items:center; justify-content:center; font-size:.56rem; letter-spacing:.5px; font-weight:700;
+}
+.root .avatar { border-color:var(--amber); color:var(--amber); }
+.team .avatar { border-color:var(--cyan);  color:var(--cyan); }
+
+.bubble { padding:11px 15px; line-height:1.65; font-size:.86rem; border-radius:2px; }
+.root .bubble {
+  background:linear-gradient(135deg,#11161b,#0c1014); border:1px solid rgba(255,179,0,.3); border-left:3px solid var(--amber);
+  color:var(--text);
+}
+.team .bubble {
+  background:linear-gradient(135deg,#0a161c,#071014); border:1px solid rgba(79,209,255,.3); border-right:3px solid var(--cyan);
+  color:#c8e9f5;
+}
+.sys .bubble {
+  background:rgba(255,179,0,.06); border:1px dashed rgba(255,179,0,.22); color:rgba(255,179,0,.65);
+  font-size:.78rem; text-align:center; padding:8px 14px;
+}
+
+/* QUESTION CARD */
+.qcard { margin-top:10px; padding:11px 14px; background:rgba(79,209,255,.05); border:1px solid rgba(79,209,255,.25); border-left:3px solid var(--cyan); }
+.qcard-label { font-size:.58rem; letter-spacing:2px; color:var(--cyan); font-weight:700; margin-bottom:6px; }
+.qcard-text  { font-size:.92rem; line-height:1.55; }
+
+/* TYPING */
+#typing {
+  display:none; align-self:flex-start; padding:11px 15px;
+  background:linear-gradient(135deg,#11161b,#0c1014); border:1px solid rgba(255,179,0,.3); border-left:3px solid var(--amber);
+  animation:slideUp .3s;
+}
+.dots { display:flex; gap:5px; align-items:center; }
+.dots span { width:6px; height:6px; background:var(--amber); border-radius:50%; animation:bounce 1.2s ease-in-out infinite; }
+.dots span:nth-child(2){ animation-delay:.2s } .dots span:nth-child(3){ animation-delay:.4s }
+@keyframes bounce { 0%,80%,100%{transform:translateY(0);opacity:.5} 40%{transform:translateY(-7px);opacity:1} }
+
+/* INTERACTION AREA */
+#interact {
+  border-top:1px solid var(--amber-dim); background:rgba(0,0,0,.2);
+  padding:14px 22px; min-height:74px; display:flex; align-items:center; justify-content:center;
+}
+
+.opt-list { display:flex; flex-direction:column; gap:8px; width:100%; max-width:600px; }
+.opt-btn {
+  text-align:left; padding:11px 14px; border:1.5px solid rgba(255,179,0,.4);
+  background:rgba(255,179,0,.04); color:var(--text); font-family:'JetBrains Mono',monospace;
+  font-size:.82rem; cursor:pointer; transition:.18s; line-height:1.4;
+}
+.opt-btn:hover { background:rgba(255,179,0,.1); border-color:var(--amber); }
+
+.btn-ghost {
+  width:100%; max-width:460px; padding:12px; border:1px solid rgba(255,179,0,.4);
+  background:rgba(255,179,0,.05); color:var(--amber); font-family:'JetBrains Mono',monospace; font-weight:700;
+  font-size:.74rem; letter-spacing:1.5px; cursor:pointer; transition:.2s;
+}
+.btn-ghost:hover { background:rgba(255,179,0,.12); border-color:var(--amber); }
+
+.guess-form { display:flex; flex-direction:column; gap:9px; width:100%; max-width:520px; }
+.guess-row  { display:flex; gap:8px; }
+.guess-row input {
+  flex:1; padding:10px 13px; background:rgba(0,0,0,.5); border:1px solid rgba(255,179,0,.45);
+  color:var(--text); font-family:'JetBrains Mono',monospace; font-size:.86rem; outline:none; transition:border-color .2s;
+}
+.guess-row input:focus { border-color:var(--amber); }
+.guess-row input::placeholder { color:rgba(255,179,0,.3); }
+.btn-confirm {
+  padding:10px 18px; background:var(--amber); color:#0a0a0a; border:none; font-family:'JetBrains Mono',monospace;
+  font-weight:700; font-size:.76rem; letter-spacing:1px; cursor:pointer; transition:opacity .2s;
+}
+.btn-confirm:hover { opacity:.85; }
+
+/* ENIGMA FINAL */
+.enigma-card { padding:16px 18px; background:rgba(255,179,0,.05); border:1px solid rgba(255,179,0,.3); }
+.enigma-title    { font-family:'VT323',monospace; font-size:1.15rem; color:var(--amber); letter-spacing:2px; text-align:center; margin-bottom:4px; }
+.enigma-subtitle { font-size:.76rem; color:var(--text-dim); text-align:center; margin-bottom:12px; font-style:italic; }
+.enigma-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+.enigma-num  { font-family:'VT323',monospace; font-size:1.05rem; color:var(--cyan); min-width:18px; }
+.enigma-text { font-size:.84rem; line-height:1.55; }
+.enigma-footer { margin-top:8px; padding-top:10px; border-top:1px dashed rgba(255,179,0,.25); font-size:.78rem; color:var(--text-dim); line-height:1.6; text-align:center; }
+
+/* ═══════════════ VICTORY ═══════════════ */
+#victory {
+  display:none; position:fixed; inset:0; background:rgba(2,3,4,.95); z-index:200;
+  align-items:center; justify-content:center; flex-direction:column; text-align:center; gap:14px; padding:40px;
+}
+#victory.show { display:flex; }
+.v-tag   { font-size:.78rem; letter-spacing:3px; color:var(--green-ok); }
+#victory h1 { font-family:'VT323',monospace; font-size:2.3rem; color:var(--amber); letter-spacing:3px; }
+.v-stats { font-size:.82rem; color:var(--cyan); }
+#victory p { font-size:.95rem; color:var(--text-dim); max-width:540px; line-height:1.75; }
+
+/* CONFETTI */
+.confetti { position:fixed; width:8px; height:8px; z-index:300; pointer-events:none; animation: fall linear forwards; }
+@keyframes fall { from{transform:translateY(-20px) rotate(0deg);opacity:1;} to{transform:translateY(105vh) rotate(720deg);opacity:0;} }
+
+@media(max-width:680px){ #left { display:none; } }
+
+/* ═══════════════ BLOQUEIO DE SEGURANÇA ═══════════════ */
+#penalty {
+  display:none; position:fixed; inset:0; z-index:600; background:rgba(8,0,0,.93);
+  flex-direction:column; align-items:center; justify-content:center; gap:16px; text-align:center; padding:40px;
+  backdrop-filter: blur(3px);
+}
+#penalty.show { display:flex; }
+.pen-icon { font-size:4.6rem; line-height:1; animation: penPulse 1.6s ease-in-out infinite; filter: drop-shadow(0 0 18px rgba(255,40,40,.6)); }
+@keyframes penPulse { 0%,100%{transform:scale(1);opacity:.85;} 50%{transform:scale(1.08);opacity:1;} }
+.pen-title { font-family:'VT323',monospace; font-size:1.7rem; color:var(--red); letter-spacing:3px; }
+.pen-quote { font-style:italic; color:rgba(255,200,200,.7); max-width:440px; line-height:1.7; font-size:.88rem; }
+#pen-cd { font-family:'VT323',monospace; font-size:4rem; color:var(--red); letter-spacing:5px; animation: cdPulse 1s ease-in-out infinite; }
+@keyframes cdPulse { 0%,100%{text-shadow:0 0 10px var(--red);} 50%{text-shadow:0 0 30px var(--red),0 0 60px #880000;} }
+.pen-sub { font-size:.62rem; color:rgba(255,179,0,.4); letter-spacing:3px; }
+#pen-time-lbl { font-size:.7rem; color:rgba(255,77,77,.8); letter-spacing:3px; margin:-6px 0 0; }
+
+#mute-btn {
+  position:fixed; bottom:14px; right:14px; z-index:400; width:36px; height:36px;
+  background:rgba(255,179,0,.1); border:1px solid rgba(255,179,0,.3); color:rgba(255,179,0,.6);
+  font-size:1rem; cursor:pointer; transition:.2s; display:flex; align-items:center; justify-content:center;
+}
+#mute-btn:hover { background:rgba(255,179,0,.2); color:var(--amber); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ LEFT PANEL ═══════════ -->
+<div id="left">
+  <div class="led-row"><div class="led"></div><div class="led"></div><div class="led"></div><div class="led"></div></div>
+
+  <div id="term">
+    <div class="term-bar"><div class="term-dot r"></div><div class="term-dot a"></div><div class="term-dot g"></div></div>
+    <div class="term-body">
+      <span class="prompt">root@rede:~$</span> status<br>
+      &gt; <span id="term-line">inicializando…</span><span class="cursor">_</span>
+    </div>
+  </div>
+
+  <div class="section-label">CAMADA</div>
+  <div class="phase-dots">
+    <div class="pdot" id="pd0"></div><div class="pdot" id="pd1"></div>
+    <div class="pdot" id="pd2"></div><div class="pdot" id="pd3"></div>
+  </div>
+
+  <div class="section-label">VERIFICAÇÕES</div>
+  <div class="qdots">
+    <div class="qdot" id="qd0"></div><div class="qdot" id="qd1"></div>
+    <div class="qdot" id="qd2"></div><div class="qdot" id="qd3"></div>
+  </div>
+
+  <div id="timer-wrap">
+    <div id="timer-lbl">TEMPO RESTANTE</div>
+    <div id="timer">30:00</div>
+  </div>
+</div>
+
+<!-- ═══════════ RIGHT PANEL ═══════════ -->
+<div id="right">
+  <div id="topbar">
+    <h1>PROTOCOLO ROOT</h1>
+    <span class="sub">— Escape Room · Redes de Computadores —</span>
+  </div>
+  <div id="phase-strip">🖥️ &nbsp;DIAGNÓSTICO DE REDE · 4 Camadas · Endereçamento → Wi-Fi</div>
+
+  <div id="chat">
+    <div id="typing"><div class="dots"><span></span><span></span><span></span></div></div>
+  </div>
+
+  <div id="interact">
+    <span style="color:rgba(255,179,0,.35);font-style:italic;font-size:.82rem;">Conectando ao núcleo do sistema…</span>
+  </div>
+</div>
+
+<!-- ═══════════ VITÓRIA ═══════════ -->
+<div id="victory">
+  <div class="v-tag">[ CONEXÃO RESTAURADA ]</div>
+  <h1>PING: 64 bytes recebidos</h1>
+  <div class="v-stats">4 pacotes transmitidos · 4 recebidos · 0% de perda</div>
+  <p id="vtext"></p>
+  <button class="btn-ghost" style="max-width:280px;margin-top:6px" onclick="location.reload()">▸ REINICIAR SISTEMA</button>
+</div>
+
+<!-- ═══════════ BLOQUEIO DE SEGURANÇA ═══════════ -->
+<div id="penalty">
+  <div class="pen-icon">🔒</div>
+  <div class="pen-title">BLOQUEIO DE SEGURANÇA</div>
+  <p id="pen-time-lbl"></p>
+  <p class="pen-quote" id="pen-quote"></p>
+  <div id="pen-cd">1:00</div>
+  <p class="pen-sub">AGUARDANDO LIBERAÇÃO DO SISTEMA</p>
+</div>
+
+<button id="mute-btn" onclick="toggleMute()" title="Silenciar áudio">🔊</button>
+
+<script>
+/* ═══════════════════════════════════════════════
+   ÁUDIO AMBIENTE — Web Audio API (zumbido de servidor + blips)
+═══════════════════════════════════════════════ */
+let audioCtx = null, masterGain = null, muted = false, blipTimer = null;
+
+function startMusic() {
+  try {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    audioCtx = new AC();
+    masterGain = audioCtx.createGain();
+    masterGain.gain.value = 0.1;
+    masterGain.connect(audioCtx.destination);
+
+    const freqs = [55, 82.5, 110];
+    freqs.forEach((f, i) => {
+      const o = audioCtx.createOscillator();
+      o.type = i === 1 ? 'triangle' : 'sine';
+      o.frequency.value = f;
+      const g = audioCtx.createGain();
+      g.gain.value = i === 0 ? 0.45 : 0.22;
+      o.connect(g); g.connect(masterGain);
+      o.start();
+
+      const lfo = audioCtx.createOscillator();
+      lfo.frequency.value = 0.06 + i * 0.015;
+      const lfoGain = audioCtx.createGain();
+      lfoGain.gain.value = 0.1;
+      lfo.connect(lfoGain); lfoGain.connect(g.gain);
+      lfo.start();
+    });
+    scheduleBlip();
+  } catch(e) {}
+}
+
+function scheduleBlip() {
+  blipTimer = setTimeout(() => {
+    if (audioCtx && !muted) playBlip();
+    scheduleBlip();
+  }, 3500 + Math.random() * 4000);
+}
+
+function playBlip() {
+  const f = 700 + Math.random() * 900;
+  const o = audioCtx.createOscillator();
+  o.type = 'sine'; o.frequency.value = f;
+  const g = audioCtx.createGain();
+  const t = audioCtx.currentTime;
+  g.gain.setValueAtTime(0, t);
+  g.gain.linearRampToValueAtTime(0.05, t + 0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.18);
+  o.connect(g); g.connect(masterGain);
+  o.start(t); o.stop(t + 0.2);
+}
+
+function toggleMute() {
+  if (!audioCtx) return;
+  muted = !muted;
+  masterGain.gain.setTargetAtTime(muted ? 0 : 0.1, audioCtx.currentTime, 0.3);
+  document.getElementById('mute-btn').textContent = muted ? '🔇' : '🔊';
+}
+
+/* ═══════════════════════════════════════════════
+   BLOQUEIO DE SEGURANÇA (penalidade progressiva)
+═══════════════════════════════════════════════ */
+const PEN_QUOTES = [
+  `"Resposta inválida. Por segurança, suspendendo o acesso temporariamente." — ROOT`,
+  `"Erro registrado no log. A persistência também é uma forma de depuração." — ROOT`,
+  `"Bloqueio automático ativado. Até sistemas caem — vocês também podem se recuperar." — ROOT`,
+  `"Pacote rejeitado pelo firewall interno. Tentem novamente após o tempo de espera." — ROOT`,
+  `"Falha detectada na verificação. Reiniciando paciência em…" — ROOT`,
+];
+let penInterval = null;
+
+function startPenalty() {
+  G.wrongCount++;
+  const mins = Math.min(G.wrongCount, 3);
+  const labels = ['', '1ª OCORRÊNCIA — 1 MINUTO', '2ª OCORRÊNCIA — 2 MINUTOS', '3ª OCORRÊNCIA — 3 MINUTOS'];
+  const labelExtra = G.wrongCount > 3 ? `${G.wrongCount}ª OCORRÊNCIA — 3 MINUTOS` : labels[mins];
+
+  document.getElementById('pen-quote').textContent = PEN_QUOTES[Math.floor(Math.random()*PEN_QUOTES.length)];
+  document.getElementById('pen-time-lbl').textContent = labelExtra;
+  document.getElementById('penalty').classList.add('show');
+  setTermStatus('BLOQUEIO ATIVO', true);
+
+  if (masterGain && !muted) masterGain.gain.setTargetAtTime(0.03, audioCtx.currentTime, 0.5);
+
+  let rem = mins * 60;
+  const cd = document.getElementById('pen-cd');
+  cd.textContent = `${mins}:00`;
+
+  clearInterval(penInterval);
+  penInterval = setInterval(() => {
+    rem--;
+    const m = Math.floor(rem/60), s = rem%60;
+    cd.textContent = `${m}:${String(s).padStart(2,'0')}`;
+    if (rem <= 0) {
+      clearInterval(penInterval);
+      document.getElementById('penalty').classList.remove('show');
+      setTermStatus('MONITORANDO', false);
+      if (masterGain && !muted) masterGain.gain.setTargetAtTime(0.1, audioCtx.currentTime, 0.5);
+    }
+  }, 1000);
+}
+
+/* ═══════════════════════════════════════════════
+   DADOS DO JOGO — 4 CAMADAS DE REDE
+═══════════════════════════════════════════════ */
+const LETTERS = ['A','B','C','D'];
+
+const PHASES = [
+  {
+    device: 'ROTEADOR',
+    aliases: ['roteador','router'],
+    strip: '🌐 &nbsp;Camada 1 de 4 · Endereçamento IP',
+    qs: [
+      { text: 'O que é, tecnicamente, um endereço IP?',
+        opts: ['Um código gravado de fábrica na placa de rede, que nunca muda',
+               'Um número que identifica um dispositivo dentro de uma rede, podendo mudar conforme a rede em que ele está conectado',
+               'Um nome de domínio digitado no navegador, como google.com',
+               'Uma senha que protege o acesso à rede Wi-Fi'],
+        correct: 1,
+        explain: 'O endereço IP identifica um dispositivo dentro de uma rede e pode mudar — diferente do endereço MAC, que é fixo e gravado de fábrica na placa de rede.' },
+      { text: 'Qual a principal diferença entre IPv4 e IPv6?',
+        opts: ['IPv4 é mais novo e usa menos endereços que o IPv6',
+               'IPv4 usa 32 bits e cerca de 4,3 bilhões de endereços; IPv6 usa 128 bits e uma quantidade muito maior de endereços',
+               'IPv4 funciona só em redes sem fio; IPv6 só em redes cabeadas',
+               'Não há diferença real entre eles, são apenas nomes diferentes para o mesmo protocolo'],
+        correct: 1,
+        explain: 'O IPv4 (32 bits, ~4,3 bilhões de endereços) está praticamente esgotado; o IPv6 (128 bits) foi criado para resolver essa escassez, oferecendo uma quantidade muito maior de endereços.' },
+      { text: 'Um computador do laboratório mostra o endereço IP 192.168.0.15. Esse endereço é:',
+        opts: ['Um IP público, visível por qualquer site da internet',
+               'Um IP privado, usado apenas dentro da rede local',
+               'Um endereço de DNS',
+               'Um endereço IPv6 simplificado'],
+        correct: 1,
+        explain: 'Faixas como 192.168.x.x, 10.x.x.x e 172.16–31.x.x (RFC 1918) são reservadas para uso interno em redes locais — são os chamados IPs privados. O IP público é o que o roteador usa para ser visto na internet.' },
+      { text: 'Para que serve a máscara de sub-rede?',
+        opts: ['Para criptografar os dados que saem da rede',
+               'Para definir qual parte do endereço IP identifica a rede e qual parte identifica o dispositivo (host)',
+               'Para esconder o IP do dispositivo de outros usuários',
+               'Para aumentar a velocidade da internet'],
+        correct: 1,
+        explain: 'A máscara de sub-rede (ex.: 255.255.255.0) divide o endereço IP em duas partes: a que identifica a rede e a que identifica o host dentro dela — é assim que os dispositivos sabem se estão na mesma rede ou em redes diferentes.' },
+    ],
+    hints: [
+      'Este equipamento é o responsável por interligar a rede local à internet, escolhendo o melhor caminho para cada pacote de dados chegar ao destino certo.',
+      'Sem ele, os dispositivos da casa ou da escola continuariam se comunicando entre si normalmente — mas nenhum conseguiria sair para a internet. Na maioria das instalações domésticas, é ele também quem distribui os IPs da rede local e atua como gateway padrão.',
+      'Costuma ter portas numeradas na parte de trás e, em modelos sem fio, uma ou mais antenas. Geralmente fica ao lado do modem, ou já vem integrado a ele. O nome do equipamento vem do verbo que significa "definir um caminho".'
+    ]
+  },
+  {
+    device: 'SWITCH',
+    aliases: ['switch','comutador'],
+    strip: '🖧 &nbsp;Camada 2 de 4 · Equipamentos de Rede Local',
+    qs: [
+      { text: 'Qual a principal diferença entre um hub e um switch?',
+        opts: ['O hub é mais moderno e mais rápido que o switch',
+               'O hub envia os dados para todas as portas ao mesmo tempo; o switch identifica o destino certo e envia apenas para a porta correta',
+               'O switch só funciona em redes sem fio',
+               'Não há diferença, são nomes diferentes para o mesmo equipamento'],
+        correct: 1,
+        explain: 'O hub é um equipamento simples: repete o sinal para todas as portas, gerando colisões e desperdício de banda. O switch é inteligente — aprende o endereço MAC de cada dispositivo e envia os dados só para a porta certa.' },
+      { text: 'Por que o hub é considerado obsoleto nas redes atuais?',
+        opts: ['Porque não existe mais nenhum cabo compatível com ele',
+               'Porque gera muitas colisões de dados e compartilha a banda entre todas as portas, tornando a rede lenta',
+               'Porque só funciona com fibra óptica',
+               'Porque não aceita o protocolo IP'],
+        correct: 1,
+        explain: 'Como o hub repete o sinal para todas as portas, quanto mais dispositivos conectados, mais colisões de dados acontecem e mais lenta a rede fica. O switch resolveu esse problema isolando cada porta.' },
+      { text: 'Um laboratório com 24 computadores conectados a um hub antigo apresenta lentidão extrema e perda de pacotes, mesmo com poucos usuários acessando a internet ao mesmo tempo. Qual ação resolveria esse problema com mais eficácia?',
+        opts: ['Trocar o hub por um switch',
+               'Trocar o cabo de internet por um mais grosso',
+               'Reiniciar todos os computadores ao mesmo tempo',
+               'Trocar o servidor DNS'],
+        correct: 0,
+        explain: 'Substituir o hub por um switch elimina as colisões, já que o switch direciona os dados apenas para a porta de destino, em vez de repetir o sinal para todas as portas como o hub faz.' },
+      { text: 'Como o switch sabe para qual porta enviar cada informação?',
+        opts: ['Ele envia para todas as portas e deixa o computador descartar o que não é dele',
+               'Ele mantém uma tabela com o endereço MAC de cada dispositivo conectado a cada porta',
+               'Ele pergunta ao servidor DNS qual é a porta certa',
+               'Ele nunca usa o endereço MAC, apenas o IP de destino'],
+        correct: 1,
+        explain: 'O switch monta e mantém uma tabela interna associando o endereço MAC (físico) de cada dispositivo a uma porta específica — é assim que ele sabe exatamente para onde encaminhar cada quadro de dados.' },
+    ],
+    hints: [
+      'Este equipamento também interliga vários computadores em uma rede cabeada — mas, diferente de um aparelho mais antigo e simples, ele é inteligente: sabe exatamente para qual porta enviar cada informação, sem desperdiçar a rede toda.',
+      'Por dentro, ele mantém uma tabela com o endereço físico de cada dispositivo conectado a cada porta — e usa essa tabela para evitar colisões de dados.',
+      'É o equipamento que substituiu o hub na maioria das redes modernas. Tem várias portas numeradas e um conjunto de LEDs que piscam a cada pacote transmitido; geralmente fica dentro de um rack ou armário de TI.'
+    ]
+  },
+  {
+    device: 'MODEM',
+    aliases: ['modem','modém'],
+    strip: '📡 &nbsp;Camada 3 de 4 · Serviços de Rede e Acesso à Internet',
+    qs: [
+      { text: 'Qual a função do servidor DHCP em uma rede?',
+        opts: ['Traduzir nomes de sites em endereços IP',
+               'Distribuir automaticamente endereço IP, máscara, gateway e DNS para os dispositivos que entram na rede',
+               'Criptografar o tráfego de dados',
+               'Bloquear sites indesejados'],
+        correct: 1,
+        explain: 'O DHCP elimina a necessidade de configurar manualmente o IP de cada dispositivo: ele distribui automaticamente IP, máscara de sub-rede, gateway e servidor DNS para quem entra na rede.' },
+      { text: 'Qual a função do DNS?',
+        opts: ['Traduzir nomes de domínio (como google.com) em endereços IP que os computadores entendem',
+               'Distribuir IPs automaticamente para os dispositivos',
+               'Criar uma rede sem fio',
+               'Proteger a rede contra ataques externos'],
+        correct: 0,
+        explain: 'Sem o DNS, os sites só abririam digitando o endereço IP diretamente — o DNS é o serviço que traduz nomes fáceis de lembrar, como google.com, para o IP real do servidor.' },
+      { text: 'O servidor DHCP de uma escola para de funcionar. Um notebook é ligado e tenta se conectar à rede automaticamente. O que provavelmente acontece?',
+        opts: ['O notebook recebe um IP normal e tudo funciona sem problemas',
+               'O notebook não recebe IP nenhum, ou recebe um IP automático limitado, e fica sem acesso completo à rede',
+               'O notebook se conecta direto à internet, ignorando a rede local',
+               'O notebook passa a usar automaticamente o IP de outro computador'],
+        correct: 1,
+        explain: 'Sem DHCP, o dispositivo não recebe a configuração automática. Em alguns sistemas, ele recebe um IP de autoconfiguração (faixa 169.254.x.x), que só permite comunicação muito limitada dentro da rede local — sem gateway, sem DNS, sem internet.' },
+      { text: 'Um usuário consegue acessar um site digitando o endereço IP dele diretamente, mas o mesmo site não abre quando ele digita o nome (como www.site.com.br). Qual serviço provavelmente está com problema?',
+        opts: ['DHCP','Gateway','DNS','Switch'],
+        correct: 2,
+        explain: 'Se o site abre pelo IP mas não pelo nome, o problema está na tradução de nomes para IP — função do DNS. O restante da rede está funcionando normalmente.' },
+    ],
+    hints: [
+      'Este equipamento é a porta de entrada do sinal que vem do seu provedor de internet — seja por cabo, fibra óptica ou linha telefônica.',
+      'O nome dele é uma junção de duas palavras: ele "modula" o sinal digital do computador para que viaje pela linha do provedor, e depois "demodula" o sinal que chega de volta, transformando-o em dados digitais novamente.',
+      'Sem ele, mesmo que todos os outros equipamentos da rede estejam funcionando perfeitamente, a internet simplesmente não chega à casa ou à escola. Geralmente é o primeiro equipamento da cadeia, ligado direto ao cabo ou fibra que vem da rua.'
+    ]
+  },
+  {
+    device: 'ACCESS POINT',
+    aliases: ['access point','ponto de acesso','access-point','accesspoint'],
+    strip: '🔐 &nbsp;Camada 4 de 4 · Protocolos, Segurança e Conexão sem Fio',
+    qs: [
+      { text: 'Qual a principal diferença entre HTTP e HTTPS?',
+        opts: ['HTTP é mais rápido e nunca deve ser substituído pelo HTTPS',
+               'HTTPS criptografa a comunicação entre o navegador e o site, protegendo os dados; HTTP transmite tudo sem proteção',
+               'HTTP só funciona em redes locais; HTTPS só na internet',
+               'Não existe diferença real, é apenas uma questão de nome'],
+        correct: 1,
+        explain: 'O "S" extra do HTTPS significa "Secure": os dados trafegam criptografados entre o navegador e o servidor, protegendo senhas e dados pessoais. No HTTP puro, qualquer um na rede pode interceptar essas informações.' },
+      { text: 'Para que serve uma VPN (Virtual Private Network)?',
+        opts: ['Para aumentar a velocidade da internet',
+               'Para criar um túnel criptografado entre o dispositivo e uma rede remota, protegendo o tráfego de dados',
+               'Para distribuir IPs automaticamente',
+               'Para traduzir nomes de domínio em IP'],
+        correct: 1,
+        explain: 'A VPN cria um túnel criptografado entre o dispositivo e uma rede remota — como se você estivesse fisicamente conectado àquela rede, mesmo estando longe, com os dados protegidos durante o trajeto.' },
+      { text: 'Para que serve o comando ping?',
+        opts: ['Para apagar o cache do navegador',
+               'Para testar se um dispositivo está acessível na rede, medindo o tempo de resposta',
+               'Para configurar o endereço IP do computador',
+               'Para bloquear um site'],
+        correct: 1,
+        explain: 'O ping envia pacotes até um destino e mede quanto tempo demora para receber a resposta — é a ferramenta mais básica para testar se um host está acessível e qual a qualidade da conexão até ele.' },
+      { text: 'Qual a diferença entre um roteador Wi-Fi doméstico e um access point dedicado?',
+        opts: ['São exatamente a mesma coisa, sem nenhuma diferença',
+               'O roteador Wi-Fi já reúne várias funções (DHCP, gateway, Wi-Fi); o access point dedicado normalmente só estende o sinal sem fio de uma rede que já existe',
+               'O access point sempre substitui a internet do provedor',
+               'O roteador só funciona com cabos, nunca com Wi-Fi'],
+        correct: 1,
+        explain: 'Um roteador doméstico já vem com várias funções embutidas (DHCP, gateway e Wi-Fi). Um access point dedicado, comum em escolas e empresas, geralmente só cria ou estende a rede sem fio — o roteamento continua sendo feito por outro equipamento.' },
+    ],
+    hints: [
+      'Este equipamento não cria a rede da internet — ele apenas estende o sinal sem fio para que os dispositivos possam se conectar via Wi-Fi a uma rede que já existe.',
+      'Diferente de um roteador doméstico (que já vem com essa função embutida), este equipamento sozinho não faz roteamento nem distribui IP — apenas transforma o sinal de uma rede cabeada em ondas de rádio Wi-Fi, e vice-versa.',
+      'Em escolas, empresas e prédios grandes, vários desses equipamentos costumam ser instalados em pontos estratégicos do teto ou da parede para garantir cobertura. O nome dele já entrega a função: é o "ponto" por onde se "acessa" a rede sem fio.'
+    ]
+  }
+];
+
+/* ═══════════════════════════════════════════════
+   ESTADO
+═══════════════════════════════════════════════ */
+let G = {
+  phase:0, qIdx:0, hints:0, answered:[],
+  qsDone:false, deviceMode:false, attempts:0,
+  busy:false, timeLeft:1800, timer:null,
+  wrongCount:0, finalEnigma:false
+};
+
+/* ═══════════════════════════════════════════════
+   TIMER
+═══════════════════════════════════════════════ */
+function startTimer() {
+  G.timer = setInterval(() => {
+    G.timeLeft--;
+    const m = Math.floor(G.timeLeft/60), s = G.timeLeft%60;
+    const el = document.getElementById('timer');
+    el.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    el.className = G.timeLeft<=300 ? 'danger' : G.timeLeft<=600 ? 'warn' : '';
+    if (G.timeLeft <= 0) { clearInterval(G.timer); timeUp(); }
+  }, 1000);
+}
+
+/* ═══════════════════════════════════════════════
+   UI HELPERS
+═══════════════════════════════════════════════ */
+const $chat     = () => document.getElementById('chat');
+const $typing   = () => document.getElementById('typing');
+const $interact = () => document.getElementById('interact');
+
+function addMsg(type, text, extra='') {
+  const chat = $chat();
+  const div  = document.createElement('div');
+  div.className = `msg ${type}`;
+  const avatarMap = { root:'ROOT', team:'TIME' };
+  const av = (type==='root'||type==='team') ? `<div class="avatar">${avatarMap[type]}</div>` : '';
+  div.innerHTML = `${av}<div class="bubble">${text}${extra}</div>`;
+  chat.insertBefore(div, $typing());
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function showTyping() { $typing().style.display='block'; $chat().scrollTop=99999; }
+function hideTyping() { $typing().style.display='none'; }
+function setInteract(html) { $interact().innerHTML = html; }
+
+function setTermStatus(text, alert=false) {
+  const el = document.getElementById('term-line');
+  if (!el) return;
+  el.textContent = text;
+  el.style.color = alert ? 'var(--red)' : 'var(--cyan)';
+}
+
+function dots() {
+  const ph = G.phase;
+  for (let i=0;i<4;i++){
+    const d = document.getElementById(`pd${i}`);
+    if(d) d.className = 'pdot' + (i<ph?' done': i===ph?' active':'');
+  }
+  for (let i=0;i<4;i++){
+    const d = document.getElementById(`qd${i}`);
+    if(!d) continue;
+    d.className = 'qdot'+(i<G.qIdx?(G.answered[i]?' ok':' err'):i===G.qIdx&&!G.qsDone?' cur':'');
+  }
+}
+
+function qcard(q) {
+  return `<div class="qcard"><div class="qcard-label">VERIFICAÇÃO TÉCNICA</div><div class="qcard-text">${q.text}</div></div>`;
+}
+
+function normalize(s) {
+  return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();
+}
+
+/* ═══════════════════════════════════════════════
+   ROOT — respostas pré-escritas (sem API)
+═══════════════════════════════════════════════ */
+function root(situation, extra={}) {
+  const pi  = Math.min(G.phase, PHASES.length-1);
+  const ph  = PHASES[pi];
+  const pick = arr => arr[Math.floor(Math.random()*arr.length)];
+
+  const INTRO = `Sistema reiniciando… conexão estabelecida. Eu sou ROOT, a inteligência responsável pela administração desta rede. Às 07h32 de hoje, um pico de tráfego anômalo derrubou todos os serviços e, como protocolo automático de segurança, a porta desta sala foi trancada eletronicamente até que a rede seja diagnosticada e restaurada por uma equipe humana. Vocês são essa equipe. Ao longo deste protocolo, farei perguntas técnicas sobre cada camada da rede. A cada etapa concluída, vou descrever um equipamento físico que vocês precisam localizar nesta sala — sem nunca dizer o nome dele diretamente. Isso seria fácil demais para uma IA do meu nível de acesso.`;
+
+  const PHASE_INTRO = [
+    `Vamos começar pela camada mais fundamental: o endereçamento. Toda comunicação em uma rede depende de números — endereços que identificam cada dispositivo e decidem para onde os dados devem ir. Responderão agora questões sobre IP, IPv4, IPv6 e máscara de sub-rede. Ao final desta etapa, vou descrever um equipamento que vocês devem localizar nesta sala.`,
+    `Endereçamento resolvido. Agora vamos falar sobre os equipamentos que efetivamente movem os dados dentro de uma rede local — e por que alguns deles são, tecnicamente falando, peças de museu. As próximas questões tratam de hub e switch. Depois, mais um equipamento para localizar.`,
+    `Endereçamento e equipamentos locais: concluídos. Mas de onde vem, de fato, o sinal da internet? E como cada dispositivo novo da rede sabe automaticamente qual IP usar, sem ninguém digitar nada? As próximas questões tratam de DHCP e DNS. Mais um equipamento ao final desta etapa.`,
+    `Última camada antes da restauração completa: protocolos, segurança e conexão sem fio. HTTP, HTTPS, VPN e ping são ferramentas que qualquer técnico de rede usa todos os dias. Resolvam estas questões e localizem o último equipamento. Depois disso, restará apenas o protocolo final de verificação.`,
+  ];
+
+  const Q_INTRO = [
+    `Próxima verificação. Analisem as opções com atenção.`,
+    `Consultando base de conhecimento. Eis a próxima pergunta.`,
+    `Dados carregados. Selecionem a resposta correta.`,
+    `Atenção: uma resposta incorreta aciona o protocolo de bloqueio automático.`,
+    `Processando próxima verificação técnica.`,
+  ];
+
+  function correctR() { return pick([
+    `Resposta correta. ${extra.explain}`,
+    `Verificação aprovada. ${extra.explain}`,
+    `Correto. ${extra.explain} Prosseguindo.`,
+    `Afirmativo. ${extra.explain}`,
+  ]); }
+
+  function wrongR() { return pick([
+    `Resposta incorreta. A opção certa era ${extra.correctLetter}) ${extra.correctText}. ${extra.explain} Ativando bloqueio de segurança.`,
+    `Verificação reprovada. O correto era ${extra.correctLetter}) ${extra.correctText}. ${extra.explain}`,
+    `Erro registrado. A resposta certa: ${extra.correctLetter}) ${extra.correctText}. ${extra.explain}`,
+  ]); }
+
+  const QS_DONE = [
+    `Questões desta etapa concluídas. Agora, uma descrição técnica do equipamento que vocês precisam localizar nesta sala. Prestem atenção — não costumo repetir.`,
+    `Etapa concluída. Vou descrever o próximo equipamento. Sejam precisos na busca.`,
+    `Questões finalizadas. Seguem as características do equipamento desta etapa.`,
+    `Última etapa de perguntas concluída. Uma última descrição técnica antes do protocolo final.`,
+  ];
+
+  function hintR() {
+    const ini = pick([`Dados recuperados do registro do sistema:`, `Analisando características físicas:`, `Consultando especificações técnicas:`]);
+    const fim = pick([`Identifiquem o equipamento e digitem o nome quando estiverem certos.`, `Quando localizarem, digitem o nome do equipamento.`, `Qual é esse equipamento? Digitem o nome ao identificá-lo.`]);
+    return `${ini} ${ph.hints[G.hints]} ${fim}`;
+  }
+
+  const WRONG_DEVICE = [
+    `"${extra.guess||'?'}" não corresponde às especificações descritas. ${G.hints<3?'Há mais dados técnicos a revelar.':'Revisem as características com atenção.'}`,
+    `Análise negativa. "${extra.guess||'?'}" não é o equipamento. ${G.hints<3?'Vou revelar mais um dado.':'As respostas estão nas pistas. Pensem.'}`,
+    `Incorreto. "${extra.guess||'?'}" não confere com os dados técnicos informados. ${G.hints<3?'Ainda há dados por vir.':'Releiam com mais cuidado.'}`,
+  ];
+
+  const RIGHT_DEVICE = [
+    `Correto. Roteador identificado. É ele quem decide o caminho de cada pacote entre a rede local e a internet, e geralmente também atua como gateway padrão. Próxima etapa liberada.`,
+    `Correto. Switch identificado. Ele substituiu o hub na maioria das redes modernas justamente por eliminar colisões e direcionar os dados com inteligência, porta a porta. Próxima etapa liberada.`,
+    `Correto. Modem identificado. "Modem" vem de modulador-demodulador: ele converte o sinal digital em um formato que viaja pela linha do provedor, e faz o caminho inverso quando os dados chegam. Sem ele, a internet simplesmente não entra na rede. Avançando.`,
+    `Correto. Access point identificado. Ele estende o sinal sem fio de uma rede já existente, permitindo que dispositivos se conectem via Wi-Fi. Todos os equipamentos foram localizados — resta apenas o protocolo final.`,
+  ];
+
+  const REVEAL_DEVICE = [
+    `O equipamento é o roteador. Ele decide o caminho de cada pacote entre a rede local e a internet. Localizem-no e avancem.`,
+    `O equipamento é o switch. Ele direciona os dados com inteligência, porta a porta, sem gerar colisões. Sigam em frente.`,
+    `O equipamento é o modem. Ele converte o sinal da operadora em dados digitais que a rede entende. Avançando.`,
+    `O equipamento é o access point. Ele estende o sinal Wi-Fi de uma rede já existente. Resta o protocolo final.`,
+  ];
+
+  const FINAL_ENIGMA = `Os quatro equipamentos foram localizados e a rede física está restaurada. Mas falta uma última verificação: o protocolo de confirmação que todo técnico de rede executa antes de declarar um sistema online. Quatro perguntas. Quatro respostas. A primeira letra de cada resposta, na ordem, forma o comando que vocês devem digitar.`;
+
+  const FINAL_WRONG = [
+    `"${extra.guess||'?'}" não é o comando correto. Revisem as quatro perguntas — cada resposta é uma palavra, e a primeira letra de cada uma, na ordem, forma o comando.`,
+    `Incorreto. Confiram as quatro respostas com atenção: o tipo de IP do roteador, a sigla de endereçamento do switch, a técnica de tradução de endereços do modem e o ponto de saída da rede do access point.`,
+    `Não é esse o comando. Pensem: quatro respostas, quatro letras, um comando de diagnóstico muito conhecido em redes.`,
+  ];
+
+  const VICTORY = `PING enviado. PING recebido. 4 pacotes transmitidos, 4 recebidos, 0% de perda — latência: instantânea. Diagnóstico concluído: rede 100% operacional. Liberando trava de segurança da porta… Parabéns, equipe. Vocês restauraram o sistema.`;
+
+  const MAP = {
+    intro: INTRO,
+    phase_intro: PHASE_INTRO[pi],
+    q_intro: pick(Q_INTRO),
+    correct: correctR(),
+    wrong: wrongR(),
+    qs_done: QS_DONE[pi],
+    hint: hintR(),
+    wrong_device: pick(WRONG_DEVICE),
+    right_device: RIGHT_DEVICE[pi],
+    reveal_device: REVEAL_DEVICE[pi],
+    final_enigma_intro: FINAL_ENIGMA,
+    final_wrong: pick(FINAL_WRONG),
+    victory: VICTORY,
+  };
+
+  return new Promise(resolve =>
+    setTimeout(() => resolve(MAP[situation] || 'ROOT processa em silêncio.'),
+    500 + Math.random()*700)
+  );
+}
+
+/* ═══════════════════════════════════════════════
+   FLUXO DO JOGO
+═══════════════════════════════════════════════ */
+async function init() {
+  dots(); startTimer();
+  document.addEventListener('click', () => { if (!audioCtx) startMusic(); }, { once:true });
+  setInteract('<span style="color:rgba(255,179,0,.35);font-style:italic;font-size:.82rem;">Conectando ao núcleo do sistema…</span>');
+  showTyping();
+  const txt = await root('intro');
+  hideTyping(); addMsg('root', txt);
+  setTermStatus('MONITORANDO', false);
+  await delay(1200); startPhase();
+}
+
+async function startPhase() {
+  G.qIdx=0; G.hints=0; G.qsDone=false;
+  G.deviceMode=false; G.attempts=0; G.answered=[];
+  dots();
+  document.getElementById('phase-strip').innerHTML = PHASES[Math.min(G.phase,3)].strip;
+  setTermStatus(`CAMADA ${G.phase+1}/4`, false);
+  showTyping();
+  const txt = await root('phase_intro');
+  hideTyping(); addMsg('root', txt);
+  await delay(1100); askQuestion();
+}
+
+async function askQuestion() {
+  if (G.busy) return;
+  dots();
+  showTyping();
+  const txt = await root('q_intro');
+  hideTyping();
+  const q = PHASES[G.phase].qs[G.qIdx];
+  addMsg('root', txt, qcard(q));
+  const btns = q.opts.map((o,i) => `<button class="opt-btn" onclick="answer(${i})">${LETTERS[i]}) ${o}</button>`).join('');
+  setInteract(`<div class="opt-list">${btns}</div>`);
+}
+
+async function answer(idx) {
+  if (G.busy) return; G.busy = true;
+  const q  = PHASES[G.phase].qs[G.qIdx];
+  const ok = (idx === q.correct);
+  addMsg('team', `— ${LETTERS[idx]}) ${q.opts[idx]}`);
+  G.answered.push(ok); dots();
+  setInteract('<span style="color:rgba(255,179,0,.35);font-style:italic;font-size:.82rem;">ROOT processa a resposta…</span>');
+  showTyping();
+  const txt = await root(ok?'correct':'wrong', {
+    explain: q.explain, correctLetter: LETTERS[q.correct], correctText: q.opts[q.correct]
+  });
+  hideTyping(); addMsg('root', txt);
+  G.qIdx++; G.busy = false;
+  if (!ok) setTimeout(startPenalty, 800);
+  const totalQs = PHASES[G.phase].qs.length;
+  if (G.qIdx < totalQs) {
+    setInteract(`<button class="btn-ghost" onclick="askQuestion()">▸ PRÓXIMA VERIFICAÇÃO</button>`);
+  } else {
+    G.qsDone = true; dots();
+    setInteract(`<button class="btn-ghost" onclick="transHints()">▸ RECEBER PRIMEIRO DADO TÉCNICO</button>`);
+  }
+}
+
+async function transHints() {
+  if (G.busy) return; G.busy = true;
+  setInteract('<span style="color:rgba(255,179,0,.35);font-style:italic;font-size:.82rem;">ROOT prepara os dados técnicos…</span>');
+  showTyping();
+  const txt = await root('qs_done');
+  hideTyping(); addMsg('root', txt);
+  G.busy = false;
+  setInteract(`<button class="btn-ghost" onclick="giveHint()">▸ VER DADO TÉCNICO Nº 1</button>`);
+}
+
+async function giveHint() {
+  if (G.busy) return;
+  if (G.hints >= 3) { revealDevice(); return; }
+  G.busy = true;
+  setInteract('<span style="color:rgba(255,179,0,.35);font-style:italic;font-size:.82rem;">ROOT consulta o registro…</span>');
+  showTyping();
+  const txt = await root('hint');
+  hideTyping(); addMsg('root', txt);
+  G.hints++; G.deviceMode = true; G.busy = false;
+  showDeviceInput();
+}
+
+function showDeviceInput() {
+  const nextLabel = G.hints < 3 ? `▸ DADO TÉCNICO Nº ${G.hints+1}` : `▸ REVELAR EQUIPAMENTO`;
+  setInteract(`
+    <div class="guess-form">
+      <div class="guess-row">
+        <input id="di" type="text" placeholder="Digite o nome do equipamento…"
+          onkeydown="if(event.key==='Enter')guessDevice()"/>
+        <button class="btn-confirm" onclick="guessDevice()">CONFIRMAR</button>
+      </div>
+      <button class="btn-ghost" onclick="giveHint()">${nextLabel}</button>
+    </div>`);
+  setTimeout(()=>{ const el=document.getElementById('di'); if(el) el.focus(); },80);
+}
+
+async function guessDevice() {
+  if (G.busy) return;
+  const el = document.getElementById('di'); if (!el) return;
+  const raw = el.value.trim(); if (!raw) return;
+  G.busy = true; el.value = '';
+  const nrm = normalize(raw);
+  const ph  = PHASES[G.phase];
+  const ok  = ph.aliases.some(a => normalize(a)===nrm || nrm===normalize(a));
+  addMsg('team', `— "${raw}"`);
+  setInteract('<span style="color:rgba(255,179,0,.35);font-style:italic;font-size:.82rem;">ROOT analisa…</span>');
+  showTyping();
+  const txt = await root(ok?'right_device':'wrong_device', {guess:raw});
+  hideTyping(); addMsg('root', txt);
+  G.attempts++; G.busy = false;
+  if (ok) { setTimeout(()=>advance(), 1800); }
+  else { G.hints<3 ? showDeviceInput() : setInteract(`<button class="btn-ghost" onclick="giveHint()">▸ VER MAIS UM DADO / REVELAR</button>`); }
+}
+
+async function revealDevice() {
+  G.busy = true;
+  setInteract('<span style="color:rgba(255,179,0,.35);font-style:italic;font-size:.82rem;">ROOT revela o equipamento…</span>');
+  showTyping();
+  const txt = await root('reveal_device');
+  hideTyping(); addMsg('root', txt);
+  G.busy = false;
+  setTimeout(()=>advance(), 1800);
+}
+
+async function advance() {
+  G.phase++;
+  if (G.phase >= 4) {
+    G.phase = 3;
+    addMsg('sys','✦ &nbsp; Os 4 equipamentos foram localizados — o protocolo final aguarda &nbsp; ✦');
+    await delay(1400);
+    await startFinalEnigma();
+    return;
+  }
+  addMsg('sys',`✦ &nbsp; Camada ${G.phase} restaurada — preparem-se para a próxima &nbsp; ✦`);
+  dots();
+  await delay(1400); startPhase();
+}
+
+/* ── PROTOCOLO FINAL — PING ── */
+async function startFinalEnigma() {
+  G.finalEnigma = true;
+  document.getElementById('phase-strip').textContent = '🔑  PROTOCOLO FINAL — 4 Equipamentos · 1 Comando';
+  setTermStatus('PROTOCOLO FINAL', false);
+  showTyping();
+  const intro = await root('final_enigma_intro');
+  hideTyping(); addMsg('root', intro);
+  await delay(900);
+
+  const card = `<div class="enigma-card">
+    <div class="enigma-title">⚡ &nbsp; PROTOCOLO FINAL &nbsp; ⚡</div>
+    <div class="enigma-subtitle">Quatro equipamentos. Quatro conceitos. Um comando os libertará.</div>
+    <div class="enigma-item">
+      <span class="enigma-num">I</span>
+      <span class="enigma-text">O <strong>roteador</strong> conecta a rede à internet usando um endereço que é único no mundo todo — diferente do endereço usado só dentro de casa ou da escola. Como se chama esse tipo de IP (uma palavra)?</span>
+    </div>
+    <div class="enigma-item">
+      <span class="enigma-num">II</span>
+      <span class="enigma-text">O <strong>switch</strong> usa endereços MAC para saber a qual porta enviar cada quadro de dados. Mas é outro tipo de endereço — aquele que muda de rede para rede e permite que os dados cheguem até a internet — que vocês estudaram na primeira camada. Qual é a sigla de duas letras desse endereço?</span>
+    </div>
+    <div class="enigma-item">
+      <span class="enigma-num">III</span>
+      <span class="enigma-text">O <strong>modem</strong> traz o sinal da internet até a casa, mas é uma técnica do roteador que permite que vários dispositivos compartilhem o mesmo IP público, traduzindo os endereços. Qual é a sigla de três letras dessa técnica?</span>
+    </div>
+    <div class="enigma-item">
+      <span class="enigma-num">IV</span>
+      <span class="enigma-text">Para que um notebook conectado ao <strong>access point</strong> consiga sair da rede local e alcançar a internet, os pacotes precisam passar por um ponto de saída — geralmente o próprio roteador. Como se chama esse ponto de saída, em uma palavra?</span>
+    </div>
+    <div class="enigma-footer">Juntem a primeira letra de cada resposta, na ordem, e descobrirão o comando de 4 letras que toda equipe de TI digita para testar se a rede está respondendo.<br>Escrevam o comando aqui.</div>
+  </div>`;
+  addMsg('sys', card);
+
+  await delay(600);
+  setInteract(`
+    <div class="guess-form">
+      <div class="guess-row">
+        <input id="final-in" type="text" placeholder="O comando final…"
+          onkeydown="if(event.key==='Enter')checkFinal()"/>
+        <button class="btn-confirm" onclick="checkFinal()">CONFIRMAR</button>
+      </div>
+    </div>`);
+  setTimeout(()=>{ const el=document.getElementById('final-in'); if(el) el.focus(); },100);
+}
+
+async function checkFinal() {
+  if (G.busy) return;
+  const el = document.getElementById('final-in'); if (!el) return;
+  const raw = el.value.trim(); if (!raw) return;
+  G.busy = true; el.value = '';
+  const norm = normalize(raw);
+  addMsg('team', `— "${raw}"`);
+
+  if (norm === 'ping') {
+    setInteract('');
+    showTyping();
+    const txt = await root('victory');
+    hideTyping(); addMsg('root', txt);
+    clearInterval(G.timer); G.busy = false;
+    setTermStatus('RESTAURADO', false);
+    setTimeout(()=>{ document.getElementById('vtext').textContent=txt; confetti(); document.getElementById('victory').classList.add('show'); }, 2000);
+  } else {
+    setInteract('<span style="color:rgba(255,179,0,.35);font-style:italic;font-size:.82rem;">ROOT analisa…</span>');
+    showTyping();
+    const txt = await root('final_wrong', {guess:raw});
+    hideTyping(); addMsg('root', txt);
+    G.busy = false;
+    setTimeout(startPenalty, 800);
+    await delay(800);
+    setInteract(`
+      <div class="guess-form">
+        <div class="guess-row">
+          <input id="final-in" type="text" placeholder="Tente novamente…"
+            onkeydown="if(event.key==='Enter')checkFinal()"/>
+          <button class="btn-confirm" onclick="checkFinal()">CONFIRMAR</button>
+        </div>
+      </div>`);
+    setTimeout(()=>{ const el=document.getElementById('final-in'); if(el) el.focus(); },100);
+  }
+}
+
+function timeUp() {
+  setTermStatus('TEMPO ESGOTADO', true);
+  addMsg('sys','⧖ O tempo esgotou-se. O bloqueio de segurança não foi removido a tempo — a rede permanece travada.');
+  setInteract(`<button class="btn-ghost" style="max-width:280px" onclick="location.reload()">▸ TENTAR NOVAMENTE</button>`);
+}
+
+/* ═══════════════════════════════════════════════
+   CONFETTI
+═══════════════════════════════════════════════ */
+function confetti() {
+  const cols = ['#ffb300','#ffd166','#4fd1ff','#ffffff','#3ddc84','#d4d4d4'];
+  for (let i=0;i<70;i++){
+    const c = document.createElement('div');
+    const size = 6+Math.random()*6;
+    c.className='confetti';
+    c.style.cssText=`left:${Math.random()*100}vw;top:-20px;
+      width:${size}px;height:${size}px;
+      background:${cols[Math.floor(Math.random()*cols.length)]};
+      border-radius:${Math.random()>.5?'50%':'2px'};
+      animation-duration:${2.5+Math.random()*2}s;
+      animation-delay:${Math.random()*1.5}s;`;
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(), 5000);
+  }
+}
+
+function delay(ms) { return new Promise(r=>setTimeout(r,ms)); }
+
+/* ═══════════════════════════════════════════════
+   START
+═══════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
