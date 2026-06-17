@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel SAEB/SIMAVE — Língua Portuguesa 9º ano</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--azul:#1a3a5c;--azul-m:#235a8c;--azul-c:#d6e8f7;--ouro:#c9871f;--ouro-c:#fff8eb;--verde:#246b4a;--verde-c:#e6f4ed;--verm:#b02a2a;--verm-c:#fdecea;--lilas:#5b21b6;--lilas-c:#ede9fe;--bg:#f2f4f7;--borda:#d0d6e0;--branco:#fff;--txt:#1c2635;--txt2:#4a5568}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+a{text-decoration:none;color:inherit}
+
+/* HEADER */
+header{background:linear-gradient(135deg,var(--azul) 0%,#2d1464 100%);color:#fff;padding:2.8rem 1.5rem 2rem;text-align:center;position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:250px;height:250px;border-radius:50%;background:rgba(201,135,31,.08)}
+header::after{content:'';position:absolute;bottom:-40px;left:-40px;width:180px;height:180px;border-radius:50%;background:rgba(91,33,182,.12)}
+.voltar-link{display:inline-block;color:rgba(255,255,255,.65);font-size:.8rem;margin-bottom:1.2rem;border:1px solid rgba(255,255,255,.2);padding:5px 14px;border-radius:20px;transition:.15s}
+.voltar-link:hover{color:#fff;background:rgba(255,255,255,.1)}
+.badge-header{display:inline-block;background:var(--ouro);color:var(--azul);font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:.8rem}
+header h1{font-family:'Lora',serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:600;margin-bottom:.4rem;line-height:1.2}
+header .sub{font-size:.92rem;opacity:.78;max-width:520px;margin:0 auto .9rem;line-height:1.6}
+.stats-bar{display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;margin-top:1rem}
+.stat{text-align:center;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:.6rem 1.2rem}
+.stat .n{display:block;font-size:1.8rem;font-weight:700;line-height:1;color:var(--ouro)}
+.stat .l{display:block;font-size:.72rem;opacity:.8;margin-top:.2rem}
+
+/* LEGENDA */
+.legenda{max-width:940px;margin:1.4rem auto 0;padding:0 1.25rem;display:flex;gap:.7rem;flex-wrap:wrap;align-items:center;justify-content:center}
+.leg-item{display:flex;align-items:center;gap:.35rem;font-size:.74rem;color:var(--txt2)}
+.leg-dot{width:10px;height:10px;border-radius:50%}
+.leg-dot.disponivel{background:var(--verde)}
+.leg-dot.breve{background:var(--ouro)}
+.leg-dot.pendente{background:#b0b8c6}
+.leg-dot.excluido{background:#ccc;border:1px dashed #999}
+
+/* MAIN */
+main{max-width:940px;margin:0 auto;padding:1.8rem 1.25rem 4rem}
+
+/* TÓPICO */
+.topico{margin-bottom:2rem}
+.topico-header{display:flex;align-items:center;gap:.7rem;margin-bottom:.8rem}
+.topico-num{background:var(--azul);color:#fff;font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.topico-title{font-family:'Lora',serif;font-size:1.05rem;color:var(--azul);font-weight:600}
+.topico-line{flex:1;height:1px;background:var(--borda)}
+
+/* GRADE DE CARDS */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:.85rem}
+
+/* CARD */
+.card{background:var(--branco);border-radius:12px;border:1px solid var(--borda);border-left:4px solid var(--borda);padding:1.1rem 1.2rem;display:flex;flex-direction:column;gap:.5rem;transition:.15s;position:relative}
+.card.disponivel{border-left-color:var(--verde)}
+.card.breve{border-left-color:var(--ouro)}
+.card.pendente{border-left-color:#c8d0dc}
+.card.excluido{border-left-color:#ccc;opacity:.65}
+.card.disponivel:hover{box-shadow:0 4px 16px rgba(36,107,74,.12);transform:translateY(-2px)}
+.card-top{display:flex;align-items:center;gap:.5rem;justify-content:space-between;flex-wrap:wrap}
+.dnum{background:var(--azul-c);color:var(--azul);font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:20px}
+.badge-status{font-size:.66rem;font-weight:700;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.04em}
+.badge-status.disponivel{background:var(--verde-c);color:var(--verde)}
+.badge-status.breve{background:var(--ouro-c);color:#a96e10}
+.badge-status.pendente{background:#eef0f4;color:#7a8697}
+.badge-status.excluido{background:#f0f0f0;color:#888}
+.card h3{font-family:'Lora',serif;font-size:.92rem;color:var(--azul);line-height:1.4;font-weight:600}
+.card p{font-size:.8rem;color:var(--txt2);line-height:1.5;flex:1}
+.card .nota{font-size:.72rem;color:var(--txt2);font-style:italic;margin-top:-.2rem}
+.btn-card{display:inline-block;background:var(--azul);color:#fff;padding:.5rem 1.2rem;border-radius:20px;font-size:.8rem;font-weight:600;margin-top:.4rem;transition:.15s;text-align:center}
+.btn-card:hover{background:var(--azul-m)}
+.btn-card.desabilitado{background:var(--bg);color:#b0b8c6;border:1px solid var(--borda);cursor:default;pointer-events:none}
+.btn-card.breve-btn{background:var(--ouro);color:var(--azul)}
+.btn-card.breve-btn:hover{background:#b07810}
+
+/* MATRIX IMPRESSÃO */
+.matrix-ref{margin-top:2.5rem;background:var(--branco);border:1px solid var(--borda);border-radius:14px;padding:1.6rem 1.8rem}
+.matrix-ref h2{font-family:'Lora',serif;font-size:1.15rem;color:var(--azul);margin-bottom:1rem;padding-bottom:.7rem;border-bottom:1px solid var(--borda)}
+.matrix-ref table{width:100%;border-collapse:collapse;font-size:.82rem}
+.matrix-ref th{background:var(--azul);color:#fff;padding:.6rem .8rem;text-align:left;font-size:.76rem;font-weight:600}
+.matrix-ref td{padding:.55rem .8rem;border-bottom:1px solid var(--borda);vertical-align:top;line-height:1.5}
+.matrix-ref tr:last-child td{border-bottom:none}
+.matrix-ref tr:nth-child(even) td{background:var(--bg)}
+.matrix-ref .d-num{font-weight:700;color:var(--azul-m);white-space:nowrap}
+.matrix-ref .d-excl{color:#aaa;text-decoration:line-through}
+.matrix-ref .d-group{background:var(--azul-c)!important;font-weight:600}
+.topico-row td{background:var(--azul)!important;color:#fff!important;font-weight:700;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;padding:.5rem .8rem!important}
+.aviso-print{font-size:.76rem;color:var(--txt2);margin-top:.8rem;border-top:1px solid var(--borda);padding-top:.6rem}
+
+footer{text-align:center;padding:1.5rem;font-size:.76rem;color:var(--txt2)}
+
+@media(max-width:600px){.stats-bar{gap:.7rem}.stat{padding:.5rem .9rem}.stat .n{font-size:1.4rem}}
+@media print{header,footer,.legenda,.btn-card,.voltar-link{display:none!important}.matrix-ref{border:none}.topico-header{page-break-before:always}}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html" class="voltar-link">← Portal do Professor</a>
+  <div class="badge-header">SAEB · SIMAVE · 9º ANO EF</div>
+  <h1>Língua Portuguesa</h1>
+  <p class="sub">Atividades interativas organizadas pela Matriz de Referência SIMAVE/PROEB — 9º ano do Ensino Fundamental</p>
+  <div class="stats-bar">
+    <div class="stat"><span class="n">9</span><span class="l">descritores disponíveis</span></div>
+    <div class="stat"><span class="n">6</span><span class="l">atividades publicadas</span></div>
+    <div class="stat"><span class="n">17</span><span class="l">descritores na matriz</span></div>
+  </div>
+</header>
+
+<div class="legenda">
+  <span class="leg-item"><span class="leg-dot disponivel"></span>Disponível</span>
+  <span class="leg-item"><span class="leg-dot breve"></span>Em breve</span>
+  <span class="leg-item"><span class="leg-dot pendente"></span>Não iniciado</span>
+  <span class="leg-item"><span class="leg-dot excluido"></span>Excluído da avaliação</span>
+</div>
+
+<main>
+
+<!-- ============================================================
+     TÓPICO I — PROCEDIMENTOS DE LEITURA
+============================================================ -->
+<section class="topico">
+  <div class="topico-header">
+    <span class="topico-num">Tópico I</span>
+    <span class="topico-title">Procedimentos de Leitura</span>
+    <span class="topico-line"></span>
+  </div>
+  <div class="cards-grid">
+
+    <article class="card disponivel">
+      <div class="card-top"><span class="dnum">D1</span><span class="badge-status disponivel">✓ Disponível</span></div>
+      <h3>Identificar o tema ou o sentido global de um texto</h3>
+      <p>Compreender o assunto central ou a ideia geral que o texto desenvolve como um todo.</p>
+      <a href="d06.html" class="btn-card">Abrir atividade →</a>
+    </article>
+
+    <article class="card disponivel">
+      <div class="card-top"><span class="dnum">D2</span><span class="badge-status disponivel">✓ Disponível</span></div>
+      <h3>Localizar informações explícitas em um texto</h3>
+      <p>Encontrar informações que estão escritas diretamente, sem necessidade de interpretação.</p>
+      <a href="d01.html" class="btn-card">Abrir atividade →</a>
+    </article>
+
+    <article class="card disponivel">
+      <div class="card-top"><span class="dnum">D3</span><span class="badge-status disponivel">✓ Disponível</span></div>
+      <h3>Inferir informações implícitas em um texto</h3>
+      <p>Concluir algo que não está escrito diretamente, mas pode ser deduzido pelas pistas do texto.</p>
+      <a href="d02.html" class="btn-card">Abrir atividade →</a>
+    </article>
+
+    <article class="card disponivel">
+      <div class="card-top"><span class="dnum">D5</span><span class="badge-status disponivel">✓ Disponível</span></div>
+      <h3>Inferir o sentido de uma palavra ou uma expressão</h3>
+      <p>Descobrir o significado de uma palavra ou expressão a partir do contexto em que aparece.</p>
+      <a href="d04.html" class="btn-card">Abrir atividade →</a>
+    </article>
+
+    <article class="card pendente">
+      <div class="card-top"><span class="dnum">D10</span><span class="badge-status pendente">Não iniciado</span></div>
+      <h3>Distinguir um fato da opinião relativa a esse fato</h3>
+      <p>Reconhecer a diferença entre afirmações objetivas (verificáveis) e posicionamentos subjetivos do autor.</p>
+      <span class="btn-card desabilitado">Em preparação</span>
+    </article>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     TÓPICO II — IMPLICAÇÃO DO SUPORTE, GÊNERO E/OU ENUNCIADOR
+============================================================ -->
+<section class="topico">
+  <div class="topico-header">
+    <span class="topico-num">Tópico II</span>
+    <span class="topico-title">Implicação do Suporte, do Gênero e/ou do Enunciador na Compreensão do Texto</span>
+    <span class="topico-line"></span>
+  </div>
+  <div class="cards-grid">
+
+    <article class="card pendente">
+      <div class="card-top"><span class="dnum">D6</span><span class="badge-status pendente">Não iniciado</span></div>
+      <h3>Identificar o gênero de um texto</h3>
+      <p>Reconhecer se o texto é uma notícia, crônica, conto, poema, anúncio, e-mail, receita, etc.</p>
+      <span class="btn-card desabilitado">Em preparação</span>
+    </article>
+
+    <article class="card pendente">
+      <div class="card-top"><span class="dnum">D7</span><span class="badge-status pendente">Não iniciado</span></div>
+      <h3>Identificar a função de textos de diferentes gêneros</h3>
+      <p>Perceber para que serve um texto: informar, persuadir, entreter, instruir, etc.</p>
+      <span class="btn-card desabilitado">Em preparação</span>
+    </article>
+
+    <article class="card disponivel">
+      <div class="card-top"><span class="dnum">D8</span><span class="badge-status disponivel">✓ Disponível</span></div>
+      <h3>Interpretar texto que conjuga linguagem verbal e não verbal</h3>
+      <p>Combinar informações do texto escrito com imagens, gráficos, tabelas, ícones ou outros elementos visuais.</p>
+      <a href="d05.html" class="btn-card">Abrir atividade →</a>
+    </article>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     TÓPICO III — RELAÇÃO ENTRE TEXTOS
+============================================================ -->
+<section class="topico">
+  <div class="topico-header">
+    <span class="topico-num">Tópico III</span>
+    <span class="topico-title">Relação entre Textos</span>
+    <span class="topico-line"></span>
+  </div>
+  <div class="cards-grid">
+
+    <article class="card excluido">
+      <div class="card-top"><span class="dnum">D18</span><span class="badge-status excluido">⊘ Excluído</span></div>
+      <h3>Reconhecer posições distintas entre duas ou mais opiniões</h3>
+      <p>Este descritor não faz parte da avaliação neste ciclo/ano de acordo com a Matriz SIMAVE vigente.</p>
+    </article>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     TÓPICO IV — COERÊNCIA E COESÃO
+============================================================ -->
+<section class="topico">
+  <div class="topico-header">
+    <span class="topico-num">Tópico IV</span>
+    <span class="topico-title">Coerência e Coesão no Processamento do Texto</span>
+    <span class="topico-line"></span>
+  </div>
+  <div class="cards-grid">
+
+    <article class="card pendente">
+      <div class="card-top"><span class="dnum">D14</span><span class="badge-status pendente">Não iniciado</span></div>
+      <h3>Identificar a tese de um texto</h3>
+      <p>Reconhecer o ponto de vista central defendido pelo autor em um texto argumentativo.</p>
+      <span class="btn-card desabilitado">Em preparação</span>
+    </article>
+
+    <article class="card pendente">
+      <div class="card-top"><span class="dnum">D19</span><span class="badge-status pendente">Não iniciado</span></div>
+      <h3>Identificar o conflito gerador do enredo e os elementos que compõem a narrativa</h3>
+      <p>Reconhecer o problema central e os elementos estruturais de um texto narrativo.</p>
+      <span class="btn-card desabilitado">Em preparação</span>
+    </article>
+
+    <article class="card pendente">
+      <div class="card-top"><span class="dnum">D26</span><span class="badge-status pendente">Não iniciado</span></div>
+      <h3>Estabelecer relações entre a tese e os argumentos</h3>
+      <p>Identificar quais argumentos sustentam a tese defendida pelo autor no texto.</p>
+      <span class="btn-card desabilitado">Em preparação</span>
+    </article>
+
+    <article class="card pendente">
+      <div class="card-top"><span class="dnum">D27</span><span class="badge-status pendente">Não iniciado</span></div>
+      <h3>Diferenciar as partes principais das secundárias em um texto</h3>
+      <p>Reconhecer quais informações são centrais e quais são complementares ou de apoio.</p>
+      <span class="btn-card desabilitado">Em preparação</span>
+    </article>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     TÓPICO V — RECURSOS EXPRESSIVOS E EFEITOS DE SENTIDO
+============================================================ -->
+<section class="topico">
+  <div class="topico-header">
+    <span class="topico-num">Tópico V</span>
+    <span class="topico-title">Relação entre Recursos Expressivos e Efeitos de Sentido</span>
+    <span class="topico-line"></span>
+  </div>
+  <div class="cards-grid">
+
+    <article class="card disponivel">
+      <div class="card-top"><span class="dnum">D21</span><span class="badge-status disponivel">✓ Disponível</span></div>
+      <h3>Reconhecer o efeito de sentido decorrente do uso de pontuação e de outras notações</h3>
+      <p>Perceber como reticências, exclamações, travessões e aspas criam efeitos de hesitação, ênfase, ironia, etc.</p>
+      <p class="nota">Atividade compartilhada com D23, D25 e D28.</p>
+      <a href="d03.html" class="btn-card">Abrir atividade →</a>
+    </article>
+
+    <article class="card disponivel">
+      <div class="card-top"><span class="dnum">D23</span><span class="badge-status disponivel">✓ Disponível</span></div>
+      <h3>Identificar efeitos de ironia ou humor em textos</h3>
+      <p>Reconhecer quando o texto usa ironia, sarcasmo ou quebra de expectativa para criar humor.</p>
+      <p class="nota">Atividade compartilhada com D21, D25 e D28.</p>
+      <a href="d03.html" class="btn-card">Abrir atividade →</a>
+    </article>
+
+    <article class="card disponivel">
+      <div class="card-top"><span class="dnum">D25</span><span class="badge-status disponivel">✓ Disponível</span></div>
+      <h3>Reconhecer o efeito de sentido decorrente do uso de recursos ortográficos e morfossintáticos</h3>
+      <p>Perceber como maiúsculas, repetição de letras, diminutivos e verbos criam efeitos expressivos.</p>
+      <p class="nota">Atividade compartilhada com D21, D23 e D28.</p>
+      <a href="d03.html" class="btn-card">Abrir atividade →</a>
+    </article>
+
+    <article class="card disponivel">
+      <div class="card-top"><span class="dnum">D28</span><span class="badge-status disponivel">✓ Disponível</span></div>
+      <h3>Reconhecer o efeito de sentido decorrente da escolha de uma determinada palavra ou expressão</h3>
+      <p>Entender por que o autor escolheu justamente aquela palavra ou expressão e que efeito isso cria.</p>
+      <p class="nota">Atividade compartilhada com D21, D23 e D25.</p>
+      <a href="d03.html" class="btn-card">Abrir atividade →</a>
+    </article>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     TÓPICO VI — VARIAÇÃO LINGUÍSTICA
+============================================================ -->
+<section class="topico">
+  <div class="topico-header">
+    <span class="topico-num">Tópico VI</span>
+    <span class="topico-title">Variação Linguística</span>
+    <span class="topico-line"></span>
+  </div>
+  <div class="cards-grid">
+
+    <article class="card pendente">
+      <div class="card-top"><span class="dnum">D13</span><span class="badge-status pendente">Não iniciado</span></div>
+      <h3>Identificar marcas linguísticas que evidenciam o locutor e o interlocutor</h3>
+      <p>Reconhecer quem fala, para quem fala e as marcas de linguagem que revelam essa relação.</p>
+      <span class="btn-card desabilitado">Em preparação</span>
+    </article>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     MATRIZ DE REFERÊNCIA COMPLETA
+============================================================ -->
+<div class="matrix-ref">
+  <h2>📋 Matriz de Referência Completa — SIMAVE/PROEB Língua Portuguesa 9º ano</h2>
+  <table>
+    <thead><tr><th style="width:70px">Descritor</th><th>Habilidade</th><th style="width:130px">Atividade</th></tr></thead>
+    <tbody>
+      <tr class="topico-row"><td colspan="3">I — Procedimentos de Leitura</td></tr>
+      <tr><td class="d-num">D1</td><td>Identificar o tema ou o sentido global de um texto</td><td><a href="d06.html" style="color:var(--verde);font-weight:600">→ Atividade D6</a></td></tr>
+      <tr><td class="d-num">D2</td><td>Localizar informações explícitas em um texto</td><td><a href="d01.html" style="color:var(--verde);font-weight:600">→ Atividade D1</a></td></tr>
+      <tr><td class="d-num">D3</td><td>Inferir informações implícitas em um texto</td><td><a href="d02.html" style="color:var(--verde);font-weight:600">→ Atividade D2</a></td></tr>
+      <tr><td class="d-num">D5</td><td>Inferir o sentido de uma palavra ou uma expressão</td><td><a href="d04.html" style="color:var(--verde);font-weight:600">→ Atividade D4</a></td></tr>
+      <tr><td class="d-num">D10</td><td>Distinguir um fato da opinião relativa a esse fato</td><td>Em preparação</td></tr>
+      <tr class="topico-row"><td colspan="3">II — Implicação do Suporte, do Gênero e/ou do Enunciador</td></tr>
+      <tr><td class="d-num">D6</td><td>Identificar o gênero de um texto</td><td>Em preparação</td></tr>
+      <tr><td class="d-num">D7</td><td>Identificar a função de textos de diferentes gêneros</td><td>Em preparação</td></tr>
+      <tr><td class="d-num">D8</td><td>Interpretar texto que conjuga linguagem verbal e não verbal</td><td><a href="d05.html" style="color:var(--verde);font-weight:600">→ Atividade D5</a></td></tr>
+      <tr class="topico-row"><td colspan="3">III — Relação entre Textos</td></tr>
+      <tr><td class="d-num d-excl">D18</td><td class="d-excl">Reconhecer posições distintas entre duas ou mais opiniões relativas ao mesmo fato ou ao mesmo tema</td><td class="d-excl">Excluído</td></tr>
+      <tr class="topico-row"><td colspan="3">IV — Coerência e Coesão no Processamento do Texto</td></tr>
+      <tr><td class="d-num">D14</td><td>Identificar a tese de um texto</td><td>Em preparação</td></tr>
+      <tr><td class="d-num">D19</td><td>Identificar o conflito gerador do enredo e os elementos que compõem a narrativa</td><td>Em preparação</td></tr>
+      <tr><td class="d-num">D26</td><td>Estabelecer relações entre a tese de um texto e os argumentos oferecidos para sustentá-la</td><td>Em preparação</td></tr>
+      <tr><td class="d-num">D27</td><td>Diferenciar as partes principais das secundárias em um texto</td><td>Em preparação</td></tr>
+      <tr class="topico-row"><td colspan="3">V — Relação entre Recursos Expressivos e Efeitos de Sentido</td></tr>
+      <tr class="d-group"><td class="d-num">D21</td><td>Reconhecer o efeito de sentido decorrente do uso de pontuação e de outras notações</td><td><a href="d03.html" style="color:var(--verde);font-weight:600">→ Atividade D3</a></td></tr>
+      <tr class="d-group"><td class="d-num">D23</td><td>Identificar efeitos de ironia ou humor em textos</td><td><a href="d03.html" style="color:var(--verde);font-weight:600">→ Atividade D3</a></td></tr>
+      <tr class="d-group"><td class="d-num">D25</td><td>Reconhecer o efeito de sentido decorrente do uso de recursos ortográficos e morfossintáticos</td><td><a href="d03.html" style="color:var(--verde);font-weight:600">→ Atividade D3</a></td></tr>
+      <tr class="d-group"><td class="d-num">D28</td><td>Reconhecer o efeito de sentido decorrente da escolha de uma determinada palavra ou expressão</td><td><a href="d03.html" style="color:var(--verde);font-weight:600">→ Atividade D3</a></td></tr>
+      <tr class="topico-row"><td colspan="3">VI — Variação Linguística</td></tr>
+      <tr><td class="d-num">D13</td><td>Identificar marcas linguísticas que evidenciam o locutor e o interlocutor</td><td>Em preparação</td></tr>
+    </tbody>
+  </table>
+  <p class="aviso-print">Fonte: Matriz de Referência SIMAVE/PROEB — Língua Portuguesa 9º ano do Ensino Fundamental e 3º ano do Ensino Médio. Secretaria de Estado de Educação de Minas Gerais. Os descritores D21, D23, D25 e D28 estão agrupados em uma única atividade interativa (Atividade D3) neste portal.</p>
+</div>
+
+</main>
+<footer>Portal do Professor Marcos Cruz · E.E. Prefeito Odílio Fernandes Costa / E.M. Capão · Santo Antônio do Retiro – MG</footer>
+</body>
+</html>
