@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAEB/SIMAVE – D6 | Tema e sentido global</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--azul:#1a3a5c;--azul-m:#235a8c;--azul-c:#d6e8f7;--ouro:#c9871f;--ouro-c:#fff8eb;--verde:#246b4a;--verde-c:#e6f4ed;--verm:#b02a2a;--verm-c:#fdecea;--bg:#f2f4f7;--borda:#d0d6e0;--branco:#fff;--txt:#1c2635;--txt2:#4a5568}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;line-height:1.5}
+header{background:var(--azul);color:#fff;padding:2.4rem 1.5rem 1.8rem;text-align:center;position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:rgba(201,135,31,.12)}
+.badge{display:inline-block;background:var(--ouro);color:var(--azul);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:.8rem}
+header h1{font-family:'Lora',serif;font-size:clamp(1.5rem,4vw,2.1rem);font-weight:600;line-height:1.3;margin-bottom:.4rem}
+header p{font-size:.92rem;opacity:.78;max-width:560px;margin:0 auto;line-height:1.6}
+.voltar-link{display:inline-block;margin-bottom:1rem;color:#fff;opacity:.7;text-decoration:none;font-size:.82rem}
+.voltar-link:hover{opacity:1}
+.tabs{background:var(--branco);border-bottom:1px solid var(--borda);position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.tabs-inner{max-width:840px;margin:0 auto;display:flex}
+.tab-btn{flex:1;background:none;border:none;padding:.95rem .5rem;font-family:'Inter',sans-serif;font-size:.88rem;font-weight:600;color:var(--txt2);cursor:pointer;border-bottom:3px solid transparent;transition:.15s;display:flex;align-items:center;justify-content:center;gap:.35rem}
+.tab-btn:hover{color:var(--azul-m);background:var(--bg)}
+.tab-btn.active{color:var(--azul);border-bottom-color:var(--ouro)}
+main{max-width:840px;margin:0 auto;padding:1.6rem 1.25rem 4rem}
+.tab-pane{display:none;flex-direction:column;gap:1.6rem}
+.tab-pane.active{display:flex}
+.painel{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.5rem 1.6rem}
+.painel h2{font-family:'Lora',serif;font-size:1.2rem;color:var(--azul);margin-bottom:.7rem}
+.painel h3{font-size:.95rem;color:var(--azul-m);margin:.9rem 0 .3rem}
+.painel p,.painel li{font-size:.9rem;margin-bottom:.5rem}
+.painel ul{margin:.2rem 0 .6rem 1.2rem}
+.painel strong{color:var(--azul)}
+.resumo-box{background:var(--azul);color:#fff;border-radius:14px;padding:1.4rem 1.6rem}
+.resumo-box h2{color:#fff;font-family:'Lora',serif;font-size:1.1rem;margin-bottom:.5rem}
+.resumo-box p{color:rgba(255,255,255,.9);font-size:.92rem;margin:0}
+.resumo-box .fc{display:block;margin-top:.7rem;font-style:italic;font-size:.88rem;background:rgba(255,255,255,.1);padding:.6rem .9rem;border-radius:8px;border-left:3px solid var(--ouro)}
+.dica-ouro{background:var(--ouro-c);border:1px solid #ecd9aa}
+.dica-ouro h2{color:#7a5310}.dica-ouro li{color:#4a3408}.dica-ouro strong{color:#7a5310}
+.glossario dt{font-weight:600;color:var(--azul-m);font-size:.88rem;margin-top:.5rem}
+.glossario dd{font-size:.86rem;color:var(--txt2);margin-left:0}
+.aviso-prof{background:#eef4fb;border:1px dashed var(--azul-m);border-radius:10px;padding:.9rem 1.1rem;font-size:.82rem;color:var(--azul-m)}
+.records{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.2rem 1.4rem}
+.records h2{font-family:'Lora',serif;font-size:1.1rem;color:var(--azul);margin-bottom:.6rem}
+.rec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.7rem}
+.rec-item{background:var(--bg);border-radius:10px;padding:.7rem;text-align:center}
+.rec-item .rv{font-size:1.5rem;font-weight:700;color:var(--azul-m)}
+.rec-item .rl{font-size:.72rem;color:var(--txt2)}
+.prog-wrap{background:var(--branco);border:1px solid var(--borda);border-radius:12px;padding:.85rem 1.1rem;display:flex;align-items:center;gap:14px}
+.prog-label{font-size:.78rem;font-weight:600;color:var(--azul-m);white-space:nowrap}
+.prog-track{flex:1;height:6px;background:var(--borda);border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--azul-m),var(--ouro));border-radius:99px;width:0%;transition:width .4s}
+.score{font-size:.78rem;font-weight:600;color:var(--txt2);white-space:nowrap}
+.card{background:var(--branco);border-radius:14px;border:1px solid var(--borda);overflow:hidden}
+.card-head{background:var(--azul);color:#fff;padding:.65rem 1.2rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.qnum{background:var(--ouro);color:var(--azul);font-size:.72rem;font-weight:700;padding:3px 11px;border-radius:20px}
+.qtipo{font-size:.74rem;opacity:.65;font-style:italic}
+.qnivel{font-size:.66rem;font-weight:700;text-transform:uppercase;padding:3px 9px;border-radius:20px;margin-left:auto}
+.qnivel.facil{background:var(--verde-c);color:var(--verde)}.qnivel.medio{background:var(--ouro-c);color:#a96e10}.qnivel.dificil{background:var(--verm-c);color:var(--verm)}
+.txt-base{background:var(--ouro-c);border-left:4px solid var(--ouro);margin:1rem 1.1rem 0;padding:1rem 1.1rem;border-radius:0 8px 8px 0;font-family:'Lora',serif;font-size:.94rem;line-height:1.85;color:#2b1d00;position:relative}
+.txt-fonte{font-family:'Inter',sans-serif;font-size:.72rem;color:var(--txt2);margin-top:.6rem;display:block;border-top:1px solid #e6d5b0;padding-top:.4rem}
+.btn-tts{position:absolute;top:.6rem;right:.6rem;background:none;border:1px solid #c9a14a;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;color:#8a6d1b;transition:.15s}
+.btn-tts:hover{background:#f5e6c1}
+.btn-tts.playing{background:var(--azul);color:#fff;border-color:var(--azul)}
+.img-slot{margin:.8rem 1.1rem 0;border:2px dashed var(--borda);border-radius:10px;padding:.8rem;text-align:center;color:var(--txt2);font-size:.76rem}
+.enunciado{padding:1rem 1.1rem .4rem;font-size:.92rem;line-height:1.6;font-weight:500;color:var(--azul)}
+.alts{padding:.4rem 1.1rem 1.1rem;display:flex;flex-direction:column;gap:.45rem}
+.alt{display:flex;align-items:flex-start;gap:10px;padding:.65rem .9rem;border:1.5px solid var(--borda);border-radius:9px;background:var(--branco);cursor:pointer;text-align:left;font-family:'Inter',sans-serif;font-size:.86rem;color:var(--txt);line-height:1.5;transition:.15s;width:100%}
+.alt:hover:not(:disabled){border-color:var(--azul-m);background:var(--azul-c);transform:translateX(2px)}
+.alt:disabled{cursor:default}
+.letra{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;border-radius:50%;background:var(--bg);font-size:.75rem;font-weight:700;color:var(--azul);flex-shrink:0}
+.alt.ok{border-color:var(--verde);background:var(--verde-c);color:var(--verde);font-weight:500}
+.alt.ok .letra{background:var(--verde);color:#fff}
+.alt.err{border-color:var(--verm);background:var(--verm-c);color:var(--verm)}
+.alt.err .letra{background:var(--verm);color:#fff}
+.alt.dim{opacity:.5}
+.fb{display:none;margin:0 1.1rem 1.1rem;padding:.8rem 1rem;border-radius:8px;font-size:.83rem;line-height:1.6}
+.fb.show{display:block}.fb.ok{background:var(--verde-c);border-left:3px solid var(--verde)}.fb.err{background:var(--verm-c);border-left:3px solid var(--verm)}
+.fb .ft{font-weight:600;margin-bottom:.3rem}.fb.ok .ft{color:var(--verde)}.fb.err .ft{color:var(--verm)}
+.fb .pq{margin-top:.5rem;border-top:1px solid rgba(0,0,0,.08);padding-top:.4rem}
+.fb .pq b{color:var(--azul)}
+.fb .pi{display:block;font-size:.8rem;color:var(--txt2);margin-bottom:.2rem}
+.fb .pi .l{font-weight:700;color:var(--azul)}
+#resultado{display:none;background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:2.4rem 2rem;text-align:center}
+#resultado h2{font-family:'Lora',serif;font-size:1.4rem;color:var(--azul)}
+.medalha{font-size:3rem;margin:.4rem 0}.nota{font-size:3.4rem;font-weight:700;color:var(--azul-m);line-height:1;margin:.4rem 0}
+#resultado p{color:var(--txt2);font-size:.9rem;max-width:480px;margin:.4rem auto 0}
+.btn{display:inline-block;background:var(--azul);color:#fff;padding:.65rem 1.5rem;border-radius:30px;border:none;font-size:.86rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;margin:.3rem}
+.btn:hover{background:var(--azul-m)}
+.btn.ouro{background:var(--ouro);color:var(--azul)}.btn.sec{background:var(--bg);color:var(--azul);border:1px solid var(--borda)}
+.jogo-card{background:var(--branco);border-radius:14px;border:1px solid var(--borda);overflow:hidden}
+.jogo-head{padding:1rem 1.3rem;border-bottom:1px solid var(--borda);display:flex;align-items:center;gap:.7rem}
+.jogo-ico{font-size:1.5rem}
+.jogo-head h3{font-family:'Lora',serif;font-size:1.1rem;color:var(--azul);margin:0}
+.jogo-head .desc{font-size:.78rem;color:var(--txt2)}
+.jogo-body{padding:1.2rem 1.3rem}
+.chip{font-size:.76rem;font-weight:600;padding:4px 11px;border-radius:20px;background:var(--azul-c);color:var(--azul)}
+.chip.timer{background:var(--ouro-c);color:#a96e10}
+.jogo-mid{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:.8rem}
+.timerbar{flex:1;min-width:100px;height:8px;background:var(--borda);border-radius:99px;overflow:hidden}
+.timerbar>div{height:100%;width:100%;background:linear-gradient(90deg,var(--verde),var(--ouro),var(--verm));border-radius:99px;transition:width .25s linear}
+.mini-texto{background:var(--ouro-c);border-left:4px solid var(--ouro);border-radius:0 8px 8px 0;padding:.85rem 1rem;font-family:'Lora',serif;font-size:.9rem;line-height:1.7;color:#2b1d00;margin-bottom:.8rem;position:relative}
+.mini-q{font-weight:600;color:var(--azul);margin-bottom:.6rem;font-size:.9rem}
+.mini-btn{border:1.5px solid var(--borda);background:var(--branco);border-radius:8px;padding:.45rem .8rem;font-size:.8rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;color:var(--azul);transition:.15s}
+.mini-btn:hover:not(:disabled){background:var(--azul-c);border-color:var(--azul-m)}
+.mini-btn:disabled{cursor:default}
+.mini-btn.ok{background:var(--verde-c);border-color:var(--verde);color:var(--verde)}
+.mini-btn.err{background:var(--verm-c);border-color:var(--verm);color:var(--verm)}
+.mini-fb{font-size:.8rem;margin-top:.5rem;padding:.45rem .65rem;border-radius:6px;display:none}
+.mini-fb.show{display:block}.mini-fb.ok{background:var(--verde-c);color:var(--verde)}.mini-fb.err{background:var(--verm-c);color:var(--verm)}
+.vf-item,.det-item{border:1.5px solid var(--borda);border-radius:10px;padding:.7rem .9rem;margin-bottom:.6rem}
+.vf-stm{font-size:.88rem;margin-bottom:.5rem}
+.btn-row{display:flex;gap:.5rem;flex-wrap:wrap}
+.cat-btn.cat-tema.ok{border-color:var(--azul-m);background:var(--azul-c);color:var(--azul)}
+.cat-btn.cat-detalhe.ok{border-color:var(--ouro);background:var(--ouro-c);color:#a96e10}
+.cat-btn.cat-foradotexto.ok{border-color:var(--verde);background:var(--verde-c);color:var(--verde)}
+.jogo-final{text-align:center;padding:.8rem 0 .3rem}
+.jogo-final .big{font-size:2rem;font-weight:700;color:var(--azul-m)}
+.jogo-final p{font-size:.88rem;color:var(--txt2);margin:.2rem 0 .8rem}
+.ord-list{list-style:none;padding:0;counter-reset:ord}
+.ord-item{counter-increment:ord;display:flex;align-items:center;gap:10px;padding:.6rem .9rem;border:1.5px solid var(--borda);border-radius:9px;margin-bottom:.5rem;background:var(--branco);font-size:.86rem;user-select:none}
+.ord-item::before{content:counter(ord);display:flex;align-items:center;justify-content:center;min-width:24px;height:24px;border-radius:50%;background:var(--azul-c);font-size:.72rem;font-weight:700;color:var(--azul)}
+.ord-item.ok{border-color:var(--verde);background:var(--verde-c)}
+.ord-item.err{border-color:var(--verm);background:var(--verm-c)}
+.ord-arrows{display:flex;flex-direction:column;gap:2px;margin-left:auto}
+.ord-arrows button{background:var(--bg);border:1px solid var(--borda);border-radius:4px;width:24px;height:20px;cursor:pointer;font-size:.65rem;display:flex;align-items:center;justify-content:center}
+.ord-arrows button:hover{background:var(--azul-c)}
+footer{text-align:center;padding:1.5rem;font-size:.76rem;color:var(--txt2)}
+@media print{.tabs,header,.prog-wrap,.btn,.btn-tts,.img-slot,footer,#resultado,.jogo-card,.records,.resumo-box,.dica-ouro,.glossario,.aviso-prof{display:none!important}.tab-pane{display:flex!important}.card{break-inside:avoid;border:1px solid #ccc;margin-bottom:1rem}.card-head{background:#333!important;-webkit-print-color-adjust:exact}.fb{display:block!important;background:#f5f5f5!important;border-left:3px solid #999!important;color:#333!important}}
+@media(max-width:480px){.painel{padding:1.1rem}.tab-btn{font-size:.78rem;padding:.8rem .3rem}}
+</style>
+</head>
+<body>
+<header>
+<a href="index.html" class="voltar-link">← Painel SAEB/SIMAVE</a>
+<div class="badge">SAEB · SIMAVE · Língua Portuguesa</div>
+<h1>Habilidade D6</h1>
+<p>Identificar o tema ou o sentido global de um texto</p>
+</header>
+<nav class="tabs"><div class="tabs-inner">
+<button class="tab-btn active" data-tab="estudar">📚 Estudar</button>
+<button class="tab-btn" data-tab="quiz">📝 Quiz</button>
+<button class="tab-btn" data-tab="jogos">🎮 Jogos</button>
+</div></nav>
+<main>
+<section class="tab-pane active" id="pane-estudar">
+<div class="resumo-box"><h2>🎯 Em uma frase</h2><p>O D1 mede se você consegue identificar <strong style="color:#ffd98a">de que o texto trata como um todo</strong> — sem confundir o assunto central com um detalhe, um exemplo ou uma informação que não está nem mesmo no texto.</p><span class="fc">"O tema é o fio que liga todas as partes do texto."</span></div>
+
+<section class="painel"><h2>📌 O que essa habilidade avalia</h2><p>O tema (ou sentido global) é a ideia que resume o texto inteiro — não apenas uma parte dele. A maior armadilha dessas questões é confundir o tema com um <strong>detalhe</strong> (uma informação real, mas secundária) ou com algo que <strong>nem aparece no texto</strong>.</p>
+<h3>Como o enunciado costuma aparecer:</h3>
+<ul><li>"Qual é o tema central do texto?"</li><li>"O texto trata principalmente de..."</li><li>"Qual frase resume melhor o texto?"</li></ul>
+</section>
+
+<section class="dica-ouro painel"><h2>💡 Dica de ouro</h2><ul>
+<li><strong>O tema cobre o texto inteiro.</strong> Se a alternativa só explica uma frase ou um parágrafo, ela é detalhe, não tema.</li>
+<li><strong>Cuidado com exemplos.</strong> Datas, números e nomes específicos costumam ser apoio para o tema, não o tema em si.</li>
+<li><strong>Desconfie do que "parece familiar".</strong> Algumas alternativas trazem informações verdadeiras sobre o assunto, mas que não estão escritas NESSE texto.</li>
+<li><strong>Cuidado com a leitura ao contrário.</strong> Algumas alternativas dizem o oposto do que o texto defende.</li>
+<li><strong>Teste a alternativa:</strong> ela explica por que cada parte do texto está ali? Se sim, é o tema.</li>
+</ul></section>
+
+<section class="painel glossario"><h2>📖 Glossário</h2><dl>
+<dt>Tema / sentido global</dt><dd>A ideia central que resume o texto como um todo.</dd>
+<dt>Detalhe</dt><dd>Informação real do texto, mas secundária — serve de apoio ao tema, não o substitui.</dd>
+<dt>Extrapolação</dt><dd>Ir além do que o texto diz, trazendo informação que não consta nele.</dd>
+<dt>Resumo</dt><dd>Versão curta do texto que preserva sua ideia central.</dd>
+</dl></section>
+
+<div class="aviso-prof"><b>Professor:</b> os textos abaixo são originais, recontos de obras de domínio público ou baseados em dados reais com licença aberta (CC-BY) — podem ser publicados sem risco de direitos autorais.</div>
+
+<div class="records" id="recordsEstudar"><h2>🏆 Seus melhores resultados</h2><div class="rec-grid" id="recGrid"></div></div>
+</section>
+<section class="tab-pane" id="pane-quiz">
+<div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.5rem">
+<button class="btn sec" onclick="window.print()">🖨️ Imprimir com gabarito</button>
+<button class="btn sec" onclick="location.reload()">🔀 Embaralhar e refazer</button>
+</div>
+<div class="prog-wrap"><span class="prog-label">Progresso</span><div class="prog-track"><div class="prog-fill" id="pFill"></div></div><span class="score" id="score">0 / 12</span></div>
+<div id="quiz" style="display:flex;flex-direction:column;gap:1.5rem"></div>
+<div id="resultado"><h2>Quiz concluído!</h2><div class="medalha" id="medalha">🏅</div><div class="nota" id="notaFinal">—</div><p id="msgFinal"></p><div style="margin-top:1rem"><button class="btn" onclick="location.reload()">↺ Embaralhar e refazer</button></div></div>
+</section>
+<section class="tab-pane" id="pane-jogos">
+<div class="resumo-box"><h2>🎮 Hora de jogar</h2><p>Cinco mini-games para treinar a identificação do tema central. Seus melhores resultados ficam salvos!</p></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">⏱️</span><div><h3>Qual é o tema?</h3><div class="desc">Leia o trecho e identifique o tema central, antes que o tempo acabe!</div></div></div><div class="jogo-body" id="g1-body"><button class="btn ouro" onclick="G1.start()">▶ Começar</button></div></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">🏷️</span><div><h3>Tema, Detalhe ou Fora do Texto?</h3><div class="desc">Classifique cada afirmação sobre o texto.</div></div></div><div class="jogo-body" id="g2-body"><button class="btn ouro" onclick="G2.start()">▶ Começar</button></div></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">🔍</span><div><h3>Ache o Resumo</h3><div class="desc">Qual frase resume melhor o texto, antes que o tempo acabe?</div></div></div><div class="jogo-body" id="g3-body"><button class="btn ouro" onclick="G3.start()">▶ Começar</button></div></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">🧩</span><div><h3>Complete o Tema</h3><div class="desc">Escolha a palavra que completa corretamente o tema central.</div></div></div><div class="jogo-body" id="g4-body"><button class="btn ouro" onclick="G4.start()">▶ Começar</button></div></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">🔢</span><div><h3>Ordene os Indícios</h3><div class="desc">Coloque os passos do raciocínio na ordem certa.</div></div></div><div class="jogo-body" id="g5-body"><button class="btn ouro" onclick="G5.start()">▶ Começar</button></div></div>
+</section>
+</main>
+<footer>Portal do Professor Marcos Cruz · SAEB/SIMAVE · D6</footer>
+
+<script>
+const QRAW = [{"n": 1, "tipo": "Fábula (Esopo)", "nivel": "facil", "texto": "<strong>O Cão e o Osso</strong><br><br>Um cão atravessava uma ponte sobre o rio, levando um belo osso na boca. Ao olhar para a água, viu seu próprio reflexo e pensou se tratar de outro cão com um osso ainda maior. Cheio de cobiça, abriu a boca para atacar o reflexo e tentar roubar aquele osso — e o seu próprio osso caiu na água, perdido para sempre.", "fonte": "Reconto livre de fábula tradicionalmente atribuída a ESOPO. Domínio público.", "enun": "Qual é o tema central dessa fábula?", "alts": ["A importância de saber nadar antes de atravessar pontes.", "A cobiça pode fazer alguém perder até o que já possui.", "Os cães costumam confundir seu próprio reflexo com outros animais.", "A disputa entre dois cães pelo mesmo osso."], "correta": 1, "porque": ["Atravessar a ponte é apenas o cenário da história, não o ensinamento que ela transmite.", "Os saltos do cão em busca de mais, abandonando o que já tinha garantido, sustentam essa lição sobre cobiça.", "Essa é uma informação literal da história (a confusão com o reflexo), mas é o meio pelo qual a fábula ensina sobre cobiça, não o tema em si.", "Há apenas um cão na fábula; o que ele vê na água é seu próprio reflexo, não outro animal real."]}, {"n": 2, "tipo": "Poema (texto original)", "nivel": "facil", "texto": "<strong>A horta da vovó</strong><br><br>Toda tarde, depois da escola,<br>eu corria para o quintal,<br>onde a vovó, de chapéu de palha,<br>cuidava do seu pequeno quintal.<br>Não importava o dia quente,<br>nem o barulho da cidade —<br>lá, entre alfaces e tomates,<br>eu aprendia, sem pressa, sobre a vida.", "fonte": "Poema original, escrito para esta atividade.", "enun": "Qual é o tema central desse poema?", "alts": ["As dificuldades de se cultivar alface e tomate em climas quentes.", "A lembrança afetiva de momentos simples vividos com a avó.", "A correria do dia a dia na cidade grande.", "A importância de se ter um quintal grande em casa."], "correta": 1, "porque": ["As dificuldades de cultivo não são mencionadas no poema; a horta é apenas o cenário do encontro com a vovó.", "Os versos descrevem, com afeto, momentos simples e despreocupados ao lado da avó, que ensinavam “sem pressa, sobre a vida”.", "O poema diz justamente o contrário: o barulho da cidade “não importava” diante daqueles momentos.", "O poema descreve um “pequeno quintal”; o tamanho não é o foco dos versos."]}, {"n": 3, "tipo": "Notícia (texto real)", "nivel": "facil", "texto": "<strong>Taxa de alfabetização do Brasil chega a 93%</strong><br><br>Segundo o Censo Demográfico 2022, do IBGE, 93% das pessoas de 15 anos ou mais no Brasil sabem ler e escrever pelo menos um bilhete simples. A taxa de analfabetismo, de 7%, é a menor já registrada pelo instituto. Em 1940, menos da metade da população era alfabetizada.", "fonte": "Adaptado de dados do Censo Demográfico 2022, IBGE/Agência Brasil. Licença Creative Commons (CC-BY 3.0).", "enun": "Qual é o tema central dessa notícia?", "alts": ["O percentual exato de pessoas alfabetizadas em 1940.", "O avanço da alfabetização no Brasil ao longo das décadas.", "A queda no número de pessoas analfabetas com mais de 65 anos.", "Os critérios usados pelo IBGE para definir alfabetização."], "correta": 1, "porque": ["O dado de 1940 aparece apenas como comparação histórica, não é o assunto principal da notícia.", "A notícia apresenta a evolução da taxa de alfabetização desde 1940 até 2022, destacando o avanço.", "Esse texto específico não menciona a faixa etária de 65 anos; vale responder com base no que está escrito, não em conhecimento externo sobre o tema.", "O texto não detalha os critérios de avaliação usados pelo IBGE."]}, {"n": 4, "tipo": "Tirinha (texto original)", "nivel": "facil", "texto": "<strong>Tirinha: Só Mais Cinco Minutos</strong><br><br><div style=\"display:flex;gap:8px;flex-wrap:wrap;margin-top:8px\"><div style=\"border:2px solid #2b1d00;border-radius:8px;padding:8px;flex:1;min-width:120px;text-align:center;background:#fffdf5;font-size:.78rem\">📱 “Vou estudar só depois de ver um vídeo rapidinho”</div><div style=\"border:2px solid #2b1d00;border-radius:8px;padding:8px;flex:1;min-width:120px;text-align:center;background:#fffdf5;font-size:.78rem\">🕑 três horas depois...</div><div style=\"border:2px solid #2b1d00;border-radius:8px;padding:8px;flex:1;min-width:120px;text-align:center;background:#fffdf5;font-size:.78rem\">“Ok, AGORA eu estudo!”</div><div style=\"border:2px solid #2b1d00;border-radius:8px;padding:8px;flex:1;min-width:120px;text-align:center;background:#fffdf5;font-size:.78rem\">💤 dormindo sobre o caderno fechado</div></div>", "fonte": "Tirinha original, criada para esta atividade.", "enun": "Qual é o tema central dessa tirinha?", "alts": ["A importância de dormir bem antes das provas.", "O hábito de procrastinar tarefas importantes por causa do celular.", "Os benefícios de assistir a vídeos educativos antes de estudar.", "A relação entre os personagens da tirinha."], "correta": 1, "porque": ["Dormir é apenas a consequência cômica final, não o assunto central da tirinha.", "Os quadrinhos mostram o adiamento sucessivo do estudo por causa do celular, até não restar tempo para estudar.", "Nada na tirinha indica que o vídeo era educativo, nem que houve algum benefício; pelo contrário, o personagem não chega a estudar.", "Há apenas um personagem na tirinha; não há uma relação entre personagens a ser identificada."]}, {"n": 5, "tipo": "Crônica (texto original)", "nivel": "medio", "texto": "<strong>O Guarda-Chuva</strong><br><br>Estava chovendo forte quando Dona Marta saiu do mercado com as duas mãos ocupadas de sacolas. Um menino que vendia balas no sinaleiro, sem dizer nada, abriu seu próprio guarda-chuva — pequeno, furado em dois lugares — e caminhou ao lado dela até o ponto de ônibus. Ao chegar lá, sorriu, fechou o guarda-chuva e voltou correndo, debaixo de chuva, para seu lugar de sempre.", "fonte": "Crônica original, escrita para esta atividade.", "enun": "Qual é o tema central dessa crônica?", "alts": ["Os problemas causados pela falta de guarda-chuvas adequados nas cidades.", "Um gesto simples de bondade entre estranhos.", "A rotina de trabalho de um vendedor ambulante.", "A reclamação de Dona Marta sobre o tempo chuvoso."], "correta": 1, "porque": ["O guarda-chuva furado é um detalhe que reforça a simplicidade do gesto, não um comentário sobre infraestrutura urbana.", "O menino ajuda Dona Marta sem nada em troca e sem nem se apresentar, num gesto espontâneo de cuidado com uma estranha.", "A crônica menciona o trabalho do menino, mas o foco está no gesto de ajuda, não na rotina dele como vendedor.", "Dona Marta não reclama em nenhum momento; quem age na crônica é o menino."]}, {"n": 6, "tipo": "Cordel (texto original)", "nivel": "medio", "texto": "<strong>Cordel do Carpinteiro</strong><br><br>Não tem máquina no mundo<br>que entenda o que ele sente,<br>quando a madeira em suas mãos<br>vira mesa, vira gente.<br>Cada risco e cada corte<br>é um verso que ele escreve,<br>no silêncio da serragem,<br>numa arte que não morre.", "fonte": "Cordel original, escrito para esta atividade.", "enun": "Qual é o tema central desse cordel?", "alts": ["As máquinas modernas usadas em marcenarias.", "O orgulho e a dedicação do carpinteiro em seu trabalho manual.", "A dificuldade de se conseguir madeira de boa qualidade.", "Os tipos de móveis que podem ser feitos de madeira."], "correta": 1, "porque": ["O cordel afirma que nenhuma máquina entende o que o carpinteiro sente, valorizando justamente o trabalho manual, e não as máquinas.", "Os versos comparam o trabalho do carpinteiro a uma arte, valorizando a dedicação e o cuidado de cada corte.", "A qualidade ou disponibilidade da madeira não é mencionada no cordel.", "“Mesa” é apenas um exemplo do que pode ser feito; o cordel não trata de tipos de móveis em geral."]}, {"n": 7, "tipo": "Notícia (texto real)", "nivel": "medio", "texto": "<strong>Alfabetização avança, mas desigualdades persistem</strong><br><br>Embora a taxa de alfabetização no Brasil tenha alcançado 93% em 2022, o avanço não foi igual em todo o país. A região Sul registrou a maior taxa de alfabetização (96,6%), enquanto municípios do Nordeste apresentaram os maiores índices de analfabetismo do país, alguns acima de 30%. A taxa entre a população indígena (85%) também ficou abaixo da média nacional.", "fonte": "Adaptado de dados do Censo Demográfico 2022, IBGE.", "enun": "Qual é o tema central dessa notícia?", "alts": ["O percentual exato de alfabetização da região Sul.", "O avanço da alfabetização no Brasil, acompanhado de desigualdades regionais e entre grupos.", "A dificuldade de se medir a taxa de alfabetização da população indígena.", "Os métodos usados pelo Censo para entrevistar moradores de municípios pequenos."], "correta": 1, "porque": ["O dado do Sul é apenas um exemplo citado para evidenciar a desigualdade, não o assunto central isolado.", "A notícia combina o avanço nacional (93%) com exemplos de desigualdade entre regiões e grupos, o que define seu tema central.", "O texto apresenta o dado da população indígena como exemplo de desigualdade, não discute dificuldades de medição.", "O texto não trata de metodologia de coleta de dados do Censo."]}, {"n": 8, "tipo": "Texto multissemiótico", "nivel": "medio", "texto": "<strong>Cartaz: Cada Gota Conta</strong><br><br><div style=\"display:flex;align-items:center;gap:14px;margin-top:8px\"><div style=\"font-size:1.8rem\">🚰</div><div style=\"font-size:.84rem\">Um banho de 15 minutos pode gastar até 135 litros de água.<br><strong>Feche o registro ao se ensaboar.</strong></div></div>", "fonte": "Texto multissemiótico original, em formato de campanha de conscientização.", "enun": "Qual é o tema central desse cartaz?", "alts": ["O valor exato gasto em uma conta de água residencial.", "A importância de economizar água no dia a dia, com atitudes simples.", "Os problemas técnicos mais comuns em registros de água.", "A comparação entre o consumo de água no banho e em outras atividades domésticas."], "correta": 1, "porque": ["O número de litros é um dado de apoio para ilustrar o problema, não o foco principal do cartaz, que não trata de valores em reais.", "O cartaz usa o exemplo do banho para incentivar uma atitude simples (fechar o registro) que economiza água.", "O cartaz não trata de problemas técnicos em torneiras ou registros.", "O cartaz menciona apenas o banho, sem comparar com outras atividades domésticas."]}, {"n": 9, "tipo": "Poema (texto original)", "nivel": "dificil", "texto": "<strong>O rio e a pedra</strong><br><br>Não foi a pressa da enchente<br>que abriu caminho na pedra,<br>foi a água, dia após dia,<br>mansa, mas nunca quieta.", "fonte": "Poema original, escrito para esta atividade.", "enun": "Qual é o tema central desse poema?", "alts": ["A força destrutiva das enchentes sobre as rochas.", "A perseverança silenciosa e constante é capaz de vencer obstáculos.", "A comparação entre diferentes tipos de rocha.", "A descrição de um rio em um dia de chuva forte."], "correta": 1, "porque": ["O poema nega isso diretamente: “Não foi a pressa da enchente” que abriu o caminho.", "A água “mansa, mas nunca quieta”, agindo “dia após dia”, representa a perseverança constante que, com o tempo, supera um obstáculo (a pedra).", "Não há comparação entre tipos de rocha no poema; há apenas uma pedra sendo moldada pela água.", "O poema não descreve uma chuva forte; fala da água mansa e constante, em contraste com a enchente."]}, {"n": 10, "tipo": "Conto (texto original)", "nivel": "dificil", "texto": "<strong>Além da cintura</strong><br><br>Toda vez que a água passava da cintura, Beto sentia o peito apertar e voltava correndo para a areia. O avô nunca disse “vai com calma” ou “não tenha medo”. Só entrava na água até onde Beto ficava, todos os domingos, sem pressa, durante todo aquele verão. Na última semana de férias, sem perceber, Beto já estava nadando além de onde a água passava da cintura — e o avô, sentado na areia, apenas sorria de longe.", "fonte": "Conto original, escrito para esta atividade.", "enun": "Qual é o tema central desse conto?", "alts": ["A descrição das férias de verão na praia.", "A superação gradual de um medo, com apoio paciente de alguém querido.", "As técnicas corretas para ensinar uma criança a nadar.", "A relação de Beto com a areia da praia."], "correta": 1, "porque": ["A praia e o verão são apenas o cenário da história, não o assunto central.", "A presença constante e paciente do avô, sem pressionar, permite que Beto supere o medo da água pouco a pouco, ao longo do verão.", "O conto não descreve técnicas de natação; mostra paciência e companhia como forma de apoio.", "A areia é apenas onde o avô fica sentado; não é o foco da narrativa."]}, {"n": 11, "tipo": "Crônica argumentativa (texto original)", "nivel": "dificil", "texto": "<strong>Silêncio, por favor</strong><br><br>Outro dia, esperando o ônibus, percebi que tinha esquecido o celular em casa. Por um instante, senti um desespero idiota. Depois, sem nada para checar, comecei a notar coisas: o cheiro de chuva que vinha, a conversa de duas senhoras sobre receita de bolo, o gato que atravessava a rua sem pressa. Cheguei em casa com mais ideias na cabeça do que em semanas. Talvez a gente devesse, de vez em quando, esquecer o celular de propósito.", "fonte": "Crônica argumentativa original, escrita para esta atividade.", "enun": "Qual é o tema central dessa crônica?", "alts": ["O esquecimento do celular em casa naquele dia específico.", "Os benefícios de momentos de desconexão digital para a atenção e a criatividade.", "A receita de bolo mencionada pelas senhoras no ponto de ônibus.", "A importância de se chegar mais cedo ao ponto de ônibus."], "correta": 1, "porque": ["O episódio do celular esquecido é o exemplo usado para defender uma ideia mais ampla, não o tema em si.", "A partir do episódio pessoal, a crônica defende a ideia de que desconectar-se do celular de vez em quando estimula a atenção e a criatividade.", "A receita de bolo é apenas um detalhe da cena observada, sem relação com o argumento central.", "O texto não discute horários de chegada ao ponto de ônibus."]}, {"n": 12, "tipo": "Texto multissemiótico", "nivel": "dificil", "texto": "<strong>Campanha: Adote um Livro</strong><br><br><div style=\"display:flex;gap:10px;margin-top:8px\"><div style=\"background:var(--azul,#1a3a5c);color:#fff;border-radius:8px;padding:10px 14px;text-align:center;font-size:.8rem\">📚❤️<br><strong>320</strong><br>livros doados</div><div style=\"background:var(--ouro,#c9871f);color:#fff;border-radius:8px;padding:10px 14px;text-align:center;font-size:.8rem\">🧒<br><strong>45</strong><br>alunos participantes</div></div><p style=\"font-size:.84rem;margin-top:8px\">A biblioteca da escola lança a campanha permanente de doação de livros usados, para que nenhum aluno fique sem material de leitura.</p>", "fonte": "Texto multissemiótico original, em formato de campanha escolar.", "enun": "Qual é o tema central desse texto multissemiótico?", "alts": ["O número exato de livros já doados até o momento.", "Uma campanha escolar de incentivo à doação de livros para garantir acesso à leitura.", "A quantidade de alunos que frequentam a biblioteca todos os dias.", "Os ícones e cores usados no cartaz da campanha."], "correta": 1, "porque": ["O número de livros doados é um resultado parcial da campanha, citado como dado de apoio, não o tema central.", "O texto verbal e os ícones, juntos, apresentam uma campanha de doação de livros com o objetivo de garantir leitura para todos os alunos.", "O texto fala em “alunos participantes” da campanha, não em frequência diária à biblioteca.", "Os elementos visuais dão forma ao cartaz, mas o tema está no que ele comunica, não em sua aparência."]}];
+const G1_ROUNDS = [{"t": "Toda manhã, o porteiro Seu Lima regava as plantas do prédio antes de qualquer morador sair de casa. Ninguém pedia, ele nem comentava — só fazia.", "q": "Qual é o tema central?", "o": ["A rotina de trabalho dos porteiros.", "Um gesto discreto de cuidado com o espaço comum.", "Os tipos de plantas mais resistentes.", "O horário de saída dos moradores."], "c": 1}, {"t": "A loja de roupas, antes badalada, perdeu quase todos os clientes depois que um shopping abriu há dois quarteirões.", "q": "Qual é o tema central?", "o": ["A localização exata do novo shopping.", "O impacto da concorrência sobre um pequeno comércio.", "Os tipos de roupas vendidos na loja.", "A distância entre a loja e o shopping."], "c": 1}, {"t": "Um gato e um rato firmaram trégua para escapar juntos de uma armadilha. Livres, o gato voltou a perseguir o rato no dia seguinte.", "q": "Qual é o tema central?", "o": ["Alianças feitas por necessidade nem sempre duram.", "A amizade verdadeira entre gatos e ratos.", "As armadilhas usadas para capturar roedores.", "A velocidade dos gatos comparada à dos ratos."], "c": 0}, {"t": "Depois de meses sem chover, a plantação de Seu Edmar secou quase toda — menos um pedaço, justamente onde ele tinha plantado árvores ao redor, criando sombra.", "q": "Qual é o tema central?", "o": ["A falta de chuva naquele ano.", "O benefício de práticas simples de manejo para enfrentar a seca.", "Os tipos de árvores plantadas por Seu Edmar.", "A quantidade de meses sem chuva."], "c": 1}, {"t": "A criança gritou ao ver a bola boiando para o meio do rio. Sem pensar duas vezes, o cão pulou n'água, mesmo sem nunca ter aprendido a nadar bem, e voltou com a bola na boca.", "q": "Qual é o tema central?", "o": ["Os riscos de brincar perto de rios.", "A lealdade de um animal disposto a arriscar-se por quem ama.", "As técnicas de natação canina.", "O tipo de bola usada na brincadeira."], "c": 1}];
+const G2_TEXT = "Depois de perder o emprego, Sandra passou a vender bolos pela vizinhança. No início, vendia só para amigos. Em poucos meses, já recebia encomendas de bairros vizinhos e contratou duas pessoas para ajudar. — Não foi fácil — diz ela —, mas descobri que dava para recomeçar de outro jeito.";
+const G2_ITEMS = [{"s": "Sandra recomeçou a vida profissional depois de perder o emprego.", "cat": "tema", "p": "Essa frase resume o assunto central que percorre todo o texto."}, {"s": "A capacidade de se reinventar diante das dificuldades.", "cat": "tema", "p": "É uma forma mais abstrata de descrever a mesma ideia central do texto."}, {"s": "No início, Sandra vendia bolos só para amigos.", "cat": "detalhe", "p": "É uma informação real do texto, mas é um detalhe que ilustra o processo, não o tema em si."}, {"s": "Sandra contratou duas pessoas para ajudar.", "cat": "detalhe", "p": "É um detalhe que mostra o crescimento do negócio, não o tema central."}, {"s": "Sandra trabalhava em uma padaria antes de perder o emprego.", "cat": "foradotexto", "p": "O texto não diz onde Sandra trabalhava antes; essa informação não consta nele."}, {"s": "Sandra vende bolos há mais de dez anos.", "cat": "foradotexto", "p": "O texto não menciona há quanto tempo Sandra vende bolos."}];
+const G3_ROUNDS = [{"t": "O professor pediu silêncio três vezes. Na quarta, simplesmente parou de falar e ficou olhando para a turma, em silêncio total, por quase um minuto. A sala, então, se calou.", "q": "Qual frase resume melhor esse texto?", "o": ["O professor gosta de silêncio nas aulas.", "Um professor usa o silêncio, em vez de gritar, para conseguir atenção da turma.", "A turma estava conversando muito naquele dia.", "O professor contou até quatro antes de continuar a aula."], "c": 1}, {"t": "A padaria do bairro, sempre vazia de manhã, passou a vender pão na calçada, ainda quentinho, recém-saído do forno. Em poucas semanas, formava fila antes mesmo de abrir.", "q": "Qual frase resume melhor esse texto?", "o": ["O horário de funcionamento da padaria mudou.", "Uma pequena mudança na forma de vender atraiu mais clientes para a padaria.", "O pão da padaria é vendido na calçada.", "A padaria sempre teve fila de clientes."], "c": 1}, {"t": "Júlia treinou a apresentação sozinha, no quarto, repetindo cada frase pelo menos vinte vezes. No dia da prova oral, surpreendeu até a si mesma com a tranquilidade que sentiu.", "q": "Qual frase resume melhor esse texto?", "o": ["A preparação cuidadosa ajudou Júlia a se sentir mais segura.", "Júlia decorou a apresentação palavra por palavra.", "A prova oral de Júlia aconteceu em seu quarto.", "Júlia repetiu a apresentação vinte vezes."], "c": 0}, {"t": "Antes de aceitar o convite para a viagem, Rafael perguntou três vezes se realmente não haveria custo nenhum. Só topou depois de ouvir a confirmação da terceira vez.", "q": "Qual frase resume melhor esse texto?", "o": ["Rafael fez uma viagem com os amigos.", "Rafael é uma pessoa cautelosa antes de tomar decisões.", "A viagem de Rafael não teve custo nenhum.", "Rafael perguntou sobre o preço da viagem três vezes."], "c": 1}, {"t": "O time perdia por dois gols faltando dez minutos. Em vez de se entregar, os jogadores passaram a se cobrar mais entre si — e empataram a partida nos minutos finais.", "q": "Qual frase resume melhor esse texto?", "o": ["O time perdia por dois gols no jogo.", "A reação de um time que não desiste, mesmo perdendo o jogo.", "O time empatou a partida nos minutos finais.", "Os jogadores se cobraram mais entre si."], "c": 1}];
+const G4_ROUNDS = [{"ctx": "Texto: um cordel descreve, com orgulho, o trabalho diário de um pescador que conhece cada parte do rio onde pesca.", "f": "O tema central desse cordel é o ___ do pescador com seu trabalho e com o lugar onde vive.", "o": ["desinteresse", "vínculo/orgulho", "arrependimento", "desconhecimento"], "c": 1}, {"ctx": "Texto: uma notícia apresenta dados reais sobre o crescimento da energia solar residencial no Brasil.", "f": "O tema central dessa notícia é o ___ da energia solar residencial no país.", "o": ["declínio", "crescimento", "custo exato", "histórico completo desde 1900"], "c": 1}, {"ctx": "Texto: uma fábula conta que a cigarra, que só cantou no verão, pede ajuda à formiga no inverno e é recusada.", "f": "O tema central dessa fábula é a importância de se ___ para os momentos difíceis.", "o": ["ignorar", "se preparar com antecedência", "cantar bastante", "pedir ajuda sempre"], "c": 1}, {"ctx": "Texto: uma crônica narra como um vizinho desconhecido ajudou a empurrar o carro de alguém que ficou na chuva.", "f": "O tema central dessa crônica é um gesto de ___ entre pessoas que não se conheciam.", "o": ["indiferença", "solidariedade", "competição", "desconfiança"], "c": 1}, {"ctx": "Texto: um cartaz de campanha escolar incentiva os alunos a economizar papel, reaproveitando folhas usadas.", "f": "O tema central desse cartaz é o incentivo ao ___ de recursos no dia a dia escolar.", "o": ["desperdício", "uso consciente", "aumento do consumo", "descarte imediato"], "c": 1}];
+const G5_ROUNDS = [{"title": "Descobrindo o tema de ‘O Cão e o Osso’", "correct": ["Releia a história: o cão tinha um osso e via seu reflexo na água.", "Observe a atitude do cão: ele quis abocanhar o reflexo, achando que era outro osso maior.", "Note a consequência: o osso real caiu na água e se perdeu.", "Pergunte-se: o que essa sequência de atitude e consequência ensina?", "Conclusão: a cobiça pode fazer alguém perder até o que já possui."]}, {"title": "Descobrindo o tema de ‘O Guarda-Chuva’", "correct": ["Releia a cena: chovia forte e Dona Marta estava com as mãos ocupadas.", "Observe a atitude do menino: ele protegeu Dona Marta sem dizer nada e sem pedir nada em troca.", "Note que ele nem se apresentou, apenas ajudou e voltou ao seu lugar.", "Pergunte-se: o que esse gesto, sem motivo aparente, revela sobre o menino?", "Conclusão: o tema central é um gesto simples de bondade entre estranhos."]}, {"title": "Descobrindo o tema de ‘Silêncio, por favor’", "correct": ["Releia o início: o autor esqueceu o celular e sentiu desespero.", "Observe o que aconteceu depois: ele passou a notar coisas ao redor (chuva, conversa, o gato).", "Note o resultado: chegou em casa com mais ideias do que em semanas.", "Pergunte-se: o episódio do celular é o assunto principal, ou serve para defender uma ideia maior?", "Conclusão: o tema central são os benefícios da desconexão digital para a atenção e a criatividade."]}];
+
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function stripHTML(s){const d=document.createElement("div");d.innerHTML=s;return d.textContent||"";}
+
+function toggleTTS(btn,id){
+  if(window.speechSynthesis.speaking){window.speechSynthesis.cancel();document.querySelectorAll(".btn-tts").forEach(b=>b.classList.remove("playing"));return;}
+  const el=document.getElementById(id);if(!el)return;
+  const text=stripHTML(el.innerHTML).replace(/\s+/g," ");
+  const u=new SpeechSynthesisUtterance(text);u.lang="pt-BR";u.rate=.9;
+  btn.classList.add("playing");
+  u.onend=()=>btn.classList.remove("playing");
+  u.onerror=()=>btn.classList.remove("playing");
+  window.speechSynthesis.speak(u);
+}
+
+const REC_KEY="saeb_d6_records";
+function loadRec(){try{return JSON.parse(localStorage.getItem(REC_KEY))||{};}catch{return {};}}
+function saveRec(k,v){const r=loadRec();if(!(k in r)||v>r[k])r[k]=v;localStorage.setItem(REC_KEY,JSON.stringify(r));renderRec();}
+function renderRec(){
+  const r=loadRec(),g=document.getElementById("recGrid");if(!g)return;
+  const items=[{k:"quiz",l:"Quiz (de 12)"},{k:"tema",l:"Qual é o tema?"},{k:"classificar",l:"Tema/Detalhe"},{k:"resumo",l:"Ache o Resumo"},{k:"complete",l:"Complete"},{k:"ordene",l:"Ordene"}];
+  g.innerHTML=items.map(i=>`<div class="rec-item"><div class="rv">${r[i.k]!=null?r[i.k]:"\u2014"}</div><div class="rl">${i.l}</div></div>`).join("");
+}
+renderRec();
+
+document.querySelectorAll(".tab-btn").forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll(".tab-pane").forEach(p=>p.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById("pane-"+btn.dataset.tab).classList.add("active");
+    window.scrollTo({top:0,behavior:"smooth"});
+  };
+});
+
+/* ---------- QUIZ ---------- */
+const QS = shuffle(QRAW).map((q,idx)=>{
+  const map=Array.from({length:q.alts.length},(_,i)=>i);
+  const smap=shuffle(map);
+  return{...q,dn:idx+1,alts:smap.map(i=>q.alts[i]),porque:smap.map(i=>q.porque[i]),correta:smap.indexOf(q.correta)};
+});
+const nivelLabel={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
+const quizEl=document.getElementById("quiz");
+QS.forEach(q=>{
+  const c=document.createElement("div");c.className="card";c.dataset.q=q.dn;
+  const tid="txt"+q.dn;
+  c.innerHTML=`<div class="card-head"><span class="qnum">Questão ${q.dn}</span><span class="qtipo">${q.tipo}</span><span class="qnivel ${q.nivel}">${nivelLabel[q.nivel]}</span></div>
+  <div class="txt-base" id="${tid}">${q.texto}<span class="txt-fonte">${q.fonte}</span><button class="btn-tts" onclick="toggleTTS(this,'${tid}')" title="Ouvir texto">\uD83D\uDD0A</button></div>
+  <div class="img-slot">\uD83D\uDDBC\uFE0F Espaço para imagem</div>
+  <p class="enunciado">${q.enun}</p>
+  <div class="alts">${q.alts.map((t,i)=>`<button class="alt" onclick="resp(${q.dn},${i})"><span class="letra">${"ABCD"[i]}</span> ${t}</button>`).join("")}</div>
+  <div class="fb" id="fb${q.dn}"></div>`;
+  quizEl.appendChild(c);
+});
+let acertos=0;const feitas=new Set();
+function resp(n,k){
+  if(feitas.has(n))return;feitas.add(n);
+  const q=QS.find(x=>x.dn===n),card=quizEl.querySelector(`[data-q="${n}"]`),btns=card.querySelectorAll(".alt"),fb=document.getElementById("fb"+n);
+  const ok=k===q.correta;if(ok)acertos++;
+  btns.forEach((b,i)=>{b.disabled=true;if(i===q.correta)b.classList.add("ok");else if(i===k)b.classList.add("err");else b.classList.add("dim");});
+  const pq=q.alts.map((t,i)=>`<span class="pi"><span class="l">${"ABCD"[i]})</span> ${q.porque[i]}</span>`).join("");
+  fb.className="fb show "+(ok?"ok":"err");
+  fb.innerHTML=`<div class="ft">${ok?"\u2713 Correto!":"\u2717 Incorreto \u2014 letra "+"ABCD"[q.correta]+"."}</div><div>${q.porque[q.correta]}</div><div class="pq"><b>Cada alternativa:</b>${pq}</div>`;
+  document.getElementById("pFill").style.width=(feitas.size/QS.length*100)+"%";
+  document.getElementById("score").textContent=acertos+" / "+QS.length;
+  if(feitas.size===QS.length)setTimeout(quizFim,500);
+}
+function quizFim(){
+  const r=document.getElementById("resultado");r.style.display="block";
+  document.getElementById("notaFinal").textContent=acertos+"/"+QS.length;
+  const p=acertos/QS.length;let m,msg;
+  if(p>=.9){m="\uD83E\uDD47";msg="Ouro! Você identifica muito bem o assunto central de um texto.";}
+  else if(p>=.7){m="\uD83E\uDD48";msg="Prata! Cuidado para não confundir um detalhe ou exemplo com o tema central.";}
+  else if(p>=.5){m="\uD83E\uDD49";msg="Bronze! Pergunte-se sempre: essa ideia explica o texto inteiro, ou só uma parte dele?";}
+  else{m="\uD83D\uDCD6";msg="Treine mais. O tema é a ideia que liga todas as partes do texto.";}
+  document.getElementById("medalha").textContent=m;document.getElementById("msgFinal").textContent=msg;
+  saveRec("quiz",acertos);
+  r.scrollIntoView({behavior:"smooth",block:"center"});
+}
+
+/* ---------- FACTORY: JOGO CRONOMETRADO (G1 e G3) ---------- */
+function makeTimedGame(bodyId, roundsSrc, recordKey){
+  return {
+    i:0, pts:0, tmr:null, tempo:0, rounds:[],
+    start(){ this.i=0; this.pts=0; this.rounds=shuffle(roundsSrc); this.render(); },
+    render(){
+      const b=document.getElementById(bodyId);
+      if(this.i>=this.rounds.length){
+        saveRec(recordKey,this.pts);
+        const max=this.rounds.length*15;
+        const msg = this.pts>=max*0.7 ? "Muito bem! Leitura rápida e precisa. \uD83E\uDD47" : this.pts>=max*0.4 ? "Bom trabalho! Continue treinando." : "Vamos treinar mais um pouco?";
+        b.innerHTML=`<div class="jogo-final"><div class="big">${this.pts} pts</div><p>${msg}</p><button class="btn ouro" onclick="${bodyId.split('-')[0].toUpperCase()}.start()">\u21BA Jogar de novo</button></div>`;
+        return;
+      }
+      const r=this.rounds[this.i]; this.tempo=100;
+      const ttsId=bodyId+"-tts";
+      b.innerHTML=`<div class="jogo-mid"><span class="chip">Rodada ${this.i+1}/${this.rounds.length}</span><span class="chip timer">\u23F1\uFE0F</span><div class="timerbar"><div id="${bodyId}-bar"></div></div><span class="chip">${this.pts} pts</span></div>
+      <div class="mini-texto">${r.t}<button class="btn-tts" onclick="toggleTTS(this,'${ttsId}')">\uD83D\uDD0A</button><span id="${ttsId}" style="display:none">${r.t}</span></div>
+      <div class="mini-q">${r.q}</div>
+      <div class="alts" id="${bodyId}-alts">${r.o.map((o,k)=>`<button class="alt" onclick="${bodyId.split('-')[0].toUpperCase()}.resp(${k})"><span class="letra">${"ABCD"[k]}</span> ${o}</button>`).join("")}</div>
+      <div class="mini-fb" id="${bodyId}-fb"></div>`;
+      clearInterval(this.tmr);
+      this.tmr=setInterval(()=>{
+        this.tempo-=2;
+        const bar=document.getElementById(bodyId+"-bar");
+        if(bar)bar.style.width=Math.max(0,this.tempo)+"%";
+        if(this.tempo<=0)this.resp(-1);
+      },120);
+    },
+    resp(k){
+      clearInterval(this.tmr);
+      const r=this.rounds[this.i],btns=document.querySelectorAll("#"+bodyId+"-alts .alt"),fb=document.getElementById(bodyId+"-fb");
+      btns.forEach((a,j)=>{a.disabled=true;if(j===r.c)a.classList.add("ok");else if(j===k)a.classList.add("err");else a.classList.add("dim");});
+      if(k===r.c){const g=5+Math.round(this.tempo/10);this.pts+=g;fb.className="mini-fb show ok";fb.textContent="\u2713 +"+g+" pts!";}
+      else{fb.className="mini-fb show err";fb.textContent=(k===-1?"\u23F1\uFE0F Tempo!":"\u2717")+" Resposta: "+"ABCD"[r.c]+".";}
+      this.i++; setTimeout(()=>this.render(),1600);
+    }
+  };
+}
+const G1 = makeTimedGame("g1-body", G1_ROUNDS, "tema");
+const G3 = makeTimedGame("g3-body", G3_ROUNDS, "resumo");
+
+/* ---------- G2: Que tipo de recurso é esse? ---------- */
+const G2 = {
+  rs:[],
+  cats:[["tema","Tema"],["detalhe","Detalhe"],["foradotexto","Fora do texto"]],
+  start(){
+    this.rs=[];
+    const b=document.getElementById("g2-body");
+    b.innerHTML=`<div class="mini-texto">${G2_TEXT}<button class="btn-tts" onclick="toggleTTS(this,'g2t')">\uD83D\uDD0A</button><span id="g2t" style="display:none">${G2_TEXT}</span></div>
+    <p style="font-size:.82rem;color:var(--txt2);margin-bottom:.6rem">Para cada afirmação sobre o texto, diga se ela representa o <b>Tema</b> central, um <b>Detalhe</b> secundário, ou se está <b>Fora do texto</b> (não consta nele).</p>`+
+    G2_ITEMS.map((it,i)=>`<div class="vf-item" id="g2i${i}"><div class="vf-stm"><b>${i+1}.</b> ${it.s}</div>
+      <div class="btn-row">${this.cats.map(c=>`<button class="mini-btn cat-btn cat-${c[0]}" onclick="G2.j(${i},'${c[0]}')">${c[1]}</button>`).join("")}</div>
+      <div class="mini-fb" id="g2f${i}"></div></div>`).join("")+`<div id="g2fin"></div>`;
+  },
+  j(i,escolha){
+    if(this.rs[i]!=null)return;
+    const it=G2_ITEMS[i], ok = escolha===it.cat;
+    this.rs[i]=ok;
+    document.querySelectorAll("#g2i"+i+" .mini-btn").forEach(btn=>{
+      btn.disabled=true;
+      const cls=btn.className.match(/cat-(\w+)/)[1];
+      if(cls===it.cat) btn.classList.add("ok");
+      else if(cls===escolha && !ok) btn.classList.add("err");
+    });
+    const fb=document.getElementById("g2f"+i);
+    fb.className="mini-fb show "+(ok?"ok":"err");
+    fb.innerHTML=(ok?"\u2713 ":"\u2717 ")+it.p;
+    if(this.rs.filter(x=>x!=null).length===G2_ITEMS.length){
+      const ac=this.rs.filter(x=>x).length;
+      saveRec("classificar",ac);
+      document.getElementById("g2fin").innerHTML=`<div class="jogo-final"><div class="big">${ac}/${G2_ITEMS.length}</div><p>${ac===G2_ITEMS.length?"Perfeito! Você distingue muito bem o tema dos detalhes. \uD83E\uDD47":"Bom trabalho! Releia as justificativas."}</p><button class="btn ouro" onclick="G2.start()">\u21BA Jogar de novo</button></div>`;
+    }
+  }
+};
+
+/* ---------- G4: Complete com o recurso certo (cloze) ---------- */
+const G4 = {
+  i:0, pts:0, rounds:[],
+  start(){ this.i=0; this.pts=0; this.rounds=shuffle(G4_ROUNDS); this.render(); },
+  render(){
+    const b=document.getElementById("g4-body");
+    if(this.i>=this.rounds.length){
+      saveRec("complete",this.pts);
+      b.innerHTML=`<div class="jogo-final"><div class="big">${this.pts}/${this.rounds.length}</div><p>${this.pts===this.rounds.length?"Perfeito! \uD83E\uDDE9\uD83E\uDD47":"Pense no efeito pedido e escolha o recurso certo."}</p><button class="btn ouro" onclick="G4.start()">\u21BA Jogar de novo</button></div>`;
+      return;
+    }
+    const it=this.rounds[this.i];
+    b.innerHTML=`<div class="jogo-mid"><span class="chip">Frase ${this.i+1}/${this.rounds.length}</span><span class="chip">${this.pts} acertos</span></div>
+    <p style="font-size:.82rem;color:var(--txt2);margin-bottom:.4rem">${it.ctx}</p>
+    <div class="mini-texto">${it.f}</div>
+    <div class="alts" id="g4-alts">${it.o.map((o,k)=>`<button class="alt" onclick="G4.resp(${k})"><span class="letra">${"ABCD"[k]}</span> ${o}</button>`).join("")}</div>
+    <div class="mini-fb" id="g4-fb"></div>`;
+  },
+  resp(k){
+    const it=this.rounds[this.i],btns=document.querySelectorAll("#g4-alts .alt"),fb=document.getElementById("g4-fb");
+    btns.forEach((a,j)=>{a.disabled=true;if(j===it.c)a.classList.add("ok");else if(j===k)a.classList.add("err");else a.classList.add("dim");});
+    if(k===it.c){this.pts++;fb.className="mini-fb show ok";fb.textContent="\u2713 Exato!";}
+    else{fb.className="mini-fb show err";fb.textContent="\u2717 A opção certa era \""+it.o[it.c]+"\".";}
+    this.i++; setTimeout(()=>this.render(),1200);
+  }
+};
+
+/* ---------- G5: Ordene o raciocínio ---------- */
+const G5 = {
+  ri:0,
+  start(){ this.ri=0; this.renderRound(); },
+  renderRound(){
+    const b=document.getElementById("g5-body");
+    if(this.ri>=G5_ROUNDS.length){
+      saveRec("ordene","\u2713");
+      b.innerHTML=`<div class="jogo-final"><div class="big">\u2713</div><p>Você organizou todo o raciocínio! \uD83D\uDD22\uD83E\uDD47</p><button class="btn ouro" onclick="G5.start()">\u21BA Jogar de novo</button></div>`;
+      return;
+    }
+    const rd=G5_ROUNDS[this.ri];
+    const items=shuffle(rd.correct);
+    b.innerHTML=`<div class="jogo-mid"><span class="chip">Passo a passo ${this.ri+1}/${G5_ROUNDS.length}</span><span class="chip">${rd.title}</span></div>
+    <p style="font-size:.84rem;color:var(--txt2);margin-bottom:.7rem">Use as setas \u25B2 \u25BC para colocar os passos do raciocínio na ordem correta. Depois, clique em "Verificar".</p>
+    <ol class="ord-list" id="g5list">${items.map((it,i)=>`<li class="ord-item" data-txt="${encodeURIComponent(it)}">${it}<div class="ord-arrows"><button onclick="G5.move(${i},-1)">\u25B2</button><button onclick="G5.move(${i},1)">\u25BC</button></div></li>`).join("")}</ol>
+    <div style="text-align:center;margin-top:.6rem"><button class="btn ouro" onclick="G5.check()">\u2713 Verificar ordem</button></div>
+    <div class="mini-fb" id="g5fb"></div>`;
+  },
+  move(idx,dir){
+    const list=document.getElementById("g5list");
+    const items=[...list.children];
+    const newIdx=idx+dir;
+    if(newIdx<0||newIdx>=items.length)return;
+    if(dir===-1) list.insertBefore(items[idx], items[newIdx]);
+    else list.insertBefore(items[newIdx], items[idx]);
+    [...list.children].forEach((li,i)=>{
+      li.querySelector(".ord-arrows").innerHTML=`<button onclick="G5.move(${i},-1)">\u25B2</button><button onclick="G5.move(${i},1)">\u25BC</button>`;
+    });
+  },
+  check(){
+    const rd=G5_ROUNDS[this.ri];
+    const list=document.getElementById("g5list");
+    const items=[...list.children];
+    const fb=document.getElementById("g5fb");
+    let allOk=true;
+    items.forEach((li,i)=>{
+      const txt=decodeURIComponent(li.dataset.txt);
+      if(txt===rd.correct[i]) li.classList.add("ok");
+      else { li.classList.add("err"); allOk=false; }
+      li.querySelectorAll("button").forEach(b=>b.disabled=true);
+    });
+    if(allOk){
+      fb.className="mini-fb show ok"; fb.textContent="\u2713 Ordem perfeita!";
+      this.ri++; setTimeout(()=>this.renderRound(),1400);
+    } else {
+      fb.className="mini-fb show err";
+      fb.innerHTML="\u2717 Algumas posições estão trocadas. <button class=\"mini-btn\" style=\"margin-left:.5rem\" onclick=\"G5.renderRound()\">Tentar de novo</button>";
+    }
+  }
+};
+</script>
+</body>
+</html>
