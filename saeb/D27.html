@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAEB/SIMAVE – D27 | Distinguir partes principais das secundárias</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--azul:#1a3a5c;--azul-m:#235a8c;--azul-c:#d6e8f7;--ouro:#c9871f;--ouro-c:#fff8eb;--verde:#246b4a;--verde-c:#e6f4ed;--verm:#b02a2a;--verm-c:#fdecea;--bg:#f2f4f7;--borda:#d0d6e0;--branco:#fff;--txt:#1c2635;--txt2:#4a5568}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;line-height:1.5}
+header{background:var(--azul);color:#fff;padding:2.4rem 1.5rem 1.8rem;text-align:center;position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:rgba(201,135,31,.12)}
+.badge{display:inline-block;background:var(--ouro);color:var(--azul);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:.8rem}
+header h1{font-family:'Lora',serif;font-size:clamp(1.5rem,4vw,2.1rem);font-weight:600;line-height:1.3;margin-bottom:.4rem}
+header p{font-size:.92rem;opacity:.78;max-width:560px;margin:0 auto;line-height:1.6}
+.voltar-link{display:inline-block;margin-bottom:1rem;color:#fff;opacity:.7;text-decoration:none;font-size:.82rem}
+.voltar-link:hover{opacity:1}
+.tabs{background:var(--branco);border-bottom:1px solid var(--borda);position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.tabs-inner{max-width:840px;margin:0 auto;display:flex}
+.tab-btn{flex:1;background:none;border:none;padding:.95rem .5rem;font-family:'Inter',sans-serif;font-size:.88rem;font-weight:600;color:var(--txt2);cursor:pointer;border-bottom:3px solid transparent;transition:.15s;display:flex;align-items:center;justify-content:center;gap:.35rem}
+.tab-btn:hover{color:var(--azul-m);background:var(--bg)}
+.tab-btn.active{color:var(--azul);border-bottom-color:var(--ouro)}
+main{max-width:840px;margin:0 auto;padding:1.6rem 1.25rem 4rem}
+.tab-pane{display:none;flex-direction:column;gap:1.6rem}
+.tab-pane.active{display:flex}
+.painel{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.5rem 1.6rem}
+.painel h2{font-family:'Lora',serif;font-size:1.2rem;color:var(--azul);margin-bottom:.7rem}
+.painel h3{font-size:.95rem;color:var(--azul-m);margin:.9rem 0 .3rem}
+.painel p,.painel li{font-size:.9rem;margin-bottom:.5rem}
+.painel ul{margin:.2rem 0 .6rem 1.2rem}
+.painel strong{color:var(--azul)}
+.resumo-box{background:var(--azul);color:#fff;border-radius:14px;padding:1.4rem 1.6rem}
+.resumo-box h2{color:#fff;font-family:'Lora',serif;font-size:1.1rem;margin-bottom:.5rem}
+.resumo-box p{color:rgba(255,255,255,.9);font-size:.92rem;margin:0}
+.resumo-box .fc{display:block;margin-top:.7rem;font-style:italic;font-size:.88rem;background:rgba(255,255,255,.1);padding:.6rem .9rem;border-radius:8px;border-left:3px solid var(--ouro)}
+.dica-ouro{background:var(--ouro-c);border:1px solid #ecd9aa}
+.dica-ouro h2{color:#7a5310}.dica-ouro li{color:#4a3408}.dica-ouro strong{color:#7a5310}
+.glossario dt{font-weight:600;color:var(--azul-m);font-size:.88rem;margin-top:.5rem}
+.glossario dd{font-size:.86rem;color:var(--txt2);margin-left:0}
+.aviso-prof{background:#eef4fb;border:1px dashed var(--azul-m);border-radius:10px;padding:.9rem 1.1rem;font-size:.82rem;color:var(--azul-m)}
+.records{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.2rem 1.4rem}
+.records h2{font-family:'Lora',serif;font-size:1.1rem;color:var(--azul);margin-bottom:.6rem}
+.rec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.7rem}
+.rec-item{background:var(--bg);border-radius:10px;padding:.7rem;text-align:center}
+.rec-item .rv{font-size:1.5rem;font-weight:700;color:var(--azul-m)}
+.rec-item .rl{font-size:.72rem;color:var(--txt2)}
+.prog-wrap{background:var(--branco);border:1px solid var(--borda);border-radius:12px;padding:.85rem 1.1rem;display:flex;align-items:center;gap:14px}
+.prog-label{font-size:.78rem;font-weight:600;color:var(--azul-m);white-space:nowrap}
+.prog-track{flex:1;height:6px;background:var(--borda);border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--azul-m),var(--ouro));border-radius:99px;width:0%;transition:width .4s}
+.score{font-size:.78rem;font-weight:600;color:var(--txt2);white-space:nowrap}
+.card{background:var(--branco);border-radius:14px;border:1px solid var(--borda);overflow:hidden}
+.card-head{background:var(--azul);color:#fff;padding:.65rem 1.2rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.qnum{background:var(--ouro);color:var(--azul);font-size:.72rem;font-weight:700;padding:3px 11px;border-radius:20px}
+.qtipo{font-size:.74rem;opacity:.65;font-style:italic}
+.qnivel{font-size:.66rem;font-weight:700;text-transform:uppercase;padding:3px 9px;border-radius:20px;margin-left:auto}
+.qnivel.facil{background:var(--verde-c);color:var(--verde)}.qnivel.medio{background:var(--ouro-c);color:#a96e10}.qnivel.dificil{background:var(--verm-c);color:var(--verm)}
+.txt-base{background:var(--ouro-c);border-left:4px solid var(--ouro);margin:1rem 1.1rem 0;padding:1rem 1.1rem;border-radius:0 8px 8px 0;font-family:'Lora',serif;font-size:.94rem;line-height:1.85;color:#2b1d00;position:relative}
+.txt-fonte{font-family:'Inter',sans-serif;font-size:.72rem;color:var(--txt2);margin-top:.6rem;display:block;border-top:1px solid #e6d5b0;padding-top:.4rem}
+.btn-tts{position:absolute;top:.6rem;right:.6rem;background:none;border:1px solid #c9a14a;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;color:#8a6d1b;transition:.15s}
+.btn-tts:hover{background:#f5e6c1}
+.btn-tts.playing{background:var(--azul);color:#fff;border-color:var(--azul)}
+.img-slot{margin:.8rem 1.1rem 0;border:2px dashed var(--borda);border-radius:10px;padding:.8rem;text-align:center;color:var(--txt2);font-size:.76rem}
+.enunciado{padding:1rem 1.1rem .4rem;font-size:.92rem;line-height:1.6;font-weight:500;color:var(--azul)}
+.alts{padding:.4rem 1.1rem 1.1rem;display:flex;flex-direction:column;gap:.45rem}
+.alt{display:flex;align-items:flex-start;gap:10px;padding:.65rem .9rem;border:1.5px solid var(--borda);border-radius:9px;background:var(--branco);cursor:pointer;text-align:left;font-family:'Inter',sans-serif;font-size:.86rem;color:var(--txt);line-height:1.5;transition:.15s;width:100%}
+.alt:hover:not(:disabled){border-color:var(--azul-m);background:var(--azul-c);transform:translateX(2px)}
+.alt:disabled{cursor:default}
+.letra{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;border-radius:50%;background:var(--bg);font-size:.75rem;font-weight:700;color:var(--azul);flex-shrink:0}
+.alt.ok{border-color:var(--verde);background:var(--verde-c);color:var(--verde);font-weight:500}
+.alt.ok .letra{background:var(--verde);color:#fff}
+.alt.err{border-color:var(--verm);background:var(--verm-c);color:var(--verm)}
+.alt.err .letra{background:var(--verm);color:#fff}
+.alt.dim{opacity:.5}
+.fb{display:none;margin:0 1.1rem 1.1rem;padding:.8rem 1rem;border-radius:8px;font-size:.83rem;line-height:1.6}
+.fb.show{display:block}.fb.ok{background:var(--verde-c);border-left:3px solid var(--verde)}.fb.err{background:var(--verm-c);border-left:3px solid var(--verm)}
+.fb .ft{font-weight:600;margin-bottom:.3rem}.fb.ok .ft{color:var(--verde)}.fb.err .ft{color:var(--verm)}
+.fb .pq{margin-top:.5rem;border-top:1px solid rgba(0,0,0,.08);padding-top:.4rem}
+.fb .pq b{color:var(--azul)}
+.fb .pi{display:block;font-size:.8rem;color:var(--txt2);margin-bottom:.2rem}
+.fb .pi .l{font-weight:700;color:var(--azul)}
+#resultado{display:none;background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:2.4rem 2rem;text-align:center}
+#resultado h2{font-family:'Lora',serif;font-size:1.4rem;color:var(--azul)}
+.medalha{font-size:3rem;margin:.4rem 0}.nota{font-size:3.4rem;font-weight:700;color:var(--azul-m);line-height:1;margin:.4rem 0}
+#resultado p{color:var(--txt2);font-size:.9rem;max-width:480px;margin:.4rem auto 0}
+.btn{display:inline-block;background:var(--azul);color:#fff;padding:.65rem 1.5rem;border-radius:30px;border:none;font-size:.86rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;margin:.3rem}
+.btn:hover{background:var(--azul-m)}
+.btn.ouro{background:var(--ouro);color:var(--azul)}.btn.sec{background:var(--bg);color:var(--azul);border:1px solid var(--borda)}
+.jogo-card{background:var(--branco);border-radius:14px;border:1px solid var(--borda);overflow:hidden}
+.jogo-head{padding:1rem 1.3rem;border-bottom:1px solid var(--borda);display:flex;align-items:center;gap:.7rem}
+.jogo-ico{font-size:1.5rem}
+.jogo-head h3{font-family:'Lora',serif;font-size:1.1rem;color:var(--azul);margin:0}
+.jogo-head .desc{font-size:.78rem;color:var(--txt2)}
+.jogo-body{padding:1.2rem 1.3rem}
+.chip{font-size:.76rem;font-weight:600;padding:4px 11px;border-radius:20px;background:var(--azul-c);color:var(--azul)}
+.chip.timer{background:var(--ouro-c);color:#a96e10}
+.jogo-mid{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:.8rem}
+.timerbar{flex:1;min-width:100px;height:8px;background:var(--borda);border-radius:99px;overflow:hidden}
+.timerbar>div{height:100%;width:100%;background:linear-gradient(90deg,var(--verde),var(--ouro),var(--verm));border-radius:99px;transition:width .25s linear}
+.mini-texto{background:var(--ouro-c);border-left:4px solid var(--ouro);border-radius:0 8px 8px 0;padding:.85rem 1rem;font-family:'Lora',serif;font-size:.9rem;line-height:1.7;color:#2b1d00;margin-bottom:.8rem;position:relative}
+.mini-q{font-weight:600;color:var(--azul);margin-bottom:.6rem;font-size:.9rem}
+.mini-btn{border:1.5px solid var(--borda);background:var(--branco);border-radius:8px;padding:.45rem .8rem;font-size:.8rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;color:var(--azul);transition:.15s}
+.mini-btn:hover:not(:disabled){background:var(--azul-c);border-color:var(--azul-m)}
+.mini-btn:disabled{cursor:default}
+.mini-btn.ok{background:var(--verde-c);border-color:var(--verde);color:var(--verde)}
+.mini-btn.err{background:var(--verm-c);border-color:var(--verm);color:var(--verm)}
+.mini-fb{font-size:.8rem;margin-top:.5rem;padding:.45rem .65rem;border-radius:6px;display:none}
+.mini-fb.show{display:block}.mini-fb.ok{background:var(--verde-c);color:var(--verde)}.mini-fb.err{background:var(--verm-c);color:var(--verm)}
+.vf-item,.det-item{border:1.5px solid var(--borda);border-radius:10px;padding:.7rem .9rem;margin-bottom:.6rem}
+.vf-stm{font-size:.88rem;margin-bottom:.5rem}
+.btn-row{display:flex;gap:.5rem;flex-wrap:wrap}
+.cat-btn.cat-tema.ok{border-color:var(--azul-m);background:var(--azul-c);color:var(--azul)}
+.cat-btn.cat-detalhe.ok{border-color:var(--ouro);background:var(--ouro-c);color:#a96e10}
+.cat-btn.cat-foradotexto.ok{border-color:var(--verde);background:var(--verde-c);color:var(--verde)}
+.jogo-final{text-align:center;padding:.8rem 0 .3rem}
+.jogo-final .big{font-size:2rem;font-weight:700;color:var(--azul-m)}
+.jogo-final p{font-size:.88rem;color:var(--txt2);margin:.2rem 0 .8rem}
+.ord-list{list-style:none;padding:0;counter-reset:ord}
+.ord-item{counter-increment:ord;display:flex;align-items:center;gap:10px;padding:.6rem .9rem;border:1.5px solid var(--borda);border-radius:9px;margin-bottom:.5rem;background:var(--branco);font-size:.86rem;user-select:none}
+.ord-item::before{content:counter(ord);display:flex;align-items:center;justify-content:center;min-width:24px;height:24px;border-radius:50%;background:var(--azul-c);font-size:.72rem;font-weight:700;color:var(--azul)}
+.ord-item.ok{border-color:var(--verde);background:var(--verde-c)}
+.ord-item.err{border-color:var(--verm);background:var(--verm-c)}
+.ord-arrows{display:flex;flex-direction:column;gap:2px;margin-left:auto}
+.ord-arrows button{background:var(--bg);border:1px solid var(--borda);border-radius:4px;width:24px;height:20px;cursor:pointer;font-size:.65rem;display:flex;align-items:center;justify-content:center}
+.ord-arrows button:hover{background:var(--azul-c)}
+footer{text-align:center;padding:1.5rem;font-size:.76rem;color:var(--txt2)}
+@media print{.tabs,header,.prog-wrap,.btn,.btn-tts,.img-slot,footer,#resultado,.jogo-card,.records,.resumo-box,.dica-ouro,.glossario,.aviso-prof{display:none!important}.tab-pane{display:flex!important}.card{break-inside:avoid;border:1px solid #ccc;margin-bottom:1rem}.card-head{background:#333!important;-webkit-print-color-adjust:exact}.fb{display:block!important;background:#f5f5f5!important;border-left:3px solid #999!important;color:#333!important}}
+@media(max-width:480px){.painel{padding:1.1rem}.tab-btn{font-size:.78rem;padding:.8rem .3rem}}
+
+.genre-tag{display:inline-block;padding:3px 10px;border-radius:14px;font-size:.72rem;font-weight:700;margin-bottom:.5rem}
+.func-tag{display:inline-block;padding:4px 12px;border-radius:14px;font-size:.75rem;font-weight:700;margin:2px 4px 2px 0;color:#fff}
+.func-informar{background:#3498db}.func-narrar{background:#e74c3c}.func-opinar{background:#f39c12}.func-instruir{background:#27ae60}.func-definir{background:#9b59b6}.func-expressar{background:#1abc9c}
+.disc-area{width:calc(100% - 2.2rem);min-height:130px;border:1.5px solid var(--borda);border-radius:9px;padding:.7rem .9rem;font-family:'Inter',sans-serif;font-size:.88rem;resize:vertical;margin:0 1.1rem .4rem}
+.disc-actions{padding:0 1.1rem 1rem}
+@media print{.gabarito-print{display:block!important;break-before:page;border:1px solid #999;border-radius:8px;padding:1rem 1.2rem;margin-top:1rem}.gabarito-print h2{font-size:1.1rem;margin-bottom:.6rem}.gabarito-print ol{margin-left:1.2rem}.gabarito-print li{font-size:.86rem;margin-bottom:.3rem}.fb{display:none!important}.disc-actions{display:none!important}}
+
+.tese-box{background:#e3f2fd;border-left:4px solid #1976d2;padding:.8rem;margin:.8rem 0;border-radius:0 8px 8px 0}
+.disc-area{width:calc(100% - 2.2rem);min-height:130px;border:1.5px solid var(--borda);border-radius:9px;padding:.7rem .9rem;font-family:'Inter',sans-serif;font-size:.88rem;resize:vertical;margin:0 1.1rem .4rem}
+.disc-actions{padding:0 1.1rem 1rem}
+@media print{.gabarito-print{display:block!important;break-before:page}.fb{display:none!important}.disc-actions{display:none!important}}
+/* ===== TELA DE IDENTIFICAÇÃO E MODO DE JOGO ===== */
+.quiz-gate{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.8rem 1.6rem;max-width:480px;margin:0 auto}
+.quiz-gate h2{font-family:'Lora',serif;font-size:1.25rem;color:var(--azul);margin-bottom:.4rem}
+.quiz-gate>p{font-size:.88rem;color:var(--txt2);margin-bottom:1.2rem}
+.gate-field{margin-bottom:1.1rem}
+.gate-field>label{display:block;font-size:.82rem;font-weight:600;color:var(--azul-m);margin-bottom:.4rem}
+.gate-field input[type=text]{width:100%;padding:.65rem .8rem;border:1.5px solid var(--borda);border-radius:9px;font-family:'Inter',sans-serif;font-size:.92rem;color:var(--txt)}
+.gate-field input[type=text]:focus{outline:none;border-color:var(--azul-m)}
+.modo-opcoes{display:flex;flex-direction:column;gap:.6rem}
+.modo-opcao{display:flex;align-items:flex-start;gap:.6rem;border:1.5px solid var(--borda);border-radius:10px;padding:.7rem .85rem;cursor:pointer;transition:.15s}
+.modo-opcao:hover{border-color:var(--azul-m)}
+.modo-opcao input[type=radio]{margin-top:.25rem;accent-color:var(--azul-m)}
+.modo-opcao input[type=radio]:checked~span b{color:var(--azul)}
+.modo-opcao span{font-size:.85rem}
+.modo-opcao small{color:var(--txt2);font-weight:400}
+.gate-aviso{color:var(--verm);font-size:.82rem;margin-top:.7rem;min-height:1.2em}
+.modo-opcao.bloqueado{opacity:.6;cursor:not-allowed}
+.modo-opcao.liberado{opacity:1;cursor:pointer;border-color:var(--verde)}
+.cadeado{font-size:.75rem}
+.senha-box{display:flex;gap:.5rem;margin-top:.6rem}
+.senha-box input[type=password]{flex:1;padding:.55rem .75rem;border:1.5px solid var(--borda);border-radius:9px;font-family:'Inter',sans-serif;font-size:.85rem}
+.senha-box input[type=password]:focus{outline:none;border-color:var(--azul-m)}
+.senha-btn{white-space:nowrap;font-size:.8rem;padding:.55rem 1rem}
+.senha-aviso{font-size:.78rem;margin-top:.4rem;min-height:1.1em}
+.senha-aviso.ok{color:var(--verde)}
+.senha-aviso.erro{color:var(--verm)}
+.modo-chip{font-size:.74rem;font-weight:700;padding:4px 12px;border-radius:20px;background:var(--azul-c);color:var(--azul-m);margin-left:auto}
+.envio-status{font-size:.82rem;margin-top:.8rem;padding:.6rem .9rem;border-radius:8px}
+.envio-status.enviando{background:var(--azul-c);color:var(--azul-m)}
+.envio-status.ok{background:var(--verde-c);color:var(--verde)}
+.envio-status.erro{background:var(--verm-c);color:var(--verm)}
+/* No modo prova, o feedback de cada questão fica escondido até o aluno terminar */
+.fb.prova-oculto{display:none!important}
+@media print{.quiz-gate,.modo-chip,.envio-status{display:none!important}#quizConteudo{display:block!important}}
+</style>
+</head><body><header><a href="index.html" class="voltar-link">← Painel SAEB/SIMAVE</a><div class="badge">SAEB · SIMAVE · Língua Portuguesa</div><h1>Habilidade D27</h1><p>Distinguir as partes principais das secundárias de um texto</p></header>
+<nav class="tabs"><div class="tabs-inner"><button class="tab-btn active" data-tab="estudar">📚 Estudar</button><button class="tab-btn" data-tab="quiz">📝 Quiz</button><button class="tab-btn" data-tab="jogos">🎮 Jogos</button></div></nav><main><section class="tab-pane active" id="pane-estudar">
+<div class="resumo-box"><h2>🎯 Em uma frase</h2><p>O D27 mede se você consegue <strong style="color:#ffd98a">separar o que é essencial</strong> em um texto do que é apenas <strong style="color:#ffd98a">detalhe de contexto</strong>.</p></div>
+<section class="painel"><h2>📌 Principal x secundário</h2>
+<div class="tese-box"><b>Parte principal</b> é o núcleo informativo — aquilo que, se removido, muda o sentido geral do texto. <b>Parte secundária</b> são detalhes de contexto (datas, locais, credenciais) que enriquecem mas não são essenciais.</div></section>
+<section class="painel"><h2>🔍 Teste prático</h2>
+<ul><li>Remova a informação mentalmente: o sentido central mudou? Se sim, é principal.</li>
+<li>Em notícias, o essencial geralmente vem no início (lead).</li>
+<li>Em narrativas, o conflito é principal; descrições de cenário tendem a ser secundárias.</li>
+<li>Datas, locais e credenciais de fontes costumam ser secundários.</li></ul></section>
+<div class="aviso-prof"><b>Fontes:</b> Agência Brasil/EBC, Machado de Assis, Esopo (domínio público).</div>
+<div class="records" id="recordsEstudar"><h2>🏆 Resultados</h2><div class="rec-grid" id="recGrid"></div></div>
+</section><section class="tab-pane" id="pane-quiz">
+
+<!-- ===== TELA DE IDENTIFICAÇÃO (aparece antes do quiz) ===== -->
+<div id="quizGate" class="quiz-gate">
+  <h2>👋 Antes de começar</h2>
+  <p>Preencha seus dados e escolha o modo de jogo.</p>
+  <div class="gate-field">
+    <label for="alunoNome">Nome do aluno</label>
+    <input type="text" id="alunoNome" placeholder="Seu nome completo" autocomplete="off">
+  </div>
+  <div class="gate-field">
+    <label for="alunoTurma">Turma / Série</label>
+    <input type="text" id="alunoTurma" placeholder="Ex: 9º Ano A" autocomplete="off">
+  </div>
+  <div class="gate-field">
+    <label>Modo de jogo</label>
+    <div class="modo-opcoes">
+      <label class="modo-opcao">
+        <input type="radio" name="modoQuiz" value="prova" checked>
+        <span><b>📝 Modo Prova</b><br><small>Sem feedback durante o quiz. As respostas certas só aparecem no final, como numa prova de verdade.</small></span>
+      </label>
+      <label class="modo-opcao" id="opcaoEstudo">
+        <input type="radio" name="modoQuiz" value="estudo" id="radioEstudo" disabled>
+        <span><b>📖 Modo Estudo</b> <span class="cadeado" id="cadeadoEstudo">🔒</span><br><small>Mostra se acertou ou errou — e a explicação — logo após cada resposta. Liberado pelo professor.</small></span>
+      </label>
+    </div>
+    <div class="senha-box" id="senhaBox">
+      <input type="password" id="senhaEstudo" placeholder="Senha do professor para liberar o Modo Estudo" autocomplete="off">
+      <button type="button" class="btn sec senha-btn" id="btnLiberarEstudo">Liberar</button>
+    </div>
+    <p class="senha-aviso" id="senhaAviso"></p>
+  </div>
+  <button class="btn" id="btnIniciarQuiz">▶ Começar o quiz</button>
+  <p class="gate-aviso" id="gateAviso"></p>
+</div>
+
+<!-- ===== QUIZ (fica oculto até o aluno preencher os dados acima) ===== -->
+<div id="quizConteudo" style="display:none">
+<div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.5rem;align-items:center">
+<button class="btn sec" onclick="window.print()">🖨️ Imprimir com gabarito</button>
+<button class="btn sec" onclick="location.reload()">🔀 Embaralhar e refazer</button>
+<span class="modo-chip" id="modoChip"></span>
+</div>
+<div class="prog-wrap"><span class="prog-label">Progresso</span><div class="prog-track"><div class="prog-fill" id="pFill"></div></div><span class="score" id="score">0 / 12</span></div>
+<div id='quiz'></div><div class='card' id='cardDisc' style='margin-top:1.5rem'><div class='card-head'><span class='qnum'>Q13</span><span class='qtipo'>Notícia real</span><span class='qnivel dificil'>Aberta</span></div><div class='txt-base' id='txtDisc'>Leia o trecho:<br><br><b>Observatório do Clima entrega recomendações para transição energética</b><br>O documento foi elaborado por 161 organizações sociais e enviado ao governo federal. O prazo para a equipe ministerial entregar o planejamento termina em 6 de fevereiro. As recomendações incluem medidas técnicas, de regulamentação e econômicas.<span class='txt-fonte'>Agência Brasil/EBC, 28 jan. 2026. Adaptado.</span></div><p class='enunciado'><b>a)</b> Qual é a informação principal desse trecho?<br><b>b)</b> Identifique uma informação secundária (de contexto/circunstância).<br><b>c)</b> Por que é importante, ao resumir um texto, separar partes principais de secundárias?</p><textarea class='disc-area'></textarea><div class='disc-actions'><button class='btn sec' id='btnDisc'>👁️ Gabarito</button></div><div class='fb' id='fbDisc'><div class='ft' style='color:var(--azul)'>Gabarito</div><div><b>a)</b> A informação principal é o documento de recomendações para a transição energética, elaborado por 161 organizações sociais.<br><b>b)</b> A data exata do prazo (6 de fevereiro) é informação secundária, de circunstância administrativa.<br><b>c)</b> Resposta livre, mas deve mencionar que separar partes principais de secundárias permite resumir o texto de forma fiel e objetiva, sem perder o sentido central nem se prender a detalhes que não mudam a compreensão geral.</div></div>
+<div id='resultado'><h2>Concluído!</h2><div class='medalha' id='medalha'>🏅</div><div class='nota' id='notaFinal'>—</div><p id='msgFinal'></p><div id="envioStatus" class="envio-status"></div><button class='btn' onclick='location.reload()'>↺ Refazer</button></div></div>
+</div>
+</section><section class='tab-pane' id='pane-jogos'><div class='resumo-box'><h2>🎮 Hora de jogar</h2><p>Cinco minijogos para treinar a distinção entre partes principais e secundárias.</p></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>⏱️</span><h3>Principal ou secundária?</h3></div><div class='jogo-body' id='g1-body'><button class='btn ouro' onclick='G1.start()'>▶ Começar</button></div></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>🏷️</span><h3>Classifique</h3></div><div class='jogo-body' id='g2-body'><button class='btn ouro' onclick='G2.start()'>▶ Começar</button></div></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>🔎</span><h3>Pelas pistas</h3></div><div class='jogo-body' id='g3-body'><button class='btn ouro' onclick='G3.start()'>▶ Começar</button></div></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>🧩</span><h3>Complete</h3></div><div class='jogo-body' id='g4-body'><button class='btn ouro' onclick='G4.start()'>▶ Começar</button></div></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>🔢</span><h3>Ordene</h3></div><div class='jogo-body' id='g5-body'><button class='btn ouro' onclick='G5.start()'>▶ Começar</button></div></div></section></main><footer>Portal do Professor Marcos Cruz · SAEB/SIMAVE · D27</footer><script>
+/* ===== CONFIGURAÇÃO DO ENVIO PARA GOOGLE SHEETS =====
+   Cole aqui a URL do seu Apps Script publicado como "App da Web".
+   Veja o arquivo google-apps-script.gs para instruções de instalação.
+   Enquanto estiver "SUBSTITUA_PELA_SUA_URL", o envio fica desativado
+   (o quiz funciona normalmente, só não manda nada para a planilha). */
+const SHEETS_URL = "SUBSTITUA_PELA_SUA_URL";
+const DESCRITOR_PAGINA = "D27 - Distinguir as partes principais das secundárias";
+const NOME_ARQUIVO = "D27.html";
+
+/* ===== ESTADO DO ALUNO E MODO DE JOGO ===== */
+let alunoNome = "";
+let alunoTurma = "";
+let modoJogo = "estudo"; // "estudo" ou "prova"
+const respostasDetalhadas = []; // uma entrada por questão respondida, na ordem em que aparecem
+
+/* ===== SENHA PARA LIBERAR O MODO ESTUDO =====
+   Troque a senha abaixo quando quiser. É a MESMA senha em todas as páginas
+   do portal (mais simples de lembrar e passar para os alunos quando for
+   hora de revisão). Lembre-se: como o quiz roda no navegador do aluno,
+   essa senha impede o uso casual do Modo Estudo, mas não é uma proteção
+   contra alguém que abra o código-fonte da página — as respostas já estão
+   no arquivo de qualquer forma, como em qualquer site estático como este. */
+const SENHA_MODO_ESTUDO = "professor123";
+
+document.getElementById("btnLiberarEstudo").onclick = () => {
+  const campo = document.getElementById("senhaEstudo");
+  const aviso = document.getElementById("senhaAviso");
+  if (campo.value === SENHA_MODO_ESTUDO) {
+    document.getElementById("radioEstudo").disabled = false;
+    document.getElementById("radioEstudo").checked = true;
+    document.getElementById("cadeadoEstudo").textContent = "🔓";
+    document.getElementById("opcaoEstudo").classList.add("liberado");
+    document.getElementById("senhaBox").style.display = "none";
+    aviso.className = "senha-aviso ok";
+    aviso.textContent = "✓ Modo Estudo liberado.";
+  } else {
+    aviso.className = "senha-aviso erro";
+    aviso.textContent = "Senha incorreta.";
+  }
+};
+// Também libera ao apertar Enter no campo de senha
+document.getElementById("senhaEstudo").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") document.getElementById("btnLiberarEstudo").click();
+});
+
+document.getElementById("btnIniciarQuiz").onclick = () => {
+  const nome = document.getElementById("alunoNome").value.trim();
+  const turma = document.getElementById("alunoTurma").value.trim();
+  const aviso = document.getElementById("gateAviso");
+  if (!nome || !turma) {
+    aviso.textContent = "Preencha nome e turma/série para continuar.";
+    return;
+  }
+  alunoNome = nome;
+  alunoTurma = turma;
+  modoJogo = document.querySelector('input[name="modoQuiz"]:checked').value;
+  document.getElementById("quizGate").style.display = "none";
+  document.getElementById("quizConteudo").style.display = "block";
+  const chip = document.getElementById("modoChip");
+  chip.textContent = modoJogo === "prova" ? "📝 Modo Prova" : "📖 Modo Estudo";
+};
+
+/* ===== ENVIO PARA O GOOGLE SHEETS ===== */
+function enviarParaSheets() {
+  const statusEl = document.getElementById("envioStatus");
+  if (!SHEETS_URL || SHEETS_URL.indexOf("SUBSTITUA") !== -1) {
+    statusEl.className = "envio-status";
+    statusEl.textContent = "";
+    return; // envio desativado até o professor configurar a URL
+  }
+  statusEl.className = "envio-status enviando";
+  statusEl.textContent = "Enviando resultado para a planilha...";
+
+  const payload = {
+    nome: alunoNome,
+    turma: alunoTurma,
+    descritor: DESCRITOR_PAGINA,
+    pagina: NOME_ARQUIVO,
+    modo: modoJogo === "prova" ? "Prova" : "Estudo",
+    respostas: respostasDetalhadas
+  };
+
+  fetch(SHEETS_URL, {
+    method: "POST",
+    mode: "no-cors", // Apps Script Web Apps não devolvem CORS; "no-cors" garante o envio mesmo sem ler a resposta
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(payload)
+  }).then(() => {
+    statusEl.className = "envio-status ok";
+    statusEl.textContent = "✓ Resultado enviado para a planilha do professor.";
+  }).catch(() => {
+    statusEl.className = "envio-status erro";
+    statusEl.textContent = "✗ Não foi possível enviar o resultado (verifique sua internet).";
+  });
+}
+
+/* ===== QUIZ ===== */
+const QRAW=[{"n": 1, "tipo": "Notícia (real)", "nivel": "facil", "texto": "<b>Brasil tem 'vazio estratégico' em minerais críticos, diz especialista</b><br><br>O Brasil dispõe dos instrumentos jurídicos necessários para controlar as riquezas minerais, mas falha ao não transformá-los em desenvolvimento industrial. A opinião é da especialista Luciana Bauer, ex-juíza federal e fundadora do Instituto Jusclima.", "fonte": "Agência Brasil/EBC, 5 maio 2026. Adaptado. agenciabrasil.ebc.com.br", "enun": "Qual é a informação principal desse trecho?", "alts": ["O nome completo da instituição fundada pela especialista.", "A avaliação de que o Brasil tem condições jurídicas mas falha em desenvolvimento industrial.", "O fato de Luciana Bauer ter sido juíza federal.", "A existência de um instituto chamado Jusclima."], "correta": 1, "porque": ["O nome da instituição é detalhe secundário, não a informação central.", "Correto: a informação principal é a avaliação central do texto — Brasil tem instrumentos jurídicos mas falha em desenvolvimento industrial. As demais informações (cargo anterior, nome do instituto) são secundárias, de identificação da fonte.", "O cargo anterior da especialista é detalhe secundário de credencial.", "O nome do instituto é detalhe secundário, apenas identifica a especialista."]}, {"n": 2, "tipo": "Notícia (real)", "nivel": "facil", "texto": "<b>Em mensagem ao Congresso, Lula destaca números do governo</b><br><br>O presidente afirmou que a renda média dos trabalhadores subiu para R$ 3.574, a maior já registrada. A mensagem foi entregue durante sessão solene que marca a retomada dos trabalhos legislativos, após o recesso.", "fonte": "Agência Brasil/EBC, 2 fev. 2026. Adaptado. agenciabrasil.ebc.com.br", "enun": "Qual informação é secundária (contexto), e não o fato principal da notícia?", "alts": ["O valor da renda média dos trabalhadores.", "O dado de que é a maior renda já registrada.", "O fato de a mensagem ter sido entregue durante sessão solene após o recesso.", "O aumento da renda dos trabalhadores."], "correta": 2, "porque": ["O valor da renda é parte da informação principal sobre os resultados do governo.", "Esse dado reforça a informação principal (é recorde).", "Correto: o contexto de quando e em que ocasião a mensagem foi entregue (sessão solene, retomada após recesso) é informação secundária, de circunstância, não o fato central da notícia (os números econômicos).", "O aumento em si é a informação principal da notícia."]}, {"n": 3, "tipo": "Crônica (Machado de Assis)", "nivel": "medio", "texto": "<b>Bons Dias!</b> (trecho adaptado)<br><br><em>\"Defendo que a verdadeira cortesia não está nos grandes gestos, mas nos pequenos: o cumprimento ao vizinho, o lugar cedido no bonde, o silêncio guardado quando a palavra feriria sem necessidade. Escrevo isso numa manhã fria de abril, com o café ainda fumegando sobre a mesa.\"</em>", "fonte": "Adaptado do espírito das crônicas de MACHADO DE ASSIS, série Bons Dias!, 1888-1889. Domínio público.", "enun": "Qual elemento do trecho é secundário, servindo apenas como ambientação?", "alts": ["A tese sobre cortesia nos pequenos gestos.", "O exemplo do cumprimento ao vizinho.", "A descrição da manhã fria com café fumegando sobre a mesa.", "O exemplo do silêncio guardado."], "correta": 2, "porque": ["A tese é o elemento principal do texto.", "Esse exemplo sustenta a tese central, sendo parte importante do argumento.", "Correto: a descrição da manhã fria e do café é apenas ambientação — detalhe de cenário que não altera o sentido central da reflexão sobre cortesia, sendo, portanto, secundário.", "Esse exemplo também sustenta a tese central, sendo parte do argumento principal."]}, {"n": 4, "tipo": "Notícia (real)", "nivel": "medio", "texto": "<b>Tratado do Alto-Mar: entenda o que muda para o Brasil</b><br><br>Já foram realizadas reuniões em abril e agosto de 2025, com uma terceira prevista para março de 2026, em Nova York. A reunião também deve decidir onde será a sede do secretariado: Bélgica, Chile e China são candidatos. O Brasil tem muito a contribuir com seu conhecimento diplomático acumulado.", "fonte": "Agência Brasil/EBC, 31 jan. 2026. Adaptado. agenciabrasil.ebc.com.br", "enun": "Qual informação é secundária em relação ao tema central da notícia (contribuição do Brasil ao tratado)?", "alts": ["A contribuição do Brasil com conhecimento diplomático.", "A disputa entre Bélgica, Chile e China pela sede do secretariado.", "O fato de o Brasil ter experiência em tratados internacionais.", "A relevância do conhecimento científico brasileiro."], "correta": 1, "porque": ["Essa é a informação central do trecho sobre o papel do Brasil.", "Correto: a disputa pela sede do secretariado entre outros países é uma informação secundária — interessante para o contexto geral do tratado, mas não diretamente relacionada ao tema central sobre a contribuição brasileira.", "Essa é informação central, sustentando a tese sobre o papel do Brasil.", "Essa também é informação central sobre a capacidade brasileira."]}, {"n": 5, "tipo": "Notícia (real)", "nivel": "medio", "texto": "<b>Observatório do Clima entrega recomendações para transição energética</b><br><br>O documento foi elaborado por 161 organizações sociais e enviado ao governo federal. O prazo para a equipe ministerial entregar o planejamento ao Conselho Nacional de Política Energética termina em 6 de fevereiro. As recomendações incluem medidas técnicas, de regulamentação e econômicas.", "fonte": "Agência Brasil/EBC, 28 jan. 2026. Adaptado. agenciabrasil.ebc.com.br", "enun": "Qual é a informação principal desse trecho?", "alts": ["A data exata do prazo (6 de fevereiro).", "O documento com recomendações de 161 organizações sociais para a transição energética.", "O nome do conselho que receberá o planejamento.", "O número exato de organizações envolvidas."], "correta": 1, "porque": ["A data é detalhe secundário, de prazo administrativo.", "Correto: a informação principal é o documento de recomendações elaborado pelas organizações sociais para subsidiar a transição energética — o cerne da notícia.", "O nome do conselho é detalhe secundário de procedimento administrativo.", "O número exato de organizações é detalhe que reforça, mas não é o fato central por si só."]}, {"n": 6, "tipo": "Conto (Machado de Assis)", "nivel": "dificil", "texto": "<b>A Cartomante</b> (resumo)<br><br>Rita, casada com Vilela, mantinha um caso secreto com Camilo, amigo de infância do marido. A casa do encontro era na antiga rua dos Barbonos, onde morava uma comprovinciana de Rita. Certo dia, Camilo recebeu uma carta anônima dizendo que o caso já era conhecido por todos.", "fonte": "Adaptado de ASSIS, Machado de. <b>A Cartomante</b>, 1884. Domínio público.", "enun": "Qual elemento do trecho é secundário em relação ao conflito central da narrativa?", "alts": ["O caso secreto entre Rita e Camilo.", "A localização exata da casa de encontro (rua dos Barbonos).", "A carta anônima revelando o caso.", "O fato de Camilo e Vilela serem amigos de infância."], "correta": 1, "porque": ["Esse é o núcleo do conflito central da narrativa.", "Correto: a localização exata da casa de encontro é detalhe secundário de cenário — acrescenta realismo à narrativa, mas não é essencial para compreender o conflito central da traição.", "Esse evento é central, pois intensifica o conflito da narrativa.", "Essa informação é central, pois explica a origem da proximidade entre os personagens, fundamental para entender a traição."]}, {"n": 7, "tipo": "Notícia (real)", "nivel": "dificil", "texto": "<b>Brasil reafirma urgência de financiamento para ações climáticas</b><br><br>Anabella Rosemberg defende a criação de um mecanismo multilateral estável para a transição justa. A declaração ocorreu durante a Pré-COP em Brasília, num evento que também contou com a presença do ministro da Fazenda, Fernando Haddad, e debates sobre o chamado Mapa do Caminho de Baku a Belém.", "fonte": "Agência Brasil/EBC, 14 out. 2025. Adaptado. agenciabrasil.ebc.com.br", "enun": "Em relação à tese central (necessidade de um mecanismo multilateral estável), qual informação é secundária?", "alts": ["A defesa da criação de um mecanismo multilateral.", "O local específico do evento (Pré-COP em Brasília) e a presença do ministro Haddad.", "A urgência do financiamento climático.", "A necessidade de uma transição justa."], "correta": 1, "porque": ["Essa é a tese central do trecho.", "Correto: o local específico do evento e a menção à presença do ministro são informações de contexto/circunstância — secundárias em relação à tese central sobre a necessidade de um mecanismo multilateral.", "Essa é parte da tese central sobre financiamento.", "Essa é parte da tese central sobre a transição justa."]}, {"n": 8, "tipo": "Fábula (Esopo)", "nivel": "facil", "texto": "<strong>A Lebre e a Tartaruga</strong><br><br>Cansada de ouvir a lebre se vangloriar de sua velocidade, a tartaruga propôs uma corrida. Todos os animais da floresta riram, achando graça. No dia da prova, a lebre disparou na frente e, certa da vitória, decidiu tirar uma soneca à beira do caminho. A tartaruga, sem parar, seguiu devagar e sempre — e venceu.", "fonte": "ESOPO. <b>A Lebre e a Tartaruga</b>. Fábulas clássicas. Domínio público.", "enun": "Qual elemento da fábula é secundário em relação à mensagem central?", "alts": ["A decisão da lebre de tirar uma soneca.", "A persistência da tartaruga até o fim.", "A reação dos outros animais, que riram da proposta.", "A vitória final da tartaruga."], "correta": 2, "porque": ["Essa decisão é central, pois causa a derrota da lebre.", "Essa persistência é o núcleo da moral da fábula.", "Correto: a reação dos outros animais (rirem da proposta) é detalhe secundário de ambientação social, não essencial para a moral central sobre persistência versus excesso de confiança.", "A vitória é o desfecho central que comprova a moral da fábula."]}, {"n": 9, "tipo": "Notícia (real)", "nivel": "medio", "texto": "<b>Meta de adaptação climática gera impasse em negociações da COP30</b><br><br>O Grupo Africano, que representa 54 países do continente, defende estender o trabalho técnico por mais dois anos. Esse grupo foi criado na COP de Sharm el Sheikh, no Egito, em 2022, com mandato inicial de dois anos. A proposta preocupa observadores por poder atrasar as metas.", "fonte": "Agência Brasil/EBC, 12 nov. 2025. Adaptado. agenciabrasil.ebc.com.br", "enun": "Qual informação é secundária em relação ao impasse central da notícia?", "alts": ["A proposta do Grupo Africano de estender o prazo.", "A preocupação dos observadores com o atraso nas metas.", "O local e o ano de criação do grupo de trabalho (Sharm el Sheikh, 2022).", "O fato de o Grupo Africano representar 54 países."], "correta": 2, "porque": ["Essa é a informação central do impasse.", "Essa é consequência direta do impasse, parte central da notícia.", "Correto: o local e ano de criação do grupo (Sharm el Sheikh, 2022) é informação histórica de contexto — secundária em relação ao impasse atual sobre a extensão de prazo.", "O número de países representados é dado relevante para entender o peso da posição do grupo, mas o foco central é o impasse, não a representatividade em si."]}, {"n": 10, "tipo": "Conto (Machado de Assis)", "nivel": "dificil", "texto": "<b>A Cartomante</b> (trecho real)<br><br><em>\"Camilo pegou-lhe nas mãos, e olhou para ela sério e fixo. Jurou que lhe queria muito, que os seus sustos pareciam de criança; em todo o caso, quando tivesse algum receio, a melhor cartomante era ele mesmo. Depois, repreendeu-a.\"</em>", "fonte": "ASSIS, Machado de. <b>A Cartomante</b>, 1884. Domínio público.", "enun": "Qual é a informação principal desse trecho, em relação ao conflito da narrativa?", "alts": ["A descrição física de Camilo olhando sério.", "A repreensão de Camilo a Rita por sua imprudência ao visitar a cartomante.", "O fato de Camilo segurar as mãos de Rita.", "A comparação entre Camilo e a cartomante."], "correta": 1, "porque": ["A descrição física é detalhe secundário de cena.", "Correto: a informação principal é a repreensão de Camilo, que revela sua preocupação com a possibilidade de descoberta pelo marido — elemento central que alimenta a tensão do conflito.", "Esse gesto físico é detalhe secundário que ilustra a cena, mas não é o núcleo informativo.", "Essa comparação é um detalhe de fala, secundário em relação à repreensão central."]}, {"n": 11, "tipo": "Notícia (real)", "nivel": "facil", "texto": "<b>ONU dedica Dia Mundial do Ambiente ao combate ao plástico</b><br><br>Os resíduos de plástico entopem os rios, poluem os oceanos e põem em perigo a vida selvagem, diz o secretário-geral da ONU. A data é comemorada todos os anos em 5 de junho, desde sua criação pela Assembleia Geral da ONU em 1972.", "fonte": "Agência Brasil/EBC, 4 jun. 2025. Adaptado. agenciabrasil.ebc.com.br", "enun": "Qual informação é secundária em relação ao alerta principal sobre poluição plástica?", "alts": ["O fato de os resíduos entupirem rios.", "O perigo à vida selvagem.", "A data de criação do Dia Mundial do Ambiente pela ONU em 1972.", "A poluição dos oceanos."], "correta": 2, "porque": ["Esse é um dos efeitos centrais citados no alerta.", "Esse é um dos efeitos centrais citados no alerta.", "Correto: a informação sobre quando e por quem a data foi criada é dado histórico de contexto — secundário em relação ao alerta central sobre os efeitos da poluição plástica.", "Esse é um dos efeitos centrais citados no alerta."]}, {"n": 12, "tipo": "Notícia (real)", "nivel": "dificil", "texto": "<b>Censo registra queda de 1 milhão de matrículas na educação básica</b><br><br>O ministro Camilo Santana disse que o Brasil praticamente universalizou o acesso à escola e que é preciso garantir qualidade e equidade agora. A declaração foi dada durante entrevista coletiva em Brasília, após divulgação dos dados do Censo Escolar pelo Inep.", "fonte": "Agência Brasil/EBC, fev. 2026. Adaptado. agenciabrasil.ebc.com.br", "enun": "Qual é a informação principal dessa notícia?", "alts": ["O local da entrevista coletiva (Brasília).", "A avaliação do ministro de que o foco agora deve ser qualidade e equidade na educação.", "O nome do órgão responsável pelo Censo Escolar (Inep).", "O momento exato da divulgação dos dados."], "correta": 1, "porque": ["O local é detalhe secundário de circunstância.", "Correto: a informação principal é a avaliação do ministro sobre o novo foco necessário — qualidade e equidade — após a universalização do acesso. É o núcleo interpretativo da notícia.", "O nome do órgão é detalhe secundário de atribuição da fonte de dados.", "O momento da divulgação é detalhe secundário de cronologia administrativa."]}];const G1R=[{"t": "'O Brasil tem instrumentos jurídicos, mas falha em desenvolvimento industrial.' + 'Luciana Bauer é ex-juíza federal.'", "q": "Qual é a informação principal?", "o": ["O cargo anterior da especialista", "A avaliação sobre falha em desenvolvimento industrial", "O nome do instituto dela", "Nenhuma das duas"], "c": 1}, {"t": "'Renda subiu para R$ 3.574.' + 'Mensagem entregue em sessão solene após recesso.'", "q": "Qual é secundária?", "o": ["O valor da renda", "O contexto da sessão solene", "Ambas são principais", "Nenhuma é relevante"], "c": 1}, {"t": "'Tese sobre cortesia nos pequenos gestos.' + 'Manhã fria com café fumegando.'", "q": "Qual é secundária?", "o": ["A tese sobre cortesia", "A descrição da manhã fria", "Ambas são centrais", "Nenhuma aparece no texto"], "c": 1}, {"t": "'Conflito: traição entre Rita e Camilo.' + 'Localização exata da casa de encontro.'", "q": "Qual é secundária?", "o": ["O conflito da traição", "A localização exata da casa", "Ambas são centrais", "Nenhuma é mencionada"], "c": 1}, {"t": "'Avaliação do ministro sobre qualidade e equidade.' + 'Local da entrevista coletiva.'", "q": "Qual é secundária?", "o": ["A avaliação do ministro", "O local da entrevista", "Ambas são centrais", "Nenhuma aparece"], "c": 1}];const G2I=[{"s": "'O Brasil falha em transformar riquezas minerais em desenvolvimento.'", "cat": "principal", "p": "Núcleo informativo do texto."}, {"s": "'Luciana Bauer é ex-juíza federal.'", "cat": "secundaria", "p": "Detalhe de credencial da fonte."}, {"s": "'A renda subiu para R$ 3.574.'", "cat": "principal", "p": "Dado central da notícia."}, {"s": "'A mensagem foi entregue após o recesso legislativo.'", "cat": "secundaria", "p": "Contexto circunstancial."}, {"s": "'O conflito da traição entre Rita e Camilo.'", "cat": "principal", "p": "Núcleo do enredo."}, {"s": "'A casa de encontro ficava na rua dos Barbonos.'", "cat": "secundaria", "p": "Detalhe de cenário."}];const G2C=[["principal", "Parte principal"], ["secundaria", "Parte secundária"]];const G3R=[{"t": "Informação que, se removida, muda o sentido geral do texto.", "q": "Isso é:", "o": ["Parte secundária", "Parte principal", "Apenas um exemplo", "Um detalhe de estilo"], "c": 1}, {"t": "Informação que, se removida, não compromete a compreensão central do texto.", "q": "Isso é:", "o": ["Parte principal", "Parte secundária", "O tema do texto", "A tese central"], "c": 1}, {"t": "Data, local ou nome de instituição mencionados apenas para situar o leitor.", "q": "Geralmente são:", "o": ["Partes principais", "Detalhes secundários de contexto", "O argumento central", "A conclusão do texto"], "c": 1}, {"t": "O núcleo do conflito ou da tese de um texto.", "q": "Isso é:", "o": ["Detalhe irrelevante", "Parte principal", "Apenas ambientação", "Informação descartável"], "c": 1}, {"t": "Descrição de cenário (tempo, clima) numa narrativa, sem alterar o enredo central.", "q": "Geralmente é:", "o": ["Parte principal", "Parte secundária", "O clímax da história", "A tese do texto"], "c": 1}];const G4R=[{"ctx": "'Brasil falha em desenvolvimento industrial, diz especialista.' + 'Ela foi juíza federal.'", "f": "O cargo anterior da especialista é informação ___.", "o": ["principal", "secundária", "inexistente", "a tese"], "c": 1}, {"ctx": "'Renda subiu para R$3.574.' + 'Mensagem entregue após recesso.'", "f": "O contexto do recesso é informação ___.", "o": ["principal", "secundária", "a tese central", "o argumento"], "c": 1}, {"ctx": "Conflito: traição entre Rita e Camilo. Localização: rua dos Barbonos.", "f": "A localização da casa é detalhe ___.", "o": ["principal", "secundário", "do conflito central", "da tese"], "c": 1}, {"ctx": "'Qualidade e equidade são prioridade.' + 'Entrevista ocorreu em Brasília.'", "f": "O local da entrevista é informação ___.", "o": ["principal", "secundária", "a tese central", "o argumento principal"], "c": 1}, {"ctx": "'Resíduos poluem oceanos.' + 'Data criada pela ONU em 1972.'", "f": "O ano de criação da data é informação ___.", "o": ["principal", "secundária", "o alerta central", "a tese"], "c": 1}];const G5R=[{"title": "Como distinguir partes principais de secundárias", "correct": ["A parte principal é o núcleo informativo: o que o texto quer comunicar centralmente.", "Partes secundárias geralmente são detalhes de contexto: datas, locais, credenciais.", "Teste prático: remova a informação e veja se o sentido central do texto muda.", "Em notícias, o principal geralmente vem logo no início (lead); detalhes vêm depois.", "Em narrativas, o conflito e suas consequências diretas são principais; descrições de cenário tendem a ser secundárias."]}, {"title": "Por que essa habilidade importa", "correct": ["Resumir um texto exige saber o que manter (principal) e o que pode ser omitido (secundário).", "Ajuda a entender rapidamente do que trata um texto longo.", "Evita que o leitor se perca em detalhes irrelevantes e perca o sentido geral.", "É essencial para fazer fichamentos, resenhas e resumos escolares.", "Permite comparar diferentes textos pelo que eles realmente defendem, sem se confundir com exemplos."]}];
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function stripHTML(s){const d=document.createElement("div");d.innerHTML=s;return d.textContent||"";}
+function toggleTTS(btn,id){if(window.speechSynthesis.speaking){window.speechSynthesis.cancel();document.querySelectorAll(".btn-tts").forEach(b=>b.classList.remove("playing"));return;}const el=document.getElementById(id);if(!el)return;const u=new SpeechSynthesisUtterance(stripHTML(el.innerHTML));u.lang="pt-BR";u.rate=.9;btn.classList.add("playing");u.onend=()=>btn.classList.remove("playing");window.speechSynthesis.speak(u);}
+const RK="saeb_d27principal_records";
+function loadRec(){try{return JSON.parse(localStorage.getItem(RK))||{};}catch{return {};}}
+function saveRec(k,v){const r=loadRec();if(!(k in r)||v>r[k])r[k]=v;localStorage.setItem(RK,JSON.stringify(r));renderRec();}
+function renderRec(){const r=loadRec(),g=document.getElementById("recGrid");if(!g)return;const items=[{k:"quiz",l:"Quiz"},{k:"qual",l:"Qual função?"},{k:"classif",l:"Classifique"},{k:"pistas",l:"Pelas pistas"},{k:"compl",l:"Complete"},{k:"ordene",l:"Ordene"}];g.innerHTML=items.map(i=>`<div class="rec-item"><div class="rv">${r[i.k]!=null?r[i.k]:"—"}</div><div class="rl">${i.l}</div></div>`).join("");}
+renderRec();
+document.querySelectorAll(".tab-btn").forEach(btn=>{btn.onclick=()=>{document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));document.querySelectorAll(".tab-pane").forEach(p=>p.classList.remove("active"));btn.classList.add("active");document.getElementById("pane-"+btn.dataset.tab).classList.add("active");window.scrollTo({top:0,behavior:"smooth"});};});
+const nivelLabel={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
+const QS=shuffle(QRAW).map((q,idx)=>{const smap=shuffle(Array.from({length:q.alts.length},(_,i)=>i));return{...q,dn:idx+1,alts:smap.map(i=>q.alts[i]),porque:smap.map(i=>q.porque[i]),correta:smap.indexOf(q.correta)};});
+const quizEl=document.getElementById("quiz");
+QS.forEach(q=>{const c=document.createElement("div");c.className="card";c.dataset.q=q.dn;const tid="txt"+q.dn;c.innerHTML=`<div class="card-head"><span class="qnum">Questão ${q.dn}</span><span class="qtipo">${q.tipo}</span><span class="qnivel ${q.nivel}">${nivelLabel[q.nivel]}</span></div><div class="txt-base" id="${tid}">${q.texto}<span class="txt-fonte">${q.fonte}</span><button class="btn-tts" onclick="toggleTTS(this,'${tid}')">🔊</button></div><div class="img-slot">🖼️ Espaço para imagem</div><p class="enunciado">${q.enun}</p><div class="alts">${q.alts.map((t,i)=>`<button class="alt" onclick="resp(${q.dn},${i})"><span class="letra">${"ABCD"[i]}</span> ${t}</button>`).join("")}</div><div class="fb" id="fb${q.dn}"></div>`;quizEl.appendChild(c);});
+let acertos=0;const feitas=new Set();
+function resp(n,k){
+  if(feitas.has(n))return;feitas.add(n);
+  const q=QS.find(x=>x.dn===n),card=quizEl.querySelector(`[data-q="${n}"]`),btns=card.querySelectorAll(".alt"),fb=document.getElementById("fb"+n);
+  const ok=k===q.correta;if(ok)acertos++;
+
+  // Registra a resposta detalhada desta questão para depois enviar ao Sheets
+  respostasDetalhadas.push({
+    questao: n,
+    tipo: q.tipo,
+    nivel: q.nivel,
+    respostaDada: k>=0 ? "ABCD"[k] : "(não respondeu)",
+    respostaCorreta: "ABCD"[q.correta],
+    acertou: ok
+  });
+
+  btns.forEach((b,i)=>{b.disabled=true;if(i===q.correta)b.classList.add("ok");else if(i===k)b.classList.add("err");else b.classList.add("dim");});
+  const pq=q.alts.map((t,i)=>`<span class="pi"><span class="l">${"ABCD"[i]})</span> ${q.porque[i]}</span>`).join("");
+  fb.className="fb show "+(ok?"ok":"err")+(modoJogo==="prova"?" prova-oculto":"");
+  fb.innerHTML=`<div class="ft">${ok?"✓ Correto!":"✗ Incorreto — a correta é "+"ABCD"[q.correta]+"."}</div><div>${q.porque[q.correta]}</div><div class="pq"><b>Cada alternativa:</b>${pq}</div>`;
+  document.getElementById("pFill").style.width=(feitas.size/QS.length*100)+"%";
+  // No modo prova, a pontuação parcial fica escondida; só aparece no resultado final
+  document.getElementById("score").textContent=modoJogo==="prova" ? (feitas.size+" / "+QS.length+" respondidas") : (acertos+" / "+QS.length);
+  if(feitas.size===QS.length)setTimeout(quizFim,500);
+}
+function quizFim(){
+  // No modo prova, revela todo o feedback que ficou oculto durante o quiz
+  if(modoJogo==="prova"){
+    document.querySelectorAll(".fb.prova-oculto").forEach(fb=>fb.classList.remove("prova-oculto"));
+    document.getElementById("score").textContent=acertos+" / "+QS.length;
+  }
+  const r=document.getElementById("resultado");r.style.display="block";
+  document.getElementById("notaFinal").textContent=acertos+"/"+QS.length;
+  const p=acertos/QS.length;let m,msg;
+  if(p>=.9){m="🥇";msg="Ouro! Precisão de detetive.";}
+  else if(p>=.7){m="🥈";msg="Prata! Atenção aos distratores.";}
+  else if(p>=.5){m="🥉";msg="Bronze! Volte ao texto antes de marcar.";}
+  else{m="📖";msg="Treine mais. A resposta está sempre lá.";}
+  document.getElementById("medalha").textContent=m;document.getElementById("msgFinal").textContent=msg;
+  saveRec("quiz",acertos);
+  enviarParaSheets();
+  r.scrollIntoView({behavior:"smooth",block:"center"});
+}document.getElementById("btnDisc").onclick=function(){document.getElementById("fbDisc").classList.toggle("show");document.getElementById("fbDisc").classList.add("ok");};
+(function(){const g=document.getElementById("gabPrint");if(!g)return;const linhas=QS.map(q=>`<li><b>Q${q.dn}:</b> ${q.alts[q.correta]}</li>`).join("");g.innerHTML=`<h2>📋 Gabarito</h2><ol>${linhas}</ol>`;})();
+
+function makeTimedGame(bodyId,rounds,rk){return{i:0,pts:0,tmr:null,tempo:0,rounds:[],start(){this.i=0;this.pts=0;this.rounds=shuffle(rounds);this.render();},render(){const b=document.getElementById(bodyId);if(this.i>=this.rounds.length){saveRec(rk,this.pts);b.innerHTML=`<div class="jogo-final"><div class="big">${this.pts} pts</div><p>${this.pts>=this.rounds.length*10?"Muito bem! 🥇":"Continue praticando."}</p><button class="btn ouro" onclick="${bodyId.split('-')[0].toUpperCase()}.start()">↺ Jogar de novo</button></div>`;return;}const r=this.rounds[this.i];this.tempo=100;b.innerHTML=`<div class="jogo-mid"><span class="chip">Rodada ${this.i+1}/${this.rounds.length}</span><div class="timerbar"><div id="${bodyId}-bar"></div></div><span class="chip">${this.pts} pts</span></div><div class="mini-texto">${r.t}</div><div class="mini-q">${r.q}</div><div class="alts" id="${bodyId}-alts">${r.o.map((o,k)=>`<button class="alt" onclick="${bodyId.split('-')[0].toUpperCase()}.resp(${k})"><span class="letra">${"ABCD"[k]}</span> ${o}</button>`).join("")}</div><div class="mini-fb" id="${bodyId}-fb"></div>`;clearInterval(this.tmr);this.tmr=setInterval(()=>{this.tempo-=2;const bar=document.getElementById(bodyId+"-bar");if(bar)bar.style.width=Math.max(0,this.tempo)+"%";if(this.tempo<=0)this.resp(-1);},120);},resp(k){clearInterval(this.tmr);const r=this.rounds[this.i],btns=document.querySelectorAll("#"+bodyId+"-alts .alt"),fb=document.getElementById(bodyId+"-fb");btns.forEach((a,j)=>{a.disabled=true;if(j===r.c)a.classList.add("ok");else if(j===k)a.classList.add("err");else a.classList.add("dim");});if(k===r.c){const g=5+Math.round(this.tempo/10);this.pts+=g;fb.className="mini-fb show ok";fb.textContent="✓ +"+g+" pts!";}else{fb.className="mini-fb show err";fb.textContent=(k===-1?"⏱️ Tempo!":"✗")+" Era: "+"ABCD"[r.c]+".";}this.i++;setTimeout(()=>this.render(),1600);}};}
+const G1=makeTimedGame("g1-body",G1R,"qual");const G3=makeTimedGame("g3-body",G3R,"pistas");
+
+const G2={rs:[],cats:G2C,start(){this.rs=[];const b=document.getElementById("g2-body");b.innerHTML=`<div style="font-size:.82rem;color:var(--txt2);margin-bottom:.8rem">Classifique cada texto pela sua função principal:</div>`+G2I.map((it,i)=>`<div class="vf-item" id="g2i${i}"><div class="vf-stm"><b>${i+1}.</b> ${it.s}</div><div class="btn-row">${this.cats.map(c=>`<button class="mini-btn cat-btn" onclick="G2.j(${i},'${c[0]}')">${c[1]}</button>`).join("")}</div><div class="mini-fb" id="g2f${i}"></div></div>`).join("")+`<div id="g2fin"></div>`;},j(i,esc){if(this.rs[i]!=null)return;const it=G2I[i],ok=esc===it.cat;this.rs[i]=ok;document.querySelectorAll("#g2i"+i+" .mini-btn").forEach(btn=>{btn.disabled=true;const txt=btn.textContent;const cat=this.cats.find(c=>c[1]===txt);if(cat&&cat[0]===it.cat)btn.style.background="var(--verde-c)";else if(cat&&cat[0]===esc&&!ok)btn.style.background="var(--vermelho-c)";});const fb=document.getElementById("g2f"+i);fb.className="mini-fb show "+(ok?"ok":"err");fb.innerHTML=(ok?"✓ ":"✗ ")+it.p;if(this.rs.filter(x=>x!=null).length===G2I.length){const ac=this.rs.filter(x=>x).length;saveRec("classif",ac);document.getElementById("g2fin").innerHTML=`<div class="jogo-final"><div class="big">${ac}/${G2I.length}</div><p>${ac===G2I.length?"Perfeito! 🥇":"Releia as justificativas."}</p><button class="btn ouro" onclick="G2.start()">↺ Jogar de novo</button></div>`;}}};
+
+const G4={i:0,pts:0,rounds:[],start(){this.i=0;this.pts=0;this.rounds=shuffle(G4R);this.render();},render(){const b=document.getElementById("g4-body");if(this.i>=this.rounds.length){saveRec("compl",this.pts);b.innerHTML=`<div class="jogo-final"><div class="big">${this.pts}/${this.rounds.length}</div><p>${this.pts===this.rounds.length?"Perfeito! 🥇":"Continue praticando."}</p><button class="btn ouro" onclick="G4.start()">↺ Jogar de novo</button></div>`;return;}const it=this.rounds[this.i];b.innerHTML=`<div class="jogo-mid"><span class="chip">Frase ${this.i+1}/${this.rounds.length}</span><span class="chip">${this.pts} acertos</span></div><p style="font-size:.82rem;color:var(--txt2);margin:.4rem 0">${it.ctx}</p><div class="mini-texto">${it.f}</div><div class="alts" id="g4-alts">${it.o.map((o,k)=>`<button class="alt" onclick="G4.resp(${k})"><span class="letra">${"ABCD"[k]}</span> ${o}</button>`).join("")}</div><div class="mini-fb" id="g4-fb"></div>`;},resp(k){const it=this.rounds[this.i],btns=document.querySelectorAll("#g4-alts .alt"),fb=document.getElementById("g4-fb");btns.forEach((a,j)=>{a.disabled=true;if(j===it.c)a.classList.add("ok");else if(j===k)a.classList.add("err");else a.classList.add("dim");});if(k===it.c){this.pts++;fb.className="mini-fb show ok";fb.textContent="✓ Exato!";}else{fb.className="mini-fb show err";fb.textContent="✗ Era: "+it.o[it.c]+".";}this.i++;setTimeout(()=>this.render(),1200);}};
+
+const G5={ri:0,start(){this.ri=0;this.renderRound();},renderRound(){const b=document.getElementById("g5-body");if(this.ri>=G5R.length){saveRec("ordene","✓");b.innerHTML=`<div class="jogo-final"><div class="big">✓</div><p>Raciocínio organizado! 🥇</p><button class="btn ouro" onclick="G5.start()">↺ Jogar de novo</button></div>`;return;}const rd=G5R[this.ri];const items=shuffle(rd.correct);b.innerHTML=`<div class="jogo-mid"><span class="chip">Passo a passo ${this.ri+1}/${G5R.length}</span></div><p style="font-size:.84rem;color:var(--txt2);margin-bottom:.6rem">Use ▲ ▼ para ordenar. Depois clique em "Verificar".</p><ol class="ord-list" id="g5list">${items.map((it,i)=>`<li class="ord-item" data-txt="${encodeURIComponent(it)}">${it}<div class="ord-arrows"><button onclick="G5.move(${i},-1)">▲</button><button onclick="G5.move(${i},1)">▼</button></div></li>`).join("")}</ol><div style="text-align:center;margin-top:.6rem"><button class="btn ouro" onclick="G5.check()">✓ Verificar ordem</button></div><div class="mini-fb" id="g5fb"></div>`;},move(idx,dir){const list=document.getElementById("g5list");const items=[...list.children];const newIdx=idx+dir;if(newIdx<0||newIdx>=items.length)return;if(dir===-1)list.insertBefore(items[idx],items[newIdx]);else list.insertBefore(items[newIdx],items[idx]);[...list.children].forEach((li,i)=>{li.querySelector(".ord-arrows").innerHTML=`<button onclick="G5.move(${i},-1)">▲</button><button onclick="G5.move(${i},1)">▼</button>`;});},check(){const rd=G5R[this.ri];const list=document.getElementById("g5list");const items=[...list.children];const fb=document.getElementById("g5fb");let ok=true;items.forEach((li,i)=>{const txt=decodeURIComponent(li.dataset.txt);if(txt===rd.correct[i])li.classList.add("ok");else{li.classList.add("err");ok=false;}li.querySelectorAll("button").forEach(b=>b.disabled=true);});if(ok){fb.className="mini-fb show ok";fb.textContent="✓ Ordem perfeita!";this.ri++;setTimeout(()=>this.renderRound(),1400);}else{fb.className="mini-fb show err";fb.innerHTML='✗ Trocadas. <button class="mini-btn" style="margin-left:.5rem" onclick="G5.renderRound()">Tentar de novo</button>';}}};
+</script></body></html>

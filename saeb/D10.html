@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAEB/SIMAVE – D10 | Distinguir fato de opinião</title>
+<meta name="description" content="Atividade interativa D10 — distinguir fato de opinião. Quiz 12 questões, 5 minijogos. Textos reais IBGE, Agência Brasil/EBC, Machado de Assis.">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--azul:#1a3a5c;--azul-m:#235a8c;--azul-c:#d6e8f7;--ouro:#c9871f;--ouro-c:#fff8eb;--verde:#246b4a;--verde-c:#e6f4ed;--verm:#b02a2a;--verm-c:#fdecea;--bg:#f2f4f7;--borda:#d0d6e0;--branco:#fff;--txt:#1c2635;--txt2:#4a5568}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;line-height:1.5}
+header{background:var(--azul);color:#fff;padding:2.4rem 1.5rem 1.8rem;text-align:center;position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:rgba(201,135,31,.12)}
+.badge{display:inline-block;background:var(--ouro);color:var(--azul);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:.8rem}
+header h1{font-family:'Lora',serif;font-size:clamp(1.5rem,4vw,2.1rem);font-weight:600;line-height:1.3;margin-bottom:.4rem}
+header p{font-size:.92rem;opacity:.78;max-width:560px;margin:0 auto;line-height:1.6}
+.voltar-link{display:inline-block;margin-bottom:1rem;color:#fff;opacity:.7;text-decoration:none;font-size:.82rem}
+.voltar-link:hover{opacity:1}
+.tabs{background:var(--branco);border-bottom:1px solid var(--borda);position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.tabs-inner{max-width:840px;margin:0 auto;display:flex}
+.tab-btn{flex:1;background:none;border:none;padding:.95rem .5rem;font-family:'Inter',sans-serif;font-size:.88rem;font-weight:600;color:var(--txt2);cursor:pointer;border-bottom:3px solid transparent;transition:.15s;display:flex;align-items:center;justify-content:center;gap:.35rem}
+.tab-btn:hover{color:var(--azul-m);background:var(--bg)}
+.tab-btn.active{color:var(--azul);border-bottom-color:var(--ouro)}
+main{max-width:840px;margin:0 auto;padding:1.6rem 1.25rem 4rem}
+.tab-pane{display:none;flex-direction:column;gap:1.6rem}
+.tab-pane.active{display:flex}
+.painel{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.5rem 1.6rem}
+.painel h2{font-family:'Lora',serif;font-size:1.2rem;color:var(--azul);margin-bottom:.7rem}
+.painel h3{font-size:.95rem;color:var(--azul-m);margin:.9rem 0 .3rem}
+.painel p,.painel li{font-size:.9rem;margin-bottom:.5rem}
+.painel ul{margin:.2rem 0 .6rem 1.2rem}
+.painel strong{color:var(--azul)}
+.resumo-box{background:var(--azul);color:#fff;border-radius:14px;padding:1.4rem 1.6rem}
+.resumo-box h2{color:#fff;font-family:'Lora',serif;font-size:1.1rem;margin-bottom:.5rem}
+.resumo-box p{color:rgba(255,255,255,.9);font-size:.92rem;margin:0}
+.resumo-box .fc{display:block;margin-top:.7rem;font-style:italic;font-size:.88rem;background:rgba(255,255,255,.1);padding:.6rem .9rem;border-radius:8px;border-left:3px solid var(--ouro)}
+.dica-ouro{background:var(--ouro-c);border:1px solid #ecd9aa}
+.dica-ouro h2{color:#7a5310}.dica-ouro li{color:#4a3408}.dica-ouro strong{color:#7a5310}
+.glossario dt{font-weight:600;color:var(--azul-m);font-size:.88rem;margin-top:.5rem}
+.glossario dd{font-size:.86rem;color:var(--txt2);margin-left:0}
+.aviso-prof{background:#eef4fb;border:1px dashed var(--azul-m);border-radius:10px;padding:.9rem 1.1rem;font-size:.82rem;color:var(--azul-m)}
+.records{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.2rem 1.4rem}
+.records h2{font-family:'Lora',serif;font-size:1.1rem;color:var(--azul);margin-bottom:.6rem}
+.rec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.7rem}
+.rec-item{background:var(--bg);border-radius:10px;padding:.7rem;text-align:center}
+.rec-item .rv{font-size:1.5rem;font-weight:700;color:var(--azul-m)}
+.rec-item .rl{font-size:.72rem;color:var(--txt2)}
+.prog-wrap{background:var(--branco);border:1px solid var(--borda);border-radius:12px;padding:.85rem 1.1rem;display:flex;align-items:center;gap:14px}
+.prog-label{font-size:.78rem;font-weight:600;color:var(--azul-m);white-space:nowrap}
+.prog-track{flex:1;height:6px;background:var(--borda);border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--azul-m),var(--ouro));border-radius:99px;width:0%;transition:width .4s}
+.score{font-size:.78rem;font-weight:600;color:var(--txt2);white-space:nowrap}
+.card{background:var(--branco);border-radius:14px;border:1px solid var(--borda);overflow:hidden}
+.card-head{background:var(--azul);color:#fff;padding:.65rem 1.2rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.qnum{background:var(--ouro);color:var(--azul);font-size:.72rem;font-weight:700;padding:3px 11px;border-radius:20px}
+.qtipo{font-size:.74rem;opacity:.65;font-style:italic}
+.qnivel{font-size:.66rem;font-weight:700;text-transform:uppercase;padding:3px 9px;border-radius:20px;margin-left:auto}
+.qnivel.facil{background:var(--verde-c);color:var(--verde)}.qnivel.medio{background:var(--ouro-c);color:#a96e10}.qnivel.dificil{background:var(--verm-c);color:var(--verm)}
+.txt-base{background:var(--ouro-c);border-left:4px solid var(--ouro);margin:1rem 1.1rem 0;padding:1rem 1.1rem;border-radius:0 8px 8px 0;font-family:'Lora',serif;font-size:.94rem;line-height:1.85;color:#2b1d00;position:relative}
+.txt-fonte{font-family:'Inter',sans-serif;font-size:.72rem;color:var(--txt2);margin-top:.6rem;display:block;border-top:1px solid #e6d5b0;padding-top:.4rem}
+.btn-tts{position:absolute;top:.6rem;right:.6rem;background:none;border:1px solid #c9a14a;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;color:#8a6d1b;transition:.15s}
+.btn-tts:hover{background:#f5e6c1}
+.btn-tts.playing{background:var(--azul);color:#fff;border-color:var(--azul)}
+.img-slot{margin:.8rem 1.1rem 0;border:2px dashed var(--borda);border-radius:10px;padding:.8rem;text-align:center;color:var(--txt2);font-size:.76rem}
+.enunciado{padding:1rem 1.1rem .4rem;font-size:.92rem;line-height:1.6;font-weight:500;color:var(--azul)}
+.alts{padding:.4rem 1.1rem 1.1rem;display:flex;flex-direction:column;gap:.45rem}
+.alt{display:flex;align-items:flex-start;gap:10px;padding:.65rem .9rem;border:1.5px solid var(--borda);border-radius:9px;background:var(--branco);cursor:pointer;text-align:left;font-family:'Inter',sans-serif;font-size:.86rem;color:var(--txt);line-height:1.5;transition:.15s;width:100%}
+.alt:hover:not(:disabled){border-color:var(--azul-m);background:var(--azul-c);transform:translateX(2px)}
+.alt:disabled{cursor:default}
+.letra{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;border-radius:50%;background:var(--bg);font-size:.75rem;font-weight:700;color:var(--azul);flex-shrink:0}
+.alt.ok{border-color:var(--verde);background:var(--verde-c);color:var(--verde);font-weight:500}
+.alt.ok .letra{background:var(--verde);color:#fff}
+.alt.err{border-color:var(--verm);background:var(--verm-c);color:var(--verm)}
+.alt.err .letra{background:var(--verm);color:#fff}
+.alt.dim{opacity:.5}
+.fb{display:none;margin:0 1.1rem 1.1rem;padding:.8rem 1rem;border-radius:8px;font-size:.83rem;line-height:1.6}
+.fb.show{display:block}.fb.ok{background:var(--verde-c);border-left:3px solid var(--verde)}.fb.err{background:var(--verm-c);border-left:3px solid var(--verm)}
+.fb .ft{font-weight:600;margin-bottom:.3rem}.fb.ok .ft{color:var(--verde)}.fb.err .ft{color:var(--verm)}
+.fb .pq{margin-top:.5rem;border-top:1px solid rgba(0,0,0,.08);padding-top:.4rem}
+.fb .pq b{color:var(--azul)}
+.fb .pi{display:block;font-size:.8rem;color:var(--txt2);margin-bottom:.2rem}
+.fb .pi .l{font-weight:700;color:var(--azul)}
+#resultado{display:none;background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:2.4rem 2rem;text-align:center}
+#resultado h2{font-family:'Lora',serif;font-size:1.4rem;color:var(--azul)}
+.medalha{font-size:3rem;margin:.4rem 0}.nota{font-size:3.4rem;font-weight:700;color:var(--azul-m);line-height:1;margin:.4rem 0}
+#resultado p{color:var(--txt2);font-size:.9rem;max-width:480px;margin:.4rem auto 0}
+.btn{display:inline-block;background:var(--azul);color:#fff;padding:.65rem 1.5rem;border-radius:30px;border:none;font-size:.86rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;margin:.3rem}
+.btn:hover{background:var(--azul-m)}
+.btn.ouro{background:var(--ouro);color:var(--azul)}.btn.sec{background:var(--bg);color:var(--azul);border:1px solid var(--borda)}
+.jogo-card{background:var(--branco);border-radius:14px;border:1px solid var(--borda);overflow:hidden}
+.jogo-head{padding:1rem 1.3rem;border-bottom:1px solid var(--borda);display:flex;align-items:center;gap:.7rem}
+.jogo-ico{font-size:1.5rem}
+.jogo-head h3{font-family:'Lora',serif;font-size:1.1rem;color:var(--azul);margin:0}
+.jogo-head .desc{font-size:.78rem;color:var(--txt2)}
+.jogo-body{padding:1.2rem 1.3rem}
+.chip{font-size:.76rem;font-weight:600;padding:4px 11px;border-radius:20px;background:var(--azul-c);color:var(--azul)}
+.chip.timer{background:var(--ouro-c);color:#a96e10}
+.jogo-mid{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:.8rem}
+.timerbar{flex:1;min-width:100px;height:8px;background:var(--borda);border-radius:99px;overflow:hidden}
+.timerbar>div{height:100%;width:100%;background:linear-gradient(90deg,var(--verde),var(--ouro),var(--verm));border-radius:99px;transition:width .25s linear}
+.mini-texto{background:var(--ouro-c);border-left:4px solid var(--ouro);border-radius:0 8px 8px 0;padding:.85rem 1rem;font-family:'Lora',serif;font-size:.9rem;line-height:1.7;color:#2b1d00;margin-bottom:.8rem;position:relative}
+.mini-q{font-weight:600;color:var(--azul);margin-bottom:.6rem;font-size:.9rem}
+.mini-btn{border:1.5px solid var(--borda);background:var(--branco);border-radius:8px;padding:.45rem .8rem;font-size:.8rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;color:var(--azul);transition:.15s}
+.mini-btn:hover:not(:disabled){background:var(--azul-c);border-color:var(--azul-m)}
+.mini-btn:disabled{cursor:default}
+.mini-btn.ok{background:var(--verde-c);border-color:var(--verde);color:var(--verde)}
+.mini-btn.err{background:var(--verm-c);border-color:var(--verm);color:var(--verm)}
+.mini-fb{font-size:.8rem;margin-top:.5rem;padding:.45rem .65rem;border-radius:6px;display:none}
+.mini-fb.show{display:block}.mini-fb.ok{background:var(--verde-c);color:var(--verde)}.mini-fb.err{background:var(--verm-c);color:var(--verm)}
+.vf-item,.det-item{border:1.5px solid var(--borda);border-radius:10px;padding:.7rem .9rem;margin-bottom:.6rem}
+.vf-stm{font-size:.88rem;margin-bottom:.5rem}
+.btn-row{display:flex;gap:.5rem;flex-wrap:wrap}
+.cat-btn.cat-tema.ok{border-color:var(--azul-m);background:var(--azul-c);color:var(--azul)}
+.cat-btn.cat-detalhe.ok{border-color:var(--ouro);background:var(--ouro-c);color:#a96e10}
+.cat-btn.cat-foradotexto.ok{border-color:var(--verde);background:var(--verde-c);color:var(--verde)}
+.jogo-final{text-align:center;padding:.8rem 0 .3rem}
+.jogo-final .big{font-size:2rem;font-weight:700;color:var(--azul-m)}
+.jogo-final p{font-size:.88rem;color:var(--txt2);margin:.2rem 0 .8rem}
+.ord-list{list-style:none;padding:0;counter-reset:ord}
+.ord-item{counter-increment:ord;display:flex;align-items:center;gap:10px;padding:.6rem .9rem;border:1.5px solid var(--borda);border-radius:9px;margin-bottom:.5rem;background:var(--branco);font-size:.86rem;user-select:none}
+.ord-item::before{content:counter(ord);display:flex;align-items:center;justify-content:center;min-width:24px;height:24px;border-radius:50%;background:var(--azul-c);font-size:.72rem;font-weight:700;color:var(--azul)}
+.ord-item.ok{border-color:var(--verde);background:var(--verde-c)}
+.ord-item.err{border-color:var(--verm);background:var(--verm-c)}
+.ord-arrows{display:flex;flex-direction:column;gap:2px;margin-left:auto}
+.ord-arrows button{background:var(--bg);border:1px solid var(--borda);border-radius:4px;width:24px;height:20px;cursor:pointer;font-size:.65rem;display:flex;align-items:center;justify-content:center}
+.ord-arrows button:hover{background:var(--azul-c)}
+footer{text-align:center;padding:1.5rem;font-size:.76rem;color:var(--txt2)}
+@media print{.tabs,header,.prog-wrap,.btn,.btn-tts,.img-slot,footer,#resultado,.jogo-card,.records,.resumo-box,.dica-ouro,.glossario,.aviso-prof{display:none!important}.tab-pane{display:flex!important}.card{break-inside:avoid;border:1px solid #ccc;margin-bottom:1rem}.card-head{background:#333!important;-webkit-print-color-adjust:exact}.fb{display:block!important;background:#f5f5f5!important;border-left:3px solid #999!important;color:#333!important}}
+@media(max-width:480px){.painel{padding:1.1rem}.tab-btn{font-size:.78rem;padding:.8rem .3rem}}
+
+.genre-tag{display:inline-block;padding:3px 10px;border-radius:14px;font-size:.72rem;font-weight:700;margin-bottom:.5rem}
+.fact-box{background:#e8f5e9;border-left:4px solid #27ae60;padding:.8rem;margin:.8rem 0;border-radius:0 8px 8px 0}
+.opn-box{background:#fff3e0;border-left:4px solid #f39c12;padding:.8rem;margin:.8rem 0;border-radius:0 8px 8px 0}
+.misto-box{background:#f3e5f5;border-left:4px solid #9b59b6;padding:.8rem;margin:.8rem 0;border-radius:0 8px 8px 0}
+.disc-area{width:calc(100% - 2.2rem);min-height:130px;border:1.5px solid var(--borda);border-radius:9px;padding:.7rem .9rem;font-family:'Inter',sans-serif;font-size:.88rem;resize:vertical;margin:0 1.1rem .4rem}
+.disc-actions{padding:0 1.1rem 1rem}
+@media print{.gabarito-print{display:block!important;break-before:page;border:1px solid #999;border-radius:8px;padding:1rem 1.2rem;margin-top:1rem}.fb{display:none!important}.disc-actions{display:none!important}}
+/* ===== TELA DE IDENTIFICAÇÃO E MODO DE JOGO ===== */
+.quiz-gate{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.8rem 1.6rem;max-width:480px;margin:0 auto}
+.quiz-gate h2{font-family:'Lora',serif;font-size:1.25rem;color:var(--azul);margin-bottom:.4rem}
+.quiz-gate>p{font-size:.88rem;color:var(--txt2);margin-bottom:1.2rem}
+.gate-field{margin-bottom:1.1rem}
+.gate-field>label{display:block;font-size:.82rem;font-weight:600;color:var(--azul-m);margin-bottom:.4rem}
+.gate-field input[type=text]{width:100%;padding:.65rem .8rem;border:1.5px solid var(--borda);border-radius:9px;font-family:'Inter',sans-serif;font-size:.92rem;color:var(--txt)}
+.gate-field input[type=text]:focus{outline:none;border-color:var(--azul-m)}
+.modo-opcoes{display:flex;flex-direction:column;gap:.6rem}
+.modo-opcao{display:flex;align-items:flex-start;gap:.6rem;border:1.5px solid var(--borda);border-radius:10px;padding:.7rem .85rem;cursor:pointer;transition:.15s}
+.modo-opcao:hover{border-color:var(--azul-m)}
+.modo-opcao input[type=radio]{margin-top:.25rem;accent-color:var(--azul-m)}
+.modo-opcao input[type=radio]:checked~span b{color:var(--azul)}
+.modo-opcao span{font-size:.85rem}
+.modo-opcao small{color:var(--txt2);font-weight:400}
+.gate-aviso{color:var(--verm);font-size:.82rem;margin-top:.7rem;min-height:1.2em}
+.modo-opcao.bloqueado{opacity:.6;cursor:not-allowed}
+.modo-opcao.liberado{opacity:1;cursor:pointer;border-color:var(--verde)}
+.cadeado{font-size:.75rem}
+.senha-box{display:flex;gap:.5rem;margin-top:.6rem}
+.senha-box input[type=password]{flex:1;padding:.55rem .75rem;border:1.5px solid var(--borda);border-radius:9px;font-family:'Inter',sans-serif;font-size:.85rem}
+.senha-box input[type=password]:focus{outline:none;border-color:var(--azul-m)}
+.senha-btn{white-space:nowrap;font-size:.8rem;padding:.55rem 1rem}
+.senha-aviso{font-size:.78rem;margin-top:.4rem;min-height:1.1em}
+.senha-aviso.ok{color:var(--verde)}
+.senha-aviso.erro{color:var(--verm)}
+.modo-chip{font-size:.74rem;font-weight:700;padding:4px 12px;border-radius:20px;background:var(--azul-c);color:var(--azul-m);margin-left:auto}
+.envio-status{font-size:.82rem;margin-top:.8rem;padding:.6rem .9rem;border-radius:8px}
+.envio-status.enviando{background:var(--azul-c);color:var(--azul-m)}
+.envio-status.ok{background:var(--verde-c);color:var(--verde)}
+.envio-status.erro{background:var(--verm-c);color:var(--verm)}
+/* No modo prova, o feedback de cada questão fica escondido até o aluno terminar */
+.fb.prova-oculto{display:none!important}
+@media print{.quiz-gate,.modo-chip,.envio-status{display:none!important}#quizConteudo{display:block!important}}
+</style>
+</head><body>
+<header>
+<a href="index.html" class="voltar-link">← Painel SAEB/SIMAVE</a>
+<div class="badge">SAEB · SIMAVE · Língua Portuguesa</div>
+<h1>Habilidade D10</h1>
+<p>Distinguir fato de opinião em textos</p>
+</header>
+<nav class="tabs"><div class="tabs-inner">
+<button class="tab-btn active" data-tab="estudar">📚 Estudar</button>
+<button class="tab-btn" data-tab="quiz">📝 Quiz</button>
+<button class="tab-btn" data-tab="jogos">🎮 Jogos</button>
+</div></nav><main>
+<section class="tab-pane active" id="pane-estudar">
+<div class="resumo-box"><h2>🎯 Em uma frase</h2>
+<p>O D10 mede se você consegue <strong style="color:#ffd98a">identificar quando um texto apresenta fatos verificáveis e quando apresenta opiniões ou julgamentos</strong>.</p>
+<span class="fc">"Fato é o que pode ser comprovado. Opinião é o que alguém pensa sobre isso."</span></div>
+
+<section class="painel"><h2>📌 O que é fato?</h2>
+<div class="fact-box">
+<b>Fato</b> é uma informação verificável — pode ser comprovada com dados, números, fontes oficiais.<br><br>
+<b>Marcas:</b> números com fonte | datas específicas | verbos neutros (registrou, apontou, mostrou) | fontes reconhecidas<br><br>
+<b>Exemplos reais:</b><br>
+• "Em 2024, o Brasil tinha 9,1 milhões de analfabetos" (IBGE/Pnad) ✓<br>
+• "O desmatamento caiu 20,6% em 2025" (MapBiomas) ✓<br>
+• "A vacina Butantan-DV tem 74,7% de eficácia" (Anvisa) ✓
+</div></section>
+
+<section class="painel"><h2>📌 O que é opinião?</h2>
+<div class="opn-box">
+<b>Opinião</b> é um julgamento de valor — o que alguém <em>pensa</em> ou <em>avalia</em> sobre algo. Não pode ser provada verdadeira ou falsa.<br><br>
+<b>Marcas:</b> adjetivos valorativos | advérbios de avaliação | causa e efeito não comprovados | "é evidente que"<br><br>
+<b>Exemplos:</b><br>
+• "Esse resultado é <b>lamentavelmente insuficiente</b>" ← julgamento<br>
+• "É <b>óbvio</b> que a educação melhora com tempo integral" ← disfarça opinião de fato<br>
+• "Isso <b>revela o fracasso</b> da política educacional" ← interpretação causal
+</div></section>
+
+<section class="painel"><h2>⚠️ Armadilhas comuns</h2>
+<div class="misto-box">
+<b>1. Autoridade não cria fato:</b> "O ministro afirmou que é um marco histórico" → o ministro afirmou isso (fato), mas "marco histórico" é a opinião dele.<br><br>
+<b>2. Aspas não criam fato:</b> Algo entre aspas pode ser uma opinião citada.<br><br>
+<b>3. "É óbvio / é evidente":</b> Expressões que disfarçam opiniões como se fossem fatos universais.<br><br>
+<b>4. Advérbios que avaliam:</b> "apenas", "lamentavelmente" antes de um número transformam fato em opinião.
+</div></section>
+
+<section class="dica-ouro painel"><h2>💡 Dica de ouro</h2><ul>
+<li><b>Teste do IBGE:</b> Uma instituição publicou o número? É fato.</li>
+<li><b>Teste do adjetivo:</b> Tem "intolerável", "urgente", "essencial"? É opinião.</li>
+<li><b>Teste da comprovação:</b> Posso verificar isso em uma fonte? Se sim, fato. Se depende de quem lê, opinião.</li>
+<li>Um texto pode <b>misturar</b> fatos e opiniões — sua tarefa é separá-los.</li>
+</ul></section>
+
+<div class="aviso-prof"><b>Fontes dos textos:</b> IBGE/Pnad, Agência Brasil/EBC, MapBiomas (dados públicos); Machado de Assis (domínio público); demais textos criados para fins didáticos.</div>
+<div class="records" id="recordsEstudar"><h2>🏆 Seus resultados</h2><div class="rec-grid" id="recGrid"></div></div>
+</section><section class="tab-pane" id="pane-quiz">
+
+<!-- ===== TELA DE IDENTIFICAÇÃO (aparece antes do quiz) ===== -->
+<div id="quizGate" class="quiz-gate">
+  <h2>👋 Antes de começar</h2>
+  <p>Preencha seus dados e escolha o modo de jogo.</p>
+  <div class="gate-field">
+    <label for="alunoNome">Nome do aluno</label>
+    <input type="text" id="alunoNome" placeholder="Seu nome completo" autocomplete="off">
+  </div>
+  <div class="gate-field">
+    <label for="alunoTurma">Turma / Série</label>
+    <input type="text" id="alunoTurma" placeholder="Ex: 9º Ano A" autocomplete="off">
+  </div>
+  <div class="gate-field">
+    <label>Modo de jogo</label>
+    <div class="modo-opcoes">
+      <label class="modo-opcao">
+        <input type="radio" name="modoQuiz" value="prova" checked>
+        <span><b>📝 Modo Prova</b><br><small>Sem feedback durante o quiz. As respostas certas só aparecem no final, como numa prova de verdade.</small></span>
+      </label>
+      <label class="modo-opcao" id="opcaoEstudo">
+        <input type="radio" name="modoQuiz" value="estudo" id="radioEstudo" disabled>
+        <span><b>📖 Modo Estudo</b> <span class="cadeado" id="cadeadoEstudo">🔒</span><br><small>Mostra se acertou ou errou — e a explicação — logo após cada resposta. Liberado pelo professor.</small></span>
+      </label>
+    </div>
+    <div class="senha-box" id="senhaBox">
+      <input type="password" id="senhaEstudo" placeholder="Senha do professor para liberar o Modo Estudo" autocomplete="off">
+      <button type="button" class="btn sec senha-btn" id="btnLiberarEstudo">Liberar</button>
+    </div>
+    <p class="senha-aviso" id="senhaAviso"></p>
+  </div>
+  <button class="btn" id="btnIniciarQuiz">▶ Começar o quiz</button>
+  <p class="gate-aviso" id="gateAviso"></p>
+</div>
+
+<!-- ===== QUIZ (fica oculto até o aluno preencher os dados acima) ===== -->
+<div id="quizConteudo" style="display:none">
+<div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.5rem;align-items:center">
+<button class="btn sec" onclick="window.print()">🖨️ Imprimir com gabarito</button>
+<button class="btn sec" onclick="location.reload()">🔀 Embaralhar e refazer</button>
+<span class="modo-chip" id="modoChip"></span>
+</div>
+<div class="prog-wrap"><span class="prog-label">Progresso</span><div class="prog-track"><div class="prog-fill" id="pFill"></div></div><span class="score" id="score">0 / 12</span></div>
+<div id='quiz' style='display:flex;flex-direction:column;gap:1.5rem'></div><div class='card' id='cardDisc' style='margin-top:1.5rem'><div class='card-head'><span class='qnum'>Questão 13</span><span class='qtipo'>Análise de texto misto</span><span class='qnivel dificil'>Aberta</span></div><div class='txt-base' id='txtDisc'>Leia o trecho abaixo:<br><br><em>'Em 2025, pela primeira vez desde 2019, a área desmatada no Brasil ficou abaixo de 1 milhão de hectares — foram 984.794 hectares, uma redução de 20,6% em relação a 2024 (MapBiomas). Embora positivo, esse resultado ainda é insuficiente: a média diária de desmatamento foi de 2.698 hectares por dia, o que é inaceitável para um país que se diz líder ambiental.'</em><span class='txt-fonte'>Dado real: MapBiomas/Agência Brasil, 2025. Interpretação: didática.</span></div><p class='enunciado'><b>a)</b> Identifique DOIS fatos no texto e transcreva-os.<br><b>b)</b> Identifique DUAS opiniões ou interpretações e explique por que são opiniões.<br><b>c)</b> Qual palavra marca a transição entre fato e opinião nesse texto?</p><textarea class='disc-area' placeholder='Escreva aqui...'></textarea><div class='disc-actions'><button class='btn sec' id='btnDisc'>👁️ Ver gabarito</button></div><div class='fb' id='fbDisc'><div class='ft' style='color:var(--azul)'>Gabarito sugerido</div><div><b>a) FATOS:</b> (1) 'Em 2025, a área desmatada foi 984.794 hectares' (dado numérico com fonte MapBiomas); (2) 'Redução de 20,6% em relação a 2024' (dado verificável). Aceitar: 'média diária de 2.698 hectares por dia' (dado numérico).<br><b>b) OPINIÕES:</b> (1) 'ainda é insuficiente' — adjetivo valorativo (quem decide o que é suficiente?); (2) 'inaceitável para um país que se diz líder ambiental' — julgamento com ironia. Aceitar outras opiniões justificadas.<br><b>c)</b> A palavra '<b>Embora</b>' marca a transição: concede o fato positivo ('Embora positivo') e em seguida introduz a opinião crítica. Outras marcas: 'ainda', 'insuficiente', 'inaceitável'.</div></div>
+<div id='resultado'><h2>Quiz concluído!</h2><div class='medalha' id='medalha'>🏅</div><div class='nota' id='notaFinal'>—</div><p id='msgFinal'></p><div id="envioStatus" class="envio-status"></div><div style='margin-top:1rem'><button class='btn' onclick='location.reload()'>↺ Refazer</button></div></div><div class='gabarito-print' id='gabPrint'></div></div>
+</div>
+</section><section class='tab-pane' id='pane-jogos'><div class='resumo-box'><h2>🎮 Hora de jogar</h2><p>Cinco minijogos para treinar a distinção entre fato e opinião.</p></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>⏱️</span><div><h3>Fato ou opinião?</h3><div class='desc'>Identifique antes do tempo acabar.</div></div></div><div class='jogo-body' id='g1-body'><button class='btn ouro' onclick='G1.start()'>▶ Começar</button></div></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>🏷️</span><div><h3>Classifique</h3><div class='desc'>Fato ou Opinião para cada afirmação.</div></div></div><div class='jogo-body' id='g2-body'><button class='btn ouro' onclick='G2.start()'>▶ Começar</button></div></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>🔎</span><div><h3>Pelas marcas</h3><div class='desc'>Identifique pelos indicadores linguísticos.</div></div></div><div class='jogo-body' id='g3-body'><button class='btn ouro' onclick='G3.start()'>▶ Começar</button></div></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>🧩</span><div><h3>Complete</h3><div class='desc'>Escolha a palavra certa para completar a análise.</div></div></div><div class='jogo-body' id='g4-body'><button class='btn ouro' onclick='G4.start()'>▶ Começar</button></div></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>🔢</span><div><h3>Ordene as marcas</h3><div class='desc'>Organize fatos e opiniões em ordem.</div></div></div><div class='jogo-body' id='g5-body'><button class='btn ouro' onclick='G5.start()'>▶ Começar</button></div></div></section></main><footer>Portal do Professor Marcos Cruz · SAEB/SIMAVE · D10 (Atividade D9)</footer><script>
+/* ===== CONFIGURAÇÃO DO ENVIO PARA GOOGLE SHEETS =====
+   Cole aqui a URL do seu Apps Script publicado como "App da Web".
+   Veja o arquivo google-apps-script.gs para instruções de instalação.
+   Enquanto estiver "SUBSTITUA_PELA_SUA_URL", o envio fica desativado
+   (o quiz funciona normalmente, só não manda nada para a planilha). */
+const SHEETS_URL = "SUBSTITUA_PELA_SUA_URL";
+const DESCRITOR_PAGINA = "D10 - Distinguir fato de opinião";
+const NOME_ARQUIVO = "D10.html";
+
+/* ===== ESTADO DO ALUNO E MODO DE JOGO ===== */
+let alunoNome = "";
+let alunoTurma = "";
+let modoJogo = "estudo"; // "estudo" ou "prova"
+const respostasDetalhadas = []; // uma entrada por questão respondida, na ordem em que aparecem
+
+/* ===== SENHA PARA LIBERAR O MODO ESTUDO =====
+   Troque a senha abaixo quando quiser. É a MESMA senha em todas as páginas
+   do portal (mais simples de lembrar e passar para os alunos quando for
+   hora de revisão). Lembre-se: como o quiz roda no navegador do aluno,
+   essa senha impede o uso casual do Modo Estudo, mas não é uma proteção
+   contra alguém que abra o código-fonte da página — as respostas já estão
+   no arquivo de qualquer forma, como em qualquer site estático como este. */
+const SENHA_MODO_ESTUDO = "professor123";
+
+document.getElementById("btnLiberarEstudo").onclick = () => {
+  const campo = document.getElementById("senhaEstudo");
+  const aviso = document.getElementById("senhaAviso");
+  if (campo.value === SENHA_MODO_ESTUDO) {
+    document.getElementById("radioEstudo").disabled = false;
+    document.getElementById("radioEstudo").checked = true;
+    document.getElementById("cadeadoEstudo").textContent = "🔓";
+    document.getElementById("opcaoEstudo").classList.add("liberado");
+    document.getElementById("senhaBox").style.display = "none";
+    aviso.className = "senha-aviso ok";
+    aviso.textContent = "✓ Modo Estudo liberado.";
+  } else {
+    aviso.className = "senha-aviso erro";
+    aviso.textContent = "Senha incorreta.";
+  }
+};
+// Também libera ao apertar Enter no campo de senha
+document.getElementById("senhaEstudo").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") document.getElementById("btnLiberarEstudo").click();
+});
+
+document.getElementById("btnIniciarQuiz").onclick = () => {
+  const nome = document.getElementById("alunoNome").value.trim();
+  const turma = document.getElementById("alunoTurma").value.trim();
+  const aviso = document.getElementById("gateAviso");
+  if (!nome || !turma) {
+    aviso.textContent = "Preencha nome e turma/série para continuar.";
+    return;
+  }
+  alunoNome = nome;
+  alunoTurma = turma;
+  modoJogo = document.querySelector('input[name="modoQuiz"]:checked').value;
+  document.getElementById("quizGate").style.display = "none";
+  document.getElementById("quizConteudo").style.display = "block";
+  const chip = document.getElementById("modoChip");
+  chip.textContent = modoJogo === "prova" ? "📝 Modo Prova" : "📖 Modo Estudo";
+};
+
+/* ===== ENVIO PARA O GOOGLE SHEETS ===== */
+function enviarParaSheets() {
+  const statusEl = document.getElementById("envioStatus");
+  if (!SHEETS_URL || SHEETS_URL.indexOf("SUBSTITUA") !== -1) {
+    statusEl.className = "envio-status";
+    statusEl.textContent = "";
+    return; // envio desativado até o professor configurar a URL
+  }
+  statusEl.className = "envio-status enviando";
+  statusEl.textContent = "Enviando resultado para a planilha...";
+
+  const payload = {
+    nome: alunoNome,
+    turma: alunoTurma,
+    descritor: DESCRITOR_PAGINA,
+    pagina: NOME_ARQUIVO,
+    modo: modoJogo === "prova" ? "Prova" : "Estudo",
+    respostas: respostasDetalhadas
+  };
+
+  fetch(SHEETS_URL, {
+    method: "POST",
+    mode: "no-cors", // Apps Script Web Apps não devolvem CORS; "no-cors" garante o envio mesmo sem ler a resposta
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(payload)
+  }).then(() => {
+    statusEl.className = "envio-status ok";
+    statusEl.textContent = "✓ Resultado enviado para a planilha do professor.";
+  }).catch(() => {
+    statusEl.className = "envio-status erro";
+    statusEl.textContent = "✗ Não foi possível enviar o resultado (verifique sua internet).";
+  });
+}
+
+/* ===== QUIZ ===== */
+const QRAW=[{"n": 1, "tipo": "Notícia — IBGE", "nivel": "facil", "texto": "<b>Brasil tinha 9,1 milhões de analfabetos em 2024</b><br><br>Segundo a Pesquisa Nacional por Amostra de Domicílios (Pnad) do Instituto Brasileiro de Geografia e Estatística (IBGE), o Brasil registrou 9,1 milhões de pessoas analfabetas em 2024. A taxa de analfabetismo foi de 5,3%, uma queda de 0,1 ponto percentual em relação a 2023.", "fonte": "Adaptado de dados da Pnad Educação 2024 – IBGE. Domínio público.", "enun": "Esse texto apresenta:", "alts": ["Apenas fatos verificáveis com dados numéricos e fonte oficial", "Apenas opiniões sobre a educação brasileira", "Uma mistura de fatos e opiniões do jornalista", "Dados sem fonte confiável"], "correta": 0, "porque": ["Correto: dados numéricos verificáveis (9,1 milhões, 5,3%), data específica (2024) e fonte oficial (IBGE/Pnad). Tudo pode ser comprovado independentemente.", "Não há nenhum julgamento ou avaliação no texto — tudo é informação objetiva.", "Não há opinião do jornalista; o texto é neutro e factual.", "A fonte está explícita: IBGE, Pnad Educação 2024."]}, {"n": 2, "tipo": "Texto de opinião", "nivel": "facil", "texto": "<b>Ministro do Trabalho critica política de aumento da Selic</b><br><br><em>\"O salário no Brasil ainda é muito baixo, por mais que tenha empresário que ache que o salário está alto. Na minha opinião, os salários no Brasil são baixos, e há espaço para continuar crescendo sem gerar impacto inflacionário\"</em>, defendeu o ministro. Na avaliação dele, os sucessivos aumentos na Selic impõem duras restrições à atividade produtiva, em razão do encarecimento do crédito.", "fonte": "Agência Brasil/EBC, 31 jan. 2025. Adaptado. agenciabrasil.ebc.com.br", "enun": "Esse texto é principalmente:", "alts": ["Um fato econômico verificável sem nenhuma opinião", "Uma opinião do ministro sobre os salários e a política de juros, explicitamente atribuída a ele ('na minha opinião')", "Uma descrição neutra da realidade econômica", "Um dado estatístico do Banco Central"], "correta": 1, "porque": ["Não é apenas fato: o ministro expressa avaliação pessoal, marcada pela própria expressão 'na minha opinião'.", "Correto: o texto traz uma opinião explicitamente identificada ('na minha opinião') sobre os salários e a política de juros — o próprio ministro sinaliza que está avaliando, não apenas relatando.", "Não é neutra: há avaliação subjetiva clara, marcada linguisticamente.", "Não é apenas dado estatístico; é interpretação política sobre dados econômicos."]}, {"n": 3, "tipo": "Fato e opinião lado a lado", "nivel": "facil", "texto": "<b>Frase 1:</b> Em 2025, o Brasil registrou redução de 20,6% no desmatamento em relação ao ano anterior, segundo o MapBiomas.<br><br><b>Frase 2:</b> Apesar da redução, o resultado ainda é lamentavelmente insuficiente diante da crise climática global.", "fonte": "Frase 1: Agência Brasil/EBC, 2025. Frase 2: texto de opinião criado para fins didáticos.", "enun": "Qual afirmação está correta?", "alts": ["As duas frases são fatos verificáveis", "A Frase 1 é fato; a Frase 2 é opinião", "As duas frases são opiniões", "A Frase 1 é opinião; a Frase 2 é fato"], "correta": 1, "porque": ["A Frase 2 contém julgamento valorativo ('lamentavelmente insuficiente'), não é fato.", "Correto: a Frase 1 tem dado numérico (20,6%), data e fonte (MapBiomas) — fato. A Frase 2 usa o adjetivo 'insuficiente' e o advérbio 'lamentavelmente', que marcam julgamento de valor — opinião.", "A Frase 1 tem dado verificável e fonte; é fato.", "Invertido: Frase 1 tem número, data e fonte; Frase 2 tem julgamento."]}, {"n": 4, "tipo": "Notícia com declaração", "nivel": "medio", "texto": "O desmatamento na Amazônia caiu 11,08% no período de agosto de 2024 a julho de 2025, segundo o Inpe. Foram desmatados 5.796 km² — a terceira menor taxa desde 1988.<br><br>A ministra do Meio Ambiente, Marina Silva, afirmou: <em>\"Ainda há muito a avançar, mas o Brasil voltou a ser um exemplo de comprometimento com a proteção da floresta.\"</em>", "fonte": "Agência Brasil/EBC, 30 out. 2025. Adaptado.", "enun": "Nesse texto, a declaração da ministra é:", "alts": ["Um fato, porque a ministra é uma autoridade", "Uma opinião atribuída à ministra, não um dado verificável", "Um dado do Inpe", "Um fato porque está entre aspas"], "correta": 1, "porque": ["Ser autoridade não torna a afirmação um fato — é a posição da ministra sobre os dados.", "Correto: 'voltou a ser um exemplo' é uma avaliação subjetiva da ministra. O texto deixa claro que é uma fala dela ('afirmou'). Dados do Inpe são fatos; a interpretação da ministra é opinião atribuída.", "Os dados do Inpe são os números (11,08%, 5.796 km²); a fala é da ministra.", "Aspas indicam citação direta — que pode ser fato ou opinião. Aqui é opinião."]}, {"n": 5, "tipo": "Crônica — estilo Machado de Assis", "nivel": "medio", "texto": "<b>Especialista critica fim da moderação de conteúdo em redes sociais</b><br><br>Crianças e adolescentes estão em risco com o fim da moderação de conteúdos em plataformas digitais. Essa é a avaliação de Pedro Hartung, diretor de Políticas e Direitos das Crianças do Instituto Alana. Segundo ele, a internet está se transformando em um campo minado de exposição de conteúdos indevidos para crianças e adolescentes.", "fonte": "Agência Brasil/EBC, 24 jan. 2025. Adaptado. agenciabrasil.ebc.com.br", "enun": "O texto começa com uma avaliação ('crianças... estão em risco'). O que vem em seguida?", "alts": ["Mantém a objetividade em todo o texto", "Identifica explicitamente que a avaliação é de um especialista, atribuindo a opinião a ele", "Apresenta dados estatísticos para apoiar o argumento", "Volta a fazer apenas descrição"], "correta": 1, "porque": ["Não: a primeira frase já é uma avaliação ('estão em risco').", "Correto: logo depois, o texto identifica a fonte da opinião ('Essa é a avaliação de Pedro Hartung...'), deixando claro que se trata do julgamento de um especialista, não de um fato comprovado por si só.", "Não há estatísticas; há atribuição de opinião especializada.", "O texto não volta a ser puramente descritivo; mantém o relato da opinião do especialista."]}, {"n": 6, "tipo": "Identificar marca de opinião", "nivel": "medio", "texto": "<b>Trecho A (fato):</b> Em 2024, o desemprego no Brasil foi de 6,9%, segundo o IBGE.<br><br><b>Trecho B (misto):</b> Em 2024, o desemprego caiu para 6,9% — uma redução considerável que demonstra a eficácia das políticas econômicas do atual governo.", "fonte": "Trecho A: IBGE, 2024. Trecho B: exemplo didático.", "enun": "Quais palavras do Trecho B introduzem uma opinião onde havia apenas fato?", "alts": ["'Em 2024' e '6,9%'", "'segundo o IBGE'", "'considerável' e 'demonstra a eficácia das políticas'", "'desemprego' e 'caiu'"], "correta": 2, "porque": ["'Em 2024' e '6,9%' são dados factuais — não introduzem opinião.", "'Segundo o IBGE' é uma marcação de fonte — confirma que é fato.", "Correto: 'considerável' é adjetivo valorativo (quem decide o que é considerável?) e 'demonstra a eficácia' é uma interpretação causal — ambos transformam o fato em opinião.", "'Desemprego' e 'caiu' são termos neutros que descrevem o dado."]}, {"n": 7, "tipo": "Opinião disfarçada de fato", "nivel": "dificil", "texto": "<b>Frase de especialista sobre saneamento:</b> \"Água e saneamento, portanto, não são temas periféricos – são centrais para a ação climática.\" — José Gesti, especialista em saneamento, em entrevista durante a COP30.", "fonte": "Agência Brasil/EBC, 22 nov. 2025. Adaptado. agenciabrasil.ebc.com.br", "enun": "Essa frase contém:", "alts": ["Um fato indiscutível sobre clima", "Uma opinião do especialista, atribuída a ele explicitamente, mesmo usando tom afirmativo", "Um dado do IBGE", "Nenhuma informação relevante"], "correta": 1, "porque": ["Não é fato indiscutível: 'centrais' é um julgamento de prioridade, não um dado mensurável.", "Correto: apesar do tom afirmativo (sem 'eu acho'), a frase é uma avaliação de prioridade política feita por um especialista identificado pelo nome — é opinião especializada, não fato bruto.", "Não há dado do IBGE nesta frase.", "Há informação relevante: a posição do especialista sobre a importância do saneamento."]}, {"n": 8, "tipo": "Citação como fato", "nivel": "dificil", "texto": "<b>Frase 1:</b> 'A vacina do Butantan apresentou 74,7% de eficácia contra a dengue sintomática.'<br><br><b>Frase 2:</b> 'O ministro da Saúde afirmou que a vacina é um marco histórico para o Brasil.'", "fonte": "Frase 1: Agência Brasil/EBC, 2025. Frase 2: declaração adaptada.", "enun": "Qual é a diferença entre as duas frases?", "alts": ["As duas são fatos científicos", "A Frase 1 é fato (dado verificável); a Frase 2 relata uma opinião atribuída ao ministro", "As duas são opiniões", "A Frase 2 é fato porque cita uma autoridade"], "correta": 1, "porque": ["A Frase 2 não é dado científico — é a opinião de um ministro.", "Correto: a Frase 1 tem dado numérico verificável (74,7%, ensaio clínico). A Frase 2 tem 'marco histórico', que é julgamento de valor do ministro. É fato que o ministro afirmou isso; mas o que ele afirmou é uma opinião.", "A Frase 1 tem dado numérico verificável — é fato.", "Ser autoridade não torna a afirmação um fato."]}, {"n": 9, "tipo": "Texto misto — análise completa", "nivel": "dificil", "texto": "Em 2024, o Brasil registrou 47,1 milhões de matrículas na educação básica, em 179 mil escolas (Censo Escolar, MEC). Contudo, essa expansão ainda é insuficiente: segundo especialistas, pelo menos 2 milhões de crianças e adolescentes permanecem fora da escola, o que representa um fracasso inaceitável da política educacional.", "fonte": "Dado real: Agência Brasil/EBC, 2025. Interpretação: texto didático.", "enun": "Identifique o trecho que é PURAMENTE fato:", "alts": ["'essa expansão ainda é insuficiente'", "'47,1 milhões de matrículas em 179 mil escolas (Censo Escolar, MEC)'", "'fracasso inaceitável da política educacional'", "'pelo menos 2 milhões... o que representa'"], "correta": 1, "porque": ["'Insuficiente' é adjetivo valorativo — opinião.", "Correto: número exato (47,1 milhões), dado comparável (179 mil escolas), fonte oficial (Censo Escolar/MEC). Verificável e neutro — fato puro.", "'Fracasso inaceitável' é julgamento de valor — opinião.", "'O que representa' inicia uma interpretação — opinião."]}, {"n": 10, "tipo": "Advérbio que transforma fato em opinião", "nivel": "dificil", "texto": "<b>Versão A:</b> 'O Brasil reduziu o desmatamento em 20,6% em 2025.'<br><br><b>Versão B:</b> 'O Brasil reduziu o desmatamento em apenas 20,6% em 2025.'", "fonte": "Dado real: Agência Brasil/EBC. Versão B: exemplo didático.", "enun": "A palavra 'apenas' na Versão B faz qual diferença?", "alts": ["Nenhuma diferença — as duas versões são fatos", "Introduz um julgamento de valor: sugere que 20,6% é pouco, o que é uma opinião", "Torna a Versão B mais objetiva", "Indica que a fonte é confiável"], "correta": 1, "porque": ["Há diferença importante: 'apenas' carrega julgamento.", "Correto: 'apenas' é um advérbio que expressa julgamento — quem decide se 20,6% é 'apenas' ou 'muito'? Essa avaliação é subjetiva. A Versão A é fato neutro; a Versão B mistura fato com opinião.", "Ao contrário: torna a versão mais subjetiva.", "'Apenas' não indica fonte — indica julgamento."]}, {"n": 11, "tipo": "Interpretação causal", "nivel": "dificil", "texto": "Segundo a Pnad/IBGE 2024, 53% dos brasileiros com mais de 25 anos não concluíram o ensino médio. Isso revela que décadas de negligência com a educação pública geraram uma geração prejudicada, o que ameaça o desenvolvimento econômico do país.", "fonte": "Dado real: IBGE/Pnad 2024. Interpretação: texto didático.", "enun": "O dado do IBGE é fato. A segunda parte do texto ('Isso revela...') é:", "alts": ["Também fato, porque cita o IBGE", "Opinião/interpretação: propõe uma causa ('negligência') e uma consequência ('ameaça') que não estão nos dados", "Um resumo dos dados", "Um verbete do dicionário"], "correta": 1, "porque": ["A segunda parte não cita mais o IBGE — é interpretação do autor.", "Correto: 'revela', 'negligência', 'prejudicada', 'ameaça' são palavras que interpretam e julgam. O IBGE forneceu o número; o autor forneceu a explicação — que é opinião.", "Não é resumo; é interpretação com julgamento.", "Não é verbete; é análise."]}, {"n": 12, "tipo": "Texto de Machado de Assis", "nivel": "dificil", "texto": "<em>\"Há essa retórica de alguns grupos políticos de que checagem de fatos é parte de um projeto autoritário. E isso é uma grande teoria da conspiração também. [...] não se trata de censura, se trata de jornalismo, de trabalhar o contraditório, de liberdade de imprensa\"</em>, defende a diretora de uma agência de checagem de notícias.", "fonte": "Agência Brasil/EBC, 20 jul. 2025. Adaptado. agenciabrasil.ebc.com.br", "enun": "Por que essa frase é claramente uma opinião, mesmo abordando um tema técnico (checagem de fatos)?", "alts": ["Porque cita dados do IBGE", "Porque a fonte usa o verbo 'defende' e expressa julgamento de valor ('grande teoria da conspiração')", "Porque é uma notícia objetiva", "Porque não tem nenhuma marca de autoria"], "correta": 1, "porque": ["Não há dados do IBGE nesta frase; é uma declaração de opinião.", "Correto: o verbo 'defende' (e não 'informa' ou 'relata') já sinaliza posição. Além disso, classificar algo como 'grande teoria da conspiração' é julgamento de valor — opinião, mesmo tratando de um tema técnico.", "Não é objetiva; é claramente posicionada e identificada com aspas e atribuição.", "Há marca de autoria explícita: a fonte é citada e identificada."]}];const G1R=[{"t": "'Em 2024, taxa de desemprego foi 6,9%, segundo IBGE.'", "q": "Fato ou opinião?", "o": ["Fato", "Opinião", "Ambos", "Nenhum"], "c": 0}, {"t": "'Essa redução no desemprego é lamentavelmente insuficiente.'", "q": "Fato ou opinião?", "o": ["Fato", "Opinião", "Ambos", "Nenhum"], "c": 1}, {"t": "'53% dos adultos brasileiros não concluíram o ensino médio (IBGE/Pnad 2024).'", "q": "É:", "o": ["Opinião", "Fato verificável", "Interpretação", "Julgamento"], "c": 1}, {"t": "'É óbvio que a educação em tempo integral melhora o desempenho dos alunos.'", "q": "Tipo de afirmação?", "o": ["Fato claro", "Opinião disfarçada de fato", "Dado do IBGE", "Citação de autoridade"], "c": 1}, {"t": "'Em 2025, o desmatamento caiu para 984.794 ha. Isso revela o fracasso do modelo econômico.'", "q": "O segundo segmento é:", "o": ["Fato complementar", "Opinião/interpretação", "Outro dado", "Dado MapBiomas"], "c": 1}];const G2I=[{"s": "'O Brasil tinha 9,1 milhões de analfabetos em 2024 (IBGE).'", "cat": "fato", "p": "Número + fonte oficial = fato."}, {"s": "'9 milhões de analfabetos é uma vergonha nacional.'", "cat": "opiniao", "p": "'Vergonha' é julgamento de valor."}, {"s": "'Desmatamento caiu 20,6% em 2025 (MapBiomas).'", "cat": "fato", "p": "Percentual + fonte = fato."}, {"s": "'Essa redução ainda é insuficiente diante da crise.'", "cat": "opiniao", "p": "'Insuficiente' é adjetivo valorativo."}, {"s": "'A vacina do Butantan tem 74,7% de eficácia (Anvisa, 2025).'", "cat": "fato", "p": "Dado de ensaio clínico, verificável."}, {"s": "'A educação em tempo integral é essencial para o país.'", "cat": "opiniao", "p": "'Essencial' é julgamento de valor."}];const G2C=[["fato", "Fato"], ["opiniao", "Opinião"]];const G3R=[{"t": "Número exato + fonte oficial + data específica.", "q": "Isso é:", "o": ["Opinião", "Fato", "Interpretação", "Julgamento"], "c": 1}, {"t": "Adjetivos: 'intolerável', 'preocupante', 'essencial', 'insuficiente'.", "q": "Essas palavras marcam:", "o": ["Fatos", "Opiniões/julgamentos", "Dados numéricos", "Fontes"], "c": 1}, {"t": "'O ministro afirmou que a vacina é um marco histórico.'", "q": "A afirmação do ministro é:", "o": ["Fato universal", "Opinião atribuída ao ministro", "Dado do IBGE", "Resultado científico"], "c": 1}, {"t": "Frase com 'apenas', 'lamentavelmente', 'infelizmente' antes de um dado.", "q": "Essas palavras introduzem:", "o": ["Mais precisão", "Julgamento de valor/opinião", "Fontes confiáveis", "Dados numéricos"], "c": 1}, {"t": "'Isso revela / isso demonstra / isso prova que...' após um dado.", "q": "Essa estrutura introduz:", "o": ["Outro fato", "Uma interpretação/opinião", "Um dado complementar", "Uma fonte"], "c": 1}];const G4R=[{"ctx": "'Em 2024, desemprego foi 6,9% (IBGE).'", "f": "Dado + fonte = ___.", "o": ["opinião", "fato", "julgamento", "interpretação"], "c": 1}, {"ctx": "'Redução considerável que demonstra eficácia das políticas.'", "f": "'Considerável' e 'demonstra eficácia' introduzem ___.", "o": ["fatos", "opiniões", "dados", "fontes"], "c": 1}, {"ctx": "'O ministro afirmou que a vacina é um marco histórico.'", "f": "'Marco histórico' é opinião ___ao ministro.", "o": ["do IBGE", "atribuída", "científica", "verificável"], "c": 1}, {"ctx": "'O Brasil reduziu apenas 20,6% o desmatamento.'", "f": "'Apenas' transforma dado em ___.", "o": ["fato mais preciso", "opinião (julgamento de que é pouco)", "fonte confiável", "dado neutro"], "c": 1}, {"ctx": "'53% não concluíram o ensino médio. Isso revela décadas de negligência.'", "f": "'Isso revela' inicia uma ___ do dado.", "o": ["confirmação", "interpretação/opinião", "fonte", "estatística"], "c": 1}];const G5R=[{"title": "Marcas de fato", "correct": ["Número exato com fonte: '6,9%, segundo IBGE'.", "Data específica: 'Em 2024', 'no período de agosto a julho'.", "Verbos neutros de relato: 'registrou', 'divulgou', 'mostrou', 'apontou'.", "Menção a fonte reconhecida: 'segundo IBGE', 'dados do MapBiomas'.", "Afirmação verificável independentemente de quem lê."]}, {"title": "Marcas de opinião", "correct": ["Adjetivos valorativos: 'intolerável', 'preocupante', 'insuficiente', 'essencial'.", "Advérbios de avaliação: 'lamentavelmente', 'infelizmente', 'apenas'.", "Expressões que fingem ser fato: 'é óbvio', 'é evidente', 'é claro que'.", "Julgamentos: 'fracasso', 'urgente', 'vergonha', 'necessário'.", "Interpretações causais: 'isso revela', 'isso demonstra', 'isso prova'.", "Atribuição de responsabilidade: 'culpa do governo', 'eficácia das políticas'."]}];
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function stripHTML(s){const d=document.createElement("div");d.innerHTML=s;return d.textContent||"";}
+function toggleTTS(btn,id){if(window.speechSynthesis.speaking){window.speechSynthesis.cancel();document.querySelectorAll(".btn-tts").forEach(b=>b.classList.remove("playing"));return;}const el=document.getElementById(id);if(!el)return;const u=new SpeechSynthesisUtterance(stripHTML(el.innerHTML));u.lang="pt-BR";u.rate=.9;btn.classList.add("playing");u.onend=()=>btn.classList.remove("playing");window.speechSynthesis.speak(u);}
+const RK="saeb_d10fatoop_records";
+function loadRec(){try{return JSON.parse(localStorage.getItem(RK))||{};}catch{return {};}}
+function saveRec(k,v){const r=loadRec();if(!(k in r)||v>r[k])r[k]=v;localStorage.setItem(RK,JSON.stringify(r));renderRec();}
+function renderRec(){const r=loadRec(),g=document.getElementById("recGrid");if(!g)return;const items=[{k:"quiz",l:"Quiz"},{k:"qual",l:"Qual função?"},{k:"classif",l:"Classifique"},{k:"pistas",l:"Pelas pistas"},{k:"compl",l:"Complete"},{k:"ordene",l:"Ordene"}];g.innerHTML=items.map(i=>`<div class="rec-item"><div class="rv">${r[i.k]!=null?r[i.k]:"—"}</div><div class="rl">${i.l}</div></div>`).join("");}
+renderRec();
+document.querySelectorAll(".tab-btn").forEach(btn=>{btn.onclick=()=>{document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));document.querySelectorAll(".tab-pane").forEach(p=>p.classList.remove("active"));btn.classList.add("active");document.getElementById("pane-"+btn.dataset.tab).classList.add("active");window.scrollTo({top:0,behavior:"smooth"});};});
+const nivelLabel={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
+const QS=shuffle(QRAW).map((q,idx)=>{const smap=shuffle(Array.from({length:q.alts.length},(_,i)=>i));return{...q,dn:idx+1,alts:smap.map(i=>q.alts[i]),porque:smap.map(i=>q.porque[i]),correta:smap.indexOf(q.correta)};});
+const quizEl=document.getElementById("quiz");
+QS.forEach(q=>{const c=document.createElement("div");c.className="card";c.dataset.q=q.dn;const tid="txt"+q.dn;c.innerHTML=`<div class="card-head"><span class="qnum">Questão ${q.dn}</span><span class="qtipo">${q.tipo}</span><span class="qnivel ${q.nivel}">${nivelLabel[q.nivel]}</span></div><div class="txt-base" id="${tid}">${q.texto}<span class="txt-fonte">${q.fonte}</span><button class="btn-tts" onclick="toggleTTS(this,'${tid}')">🔊</button></div><div class="img-slot">🖼️ Espaço para imagem</div><p class="enunciado">${q.enun}</p><div class="alts">${q.alts.map((t,i)=>`<button class="alt" onclick="resp(${q.dn},${i})"><span class="letra">${"ABCD"[i]}</span> ${t}</button>`).join("")}</div><div class="fb" id="fb${q.dn}"></div>`;quizEl.appendChild(c);});
+let acertos=0;const feitas=new Set();
+function resp(n,k){
+  if(feitas.has(n))return;feitas.add(n);
+  const q=QS.find(x=>x.dn===n),card=quizEl.querySelector(`[data-q="${n}"]`),btns=card.querySelectorAll(".alt"),fb=document.getElementById("fb"+n);
+  const ok=k===q.correta;if(ok)acertos++;
+
+  // Registra a resposta detalhada desta questão para depois enviar ao Sheets
+  respostasDetalhadas.push({
+    questao: n,
+    tipo: q.tipo,
+    nivel: q.nivel,
+    respostaDada: k>=0 ? "ABCD"[k] : "(não respondeu)",
+    respostaCorreta: "ABCD"[q.correta],
+    acertou: ok
+  });
+
+  btns.forEach((b,i)=>{b.disabled=true;if(i===q.correta)b.classList.add("ok");else if(i===k)b.classList.add("err");else b.classList.add("dim");});
+  const pq=q.alts.map((t,i)=>`<span class="pi"><span class="l">${"ABCD"[i]})</span> ${q.porque[i]}</span>`).join("");
+  fb.className="fb show "+(ok?"ok":"err")+(modoJogo==="prova"?" prova-oculto":"");
+  fb.innerHTML=`<div class="ft">${ok?"✓ Correto!":"✗ Incorreto — a correta é "+"ABCD"[q.correta]+"."}</div><div>${q.porque[q.correta]}</div><div class="pq"><b>Cada alternativa:</b>${pq}</div>`;
+  document.getElementById("pFill").style.width=(feitas.size/QS.length*100)+"%";
+  // No modo prova, a pontuação parcial fica escondida; só aparece no resultado final
+  document.getElementById("score").textContent=modoJogo==="prova" ? (feitas.size+" / "+QS.length+" respondidas") : (acertos+" / "+QS.length);
+  if(feitas.size===QS.length)setTimeout(quizFim,500);
+}
+function quizFim(){
+  // No modo prova, revela todo o feedback que ficou oculto durante o quiz
+  if(modoJogo==="prova"){
+    document.querySelectorAll(".fb.prova-oculto").forEach(fb=>fb.classList.remove("prova-oculto"));
+    document.getElementById("score").textContent=acertos+" / "+QS.length;
+  }
+  const r=document.getElementById("resultado");r.style.display="block";
+  document.getElementById("notaFinal").textContent=acertos+"/"+QS.length;
+  const p=acertos/QS.length;let m,msg;
+  if(p>=.9){m="🥇";msg="Ouro! Precisão de detetive.";}
+  else if(p>=.7){m="🥈";msg="Prata! Atenção aos distratores.";}
+  else if(p>=.5){m="🥉";msg="Bronze! Volte ao texto antes de marcar.";}
+  else{m="📖";msg="Treine mais. A resposta está sempre lá.";}
+  document.getElementById("medalha").textContent=m;document.getElementById("msgFinal").textContent=msg;
+  saveRec("quiz",acertos);
+  enviarParaSheets();
+  r.scrollIntoView({behavior:"smooth",block:"center"});
+}document.getElementById("btnDisc").onclick=function(){document.getElementById("fbDisc").classList.toggle("show");document.getElementById("fbDisc").classList.add("ok");};
+(function(){const g=document.getElementById("gabPrint");if(!g)return;const linhas=QS.map(q=>`<li><b>Q${q.dn}:</b> ${q.alts[q.correta]}</li>`).join("");g.innerHTML=`<h2>📋 Gabarito</h2><ol>${linhas}</ol>`;})();
+
+function makeTimedGame(bodyId,rounds,rk){return{i:0,pts:0,tmr:null,tempo:0,rounds:[],start(){this.i=0;this.pts=0;this.rounds=shuffle(rounds);this.render();},render(){const b=document.getElementById(bodyId);if(this.i>=this.rounds.length){saveRec(rk,this.pts);b.innerHTML=`<div class="jogo-final"><div class="big">${this.pts} pts</div><p>${this.pts>=this.rounds.length*10?"Muito bem! 🥇":"Continue praticando."}</p><button class="btn ouro" onclick="${bodyId.split('-')[0].toUpperCase()}.start()">↺ Jogar de novo</button></div>`;return;}const r=this.rounds[this.i];this.tempo=100;b.innerHTML=`<div class="jogo-mid"><span class="chip">Rodada ${this.i+1}/${this.rounds.length}</span><div class="timerbar"><div id="${bodyId}-bar"></div></div><span class="chip">${this.pts} pts</span></div><div class="mini-texto">${r.t}</div><div class="mini-q">${r.q}</div><div class="alts" id="${bodyId}-alts">${r.o.map((o,k)=>`<button class="alt" onclick="${bodyId.split('-')[0].toUpperCase()}.resp(${k})"><span class="letra">${"ABCD"[k]}</span> ${o}</button>`).join("")}</div><div class="mini-fb" id="${bodyId}-fb"></div>`;clearInterval(this.tmr);this.tmr=setInterval(()=>{this.tempo-=2;const bar=document.getElementById(bodyId+"-bar");if(bar)bar.style.width=Math.max(0,this.tempo)+"%";if(this.tempo<=0)this.resp(-1);},120);},resp(k){clearInterval(this.tmr);const r=this.rounds[this.i],btns=document.querySelectorAll("#"+bodyId+"-alts .alt"),fb=document.getElementById(bodyId+"-fb");btns.forEach((a,j)=>{a.disabled=true;if(j===r.c)a.classList.add("ok");else if(j===k)a.classList.add("err");else a.classList.add("dim");});if(k===r.c){const g=5+Math.round(this.tempo/10);this.pts+=g;fb.className="mini-fb show ok";fb.textContent="✓ +"+g+" pts!";}else{fb.className="mini-fb show err";fb.textContent=(k===-1?"⏱️ Tempo!":"✗")+" Era: "+"ABCD"[r.c]+".";}this.i++;setTimeout(()=>this.render(),1600);}};}
+const G1=makeTimedGame("g1-body",G1R,"qual");const G3=makeTimedGame("g3-body",G3R,"pistas");
+
+const G2={rs:[],cats:G2C,start(){this.rs=[];const b=document.getElementById("g2-body");b.innerHTML=`<div style="font-size:.82rem;color:var(--txt2);margin-bottom:.8rem">Classifique cada texto pela sua função principal:</div>`+G2I.map((it,i)=>`<div class="vf-item" id="g2i${i}"><div class="vf-stm"><b>${i+1}.</b> ${it.s}</div><div class="btn-row">${this.cats.map(c=>`<button class="mini-btn cat-btn" onclick="G2.j(${i},'${c[0]}')">${c[1]}</button>`).join("")}</div><div class="mini-fb" id="g2f${i}"></div></div>`).join("")+`<div id="g2fin"></div>`;},j(i,esc){if(this.rs[i]!=null)return;const it=G2I[i],ok=esc===it.cat;this.rs[i]=ok;document.querySelectorAll("#g2i"+i+" .mini-btn").forEach(btn=>{btn.disabled=true;const txt=btn.textContent;const cat=this.cats.find(c=>c[1]===txt);if(cat&&cat[0]===it.cat)btn.style.background="var(--verde-c)";else if(cat&&cat[0]===esc&&!ok)btn.style.background="var(--vermelho-c)";});const fb=document.getElementById("g2f"+i);fb.className="mini-fb show "+(ok?"ok":"err");fb.innerHTML=(ok?"✓ ":"✗ ")+it.p;if(this.rs.filter(x=>x!=null).length===G2I.length){const ac=this.rs.filter(x=>x).length;saveRec("classif",ac);document.getElementById("g2fin").innerHTML=`<div class="jogo-final"><div class="big">${ac}/${G2I.length}</div><p>${ac===G2I.length?"Perfeito! 🥇":"Releia as justificativas."}</p><button class="btn ouro" onclick="G2.start()">↺ Jogar de novo</button></div>`;}}};
+
+const G4={i:0,pts:0,rounds:[],start(){this.i=0;this.pts=0;this.rounds=shuffle(G4R);this.render();},render(){const b=document.getElementById("g4-body");if(this.i>=this.rounds.length){saveRec("compl",this.pts);b.innerHTML=`<div class="jogo-final"><div class="big">${this.pts}/${this.rounds.length}</div><p>${this.pts===this.rounds.length?"Perfeito! 🥇":"Continue praticando."}</p><button class="btn ouro" onclick="G4.start()">↺ Jogar de novo</button></div>`;return;}const it=this.rounds[this.i];b.innerHTML=`<div class="jogo-mid"><span class="chip">Frase ${this.i+1}/${this.rounds.length}</span><span class="chip">${this.pts} acertos</span></div><p style="font-size:.82rem;color:var(--txt2);margin:.4rem 0">${it.ctx}</p><div class="mini-texto">${it.f}</div><div class="alts" id="g4-alts">${it.o.map((o,k)=>`<button class="alt" onclick="G4.resp(${k})"><span class="letra">${"ABCD"[k]}</span> ${o}</button>`).join("")}</div><div class="mini-fb" id="g4-fb"></div>`;},resp(k){const it=this.rounds[this.i],btns=document.querySelectorAll("#g4-alts .alt"),fb=document.getElementById("g4-fb");btns.forEach((a,j)=>{a.disabled=true;if(j===it.c)a.classList.add("ok");else if(j===k)a.classList.add("err");else a.classList.add("dim");});if(k===it.c){this.pts++;fb.className="mini-fb show ok";fb.textContent="✓ Exato!";}else{fb.className="mini-fb show err";fb.textContent="✗ Era: "+it.o[it.c]+".";}this.i++;setTimeout(()=>this.render(),1200);}};
+
+const G5={ri:0,start(){this.ri=0;this.renderRound();},renderRound(){const b=document.getElementById("g5-body");if(this.ri>=G5R.length){saveRec("ordene","✓");b.innerHTML=`<div class="jogo-final"><div class="big">✓</div><p>Raciocínio organizado! 🥇</p><button class="btn ouro" onclick="G5.start()">↺ Jogar de novo</button></div>`;return;}const rd=G5R[this.ri];const items=shuffle(rd.correct);b.innerHTML=`<div class="jogo-mid"><span class="chip">Passo a passo ${this.ri+1}/${G5R.length}</span></div><p style="font-size:.84rem;color:var(--txt2);margin-bottom:.6rem">Use ▲ ▼ para ordenar. Depois clique em "Verificar".</p><ol class="ord-list" id="g5list">${items.map((it,i)=>`<li class="ord-item" data-txt="${encodeURIComponent(it)}">${it}<div class="ord-arrows"><button onclick="G5.move(${i},-1)">▲</button><button onclick="G5.move(${i},1)">▼</button></div></li>`).join("")}</ol><div style="text-align:center;margin-top:.6rem"><button class="btn ouro" onclick="G5.check()">✓ Verificar ordem</button></div><div class="mini-fb" id="g5fb"></div>`;},move(idx,dir){const list=document.getElementById("g5list");const items=[...list.children];const newIdx=idx+dir;if(newIdx<0||newIdx>=items.length)return;if(dir===-1)list.insertBefore(items[idx],items[newIdx]);else list.insertBefore(items[newIdx],items[idx]);[...list.children].forEach((li,i)=>{li.querySelector(".ord-arrows").innerHTML=`<button onclick="G5.move(${i},-1)">▲</button><button onclick="G5.move(${i},1)">▼</button>`;});},check(){const rd=G5R[this.ri];const list=document.getElementById("g5list");const items=[...list.children];const fb=document.getElementById("g5fb");let ok=true;items.forEach((li,i)=>{const txt=decodeURIComponent(li.dataset.txt);if(txt===rd.correct[i])li.classList.add("ok");else{li.classList.add("err");ok=false;}li.querySelectorAll("button").forEach(b=>b.disabled=true);});if(ok){fb.className="mini-fb show ok";fb.textContent="✓ Ordem perfeita!";this.ri++;setTimeout(()=>this.renderRound(),1400);}else{fb.className="mini-fb show err";fb.innerHTML='✗ Trocadas. <button class="mini-btn" style="margin-left:.5rem" onclick="G5.renderRound()">Tentar de novo</button>';}}};
+</script></body></html>

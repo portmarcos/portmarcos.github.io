@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAEB/SIMAVE – D2 | Inferir informações implícitas</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--azul:#1a3a5c;--azul-m:#235a8c;--azul-c:#d6e8f7;--ouro:#c9871f;--ouro-c:#fff8eb;--verde:#246b4a;--verde-c:#e6f4ed;--verm:#b02a2a;--verm-c:#fdecea;--bg:#f2f4f7;--borda:#d0d6e0;--branco:#fff;--txt:#1c2635;--txt2:#4a5568}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;line-height:1.5}
+header{background:var(--azul);color:#fff;padding:2.4rem 1.5rem 1.8rem;text-align:center;position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:rgba(201,135,31,.12)}
+.badge{display:inline-block;background:var(--ouro);color:var(--azul);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:.8rem}
+header h1{font-family:'Lora',serif;font-size:clamp(1.5rem,4vw,2.1rem);font-weight:600;line-height:1.3;margin-bottom:.4rem}
+header p{font-size:.92rem;opacity:.78;max-width:560px;margin:0 auto;line-height:1.6}
+.voltar-link{display:inline-block;margin-bottom:1rem;color:#fff;opacity:.7;text-decoration:none;font-size:.82rem}
+.voltar-link:hover{opacity:1}
+.tabs{background:var(--branco);border-bottom:1px solid var(--borda);position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.tabs-inner{max-width:840px;margin:0 auto;display:flex}
+.tab-btn{flex:1;background:none;border:none;padding:.95rem .5rem;font-family:'Inter',sans-serif;font-size:.88rem;font-weight:600;color:var(--txt2);cursor:pointer;border-bottom:3px solid transparent;transition:.15s;display:flex;align-items:center;justify-content:center;gap:.35rem}
+.tab-btn:hover{color:var(--azul-m);background:var(--bg)}
+.tab-btn.active{color:var(--azul);border-bottom-color:var(--ouro)}
+main{max-width:840px;margin:0 auto;padding:1.6rem 1.25rem 4rem}
+.tab-pane{display:none;flex-direction:column;gap:1.6rem}
+.tab-pane.active{display:flex}
+.painel{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.5rem 1.6rem}
+.painel h2{font-family:'Lora',serif;font-size:1.2rem;color:var(--azul);margin-bottom:.7rem}
+.painel h3{font-size:.95rem;color:var(--azul-m);margin:.9rem 0 .3rem}
+.painel p,.painel li{font-size:.9rem;margin-bottom:.5rem}
+.painel ul{margin:.2rem 0 .6rem 1.2rem}
+.painel strong{color:var(--azul)}
+.resumo-box{background:var(--azul);color:#fff;border-radius:14px;padding:1.4rem 1.6rem}
+.resumo-box h2{color:#fff;font-family:'Lora',serif;font-size:1.1rem;margin-bottom:.5rem}
+.resumo-box p{color:rgba(255,255,255,.9);font-size:.92rem;margin:0}
+.resumo-box .fc{display:block;margin-top:.7rem;font-style:italic;font-size:.88rem;background:rgba(255,255,255,.1);padding:.6rem .9rem;border-radius:8px;border-left:3px solid var(--ouro)}
+.dica-ouro{background:var(--ouro-c);border:1px solid #ecd9aa}
+.dica-ouro h2{color:#7a5310}.dica-ouro li{color:#4a3408}.dica-ouro strong{color:#7a5310}
+.glossario dt{font-weight:600;color:var(--azul-m);font-size:.88rem;margin-top:.5rem}
+.glossario dd{font-size:.86rem;color:var(--txt2);margin-left:0}
+.aviso-prof{background:#eef4fb;border:1px dashed var(--azul-m);border-radius:10px;padding:.9rem 1.1rem;font-size:.82rem;color:var(--azul-m)}
+.records{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.2rem 1.4rem}
+.records h2{font-family:'Lora',serif;font-size:1.1rem;color:var(--azul);margin-bottom:.6rem}
+.rec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.7rem}
+.rec-item{background:var(--bg);border-radius:10px;padding:.7rem;text-align:center}
+.rec-item .rv{font-size:1.5rem;font-weight:700;color:var(--azul-m)}
+.rec-item .rl{font-size:.72rem;color:var(--txt2)}
+.prog-wrap{background:var(--branco);border:1px solid var(--borda);border-radius:12px;padding:.85rem 1.1rem;display:flex;align-items:center;gap:14px}
+.prog-label{font-size:.78rem;font-weight:600;color:var(--azul-m);white-space:nowrap}
+.prog-track{flex:1;height:6px;background:var(--borda);border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--azul-m),var(--ouro));border-radius:99px;width:0%;transition:width .4s}
+.score{font-size:.78rem;font-weight:600;color:var(--txt2);white-space:nowrap}
+.card{background:var(--branco);border-radius:14px;border:1px solid var(--borda);overflow:hidden}
+.card-head{background:var(--azul);color:#fff;padding:.65rem 1.2rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.qnum{background:var(--ouro);color:var(--azul);font-size:.72rem;font-weight:700;padding:3px 11px;border-radius:20px}
+.qtipo{font-size:.74rem;opacity:.65;font-style:italic}
+.qnivel{font-size:.66rem;font-weight:700;text-transform:uppercase;padding:3px 9px;border-radius:20px;margin-left:auto}
+.qnivel.facil{background:var(--verde-c);color:var(--verde)}.qnivel.medio{background:var(--ouro-c);color:#a96e10}.qnivel.dificil{background:var(--verm-c);color:var(--verm)}
+.txt-base{background:var(--ouro-c);border-left:4px solid var(--ouro);margin:1rem 1.1rem 0;padding:1rem 1.1rem;border-radius:0 8px 8px 0;font-family:'Lora',serif;font-size:.94rem;line-height:1.85;color:#2b1d00;position:relative}
+.txt-fonte{font-family:'Inter',sans-serif;font-size:.72rem;color:var(--txt2);margin-top:.6rem;display:block;border-top:1px solid #e6d5b0;padding-top:.4rem}
+.btn-tts{position:absolute;top:.6rem;right:.6rem;background:none;border:1px solid #c9a14a;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;color:#8a6d1b;transition:.15s}
+.btn-tts:hover{background:#f5e6c1}
+.btn-tts.playing{background:var(--azul);color:#fff;border-color:var(--azul)}
+.img-slot{margin:.8rem 1.1rem 0;border:2px dashed var(--borda);border-radius:10px;padding:.8rem;text-align:center;color:var(--txt2);font-size:.76rem}
+.enunciado{padding:1rem 1.1rem .4rem;font-size:.92rem;line-height:1.6;font-weight:500;color:var(--azul)}
+.alts{padding:.4rem 1.1rem 1.1rem;display:flex;flex-direction:column;gap:.45rem}
+.alt{display:flex;align-items:flex-start;gap:10px;padding:.65rem .9rem;border:1.5px solid var(--borda);border-radius:9px;background:var(--branco);cursor:pointer;text-align:left;font-family:'Inter',sans-serif;font-size:.86rem;color:var(--txt);line-height:1.5;transition:.15s;width:100%}
+.alt:hover:not(:disabled){border-color:var(--azul-m);background:var(--azul-c);transform:translateX(2px)}
+.alt:disabled{cursor:default}
+.letra{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;border-radius:50%;background:var(--bg);font-size:.75rem;font-weight:700;color:var(--azul);flex-shrink:0}
+.alt.ok{border-color:var(--verde);background:var(--verde-c);color:var(--verde);font-weight:500}
+.alt.ok .letra{background:var(--verde);color:#fff}
+.alt.err{border-color:var(--verm);background:var(--verm-c);color:var(--verm)}
+.alt.err .letra{background:var(--verm);color:#fff}
+.alt.dim{opacity:.5}
+.fb{display:none;margin:0 1.1rem 1.1rem;padding:.8rem 1rem;border-radius:8px;font-size:.83rem;line-height:1.6}
+.fb.show{display:block}.fb.ok{background:var(--verde-c);border-left:3px solid var(--verde)}.fb.err{background:var(--verm-c);border-left:3px solid var(--verm)}
+.fb .ft{font-weight:600;margin-bottom:.3rem}.fb.ok .ft{color:var(--verde)}.fb.err .ft{color:var(--verm)}
+.fb .pq{margin-top:.5rem;border-top:1px solid rgba(0,0,0,.08);padding-top:.4rem}
+.fb .pq b{color:var(--azul)}
+.fb .pi{display:block;font-size:.8rem;color:var(--txt2);margin-bottom:.2rem}
+.fb .pi .l{font-weight:700;color:var(--azul)}
+#resultado{display:none;background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:2.4rem 2rem;text-align:center}
+#resultado h2{font-family:'Lora',serif;font-size:1.4rem;color:var(--azul)}
+.medalha{font-size:3rem;margin:.4rem 0}.nota{font-size:3.4rem;font-weight:700;color:var(--azul-m);line-height:1;margin:.4rem 0}
+#resultado p{color:var(--txt2);font-size:.9rem;max-width:480px;margin:.4rem auto 0}
+.btn{display:inline-block;background:var(--azul);color:#fff;padding:.65rem 1.5rem;border-radius:30px;border:none;font-size:.86rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;margin:.3rem}
+.btn:hover{background:var(--azul-m)}
+.btn.ouro{background:var(--ouro);color:var(--azul)}.btn.sec{background:var(--bg);color:var(--azul);border:1px solid var(--borda)}
+.jogo-card{background:var(--branco);border-radius:14px;border:1px solid var(--borda);overflow:hidden}
+.jogo-head{padding:1rem 1.3rem;border-bottom:1px solid var(--borda);display:flex;align-items:center;gap:.7rem}
+.jogo-ico{font-size:1.5rem}
+.jogo-head h3{font-family:'Lora',serif;font-size:1.1rem;color:var(--azul);margin:0}
+.jogo-head .desc{font-size:.78rem;color:var(--txt2)}
+.jogo-body{padding:1.2rem 1.3rem}
+.chip{font-size:.76rem;font-weight:600;padding:4px 11px;border-radius:20px;background:var(--azul-c);color:var(--azul)}
+.chip.timer{background:var(--ouro-c);color:#a96e10}
+.jogo-mid{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:.8rem}
+.timerbar{flex:1;min-width:100px;height:8px;background:var(--borda);border-radius:99px;overflow:hidden}
+.timerbar>div{height:100%;width:100%;background:linear-gradient(90deg,var(--verde),var(--ouro),var(--verm));border-radius:99px;transition:width .25s linear}
+.mini-texto{background:var(--ouro-c);border-left:4px solid var(--ouro);border-radius:0 8px 8px 0;padding:.85rem 1rem;font-family:'Lora',serif;font-size:.9rem;line-height:1.7;color:#2b1d00;margin-bottom:.8rem;position:relative}
+.mini-q{font-weight:600;color:var(--azul);margin-bottom:.6rem;font-size:.9rem}
+.mini-btn{border:1.5px solid var(--borda);background:var(--branco);border-radius:8px;padding:.45rem .8rem;font-size:.8rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;color:var(--azul);transition:.15s}
+.mini-btn:hover:not(:disabled){background:var(--azul-c);border-color:var(--azul-m)}
+.mini-btn:disabled{cursor:default}
+.mini-btn.ok{background:var(--verde-c);border-color:var(--verde);color:var(--verde)}
+.mini-btn.err{background:var(--verm-c);border-color:var(--verm);color:var(--verm)}
+.mini-fb{font-size:.8rem;margin-top:.5rem;padding:.45rem .65rem;border-radius:6px;display:none}
+.mini-fb.show{display:block}.mini-fb.ok{background:var(--verde-c);color:var(--verde)}.mini-fb.err{background:var(--verm-c);color:var(--verm)}
+.vf-item,.det-item{border:1.5px solid var(--borda);border-radius:10px;padding:.7rem .9rem;margin-bottom:.6rem}
+.vf-stm{font-size:.88rem;margin-bottom:.5rem}
+.btn-row{display:flex;gap:.5rem;flex-wrap:wrap}
+.cat-btn.cat-explicito.ok{border-color:var(--azul-m);background:var(--azul-c);color:var(--azul)}
+.cat-btn.cat-inferivel.ok{border-color:var(--ouro);background:var(--ouro-c);color:#a96e10}
+.cat-btn.cat-extrapolacao.ok{border-color:var(--verde);background:var(--verde-c);color:var(--verde)}
+.jogo-final{text-align:center;padding:.8rem 0 .3rem}
+.jogo-final .big{font-size:2rem;font-weight:700;color:var(--azul-m)}
+.jogo-final p{font-size:.88rem;color:var(--txt2);margin:.2rem 0 .8rem}
+.ord-list{list-style:none;padding:0;counter-reset:ord}
+.ord-item{counter-increment:ord;display:flex;align-items:center;gap:10px;padding:.6rem .9rem;border:1.5px solid var(--borda);border-radius:9px;margin-bottom:.5rem;background:var(--branco);font-size:.86rem;user-select:none}
+.ord-item::before{content:counter(ord);display:flex;align-items:center;justify-content:center;min-width:24px;height:24px;border-radius:50%;background:var(--azul-c);font-size:.72rem;font-weight:700;color:var(--azul)}
+.ord-item.ok{border-color:var(--verde);background:var(--verde-c)}
+.ord-item.err{border-color:var(--verm);background:var(--verm-c)}
+.ord-arrows{display:flex;flex-direction:column;gap:2px;margin-left:auto}
+.ord-arrows button{background:var(--bg);border:1px solid var(--borda);border-radius:4px;width:24px;height:20px;cursor:pointer;font-size:.65rem;display:flex;align-items:center;justify-content:center}
+.ord-arrows button:hover{background:var(--azul-c)}
+footer{text-align:center;padding:1.5rem;font-size:.76rem;color:var(--txt2)}
+@media print{.tabs,header,.prog-wrap,.btn,.btn-tts,.img-slot,footer,#resultado,.jogo-card,.records,.resumo-box,.dica-ouro,.glossario,.aviso-prof{display:none!important}.tab-pane{display:flex!important}.card{break-inside:avoid;border:1px solid #ccc;margin-bottom:1rem}.card-head{background:#333!important;-webkit-print-color-adjust:exact}.fb{display:block!important;background:#f5f5f5!important;border-left:3px solid #999!important;color:#333!important}}
+@media(max-width:480px){.painel{padding:1.1rem}.tab-btn{font-size:.78rem;padding:.8rem .3rem}}
+/* ===== TELA DE IDENTIFICAÇÃO E MODO DE JOGO ===== */
+.quiz-gate{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.8rem 1.6rem;max-width:480px;margin:0 auto}
+.quiz-gate h2{font-family:'Lora',serif;font-size:1.25rem;color:var(--azul);margin-bottom:.4rem}
+.quiz-gate>p{font-size:.88rem;color:var(--txt2);margin-bottom:1.2rem}
+.gate-field{margin-bottom:1.1rem}
+.gate-field>label{display:block;font-size:.82rem;font-weight:600;color:var(--azul-m);margin-bottom:.4rem}
+.gate-field input[type=text]{width:100%;padding:.65rem .8rem;border:1.5px solid var(--borda);border-radius:9px;font-family:'Inter',sans-serif;font-size:.92rem;color:var(--txt)}
+.gate-field input[type=text]:focus{outline:none;border-color:var(--azul-m)}
+.modo-opcoes{display:flex;flex-direction:column;gap:.6rem}
+.modo-opcao{display:flex;align-items:flex-start;gap:.6rem;border:1.5px solid var(--borda);border-radius:10px;padding:.7rem .85rem;cursor:pointer;transition:.15s}
+.modo-opcao:hover{border-color:var(--azul-m)}
+.modo-opcao input[type=radio]{margin-top:.25rem;accent-color:var(--azul-m)}
+.modo-opcao input[type=radio]:checked~span b{color:var(--azul)}
+.modo-opcao span{font-size:.85rem}
+.modo-opcao small{color:var(--txt2);font-weight:400}
+.gate-aviso{color:var(--verm);font-size:.82rem;margin-top:.7rem;min-height:1.2em}
+.modo-opcao.bloqueado{opacity:.6;cursor:not-allowed}
+.modo-opcao.liberado{opacity:1;cursor:pointer;border-color:var(--verde)}
+.cadeado{font-size:.75rem}
+.senha-box{display:flex;gap:.5rem;margin-top:.6rem}
+.senha-box input[type=password]{flex:1;padding:.55rem .75rem;border:1.5px solid var(--borda);border-radius:9px;font-family:'Inter',sans-serif;font-size:.85rem}
+.senha-box input[type=password]:focus{outline:none;border-color:var(--azul-m)}
+.senha-btn{white-space:nowrap;font-size:.8rem;padding:.55rem 1rem}
+.senha-aviso{font-size:.78rem;margin-top:.4rem;min-height:1.1em}
+.senha-aviso.ok{color:var(--verde)}
+.senha-aviso.erro{color:var(--verm)}
+.modo-chip{font-size:.74rem;font-weight:700;padding:4px 12px;border-radius:20px;background:var(--azul-c);color:var(--azul-m);margin-left:auto}
+.envio-status{font-size:.82rem;margin-top:.8rem;padding:.6rem .9rem;border-radius:8px}
+.envio-status.enviando{background:var(--azul-c);color:var(--azul-m)}
+.envio-status.ok{background:var(--verde-c);color:var(--verde)}
+.envio-status.erro{background:var(--verm-c);color:var(--verm)}
+/* No modo prova, o feedback de cada questão fica escondido até o aluno terminar */
+.fb.prova-oculto{display:none!important}
+@media print{.quiz-gate,.modo-chip,.envio-status{display:none!important}#quizConteudo{display:block!important}}
+</style>
+</head>
+<body>
+<header>
+<a href="index.html" class="voltar-link">← Painel SAEB/SIMAVE</a>
+<div class="badge">SAEB · SIMAVE · Língua Portuguesa</div>
+<h1>Habilidade D2</h1>
+<p>Inferir informações implícitas em um texto</p>
+</header>
+<nav class="tabs"><div class="tabs-inner">
+<button class="tab-btn active" data-tab="estudar">📚 Estudar</button>
+<button class="tab-btn" data-tab="quiz">📝 Quiz</button>
+<button class="tab-btn" data-tab="jogos">🎮 Jogos</button>
+</div></nav>
+<main>
+<section class="tab-pane active" id="pane-estudar">
+<div class="resumo-box"><h2>🎯 Em uma frase</h2><p>O D2 mede se você consegue <strong style="color:#ffd98a">concluir algo que o texto não diz com essas palavras</strong>, mas que pode ser deduzido a partir de pistas: ações de personagens, dados que se complementam, escolhas de palavras, contexto.</p><span class="fc">"A resposta não está escrita — mas pode ser comprovada pelo texto."</span></div>
+
+<section class="painel"><h2>📌 O que essa habilidade avalia</h2><p>Diferente do D1 (localizar o que está escrito), o D2 pede uma <strong>conclusão</strong>. Essa conclusão precisa estar sustentada por pistas do texto — não pode ser apenas algo "plausível" sem base nele.</p>
+<h3>Como o enunciado costuma aparecer:</h3>
+<ul><li>"É possível inferir que..."</li><li>"O texto sugere que..."</li><li>"A partir do texto, depreende-se que..."</li><li>"Combinando o texto e a imagem/gráfico, conclui-se que..."</li></ul>
+</section>
+
+<section class="dica-ouro painel"><h2>💡 Dica de ouro</h2><ul>
+<li><strong>Junte pistas, não palavras soltas.</strong> A resposta certa costuma combinar 2 ou mais informações do texto.</li>
+<li><strong>A inferência precisa "caber" no texto.</strong> Se a alternativa contradiz algo dito, está errada — mesmo que pareça lógica fora do texto.</li>
+<li><strong>Cuidado com a extrapolação.</strong> Não vale concluir além do que as pistas permitem (o texto sugere que algo PODE acontecer, não que VAI acontecer com certeza).</li>
+<li><strong>Desconfie de palavras absolutas</strong> como "nenhum", "todo", "sempre", "completamente" — são raramente sustentadas só por pistas.</li>
+<li><strong>Ações e atitudes</strong> dos personagens geralmente revelam sentimentos/intenções não ditos diretamente.</li>
+<li><strong>Em gráficos/infográficos</strong>, junte o que a imagem mostra com o que o texto diz — a resposta geralmente está na relação entre os dois.</li>
+</ul></section>
+
+<section class="painel glossario"><h2>📖 Glossário</h2><dl>
+<dt>Inferência</dt><dd>Conclusão obtida a partir de pistas do texto, mesmo sem estar escrita diretamente.</dd>
+<dt>Implícito</dt><dd>Sugerido, não dito abertamente.</dd>
+<dt>Pista textual</dt><dd>Elemento do texto (palavra, ação, dado) que sustenta uma inferência.</dd>
+<dt>Texto multissemiótico</dt><dd>Texto que combina linguagem verbal (palavras) com não verbal (imagens, gráficos, ícones).</dd>
+<dt>Extrapolação (cuidado!)</dt><dd>Ir além do que o texto permite concluir — é um erro comum.</dd>
+</dl></section>
+
+<div class="aviso-prof"><b>Professor:</b> os textos abaixo são originais, recontos de obras de domínio público ou baseados em dados reais com licença aberta (CC-BY) — podem ser publicados sem risco de direitos autorais.</div>
+
+<div class="records" id="recordsEstudar"><h2>🏆 Seus melhores resultados</h2><div class="rec-grid" id="recGrid"></div></div>
+</section>
+<section class="tab-pane" id="pane-quiz">
+
+<!-- ===== TELA DE IDENTIFICAÇÃO (aparece antes do quiz) ===== -->
+<div id="quizGate" class="quiz-gate">
+  <h2>👋 Antes de começar</h2>
+  <p>Preencha seus dados e escolha o modo de jogo.</p>
+  <div class="gate-field">
+    <label for="alunoNome">Nome do aluno</label>
+    <input type="text" id="alunoNome" placeholder="Seu nome completo" autocomplete="off">
+  </div>
+  <div class="gate-field">
+    <label for="alunoTurma">Turma / Série</label>
+    <input type="text" id="alunoTurma" placeholder="Ex: 9º Ano A" autocomplete="off">
+  </div>
+  <div class="gate-field">
+    <label>Modo de jogo</label>
+    <div class="modo-opcoes">
+      <label class="modo-opcao">
+        <input type="radio" name="modoQuiz" value="prova" checked>
+        <span><b>📝 Modo Prova</b><br><small>Sem feedback durante o quiz. As respostas certas só aparecem no final, como numa prova de verdade.</small></span>
+      </label>
+      <label class="modo-opcao" id="opcaoEstudo">
+        <input type="radio" name="modoQuiz" value="estudo" id="radioEstudo" disabled>
+        <span><b>📖 Modo Estudo</b> <span class="cadeado" id="cadeadoEstudo">🔒</span><br><small>Mostra se acertou ou errou — e a explicação — logo após cada resposta. Liberado pelo professor.</small></span>
+      </label>
+    </div>
+    <div class="senha-box" id="senhaBox">
+      <input type="password" id="senhaEstudo" placeholder="Senha do professor para liberar o Modo Estudo" autocomplete="off">
+      <button type="button" class="btn sec senha-btn" id="btnLiberarEstudo">Liberar</button>
+    </div>
+    <p class="senha-aviso" id="senhaAviso"></p>
+  </div>
+  <button class="btn" id="btnIniciarQuiz">▶ Começar o quiz</button>
+  <p class="gate-aviso" id="gateAviso"></p>
+</div>
+
+<!-- ===== QUIZ (fica oculto até o aluno preencher os dados acima) ===== -->
+<div id="quizConteudo" style="display:none">
+<div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.5rem;align-items:center">
+<button class="btn sec" onclick="window.print()">🖨️ Imprimir com gabarito</button>
+<button class="btn sec" onclick="location.reload()">🔀 Embaralhar e refazer</button>
+<span class="modo-chip" id="modoChip"></span>
+</div>
+<div class="prog-wrap"><span class="prog-label">Progresso</span><div class="prog-track"><div class="prog-fill" id="pFill"></div></div><span class="score" id="score">0 / 12</span></div>
+<div id="quiz" style="display:flex;flex-direction:column;gap:1.5rem"></div>
+<div id="resultado"><h2>Quiz concluído!</h2><div class="medalha" id="medalha">🏅</div><div class="nota" id="notaFinal">—</div><p id="msgFinal"></p><div id="envioStatus" class="envio-status"></div><div style="margin-top:1rem"><button class="btn" onclick="location.reload()">↺ Embaralhar e refazer</button></div></div>
+</div>
+</section>
+<section class="tab-pane" id="pane-jogos">
+<div class="resumo-box"><h2>🎮 Hora de jogar</h2><p>Cinco mini-games para treinar a leitura nas entrelinhas. Seus melhores resultados ficam salvos!</p></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">⏱️</span><div><h3>Pista ou Conclusão?</h3><div class="desc">Leia o trecho e infira a conclusão, antes que o tempo acabe!</div></div></div><div class="jogo-body" id="g1-body"><button class="btn ouro" onclick="G1.start()">▶ Começar</button></div></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">🏷️</span><div><h3>Explícito, Inferível ou Não dá pra saber?</h3><div class="desc">Classifique cada afirmação sobre o texto.</div></div></div><div class="jogo-body" id="g2-body"><button class="btn ouro" onclick="G2.start()">▶ Começar</button></div></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">🔍</span><div><h3>Ache a Pista</h3><div class="desc">Qual trecho do texto sustenta a conclusão?</div></div></div><div class="jogo-body" id="g3-body"><button class="btn ouro" onclick="G3.start()">▶ Começar</button></div></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">🧩</span><div><h3>Complete a Inferência</h3><div class="desc">Escolha a conclusão que faz sentido.</div></div></div><div class="jogo-body" id="g4-body"><button class="btn ouro" onclick="G4.start()">▶ Começar</button></div></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">🔢</span><div><h3>Ordene as Pistas</h3><div class="desc">Coloque as pistas na ordem em que aparecem no texto.</div></div></div><div class="jogo-body" id="g5-body"><button class="btn ouro" onclick="G5.start()">▶ Começar</button></div></div>
+</section>
+</main>
+<footer>Portal do Professor Marcos Cruz · SAEB/SIMAVE · D2</footer>
+
+<script>
+/* ===== CONFIGURAÇÃO DO ENVIO PARA GOOGLE SHEETS =====
+   Cole aqui a URL do seu Apps Script publicado como "App da Web".
+   Veja o arquivo google-apps-script.gs para instruções de instalação.
+   Enquanto estiver "SUBSTITUA_PELA_SUA_URL", o envio fica desativado
+   (o quiz funciona normalmente, só não manda nada para a planilha). */
+const SHEETS_URL = "SUBSTITUA_PELA_SUA_URL";
+const DESCRITOR_PAGINA = "D3 - Inferir informações implícitas";
+const NOME_ARQUIVO = "D03.html";
+
+/* ===== ESTADO DO ALUNO E MODO DE JOGO ===== */
+let alunoNome = "";
+let alunoTurma = "";
+let modoJogo = "estudo"; // "estudo" ou "prova"
+const respostasDetalhadas = []; // uma entrada por questão respondida, na ordem em que aparecem
+
+/* ===== SENHA PARA LIBERAR O MODO ESTUDO =====
+   Troque a senha abaixo quando quiser. É a MESMA senha em todas as páginas
+   do portal (mais simples de lembrar e passar para os alunos quando for
+   hora de revisão). Lembre-se: como o quiz roda no navegador do aluno,
+   essa senha impede o uso casual do Modo Estudo, mas não é uma proteção
+   contra alguém que abra o código-fonte da página — as respostas já estão
+   no arquivo de qualquer forma, como em qualquer site estático como este. */
+const SENHA_MODO_ESTUDO = "professor123";
+
+document.getElementById("btnLiberarEstudo").onclick = () => {
+  const campo = document.getElementById("senhaEstudo");
+  const aviso = document.getElementById("senhaAviso");
+  if (campo.value === SENHA_MODO_ESTUDO) {
+    document.getElementById("radioEstudo").disabled = false;
+    document.getElementById("radioEstudo").checked = true;
+    document.getElementById("cadeadoEstudo").textContent = "🔓";
+    document.getElementById("opcaoEstudo").classList.add("liberado");
+    document.getElementById("senhaBox").style.display = "none";
+    aviso.className = "senha-aviso ok";
+    aviso.textContent = "✓ Modo Estudo liberado.";
+  } else {
+    aviso.className = "senha-aviso erro";
+    aviso.textContent = "Senha incorreta.";
+  }
+};
+// Também libera ao apertar Enter no campo de senha
+document.getElementById("senhaEstudo").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") document.getElementById("btnLiberarEstudo").click();
+});
+
+document.getElementById("btnIniciarQuiz").onclick = () => {
+  const nome = document.getElementById("alunoNome").value.trim();
+  const turma = document.getElementById("alunoTurma").value.trim();
+  const aviso = document.getElementById("gateAviso");
+  if (!nome || !turma) {
+    aviso.textContent = "Preencha nome e turma/série para continuar.";
+    return;
+  }
+  alunoNome = nome;
+  alunoTurma = turma;
+  modoJogo = document.querySelector('input[name="modoQuiz"]:checked').value;
+  document.getElementById("quizGate").style.display = "none";
+  document.getElementById("quizConteudo").style.display = "block";
+  const chip = document.getElementById("modoChip");
+  chip.textContent = modoJogo === "prova" ? "📝 Modo Prova" : "📖 Modo Estudo";
+};
+
+/* ===== ENVIO PARA O GOOGLE SHEETS ===== */
+function enviarParaSheets() {
+  const statusEl = document.getElementById("envioStatus");
+  if (!SHEETS_URL || SHEETS_URL.indexOf("SUBSTITUA") !== -1) {
+    statusEl.className = "envio-status";
+    statusEl.textContent = "";
+    return; // envio desativado até o professor configurar a URL
+  }
+  statusEl.className = "envio-status enviando";
+  statusEl.textContent = "Enviando resultado para a planilha...";
+
+  const payload = {
+    nome: alunoNome,
+    turma: alunoTurma,
+    descritor: DESCRITOR_PAGINA,
+    pagina: NOME_ARQUIVO,
+    modo: modoJogo === "prova" ? "Prova" : "Estudo",
+    respostas: respostasDetalhadas
+  };
+
+  fetch(SHEETS_URL, {
+    method: "POST",
+    mode: "no-cors", // Apps Script Web Apps não devolvem CORS; "no-cors" garante o envio mesmo sem ler a resposta
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(payload)
+  }).then(() => {
+    statusEl.className = "envio-status ok";
+    statusEl.textContent = "✓ Resultado enviado para a planilha do professor.";
+  }).catch(() => {
+    statusEl.className = "envio-status erro";
+    statusEl.textContent = "✗ Não foi possível enviar o resultado (verifique sua internet).";
+  });
+}
+
+/* ===== QUIZ ===== */
+const QRAW=[{"n": 1, "tipo": "Fábula (Esopo)", "nivel": "facil", "texto": "<strong>A Raposa e as Uvas</strong><br><br>Numa tarde de muita sede, uma raposa avistou um cacho de uvas maduras, bem no alto de uma videira. Deu um salto. Não alcançou. Deu outro salto, ainda mais forte. Nada. Tentou uma terceira vez, quase torceu a pata, e nada. Por fim, afastou-se devagar, dizendo, com o nariz empinado: — Ora, essas uvas estão verdes mesmo. Nem valeria a pena comê-las.", "fonte": "Reconto livre da fábula de ESOPO. Domínio público.", "enun": "O que se pode inferir sobre o real motivo de a raposa dizer que as uvas “estão verdes”?", "alts": ["Ela realmente provou as uvas e elas estavam verdes.", "Ela inventa essa explicação porque não conseguiu alcançar as uvas.", "Ela está sendo gentil, deixando as uvas para que outros animais comam.", "Ela está avisando outros animais para não comerem as uvas."], "correta": 1, "porque": ["O texto não menciona que ela provou as uvas; ela apenas se afasta depois de não conseguir alcançá-las.", "Os saltos repetidos sem sucesso, seguidos da desistência e da frase final, sugerem que a fala é uma forma de disfarçar o fracasso.", "Não há, no texto, nenhum gesto de generosidade; a raposa se afasta sozinha, sem mencionar outros animais.", "Não há outros animais mencionados na fábula."]}, {"n": 2, "tipo": "Divulgação científica", "nivel": "facil", "texto": "<strong>Os braços que pensam</strong><br><br>Os polvos possuem cerca de 500 milhões de neurônios, mas a maior parte deles não fica no cérebro central: cerca de dois terços estão distribuídos pelos próprios braços. Cada braço possui agrupamentos de neurônios chamados de 'minicérebros', que permitem que ele se mova, saboreie e reaja ao ambiente de forma semi-independente, sem precisar esperar uma ordem do cérebro principal.", "fonte": "Adaptado de reportagem sobre neurociência de polvos, Correio Braziliense, jul. 2025, com base em pesquisas científicas sobre Octopus bimaculatus.", "enun": "Com base no texto, o que se pode inferir sobre a relação entre os braços de um polvo e seu cérebro central?", "alts": ["Os braços do polvo são totalmente incapazes de agir sem uma ordem do cérebro.", "Os braços do polvo podem agir com certa autonomia, sem depender só do cérebro central.", "O cérebro do polvo está localizado dentro de cada um dos braços.", "Os polvos não possuem cérebro, apenas neurônios espalhados pelo corpo."], "correta": 1, "porque": ["O texto diz o contrário: os braços podem reagir e “decidir” sozinhos.", "A distribuição de neurônios pelos braços, somada à ideia de que eles “decidem” sem esperar o cérebro, permite inferir certa autonomia.", "O texto não diz que o cérebro está dentro dos braços, apenas que parte dos neurônios está lá.", "O texto menciona um “cérebro central”, ou seja, o polvo possui cérebro."]}, {"n": 3, "tipo": "Notícia", "nivel": "facil", "texto": "<strong>Pesquisa mostra queda no número de leitores no Brasil</strong><br><br>Uma pesquisa nacional sobre hábitos de leitura mostrou que o percentual de brasileiros que leram ao menos um livro nos últimos três meses caiu de 52%, em 2019, para 47%, em 2024 — uma redução equivalente a cerca de 6,7 milhões de leitores no período. Segundo especialistas ouvidos pela reportagem, o tempo dedicado a redes sociais e vídeos curtos tem disputado a atenção das pessoas com a leitura de livros. Por outro lado, o hábito de ouvir audiolivros cresceu: o percentual de pessoas que escutam esse formato passou de 20% para 23% entre 2019 e 2024.", "fonte": "Adaptado de dados da Pesquisa Retratos da Leitura no Brasil (Instituto Pró-Livro, 2024) e reportagens sob licença Creative Commons (CC-BY 3.0).", "enun": "A partir do texto, o que se pode inferir sobre a relação entre o uso de redes sociais e a queda no número de leitores?", "alts": ["O texto afirma que as redes sociais são a única causa da queda no número de leitores.", "O texto sugere que as redes sociais competem pela atenção das pessoas, o que pode ter contribuído para a queda.", "O texto afirma que ler livros e usar redes sociais são atividades sem nenhuma relação entre si.", "Segundo o texto, o crescimento dos audiolivros foi causado diretamente pelo uso de redes sociais."], "correta": 1, "porque": ["O texto usa a expressão “tem disputado a atenção”, que indica concorrência, mas não diz ser a única causa da queda.", "A ideia de “disputar a atenção” permite inferir uma relação entre o aumento do uso de redes sociais e a diminuição da leitura, sem afirmar uma causa exclusiva.", "O texto sugere justamente uma relação (disputa de atenção), não ausência de relação.", "O texto não estabelece essa relação; apresenta os dois dados separadamente, com “por outro lado”."]}, {"n": 4, "tipo": "Tirinha (texto original)", "nivel": "facil", "texto": "<strong>Tirinha: Sexta-feira</strong><br><br><div style=\"display:flex;gap:8px;flex-wrap:wrap;margin-top:8px\"><div style=\"border:2px solid #2b1d00;border-radius:8px;padding:8px;flex:1;min-width:130px;text-align:center;background:#fffdf5;font-size:.82rem\">🧒: “Mãe, posso comer o último pedaço do bolo?”</div><div style=\"border:2px solid #2b1d00;border-radius:8px;padding:8px;flex:1;min-width:130px;text-align:center;background:#fffdf5;font-size:.82rem\">👩: “Pode... mas depois não vem reclamar de dor de barriga.”</div><div style=\"border:2px solid #2b1d00;border-radius:8px;padding:8px;flex:1;min-width:130px;text-align:center;background:#fffdf5;font-size:.82rem\">🧒 (deitado, segurando a barriga)<br>👩 (sorrindo de canto): “Eu avisei.”</div></div>", "fonte": "Tirinha original (texto), criada para esta atividade.", "enun": "O que se pode inferir sobre o que aconteceu com a criança entre o segundo e o terceiro quadrinho?", "alts": ["A criança não comeu o bolo, por medo da reação da mãe.", "A criança comeu o bolo e, depois, sentiu dor de barriga, como a mãe havia previsto.", "A mãe comeu o bolo no lugar da criança.", "A criança e a mãe fizeram um novo bolo juntas."], "correta": 1, "porque": ["A criança aparece deitada e segurando a barriga no terceiro quadrinho, o que contradiz essa alternativa.", "A fala da mãe (“não vem reclamar de dor de barriga”) somada à imagem da criança deitada, segurando a barriga, e ao comentário final (“Eu avisei”) permitem essa inferência.", "Não há nada nos quadrinhos que sugira isso.", "Não há menção a um novo bolo na tirinha."]}, {"n": 5, "tipo": "Texto multissemiótico", "nivel": "medio", "texto": "<strong>Leitura x Audiolivros no Brasil (2019–2024)</strong><br><br>Os dados abaixo, da Pesquisa Retratos da Leitura, mostram duas tendências no mesmo período:<div style=\"margin:10px 0\"><div style=\"font-size:.82rem;margin-bottom:2px\">Leitores de livros (últimos 3 meses)</div><div style=\"display:flex;align-items:center;gap:6px;margin-bottom:4px\"><span style=\"font-size:.78rem;width:42px;display:inline-block\">2019</span><div style=\"background:#c9871f;border-radius:4px;height:14px;width:52%\"></div><span style=\"font-size:.78rem\">&nbsp;52%</span></div><div style=\"display:flex;align-items:center;gap:6px\"><span style=\"font-size:.78rem;width:42px;display:inline-block\">2024</span><div style=\"background:#c9871f;border-radius:4px;height:14px;width:47%\"></div><span style=\"font-size:.78rem\">&nbsp;47%</span></div><div style=\"font-size:.82rem;margin:10px 0 2px\">Ouvintes de audiolivros</div><div style=\"display:flex;align-items:center;gap:6px;margin-bottom:4px\"><span style=\"font-size:.78rem;width:42px;display:inline-block\">2019</span><div style=\"background:#a96e10;border-radius:4px;height:14px;width:20%\"></div><span style=\"font-size:.78rem\">&nbsp;20%</span></div><div style=\"display:flex;align-items:center;gap:6px\"><span style=\"font-size:.78rem;width:42px;display:inline-block\">2024</span><div style=\"background:#a96e10;border-radius:4px;height:14px;width:23%\"></div><span style=\"font-size:.78rem\">&nbsp;23%</span></div></div>", "fonte": "Gráficos elaborados a partir de dados da Pesquisa Retratos da Leitura no Brasil (Instituto Pró-Livro, 2024).", "enun": "Combinando os dois gráficos, o que se pode inferir sobre a forma como os brasileiros estão consumindo conteúdo de livros?", "alts": ["A queda na leitura tradicional indica que os brasileiros estão lendo menos livros, em qualquer formato.", "Apesar da queda na leitura tradicional, o crescimento dos audiolivros sugere uma mudança no formato de consumo, não um abandono total.", "Os gráficos mostram que os audiolivros já são mais populares do que os livros impressos.", "Não é possível relacionar os dois gráficos, pois tratam de assuntos diferentes."], "correta": 1, "porque": ["Essa conclusão ignora o segundo gráfico, que mostra crescimento no consumo de audiolivros no mesmo período.", "A queda em um gráfico (leitura tradicional) combinada ao crescimento no outro (audiolivros) sugere mudança de formato, não desinteresse total.", "23% é bem menor que 47% — os audiolivros não superam os livros impressos nos dados apresentados.", "Os dois gráficos tratam do mesmo tema (consumo de livros) no mesmo período, por isso podem ser relacionados."]}, {"n": 6, "tipo": "Crônica (texto original)", "nivel": "medio", "texto": "<strong>O Pastor e o Lobo</strong><br><br>Um pastor de ovelhas achava a vida muito monótona. Por isso, inventava de tudo para se distrair. A sua diversão favorita era fingir que estava em apuros: <em>\"Um lobo! Socorro! Socorro!\"</em>, costumava gritar. Quando as pessoas do povoado vinham em seu socorro, encontravam-no perfeitamente seguro, rindo a valer. Um dia apareceu um lobo de verdade na frente do pastor. Desesperado, ele começou a gritar como sempre fazia. Desta vez ninguém veio socorrê-lo, e o lobo devorou todas as suas ovelhas.<br><em>Moral: Quando os mentirosos falam a verdade, ninguém acredita.</em>", "fonte": "ESOPO. <b>O Pastor e o Lobo</b>. Fábulas clássicas. Domínio público.", "enun": "O que se pode inferir sobre o motivo de ninguém ter ido ajudar o pastor na última vez?", "alts": ["As pessoas do povoado estavam ocupadas demais para ajudar.", "As pessoas não acreditaram nele, pois ele já havia mentido sobre o lobo várias vezes antes.", "O lobo havia ameaçado as pessoas do povoado antes.", "O pastor não gritou alto o suficiente dessa vez."], "correta": 1, "porque": ["O texto não menciona que as pessoas estavam ocupadas.", "Correto: o texto não afirma isso diretamente, mas a moral ('quando os mentirosos falam a verdade, ninguém acredita') e o padrão de mentiras repetidas do pastor permitem inferir que a credibilidade dele havia se esgotado.", "Não há menção a ameaças do lobo às pessoas.", "Não há indicação sobre o volume do grito; o problema é a credibilidade, não o volume."]}, {"n": 7, "tipo": "Cordel (texto original)", "nivel": "medio", "texto": "<strong>A Cigarra e a Formiga</strong> (trad. Bocage)<br><br><em>\"Tendo a cigarra em cantigas / Folgado todo o Verão, / Achou-se em penúria extrema / Na tormentosa estação. // Não lhe restando migalha / Que trincasse, a tagarela / Foi valer-se da formiga, / Que morava perto dela. // Rogou-lhe que lhe emprestasse [...] / A formiga nunca empresta, / Nunca dá, por isso junta. / 'No Verão em que lidavas?' / À pedinte ela pergunta.\"</em>", "fonte": "LA FONTAINE, Jean de. <b>A Cigarra e a Formiga</b>. Tradução de Bocage (1765–1805). Domínio público.", "enun": "O que se pode inferir sobre a verdadeira razão da pergunta da formiga ('No Verão em que lidavas?')?", "alts": ["A formiga está apenas curiosa sobre a rotina da cigarra.", "A formiga está indiretamente cobrando da cigarra por não ter trabalhado durante o verão, justificando sua recusa em ajudar.", "A formiga quer convidar a cigarra para cantar com ela.", "A formiga não sabe o que a cigarra fez durante o verão."], "correta": 1, "porque": ["Não é simples curiosidade; a pergunta tem função de reprovação implícita.", "Correto: a pergunta da formiga, somada ao fato de que 'nunca empresta, nunca dá', revela uma cobrança implícita — ela está usando a pergunta para justificar moralmente sua recusa em ajudar a cigarra.", "Não há convite para cantar; a formiga já demonstrou negativa de ajuda.", "A formiga certamente sabe (são vizinhas), por isso a pergunta é retórica, não informativa."]}, {"n": 8, "tipo": "Notícia", "nivel": "medio", "texto": "<strong>Energia solar é hoje a 2ª maior fonte de eletricidade do Brasil</strong><br><br>A energia solar se tornou a segunda maior fonte da matriz elétrica brasileira, respondendo por cerca de 22% a 24% de toda a eletricidade gerada no país. A maior parte dessa energia vem da chamada geração distribuída — painéis instalados em telhados de casas, comércios e propriedades rurais —, sendo que os sistemas residenciais representam a maior parte das instalações em operação. Segundo o setor, esse tipo de geração, feita perto de onde a energia é consumida, reduz perdas na rede de transmissão.", "fonte": "Adaptado de reportagem da AGÊNCIA BRASIL/EBC, mar. 2025. Licença Creative Commons (CC-BY 3.0).", "enun": "Com base no texto, o que se pode inferir sobre o papel das famílias brasileiras no crescimento recente da energia solar?", "alts": ["O texto afirma que apenas grandes empresas investem em energia solar no Brasil.", "Como a maior parte das instalações de geração distribuída é residencial, é possível inferir que as famílias têm papel importante nesse crescimento.", "O texto explica esse crescimento pela oferta de painéis solares gratuitos do governo às famílias.", "O texto sugere que a energia solar residencial ainda é um modelo raro e pouco utilizado no Brasil."], "correta": 1, "porque": ["O texto destaca justamente o oposto: a maior parte das instalações é residencial.", "A informação de que “os sistemas residenciais representam a maior parte das instalações” permite inferir que as famílias estão entre os principais responsáveis por esse crescimento.", "O texto não menciona nenhum programa de distribuição gratuita pelo governo.", "O texto afirma o contrário: os sistemas residenciais “representam a maior parte das instalações em operação”, ou seja, é um modelo já bastante disseminado."]}, {"n": 9, "tipo": "Poema (Romantismo)", "nivel": "dificil", "verso": 1, "texto": "<strong>Canção do Exílio</strong> (terceira estrofe)<br><br>Não permita Deus que eu morra,<br>Sem que volte para lá;<br>Sem que desfrute os primores<br>Que não encontro por cá;<br>Sem qu'inda aviste as palmeiras<br>Onde canta o Sabiá.", "fonte": "DIAS, Gonçalves. In: Primeiros Cantos, 1846. Domínio público.", "enun": "O que se pode inferir sobre o estado de espírito do eu lírico a partir do verso “Não permita Deus que eu morra, / Sem que volte para lá”?", "alts": ["O eu lírico está satisfeito com a vida no lugar onde se encontra atualmente.", "O eu lírico sente um desejo tão forte de voltar à sua terra que associa esse retorno a uma condição para morrer em paz.", "O eu lírico tem medo da morte e, por isso, evita pensar no assunto.", "O eu lírico já está de volta à sua terra natal quando escreve o poema."], "correta": 1, "porque": ["O verso seguinte (“Sem que desfrute os primores / Que não encontro por cá”) mostra insatisfação com o lugar atual.", "Pedir a Deus para não morrer sem voltar sugere que esse retorno é essencial para o eu lírico — uma intensidade de desejo (saudade) que vai além do comum.", "O verso fala da morte como possibilidade ligada a uma condição (“sem que volte”), não como algo evitado por medo.", "Os verbos no subjuntivo (“volte”, “desfrute”, “aviste”) indicam algo que ainda não aconteceu — o eu lírico ainda não voltou."]}, {"n": 10, "tipo": "Divulgação científica", "nivel": "dificil", "texto": "<strong>O cérebro que não descansa</strong><br><br>Durante o sono, o cérebro não 'desliga' — pelo contrário, entra em um processo intenso de organização. Pesquisas em neurociência mostram que o sono profundo, especialmente nas primeiras horas da noite, ajuda a transferir informações do armazenamento inicial para redes neurais mais estáveis. Estudar 7 horas e dormir 7 horas tende a produzir mais retenção de conteúdo do que estudar 10 horas e dormir apenas 4 — porque o cérebro que dorme pouco não tem tempo de consolidar o que foi aprendido.", "fonte": "Adaptado de reportagens sobre neurociência do sono e aprendizagem, com base em estudos da Universidade da Pensilvânia e pesquisa publicada em 2025 sobre sono e memória.", "enun": "Com base no texto, o que se pode inferir sobre a prática de “virar a noite” estudando na véspera de uma prova?", "alts": ["É a melhor estratégia, pois aumenta o tempo total dedicado ao estudo.", "Pode ser pouco eficaz, já que o sono parece fazer parte do processo de fixação do conteúdo estudado.", "É indiferente para a memória, pois o texto trata apenas de concentração e humor, não de fixação de conteúdo.", "O texto sugere que o efeito do sono se limita ao dia seguinte, sem relação com o que foi estudado antes de dormir."], "correta": 1, "porque": ["O texto sugere o contrário: mais tempo de estudo sem sono pode prejudicar a fixação do conteúdo.", "Se o sono ajuda a “consolidar” o que foi estudado, dormir pouco pode comprometer justamente a fixação do conteúdo, tornando a estratégia pouco eficaz.", "O texto trata diretamente da consolidação da memória durante o sono, não apenas de concentração e humor.", "O texto relaciona o sono justamente ao conteúdo estudado antes de dormir, por meio da consolidação da memória."]}, {"n": 11, "tipo": "Conto (texto original)", "nivel": "dificil", "texto": "<b>Bons Dias!</b> (trecho adaptado)<br><br><em>\"Tinha eu preparado um discurso longo, cheio de citações e frases bonitas, decoradas com cuidado. Mas, na hora, esqueci tudo. Fiquei ali, mudo, por um instante que pareceu eterno. Então, em vez do discurso, disse apenas o que sentia, sem ornamentos. E foi isso, justamente isso, que arrancou aplausos — não a eloquência que faltou, mas a verdade que sobrou.\"</em>", "fonte": "Adaptado do espírito das crônicas de MACHADO DE ASSIS, série Bons Dias!, 1888-1889. Domínio público.", "enun": "O que se pode inferir sobre o motivo de o cronista ter sido aplaudido?", "alts": ["O público aplaudiu porque o discurso decorado foi impecável.", "O público se emocionou com a sinceridade da fala espontânea, mais do que aplaudiria um discurso ensaiado.", "O público aplaudiu por educação, independentemente do conteúdo.", "O cronista não sabe explicar por que foi aplaudido."], "correta": 1, "porque": ["O texto diz claramente que ele esqueceu o discurso decorado.", "Correto: o texto indica que foi 'a verdade que sobrou' — não a eloquência planejada — que emocionou o público, sugerindo que a autenticidade comoveu mais do que um discurso ensaiado teria comovido.", "Não há indicação de aplauso por mero protocolo; o texto enfatiza a emoção genuína.", "O cronista identifica claramente o motivo ao contrastar 'eloquência que faltou' com 'verdade que sobrou'."]}, {"n": 12, "tipo": "Texto multissemiótico", "nivel": "dificil", "texto": "<strong>Sono de adolescentes: dados de pesquisa real</strong><br><br>Uma pesquisa com adolescentes de Fortaleza (CE) mostrou que quase 55% dos jovens têm sono insuficiente, e cerca de 48% relataram sonolência excessiva durante o dia. O estudo também encontrou uma diferença relevante: entre os adolescentes que usavam celular antes de dormir, 56,3% relataram sono insuficiente — contra 49,7% entre os que não usavam celular antes de deitar.<div style=\"margin:10px 0\"><div style=\"display:flex;align-items:center;gap:6px;margin-bottom:4px\"><span style=\"font-size:.78rem;width:180px;display:inline-block\">Usa celular antes de dormir</span><div style=\"background:#b02a2a;border-radius:4px;height:14px;width:56%\"></div><span style=\"font-size:.78rem\">&nbsp;56,3%</span></div><div style=\"display:flex;align-items:center;gap:6px\"><span style=\"font-size:.78rem;width:180px;display:inline-block\">Não usa celular antes de dormir</span><div style=\"background:#246b4a;border-radius:4px;height:14px;width:50%\"></div><span style=\"font-size:.78rem\">&nbsp;49,7%</span></div></div>", "fonte": "Pesquisa de dissertação de Felipe Alves, Universidade Federal do Ceará (UFC), divulgada pela Agência UFC. Dados reais de pesquisa acadêmica.", "enun": "Com base nos dados, o que se pode inferir sobre a relação entre uso de celular e sono insuficiente?", "alts": ["Não há relação alguma entre o uso de celular e a qualidade do sono dos adolescentes.", "Usar celular antes de dormir parece estar associado a uma maior proporção de sono insuficiente entre os adolescentes pesquisados.", "O gráfico mostra que a maioria dos estudantes que usa celular dorme melhor.", "Os dados provam, sem dúvida, que o celular é a única causa do sono insuficiente."], "correta": 1, "porque": ["Os dados mostram uma diferença percentual entre os dois grupos, o que sugere associação.", "Correto: a diferença de 56,3% contra 49,7% indica uma associação entre uso de celular antes de dormir e maior proporção de sono insuficiente — não prova causa única, mas mostra correlação relevante nos dados.", "Os dados mostram o oposto: maior proporção de sono insuficiente entre quem usa celular.", "A pesquisa mostra associação, não prova de causa exclusiva; outros fatores podem influenciar o sono."]}];
+const G1_ROUNDS = [{"t": "Marina chegou na sala, jogou a mochila na cadeira e nem respondeu ao “bom dia” da professora. Ficou olhando para o celular embaixo da carteira o resto da aula.", "q": "O que se pode inferir sobre o estado de Marina nessa aula?", "o": ["Ela estava muito interessada no conteúdo da aula.", "Algo a estava incomodando ou distraindo.", "Ela tinha terminado todas as tarefas.", "Ela é sempre assim, todos os dias."], "c": 1}, {"t": "O restaurante, antes lotado às sextas, agora tem mesas vazias mesmo nos fins de semana. O dono trocou o cardápio impresso por um QR code e reduziu o número de garçons.", "q": "O que se pode inferir sobre a situação do restaurante?", "o": ["O restaurante está com mais clientes do que antes.", "O restaurante pode estar passando por dificuldades financeiras.", "O dono decidiu fechar o restaurante imediatamente.", "O restaurante mudou de endereço."], "c": 1}, {"t": "Depois da reunião, o diretor saiu sem dizer nada, levando a pasta debaixo do braço. Os professores se entreolharam e começaram a guardar seus materiais em silêncio.", "q": "O que se pode inferir sobre o clima da reunião?", "o": ["A reunião foi muito alegre e animada.", "Algo na reunião deixou as pessoas desconfortáveis ou tensas.", "A reunião não chegou a acontecer.", "Todos saíram muito satisfeitos com o resultado."], "c": 1}, {"t": "Ana trouxe o guarda-chuva, a capa de chuva e as botas, mesmo o sol estando forte naquela manhã.", "q": "O que se pode inferir sobre Ana?", "o": ["Ela não sabia para que servia o guarda-chuva.", "Ela provavelmente viu uma previsão de chuva para aquele dia.", "Ela estava sentindo muito frio.", "Ela emprestou os itens de um amigo."], "c": 1}, {"t": "O cachorro correu até a porta antes mesmo de a campainha tocar, com o rabo abanando sem parar.", "q": "O que se pode inferir sobre o cachorro?", "o": ["Ele estava com medo de quem chegava.", "Ele reconheceu, por algum sinal, a chegada de alguém que conhece e gosta.", "Ele queria sair de casa correndo.", "Ele estava com fome naquele momento."], "c": 1}];
+const G2_TEXT = "Marcela chegou à escola sem o caderno de Matemática. Sentou no fundo da sala e ficou olhando pela janela. Quando a professora pediu para abrirem o caderno na página 42, ela disse que tinha esquecido em casa. A professora suspirou e emprestou uma folha.";
+const G2_ITEMS = [{"s": "Marcela disse que tinha esquecido o caderno em casa.", "cat": "explicito", "p": "Está escrito exatamente assim no texto."}, {"s": "Marcela sentou no fundo da sala.", "cat": "explicito", "p": "Informação dita diretamente pelo texto."}, {"s": "A professora ficou incomodada com a situação.", "cat": "inferivel", "p": "O texto não diz “incomodada”, mas o gesto de suspirar sugere isso."}, {"s": "Marcela estava distraída ou pensando em outra coisa antes da aula começar.", "cat": "inferivel", "p": "“Ficou olhando pela janela” sugere distração, sem dizer isso diretamente."}, {"s": "Marcela não tinha dinheiro para comprar um caderno novo.", "cat": "extrapolacao", "p": "O texto não fala nada sobre dinheiro — isso seria ir além do que está escrito."}, {"s": "Essa não era a primeira vez que Marcela esquecia material.", "cat": "extrapolacao", "p": "O texto descreve um único episódio; não há como saber se já aconteceu antes."}];
+const G3_ROUNDS = [{"t": "João chegou em casa, jogou a mochila no chão e foi direto para o quarto, fechando a porta com força. Na mesa da cozinha, o boletim continuava aberto, do jeito que a mãe tinha deixado.", "q": "Conclusão: “É possível inferir que João não recebeu boas notícias no boletim.” Qual trecho do texto melhor sustenta essa conclusão?", "o": ["“chegou em casa”", "“jogou a mochila no chão e fechou a porta com força”", "“Na mesa da cozinha, o boletim continuava aberto”", "“foi direto para o quarto”"], "c": 1}, {"t": "Depois do jogo, o time voltou para o vestiário em silêncio. Ninguém tirou a camisa imediatamente; alguns ficaram sentados, olhando para o chão.", "q": "Conclusão: “É possível inferir que o time perdeu o jogo.” Qual trecho melhor sustenta essa conclusão?", "o": ["“o time voltou para o vestiário”", "“em silêncio... alguns ficaram sentados, olhando para o chão”", "“Ninguém tirou a camisa imediatamente”", "“Depois do jogo”"], "c": 1}, {"t": "A loja, que antes ficava aberta até as 22h, agora fecha às 18h. Duas vitrines estão com cartazes de “tudo pela metade do preço”.", "q": "Conclusão: “É possível inferir que a loja está enfrentando dificuldades.” Qual trecho melhor sustenta essa conclusão?", "o": ["“fecha às 18h”", "“cartazes de ‘tudo pela metade do preço’”", "“antes ficava aberta até as 22h”", "“Duas vitrines estão”"], "c": 1}, {"t": "Pedro estudou a noite toda para a prova. No dia seguinte, levou três xícaras de café para a escola e, durante a prova, cochilou duas vezes sobre a folha.", "q": "Conclusão: “É possível inferir que Pedro não conseguiu se concentrar bem durante a prova.” Qual trecho melhor sustenta essa conclusão?", "o": ["“estudou a noite toda”", "“levou três xícaras de café”", "“cochilou duas vezes sobre a folha”", "“No dia seguinte”"], "c": 2}, {"t": "Depois da reforma, a praça ganhou bancos novos, mas as luzes continuam quebradas. À noite, quase ninguém passa por ali.", "q": "Conclusão: “É possível inferir que a falta de iluminação influencia o uso da praça à noite.” Qual trecho melhor sustenta essa conclusão?", "o": ["“ganhou bancos novos”", "“as luzes continuam quebradas... quase ninguém passa por ali”", "“Depois da reforma”", "“a praça ganhou”"], "c": 1}];
+const G4_ROUNDS = [{"ctx": "Texto: “O cachorro correu até a porta antes mesmo de a campainha tocar, com o rabo abanando.”", "f": "É possível inferir que o cachorro ___ a pessoa que chegou.", "o": ["temia", "reconheceu e gostava de", "não conhecia", "estava fugindo de"], "c": 1}, {"ctx": "Texto: “Ana trouxe guarda-chuva, capa de chuva e botas, mesmo com o sol forte pela manhã.”", "f": "É possível inferir que Ana ___ chuva para aquele dia.", "o": ["não esperava", "esperava", "odiava", "já tinha visto"], "c": 1}, {"ctx": "Texto (fábula): a raposa, após não alcançar as uvas, disse que elas “estavam verdes”.", "f": "A fala da raposa funciona como uma forma de ___ o fracasso em alcançar as uvas.", "o": ["comemorar", "disfarçar", "explicar cientificamente", "registrar"], "c": 1}, {"ctx": "Texto: o professor Aurélio guardou o discurso escrito e falou apenas “parabéns, turma” sem microfone.", "f": "A platéia aplaudiu de pé porque se ___ com a simplicidade da fala.", "o": ["incomodou", "emocionou", "confundiu", "assustou"], "c": 1}, {"ctx": "Texto: dados mostram queda na leitura de livros impressos, mas crescimento no uso de audiolivros.", "f": "É possível inferir que o hábito de consumir livros está ___, não desaparecendo.", "o": ["sumindo", "se transformando", "proibido", "estagnado"], "c": 1}];
+const G5_ROUNDS = [{"title": "Pistas: Seu Roberto e a escola", "correct": ["Seu Roberto chegou à escola vinte minutos antes do sinal.", "Ele ficou olhando o relógio do painel a cada minuto.", "Lia comentou que o pai chegou cedo de novo.", "Ele perguntou várias vezes se ela tinha comido na escola.", "O texto revela que ele tinha lido, à noite, sobre crianças passando mal."]}, {"title": "Pistas: O Discurso do professor Aurélio", "correct": ["O professor ensaiou o discurso, repassando as frases no espelho do carro.", "Ele subiu ao palco com folhas cheias de anotações.", "O microfone não funcionou.", "Ele guardou as folhas no bolso.", "Disse, sem microfone, apenas: “parabéns, turma”.", "A platéia aplaudiu de pé."]}, {"title": "Pistas: A Raposa e as Uvas", "correct": ["A raposa avistou um cacho de uvas no alto da videira.", "Ela deu o primeiro salto e não alcançou.", "Tentou mais duas vezes, sem sucesso.", "Afastou-se devagar.", "Disse que as uvas estavam verdes e não valiam a pena."]}];
+
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function stripHTML(s){const d=document.createElement("div");d.innerHTML=s;return d.textContent||"";}
+
+function toggleTTS(btn,id){
+  if(window.speechSynthesis.speaking){window.speechSynthesis.cancel();document.querySelectorAll(".btn-tts").forEach(b=>b.classList.remove("playing"));return;}
+  const el=document.getElementById(id);if(!el)return;
+  const text=stripHTML(el.innerHTML).replace(/\s+/g," ");
+  const u=new SpeechSynthesisUtterance(text);u.lang="pt-BR";u.rate=.9;
+  btn.classList.add("playing");
+  u.onend=()=>btn.classList.remove("playing");
+  u.onerror=()=>btn.classList.remove("playing");
+  window.speechSynthesis.speak(u);
+}
+
+const REC_KEY="saeb_d2_records";
+function loadRec(){try{return JSON.parse(localStorage.getItem(REC_KEY))||{};}catch{return {};}}
+function saveRec(k,v){const r=loadRec();if(!(k in r)||v>r[k])r[k]=v;localStorage.setItem(REC_KEY,JSON.stringify(r));renderRec();}
+function renderRec(){
+  const r=loadRec(),g=document.getElementById("recGrid");if(!g)return;
+  const items=[{k:"quiz",l:"Quiz (de 12)"},{k:"pista",l:"Pista ou Conclusão?"},{k:"classificar",l:"Explícito/Inferível"},{k:"achapista",l:"Ache a Pista"},{k:"complete",l:"Complete"},{k:"ordene",l:"Ordene"}];
+  g.innerHTML=items.map(i=>`<div class="rec-item"><div class="rv">${r[i.k]!=null?r[i.k]:"\u2014"}</div><div class="rl">${i.l}</div></div>`).join("");
+}
+renderRec();
+
+document.querySelectorAll(".tab-btn").forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll(".tab-pane").forEach(p=>p.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById("pane-"+btn.dataset.tab).classList.add("active");
+    window.scrollTo({top:0,behavior:"smooth"});
+  };
+});
+
+/* ---------- QUIZ ---------- */
+const QS = shuffle(QRAW).map((q,idx)=>{
+  const map=Array.from({length:q.alts.length},(_,i)=>i);
+  const smap=shuffle(map);
+  return{...q,dn:idx+1,alts:smap.map(i=>q.alts[i]),porque:smap.map(i=>q.porque[i]),correta:smap.indexOf(q.correta)};
+});
+const nivelLabel={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
+const quizEl=document.getElementById("quiz");
+QS.forEach(q=>{
+  const c=document.createElement("div");c.className="card";c.dataset.q=q.dn;
+  const tid="txt"+q.dn;
+  c.innerHTML=`<div class="card-head"><span class="qnum">Questão ${q.dn}</span><span class="qtipo">${q.tipo}</span><span class="qnivel ${q.nivel}">${nivelLabel[q.nivel]}</span></div>
+  <div class="txt-base" id="${tid}">${q.texto}<span class="txt-fonte">${q.fonte}</span><button class="btn-tts" onclick="toggleTTS(this,'${tid}')" title="Ouvir texto">\uD83D\uDD0A</button></div>
+  <div class="img-slot">\uD83D\uDDBC\uFE0F Espaço para imagem</div>
+  <p class="enunciado">${q.enun}</p>
+  <div class="alts">${q.alts.map((t,i)=>`<button class="alt" onclick="resp(${q.dn},${i})"><span class="letra">${"ABCD"[i]}</span> ${t}</button>`).join("")}</div>
+  <div class="fb" id="fb${q.dn}"></div>`;
+  quizEl.appendChild(c);
+});
+let acertos=0;const feitas=new Set();
+function resp(n,k){
+  if(feitas.has(n))return;feitas.add(n);
+  const q=QS.find(x=>x.dn===n),card=quizEl.querySelector(`[data-q="${n}"]`),btns=card.querySelectorAll(".alt"),fb=document.getElementById("fb"+n);
+  const ok=k===q.correta;if(ok)acertos++;
+
+  // Registra a resposta detalhada desta questão para depois enviar ao Sheets
+  respostasDetalhadas.push({
+    questao: n,
+    tipo: q.tipo,
+    nivel: q.nivel,
+    respostaDada: k>=0 ? "ABCD"[k] : "(não respondeu)",
+    respostaCorreta: "ABCD"[q.correta],
+    acertou: ok
+  });
+
+  btns.forEach((b,i)=>{b.disabled=true;if(i===q.correta)b.classList.add("ok");else if(i===k)b.classList.add("err");else b.classList.add("dim");});
+  const pq=q.alts.map((t,i)=>`<span class="pi"><span class="l">${"ABCD"[i]})</span> ${q.porque[i]}</span>`).join("");
+  fb.className="fb show "+(ok?"ok":"err")+(modoJogo==="prova"?" prova-oculto":"");
+  fb.innerHTML=`<div class="ft">${ok?"✓ Correto!":"✗ Incorreto — a correta é "+"ABCD"[q.correta]+"."}</div><div>${q.porque[q.correta]}</div><div class="pq"><b>Cada alternativa:</b>${pq}</div>`;
+  document.getElementById("pFill").style.width=(feitas.size/QS.length*100)+"%";
+  // No modo prova, a pontuação parcial fica escondida; só aparece no resultado final
+  document.getElementById("score").textContent=modoJogo==="prova" ? (feitas.size+" / "+QS.length+" respondidas") : (acertos+" / "+QS.length);
+  if(feitas.size===QS.length)setTimeout(quizFim,500);
+}
+function quizFim(){
+  // No modo prova, revela todo o feedback que ficou oculto durante o quiz
+  if(modoJogo==="prova"){
+    document.querySelectorAll(".fb.prova-oculto").forEach(fb=>fb.classList.remove("prova-oculto"));
+    document.getElementById("score").textContent=acertos+" / "+QS.length;
+  }
+  const r=document.getElementById("resultado");r.style.display="block";
+  document.getElementById("notaFinal").textContent=acertos+"/"+QS.length;
+  const p=acertos/QS.length;let m,msg;
+  if(p>=.9){m="🥇";msg="Ouro! Precisão de detetive.";}
+  else if(p>=.7){m="🥈";msg="Prata! Atenção aos distratores.";}
+  else if(p>=.5){m="🥉";msg="Bronze! Volte ao texto antes de marcar.";}
+  else{m="📖";msg="Treine mais. A resposta está sempre lá.";}
+  document.getElementById("medalha").textContent=m;document.getElementById("msgFinal").textContent=msg;
+  saveRec("quiz",acertos);
+  enviarParaSheets();
+  r.scrollIntoView({behavior:"smooth",block:"center"});
+}
+
+/* ---------- FACTORY: JOGO CRONOMETRADO (G1 e G3) ---------- */
+function makeTimedGame(bodyId, roundsSrc, recordKey){
+  return {
+    i:0, pts:0, tmr:null, tempo:0, rounds:[],
+    start(){ this.i=0; this.pts=0; this.rounds=shuffle(roundsSrc); this.render(); },
+    render(){
+      const b=document.getElementById(bodyId);
+      if(this.i>=this.rounds.length){
+        saveRec(recordKey,this.pts);
+        const max=this.rounds.length*15;
+        const msg = this.pts>=max*0.7 ? "Muito bem! Leitura rápida e precisa. \uD83E\uDD47" : this.pts>=max*0.4 ? "Bom trabalho! Continue treinando." : "Vamos treinar mais um pouco?";
+        b.innerHTML=`<div class="jogo-final"><div class="big">${this.pts} pts</div><p>${msg}</p><button class="btn ouro" onclick="${bodyId.split('-')[0].toUpperCase()}.start()">\u21BA Jogar de novo</button></div>`;
+        return;
+      }
+      const r=this.rounds[this.i]; this.tempo=100;
+      const ttsId=bodyId+"-tts";
+      b.innerHTML=`<div class="jogo-mid"><span class="chip">Rodada ${this.i+1}/${this.rounds.length}</span><span class="chip timer">\u23F1\uFE0F</span><div class="timerbar"><div id="${bodyId}-bar"></div></div><span class="chip">${this.pts} pts</span></div>
+      <div class="mini-texto">${r.t}<button class="btn-tts" onclick="toggleTTS(this,'${ttsId}')">\uD83D\uDD0A</button><span id="${ttsId}" style="display:none">${r.t}</span></div>
+      <div class="mini-q">${r.q}</div>
+      <div class="alts" id="${bodyId}-alts">${r.o.map((o,k)=>`<button class="alt" onclick="${bodyId.split('-')[0].toUpperCase()}.resp(${k})"><span class="letra">${"ABCD"[k]}</span> ${o}</button>`).join("")}</div>
+      <div class="mini-fb" id="${bodyId}-fb"></div>`;
+      clearInterval(this.tmr);
+      this.tmr=setInterval(()=>{
+        this.tempo-=2;
+        const bar=document.getElementById(bodyId+"-bar");
+        if(bar)bar.style.width=Math.max(0,this.tempo)+"%";
+        if(this.tempo<=0)this.resp(-1);
+      },120);
+    },
+    resp(k){
+      clearInterval(this.tmr);
+      const r=this.rounds[this.i],btns=document.querySelectorAll("#"+bodyId+"-alts .alt"),fb=document.getElementById(bodyId+"-fb");
+      btns.forEach((a,j)=>{a.disabled=true;if(j===r.c)a.classList.add("ok");else if(j===k)a.classList.add("err");else a.classList.add("dim");});
+      if(k===r.c){const g=5+Math.round(this.tempo/10);this.pts+=g;fb.className="mini-fb show ok";fb.textContent="\u2713 +"+g+" pts!";}
+      else{fb.className="mini-fb show err";fb.textContent=(k===-1?"\u23F1\uFE0F Tempo!":"\u2717")+" Resposta: "+"ABCD"[r.c]+".";}
+      this.i++; setTimeout(()=>this.render(),1600);
+    }
+  };
+}
+const G1 = makeTimedGame("g1-body", G1_ROUNDS, "pista");
+const G3 = makeTimedGame("g3-body", G3_ROUNDS, "achapista");
+
+/* ---------- G2: Que tipo de recurso é esse? ---------- */
+const G2 = {
+  rs:[],
+  cats:[["explicito","Explícito"],["inferivel","Inferível"],["extrapolacao","Não dá pra saber"]],
+  start(){
+    this.rs=[];
+    const b=document.getElementById("g2-body");
+    b.innerHTML=`<div class="mini-texto">${G2_TEXT}<button class="btn-tts" onclick="toggleTTS(this,'g2t')">\uD83D\uDD0A</button><span id="g2t" style="display:none">${G2_TEXT}</span></div>
+    <p style="font-size:.82rem;color:var(--txt2);margin-bottom:.6rem">Para cada afirmação sobre o texto, diga se ela é <b>Explícita</b>, <b>Inferível</b> ou se <b>Não dá pra saber</b> (extrapolação).</p>`+
+    G2_ITEMS.map((it,i)=>`<div class="vf-item" id="g2i${i}"><div class="vf-stm"><b>${i+1}.</b> ${it.s}</div>
+      <div class="btn-row">${this.cats.map(c=>`<button class="mini-btn cat-btn cat-${c[0]}" onclick="G2.j(${i},'${c[0]}')">${c[1]}</button>`).join("")}</div>
+      <div class="mini-fb" id="g2f${i}"></div></div>`).join("")+`<div id="g2fin"></div>`;
+  },
+  j(i,escolha){
+    if(this.rs[i]!=null)return;
+    const it=G2_ITEMS[i], ok = escolha===it.cat;
+    this.rs[i]=ok;
+    document.querySelectorAll("#g2i"+i+" .mini-btn").forEach(btn=>{
+      btn.disabled=true;
+      const cls=btn.className.match(/cat-(\w+)/)[1];
+      if(cls===it.cat) btn.classList.add("ok");
+      else if(cls===escolha && !ok) btn.classList.add("err");
+    });
+    const fb=document.getElementById("g2f"+i);
+    fb.className="mini-fb show "+(ok?"ok":"err");
+    fb.innerHTML=(ok?"\u2713 ":"\u2717 ")+it.p;
+    if(this.rs.filter(x=>x!=null).length===G2_ITEMS.length){
+      const ac=this.rs.filter(x=>x).length;
+      saveRec("classificar",ac);
+      document.getElementById("g2fin").innerHTML=`<div class="jogo-final"><div class="big">${ac}/${G2_ITEMS.length}</div><p>${ac===G2_ITEMS.length?"Perfeito! Você distingue muito bem o que está escrito do que é inferido. \uD83E\uDD47":"Bom trabalho! Releia as justificativas."}</p><button class="btn ouro" onclick="G2.start()">\u21BA Jogar de novo</button></div>`;
+    }
+  }
+};
+
+/* ---------- G4: Complete com o recurso certo (cloze) ---------- */
+const G4 = {
+  i:0, pts:0, rounds:[],
+  start(){ this.i=0; this.pts=0; this.rounds=shuffle(G4_ROUNDS); this.render(); },
+  render(){
+    const b=document.getElementById("g4-body");
+    if(this.i>=this.rounds.length){
+      saveRec("complete",this.pts);
+      b.innerHTML=`<div class="jogo-final"><div class="big">${this.pts}/${this.rounds.length}</div><p>${this.pts===this.rounds.length?"Perfeito! \uD83E\uDDE9\uD83E\uDD47":"Pense no efeito pedido e escolha o recurso certo."}</p><button class="btn ouro" onclick="G4.start()">\u21BA Jogar de novo</button></div>`;
+      return;
+    }
+    const it=this.rounds[this.i];
+    b.innerHTML=`<div class="jogo-mid"><span class="chip">Frase ${this.i+1}/${this.rounds.length}</span><span class="chip">${this.pts} acertos</span></div>
+    <p style="font-size:.82rem;color:var(--txt2);margin-bottom:.4rem">${it.ctx}</p>
+    <div class="mini-texto">${it.f}</div>
+    <div class="alts" id="g4-alts">${it.o.map((o,k)=>`<button class="alt" onclick="G4.resp(${k})"><span class="letra">${"ABCD"[k]}</span> ${o}</button>`).join("")}</div>
+    <div class="mini-fb" id="g4-fb"></div>`;
+  },
+  resp(k){
+    const it=this.rounds[this.i],btns=document.querySelectorAll("#g4-alts .alt"),fb=document.getElementById("g4-fb");
+    btns.forEach((a,j)=>{a.disabled=true;if(j===it.c)a.classList.add("ok");else if(j===k)a.classList.add("err");else a.classList.add("dim");});
+    if(k===it.c){this.pts++;fb.className="mini-fb show ok";fb.textContent="\u2713 Exato!";}
+    else{fb.className="mini-fb show err";fb.textContent="\u2717 A opção certa era \""+it.o[it.c]+"\".";}
+    this.i++; setTimeout(()=>this.render(),1200);
+  }
+};
+
+/* ---------- G5: Ordene o raciocínio ---------- */
+const G5 = {
+  ri:0,
+  start(){ this.ri=0; this.renderRound(); },
+  renderRound(){
+    const b=document.getElementById("g5-body");
+    if(this.ri>=G5_ROUNDS.length){
+      saveRec("ordene","\u2713");
+      b.innerHTML=`<div class="jogo-final"><div class="big">\u2713</div><p>Você organizou todo o raciocínio! \uD83D\uDD22\uD83E\uDD47</p><button class="btn ouro" onclick="G5.start()">\u21BA Jogar de novo</button></div>`;
+      return;
+    }
+    const rd=G5_ROUNDS[this.ri];
+    const items=shuffle(rd.correct);
+    b.innerHTML=`<div class="jogo-mid"><span class="chip">Passo a passo ${this.ri+1}/${G5_ROUNDS.length}</span><span class="chip">${rd.title}</span></div>
+    <p style="font-size:.84rem;color:var(--txt2);margin-bottom:.7rem">Use as setas \u25B2 \u25BC para colocar os passos do raciocínio na ordem correta. Depois, clique em "Verificar".</p>
+    <ol class="ord-list" id="g5list">${items.map((it,i)=>`<li class="ord-item" data-txt="${encodeURIComponent(it)}">${it}<div class="ord-arrows"><button onclick="G5.move(${i},-1)">\u25B2</button><button onclick="G5.move(${i},1)">\u25BC</button></div></li>`).join("")}</ol>
+    <div style="text-align:center;margin-top:.6rem"><button class="btn ouro" onclick="G5.check()">\u2713 Verificar ordem</button></div>
+    <div class="mini-fb" id="g5fb"></div>`;
+  },
+  move(idx,dir){
+    const list=document.getElementById("g5list");
+    const items=[...list.children];
+    const newIdx=idx+dir;
+    if(newIdx<0||newIdx>=items.length)return;
+    if(dir===-1) list.insertBefore(items[idx], items[newIdx]);
+    else list.insertBefore(items[newIdx], items[idx]);
+    [...list.children].forEach((li,i)=>{
+      li.querySelector(".ord-arrows").innerHTML=`<button onclick="G5.move(${i},-1)">\u25B2</button><button onclick="G5.move(${i},1)">\u25BC</button>`;
+    });
+  },
+  check(){
+    const rd=G5_ROUNDS[this.ri];
+    const list=document.getElementById("g5list");
+    const items=[...list.children];
+    const fb=document.getElementById("g5fb");
+    let allOk=true;
+    items.forEach((li,i)=>{
+      const txt=decodeURIComponent(li.dataset.txt);
+      if(txt===rd.correct[i]) li.classList.add("ok");
+      else { li.classList.add("err"); allOk=false; }
+      li.querySelectorAll("button").forEach(b=>b.disabled=true);
+    });
+    if(allOk){
+      fb.className="mini-fb show ok"; fb.textContent="\u2713 Ordem perfeita!";
+      this.ri++; setTimeout(()=>this.renderRound(),1400);
+    } else {
+      fb.className="mini-fb show err";
+      fb.innerHTML="\u2717 Algumas posições estão trocadas. <button class=\"mini-btn\" style=\"margin-left:.5rem\" onclick=\"G5.renderRound()\">Tentar de novo</button>";
+    }
+  }
+};
+</script>
+</body>
+</html>
