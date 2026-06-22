@@ -72,7 +72,7 @@ main{max-width:840px;margin:0 auto;padding:1.6rem 1.25rem 4rem}
 .alt.ok .letra{background:var(--verde);color:#fff}
 .alt.err{border-color:var(--verm);background:var(--verm-c);color:var(--verm)}
 .alt.err .letra{background:var(--verm);color:#fff}
-.alt.dim{opacity:.5}
+.alt.dim{opacity:.5}.alt.sel{border-color:var(--azul-m);background:var(--azul-c)}.alt.sel .letra{background:var(--azul-m);color:#fff}
 .fb{display:none;margin:0 1.1rem 1.1rem;padding:.8rem 1rem;border-radius:8px;font-size:.83rem;line-height:1.6}
 .fb.show{display:block}.fb.ok{background:var(--verde-c);border-left:3px solid var(--verde)}.fb.err{background:var(--verm-c);border-left:3px solid var(--verm)}
 .fb .ft{font-weight:600;margin-bottom:.3rem}.fb.ok .ft{color:var(--verde)}.fb.err .ft{color:var(--verm)}
@@ -285,7 +285,8 @@ const NOME_ARQUIVO = "D10.html";
 let alunoNome = "";
 let alunoTurma = "";
 let modoJogo = "estudo"; // "estudo" ou "prova"
-const respostasDetalhadas = []; // uma entrada por questão respondida, na ordem em que aparecem
+const respostasDetalhadas = [];
+const selecoes = {}; // {dn: k} para revelar botões no fim do modo prova // uma entrada por questão respondida, na ordem em que aparecem
 
 /* ===== SENHA PARA LIBERAR O MODO ESTUDO =====
    Troque a senha abaixo quando quiser. É a MESMA senha em todas as páginas
@@ -399,7 +400,7 @@ function resp(n,k){
     acertou: ok
   });
 
-  btns.forEach((b,i)=>{b.disabled=true;if(i===q.correta)b.classList.add("ok");else if(i===k)b.classList.add("err");else b.classList.add("dim");});
+  selecoes[n]=k;btns.forEach((b,i)=>{b.disabled=true;if(modoJogo==="estudo"){if(i===q.correta)b.classList.add("ok");else if(i===k)b.classList.add("err");else b.classList.add("dim");}else{if(i===k)b.classList.add("sel");else b.classList.add("dim");}});
   const pq=q.alts.map((t,i)=>`<span class="pi"><span class="l">${"ABCD"[i]})</span> ${q.porque[i]}</span>`).join("");
   fb.className="fb show "+(ok?"ok":"err")+(modoJogo==="prova"?" prova-oculto":"");
   fb.innerHTML=`<div class="ft">${ok?"✓ Correto!":"✗ Incorreto — a correta é "+"ABCD"[q.correta]+"."}</div><div>${q.porque[q.correta]}</div><div class="pq"><b>Cada alternativa:</b>${pq}</div>`;
@@ -412,6 +413,7 @@ function quizFim(){
   // No modo prova, revela todo o feedback que ficou oculto durante o quiz
   if(modoJogo==="prova"){
     document.querySelectorAll(".fb.prova-oculto").forEach(fb=>fb.classList.remove("prova-oculto"));
+    QS.forEach(q=>{const k=selecoes[q.dn];if(k===undefined)return;const card=quizEl.querySelector('[data-q="'+q.dn+'"]');if(!card)return;card.querySelectorAll(".alt").forEach((b,i)=>{b.classList.remove("sel");if(i===q.correta)b.classList.add("ok");else if(i===k)b.classList.add("err");});});
     document.getElementById("score").textContent=acertos+" / "+QS.length;
   }
   const r=document.getElementById("resultado");r.style.display="block";
