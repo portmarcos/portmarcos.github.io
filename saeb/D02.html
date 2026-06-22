@@ -563,7 +563,7 @@ const G1={
     btns.forEach((a,j)=>{a.disabled=true;if(j===r.c)a.classList.add("ok");else if(j===k)a.classList.add("err");else a.classList.add("dim");});
     if(k===r.c){const g=5+Math.round(this.tempo/10);this.pts+=g;fb.className="mini-fb show ok";fb.textContent="✓ +"+g+" pts!";}
     else{fb.className="mini-fb show err";fb.textContent=(k===-1?"⏱️ Tempo!":"✗")+" Resposta: "+"ABCD"[r.c]+".";}
-    this.i++;setTimeout(()=>this.render(),1400);}
+    this.i++;setTimeout(()=>this.render(),2500);}
 };
 
 /* ===== JOGO 2: V OU F ===== */
