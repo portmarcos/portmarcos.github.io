@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAEB/SIMAVE – D21 | Reconhecer posições distintas entre opiniões</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--azul:#1a3a5c;--azul-m:#235a8c;--azul-c:#d6e8f7;--ouro:#c9871f;--ouro-c:#fff8eb;--verde:#246b4a;--verde-c:#e6f4ed;--verm:#b02a2a;--verm-c:#fdecea;--bg:#f2f4f7;--borda:#d0d6e0;--branco:#fff;--txt:#1c2635;--txt2:#4a5568}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;line-height:1.5}
+header{background:var(--azul);color:#fff;padding:2.4rem 1.5rem 1.8rem;text-align:center;position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:rgba(201,135,31,.12)}
+.badge{display:inline-block;background:var(--ouro);color:var(--azul);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:.8rem}
+header h1{font-family:'Lora',serif;font-size:clamp(1.5rem,4vw,2.1rem);font-weight:600;line-height:1.3;margin-bottom:.4rem}
+header p{font-size:.92rem;opacity:.78;max-width:560px;margin:0 auto;line-height:1.6}
+.voltar-link{display:inline-block;margin-bottom:1rem;color:#fff;opacity:.7;text-decoration:none;font-size:.82rem}
+.voltar-link:hover{opacity:1}
+.tabs{background:var(--branco);border-bottom:1px solid var(--borda);position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.tabs-inner{max-width:840px;margin:0 auto;display:flex}
+.tab-btn{flex:1;background:none;border:none;padding:.95rem .5rem;font-family:'Inter',sans-serif;font-size:.88rem;font-weight:600;color:var(--txt2);cursor:pointer;border-bottom:3px solid transparent;transition:.15s;display:flex;align-items:center;justify-content:center;gap:.35rem}
+.tab-btn:hover{color:var(--azul-m);background:var(--bg)}
+.tab-btn.active{color:var(--azul);border-bottom-color:var(--ouro)}
+main{max-width:840px;margin:0 auto;padding:1.6rem 1.25rem 4rem}
+.tab-pane{display:none;flex-direction:column;gap:1.6rem}
+.tab-pane.active{display:flex}
+.painel{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.5rem 1.6rem}
+.painel h2{font-family:'Lora',serif;font-size:1.2rem;color:var(--azul);margin-bottom:.7rem}
+.painel h3{font-size:.95rem;color:var(--azul-m);margin:.9rem 0 .3rem}
+.painel p,.painel li{font-size:.9rem;margin-bottom:.5rem}
+.painel ul{margin:.2rem 0 .6rem 1.2rem}
+.painel strong{color:var(--azul)}
+.resumo-box{background:var(--azul);color:#fff;border-radius:14px;padding:1.4rem 1.6rem}
+.resumo-box h2{color:#fff;font-family:'Lora',serif;font-size:1.1rem;margin-bottom:.5rem}
+.resumo-box p{color:rgba(255,255,255,.9);font-size:.92rem;margin:0}
+.resumo-box .fc{display:block;margin-top:.7rem;font-style:italic;font-size:.88rem;background:rgba(255,255,255,.1);padding:.6rem .9rem;border-radius:8px;border-left:3px solid var(--ouro)}
+.dica-ouro{background:var(--ouro-c);border:1px solid #ecd9aa}
+.dica-ouro h2{color:#7a5310}.dica-ouro li{color:#4a3408}.dica-ouro strong{color:#7a5310}
+.glossario dt{font-weight:600;color:var(--azul-m);font-size:.88rem;margin-top:.5rem}
+.glossario dd{font-size:.86rem;color:var(--txt2);margin-left:0}
+.aviso-prof{background:#eef4fb;border:1px dashed var(--azul-m);border-radius:10px;padding:.9rem 1.1rem;font-size:.82rem;color:var(--azul-m)}
+.records{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.2rem 1.4rem}
+.records h2{font-family:'Lora',serif;font-size:1.1rem;color:var(--azul);margin-bottom:.6rem}
+.rec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.7rem}
+.rec-item{background:var(--bg);border-radius:10px;padding:.7rem;text-align:center}
+.rec-item .rv{font-size:1.5rem;font-weight:700;color:var(--azul-m)}
+.rec-item .rl{font-size:.72rem;color:var(--txt2)}
+.prog-wrap{background:var(--branco);border:1px solid var(--borda);border-radius:12px;padding:.85rem 1.1rem;display:flex;align-items:center;gap:14px}
+.prog-label{font-size:.78rem;font-weight:600;color:var(--azul-m);white-space:nowrap}
+.prog-track{flex:1;height:6px;background:var(--borda);border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--azul-m),var(--ouro));border-radius:99px;width:0%;transition:width .4s}
+.score{font-size:.78rem;font-weight:600;color:var(--txt2);white-space:nowrap}
+.card{background:var(--branco);border-radius:14px;border:1px solid var(--borda);overflow:hidden}
+.card-head{background:var(--azul);color:#fff;padding:.65rem 1.2rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.qnum{background:var(--ouro);color:var(--azul);font-size:.72rem;font-weight:700;padding:3px 11px;border-radius:20px}
+.qtipo{font-size:.74rem;opacity:.65;font-style:italic}
+.qnivel{font-size:.66rem;font-weight:700;text-transform:uppercase;padding:3px 9px;border-radius:20px;margin-left:auto}
+.qnivel.facil{background:var(--verde-c);color:var(--verde)}.qnivel.medio{background:var(--ouro-c);color:#a96e10}.qnivel.dificil{background:var(--verm-c);color:var(--verm)}
+.txt-base{background:var(--ouro-c);border-left:4px solid var(--ouro);margin:1rem 1.1rem 0;padding:1rem 1.1rem;border-radius:0 8px 8px 0;font-family:'Lora',serif;font-size:.94rem;line-height:1.85;color:#2b1d00;position:relative}
+.txt-fonte{font-family:'Inter',sans-serif;font-size:.72rem;color:var(--txt2);margin-top:.6rem;display:block;border-top:1px solid #e6d5b0;padding-top:.4rem}
+.btn-tts{position:absolute;top:.6rem;right:.6rem;background:none;border:1px solid #c9a14a;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;color:#8a6d1b;transition:.15s}
+.btn-tts:hover{background:#f5e6c1}
+.btn-tts.playing{background:var(--azul);color:#fff;border-color:var(--azul)}
+.img-slot{margin:.8rem 1.1rem 0;border:2px dashed var(--borda);border-radius:10px;padding:.8rem;text-align:center;color:var(--txt2);font-size:.76rem}
+.enunciado{padding:1rem 1.1rem .4rem;font-size:.92rem;line-height:1.6;font-weight:500;color:var(--azul)}
+.alts{padding:.4rem 1.1rem 1.1rem;display:flex;flex-direction:column;gap:.45rem}
+.alt{display:flex;align-items:flex-start;gap:10px;padding:.65rem .9rem;border:1.5px solid var(--borda);border-radius:9px;background:var(--branco);cursor:pointer;text-align:left;font-family:'Inter',sans-serif;font-size:.86rem;color:var(--txt);line-height:1.5;transition:.15s;width:100%}
+.alt:hover:not(:disabled){border-color:var(--azul-m);background:var(--azul-c);transform:translateX(2px)}
+.alt:disabled{cursor:default}
+.letra{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;border-radius:50%;background:var(--bg);font-size:.75rem;font-weight:700;color:var(--azul);flex-shrink:0}
+.alt.ok{border-color:var(--verde);background:var(--verde-c);color:var(--verde);font-weight:500}
+.alt.ok .letra{background:var(--verde);color:#fff}
+.alt.err{border-color:var(--verm);background:var(--verm-c);color:var(--verm)}
+.alt.err .letra{background:var(--verm);color:#fff}
+.alt.dim{opacity:.5}
+.fb{display:none;margin:0 1.1rem 1.1rem;padding:.8rem 1rem;border-radius:8px;font-size:.83rem;line-height:1.6}
+.fb.show{display:block}.fb.ok{background:var(--verde-c);border-left:3px solid var(--verde)}.fb.err{background:var(--verm-c);border-left:3px solid var(--verm)}
+.fb .ft{font-weight:600;margin-bottom:.3rem}.fb.ok .ft{color:var(--verde)}.fb.err .ft{color:var(--verm)}
+.fb .pq{margin-top:.5rem;border-top:1px solid rgba(0,0,0,.08);padding-top:.4rem}
+.fb .pq b{color:var(--azul)}
+.fb .pi{display:block;font-size:.8rem;color:var(--txt2);margin-bottom:.2rem}
+.fb .pi .l{font-weight:700;color:var(--azul)}
+#resultado{display:none;background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:2.4rem 2rem;text-align:center}
+#resultado h2{font-family:'Lora',serif;font-size:1.4rem;color:var(--azul)}
+.medalha{font-size:3rem;margin:.4rem 0}.nota{font-size:3.4rem;font-weight:700;color:var(--azul-m);line-height:1;margin:.4rem 0}
+#resultado p{color:var(--txt2);font-size:.9rem;max-width:480px;margin:.4rem auto 0}
+.btn{display:inline-block;background:var(--azul);color:#fff;padding:.65rem 1.5rem;border-radius:30px;border:none;font-size:.86rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;margin:.3rem}
+.btn:hover{background:var(--azul-m)}
+.btn.ouro{background:var(--ouro);color:var(--azul)}.btn.sec{background:var(--bg);color:var(--azul);border:1px solid var(--borda)}
+.jogo-card{background:var(--branco);border-radius:14px;border:1px solid var(--borda);overflow:hidden}
+.jogo-head{padding:1rem 1.3rem;border-bottom:1px solid var(--borda);display:flex;align-items:center;gap:.7rem}
+.jogo-ico{font-size:1.5rem}
+.jogo-head h3{font-family:'Lora',serif;font-size:1.1rem;color:var(--azul);margin:0}
+.jogo-head .desc{font-size:.78rem;color:var(--txt2)}
+.jogo-body{padding:1.2rem 1.3rem}
+.chip{font-size:.76rem;font-weight:600;padding:4px 11px;border-radius:20px;background:var(--azul-c);color:var(--azul)}
+.chip.timer{background:var(--ouro-c);color:#a96e10}
+.jogo-mid{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:.8rem}
+.timerbar{flex:1;min-width:100px;height:8px;background:var(--borda);border-radius:99px;overflow:hidden}
+.timerbar>div{height:100%;width:100%;background:linear-gradient(90deg,var(--verde),var(--ouro),var(--verm));border-radius:99px;transition:width .25s linear}
+.mini-texto{background:var(--ouro-c);border-left:4px solid var(--ouro);border-radius:0 8px 8px 0;padding:.85rem 1rem;font-family:'Lora',serif;font-size:.9rem;line-height:1.7;color:#2b1d00;margin-bottom:.8rem;position:relative}
+.mini-q{font-weight:600;color:var(--azul);margin-bottom:.6rem;font-size:.9rem}
+.mini-btn{border:1.5px solid var(--borda);background:var(--branco);border-radius:8px;padding:.45rem .8rem;font-size:.8rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;color:var(--azul);transition:.15s}
+.mini-btn:hover:not(:disabled){background:var(--azul-c);border-color:var(--azul-m)}
+.mini-btn:disabled{cursor:default}
+.mini-btn.ok{background:var(--verde-c);border-color:var(--verde);color:var(--verde)}
+.mini-btn.err{background:var(--verm-c);border-color:var(--verm);color:var(--verm)}
+.mini-fb{font-size:.8rem;margin-top:.5rem;padding:.45rem .65rem;border-radius:6px;display:none}
+.mini-fb.show{display:block}.mini-fb.ok{background:var(--verde-c);color:var(--verde)}.mini-fb.err{background:var(--verm-c);color:var(--verm)}
+.vf-item,.det-item{border:1.5px solid var(--borda);border-radius:10px;padding:.7rem .9rem;margin-bottom:.6rem}
+.vf-stm{font-size:.88rem;margin-bottom:.5rem}
+.btn-row{display:flex;gap:.5rem;flex-wrap:wrap}
+.cat-btn.cat-tema.ok{border-color:var(--azul-m);background:var(--azul-c);color:var(--azul)}
+.cat-btn.cat-detalhe.ok{border-color:var(--ouro);background:var(--ouro-c);color:#a96e10}
+.cat-btn.cat-foradotexto.ok{border-color:var(--verde);background:var(--verde-c);color:var(--verde)}
+.jogo-final{text-align:center;padding:.8rem 0 .3rem}
+.jogo-final .big{font-size:2rem;font-weight:700;color:var(--azul-m)}
+.jogo-final p{font-size:.88rem;color:var(--txt2);margin:.2rem 0 .8rem}
+.ord-list{list-style:none;padding:0;counter-reset:ord}
+.ord-item{counter-increment:ord;display:flex;align-items:center;gap:10px;padding:.6rem .9rem;border:1.5px solid var(--borda);border-radius:9px;margin-bottom:.5rem;background:var(--branco);font-size:.86rem;user-select:none}
+.ord-item::before{content:counter(ord);display:flex;align-items:center;justify-content:center;min-width:24px;height:24px;border-radius:50%;background:var(--azul-c);font-size:.72rem;font-weight:700;color:var(--azul)}
+.ord-item.ok{border-color:var(--verde);background:var(--verde-c)}
+.ord-item.err{border-color:var(--verm);background:var(--verm-c)}
+.ord-arrows{display:flex;flex-direction:column;gap:2px;margin-left:auto}
+.ord-arrows button{background:var(--bg);border:1px solid var(--borda);border-radius:4px;width:24px;height:20px;cursor:pointer;font-size:.65rem;display:flex;align-items:center;justify-content:center}
+.ord-arrows button:hover{background:var(--azul-c)}
+footer{text-align:center;padding:1.5rem;font-size:.76rem;color:var(--txt2)}
+@media print{.tabs,header,.prog-wrap,.btn,.btn-tts,.img-slot,footer,#resultado,.jogo-card,.records,.resumo-box,.dica-ouro,.glossario,.aviso-prof{display:none!important}.tab-pane{display:flex!important}.card{break-inside:avoid;border:1px solid #ccc;margin-bottom:1rem}.card-head{background:#333!important;-webkit-print-color-adjust:exact}.fb{display:block!important;background:#f5f5f5!important;border-left:3px solid #999!important;color:#333!important}}
+@media(max-width:480px){.painel{padding:1.1rem}.tab-btn{font-size:.78rem;padding:.8rem .3rem}}
+
+.genre-tag{display:inline-block;padding:3px 10px;border-radius:14px;font-size:.72rem;font-weight:700;margin-bottom:.5rem}
+.func-tag{display:inline-block;padding:4px 12px;border-radius:14px;font-size:.75rem;font-weight:700;margin:2px 4px 2px 0;color:#fff}
+.func-informar{background:#3498db}.func-narrar{background:#e74c3c}.func-opinar{background:#f39c12}.func-instruir{background:#27ae60}.func-definir{background:#9b59b6}.func-expressar{background:#1abc9c}
+.disc-area{width:calc(100% - 2.2rem);min-height:130px;border:1.5px solid var(--borda);border-radius:9px;padding:.7rem .9rem;font-family:'Inter',sans-serif;font-size:.88rem;resize:vertical;margin:0 1.1rem .4rem}
+.disc-actions{padding:0 1.1rem 1rem}
+@media print{.gabarito-print{display:block!important;break-before:page;border:1px solid #999;border-radius:8px;padding:1rem 1.2rem;margin-top:1rem}.gabarito-print h2{font-size:1.1rem;margin-bottom:.6rem}.gabarito-print ol{margin-left:1.2rem}.gabarito-print li{font-size:.86rem;margin-bottom:.3rem}.fb{display:none!important}.disc-actions{display:none!important}}
+
+.tese-box{background:#e3f2fd;border-left:4px solid #1976d2;padding:.8rem;margin:.8rem 0;border-radius:0 8px 8px 0}
+.disc-area{width:calc(100% - 2.2rem);min-height:130px;border:1.5px solid var(--borda);border-radius:9px;padding:.7rem .9rem;font-family:'Inter',sans-serif;font-size:.88rem;resize:vertical;margin:0 1.1rem .4rem}
+.disc-actions{padding:0 1.1rem 1rem}
+@media print{.gabarito-print{display:block!important;break-before:page}.fb{display:none!important}.disc-actions{display:none!important}}
+/* ===== TELA DE IDENTIFICAÇÃO E MODO DE JOGO ===== */
+.quiz-gate{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.8rem 1.6rem;max-width:480px;margin:0 auto}
+.quiz-gate h2{font-family:'Lora',serif;font-size:1.25rem;color:var(--azul);margin-bottom:.4rem}
+.quiz-gate>p{font-size:.88rem;color:var(--txt2);margin-bottom:1.2rem}
+.gate-field{margin-bottom:1.1rem}
+.gate-field>label{display:block;font-size:.82rem;font-weight:600;color:var(--azul-m);margin-bottom:.4rem}
+.gate-field input[type=text]{width:100%;padding:.65rem .8rem;border:1.5px solid var(--borda);border-radius:9px;font-family:'Inter',sans-serif;font-size:.92rem;color:var(--txt)}
+.gate-field input[type=text]:focus{outline:none;border-color:var(--azul-m)}
+.modo-opcoes{display:flex;flex-direction:column;gap:.6rem}
+.modo-opcao{display:flex;align-items:flex-start;gap:.6rem;border:1.5px solid var(--borda);border-radius:10px;padding:.7rem .85rem;cursor:pointer;transition:.15s}
+.modo-opcao:hover{border-color:var(--azul-m)}
+.modo-opcao input[type=radio]{margin-top:.25rem;accent-color:var(--azul-m)}
+.modo-opcao input[type=radio]:checked~span b{color:var(--azul)}
+.modo-opcao span{font-size:.85rem}
+.modo-opcao small{color:var(--txt2);font-weight:400}
+.gate-aviso{color:var(--verm);font-size:.82rem;margin-top:.7rem;min-height:1.2em}
+.modo-opcao.bloqueado{opacity:.6;cursor:not-allowed}
+.modo-opcao.liberado{opacity:1;cursor:pointer;border-color:var(--verde)}
+.cadeado{font-size:.75rem}
+.senha-box{display:flex;gap:.5rem;margin-top:.6rem}
+.senha-box input[type=password]{flex:1;padding:.55rem .75rem;border:1.5px solid var(--borda);border-radius:9px;font-family:'Inter',sans-serif;font-size:.85rem}
+.senha-box input[type=password]:focus{outline:none;border-color:var(--azul-m)}
+.senha-btn{white-space:nowrap;font-size:.8rem;padding:.55rem 1rem}
+.senha-aviso{font-size:.78rem;margin-top:.4rem;min-height:1.1em}
+.senha-aviso.ok{color:var(--verde)}
+.senha-aviso.erro{color:var(--verm)}
+.modo-chip{font-size:.74rem;font-weight:700;padding:4px 12px;border-radius:20px;background:var(--azul-c);color:var(--azul-m);margin-left:auto}
+.envio-status{font-size:.82rem;margin-top:.8rem;padding:.6rem .9rem;border-radius:8px}
+.envio-status.enviando{background:var(--azul-c);color:var(--azul-m)}
+.envio-status.ok{background:var(--verde-c);color:var(--verde)}
+.envio-status.erro{background:var(--verm-c);color:var(--verm)}
+/* No modo prova, o feedback de cada questão fica escondido até o aluno terminar */
+.fb.prova-oculto{display:none!important}
+@media print{.quiz-gate,.modo-chip,.envio-status{display:none!important}#quizConteudo{display:block!important}}
+</style>
+</head><body><header><a href="index.html" class="voltar-link">← Painel SAEB/SIMAVE</a><div class="badge">SAEB · SIMAVE · Língua Portuguesa</div><h1>Habilidade D21</h1><p>Reconhecer posições distintas entre duas ou mais opiniões relativas ao mesmo fato ou tema</p></header>
+<nav class="tabs"><div class="tabs-inner"><button class="tab-btn active" data-tab="estudar">📚 Estudar</button><button class="tab-btn" data-tab="quiz">📝 Quiz</button><button class="tab-btn" data-tab="jogos">🎮 Jogos</button></div></nav><main><section class="tab-pane active" id="pane-estudar"><div class="resumo-box"><h2>🎯 Em uma frase</h2><p>O D21 mede se você consegue <strong style="color:#ffd98a">identificar que dois ou mais textos expressam opiniões diferentes</strong> sobre o mesmo fato ou tema — e compreender em que exatamente discordam.</p><span class="fc">"Dois autores sobre o mesmo tema podem chegar a conclusões opostas — o D21 pede que você identifique onde, exatamente, as opiniões divergem."</span></div>
+<section class="painel"><h2>📌 O que essa habilidade avalia</h2>
+<p>Sobre quase todo tema, existem opiniões diferentes. O D21 pede que você reconheça: <strong>qual é a posição de cada autor?</strong> Em que ponto <strong>exato</strong> eles discordam? E — o mais importante — <strong>por que</strong> chegam a conclusões opostas sobre o mesmo assunto?</p>
+<h3>Perguntas-chave ao comparar posições:</h3>
+<ul>
+<li>Qual é a <strong>posição</strong> de cada texto? (a favor, contra, com ressalvas)</li>
+<li>Em que <strong>ponto específico</strong> os autores discordam? (não basta dizer "discordam" — sobre o quê?)</li>
+<li>Usam os <strong>mesmos dados</strong> mas chegam a conclusões diferentes?</li>
+<li>Que <strong>argumento central</strong> sustenta cada posição?</li>
+<li>Há algo em que <strong>concordam</strong>, mesmo discordando no geral?</li>
+</ul>
+<h3>Como o enunciado costuma aparecer:</h3>
+<ul>
+<li>"Qual é a posição do Texto 1 / do Texto 2 sobre..."</li>
+<li>"Em que aspecto os autores discordam?"</li>
+<li>"O autor do Texto 2, em relação à proposta do Texto 1..."</li>
+<li>"Embora ambos reconheçam X, em que exatamente divergem?"</li>
+</ul>
+</section>
+
+<section class="dica-ouro painel"><h2>💡 Dica de ouro</h2><ul>
+<li><strong>Diferença de abordagem ≠ diferença de opinião.</strong> No D21, os autores tomam <em>lados</em> sobre o mesmo fato. No D20, podem ter a mesma opinião, mas tratá-la de formas diferentes.</li>
+<li><strong>Identifique o ponto exato da divergência.</strong> "Discordam" é a resposta mínima — o que conta é <em>sobre o quê</em> exatamente eles discordam.</li>
+<li><strong>Um texto pode reconhecer parte do argumento contrário e ainda discordar.</strong> Isso é discordância parcial, não concordância.</li>
+<li><strong>Atenção a falsas oposições.</strong> Dois textos podem discordar sobre um aspecto e concordar em outro. Identifique o ponto central de divergência.</li>
+<li><strong>O argumento justifica a posição.</strong> Entender por que cada autor pensa o que pensa é mais importante que apenas saber se é a favor ou contra.</li>
+</ul></section>
+
+<section class="painel glossario"><h2>📖 Glossário</h2><dl>
+<dt>Posição</dt><dd>O ponto de vista ou opinião do autor sobre um tema — o que ele defende ou rejeita.</dd>
+<dt>Divergência</dt><dd>O ponto em que dois autores discordam — o objeto do desacordo.</dd>
+<dt>Argumento</dt><dd>O raciocínio ou justificativa que sustenta uma posição.</dd>
+<dt>Texto de opinião</dt><dd>Texto em que o autor defende um ponto de vista: editorial, carta do leitor, crônica argumentativa.</dd>
+<dt>Discordância parcial</dt><dd>Quando um autor reconhece parte do argumento contrário, mas mantém sua posição.</dd>
+<dt>Contraposição</dt><dd>Apresentar o argumento oposto ao do outro texto — o que o D21 avalia diretamente.</dd>
+</dl></section>
+
+<div class="aviso-prof">📌 <strong>Professor(a):</strong> o D21 é o descritor mais próximo do debate. Uma atividade complementar eficaz é pedir aos alunos que identifiquem qual texto "ganhou" o argumento e justifiquem — isso força o pensamento crítico sobre a qualidade dos argumentos, além da simples identificação das posições.</div>
+</section><section class="tab-pane" id="pane-quiz">
+
+<!-- ===== TELA DE IDENTIFICAÇÃO (aparece antes do quiz) ===== -->
+<div id="quizGate" class="quiz-gate">
+  <h2>👋 Antes de começar</h2>
+  <p>Preencha seus dados e escolha o modo de jogo.</p>
+  <div class="gate-field">
+    <label for="alunoNome">Nome do aluno</label>
+    <input type="text" id="alunoNome" placeholder="Seu nome completo" autocomplete="off">
+  </div>
+  <div class="gate-field">
+    <label for="alunoTurma">Turma / Série</label>
+    <input type="text" id="alunoTurma" placeholder="Ex: 9º Ano A" autocomplete="off">
+  </div>
+  <div class="gate-field">
+    <label>Modo de jogo</label>
+    <div class="modo-opcoes">
+      <label class="modo-opcao">
+        <input type="radio" name="modoQuiz" value="prova" checked>
+        <span><b>📝 Modo Prova</b><br><small>Sem feedback durante o quiz. As respostas certas só aparecem no final, como numa prova de verdade.</small></span>
+      </label>
+      <label class="modo-opcao" id="opcaoEstudo">
+        <input type="radio" name="modoQuiz" value="estudo" id="radioEstudo" disabled>
+        <span><b>📖 Modo Estudo</b> <span class="cadeado" id="cadeadoEstudo">🔒</span><br><small>Mostra se acertou ou errou — e a explicação — logo após cada resposta. Liberado pelo professor.</small></span>
+      </label>
+    </div>
+    <div class="senha-box" id="senhaBox">
+      <input type="password" id="senhaEstudo" placeholder="Senha do professor para liberar o Modo Estudo" autocomplete="off">
+      <button type="button" class="btn sec senha-btn" id="btnLiberarEstudo">Liberar</button>
+    </div>
+    <p class="senha-aviso" id="senhaAviso"></p>
+  </div>
+  <button class="btn" id="btnIniciarQuiz">▶ Começar o quiz</button>
+  <p class="gate-aviso" id="gateAviso"></p>
+</div>
+
+<!-- ===== QUIZ (fica oculto até o aluno preencher os dados acima) ===== -->
+<div id="quizConteudo" style="display:none">
+<div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.5rem;align-items:center">
+<button class="btn sec" onclick="window.print()">🖨️ Imprimir com gabarito</button>
+<button class="btn sec" onclick="location.reload()">🔀 Embaralhar e refazer</button>
+<span class="modo-chip" id="modoChip"></span>
+</div>
+<div class="prog-wrap"><span class="prog-label">Progresso</span><div class="prog-track"><div class="prog-fill" id="pFill"></div></div><span class="score" id="score">0 / 12</span></div>
+<div id='quiz'></div><div class='card' id='cardDisc' style='margin-top:1.5rem'><div class='card-head'><span class='qnum'>Q13</span><span class='qtipo'>Notícia real</span><span class='qnivel dificil'>Aberta</span></div><div class='txt-base' id='txtDisc'>Leia o trecho:<br><br><b>Observatório do Clima entrega recomendações para transição energética</b><br>O documento foi elaborado por 161 organizações sociais e enviado ao governo federal. O prazo para a equipe ministerial entregar o planejamento termina em 6 de fevereiro. As recomendações incluem medidas técnicas, de regulamentação e econômicas.<span class='txt-fonte'>Agência Brasil/EBC, 28 jan. 2026. Adaptado.</span></div><p class='enunciado'><b>a)</b> Qual é a informação principal desse trecho?<br><b>b)</b> Identifique uma informação secundária (de contexto/circunstância).<br><b>c)</b> Por que é importante, ao resumir um texto, separar partes principais de secundárias?</p><textarea class='disc-area'></textarea><div class='disc-actions'><button class='btn sec' id='btnDisc'>👁️ Gabarito</button></div><div class='fb' id='fbDisc'><div class='ft' style='color:var(--azul)'>Gabarito</div><div><b>a)</b> A informação principal é o documento de recomendações para a transição energética, elaborado por 161 organizações sociais.<br><b>b)</b> A data exata do prazo (6 de fevereiro) é informação secundária, de circunstância administrativa.<br><b>c)</b> Resposta livre, mas deve mencionar que separar partes principais de secundárias permite resumir o texto de forma fiel e objetiva, sem perder o sentido central nem se prender a detalhes que não mudam a compreensão geral.</div></div>
+<div id='resultado'><h2>Concluído!</h2><div class='medalha' id='medalha'>🏅</div><div class='nota' id='notaFinal'>—</div><p id='msgFinal'></p><div id="envioStatus" class="envio-status"></div><button class='btn' onclick='location.reload()'>↺ Refazer</button></div></div>
+</div>
+</section><section class='tab-pane' id='pane-jogos'><div class='resumo-box'><h2>🎮 Hora de jogar</h2><p>Cinco minijogos para treinar identificar posições distintas em textos de opinião.</p></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>⏱️</span><h3>Qual a posição?</h3></div><div class='jogo-body' id='g1-body'><button class='btn ouro' onclick='G1.start()'>▶ Começar</button></div></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>🏷️</span><h3>A favor ou contra?</h3></div><div class='jogo-body' id='g2-body'><button class='btn ouro' onclick='G2.start()'>▶ Começar</button></div></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>🔎</span><h3>Ponto de discordância</h3></div><div class='jogo-body' id='g3-body'><button class='btn ouro' onclick='G3.start()'>▶ Começar</button></div></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>🧩</span><h3>Complete</h3></div><div class='jogo-body' id='g4-body'><button class='btn ouro' onclick='G4.start()'>▶ Começar</button></div></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>🔢</span><h3>Ordene os passos</h3></div><div class='jogo-body' id='g5-body'><button class='btn ouro' onclick='G5.start()'>▶ Começar</button></div></div></section></main><footer>Portal do Professor Marcos Cruz · SAEB/SIMAVE · D21</footer><script>
+/* ===== CONFIGURAÇÃO DO ENVIO PARA GOOGLE SHEETS =====
+   Cole aqui a URL do seu Apps Script publicado como "App da Web".
+   Veja o arquivo google-apps-script.gs para instruções de instalação.
+   Enquanto estiver "SUBSTITUA_PELA_SUA_URL", o envio fica desativado
+   (o quiz funciona normalmente, só não manda nada para a planilha). */
+const SHEETS_URL = "https://script.google.com/macros/s/AKfycbwPcWRWW2IkMb8-WkyB2w1M2n9ivcYlfqWajYRgCzecLTC1T7aBetZtR2MDaOIxahc/exec";
+const DESCRITOR_PAGINA = "D21 - Reconhecer posições distintas entre duas ou mais opiniões";
+const NOME_ARQUIVO = "D21.html";
+
+/* ===== ESTADO DO ALUNO E MODO DE JOGO ===== */
+let alunoNome = "";
+let alunoTurma = "";
+let modoJogo = "estudo"; // "estudo" ou "prova"
+const respostasDetalhadas = []; // uma entrada por questão respondida, na ordem em que aparecem
+
+/* ===== SENHA PARA LIBERAR O MODO ESTUDO =====
+   Troque a senha abaixo quando quiser. É a MESMA senha em todas as páginas
+   do portal (mais simples de lembrar e passar para os alunos quando for
+   hora de revisão). Lembre-se: como o quiz roda no navegador do aluno,
+   essa senha impede o uso casual do Modo Estudo, mas não é uma proteção
+   contra alguém que abra o código-fonte da página — as respostas já estão
+   no arquivo de qualquer forma, como em qualquer site estático como este. */
+const SENHA_MODO_ESTUDO = "professor123";
+
+document.getElementById("btnLiberarEstudo").onclick = () => {
+  const campo = document.getElementById("senhaEstudo");
+  const aviso = document.getElementById("senhaAviso");
+  if (campo.value === SENHA_MODO_ESTUDO) {
+    document.getElementById("radioEstudo").disabled = false;
+    document.getElementById("radioEstudo").checked = true;
+    document.getElementById("cadeadoEstudo").textContent = "🔓";
+    document.getElementById("opcaoEstudo").classList.add("liberado");
+    document.getElementById("senhaBox").style.display = "none";
+    aviso.className = "senha-aviso ok";
+    aviso.textContent = "✓ Modo Estudo liberado.";
+  } else {
+    aviso.className = "senha-aviso erro";
+    aviso.textContent = "Senha incorreta.";
+  }
+};
+// Também libera ao apertar Enter no campo de senha
+document.getElementById("senhaEstudo").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") document.getElementById("btnLiberarEstudo").click();
+});
+
+document.getElementById("btnIniciarQuiz").onclick = () => {
+  const nome = document.getElementById("alunoNome").value.trim();
+  const turma = document.getElementById("alunoTurma").value.trim();
+  const aviso = document.getElementById("gateAviso");
+  if (!nome || !turma) {
+    aviso.textContent = "Preencha nome e turma/série para continuar.";
+    return;
+  }
+  alunoNome = nome;
+  alunoTurma = turma;
+  modoJogo = document.querySelector('input[name="modoQuiz"]:checked').value;
+  document.getElementById("quizGate").style.display = "none";
+  document.getElementById("quizConteudo").style.display = "block";
+  const chip = document.getElementById("modoChip");
+  chip.textContent = modoJogo === "prova" ? "📝 Modo Prova" : "📖 Modo Estudo";
+};
+
+/* ===== ENVIO PARA O GOOGLE SHEETS ===== */
+function enviarParaSheets() {
+  const statusEl = document.getElementById("envioStatus");
+  if (!SHEETS_URL || SHEETS_URL.indexOf("SUBSTITUA") !== -1) {
+    statusEl.className = "envio-status";
+    statusEl.textContent = "";
+    return; // envio desativado até o professor configurar a URL
+  }
+  statusEl.className = "envio-status enviando";
+  statusEl.textContent = "Enviando resultado para a planilha...";
+
+  const payload = {
+    nome: alunoNome,
+    turma: alunoTurma,
+    descritor: DESCRITOR_PAGINA,
+    pagina: NOME_ARQUIVO,
+    modo: modoJogo === "prova" ? "Prova" : "Estudo",
+    respostas: respostasDetalhadas
+  };
+
+  fetch(SHEETS_URL, {
+    method: "POST",
+    mode: "no-cors", // Apps Script Web Apps não devolvem CORS; "no-cors" garante o envio mesmo sem ler a resposta
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(payload)
+  }).then(() => {
+    statusEl.className = "envio-status ok";
+    statusEl.textContent = "✓ Resultado enviado para a planilha do professor.";
+  }).catch(() => {
+    statusEl.className = "envio-status erro";
+    statusEl.textContent = "✗ Não foi possível enviar o resultado (verifique sua internet).";
+  });
+}
+
+/* ===== QUIZ ===== */
+const QRAW=[{"n": 1, "tipo": "Par de textos de opinião (originais)", "nivel": "facil", "texto": "<div style=\"display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2px\"><div style=\"flex:1;min-width:190px;background:#e6edf7;border-left:3px solid #235a8c;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#1a3a5c;display:block;margin-bottom:3px\">📱 TEXTO 1</b>O celular é a principal ferramenta de pesquisa que o aluno tem no bolso. Proibi-lo é negar acesso ao conhecimento. Precisamos ensinar a usá-lo com responsabilidade — não bani-lo da sala de aula.</div><div style=\"flex:1;min-width:190px;background:#fff8eb;border-left:3px solid #c9871f;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#a96e10;display:block;margin-bottom:3px\">📵 TEXTO 2</b>A tela acende e a aula some. Já tentei competir com o YouTube — não consigo. Enquanto o celular estiver na mão do aluno, a atenção dele nunca será inteiramente minha. Proibir é necessário.</div></div>", "fonte": "Textos originais criados para esta atividade.", "enun": "Qual é a <b>posição do Texto 1</b> sobre o uso de celular na escola?", "alts": ["Contrária — defende que o celular deve ser proibido na sala de aula.", "Favorável — defende que o celular deve ser permitido e ensinado como ferramenta.", "Neutra — apresenta os dois lados sem tomar partido.", "Favorável ao uso, mas apenas fora do horário de aula."], "correta": 1, "porque": ["T1 diz explicitamente 'Proibi-lo é negar acesso ao conhecimento' — é claramente favorável ao uso do celular.", "Correto: T1 defende que o celular é 'a principal ferramenta de pesquisa' e que se deve 'ensinar a usá-lo, não bani-lo'. Posição claramente favorável ao uso como ferramenta pedagógica.", "T1 não apresenta dois lados — toma partido explícito: 'Precisamos ensinar a usá-lo, não bani-lo'. É texto de opinião, não de análise equilibrada.", "T1 não faz distinção de horário. Sua defesa é do uso dentro da sala de aula, sem restrição específica."]}, {"n": 2, "tipo": "Par de textos de opinião (originais)", "nivel": "facil", "texto": "<div style=\"display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2px\"><div style=\"flex:1;min-width:190px;background:#e6edf7;border-left:3px solid #235a8c;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#1a3a5c;display:block;margin-bottom:3px\">🏫 TEXTO 1</b>O ensino presencial é insubstituível. A interação humana — um olhar do professor, a dúvida do colega ao lado — constrói algo que nenhuma tela reproduz. Aprender é, antes de tudo, um ato coletivo.</div><div style=\"flex:1;min-width:190px;background:#fff8eb;border-left:3px solid #c9871f;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#a96e10;display:block;margin-bottom:3px\">💻 TEXTO 2</b>O ensino a distância democratizou o acesso à educação. Pais que não podiam largar o trabalho, pessoas em cidades distantes, deficientes com dificuldade de locomoção — todos ganharam com ele. Negar isso é romantismo.</div></div>", "fonte": "Textos originais criados para esta atividade.", "enun": "Em que aspecto as opiniões dos dois autores claramente <b>discordam</b>?", "alts": ["Sobre se o professor é importante na educação — T1 acha que sim; T2 acha que não.", "Sobre qual modalidade de ensino é mais adequada — T1 defende o presencial; T2 defende o EAD.", "Sobre se a tecnologia deve existir nas escolas — T1 é contra; T2 é a favor.", "Os dois autores concordam em todos os pontos — apenas usam exemplos diferentes."], "correta": 1, "porque": ["T2 não diz que o professor não é importante — fala de acesso à educação por EAD. A discordância não é sobre o papel do professor.", "Correto: T1 defende que o presencial é 'insubstituível' (interação humana). T2 defende o EAD como forma de democratizar o acesso. É qual modalidade é mais adequada o ponto de discordância.", "T1 não é contra tecnologia em geral — fala da insubstituibilidade da interação presencial. A questão é presencial vs. EAD, não tecnologia vs. não tecnologia.", "Os textos discordam claramente: T1 diz que o presencial é insubstituível; T2 defende o EAD como avanço. São posições opostas."]}, {"n": 3, "tipo": "Par de textos de opinião (originais)", "nivel": "facil", "texto": "<div style=\"display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2px\"><div style=\"flex:1;min-width:190px;background:#e6edf7;border-left:3px solid #235a8c;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#1a3a5c;display:block;margin-bottom:3px\">👕 TEXTO 1</b>O uniforme resolve muitos problemas: as crianças não competem pela roupa, ninguém se sente excluído por não ter a marca da moda. É uma solução simples para uma questão complexa — a desigualdade visível dentro da escola.</div><div style=\"flex:1;min-width:190px;background:#fff8eb;border-left:3px solid #c9871f;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#a96e10;display:block;margin-bottom:3px\">🎨 TEXTO 2</b>Uniformizar crianças é apagar individualidades. A roupa é expressão. Tirar essa expressão cedo demais cria adultos que não sabem se posicionar, que aprenderam a se conformar antes de aprender a pensar.</div></div>", "fonte": "Textos originais criados para esta atividade.", "enun": "Qual dos dois autores é <b>favorável ao uniforme</b> escolar?", "alts": ["O autor do Texto 2, porque defende a liberdade de expressão das crianças.", "Os dois autores, porque ambos reconhecem que a aparência importa na escola.", "O autor do Texto 1, porque defende o uniforme como solução para a desigualdade visível.", "Nenhum dos dois — ambos são contra o uniforme, mas por razões diferentes."], "correta": 2, "porque": ["T2 é contra o uniforme — defende que ele apaga individualidades e forma 'adultos que se conformam'. Posição claramente contrária.", "T2 não defende o uniforme — só menciona que roupa é expressão. Defender expressão individual é o oposto de defender uniforme.", "Correto: T1 defende que o uniforme 'resolve muitos problemas' e é uma 'solução simples' para a desigualdade visível. Posição favorável explícita.", "T1 é claramente favorável: 'o uniforme resolve muitos problemas'. Dizer que ambos são contra contraria diretamente o texto."]}, {"n": 4, "tipo": "Par de textos de opinião (originais)", "nivel": "medio", "texto": "<div style=\"display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2px\"><div style=\"flex:1;min-width:190px;background:#e6edf7;border-left:3px solid #235a8c;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#1a3a5c;display:block;margin-bottom:3px\">📅 TEXTO 1</b>A semana de quatro dias já foi testada em empresas de diferentes países com resultados consistentes: produtividade mantida ou aumentada, e trabalhadores mais saudáveis. O Brasil deveria avançar nessa direção.</div><div style=\"flex:1;min-width:190px;background:#fff8eb;border-left:3px solid #c9871f;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#a96e10;display:block;margin-bottom:3px\">⚠️ TEXTO 2</b>A semana de quatro dias funciona para escritórios e empresas de tecnologia. Mas quem garante o atendimento nos hospitais, nas escolas, no comércio? Uma reforma trabalhista não pode ignorar que o mundo real não funciona em modo home office.</div></div>", "fonte": "Textos originais criados para esta atividade.", "enun": "O autor do Texto 2, em relação à proposta da semana de quatro dias de trabalho:", "alts": ["Concorda inteiramente — também considera que a proposta é viável em todos os setores.", "Discorda parcialmente — reconhece que funciona em alguns contextos, mas questiona sua aplicação universal.", "Concorda, mas apenas para trabalhadores da área de tecnologia.", "Não tem opinião — apenas apresenta os dois lados sem se posicionar."], "correta": 1, "porque": ["T2 não concorda inteiramente — sua crítica central é que o modelo não funciona para hospitais, escolas e comércio. Concordância total exigiria defesa sem ressalvas.", "Correto: T2 reconhece que o modelo 'funciona para escritórios e tecnologia' (concordância parcial), mas questiona sua aplicação universal. Não é rejeição total, mas discordância sobre o alcance da proposta.", "T2 menciona tecnologia como o contexto onde funciona, mas não concorda que ela deve adotá-la — seu ponto é que generalizar o modelo é um problema. Sua posição é crítica, não de concordância restrita.", "T2 levanta objeções concretas (hospitais, escolas, comércio) — não é texto neutro. Toma partido contra a universalização da proposta."]}, {"n": 5, "tipo": "Par de textos de opinião (originais)", "nivel": "medio", "texto": "<div style=\"display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2px\"><div style=\"flex:1;min-width:190px;background:#e6edf7;border-left:3px solid #235a8c;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#1a3a5c;display:block;margin-bottom:3px\">📲 TEXTO 1</b>Redes sociais são o espaço público da geração Z. É onde jovens se organizam politicamente, se apoiam em crises, encontram comunidades com interesses em comum. Demonizá-las é não entender como essa geração funciona.</div><div style=\"flex:1;min-width:190px;background:#fff8eb;border-left:3px solid #c9871f;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#a96e10;display:block;margin-bottom:3px\">🧠 TEXTO 2</b>A taxa de ansiedade e depressão entre adolescentes disparou junto com o uso de redes sociais. Correlação não é causalidade, dizem alguns — mas os pais não estão esperando estudos definitivos para ver os filhos sofrendo.</div></div>", "fonte": "Textos originais criados para esta atividade.", "enun": "Qual é a <b>diferença fundamental</b> nas posições dos dois textos sobre redes sociais e jovens?", "alts": ["T1 é contra as redes sociais e T2 é a favor.", "T1 enfatiza os benefícios sociais e políticos; T2 enfatiza os riscos à saúde mental dos adolescentes.", "Os dois textos concordam que as redes sociais devem ser regulamentadas.", "T1 defende o uso por adultos; T2 defende o uso apenas por jovens."], "correta": 1, "porque": ["É o contrário: T1 é favorável (valoriza o espaço político e social das redes); T2 destaca os riscos. A diferença fundamental está no que cada um enfatiza, não nos papéis invertidos.", "Correto: T1 valoriza o papel político, social e comunitário das redes sociais (benefícios). T2 destaca o aumento de ansiedade e depressão (riscos). Mesmo objeto, perspectivas opostas sobre seus efeitos.", "Nenhum dos dois fala de regulamentação — esse tema não está nos textos. Inferir isso vai além do que os textos dizem.", "Nenhum dos dois faz distinção por faixa etária nesse sentido. Ambos falam de jovens e adolescentes em geral."]}, {"n": 6, "tipo": "Par de textos de opinião (originais)", "nivel": "medio", "texto": "<div style=\"display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2px\"><div style=\"flex:1;min-width:190px;background:#e6edf7;border-left:3px solid #235a8c;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#1a3a5c;display:block;margin-bottom:3px\">🦁 TEXTO 1</b>Os zoológicos modernos são centros de conservação de espécies ameaçadas. Sem eles, animais como o mico-leão-dourado e o lobo-guará teriam extinção acelerada. A crítica ao cativeiro ignora esse papel essencial.</div><div style=\"flex:1;min-width:190px;background:#fff8eb;border-left:3px solid #c9871f;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#a96e10;display:block;margin-bottom:3px\">🚫 TEXTO 2</b>Nenhuma pesquisa de conservação justifica ver um elefante caminhando em 100 metros quadrados. O bem-estar animal não é negociável — e confinamento produz sofrimento, independentemente do propósito declarado.</div></div>", "fonte": "Textos originais criados para esta atividade.", "enun": "Embora ambos reconheçam que zoológicos têm um papel ligado à sobrevivência das espécies, em que <b>exatamente</b> os autores divergem?", "alts": ["Na avaliação de quais animais devem ser mantidos em cativeiro.", "Se o objetivo conservacionista é suficiente para justificar o cativeiro, ou se o sofrimento animal invalida esse objetivo.", "Em relação ao financiamento dos zoológicos — T1 defende o público; T2 defende o privado.", "Sobre se o mico-leão-dourado está ameaçado de extinção ou não."], "correta": 1, "porque": ["Nenhum dos textos faz distinção entre espécies para o argumento — a questão é sobre cativeiro em geral.", "Correto: T1 aceita o cativeiro como meio legítimo para conservação ('papel essencial'). T2 argumenta que o sofrimento animal é inaceitável independentemente do objetivo ('propósito declarado'). O ponto de divergência é: o fim justifica o meio?", "Financiamento não é mencionado em nenhum dos textos — é uma inferência indevida.", "O mico-leão-dourado é apenas um exemplo. Nenhum texto discute o estado de conservação específico da espécie."]}, {"n": 7, "tipo": "Par de textos de opinião (originais)", "nivel": "dificil", "texto": "<div style=\"display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2px\"><div style=\"flex:1;min-width:190px;background:#e6edf7;border-left:3px solid #235a8c;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#1a3a5c;display:block;margin-bottom:3px\">📈 TEXTO 1</b>A IA elimina tarefas, não empregos. Historicamente, toda revolução tecnológica criou mais postos do que destruiu. A indústria têxtil mecanizou e surgiu uma indústria inteira ao redor dela. A IA seguirá o mesmo caminho.</div><div style=\"flex:1;min-width:190px;background:#fff8eb;border-left:3px solid #c9871f;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#a96e10;display:block;margin-bottom:3px\">⏱️ TEXTO 2</b>O argumento histórico ignora a velocidade desta mudança. Quando o tear mecânico chegou, houve décadas para adaptação. A IA está transformando mercados em anos. Trabalhadores de 50 anos não têm tempo de 're-skilling'.</div></div>", "fonte": "Textos originais criados para esta atividade.", "enun": "A discordância fundamental entre os dois autores sobre o impacto da IA no emprego está em:", "alts": ["Se a IA é capaz ou não de criar novos empregos no longo prazo.", "Se os trabalhadores jovens conseguem aprender novas habilidades rapidamente.", "Se a velocidade da mudança atual permite o mesmo processo histórico de adaptação que houve em outras revoluções tecnológicas.", "Se as empresas de tecnologia devem ser regulamentadas pelo governo."], "correta": 2, "porque": ["T1 afirma que historicamente a tecnologia cria mais empregos. T2 não nega isso diretamente — questiona se isso se repetirá na mesma velocidade. A discordância é sobre o ritmo, não sobre a capacidade de criar empregos.", "T2 menciona trabalhadores de 50 anos como exemplo de quem não tem tempo — é um argumento de apoio, não o foco central da discordância.", "Correto: T1 usa o argumento histórico (têxtil → nova indústria) para prever que a IA repetirá o padrão de criar mais empregos do que destrói. T2 contra-argumenta que a velocidade atual não dá tempo para adaptação como houve antes. É a velocidade — e se ela invalida o argumento histórico — o ponto central de divergência.", "Regulamentação não é mencionada em nenhum dos textos."]}, {"n": 8, "tipo": "Par de textos de opinião (originais)", "nivel": "dificil", "texto": "<div style=\"display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2px\"><div style=\"flex:1;min-width:190px;background:#e6edf7;border-left:3px solid #235a8c;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#1a3a5c;display:block;margin-bottom:3px\">⚖️ TEXTO 1</b>As cotas raciais nas universidades são reparação histórica. Décadas de exclusão sistemática não se corrigem com igualdade formal. Para dar as mesmas oportunidades, às vezes é preciso tratar de forma diferente quem foi diferentemente prejudicado.</div><div style=\"flex:1;min-width:190px;background:#fff8eb;border-left:3px solid #c9871f;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#a96e10;display:block;margin-bottom:3px\">🗺️ TEXTO 2</b>Cotas raciais universalizam um critério que deveria ser socioeconômico. Um estudante negro de família rica recebe o mesmo benefício de um pobre. A desigualdade tem cor, sim — mas também tem CEP, e o CEP é mais determinante ainda.</div></div>", "fonte": "Textos originais criados para esta atividade.", "enun": "Qual é a <b>discordância central</b> entre os dois autores sobre as cotas universitárias?", "alts": ["Se a universidade pública deve ser gratuita ou paga.", "Se o critério de acesso deve ser racial (T1) ou socioeconômico (T2).", "Se a desigualdade racial existe no Brasil — T1 acredita que sim; T2 acredita que não.", "Se alunos de família rica devem ou não ter acesso à universidade pública."], "correta": 1, "porque": ["Gratuidade da universidade não é mencionada em nenhum dos textos.", "Correto: T1 defende cotas raciais como reparação histórica (critério: raça). T2 argumenta que o critério correto é socioeconômico (critério: renda e CEP). A discordância central é sobre qual critério deve guiar as políticas de acesso.", "T2 reconhece explicitamente que 'a desigualdade tem cor' — não nega o racismo. A discordância é sobre o remédio, não sobre o diagnóstico.", "Nenhum dos textos fala sobre acesso universal à universidade pública em geral. T2 usa o 'estudante negro de família rica' como exemplo para questionar o critério, não para discutir acesso por classe."]}, {"n": 9, "tipo": "Par de textos de opinião (originais) — Questão discursiva", "nivel": "dificil", "texto": "<div style=\"display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2px\"><div style=\"flex:1;min-width:190px;background:#e6edf7;border-left:3px solid #235a8c;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#1a3a5c;display:block;margin-bottom:3px\">📅 TEXTO 1</b>A semana de quatro dias já demonstrou, em projetos-piloto em vários países, que produtividade não cai e satisfação dos trabalhadores aumenta. Trabalhar cinco dias por semana é um hábito industrial do século XX — não uma lei da natureza. O Brasil pode e deve avançar.</div><div style=\"flex:1;min-width:190px;background:#fff8eb;border-left:3px solid #c9871f;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#a96e10;display:block;margin-bottom:3px\">⚠️ TEXTO 2</b>Quatro dias para quem tem o privilégio de um trabalho de escritório. O gari coleta o lixo cinco dias; a enfermeira trabalha em plantões; o balconista cobre o movimento do fim de semana. Uma lei que beneficia apenas uma parcela dos trabalhadores não é avanço — é mais desigualdade.</div></div>", "fonte": "Textos originais criados para esta atividade.", "enun": "(Questão aberta) Identifique e explique a <b>posição de cada autor</b> sobre a semana de quatro dias de trabalho. Em que ponto específico eles <b>discordam</b>?", "alts": ["[Esta questão é discursiva — use a área de texto abaixo.]", "[Alternativa B — não aplicável]", "[Alternativa C — não aplicável]", "[Alternativa D — não aplicável]"], "correta": 0, "porque": ["Esta é uma questão discursiva. O gabarito está disponível no botão 'Ver gabarito'.", "", "", ""]}];const G1R=[{"t": "'O celular é a principal ferramenta de pesquisa que o aluno tem no bolso. Proibi-lo é negar acesso ao conhecimento.'", "q": "Qual é a posição desse texto?", "o": ["Contrária ao uso do celular na escola", "Favorável ao uso do celular como ferramenta", "Neutra — apresenta dois lados", "Favorável, mas apenas fora do horário de aula"], "c": 1}, {"t": "'O ensino presencial é insubstituível. A interação humana constrói algo que nenhuma tela reproduz.'", "q": "Qual é a posição desse texto?", "o": ["Favorável ao ensino a distância", "Favorável ao ensino presencial", "Neutra — reconhece vantagens das duas modalidades", "Crítica ao uso de tecnologia na educação em geral"], "c": 1}, {"t": "'A IA elimina tarefas, não empregos. Historicamente, toda revolução tecnológica criou mais postos do que destruiu.'", "q": "Qual é a posição desse texto sobre IA e emprego?", "o": ["A IA elimina empregos sem criar novos", "A IA tem efeito líquido positivo sobre o emprego", "A IA não tem impacto no mercado de trabalho", "A IA cria empregos apenas para trabalhadores jovens"], "c": 1}, {"t": "'Nenhuma pesquisa de conservação justifica ver um elefante em 100 m². O bem-estar animal não é negociável.'", "q": "Qual é a posição desse texto sobre zoológicos?", "o": ["Favorável aos zoológicos como centros de conservação", "Contrária ao cativeiro, independentemente do objetivo", "Favorável, mas apenas para espécies ameaçadas", "Neutra — reconhece prós e contras"], "c": 1}, {"t": "'Cotas raciais universalizam um critério que deveria ser socioeconômico. A desigualdade tem cor, mas também tem CEP.'", "q": "Qual é a posição desse texto sobre cotas raciais?", "o": ["Favorável às cotas raciais como reparação histórica", "Contrária às cotas raciais — defende critério socioeconômico", "Favorável às cotas apenas para estudantes pobres", "Neutra — reconhece argumentos dos dois lados"], "c": 1}];const G2I=[{"s": "'O celular na escola é ferramenta — precisamos ensinar a usá-lo, não proibi-lo.'", "cat": "favor", "p": "Posição favorável ao uso do celular na escola."}, {"s": "'A tela acende e a aula some. Proibir é necessário.'", "cat": "contra", "p": "Posição contrária ao uso do celular na escola."}, {"s": "'Banir o celular é negar a realidade do século XXI.'", "cat": "favor", "p": "Posição favorável ao uso do celular na escola."}, {"s": "'Sem o celular, os alunos interagem mais entre si e com o professor.'", "cat": "contra", "p": "Posição contrária ao uso do celular na escola."}, {"s": "'O aluno que pesquisa no celular aprende mais rápido que no livro didático defasado.'", "cat": "favor", "p": "Posição favorável ao uso do celular na escola."}, {"s": "'Proibir é necessário enquanto não há formação adequada dos alunos para o uso responsável.'", "cat": "contra", "p": "Posição contrária (pelo menos provisoriamente) ao uso do celular na escola."}];const G2C=[["favor", "A favor do uso"], ["contra", "Contra o uso"]];const G3R=[{"t": "T1: 'IA cria empregos historicamente.' T2: 'A velocidade atual não permite a adaptação que houve antes.'", "q": "O ponto exato de discordância é:", "o": ["Se a IA deve ser usada em empresas", "Se a IA é tecnologia confiável", "Se a velocidade da mudança atual invalida o argumento histórico", "Se trabalhadores jovens conseguem aprender novas habilidades"], "c": 2}, {"t": "T1: 'Cotas devem ser raciais.' T2: 'Cotas devem ser socioeconômicas.'", "q": "O ponto exato de discordância é:", "o": ["Se a desigualdade racial existe no Brasil", "Se a universidade pública deve ser gratuita", "O critério adequado para as cotas", "Se alunos ricos devem ter acesso à universidade"], "c": 2}, {"t": "T1: 'O presencial é insubstituível.' T2: 'O EAD democratizou o acesso.'", "q": "O ponto exato de discordância é:", "o": ["Se o professor é necessário", "Qual modalidade de ensino é mais adequada", "Se a tecnologia deve existir nas escolas", "Se o EAD deve ser gratuito"], "c": 1}, {"t": "T1: 'Redes sociais beneficiam os jovens politicamente.' T2: 'Redes sociais aumentam ansiedade e depressão.'", "q": "O ponto exato de discordância é:", "o": ["Se as redes devem ser regulamentadas", "Se os jovens devem usar redes sociais", "Se os benefícios superam os malefícios para os jovens", "Se as redes sociais devem ser pagas"], "c": 2}, {"t": "T1: 'Zoológicos conservam espécies.' T2: 'Cativeiro produz sofrimento, independentemente do propósito.'", "q": "O ponto exato de discordância é:", "o": ["Quais animais devem ser mantidos em zoológicos", "Se o objetivo conservacionista justifica o cativeiro", "Como os zoológicos devem ser financiados", "Se o mico-leão-dourado está ameaçado"], "c": 1}];const G4R=[{"ctx": "T1: 'Proibir o celular é negar o conhecimento.' T2: 'Proibir é necessário — a tela come a atenção.'", "f": "Os dois textos têm ___ sobre o uso do celular na escola.", "o": ["a mesma posição", "posições distintas: um é favorável, o outro é contrário", "o mesmo argumento, mas chegam a conclusões diferentes", "a mesma conclusão, mas por caminhos diferentes"], "c": 1}, {"ctx": "T1 defende cotas raciais. T2 defende critério socioeconômico.", "f": "A discordância entre os autores é sobre o ___ das cotas.", "o": ["valor", "critério — racial (T1) vs. socioeconômico (T2)", "impacto", "histórico"], "c": 1}, {"ctx": "T1: 'A IA seguirá o caminho histórico de criar empregos.' T2: 'A velocidade atual não permite adaptação.'", "f": "Os autores discordam sobre se a ___ invalida o argumento histórico.", "o": ["tecnologia", "regulamentação", "velocidade da mudança atual", "criação de empregos"], "c": 2}, {"ctx": "T1: 'Zoológicos conservam espécies.' T2: 'Cativeiro produz sofrimento — o propósito não importa.'", "f": "Os autores discordam sobre se o ___ justifica o cativeiro.", "o": ["custo", "sofrimento", "objetivo conservacionista", "número de espécies salvas"], "c": 2}, {"ctx": "T1: 'EAD democratizou o acesso.' T2: 'O presencial é insubstituível.'", "f": "Identificar o ponto de discordância entre os autores é mais útil do que apenas dizer que eles ___.", "o": ["concordam", "têm posições", "discordam (sem especificar sobre o quê)", "escrevem bem"], "c": 2}];const G5R=[{"title": "Como identificar posições distintas em textos de opinião", "correct": ["1. Leia os dois textos e identifique o tema que têm em comum.", "2. Pergunte: o autor do Texto 1 é a favor ou contra? Por quê?", "3. Pergunte: o autor do Texto 2 é a favor ou contra? Por quê?", "4. Compare: em que ponto exato eles discordam?", "5. Verifique: há algum ponto em que concordam, mesmo discordando no geral?"]}, {"title": "Erros comuns ao comparar posições em textos de opinião", "correct": ["Confundir diferença de abordagem (D20) com diferença de opinião (D21).", "Dizer apenas 'discordam' sem identificar sobre o quê especificamente.", "Ignorar que um texto pode reconhecer parte do argumento contrário e ainda discordar.", "Confundir o argumento (justificativa) com a posição (o que o autor defende).", "Assumir que quem discorda está errado — textos de opinião apresentam pontos de vista, não verdades."]}];
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function stripHTML(s){const d=document.createElement("div");d.innerHTML=s;return d.textContent||"";}
+function toggleTTS(btn,id){if(window.speechSynthesis.speaking){window.speechSynthesis.cancel();document.querySelectorAll(".btn-tts").forEach(b=>b.classList.remove("playing"));return;}const el=document.getElementById(id);if(!el)return;const u=new SpeechSynthesisUtterance(stripHTML(el.innerHTML));u.lang="pt-BR";u.rate=.9;btn.classList.add("playing");u.onend=()=>btn.classList.remove("playing");window.speechSynthesis.speak(u);}
+const RK="saeb_d21posicoes_records";
+function loadRec(){try{return JSON.parse(localStorage.getItem(RK))||{};}catch{return {};}}
+function saveRec(k,v){const r=loadRec();if(!(k in r)||v>r[k])r[k]=v;localStorage.setItem(RK,JSON.stringify(r));renderRec();}
+function renderRec(){const r=loadRec(),g=document.getElementById("recGrid");if(!g)return;const items=[{k:"quiz",l:"Quiz"},{k:"qual",l:"Qual função?"},{k:"classif",l:"Classifique"},{k:"pistas",l:"Pelas pistas"},{k:"compl",l:"Complete"},{k:"ordene",l:"Ordene"}];g.innerHTML=items.map(i=>`<div class="rec-item"><div class="rv">${r[i.k]!=null?r[i.k]:"—"}</div><div class="rl">${i.l}</div></div>`).join("");}
+renderRec();
+document.querySelectorAll(".tab-btn").forEach(btn=>{btn.onclick=()=>{document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));document.querySelectorAll(".tab-pane").forEach(p=>p.classList.remove("active"));btn.classList.add("active");document.getElementById("pane-"+btn.dataset.tab).classList.add("active");window.scrollTo({top:0,behavior:"smooth"});};});
+const nivelLabel={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
+const QS=shuffle(QRAW).map((q,idx)=>{const smap=shuffle(Array.from({length:q.alts.length},(_,i)=>i));return{...q,dn:idx+1,alts:smap.map(i=>q.alts[i]),porque:smap.map(i=>q.porque[i]),correta:smap.indexOf(q.correta)};});
+const quizEl=document.getElementById("quiz");
+QS.forEach(q=>{const c=document.createElement("div");c.className="card";c.dataset.q=q.dn;const tid="txt"+q.dn;c.innerHTML=`<div class="card-head"><span class="qnum">Questão ${q.dn}</span><span class="qtipo">${q.tipo}</span><span class="qnivel ${q.nivel}">${nivelLabel[q.nivel]}</span></div><div class="txt-base" id="${tid}">${q.texto}<span class="txt-fonte">${q.fonte}</span><button class="btn-tts" onclick="toggleTTS(this,'${tid}')">🔊</button></div><div class="img-slot">🖼️ Espaço para imagem</div><p class="enunciado">${q.enun}</p><div class="alts">${q.alts.map((t,i)=>`<button class="alt" onclick="resp(${q.dn},${i})"><span class="letra">${"ABCD"[i]}</span> ${t}</button>`).join("")}</div><div class="fb" id="fb${q.dn}"></div>`;quizEl.appendChild(c);});
+let acertos=0;const feitas=new Set();
+function resp(n,k){
+  if(feitas.has(n))return;feitas.add(n);
+  const q=QS.find(x=>x.dn===n),card=quizEl.querySelector(`[data-q="${n}"]`),btns=card.querySelectorAll(".alt"),fb=document.getElementById("fb"+n);
+  const ok=k===q.correta;if(ok)acertos++;
+
+  // Registra a resposta detalhada desta questão para depois enviar ao Sheets
+  respostasDetalhadas.push({
+    questao: n,
+    tipo: q.tipo,
+    nivel: q.nivel,
+    respostaDada: k>=0 ? "ABCD"[k] : "(não respondeu)",
+    respostaCorreta: "ABCD"[q.correta],
+    acertou: ok
+  });
+
+  btns.forEach((b,i)=>{b.disabled=true;if(i===q.correta)b.classList.add("ok");else if(i===k)b.classList.add("err");else b.classList.add("dim");});
+  const pq=q.alts.map((t,i)=>`<span class="pi"><span class="l">${"ABCD"[i]})</span> ${q.porque[i]}</span>`).join("");
+  fb.className="fb show "+(ok?"ok":"err")+(modoJogo==="prova"?" prova-oculto":"");
+  fb.innerHTML=`<div class="ft">${ok?"✓ Correto!":"✗ Incorreto — a correta é "+"ABCD"[q.correta]+"."}</div><div>${q.porque[q.correta]}</div><div class="pq"><b>Cada alternativa:</b>${pq}</div>`;
+  document.getElementById("pFill").style.width=(feitas.size/QS.length*100)+"%";
+  // No modo prova, a pontuação parcial fica escondida; só aparece no resultado final
+  document.getElementById("score").textContent=modoJogo==="prova" ? (feitas.size+" / "+QS.length+" respondidas") : (acertos+" / "+QS.length);
+  if(feitas.size===QS.length)setTimeout(quizFim,500);
+}
+function quizFim(){
+  // No modo prova, revela todo o feedback que ficou oculto durante o quiz
+  if(modoJogo==="prova"){
+    document.querySelectorAll(".fb.prova-oculto").forEach(fb=>fb.classList.remove("prova-oculto"));
+    document.getElementById("score").textContent=acertos+" / "+QS.length;
+  }
+  const r=document.getElementById("resultado");r.style.display="block";
+  document.getElementById("notaFinal").textContent=acertos+"/"+QS.length;
+  const p=acertos/QS.length;let m,msg;
+  if(p>=.9){m="🥇";msg="Ouro! Precisão de detetive.";}
+  else if(p>=.7){m="🥈";msg="Prata! Atenção aos distratores.";}
+  else if(p>=.5){m="🥉";msg="Bronze! Volte ao texto antes de marcar.";}
+  else{m="📖";msg="Treine mais. A resposta está sempre lá.";}
+  document.getElementById("medalha").textContent=m;document.getElementById("msgFinal").textContent=msg;
+  saveRec("quiz",acertos);
+  enviarParaSheets();
+  r.scrollIntoView({behavior:"smooth",block:"center"});
+}document.getElementById("btnDisc").onclick=function(){document.getElementById("fbDisc").classList.toggle("show");document.getElementById("fbDisc").classList.add("ok");};
+(function(){const g=document.getElementById("gabPrint");if(!g)return;const linhas=QS.map(q=>`<li><b>Q${q.dn}:</b> ${q.alts[q.correta]}</li>`).join("");g.innerHTML=`<h2>📋 Gabarito</h2><ol>${linhas}</ol>`;})();
+
+function makeTimedGame(bodyId,rounds,rk){return{i:0,pts:0,tmr:null,tempo:0,rounds:[],start(){this.i=0;this.pts=0;this.rounds=shuffle(rounds);this.render();},render(){const b=document.getElementById(bodyId);if(this.i>=this.rounds.length){saveRec(rk,this.pts);b.innerHTML=`<div class="jogo-final"><div class="big">${this.pts} pts</div><p>${this.pts>=this.rounds.length*10?"Muito bem! 🥇":"Continue praticando."}</p><button class="btn ouro" onclick="${bodyId.split('-')[0].toUpperCase()}.start()">↺ Jogar de novo</button></div>`;return;}const r=this.rounds[this.i];this.tempo=100;b.innerHTML=`<div class="jogo-mid"><span class="chip">Rodada ${this.i+1}/${this.rounds.length}</span><div class="timerbar"><div id="${bodyId}-bar"></div></div><span class="chip">${this.pts} pts</span></div><div class="mini-texto">${r.t}</div><div class="mini-q">${r.q}</div><div class="alts" id="${bodyId}-alts">${r.o.map((o,k)=>`<button class="alt" onclick="${bodyId.split('-')[0].toUpperCase()}.resp(${k})"><span class="letra">${"ABCD"[k]}</span> ${o}</button>`).join("")}</div><div class="mini-fb" id="${bodyId}-fb"></div>`;clearInterval(this.tmr);this.tmr=setInterval(()=>{this.tempo-=2;const bar=document.getElementById(bodyId+"-bar");if(bar)bar.style.width=Math.max(0,this.tempo)+"%";if(this.tempo<=0)this.resp(-1);},120);},resp(k){clearInterval(this.tmr);const r=this.rounds[this.i],btns=document.querySelectorAll("#"+bodyId+"-alts .alt"),fb=document.getElementById(bodyId+"-fb");btns.forEach((a,j)=>{a.disabled=true;if(j===r.c)a.classList.add("ok");else if(j===k)a.classList.add("err");else a.classList.add("dim");});if(k===r.c){const g=5+Math.round(this.tempo/10);this.pts+=g;fb.className="mini-fb show ok";fb.textContent="✓ +"+g+" pts!";}else{fb.className="mini-fb show err";fb.textContent=(k===-1?"⏱️ Tempo!":"✗")+" Era: "+"ABCD"[r.c]+".";}this.i++;setTimeout(()=>this.render(),1600);}};}
+const G1=makeTimedGame("g1-body",G1R,"qual");const G3=makeTimedGame("g3-body",G3R,"pistas");
+
+const G2={rs:[],cats:G2C,start(){this.rs=[];const b=document.getElementById("g2-body");b.innerHTML=`<div style="font-size:.82rem;color:var(--txt2);margin-bottom:.8rem">Classifique cada texto pela sua função principal:</div>`+G2I.map((it,i)=>`<div class="vf-item" id="g2i${i}"><div class="vf-stm"><b>${i+1}.</b> ${it.s}</div><div class="btn-row">${this.cats.map(c=>`<button class="mini-btn cat-btn" onclick="G2.j(${i},'${c[0]}')">${c[1]}</button>`).join("")}</div><div class="mini-fb" id="g2f${i}"></div></div>`).join("")+`<div id="g2fin"></div>`;},j(i,esc){if(this.rs[i]!=null)return;const it=G2I[i],ok=esc===it.cat;this.rs[i]=ok;document.querySelectorAll("#g2i"+i+" .mini-btn").forEach(btn=>{btn.disabled=true;const txt=btn.textContent;const cat=this.cats.find(c=>c[1]===txt);if(cat&&cat[0]===it.cat)btn.style.background="var(--verde-c)";else if(cat&&cat[0]===esc&&!ok)btn.style.background="var(--vermelho-c)";});const fb=document.getElementById("g2f"+i);fb.className="mini-fb show "+(ok?"ok":"err");fb.innerHTML=(ok?"✓ ":"✗ ")+it.p;if(this.rs.filter(x=>x!=null).length===G2I.length){const ac=this.rs.filter(x=>x).length;saveRec("classif",ac);document.getElementById("g2fin").innerHTML=`<div class="jogo-final"><div class="big">${ac}/${G2I.length}</div><p>${ac===G2I.length?"Perfeito! 🥇":"Releia as justificativas."}</p><button class="btn ouro" onclick="G2.start()">↺ Jogar de novo</button></div>`;}}};
+
+const G4={i:0,pts:0,rounds:[],start(){this.i=0;this.pts=0;this.rounds=shuffle(G4R);this.render();},render(){const b=document.getElementById("g4-body");if(this.i>=this.rounds.length){saveRec("compl",this.pts);b.innerHTML=`<div class="jogo-final"><div class="big">${this.pts}/${this.rounds.length}</div><p>${this.pts===this.rounds.length?"Perfeito! 🥇":"Continue praticando."}</p><button class="btn ouro" onclick="G4.start()">↺ Jogar de novo</button></div>`;return;}const it=this.rounds[this.i];b.innerHTML=`<div class="jogo-mid"><span class="chip">Frase ${this.i+1}/${this.rounds.length}</span><span class="chip">${this.pts} acertos</span></div><p style="font-size:.82rem;color:var(--txt2);margin:.4rem 0">${it.ctx}</p><div class="mini-texto">${it.f}</div><div class="alts" id="g4-alts">${it.o.map((o,k)=>`<button class="alt" onclick="G4.resp(${k})"><span class="letra">${"ABCD"[k]}</span> ${o}</button>`).join("")}</div><div class="mini-fb" id="g4-fb"></div>`;},resp(k){const it=this.rounds[this.i],btns=document.querySelectorAll("#g4-alts .alt"),fb=document.getElementById("g4-fb");btns.forEach((a,j)=>{a.disabled=true;if(j===it.c)a.classList.add("ok");else if(j===k)a.classList.add("err");else a.classList.add("dim");});if(k===it.c){this.pts++;fb.className="mini-fb show ok";fb.textContent="✓ Exato!";}else{fb.className="mini-fb show err";fb.textContent="✗ Era: "+it.o[it.c]+".";}this.i++;setTimeout(()=>this.render(),1200);}};
+
+const G5={ri:0,start(){this.ri=0;this.renderRound();},renderRound(){const b=document.getElementById("g5-body");if(this.ri>=G5R.length){saveRec("ordene","✓");b.innerHTML=`<div class="jogo-final"><div class="big">✓</div><p>Raciocínio organizado! 🥇</p><button class="btn ouro" onclick="G5.start()">↺ Jogar de novo</button></div>`;return;}const rd=G5R[this.ri];const items=shuffle(rd.correct);b.innerHTML=`<div class="jogo-mid"><span class="chip">Passo a passo ${this.ri+1}/${G5R.length}</span></div><p style="font-size:.84rem;color:var(--txt2);margin-bottom:.6rem">Use ▲ ▼ para ordenar. Depois clique em "Verificar".</p><ol class="ord-list" id="g5list">${items.map((it,i)=>`<li class="ord-item" data-txt="${encodeURIComponent(it)}">${it}<div class="ord-arrows"><button onclick="G5.move(${i},-1)">▲</button><button onclick="G5.move(${i},1)">▼</button></div></li>`).join("")}</ol><div style="text-align:center;margin-top:.6rem"><button class="btn ouro" onclick="G5.check()">✓ Verificar ordem</button></div><div class="mini-fb" id="g5fb"></div>`;},move(idx,dir){const list=document.getElementById("g5list");const items=[...list.children];const newIdx=idx+dir;if(newIdx<0||newIdx>=items.length)return;if(dir===-1)list.insertBefore(items[idx],items[newIdx]);else list.insertBefore(items[newIdx],items[idx]);[...list.children].forEach((li,i)=>{li.querySelector(".ord-arrows").innerHTML=`<button onclick="G5.move(${i},-1)">▲</button><button onclick="G5.move(${i},1)">▼</button>`;});},check(){const rd=G5R[this.ri];const list=document.getElementById("g5list");const items=[...list.children];const fb=document.getElementById("g5fb");let ok=true;items.forEach((li,i)=>{const txt=decodeURIComponent(li.dataset.txt);if(txt===rd.correct[i])li.classList.add("ok");else{li.classList.add("err");ok=false;}li.querySelectorAll("button").forEach(b=>b.disabled=true);});if(ok){fb.className="mini-fb show ok";fb.textContent="✓ Ordem perfeita!";this.ri++;setTimeout(()=>this.renderRound(),1400);}else{fb.className="mini-fb show err";fb.innerHTML='✗ Trocadas. <button class="mini-btn" style="margin-left:.5rem" onclick="G5.renderRound()">Tentar de novo</button>';}}};
+</script></body></html>
