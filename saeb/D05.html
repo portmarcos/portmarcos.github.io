@@ -496,7 +496,7 @@ function makeTimedGame(bodyId, roundsSrc, recordKey){
         const bar=document.getElementById(bodyId+"-bar");
         if(bar)bar.style.width=Math.max(0,this.tempo)+"%";
         if(this.tempo<=0)this.resp(-1);
-      },120);
+      },400);
     },
     resp(k){
       clearInterval(this.tmr);
