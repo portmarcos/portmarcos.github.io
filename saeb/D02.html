@@ -557,7 +557,7 @@ const G1={
     <div class="mini-q">${r.q}</div>
     <div class="alts" id="g1a">${r.o.map((o,k)=>`<button class="alt" onclick="G1.resp(${k})"><span class="letra">${"ABCD"[k]}</span> ${o}</button>`).join("")}</div>
     <div class="mini-fb" id="g1fb"></div>`;
-    clearInterval(this.tmr);this.tmr=setInterval(()=>{this.tempo-=2;const bar=document.getElementById("g1bar");if(bar)bar.style.width=Math.max(0,this.tempo)+"%";if(this.tempo<=0)this.resp(-1);},120);
+    clearInterval(this.tmr);this.tmr=setInterval(()=>{this.tempo-=2;const bar=document.getElementById("g1bar");if(bar)bar.style.width=Math.max(0,this.tempo)+"%";if(this.tempo<=0)this.resp(-1);},400);
   },
   resp(k){clearInterval(this.tmr);const r=this.rds[this.i],btns=document.querySelectorAll("#g1a .alt"),fb=document.getElementById("g1fb");
     btns.forEach((a,j)=>{a.disabled=true;if(j===r.c)a.classList.add("ok");else if(j===k)a.classList.add("err");else a.classList.add("dim");});
