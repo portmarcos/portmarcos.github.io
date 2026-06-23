@@ -484,7 +484,7 @@ QS.forEach((q,idx)=>{
   const tid="txt"+q.dn;
   c.innerHTML=`<div class="card-head"><span class="qnum">Questão ${q.dn}</span><span class="qtipo">${q.tipo}</span><span class="qnivel ${q.nivel}">${nivelLabel[q.nivel]}</span></div>
   <div class="txt-base" id="${tid}">${q.texto}<span class="txt-fonte">${q.fonte}</span><button class="btn-tts" onclick="toggleTTS(this,'${tid}')" title="Ouvir texto">🔊</button></div>
-  <div class="img-slot">🖼️ Espaço para imagem</div>
+  
   <p class="enunciado">${q.enun}</p>
   <div class="alts">${q.alts.map((t,i)=>`<button class="alt" onclick="resp(${q.dn},${i})"><span class="letra">${"ABCD"[i]}</span> ${t}</button>`).join("")}</div>
   <div class="fb" id="fb${q.dn}"></div>`;
