@@ -235,7 +235,7 @@ footer{text-align:center;padding:1.5rem;font-size:.76rem;color:var(--txt2)}
 <!-- ===== QUIZ (fica oculto até o aluno preencher os dados acima) ===== -->
 <div id="quizConteudo" style="display:none">
 <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.5rem;align-items:center">
-<button class="btn sec" onclick="window.print()">🖨️ Imprimir com gabarito</button>
+
 <button class="btn sec" onclick="location.reload()">🔀 Embaralhar e refazer</button>
 <span class="modo-chip" id="modoChip"></span>
 </div>
@@ -481,7 +481,7 @@ function quizFim(){
   // No modo prova, revela todo o feedback que ficou oculto durante o quiz
   if(modoJogo==="prova"){
     document.querySelectorAll(".fb.prova-oculto").forEach(fb=>fb.classList.remove("prova-oculto"));
-    QS.forEach(q=>{const k=selecoes[q.dn];if(k===undefined)return;const card=quizEl.querySelector('[data-q="'+q.dn+'"]');if(!card)return;card.querySelectorAll(".alt").forEach((b,i)=>{b.classList.remove("sel");if(i===q.correta)b.classList.add("ok");else if(i===k)b.classList.add("err");});});
+    if(modoJogo==="estudo"){QS.forEach(q=>{const k=selecoes[q.dn];if(k===undefined)return;const card=quizEl.querySelector('[data-q="'+q.dn+'"]');if(!card)return;card.querySelectorAll(".alt").forEach((b,i)=>{b.classList.remove("sel");if(i===q.correta)b.classList.add("ok");else if(i===k)b.classList.add("err");});});}
     document.getElementById("score").textContent=acertos+" / "+QS.length;
   }
   const r=document.getElementById("resultado");r.style.display="block";
@@ -651,6 +651,15 @@ const G5={
     else{fb.className="mini-fb show err";fb.innerHTML="✗ Algumas posições estão trocadas. <button class='mini-btn' style='margin-left:.5rem' onclick='G5.renderRound()'>Tentar de novo</button>";}
   }
 };
+
+function toggleGabAberta(id,btn){
+  var el=document.getElementById(id);if(!el)return;
+  if(el.style.display==='block'){el.style.display='none';btn.textContent='Ver gabarito';return;}
+  var pwd=prompt('Senha do professor:');
+  if(pwd===null)return;
+  if(pwd===SENHA_MODO_ESTUDO){el.style.display='block';btn.textContent='Ocultar';}
+  else{alert('Senha incorreta.');}
+}
 </script>
 </body>
 </html>
