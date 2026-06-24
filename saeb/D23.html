@@ -172,6 +172,13 @@ footer{text-align:center;padding:1.5rem;font-size:.76rem;color:var(--txt2)}
 /* No modo prova, o feedback de cada questão fica escondido até o aluno terminar */
 .fb.prova-oculto{display:none!important}
 @media print{.quiz-gate,.modo-chip,.envio-status{display:none!important}#quizConteudo{display:block!important}}
+
+.discursiva-area{display:flex;flex-direction:column;gap:.6rem;padding:.4rem 1.1rem 1.1rem}
+.discursiva-area textarea{width:100%;min-height:100px;padding:.7rem .9rem;border:1.5px solid var(--borda);border-radius:9px;font-family:'Inter',sans-serif;font-size:.86rem;color:var(--txt);line-height:1.5;resize:vertical;background:var(--branco)}
+.discursiva-area textarea:focus{outline:none;border-color:var(--azul-m)}
+.btn-gabarito{align-self:flex-start;background:var(--azul);color:#fff;border:none;padding:.55rem 1.1rem;border-radius:8px;font-family:'Inter',sans-serif;font-size:.85rem;font-weight:600;cursor:pointer;transition:.15s}
+.btn-gabarito:hover{background:var(--azul-m)}
+.btn-gabarito:disabled{opacity:.5;cursor:default}
 </style>
 </head><body><header><a href="index.html" class="voltar-link">← Painel SAEB/SIMAVE</a><div class="badge">SAEB · SIMAVE · Língua Portuguesa</div><h1>Habilidade D23</h1><p>Identificar efeitos de ironia ou humor em textos</p></header>
 <nav class="tabs"><div class="tabs-inner"><button class="tab-btn active" data-tab="estudar">📚 Estudar</button><button class="tab-btn" data-tab="quiz">📝 Quiz</button><button class="tab-btn" data-tab="jogos">🎮 Jogos</button></div></nav><main><section class="tab-pane active" id="pane-estudar"><div class="resumo-box"><h2>🎯 Em uma frase</h2><p>O D23 mede se você consegue <strong style='color:#ffd98a'>identificar como ironia e humor são criados</strong> — e entender que nas tirinhas do Armandinho, cada piada esconde uma crítica.</p><span class="fc">"No Armandinho, o riso é o veículo — a crítica é a mensagem."</span></div>
@@ -370,7 +377,7 @@ document.querySelectorAll(".tab-btn").forEach(btn=>{btn.onclick=()=>{document.qu
 const nivelLabel={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
 const QS=shuffle(QRAW).map((q,idx)=>{const smap=shuffle(Array.from({length:q.alts.length},(_,i)=>i));return{...q,dn:idx+1,alts:smap.map(i=>q.alts[i]),porque:smap.map(i=>q.porque[i]),correta:smap.indexOf(q.correta)};});
 const quizEl=document.getElementById("quiz");
-QS.forEach(q=>{const c=document.createElement("div");c.className="card";c.dataset.q=q.dn;const tid="txt"+q.dn;c.innerHTML=`<div class="card-head"><span class="qnum">Questão ${q.dn}</span><span class="qtipo">${q.tipo}</span><span class="qnivel ${q.nivel}">${nivelLabel[q.nivel]}</span></div><div class="txt-base" id="${tid}">${q.texto}<span class="txt-fonte">${q.fonte}</span><button class="btn-tts" onclick="toggleTTS(this,'${tid}')">🔊</button></div><p class="enunciado">${q.enun}</p><div class="alts">${q.alts.map((t,i)=>`<button class="alt" onclick="resp(${q.dn},${i})"><span class="letra">${"ABCD"[i]}</span> ${t}</button>`).join("")}</div><div class="fb" id="fb${q.dn}"></div>`;quizEl.appendChild(c);});
+QS.forEach(q=>{const c=document.createElement("div");c.className="card";c.dataset.q=q.dn;const tid="txt"+q.dn;c.innerHTML=`<div class="card-head"><span class="qnum">Questão ${q.dn}</span><span class="qtipo">${q.tipo}</span><span class="qnivel ${q.nivel}">${nivelLabel[q.nivel]}</span></div><div class="txt-base" id="${tid}">${q.texto}<span class="txt-fonte">${q.fonte}</span><button class="btn-tts" onclick="toggleTTS(this,'${tid}')">🔊</button></div><p class="enunciado">${q.enun}</p><div class="alts">${(q.alts[0].includes("discursiva")&&q.alts.slice(1).every(a=>!a.trim())?`<div class="discursiva-area"><textarea id="disc${q.dn}" placeholder="Escreva sua resposta aqui…" rows="4"></textarea><button class="btn-gabarito" onclick="respDiscursiva(${q.dn})">Ver gabarito ▶</button></div>`:q.alts.map((t,i)=>`<button class="alt" onclick="resp(${q.dn},${i})"><span class="letra">${"ABCD"[i]}</span> ${t}</button>`).join(""))}</div><div class="fb" id="fb${q.dn}"></div>`;quizEl.appendChild(c);});
 let acertos=0;const feitas=new Set();
 function resp(n,k){
   if(feitas.has(n))return;feitas.add(n);
@@ -394,6 +401,23 @@ function resp(n,k){
   document.getElementById("pFill").style.width=(feitas.size/QS.length*100)+"%";
   // No modo prova, a pontuação parcial fica escondida; só aparece no resultado final
   document.getElementById("score").textContent=modoJogo==="prova" ? (feitas.size+" / "+QS.length+" respondidas") : (acertos+" / "+QS.length);
+  if(feitas.size===QS.length)setTimeout(quizFim,500);
+}
+function respDiscursiva(n){
+  if(feitas.has(n))return;feitas.add(n);
+  const q=QS.find(x=>x.dn===n);
+  const ta=document.getElementById("disc"+n);
+  const fb=document.getElementById("fb"+n);
+  const btn=ta?ta.nextElementSibling:null;
+  if(ta)ta.disabled=true;
+  if(btn)btn.disabled=true;
+  acertos++;
+  respostasDetalhadas.push({questao:n,tipo:q.tipo,nivel:q.nivel,respostaDada:"(discursiva)",respostaCorreta:"(discursiva)",acertou:true});
+  selecoes[n]=0;
+  fb.className="fb show ok";
+  fb.innerHTML=`<div class="ft">✏️ Questão discursiva — gabarito comentado:</div><div>${q.porque[0]}</div>`;
+  document.getElementById("pFill").style.width=(feitas.size/QS.length*100)+"%";
+  document.getElementById("score").textContent=modoJogo==="prova"?(feitas.size+" / "+QS.length+" respondidas"):(acertos+" / "+QS.length);
   if(feitas.size===QS.length)setTimeout(quizFim,500);
 }
 function quizFim(){
