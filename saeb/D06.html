@@ -169,13 +169,6 @@ footer{text-align:center;padding:1.5rem;font-size:.76rem;color:var(--txt2)}
 /* No modo prova, o feedback de cada questão fica escondido até o aluno terminar */
 .fb.prova-oculto{display:none!important}
 @media print{.quiz-gate,.modo-chip,.envio-status{display:none!important}#quizConteudo{display:block!important}}
-
-.discursiva-area{display:flex;flex-direction:column;gap:.6rem;padding:.4rem 1.1rem 1.1rem}
-.discursiva-area textarea{width:100%;min-height:100px;padding:.7rem .9rem;border:1.5px solid var(--borda);border-radius:9px;font-family:'Inter',sans-serif;font-size:.86rem;color:var(--txt);line-height:1.5;resize:vertical;background:var(--branco)}
-.discursiva-area textarea:focus{outline:none;border-color:var(--azul-m)}
-.btn-gabarito{align-self:flex-start;background:var(--azul);color:#fff;border:none;padding:.55rem 1.1rem;border-radius:8px;font-family:'Inter',sans-serif;font-size:.85rem;font-weight:600;cursor:pointer;transition:.15s}
-.btn-gabarito:hover{background:var(--azul-m)}
-.btn-gabarito:disabled{opacity:.5;cursor:default}
 </style>
 </head><body>
 <header>
@@ -282,7 +275,26 @@ footer{text-align:center;padding:1.5rem;font-size:.76rem;color:var(--txt2)}
 <span class="modo-chip" id="modoChip"></span>
 </div>
 <div class="prog-wrap"><span class="prog-label">Progresso</span><div class="prog-track"><div class="prog-fill" id="pFill"></div></div><span class="score" id="score">0 / 12</span></div>
-<div id="quiz" style="display:flex;flex-direction:column;gap:1.5rem"></div><div class="card" id="cardDisc" style="margin-top:1.5rem">
+<div id="quiz" style="display:flex;flex-direction:column;gap:1.5rem"></div>
+<!-- ===== QUESTÕES ABERTAS ===== -->
+<div class="card" id="cardAberta1" style="margin-top:1.5rem">
+  <div class="card-head"><span class="qnum">Questão Aberta 1</span><span class="qtipo">Justificar identificação de gênero</span><span class="qnivel facil">Aberta</span></div>
+  <div class="txt-base"><p><b>Questão aberta 1:</b> Escolha qualquer texto deste quiz e responda: <b>(a)</b> Qual é o gênero desse texto? <b>(b)</b> Cite pelo menos duas características formais que permitem identificar esse gênero (não apenas o assunto).</p><textarea class="disc-area" placeholder="Resposta..." style="min-height:160px;width:100%;resize:vertical;margin:1rem 1.1rem .5rem;width:calc(100% - 2.2rem);display:block"></textarea></div>
+  <div class="disc-actions" style="padding:0 1.1rem .5rem"><button class="btn sec" onclick="toggleGabAberta('gabA1_D06.html',this)">👁️ Ver gabarito</button></div>
+  <div class="fb" id="gabA1_D06.html" style="display:none"><div class="ft" style="color:var(--azul)">Gabarito</div><div>Critério: o estudante deve identificar o gênero corretamente E citar características formais reais (estrutura, linguagem, suporte, finalidade) — não apenas o tema ou assunto.</div></div>
+</div>
+<div class="card" id="cardAberta2" style="margin-top:1rem">
+  <div class="card-head"><span class="qnum">Questão Aberta 2</span><span class="qtipo">Comparar dois gêneros distintos</span><span class="qnivel medio">Aberta</span></div>
+  <div class="txt-base"><p><b>Questão aberta 2:</b> Compare uma <b>notícia</b> e uma <b>crônica</b> (dois gêneros presentes nesta atividade). Explique: <b>(a)</b> qual a finalidade de cada um; <b>(b)</b> qual a principal diferença na linguagem usada; <b>(c)</b> como o leitor sabe, já no primeiro parágrafo, qual dos dois está lendo.</p><textarea class="disc-area" placeholder="Resposta..." style="min-height:160px;width:100%;resize:vertical;margin:1rem 1.1rem .5rem;width:calc(100% - 2.2rem);display:block"></textarea></div>
+  <div class="disc-actions" style="padding:0 1.1rem .5rem"><button class="btn sec" onclick="toggleGabAberta('gabA2_D06.html',this)">👁️ Ver gabarito</button></div>
+  <div class="fb" id="gabA2_D06.html" style="display:none"><div class="ft" style="color:var(--azul)">Gabarito</div><div><b>(a)</b> A notícia informa sobre um fato de interesse público com objetividade; a crônica comenta a realidade do cotidiano com subjetividade e tom literário. <b>(b)</b> A notícia usa linguagem objetiva e impessoal; a crônica usa 1ª pessoa, ironia, metáforas e linguagem mais próxima da ficção. <b>(c)</b> A notícia começa com o fato central (lead jornalístico); a crônica geralmente começa com observação, situação ou reflexão pessoal.</div></div>
+</div>
+<div class="card" id="cardAberta3" style="margin-top:1rem">
+  <div class="card-head"><span class="qnum">Questão Aberta 3</span><span class="qtipo">Gênero e finalidade em texto multissemiótico</span><span class="qnivel dificil">Aberta</span></div>
+  <div class="txt-base"><p><b>Questão aberta 3:</b> Um cartaz de campanha usa imagens, cores, slogan e texto verbal juntos. <b>(a)</b> Esse conjunto é considerado um "texto multissemiótico" — o que significa esse termo? <b>(b)</b> Por que um texto só de palavras, mesmo com o mesmo assunto, não teria o mesmo efeito que o cartaz? <b>(c)</b> Cite um exemplo desta atividade.</p><textarea class="disc-area" placeholder="Resposta..." style="min-height:160px;width:100%;resize:vertical;margin:1rem 1.1rem .5rem;width:calc(100% - 2.2rem);display:block"></textarea></div>
+  <div class="disc-actions" style="padding:0 1.1rem .5rem"><button class="btn sec" onclick="toggleGabAberta('gabA3_D06.html',this)">👁️ Ver gabarito</button></div>
+  <div class="fb" id="gabA3_D06.html" style="display:none"><div class="ft" style="color:var(--azul)">Gabarito</div><div><b>(a)</b> "Multissemiótico" significa que usa múltiplas linguagens de sentido (imagem, cor, tipografia, texto verbal) ao mesmo tempo — não só palavras. <b>(b)</b> O impacto emocional, a rapidez de leitura e a memória visual dependem da combinação de imagem + texto; só o texto perderia a força visual e o apelo imediato. <b>(c)</b> Qualquer campanha ou cartaz da atividade (gota, doe um livro, etc.).</div></div>
+</div><div class="card" id="cardDisc" style="margin-top:1.5rem">
   <div class="card-head"><span class="qnum">Questão 13</span><span class="qtipo">Convite escolar</span><span class="qnivel dificil">Aberta</span></div>
   <div class="txt-base" id="txtDisc">Leia o seguinte comunicado:<br><br><b>Prezados pais e responsáveis,</b><br><br>Informamos que a <b>Festa Junina da Escola Municipal Capão</b> será realizada no dia <b>28 de junho de 2025</b>, a partir das 14h, no pátio da escola. As turmas do 6º ao 9º ano estão convidadas a apresentar uma quadrilha. As inscrições devem ser feitas até o dia 20 de junho na secretaria da escola.<br><br>Contamos com a participação de todos!<br><br><b>Direção da Escola Municipal Capão</b><span class="txt-fonte">Convite / comunicado escolar fictício, criado para fins didáticos.</span><button class="btn-tts" onclick="toggleTTS(this,'txtDisc')">🔊</button></div>
   <p class="enunciado"><b>a)</b> Qual é o gênero desse texto? Justifique sua resposta identificando pelo menos <b>DUAS características</b> do gênero no texto.<br><b>b)</b> Esse texto poderia cumprir a mesma função se fosse uma notícia jornalística? Explique por quê.</p>
@@ -419,7 +431,7 @@ document.querySelectorAll(".tab-btn").forEach(btn=>{btn.onclick=()=>{document.qu
 const nivelLabel={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
 const QS=shuffle(QRAW).map((q,idx)=>{const smap=shuffle(Array.from({length:q.alts.length},(_,i)=>i));return{...q,dn:idx+1,alts:smap.map(i=>q.alts[i]),porque:smap.map(i=>q.porque[i]),correta:smap.indexOf(q.correta)};});
 const quizEl=document.getElementById("quiz");
-QS.forEach(q=>{const c=document.createElement("div");c.className="card";c.dataset.q=q.dn;const tid="txt"+q.dn;c.innerHTML=`<div class="card-head"><span class="qnum">Questão ${q.dn}</span><span class="qtipo">${q.tipo}</span><span class="qnivel ${q.nivel}">${nivelLabel[q.nivel]}</span></div><div class="txt-base" id="${tid}">${q.texto}<span class="txt-fonte">${q.fonte}</span><button class="btn-tts" onclick="toggleTTS(this,'${tid}')">🔊</button></div><p class="enunciado">${q.enun}</p><div class="alts">${(q.alts[0].includes("discursiva")&&q.alts.slice(1).every(a=>!a.trim())?`<div class="discursiva-area"><textarea id="disc${q.dn}" placeholder="Escreva sua resposta aqui…" rows="4"></textarea><button class="btn-gabarito" onclick="respDiscursiva(${q.dn})">Ver gabarito ▶</button></div>`:q.alts.map((t,i)=>`<button class="alt" onclick="resp(${q.dn},${i})"><span class="letra">${"ABCD"[i]}</span> ${t}</button>`).join(""))}</div><div class="fb" id="fb${q.dn}"></div>`;quizEl.appendChild(c);});
+QS.forEach(q=>{const c=document.createElement("div");c.className="card";c.dataset.q=q.dn;const tid="txt"+q.dn;c.innerHTML=`<div class="card-head"><span class="qnum">Questão ${q.dn}</span><span class="qtipo">${q.tipo}</span><span class="qnivel ${q.nivel}">${nivelLabel[q.nivel]}</span></div><div class="txt-base" id="${tid}">${q.texto}<span class="txt-fonte">${q.fonte}</span><button class="btn-tts" onclick="toggleTTS(this,'${tid}')">🔊</button></div><p class="enunciado">${q.enun}</p><div class="alts">${q.alts.map((t,i)=>`<button class="alt" onclick="resp(${q.dn},${i})"><span class="letra">${"ABCD"[i]}</span> ${t}</button>`).join("")}</div><div class="fb" id="fb${q.dn}"></div>`;quizEl.appendChild(c);});
 let acertos=0;const feitas=new Set();
 function resp(n,k){
   if(feitas.has(n))return;feitas.add(n);
@@ -443,23 +455,6 @@ function resp(n,k){
   document.getElementById("pFill").style.width=(feitas.size/QS.length*100)+"%";
   // No modo prova, a pontuação parcial fica escondida; só aparece no resultado final
   document.getElementById("score").textContent=modoJogo==="prova" ? (feitas.size+" / "+QS.length+" respondidas") : (acertos+" / "+QS.length);
-  if(feitas.size===QS.length)setTimeout(quizFim,500);
-}
-function respDiscursiva(n){
-  if(feitas.has(n))return;feitas.add(n);
-  const q=QS.find(x=>x.dn===n);
-  const ta=document.getElementById("disc"+n);
-  const fb=document.getElementById("fb"+n);
-  const btn=ta?ta.nextElementSibling:null;
-  if(ta)ta.disabled=true;
-  if(btn)btn.disabled=true;
-  acertos++;
-  respostasDetalhadas.push({questao:n,tipo:q.tipo,nivel:q.nivel,respostaDada:"(discursiva)",respostaCorreta:"(discursiva)",acertou:true});
-  selecoes[n]=0;
-  fb.className="fb show ok";
-  fb.innerHTML=`<div class="ft">✏️ Questão discursiva — gabarito comentado:</div><div>${q.porque[0]}</div>`;
-  document.getElementById("pFill").style.width=(feitas.size/QS.length*100)+"%";
-  document.getElementById("score").textContent=modoJogo==="prova"?(feitas.size+" / "+QS.length+" respondidas"):(acertos+" / "+QS.length);
   if(feitas.size===QS.length)setTimeout(quizFim,500);
 }
 function quizFim(){
