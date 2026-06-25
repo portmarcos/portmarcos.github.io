@@ -299,7 +299,7 @@ footer{text-align:center;padding:1.5rem;font-size:.76rem;color:var(--txt2)}
   <div class="txt-base" id="txtDisc">Leia o seguinte comunicado:<br><br><b>Prezados pais e responsáveis,</b><br><br>Informamos que a <b>Festa Junina da Escola Municipal Capão</b> será realizada no dia <b>28 de junho de 2025</b>, a partir das 14h, no pátio da escola. As turmas do 6º ao 9º ano estão convidadas a apresentar uma quadrilha. As inscrições devem ser feitas até o dia 20 de junho na secretaria da escola.<br><br>Contamos com a participação de todos!<br><br><b>Direção da Escola Municipal Capão</b><span class="txt-fonte">Convite / comunicado escolar fictício, criado para fins didáticos.</span><button class="btn-tts" onclick="toggleTTS(this,'txtDisc')">🔊</button></div>
   <p class="enunciado"><b>a)</b> Qual é o gênero desse texto? Justifique sua resposta identificando pelo menos <b>DUAS características</b> do gênero no texto.<br><b>b)</b> Esse texto poderia cumprir a mesma função se fosse uma notícia jornalística? Explique por quê.</p>
   <textarea class="disc-area" placeholder="Escreva aqui a sua resposta..."></textarea>
-  <div class="disc-actions"><button class="btn sec" id="btnDisc">👁️ Ver gabarito sugerido</button></div>
+  <div class="disc-actions"><button class="btn sec" id="btnDisc" onclick="(function(){var p=prompt('Senha do professor:');if(p===SENHA_MODO_ESTUDO){var fb=document.getElementById('fbDisc');if(fb){fb.style.display='block';}}else if(p!==null){alert('Senha incorreta.');}})()">👁️ Ver gabarito</button></div>
   <div class="fb" id="fbDisc"><div class="ft" style="color:var(--azul)">Gabarito sugerido</div><div><b>a)</b> É um <b>convite / comunicado escolar</b>. Características: (1) destinatário explícito no vocativo ('Prezados pais e responsáveis'); (2) linguagem formal e impessoal; (3) dados objetivos sobre o evento (data, hora, local); (4) emissora identificada ('Direção da Escola'); (5) verbos de convocação ('Contamos com a participação'). Aceitar dois ou mais características bem identificadas.<br><b>b)</b> Não cumpriria a mesma função. A notícia relata um fato que já aconteceu, de interesse público amplo, sem destinatário específico. Esse texto convoca um grupo definido (pais e responsáveis) para uma ação futura, o que é função do convite/comunicado — não da notícia.</div></div>
 <div id="resultado"><h2>Quiz concluído!</h2><div class="medalha" id="medalha">🏅</div><div class="nota" id="notaFinal">—</div><p id="msgFinal"></p><div id="envioStatus" class="envio-status"></div><div style="margin-top:1rem"><button class="btn" onclick="location.reload()">↺ Refazer</button></div></div>
 <div class="gabarito-print" id="gabPrint"></div>
@@ -460,8 +460,8 @@ function resp(n,k){
 function quizFim(){
   // No modo prova, revela todo o feedback que ficou oculto durante o quiz
   if(modoJogo==="prova"){
-    document.querySelectorAll(".fb.prova-oculto").forEach(fb=>fb.classList.remove("prova-oculto"));
-    if(modoJogo==="estudo"){QS.forEach(q=>{const k=selecoes[q.dn];if(k===undefined)return;const card=quizEl.querySelector('[data-q="'+q.dn+'"]');if(!card)return;card.querySelectorAll(".alt").forEach((b,i)=>{b.classList.remove("sel");if(i===q.correta)b.classList.add("ok");else if(i===k)b.classList.add("err");});});}
+    // gabarito bloqueado no modo prova
+    // modo estudo mostra gabarito por senha
     document.getElementById("score").textContent=acertos+" / "+QS.length;
   }
   const r=document.getElementById("resultado");r.style.display="block";
