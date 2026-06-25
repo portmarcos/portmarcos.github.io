@@ -846,7 +846,7 @@ async function send(){
   const data=document.getElementById('data-ativ').value;
   if(!nome||!turma){msg('err','Preencha nome e turma antes de enviar.');return;}
   const url=SCRIPT_URL;
-  if(url==='COLE_AQUI_URL_LINUX'){msg('err','Configure a URL do Apps Script para esta atividade.');return;}
+  if(url==='https://script.google.com/macros/s/AKfycbziLz85J0730CBuDR_5JpezPbYLMY9grYDhFZJxUQiGFUv8ekthzy7OPDCAMd3yqQRN/exec'){msg('err','Configure a URL do Apps Script para esta atividade.');return;}
   const btn=document.getElementById('bsend');
   btn.disabled=true; msg('loading','⏳ Enviando…');
   try{
