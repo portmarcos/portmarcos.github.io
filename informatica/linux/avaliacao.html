@@ -808,7 +808,7 @@ r=leitura(4), w=escrita(2), x=execução(1). Soma: rwx=7, rw-=6, r-x=5, r--=4.</
 </footer>
 
 <script>
-const SCRIPT_URL = "COLE_AQUI_URL_LINUX";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbziLz85J0730CBuDR_5JpezPbYLMY9grYDhFZJxUQiGFUv8ekthzy7OPDCAMd3yqQRN/exec";";
 const FC=[1,2,3,4,6,7,8,9,11,12,14,16,19];
 const AB=[5,10,13,15];
 const DI=[17,18,20];
@@ -846,7 +846,7 @@ async function send(){
   const data=document.getElementById('data-ativ').value;
   if(!nome||!turma){msg('err','Preencha nome e turma antes de enviar.');return;}
   const url=SCRIPT_URL;
-  if(url==='https://script.google.com/macros/s/AKfycbziLz85J0730CBuDR_5JpezPbYLMY9grYDhFZJxUQiGFUv8ekthzy7OPDCAMd3yqQRN/exec'){msg('err','Configure a URL do Apps Script para esta atividade.');return;}
+  if(url==='COLE_AQUI_URL_LINUX'){msg('err','Configure a URL do Apps Script para esta atividade.');return;}
   const btn=document.getElementById('bsend');
   btn.disabled=true; msg('loading','⏳ Enviando…');
   try{
