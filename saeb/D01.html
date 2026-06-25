@@ -512,8 +512,8 @@ function resp(n,k){
 function quizFim(){
   // No modo prova, revela todo o feedback que ficou oculto durante o quiz
   if(modoJogo==="prova"){
-    document.querySelectorAll(".fb.prova-oculto").forEach(fb=>fb.classList.remove("prova-oculto"));
-    if(modoJogo==="estudo"){QS.forEach(q=>{const k=selecoes[q.dn];if(k===undefined)return;const card=quizEl.querySelector('[data-q="'+q.dn+'"]');if(!card)return;card.querySelectorAll(".alt").forEach((b,i)=>{b.classList.remove("sel");if(i===q.correta)b.classList.add("ok");else if(i===k)b.classList.add("err");});});}
+    // gabarito bloqueado no modo prova
+    // modo estudo mostra gabarito por senha
     document.getElementById("score").textContent=acertos+" / "+QS.length;
   }
   const r=document.getElementById("resultado");r.style.display="block";
