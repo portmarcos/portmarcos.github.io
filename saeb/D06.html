@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAEB/SIMAVE – D6 | Identificar o gênero de um texto</title>
+<meta name="description" content="Atividade interativa D6 — identificar o gênero textual. Quiz com 12 questões, 5 minijogos. Textos reais de Agência Brasil/EBC, Olavo Bilac, Esopo e domínio público.">
+<meta property="og:title" content="SAEB/SIMAVE D6 — Identificar o gênero de um texto">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--azul:#1a3a5c;--azul-m:#235a8c;--azul-c:#d6e8f7;--ouro:#c9871f;--ouro-c:#fff8eb;--verde:#246b4a;--verde-c:#e6f4ed;--verm:#b02a2a;--verm-c:#fdecea;--bg:#f2f4f7;--borda:#d0d6e0;--branco:#fff;--txt:#1c2635;--txt2:#4a5568}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;line-height:1.5}
+header{background:var(--azul);color:#fff;padding:2.4rem 1.5rem 1.8rem;text-align:center;position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:rgba(201,135,31,.12)}
+.badge{display:inline-block;background:var(--ouro);color:var(--azul);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:.8rem}
+header h1{font-family:'Lora',serif;font-size:clamp(1.5rem,4vw,2.1rem);font-weight:600;line-height:1.3;margin-bottom:.4rem}
+header p{font-size:.92rem;opacity:.78;max-width:560px;margin:0 auto;line-height:1.6}
+.voltar-link{display:inline-block;margin-bottom:1rem;color:#fff;opacity:.7;text-decoration:none;font-size:.82rem}
+.voltar-link:hover{opacity:1}
+.tabs{background:var(--branco);border-bottom:1px solid var(--borda);position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.tabs-inner{max-width:840px;margin:0 auto;display:flex}
+.tab-btn{flex:1;background:none;border:none;padding:.95rem .5rem;font-family:'Inter',sans-serif;font-size:.88rem;font-weight:600;color:var(--txt2);cursor:pointer;border-bottom:3px solid transparent;transition:.15s;display:flex;align-items:center;justify-content:center;gap:.35rem}
+.tab-btn:hover{color:var(--azul-m);background:var(--bg)}
+.tab-btn.active{color:var(--azul);border-bottom-color:var(--ouro)}
+main{max-width:840px;margin:0 auto;padding:1.6rem 1.25rem 4rem}
+.tab-pane{display:none;flex-direction:column;gap:1.6rem}
+.tab-pane.active{display:flex}
+.painel{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.5rem 1.6rem}
+.painel h2{font-family:'Lora',serif;font-size:1.2rem;color:var(--azul);margin-bottom:.7rem}
+.painel h3{font-size:.95rem;color:var(--azul-m);margin:.9rem 0 .3rem}
+.painel p,.painel li{font-size:.9rem;margin-bottom:.5rem}
+.painel ul{margin:.2rem 0 .6rem 1.2rem}
+.painel strong{color:var(--azul)}
+.resumo-box{background:var(--azul);color:#fff;border-radius:14px;padding:1.4rem 1.6rem}
+.resumo-box h2{color:#fff;font-family:'Lora',serif;font-size:1.1rem;margin-bottom:.5rem}
+.resumo-box p{color:rgba(255,255,255,.9);font-size:.92rem;margin:0}
+.resumo-box .fc{display:block;margin-top:.7rem;font-style:italic;font-size:.88rem;background:rgba(255,255,255,.1);padding:.6rem .9rem;border-radius:8px;border-left:3px solid var(--ouro)}
+.dica-ouro{background:var(--ouro-c);border:1px solid #ecd9aa}
+.dica-ouro h2{color:#7a5310}.dica-ouro li{color:#4a3408}.dica-ouro strong{color:#7a5310}
+.glossario dt{font-weight:600;color:var(--azul-m);font-size:.88rem;margin-top:.5rem}
+.glossario dd{font-size:.86rem;color:var(--txt2);margin-left:0}
+.aviso-prof{background:#eef4fb;border:1px dashed var(--azul-m);border-radius:10px;padding:.9rem 1.1rem;font-size:.82rem;color:var(--azul-m)}
+.records{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.2rem 1.4rem}
+.records h2{font-family:'Lora',serif;font-size:1.1rem;color:var(--azul);margin-bottom:.6rem}
+.rec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.7rem}
+.rec-item{background:var(--bg);border-radius:10px;padding:.7rem;text-align:center}
+.rec-item .rv{font-size:1.5rem;font-weight:700;color:var(--azul-m)}
+.rec-item .rl{font-size:.72rem;color:var(--txt2)}
+.prog-wrap{background:var(--branco);border:1px solid var(--borda);border-radius:12px;padding:.85rem 1.1rem;display:flex;align-items:center;gap:14px}
+.prog-label{font-size:.78rem;font-weight:600;color:var(--azul-m);white-space:nowrap}
+.prog-track{flex:1;height:6px;background:var(--borda);border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--azul-m),var(--ouro));border-radius:99px;width:0%;transition:width .4s}
+.score{font-size:.78rem;font-weight:600;color:var(--txt2);white-space:nowrap}
+.card{background:var(--branco);border-radius:14px;border:1px solid var(--borda);overflow:hidden}
+.card-head{background:var(--azul);color:#fff;padding:.65rem 1.2rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.qnum{background:var(--ouro);color:var(--azul);font-size:.72rem;font-weight:700;padding:3px 11px;border-radius:20px}
+.qtipo{font-size:.74rem;opacity:.65;font-style:italic}
+.qnivel{font-size:.66rem;font-weight:700;text-transform:uppercase;padding:3px 9px;border-radius:20px;margin-left:auto}
+.qnivel.facil{background:var(--verde-c);color:var(--verde)}.qnivel.medio{background:var(--ouro-c);color:#a96e10}.qnivel.dificil{background:var(--verm-c);color:var(--verm)}
+.txt-base{background:var(--ouro-c);border-left:4px solid var(--ouro);margin:1rem 1.1rem 0;padding:1rem 1.1rem;border-radius:0 8px 8px 0;font-family:'Lora',serif;font-size:.94rem;line-height:1.85;color:#2b1d00;position:relative}
+.txt-fonte{font-family:'Inter',sans-serif;font-size:.72rem;color:var(--txt2);margin-top:.6rem;display:block;border-top:1px solid #e6d5b0;padding-top:.4rem}
+.btn-tts{position:absolute;top:.6rem;right:.6rem;background:none;border:1px solid #c9a14a;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;color:#8a6d1b;transition:.15s}
+.btn-tts:hover{background:#f5e6c1}
+.btn-tts.playing{background:var(--azul);color:#fff;border-color:var(--azul)}
+.img-slot{margin:.8rem 1.1rem 0;border:2px dashed var(--borda);border-radius:10px;padding:.8rem;text-align:center;color:var(--txt2);font-size:.76rem}
+.enunciado{padding:1rem 1.1rem .4rem;font-size:.92rem;line-height:1.6;font-weight:500;color:var(--azul)}
+.alts{padding:.4rem 1.1rem 1.1rem;display:flex;flex-direction:column;gap:.45rem}
+.alt{display:flex;align-items:flex-start;gap:10px;padding:.65rem .9rem;border:1.5px solid var(--borda);border-radius:9px;background:var(--branco);cursor:pointer;text-align:left;font-family:'Inter',sans-serif;font-size:.86rem;color:var(--txt);line-height:1.5;transition:.15s;width:100%}
+.alt:hover:not(:disabled){border-color:var(--azul-m);background:var(--azul-c);transform:translateX(2px)}
+.alt:disabled{cursor:default}
+.letra{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;border-radius:50%;background:var(--bg);font-size:.75rem;font-weight:700;color:var(--azul);flex-shrink:0}
+.alt.ok{border-color:var(--verde);background:var(--verde-c);color:var(--verde);font-weight:500}
+.alt.ok .letra{background:var(--verde);color:#fff}
+.alt.err{border-color:var(--verm);background:var(--verm-c);color:var(--verm)}
+.alt.err .letra{background:var(--verm);color:#fff}
+.alt.dim{opacity:.5}.alt.sel{border-color:var(--azul-m);background:var(--azul-c)}.alt.sel .letra{background:var(--azul-m);color:#fff}
+.fb{display:none;margin:0 1.1rem 1.1rem;padding:.8rem 1rem;border-radius:8px;font-size:.83rem;line-height:1.6}
+.fb.show{display:block}.fb.ok{background:var(--verde-c);border-left:3px solid var(--verde)}.fb.err{background:var(--verm-c);border-left:3px solid var(--verm)}
+.fb .ft{font-weight:600;margin-bottom:.3rem}.fb.ok .ft{color:var(--verde)}.fb.err .ft{color:var(--verm)}
+.fb .pq{margin-top:.5rem;border-top:1px solid rgba(0,0,0,.08);padding-top:.4rem}
+.fb .pq b{color:var(--azul)}
+.fb .pi{display:block;font-size:.8rem;color:var(--txt2);margin-bottom:.2rem}
+.fb .pi .l{font-weight:700;color:var(--azul)}
+#resultado{display:none;background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:2.4rem 2rem;text-align:center}
+#resultado h2{font-family:'Lora',serif;font-size:1.4rem;color:var(--azul)}
+.medalha{font-size:3rem;margin:.4rem 0}.nota{font-size:3.4rem;font-weight:700;color:var(--azul-m);line-height:1;margin:.4rem 0}
+#resultado p{color:var(--txt2);font-size:.9rem;max-width:480px;margin:.4rem auto 0}
+.btn{display:inline-block;background:var(--azul);color:#fff;padding:.65rem 1.5rem;border-radius:30px;border:none;font-size:.86rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;margin:.3rem}
+.btn:hover{background:var(--azul-m)}
+.btn.ouro{background:var(--ouro);color:var(--azul)}.btn.sec{background:var(--bg);color:var(--azul);border:1px solid var(--borda)}
+.jogo-card{background:var(--branco);border-radius:14px;border:1px solid var(--borda);overflow:hidden}
+.jogo-head{padding:1rem 1.3rem;border-bottom:1px solid var(--borda);display:flex;align-items:center;gap:.7rem}
+.jogo-ico{font-size:1.5rem}
+.jogo-head h3{font-family:'Lora',serif;font-size:1.1rem;color:var(--azul);margin:0}
+.jogo-head .desc{font-size:.78rem;color:var(--txt2)}
+.jogo-body{padding:1.2rem 1.3rem}
+.chip{font-size:.76rem;font-weight:600;padding:4px 11px;border-radius:20px;background:var(--azul-c);color:var(--azul)}
+.chip.timer{background:var(--ouro-c);color:#a96e10}
+.jogo-mid{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:.8rem}
+.timerbar{flex:1;min-width:100px;height:8px;background:var(--borda);border-radius:99px;overflow:hidden}
+.timerbar>div{height:100%;width:100%;background:linear-gradient(90deg,var(--verde),var(--ouro),var(--verm));border-radius:99px;transition:width .25s linear}
+.mini-texto{background:var(--ouro-c);border-left:4px solid var(--ouro);border-radius:0 8px 8px 0;padding:.85rem 1rem;font-family:'Lora',serif;font-size:.9rem;line-height:1.7;color:#2b1d00;margin-bottom:.8rem;position:relative}
+.mini-q{font-weight:600;color:var(--azul);margin-bottom:.6rem;font-size:.9rem}
+.mini-btn{border:1.5px solid var(--borda);background:var(--branco);border-radius:8px;padding:.45rem .8rem;font-size:.8rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;color:var(--azul);transition:.15s}
+.mini-btn:hover:not(:disabled){background:var(--azul-c);border-color:var(--azul-m)}
+.mini-btn:disabled{cursor:default}
+.mini-btn.ok{background:var(--verde-c);border-color:var(--verde);color:var(--verde)}
+.mini-btn.err{background:var(--verm-c);border-color:var(--verm);color:var(--verm)}
+.mini-fb{font-size:.8rem;margin-top:.5rem;padding:.45rem .65rem;border-radius:6px;display:none}
+.mini-fb.show{display:block}.mini-fb.ok{background:var(--verde-c);color:var(--verde)}.mini-fb.err{background:var(--verm-c);color:var(--verm)}
+.vf-item,.det-item{border:1.5px solid var(--borda);border-radius:10px;padding:.7rem .9rem;margin-bottom:.6rem}
+.vf-stm{font-size:.88rem;margin-bottom:.5rem}
+.btn-row{display:flex;gap:.5rem;flex-wrap:wrap}
+.cat-btn.cat-tema.ok{border-color:var(--azul-m);background:var(--azul-c);color:var(--azul)}
+.cat-btn.cat-detalhe.ok{border-color:var(--ouro);background:var(--ouro-c);color:#a96e10}
+.cat-btn.cat-foradotexto.ok{border-color:var(--verde);background:var(--verde-c);color:var(--verde)}
+.jogo-final{text-align:center;padding:.8rem 0 .3rem}
+.jogo-final .big{font-size:2rem;font-weight:700;color:var(--azul-m)}
+.jogo-final p{font-size:.88rem;color:var(--txt2);margin:.2rem 0 .8rem}
+.ord-list{list-style:none;padding:0;counter-reset:ord}
+.ord-item{counter-increment:ord;display:flex;align-items:center;gap:10px;padding:.6rem .9rem;border:1.5px solid var(--borda);border-radius:9px;margin-bottom:.5rem;background:var(--branco);font-size:.86rem;user-select:none}
+.ord-item::before{content:counter(ord);display:flex;align-items:center;justify-content:center;min-width:24px;height:24px;border-radius:50%;background:var(--azul-c);font-size:.72rem;font-weight:700;color:var(--azul)}
+.ord-item.ok{border-color:var(--verde);background:var(--verde-c)}
+.ord-item.err{border-color:var(--verm);background:var(--verm-c)}
+.ord-arrows{display:flex;flex-direction:column;gap:2px;margin-left:auto}
+.ord-arrows button{background:var(--bg);border:1px solid var(--borda);border-radius:4px;width:24px;height:20px;cursor:pointer;font-size:.65rem;display:flex;align-items:center;justify-content:center}
+.ord-arrows button:hover{background:var(--azul-c)}
+footer{text-align:center;padding:1.5rem;font-size:.76rem;color:var(--txt2)}
+@media print{.tabs,header,.prog-wrap,.btn,.btn-tts,.img-slot,footer,#resultado,.jogo-card,.records,.resumo-box,.dica-ouro,.glossario,.aviso-prof{display:none!important}.tab-pane{display:flex!important}.card{break-inside:avoid;border:1px solid #ccc;margin-bottom:1rem}.card-head{background:#333!important;-webkit-print-color-adjust:exact}.fb{display:block!important;background:#f5f5f5!important;border-left:3px solid #999!important;color:#333!important}}
+@media(max-width:480px){.painel{padding:1.1rem}.tab-btn{font-size:.78rem;padding:.8rem .3rem}}
+
+.genre-tag{display:inline-block;padding:3px 10px;border-radius:14px;font-size:.72rem;font-weight:700;margin-bottom:.5rem}
+.disc-area{width:calc(100% - 2.2rem);min-height:130px;border:1.5px solid var(--borda);border-radius:9px;padding:.7rem .9rem;font-family:'Inter',sans-serif;font-size:.88rem;resize:vertical;margin:0 1.1rem .4rem}
+.disc-actions{padding:0 1.1rem 1rem}
+@media print{.gabarito-print{display:block!important;break-before:page;border:1px solid #999;border-radius:8px;padding:1rem 1.2rem;margin-top:1rem}.gabarito-print h2{font-size:1.1rem;margin-bottom:.6rem}.gabarito-print ol{margin-left:1.2rem}.gabarito-print li{font-size:.86rem;margin-bottom:.3rem}.fb{display:none!important}.disc-actions{display:none!important}}
+/* ===== TELA DE IDENTIFICAÇÃO E MODO DE JOGO ===== */
+.quiz-gate{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.8rem 1.6rem;max-width:480px;margin:0 auto}
+.quiz-gate h2{font-family:'Lora',serif;font-size:1.25rem;color:var(--azul);margin-bottom:.4rem}
+.quiz-gate>p{font-size:.88rem;color:var(--txt2);margin-bottom:1.2rem}
+.gate-field{margin-bottom:1.1rem}
+.gate-field>label{display:block;font-size:.82rem;font-weight:600;color:var(--azul-m);margin-bottom:.4rem}
+.gate-field input[type=text]{width:100%;padding:.65rem .8rem;border:1.5px solid var(--borda);border-radius:9px;font-family:'Inter',sans-serif;font-size:.92rem;color:var(--txt)}
+.gate-field input[type=text]:focus{outline:none;border-color:var(--azul-m)}
+.modo-opcoes{display:flex;flex-direction:column;gap:.6rem}
+.modo-opcao{display:flex;align-items:flex-start;gap:.6rem;border:1.5px solid var(--borda);border-radius:10px;padding:.7rem .85rem;cursor:pointer;transition:.15s}
+.modo-opcao:hover{border-color:var(--azul-m)}
+.modo-opcao input[type=radio]{margin-top:.25rem;accent-color:var(--azul-m)}
+.modo-opcao input[type=radio]:checked~span b{color:var(--azul)}
+.modo-opcao span{font-size:.85rem}
+.modo-opcao small{color:var(--txt2);font-weight:400}
+.gate-aviso{color:var(--verm);font-size:.82rem;margin-top:.7rem;min-height:1.2em}
+.modo-opcao.bloqueado{opacity:.6;cursor:not-allowed}
+.modo-opcao.liberado{opacity:1;cursor:pointer;border-color:var(--verde)}
+.cadeado{font-size:.75rem}
+.senha-box{display:flex;gap:.5rem;margin-top:.6rem}
+.senha-box input[type=password]{flex:1;padding:.55rem .75rem;border:1.5px solid var(--borda);border-radius:9px;font-family:'Inter',sans-serif;font-size:.85rem}
+.senha-box input[type=password]:focus{outline:none;border-color:var(--azul-m)}
+.senha-btn{white-space:nowrap;font-size:.8rem;padding:.55rem 1rem}
+.senha-aviso{font-size:.78rem;margin-top:.4rem;min-height:1.1em}
+.senha-aviso.ok{color:var(--verde)}
+.senha-aviso.erro{color:var(--verm)}
+.modo-chip{font-size:.74rem;font-weight:700;padding:4px 12px;border-radius:20px;background:var(--azul-c);color:var(--azul-m);margin-left:auto}
+.envio-status{font-size:.82rem;margin-top:.8rem;padding:.6rem .9rem;border-radius:8px}
+.envio-status.enviando{background:var(--azul-c);color:var(--azul-m)}
+.envio-status.ok{background:var(--verde-c);color:var(--verde)}
+.envio-status.erro{background:var(--verm-c);color:var(--verm)}
+/* No modo prova, o feedback de cada questão fica escondido até o aluno terminar */
+.fb.prova-oculto{display:none!important}
+@media print{.quiz-gate,.modo-chip,.envio-status{display:none!important}#quizConteudo{display:block!important}}
+</style>
+</head><body>
+<header>
+<a href="index.html" class="voltar-link">← Painel SAEB/SIMAVE</a>
+<div class="badge">SAEB · SIMAVE · Língua Portuguesa</div>
+<h1>Habilidade D6</h1>
+<p>Identificar o gênero de um texto</p>
+</header>
+<nav class="tabs"><div class="tabs-inner">
+<button class="tab-btn active" data-tab="estudar">📚 Estudar</button>
+<button class="tab-btn" data-tab="quiz">📝 Quiz</button>
+<button class="tab-btn" data-tab="jogos">🎮 Jogos</button>
+</div></nav><main>
+<section class="tab-pane active" id="pane-estudar">
+<div class="resumo-box"><h2>🎯 Em uma frase</h2>
+<p>O D6 mede se você consegue <strong style="color:#ffd98a">identificar a que gênero textual pertence um texto</strong>, reconhecendo suas características estruturais, linguísticas e de circulação social.</p>
+<span class="fc">"Cada gênero tem uma forma de ser, uma função e um lugar onde circula."</span></div>
+
+<section class="painel"><h2>📌 O que é gênero textual?</h2>
+<p>Gênero textual é uma categoria de texto reconhecida socialmente por sua <strong>forma</strong>, <strong>função</strong> e <strong>contexto de uso</strong>. Não confunda com <em>tipo textual</em> (narração, descrição, dissertação): o gênero é mais específico.</p>
+<ul>
+<li>Uma <strong>notícia</strong> informa; tem título, lead, linguagem objetiva.</li>
+<li>Um <strong>poema</strong> expressa; tem versos, rima (geralmente), linguagem figurada.</li>
+<li>Uma <strong>fábula</strong> ensina; tem animais que falam e moral explícita.</li>
+<li>Um <strong>verbete</strong> define; tem entrada, classe gramatical, definição objetiva.</li>
+<li>Um <strong>cordel</strong> narra/satiriza; tem sextilhas rimadas, temas do sertão.</li>
+<li>Uma <strong>receita</strong> instrui; tem ingredientes e modo de preparo com verbos no imperativo.</li>
+</ul></section>
+
+<section class="painel"><h2>🔍 Pistas para identificar o gênero</h2>
+<ul>
+<li><b>Suporte:</b> Onde circula? Jornal, livro, site, folheto, revista?</li>
+<li><b>Estrutura:</b> Em verso ou prosa? Com lista? Com vocativo?</li>
+<li><b>Função:</b> Informar, convencer, entreter, instruir, expressar?</li>
+<li><b>Linguagem:</b> Objetiva, poética, coloquial, formal, técnica?</li>
+<li><b>Emissor:</b> Jornalista, instituição, leitor, poeta, escritor?</li>
+</ul></section>
+
+<section class="painel"><h2>📚 Gêneros mais cobrados no SAEB/SIMAVE</h2>
+<table style="border-collapse:collapse;width:100%;font-size:.84rem">
+<thead><tr style="background:var(--azul);color:#fff"><th style="padding:.5rem .8rem;text-align:left">Gênero</th><th style="padding:.5rem .8rem;text-align:left">Função</th><th style="padding:.5rem .8rem;text-align:left">Marca principal</th></tr></thead>
+<tbody>
+<tr><td style="padding:.45rem .8rem;border-bottom:1px solid var(--borda)">Notícia</td><td style="padding:.45rem .8rem;border-bottom:1px solid var(--borda)">Informar fato real</td><td style="padding:.45rem .8rem;border-bottom:1px solid var(--borda)">Título + lead + linguagem impessoal</td></tr>
+<tr style="background:var(--bg)"><td style="padding:.45rem .8rem;border-bottom:1px solid var(--borda)">Crônica</td><td style="padding:.45rem .8rem;border-bottom:1px solid var(--borda)">Comentar cotidiano</td><td style="padding:.45rem .8rem;border-bottom:1px solid var(--borda)">Tom pessoal, ironia, 1ª pessoa</td></tr>
+<tr><td style="padding:.45rem .8rem;border-bottom:1px solid var(--borda)">Fábula</td><td style="padding:.45rem .8rem;border-bottom:1px solid var(--borda)">Ensinar/moralizar</td><td style="padding:.45rem .8rem;border-bottom:1px solid var(--borda)">Animais + moral explícita</td></tr>
+<tr style="background:var(--bg)"><td style="padding:.45rem .8rem;border-bottom:1px solid var(--borda)">Cordel</td><td style="padding:.45rem .8rem;border-bottom:1px solid var(--borda)">Narrar/satirizar</td><td style="padding:.45rem .8rem;border-bottom:1px solid var(--borda)">Sextilha rimada + temas do sertão</td></tr>
+<tr><td style="padding:.45rem .8rem;border-bottom:1px solid var(--borda)">Carta de leitor</td><td style="padding:.45rem .8rem;border-bottom:1px solid var(--borda)">Opinar/contestar</td><td style="padding:.45rem .8rem;border-bottom:1px solid var(--borda)">Vocativo + assinatura + opinião pessoal</td></tr>
+<tr style="background:var(--bg)"><td style="padding:.45rem .8rem;border-bottom:1px solid var(--borda)">Verbete</td><td style="padding:.45rem .8rem;border-bottom:1px solid var(--borda)">Definir conceito</td><td style="padding:.45rem .8rem;border-bottom:1px solid var(--borda)">Entrada + classe + definição objetiva</td></tr>
+<tr><td style="padding:.45rem .8rem;border-bottom:1px solid var(--borda)">Edital</td><td style="padding:.45rem .8rem;border-bottom:1px solid var(--borda)">Regular/convocar</td><td style="padding:.45rem .8rem;border-bottom:1px solid var(--borda)">Linguagem formal + prazos + requisitos</td></tr>
+<tr style="background:var(--bg)"><td style="padding:.45rem .8rem">Receita</td><td style="padding:.45rem .8rem">Instruir</td><td style="padding:.45rem .8rem">Ingredientes + verbos no imperativo</td></tr>
+</tbody></table></section>
+
+<section class="dica-ouro painel"><h2>💡 Dica de ouro</h2><ul>
+<li>Se o texto está em <strong>sextilhas rimadas</strong> com temas nordestinos → cordel.</li>
+<li>Se tem <strong>animais que falam</strong> e uma <strong>moral no final</strong> → fábula.</li>
+<li>Se é pessoal, bem-humorado, sobre algo banal → crônica (não é notícia nem editorial).</li>
+<li>Se define um conceito com linguagem técnica e impessoal → verbete.</li>
+<li>Tratar de um gênero não é o mesmo que ser desse gênero. Uma crônica <em>sobre</em> anúncios não é um anúncio.</li>
+</ul></section>
+
+<div class="aviso-prof"><b>Fontes dos textos desta atividade:</b> Agência Brasil/EBC (conteúdo de uso livre com atribuição); Olavo Bilac (1865–1918), <em>Profissão de Fé</em> — domínio público; Esopo, <em>O Lobo e o Cordeiro</em> — domínio público; tradição do cordel nordestino de Leandro Gomes de Barros (1865–1918) — domínio público; demais textos criados para fins didáticos.</div>
+<div class="records" id="recordsEstudar"><h2>🏆 Seus melhores resultados</h2><div class="rec-grid" id="recGrid"></div></div>
+</section><section class="tab-pane" id="pane-quiz">
+
+<!-- ===== TELA DE IDENTIFICAÇÃO (aparece antes do quiz) ===== -->
+<div id="quizGate" class="quiz-gate">
+  <h2>👋 Antes de começar</h2>
+  <p>Preencha seus dados e escolha o modo de jogo.</p>
+  <div class="gate-field">
+    <label for="alunoNome">Nome do aluno</label>
+    <input type="text" id="alunoNome" placeholder="Seu nome completo" autocomplete="off">
+  </div>
+  <div class="gate-field">
+    <label for="alunoTurma">Turma / Série</label>
+    <input type="text" id="alunoTurma" placeholder="Ex: 9º Ano A" autocomplete="off">
+  </div>
+  <div class="gate-field">
+    <label>Modo de jogo</label>
+    <div class="modo-opcoes">
+      <label class="modo-opcao">
+        <input type="radio" name="modoQuiz" value="prova" checked>
+        <span><b>📝 Modo Prova</b><br><small>Sem feedback durante o quiz. As respostas certas só aparecem no final, como numa prova de verdade.</small></span>
+      </label>
+      <label class="modo-opcao" id="opcaoEstudo">
+        <input type="radio" name="modoQuiz" value="estudo" id="radioEstudo" disabled>
+        <span><b>📖 Modo Estudo</b> <span class="cadeado" id="cadeadoEstudo">🔒</span><br><small>Mostra se acertou ou errou — e a explicação — logo após cada resposta. Liberado pelo professor.</small></span>
+      </label>
+    </div>
+    <div class="senha-box" id="senhaBox">
+      <input type="password" id="senhaEstudo" placeholder="Senha do professor para liberar o Modo Estudo" autocomplete="off">
+      <button type="button" class="btn sec senha-btn" id="btnLiberarEstudo">Liberar</button>
+    </div>
+    <p class="senha-aviso" id="senhaAviso"></p>
+  </div>
+  <button class="btn" id="btnIniciarQuiz">▶ Começar o quiz</button>
+  <p class="gate-aviso" id="gateAviso"></p>
+</div>
+
+<!-- ===== QUIZ (fica oculto até o aluno preencher os dados acima) ===== -->
+<div id="quizConteudo" style="display:none">
+<div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.5rem;align-items:center">
+
+<button class="btn sec" onclick="location.reload()">🔀 Embaralhar e refazer</button>
+<span class="modo-chip" id="modoChip"></span>
+</div>
+<div class="prog-wrap"><span class="prog-label">Progresso</span><div class="prog-track"><div class="prog-fill" id="pFill"></div></div><span class="score" id="score">0 / 12</span></div>
+<div id="quiz" style="display:flex;flex-direction:column;gap:1.5rem"></div>
+<!-- ===== QUESTÕES ABERTAS ===== -->
+<div class="card" id="cardAberta1" style="margin-top:1.5rem">
+  <div class="card-head"><span class="qnum">Questão Aberta 1</span><span class="qtipo">Justificar identificação de gênero</span><span class="qnivel facil">Aberta</span></div>
+  <div class="txt-base"><p><b>Questão aberta 1:</b> Escolha qualquer texto deste quiz e responda: <b>(a)</b> Qual é o gênero desse texto? <b>(b)</b> Cite pelo menos duas características formais que permitem identificar esse gênero (não apenas o assunto).</p><textarea class="disc-area" placeholder="Resposta..." style="min-height:160px;width:100%;resize:vertical;margin:1rem 1.1rem .5rem;width:calc(100% - 2.2rem);display:block"></textarea></div>
+  <div class="disc-actions" style="padding:0 1.1rem .5rem"><button class="btn sec" onclick="toggleGabAberta('gabA1_D06.html',this)">👁️ Ver gabarito</button></div>
+  <div class="fb" id="gabA1_D06.html" style="display:none"><div class="ft" style="color:var(--azul)">Gabarito</div><div>Critério: o estudante deve identificar o gênero corretamente E citar características formais reais (estrutura, linguagem, suporte, finalidade) — não apenas o tema ou assunto.</div></div>
+</div>
+<div class="card" id="cardAberta2" style="margin-top:1rem">
+  <div class="card-head"><span class="qnum">Questão Aberta 2</span><span class="qtipo">Comparar dois gêneros distintos</span><span class="qnivel medio">Aberta</span></div>
+  <div class="txt-base"><p><b>Questão aberta 2:</b> Compare uma <b>notícia</b> e uma <b>crônica</b> (dois gêneros presentes nesta atividade). Explique: <b>(a)</b> qual a finalidade de cada um; <b>(b)</b> qual a principal diferença na linguagem usada; <b>(c)</b> como o leitor sabe, já no primeiro parágrafo, qual dos dois está lendo.</p><textarea class="disc-area" placeholder="Resposta..." style="min-height:160px;width:100%;resize:vertical;margin:1rem 1.1rem .5rem;width:calc(100% - 2.2rem);display:block"></textarea></div>
+  <div class="disc-actions" style="padding:0 1.1rem .5rem"><button class="btn sec" onclick="toggleGabAberta('gabA2_D06.html',this)">👁️ Ver gabarito</button></div>
+  <div class="fb" id="gabA2_D06.html" style="display:none"><div class="ft" style="color:var(--azul)">Gabarito</div><div><b>(a)</b> A notícia informa sobre um fato de interesse público com objetividade; a crônica comenta a realidade do cotidiano com subjetividade e tom literário. <b>(b)</b> A notícia usa linguagem objetiva e impessoal; a crônica usa 1ª pessoa, ironia, metáforas e linguagem mais próxima da ficção. <b>(c)</b> A notícia começa com o fato central (lead jornalístico); a crônica geralmente começa com observação, situação ou reflexão pessoal.</div></div>
+</div>
+<div class="card" id="cardAberta3" style="margin-top:1rem">
+  <div class="card-head"><span class="qnum">Questão Aberta 3</span><span class="qtipo">Gênero e finalidade em texto multissemiótico</span><span class="qnivel dificil">Aberta</span></div>
+  <div class="txt-base"><p><b>Questão aberta 3:</b> Um cartaz de campanha usa imagens, cores, slogan e texto verbal juntos. <b>(a)</b> Esse conjunto é considerado um "texto multissemiótico" — o que significa esse termo? <b>(b)</b> Por que um texto só de palavras, mesmo com o mesmo assunto, não teria o mesmo efeito que o cartaz? <b>(c)</b> Cite um exemplo desta atividade.</p><textarea class="disc-area" placeholder="Resposta..." style="min-height:160px;width:100%;resize:vertical;margin:1rem 1.1rem .5rem;width:calc(100% - 2.2rem);display:block"></textarea></div>
+  <div class="disc-actions" style="padding:0 1.1rem .5rem"><button class="btn sec" onclick="toggleGabAberta('gabA3_D06.html',this)">👁️ Ver gabarito</button></div>
+  <div class="fb" id="gabA3_D06.html" style="display:none"><div class="ft" style="color:var(--azul)">Gabarito</div><div><b>(a)</b> "Multissemiótico" significa que usa múltiplas linguagens de sentido (imagem, cor, tipografia, texto verbal) ao mesmo tempo — não só palavras. <b>(b)</b> O impacto emocional, a rapidez de leitura e a memória visual dependem da combinação de imagem + texto; só o texto perderia a força visual e o apelo imediato. <b>(c)</b> Qualquer campanha ou cartaz da atividade (gota, doe um livro, etc.).</div></div>
+</div><div class="card" id="cardDisc" style="margin-top:1.5rem">
+  <div class="card-head"><span class="qnum">Questão 13</span><span class="qtipo">Convite escolar</span><span class="qnivel dificil">Aberta</span></div>
+  <div class="txt-base" id="txtDisc">Leia o seguinte comunicado:<br><br><b>Prezados pais e responsáveis,</b><br><br>Informamos que a <b>Festa Junina da Escola Municipal Capão</b> será realizada no dia <b>28 de junho de 2025</b>, a partir das 14h, no pátio da escola. As turmas do 6º ao 9º ano estão convidadas a apresentar uma quadrilha. As inscrições devem ser feitas até o dia 20 de junho na secretaria da escola.<br><br>Contamos com a participação de todos!<br><br><b>Direção da Escola Municipal Capão</b><span class="txt-fonte">Convite / comunicado escolar fictício, criado para fins didáticos.</span><button class="btn-tts" onclick="toggleTTS(this,'txtDisc')">🔊</button></div>
+  <p class="enunciado"><b>a)</b> Qual é o gênero desse texto? Justifique sua resposta identificando pelo menos <b>DUAS características</b> do gênero no texto.<br><b>b)</b> Esse texto poderia cumprir a mesma função se fosse uma notícia jornalística? Explique por quê.</p>
+  <textarea class="disc-area" placeholder="Escreva aqui a sua resposta..."></textarea>
+  <div class="disc-actions"><button class="btn sec" id="btnDisc" onclick="(function(){var p=prompt('Senha do professor:');if(p===SENHA_MODO_ESTUDO){var fb=document.getElementById('fbDisc');if(fb){fb.style.display='block';}}else if(p!==null){alert('Senha incorreta.');}})()">👁️ Ver gabarito</button></div>
+  <div class="fb" id="fbDisc"><div class="ft" style="color:var(--azul)">Gabarito sugerido</div><div><b>a)</b> É um <b>convite / comunicado escolar</b>. Características: (1) destinatário explícito no vocativo ('Prezados pais e responsáveis'); (2) linguagem formal e impessoal; (3) dados objetivos sobre o evento (data, hora, local); (4) emissora identificada ('Direção da Escola'); (5) verbos de convocação ('Contamos com a participação'). Aceitar dois ou mais características bem identificadas.<br><b>b)</b> Não cumpriria a mesma função. A notícia relata um fato que já aconteceu, de interesse público amplo, sem destinatário específico. Esse texto convoca um grupo definido (pais e responsáveis) para uma ação futura, o que é função do convite/comunicado — não da notícia.</div></div>
+<div id="resultado"><h2>Quiz concluído!</h2><div class="medalha" id="medalha">🏅</div><div class="nota" id="notaFinal">—</div><p id="msgFinal"></p><div id="envioStatus" class="envio-status"></div><div style="margin-top:1rem"><button class="btn" onclick="location.reload()">↺ Refazer</button></div></div>
+
+</div>
+</div>
+</section><section class="tab-pane" id="pane-jogos">
+<div class="resumo-box"><h2>🎮 Hora de jogar</h2><p>Cinco minijogos para treinar a identificação dos gêneros textuais.</p></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">⏱️</span><div><h3>Qual é o gênero?</h3><div class="desc">Identifique o gênero antes do tempo acabar.</div></div></div><div class="jogo-body" id="g1-body"><button class="btn ouro" onclick="G1.start()">▶ Começar</button></div></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">🏷️</span><div><h3>Classifique o texto</h3><div class="desc">Arraste cada texto para o gênero correto.</div></div></div><div class="jogo-body" id="g2-body"><button class="btn ouro" onclick="G2.start()">▶ Começar</button></div></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">🔎</span><div><h3>Gênero pelas pistas</h3><div class="desc">Identifique o gênero pelas características estruturais.</div></div></div><div class="jogo-body" id="g3-body"><button class="btn ouro" onclick="G3.start()">▶ Começar</button></div></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">🧩</span><div><h3>Complete com o gênero</h3><div class="desc">Escolha o gênero correto para completar a análise.</div></div></div><div class="jogo-body" id="g4-body"><button class="btn ouro" onclick="G4.start()">▶ Começar</button></div></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">🔢</span><div><h3>Ordene as pistas</h3><div class="desc">Organize os passos para identificar o gênero.</div></div></div><div class="jogo-body" id="g5-body"><button class="btn ouro" onclick="G5.start()">▶ Começar</button></div></div>
+</section></main>
+<footer>Portal do Professor Marcos Cruz · SAEB/SIMAVE · D6 (Atividade D7)</footer><script>
+/* ===== CONFIGURAÇÃO DO ENVIO PARA GOOGLE SHEETS =====
+   Cole aqui a URL do seu Apps Script publicado como "App da Web".
+   Veja o arquivo google-apps-script.gs para instruções de instalação.
+   Enquanto estiver "SUBSTITUA_PELA_SUA_URL", o envio fica desativado
+   (o quiz funciona normalmente, só não manda nada para a planilha). */
+const SHEETS_URL = "https://script.google.com/macros/s/AKfycbwPcWRWW2IkMb8-WkyB2w1M2n9ivcYlfqWajYRgCzecLTC1T7aBetZtR2MDaOIxahc/exec";
+const DESCRITOR_PAGINA = "D6 - Identificar o gênero textual";
+const NOME_ARQUIVO = "D06.html";
+
+/* ===== ESTADO DO ALUNO E MODO DE JOGO ===== */
+let alunoNome = "";
+let alunoTurma = "";
+let modoJogo = "estudo"; // "estudo" ou "prova"
+const respostasDetalhadas = [];
+const selecoes = {}; // {dn: k} para revelar botões no fim do modo prova // uma entrada por questão respondida, na ordem em que aparecem
+
+/* ===== SENHA PARA LIBERAR O MODO ESTUDO =====
+   Troque a senha abaixo quando quiser. É a MESMA senha em todas as páginas
+   do portal (mais simples de lembrar e passar para os alunos quando for
+   hora de revisão). Lembre-se: como o quiz roda no navegador do aluno,
+   essa senha impede o uso casual do Modo Estudo, mas não é uma proteção
+   contra alguém que abra o código-fonte da página — as respostas já estão
+   no arquivo de qualquer forma, como em qualquer site estático como este. */
+const SENHA_MODO_ESTUDO = "professor123";
+
+document.getElementById("btnLiberarEstudo").onclick = () => {
+  const campo = document.getElementById("senhaEstudo");
+  const aviso = document.getElementById("senhaAviso");
+  if (campo.value === SENHA_MODO_ESTUDO) {
+    document.getElementById("radioEstudo").disabled = false;
+    document.getElementById("radioEstudo").checked = true;
+    document.getElementById("cadeadoEstudo").textContent = "🔓";
+    document.getElementById("opcaoEstudo").classList.add("liberado");
+    document.getElementById("senhaBox").style.display = "none";
+    aviso.className = "senha-aviso ok";
+    aviso.textContent = "✓ Modo Estudo liberado.";
+  } else {
+    aviso.className = "senha-aviso erro";
+    aviso.textContent = "Senha incorreta.";
+  }
+};
+// Também libera ao apertar Enter no campo de senha
+document.getElementById("senhaEstudo").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") document.getElementById("btnLiberarEstudo").click();
+});
+
+document.getElementById("btnIniciarQuiz").onclick = () => {
+  const nome = document.getElementById("alunoNome").value.trim();
+  const turma = document.getElementById("alunoTurma").value.trim();
+  const aviso = document.getElementById("gateAviso");
+  if (!nome || !turma) {
+    aviso.textContent = "Preencha nome e turma/série para continuar.";
+    return;
+  }
+  alunoNome = nome;
+  alunoTurma = turma;
+  modoJogo = document.querySelector('input[name="modoQuiz"]:checked').value;
+  document.getElementById("quizGate").style.display = "none";
+  document.getElementById("quizConteudo").style.display = "block";
+  const chip = document.getElementById("modoChip");
+  chip.textContent = modoJogo === "prova" ? "📝 Modo Prova" : "📖 Modo Estudo";
+};
+
+/* ===== ENVIO PARA O GOOGLE SHEETS ===== */
+function enviarParaSheets() {
+  const statusEl = document.getElementById("envioStatus");
+  if (!SHEETS_URL || SHEETS_URL.indexOf("SUBSTITUA") !== -1) {
+    statusEl.className = "envio-status";
+    statusEl.textContent = "";
+    return; // envio desativado até o professor configurar a URL
+  }
+  statusEl.className = "envio-status enviando";
+  statusEl.textContent = "Enviando resultado para a planilha...";
+
+  const payload = {
+    nome: alunoNome,
+    turma: alunoTurma,
+    descritor: DESCRITOR_PAGINA,
+    pagina: NOME_ARQUIVO,
+    modo: modoJogo === "prova" ? "Prova" : "Estudo",
+    respostas: respostasDetalhadas
+  };
+
+  fetch(SHEETS_URL, {
+    method: "POST",
+    mode: "no-cors", // Apps Script Web Apps não devolvem CORS; "no-cors" garante o envio mesmo sem ler a resposta
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(payload)
+  }).then(() => {
+    statusEl.className = "envio-status ok";
+    statusEl.textContent = "✓ Resultado enviado para a planilha do professor.";
+  }).catch(() => {
+    statusEl.className = "envio-status erro";
+    statusEl.textContent = "✗ Não foi possível enviar o resultado (verifique sua internet).";
+  });
+}
+
+/* ===== QUIZ ===== */
+const QRAW=[{"n": 1, "tipo": "Texto para identificar", "nivel": "facil", "texto": "<b>Anvisa registra vacina brasileira contra a dengue</b><br><br>A Agência Nacional de Vigilância Sanitária (Anvisa) publicou, nesta segunda-feira (8), o registro da Butantan-DV, primeiro imunizante contra a dengue em dose única do mundo, produzido integralmente no Brasil pelo Instituto Butantan. A intenção é iniciar a aplicação em 2026, de forma gratuita, pelo Sistema Único de Saúde (SUS). Segundo o Butantan, 1 milhão de doses já estão prontas. A aprovação é para pessoas de 12 a 59 anos.", "fonte": "Agência Brasil/EBC, 8 dez. 2025. Conteúdo de uso livre com atribuição. agenciabrasil.ebc.com.br", "enun": "Qual é o gênero desse texto?", "alts": ["Verbete de enciclopédia, pois explica o que é a Butantan-DV com termos técnicos.", "Notícia jornalística", "Comunicado oficial da Anvisa, pois foi emitido por um órgão regulador do governo.", "Reportagem, pois aprofunda o tema com dados técnicos e declarações do Butantan."], "correta": 1, "porque": ["Incorreto: verbete não tem manchete com verbo ('registra') nem data de publicação. O texto tem lead jornalístico (quem, o quê, quando) — estrutura de notícia, não de verbete.", "Correto: manchete com verbo de ação, lead com data e fonte, relato de fato recente de interesse público — marcas típicas da notícia jornalística.", "Incorreto: o texto foi produzido pela Agência Brasil (EBC), não pela Anvisa. Comunicado oficial tem linguagem burocrática e não usa lead jornalístico.", "Incorreto: notícia e reportagem se parecem, mas esta é uma notícia — relata fato pontual com dados básicos. Reportagem exige apuração mais extensa e múltiplas fontes."]}, {"n": 2, "tipo": "Texto para identificar", "nivel": "facil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Poema — Profissão de Fé (Olavo Bilac, 1888 — fragmentos)</b><p><em>Invejo o ourives quando escrevo:<br>Imito o amor<br>Com que ele, em ouro, o alto-relevo<br>Faz de uma flor.<br><br>Imito-o. E, pois, nem de Carrara<br>A pedra firo:<br>O alvo cristal, a pedra rara,<br>O ônix prefiro.<br><br>Não é a forma vã o que procuro:<br>Pois arte é forma,<br>E arte não pede nem quer futuro<br>— apenas norma.<br><br>Que o ourives faz durar mais anos<br>Do que a poesia,<br>Que o ferro pesa mais que os danos<br>Da fantasia?</em></p></div>", "fonte": "BILAC, Olavo. <b>Profissão de Fé</b>. In: <em>Poesias</em>, 1888. Domínio público.", "enun": "Qual é o gênero desse texto?", "alts": ["Crônica, pois o autor reflete sobre seu modo de escrever em linguagem poética.", "Fábula, pois usa personagens como o ourives para transmitir uma lição de ofício.", "Poema", "Carta, pois o texto se dirige a um interlocutor que o autor admira e imita."], "correta": 2, "porque": ["Incorreto: crônica é texto em prosa, geralmente publicado em jornal. Este texto usa estrofes, rima e métrica — estrutura de poema, não de crônica.", "Incorreto: fábula tem narração com animais ou seres personificados e termina com moral. O ourives aqui é metáfora poética, não personagem de narrativa.", "Correto: o texto é organizado em estrofes, tem rima, ritmo e linguagem figurada ('imito o amor') — características definidoras do poema lírico.", "Incorreto: carta tem destinatário, saudação e assinatura. O verbo 'imito' expressa o próprio eu lírico — não é mensagem endereçada a alguém."]}, {"n": 3, "tipo": "Texto para identificar", "nivel": "facil", "texto": "Um lobo estava bebendo água em um riacho quando avistou um cordeiro bebendo mais abaixo. Querendo um pretexto para devorá-lo, o lobo disse: <em>\"Por que você está turvando minha água?\"</em>. O cordeiro respondeu: <em>\"Isso é impossível: a água corre de cima para baixo, do senhor para mim.\"</em> O lobo, sem argumento, insistiu: <em>\"Mas seu pai me insultou há seis meses.\"</em> <em>\"Ainda não havia nascido\"</em>, disse o cordeiro. O lobo, sem se importar com a razão, devorou o animal mesmo assim.<br><em>Moral: Para quem já decidiu praticar uma injustiça, nenhum argumento é suficiente.</em>", "fonte": "ESOPO. <b>O Lobo e o Cordeiro</b>. Fábulas clássicas. Tradução do grego antigo para o português. Domínio público.", "enun": "Qual é o gênero desse texto?", "alts": ["Conto, pois apresenta personagens fictícios em narrativa curta com conflito e desfecho.", "Notícia, pois relata um episódio de agressão com diálogos e desfecho informado.", "Fábula", "Crônica, pois é texto curto que narra uma situação e comenta um comportamento social."], "correta": 2, "porque": ["Incorreto: conto e fábula têm estrutura parecida, mas a fábula usa personagens arquetípicos (lobo mau, cordeiro inocente), brevidade extrema e moral explícita. Conto desenvolve a psicologia dos personagens.", "Incorreto: notícia relata fatos reais com data, local e fontes identificáveis. Esta narrativa é fictícia, com animais falantes — nenhum recurso do jornalismo está presente.", "Correto: narrativa curta com animais personificados, comportamento que exemplifica vício humano (a prepotência do forte) e moral — marcas definidoras da fábula.", "Incorreto: crônica comenta situações cotidianas reais com voz autoral presente. Este texto é narrativa fictícia com moral — sem nenhuma voz do cronista comentando."]}, {"n": 4, "tipo": "Texto para identificar", "nivel": "medio", "texto": "<b>Recomendações do Guia Alimentar para a População Brasileira</b><br><br>Prefira sempre alimentos in natura ou minimamente processados às preparações culinárias. Utilize óleos, gorduras, sal e açúcar em pequenas quantidades ao temperar e cozinhar alimentos. Limite o uso de alimentos processados. Evite alimentos ultraprocessados.", "fonte": "Guia Alimentar para a População Brasileira, Ministério da Saúde, 2ª edição, 2014. Documento oficial de domínio público. gov.br/saude", "enun": "Qual é o gênero desse texto?", "alts": ["Relatório científico, pois cita dados do Ministério da Saúde sobre alimentação.", "Texto instrucional/recomendação oficial", "Notícia, pois divulga as orientações do Ministério da Saúde sobre alimentação.", "Editorial, pois defende uma posição sobre como a população deve se alimentar."], "correta": 1, "porque": ["Incorreto: relatório científico descreve pesquisa com metodologia e resultados. Este texto usa verbos no imperativo ('Prefira', 'Utilize') para orientar ação direta — sem dados coletados.", "Correto: verbos no imperativo ('Prefira', 'Utilize', 'Limite', 'Evite') e ausência de narração ou argumentação — o objetivo é orientar comportamentos, não informar nem opinar.", "Incorreto: notícia relata fato novo com data e fonte. Este texto não narra acontecimento: prescreve comportamentos de forma atemporal — sem lead, sem data.", "Incorreto: editorial defende opinião com argumentos explícitos. Aqui não há argumentação: apenas orientações diretas, sem justificar por que cada recomendação é melhor."]}, {"n": 5, "tipo": "Texto para identificar", "nivel": "medio", "texto": "<b>bioma</b> (substantivo masculino)<br><br>Conjunto de ecossistemas terrestres ou aquáticos que compartilham características climáticas, vegetais e animais semelhantes, formado ao longo de milhões de anos de evolução. O Brasil abriga seis biomas continentais reconhecidos: Amazônia, Cerrado, Mata Atlântica, Caatinga, Pampa e Pantanal. Cada bioma possui biodiversidade, regime de chuvas e tipos de solo particulares. Fonte: IBGE — Instituto Brasileiro de Geografia e Estatística.", "fonte": "Adaptado do glossário do IBGE (Instituto Brasileiro de Geografia e Estatística). Conteúdo de domínio público. ibge.gov.br", "enun": "Qual é o gênero desse texto?", "alts": ["Verbete de dicionário", "Notícia, pois divulga dados recentes do IBGE sobre os biomas brasileiros.", "Relatório científico, pois apresenta dados técnicos sobre ecossistemas e biodiversidade.", "Comunicado oficial, pois foi publicado no site de órgão público (ibge.gov.br)."], "correta": 0, "porque": ["Correto: o texto inicia com o termo ('bioma'), indica a classe gramatical, apresenta definição técnica geral seguida de exemplos — estrutura clássica de verbete de dicionário ou enciclopédia.", "Incorreto: notícia relata fato ocorrido em data específica com lead jornalístico. Este texto define conceito de forma atemporal — sem data, sem fonte jornalística, sem evento.", "Incorreto: relatório apresenta metodologia, objetivos e resultados de pesquisa. Este texto define um conceito em formato enciclopédico — sem metodologia nem análise de dados coletados.", "Incorreto: o fato de estar em site governamental não define o gênero. Comunicado oficial anuncia decisões ou atos; este texto apenas define um conceito técnico."]}, {"n": 6, "tipo": "Texto para identificar", "nivel": "medio", "texto": "<b>Desmatamento cai 11% na Amazônia e no Cerrado</b><br><br>O desmatamento na Amazônia e no Cerrado recuou no período de agosto de 2024 a julho de 2025, segundo o Projeto de Monitoramento do Desmatamento na Amazônia Legal por Satélite (Prodes), do Instituto Nacional de Pesquisas Espaciais (Inpe). Na Amazônia, a queda foi de 11,08% em relação ao período anterior. Foram desmatados 5.796 km² — a terceira menor taxa desde 1988. No Cerrado, a redução foi de 11,49%.<br><br>A ministra do Meio Ambiente e Mudança do Clima, Marina Silva, destacou que os resultados refletem o trabalho de fiscalização intensificada e a recomposição dos órgãos ambientais. \"Ainda há muito a avançar, mas o Brasil voltou a ser um exemplo de comprometimento com a proteção da floresta\", afirmou.", "fonte": "Agência Brasil/EBC, 30 out. 2025. Adaptado. Conteúdo de uso livre com atribuição. agenciabrasil.ebc.com.br", "enun": "Qual é o gênero desse texto?", "alts": ["Notícia, pois o título informa fato recente com dado numérico e fonte oficial.", "Relatório do Inpe, pois apresenta dados técnicos de monitoramento por satélite.", "Reportagem jornalística", "Editorial, pois o texto defende a importância de reduzir o desmatamento."], "correta": 2, "porque": ["Incorreto: notícia e reportagem são parecidas, mas a reportagem é mais extensa — contextualiza o dado, compara períodos e cobre múltiplas regiões. Notícia seria mais curta e pontual.", "Incorreto: o texto cita o Inpe como fonte, mas foi produzido pela Agência Brasil (EBC). Relatório técnico do Inpe teria linguagem metodológica própria, não jornalística.", "Correto: manchete, dados comparativos, identificação de fonte (Prodes/Inpe), cobertura de múltiplos aspectos — características de reportagem, que aprofunda mais que a notícia simples.", "Incorreto: editorial defende posição com argumentos do veículo. Este texto relata dados com objetividade — sem tomar partido nem fazer recomendações."]}, {"n": 7, "tipo": "Texto para identificar", "nivel": "medio", "texto": "Senhor redator,<br><br>Leio seu jornal há mais de dez anos e sempre apreci a qualidade das reportagens. Mas desta vez preciso manifestar minha discordância. A matéria publicada na última quarta-feira sobre a proposta de redução do horário das bibliotecas municipais tratou o assunto de forma superficial. Bibliotecas não são luxo: são infraestrutura básica para estudantes que não têm acesso à internet em casa. Fechar mais cedo é punir quem mais precisa.<br><br>Atenciosamente,<br>Maria do Socorro Ferreira<br>Professora, Santo Antônio do Retiro (MG)", "fonte": "Texto-modelo criado para fins didáticos, representativo do gênero carta de leitor (cartas publicadas em jornais são protegidas por direitos autorais do veículo).", "enun": "Qual é o gênero desse texto?", "alts": ["Notícia, pois o texto informa sobre proposta de reduzir o horário das bibliotecas.", "Carta de leitor", "E-mail, pois é texto pessoal endereçado diretamente ao responsável pelo jornal.", "Editorial, pois o texto critica uma decisão e defende uma posição com argumentos."], "correta": 1, "porque": ["Incorreto: notícia relata fato com objetividade. Este texto usa primeira pessoa e toma posição pessoal ('preciso manifestar minha discordância') — marcas de carta de leitor, não de notícia.", "Correto: texto enviado por leitor ao jornal, em primeira pessoa, citando publicação anterior e defendendo opinião pública — todas as marcas da carta de leitor estão presentes.", "Incorreto: e-mail é mensagem digital privada. Esta carta foi escrita para publicação no jornal — o endereçamento 'Senhor redator' é público e convencional, não privado.", "Incorreto: editorial é escrito pela equipe do jornal, sem autor identificado, representando a opinião da publicação. Este texto tem leitor identificado que discorda do próprio jornal."]}, {"n": 8, "tipo": "Texto para identificar", "nivel": "medio", "texto": "<b>Bons Dias!</b> (trecho)<br><br><em>\"Hão de reconhecer que sou bem criado. Podia entrar aqui, chapéu à banda, e ir logo dizendo o que me parecesse; depois ia-me embora, para voltar na outra semana. Mas, não senhor; chego à porta, e o meu primeiro cuidado é dar-lhe os bons dias. Agora, se o leitor não me disser a mesma cousa, em resposta, é porque é um grande malcriado...\"</em>", "fonte": "ASSIS, Machado de. <b>Bons Dias!</b>, crônica de 5 de abril de 1888, publicada na Gazeta de Notícias. Domínio público. machado.mec.gov.br", "enun": "Qual é o gênero desse texto?", "alts": ["Carta pessoal, pois o autor se dirige diretamente ao leitor como a um conhecido.", "Conto humorístico, pois narra com ironia uma situação cotidiana entre personagens.", "Crônica", "Discurso, pois o autor defende a boa educação e cobra resposta do interlocutor."], "correta": 2, "porque": ["Incorreto: carta tem destinatário específico, saudação formal e é texto privado. Este texto é publicado semanalmente em jornal e se dirige ao 'leitor' de forma genérica — marca típica de crônica.", "Incorreto: conto tem personagens, enredo e desfecho narrativo. Aqui não há história: o autor comenta sua própria maneira de escrever com humor e ironia — reflexão típica de crônica.", "Correto: texto curto publicado em jornal, com voz pessoal do autor, humor e comentário sobre o cotidiano. Machado usa todos esses elementos, inclusive a ironia com o próprio leitor.", "Incorreto: discurso é gênero oral, proferido em ocasião específica, com estrutura formal. Este texto é publicado em jornal com linguagem informal e irônica — marca de crônica, não de discurso."]}, {"n": 9, "tipo": "Texto para identificar", "nivel": "dificil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Quadra popular (texto oral — tradição nordestina)</b><p><em>Quem inventou esse \"S\"<br>Com que se escreve saudade<br>Foi o mesmo que inventou<br>O \"F\" da falsidade<br><br>E o mesmo que fez o \"I\"<br>Da minha infelicidade<br><br>Mas também foi ele quem fez<br>O \"A\" da amizade<br>O \"E\" da esperança<br>E o \"M\" da minha vontade<br><br>Então se devo chorar<br>Devo também sorrir na vida<br>Pois a mesma letra que fere<br>Também cura a ferida</em></p></div>", "fonte": "Quadra popular nordestina, tradição oral da literatura de cordel. Domínio público. (Forma de quadra, anterior à popularização da sextilha no gênero.)", "enun": "Qual é o gênero desse texto?", "alts": ["Poema erudito, pois usa recursos líricos para expressar sentimento de tristeza.", "Cordel/poesia popular nordestina", "Letra de música, pois tem rima, ritmo marcado e fala de saudade.", "Provérbio popular, pois condensa uma sabedoria em poucas palavras rimadas."], "correta": 1, "porque": ["Incorreto: poema erudito usa linguagem elaborada e referências cultas. Esta quadra tem linguagem simples, jogo com letras do alfabeto e origem oral — marcas da poesia popular nordestina.", "Correto: seis versos, rima alternada, linguagem coloquial, jogo com letras do alfabeto e tema da saudade — base métrica do cordel e da poesia popular nordestina.", "Incorreto: letra de música é composta com melodia em mente. Esta quadra pertence à tradição oral e escrita do cordel — pode ser cantada, mas não é letra de música no sentido estrito.", "Incorreto: provérbio condensa sabedoria prática ('quem muito quer nada tem'). Esta quadra não dá conselho — expressa sentimento pessoal através de jogo poético com as letras."]}, {"n": 10, "tipo": "Texto para identificar", "nivel": "dificil", "texto": "<b>EDITAL DE PROCESSO SELETIVO SIMPLIFICADO Nº 01/2025</b><br>Secretaria Municipal de Educação — Bom Sucesso, MG<br><br><b>1. DAS DISPOSIÇÕES PRELIMINARES</b><br>O presente Processo Seletivo Simplificado tem como objetivo a seleção de profissional para exercer a função de Formador Municipal, integrando a Rede Nacional de Formadores. A seleção se dará por meio de análise de currículo, conforme os critérios estabelecidos neste Edital.<br><br><b>5. DISPOSIÇÕES FINAIS</b><br>5.2 O Processo Seletivo Simplificado nº 01/2025 terá validade pelo prazo de 1 (um) ano, prorrogável por igual período.<br><br>Bom Sucesso, MG, 26 de junho de 2025.", "fonte": "Edital de Processo Seletivo Simplificado nº 01/2025, Secretaria Municipal de Educação de Bom Sucesso/MG, publicado em 26 jun. 2025. Documento oficial de domínio público. bomsucesso.mg.gov.br", "enun": "Qual é o gênero desse texto?", "alts": ["Comunicado oficial, pois divulga informações de interesse público de órgão municipal.", "Notícia, pois informa sobre a abertura de vagas para Formador Municipal.", "Edital/Comunicado oficial", "Regulamento, pois estabelece regras e critérios para um processo formal de seleção."], "correta": 2, "porque": ["Incorreto: comunicado é mais simples, usado para avisos rápidos. Edital é documento legal, numerado, publicado em diário oficial, com valor jurídico e prazo — como este texto.", "Incorreto: notícia relata acontecimento com lead jornalístico. Este texto é ato administrativo com numeração, cláusulas e vigência — não narra, mas regula processo oficial.", "Correto: ato administrativo público com numeração oficial, cláusulas, critérios e prazos — todos os elementos do edital de seleção estão presentes neste documento.", "Incorreto: regulamento disciplina funcionamento permanente de instituição. Edital abre e regula processo temporário (seleção), com prazo de validade definido."]}, {"n": 11, "tipo": "Texto para identificar", "nivel": "dificil", "texto": "<b>Como economizar energia elétrica em casa</b><br><br>1. Desligue aparelhos em standby: televisores, carregadores e roteadores consomem energia mesmo quando não estão em uso ativo.<br>2. Substitua lâmpadas incandescentes por LED: o consumo pode cair até 80%.<br>3. Use a máquina de lavar com carga completa e no ciclo mais curto adequado.<br>4. Verifique a vedação da geladeira: uma borracha gasta pode aumentar o consumo em 30%.<br>5. Aproveite a luz natural durante o dia antes de acender luminárias artificiais.", "fonte": "Adaptado de orientações oficiais do Procel (Programa Nacional de Conservação de Energia Elétrica) e da Aneel (Agência Nacional de Energia Elétrica). Conteúdo de domínio público. gov.br/aneel", "enun": "Qual é o gênero desse texto?", "alts": ["Reportagem, pois apresenta dados do Procel e da Aneel sobre consumo de energia.", "Texto instrucional", "Verbete, pois explica o que são aparelhos em standby, lâmpadas LED e vedação.", "Notícia, pois divulga as orientações oficiais de órgão federal (Aneel)."], "correta": 1, "porque": ["Incorreto: reportagem relata fatos com apuração jornalística e análise. Este texto usa verbos no imperativo ('Desligue', 'Substitua', 'Use') para orientar ações — função instrucional, não jornalística.", "Correto: lista numerada com verbos no imperativo, orientações práticas e justificativas — estrutura clássica de texto instrucional. O objetivo é ensinar a fazer, não informar nem narrar.", "Incorreto: verbete define conceito de forma geral. Este texto não define 'standby' ou 'LED' — usa esses termos como parte de instruções práticas de economia de energia.", "Incorreto: notícia relata fato novo com data e lead. Este texto é atemporal — não anuncia nada, apenas orienta ações que qualquer pessoa pode seguir a qualquer momento."]}, {"n": 12, "tipo": "Texto para identificar", "nivel": "dificil", "texto": "A raposa e as uvas: Uma raposa, faminta, viu um cacho de uvas maduras pendurado em uma parreira alta e tentou alcançá-lo de várias formas. Por mais que pulasse, não conseguia. Por fim, foi embora, dizendo a si mesma: <em>\"Essas uvas ainda estão verdes, eu nem as quero.\"</em><br><br><em>Moral: É fácil desprezar o que não se pode obter.</em>", "fonte": "ESOPO. <b>A Raposa e as Uvas</b>. Fábulas clássicas. Domínio público.", "enun": "O texto analisa um comportamento humano através de uma narrativa com animal. Quanto ao gênero, esse texto é:", "alts": ["Um conto, pois apresenta personagem fictícia, situação-problema e desfecho narrativo.", "Uma crônica, pois comenta com ironia um comportamento humano usando situação cotidiana.", "Uma fábula, pois usa um animal para ensinar uma lição moral.", "Uma parábola, pois usa situação simbólica com lição de comportamento ao final."], "correta": 2, "porque": ["Incorreto: conto e fábula têm estrutura parecida, mas a fábula usa animal como protagonista arquetípico e tem moral declarada ao final. No conto, a lição emerge da psicologia dos personagens, sem enunciação explícita.", "Incorreto: crônica comenta situações reais e contemporâneas com voz autoral. Este texto é narrativa fictícia com animal — não comenta o cotidiano, mas o ilustra alegoricamente.", "Correto: animal protagonista (a raposa), narrativa de conflito, comportamento alegórico humano (racionalizar o fracasso) e moral enunciada — marcas clássicas da fábula.", "Incorreto: parábola e fábula são parecidas, mas a parábola usa personagens humanos em situações cotidianas. A presença do animal como protagonista alegórico é o que define a fábula."]}];
+const G1R=[{"t": "<b>Manual de uso — Liquidificador Turbo Plus</b><br>Antes de usar, verifique se a tensão da tomada corresponde à indicada na etiqueta do produto. Nunca opere com o copo inclinado ou sem a tampa. Após o uso, lave as peças laváveis em água corrente. Não mergulhe a base motorizada.", "q": "Qual é o gênero?", "o": ["Notícia", "Manual/texto instrucional", "Crônica", "Editorial"], "c": 1}, {"t": "<em>Quem não semeia com cuidado / Não colhe com alegria; / O lavrador descuidado / Faz chorar a família.</em>", "q": "Qual é o gênero?", "o": ["Notícia", "Verbete", "Cordel", "Fábula"], "c": 2}, {"t": "<b>Pesquisadores descobrem nova espécie de beija-flor no Cerrado</b><br>Cientistas da Universidade de Brasília identificaram uma espécie de beija-flor até então desconhecida no Cerrado central. O animal mede 7 cm e apresenta plumagem azul iridescente. O estudo foi publicado na revista <em>Ornitologia Brasileira</em>.", "q": "Qual é o gênero?", "o": ["Fábula", "Conto", "Notícia", "Verbete"], "c": 2}, {"t": "<b>sertão</b> (subs. masc.) — região semiárida do interior do Nordeste e partes do Centro-Oeste brasileiro, caracterizada por clima quente e seco, vegetação de caatinga, irregularidade de chuvas e forte identidade cultural. Sinônimo regional de interior distante ou inóspito.", "q": "Qual é o gênero?", "o": ["Crônica", "Receita", "Verbete", "Notícia"], "c": 2}, {"t": "<em>Batatinha quando nasce<br>esparrama pelo chão;<br>menininha quando dorme<br>põe a mão no coração.</em>", "q": "Qual é o gênero?", "o": ["Fábula", "Poema/canção", "Notícia", "Relatório"], "c": 1}];
+const G2I=[{"s": "'O projeto de lei foi aprovado por 45 votos a 12. O texto segue para sanção presidencial.'", "cat": "noticia", "p": "Linguagem objetiva, fato recente, dado concreto — notícia."}, {"s": "'Minha querida amiga, como vai você? Aqui em casa as coisas vão bem...'", "cat": "carta", "p": "Vocativo pessoal, tom íntimo, primeira pessoa — carta pessoal."}, {"s": "'A raposa e as uvas: uma raposa tentou alcançar um cacho de uvas, não conseguiu e disse que estavam verdes mesmo.' (Moral: desprezamos o que não podemos ter.)", "cat": "fabula", "p": "Animais personificados + moral explícita = fábula."}, {"s": "'Para fazer o bolo: 3 ovos, 2 xícaras de farinha, 1 de açúcar. Misture e leve ao forno por 30 min.'", "cat": "receita", "p": "Lista de ingredientes + modo de preparo = receita culinária."}, {"s": "'No início do século XX, os cortiços do Rio de Janeiro abrigavam centenas de imigrantes em condições insalubres, segundo pesquisadores.'", "cat": "reportagem", "p": "Contexto histórico, fontes, aprofundamento — traços de reportagem."}, {"s": "'Minha vizinha tem uma teoria: quanto mais barulho você faz para trabalhar, menos você trabalha. Ela nunca estava errada.'", "cat": "cronica", "p": "Tom pessoal, humor, observação do cotidiano — crônica."}];
+const G2C=[["noticia", "Notícia"], ["carta", "Carta"], ["fabula", "Fábula"], ["receita", "Receita"], ["reportagem", "Reportagem"], ["cronica", "Crônica"]];
+const G3R=[{"t": "Texto com título em negrito, lead que responde 'O quê, Quem, Quando, Onde', uso de fontes e linguagem impessoal.", "q": "Qual gênero tem TODAS essas características?", "o": ["Crônica", "Notícia", "Cordel", "Fábula"], "c": 1}, {"t": "Texto em verso, rima e metro regular, estrutura de sextilha (6 versos por estrofe), temas do sertão nordestino.", "q": "Qual gênero?", "o": ["Poema erudito", "Soneto", "Cordel", "Haiku"], "c": 2}, {"t": "Texto curto, em prosa, com animais falantes que representam defeitos humanos, sempre terminando com uma lição moral.", "q": "Qual gênero?", "o": ["Conto de fadas", "Fábula", "Crônica", "Reportagem"], "c": 1}, {"t": "Texto publicado por um órgão oficial, com linguagem formal, prazos, requisitos e dados de contato.", "q": "Qual gênero?", "o": ["Carta de leitor", "Crônica", "Edital/comunicado oficial", "Notícia"], "c": 2}, {"t": "Texto em verso com linguagem figurada, expressão de sentimentos, sem compromisso de relatar fatos reais.", "q": "Qual gênero?", "o": ["Reportagem", "Poema", "Verbete", "Carta formal"], "c": 1}];
+const G4R=[{"ctx": "'Invejo o ourives quando escrevo: / Imito o amor / Com que ele, em ouro, o alto-relevo / Faz de uma flor.'", "f": "Esse trecho, por ser escrito em versos com rima e métrica, pertence ao gênero ___.", "o": ["crônica", "poema", "notícia", "verbete"], "c": 1}, {"ctx": "'Um lobo disse ao cordeiro: Você está sujando minha água. Moral: aos olhos do injusto, nenhum argumento basta.'", "f": "Animais que falam e lição moral explícita = ___.", "o": ["conto", "editorial", "fábula", "reportagem"], "c": 2}, {"ctx": "'A Anvisa publicou o registro da vacina Butantan-DV. Agência Brasil/EBC, 8 dez. 2025.'", "f": "Fato real, recente, com data e fonte identificada = ___.", "o": ["crônica", "poema", "notícia", "fábula"], "c": 2}, {"ctx": "'Verbos no imperativo, lista de passos, objetivo de orientar o leitor a realizar uma tarefa.'", "f": "Essas marcas definem o ___.", "o": ["verbete", "texto instrucional", "editorial", "cordel"], "c": 1}, {"ctx": "'Texto em sextilha, rima XAXBXB, tema do sertão, tradição nordestina de Leandro Gomes de Barros (1865–1918).'", "f": "A forma em sextilha rimada do sertão nordestino é marca do ___.", "o": ["soneto", "poema erudito", "cordel", "haiku"], "c": 2}];
+const G5R=[{"title": "Como identificar o gênero de um texto", "correct": ["Leia o texto inteiro antes de tentar identificar o gênero.", "Observe o suporte: jornal, livro, folheto, site, envelope...", "Verifique a estrutura: está em verso ou prosa? Tem lista, parágrafos ou diálogos?", "Identifique a função: informar, entreter, convencer, instruir, expressar?", "Confirme com as marcas linguísticas: verbos no imperativo? Linguagem pessoal? Tom irônico? Fontes citadas?"]}, {"title": "Poema vs. Cordel — como distinguir", "correct": ["Verifique se o texto está em versos e com rima.", "Se sim, observe o número de versos por estrofe: sextilha (6) é típica do cordel.", "Verifique os temas: sertão, religiosidade, heroísmo nordestino → cordel; amor, natureza, reflexão → poema erudito.", "Cheque a linguagem: coloquial e regional → cordel; culta e elaborada → poema parnasiano ou lírico.", "Confirme o suporte original: folheto de feira → cordel; livro de literatura → poema."]}];
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function stripHTML(s){const d=document.createElement("div");d.innerHTML=s;return d.textContent||"";}
+function toggleTTS(btn,id){if(window.speechSynthesis.speaking){window.speechSynthesis.cancel();document.querySelectorAll(".btn-tts").forEach(b=>b.classList.remove("playing"));return;}const el=document.getElementById(id);if(!el)return;const u=new SpeechSynthesisUtterance(stripHTML(el.innerHTML));u.lang="pt-BR";u.rate=.9;btn.classList.add("playing");u.onend=()=>btn.classList.remove("playing");window.speechSynthesis.speak(u);}
+const RK="saeb_d6genero_records";
+function loadRec(){try{return JSON.parse(localStorage.getItem(RK))||{};}catch{return {};}}
+function saveRec(k,v){const r=loadRec();if(!(k in r)||v>r[k])r[k]=v;localStorage.setItem(RK,JSON.stringify(r));renderRec();}
+function renderRec(){const r=loadRec(),g=document.getElementById("recGrid");if(!g)return;const items=[{k:"quiz",l:"Quiz"},{k:"genero",l:"Qual gênero?"},{k:"classif",l:"Classifique"},{k:"pistas",l:"Pelas pistas"},{k:"compl",l:"Complete"},{k:"ordene",l:"Ordene"}];g.innerHTML=items.map(i=>`<div class="rec-item"><div class="rv">${r[i.k]!=null?r[i.k]:"—"}</div><div class="rl">${i.l}</div></div>`).join("");}
+renderRec();
+document.querySelectorAll(".tab-btn").forEach(btn=>{btn.onclick=()=>{document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));document.querySelectorAll(".tab-pane").forEach(p=>p.classList.remove("active"));btn.classList.add("active");document.getElementById("pane-"+btn.dataset.tab).classList.add("active");window.scrollTo({top:0,behavior:"smooth"});};});
+const nivelLabel={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
+const QS=shuffle(QRAW).map((q,idx)=>{const smap=shuffle(Array.from({length:q.alts.length},(_,i)=>i));return{...q,dn:idx+1,alts:smap.map(i=>q.alts[i]),porque:smap.map(i=>q.porque[i]),correta:smap.indexOf(q.correta)};});
+const quizEl=document.getElementById("quiz");
+QS.forEach(q=>{const c=document.createElement("div");c.className="card";c.dataset.q=q.dn;const tid="txt"+q.dn;c.innerHTML=`<div class="card-head"><span class="qnum">Questão ${q.dn}</span><span class="qtipo">${q.tipo}</span><span class="qnivel ${q.nivel}">${nivelLabel[q.nivel]}</span></div><div class="txt-base" id="${tid}">${q.texto}<span class="txt-fonte">${q.fonte}</span><button class="btn-tts" onclick="toggleTTS(this,'${tid}')">🔊</button></div><p class="enunciado">${q.enun}</p><div class="alts">${q.alts.map((t,i)=>`<button class="alt" onclick="resp(${q.dn},${i})"><span class="letra">${"ABCD"[i]}</span> ${t}</button>`).join("")}</div><div class="fb" id="fb${q.dn}"></div>`;quizEl.appendChild(c);});
+let acertos=0;const feitas=new Set();
+function resp(n,k){
+  if(feitas.has(n))return;feitas.add(n);
+  const q=QS.find(x=>x.dn===n),card=quizEl.querySelector(`[data-q="${n}"]`),btns=card.querySelectorAll(".alt"),fb=document.getElementById("fb"+n);
+  const ok=k===q.correta;if(ok)acertos++;
+
+  // Registra a resposta detalhada desta questão para depois enviar ao Sheets
+  respostasDetalhadas.push({
+    questao: n,
+    tipo: q.tipo,
+    nivel: q.nivel,
+    respostaDada: k>=0 ? "ABCD"[k] : "(não respondeu)",
+    respostaCorreta: "ABCD"[q.correta],
+    acertou: ok
+  });
+
+  selecoes[n]=k;btns.forEach((b,i)=>{b.disabled=true;if(modoJogo==="estudo"){if(i===q.correta)b.classList.add("ok");else if(i===k)b.classList.add("err");else b.classList.add("dim");}else{if(i===k)b.classList.add("sel");else b.classList.add("dim");}});
+  const pq=q.alts.map((t,i)=>`<span class="pi"><span class="l">${"ABCD"[i]})</span> ${q.porque[i]}</span>`).join("");
+  fb.className="fb show "+(ok?"ok":"err")+(modoJogo==="prova"?" prova-oculto":"");
+  fb.innerHTML=`<div class="ft">${ok?"✓ Correto!":"✗ Incorreto — a correta é "+"ABCD"[q.correta]+"."}</div><div>${q.porque[q.correta]}</div><div class="pq"><b>Cada alternativa:</b>${pq}</div>`;
+  document.getElementById("pFill").style.width=(feitas.size/QS.length*100)+"%";
+  // No modo prova, a pontuação parcial fica escondida; só aparece no resultado final
+  document.getElementById("score").textContent=modoJogo==="prova" ? (feitas.size+" / "+QS.length+" respondidas") : (acertos+" / "+QS.length);
+  if(feitas.size===QS.length)setTimeout(quizFim,500);
+}
+function quizFim(){
+  // No modo prova, revela todo o feedback que ficou oculto durante o quiz
+  if(modoJogo==="prova"){
+    // gabarito bloqueado no modo prova
+    // modo estudo mostra gabarito por senha
+    document.getElementById("score").textContent=acertos+" / "+QS.length;
+  }
+  const r=document.getElementById("resultado");r.style.display="block";
+  document.getElementById("notaFinal").textContent=acertos+"/"+QS.length;
+  const p=acertos/QS.length;let m,msg;
+  if(p>=.9){m="🥇";msg="Ouro! Precisão de detetive.";}
+  else if(p>=.7){m="🥈";msg="Prata! Atenção aos distratores.";}
+  else if(p>=.5){m="🥉";msg="Bronze! Volte ao texto antes de marcar.";}
+  else{m="📖";msg="Treine mais. A resposta está sempre lá.";}
+  document.getElementById("medalha").textContent=m;document.getElementById("msgFinal").textContent=msg;
+  saveRec("quiz",acertos);
+  enviarParaSheets();
+  r.scrollIntoView({behavior:"smooth",block:"center"});
+}
+// gabarito disc protegido por senha no HTML;
+// gabPrint removido: gabarito protegido por senha
+
+function makeTimedGame(bodyId,rounds,rk){return{i:0,pts:0,tmr:null,tempo:0,rounds:[],start(){this.i=0;this.pts=0;this.rounds=shuffle(rounds);this.render();},render(){const b=document.getElementById(bodyId);if(this.i>=this.rounds.length){saveRec(rk,this.pts);b.innerHTML=`<div class="jogo-final"><div class="big">${this.pts} pts</div><p>${this.pts>=this.rounds.length*10?"Muito bem! 🥇":"Continue praticando."}</p><button class="btn ouro" onclick="${bodyId.split('-')[0].toUpperCase()}.start()">↺ Jogar de novo</button></div>`;return;}const r=this.rounds[this.i];this.tempo=100;b.innerHTML=`<div class="jogo-mid"><span class="chip">Rodada ${this.i+1}/${this.rounds.length}</span><div class="timerbar"><div id="${bodyId}-bar"></div></div><span class="chip">${this.pts} pts</span></div><div class="mini-texto">${r.t}</div><div class="mini-q">${r.q}</div><div class="alts" id="${bodyId}-alts">${r.o.map((o,k)=>`<button class="alt" onclick="${bodyId.split('-')[0].toUpperCase()}.resp(${k})"><span class="letra">${"ABCD"[k]}</span> ${o}</button>`).join("")}</div><div class="mini-fb" id="${bodyId}-fb"></div>`;clearInterval(this.tmr);this.tmr=setInterval(()=>{this.tempo-=2;const bar=document.getElementById(bodyId+"-bar");if(bar)bar.style.width=Math.max(0,this.tempo)+"%";if(this.tempo<=0)this.resp(-1);},400);},resp(k){clearInterval(this.tmr);const r=this.rounds[this.i],btns=document.querySelectorAll("#"+bodyId+"-alts .alt"),fb=document.getElementById(bodyId+"-fb");btns.forEach((a,j)=>{a.disabled=true;if(j===r.c)a.classList.add("ok");else if(j===k)a.classList.add("err");else a.classList.add("dim");});if(k===r.c){const g=5+Math.round(this.tempo/10);this.pts+=g;fb.className="mini-fb show ok";fb.textContent="✓ +"+g+" pts!";}else{fb.className="mini-fb show err";fb.textContent=(k===-1?"⏱️ Tempo!":"✗")+" Resposta: "+"ABCD"[r.c]+".";}this.i++;setTimeout(()=>this.render(),2500);}};}
+const G1=makeTimedGame("g1-body",G1R,"genero");
+const G3=makeTimedGame("g3-body",G3R,"pistas");
+
+const G2={rs:[],cats:G2C,start(){this.rs=[];const b=document.getElementById("g2-body");b.innerHTML=`<div style="font-size:.82rem;color:var(--txt2);margin-bottom:.8rem">Classifique cada trecho no gênero correto:</div>`+G2I.map((it,i)=>`<div class="vf-item" id="g2i${i}"><div class="vf-stm"><b>${i+1}.</b> ${it.s}</div><div class="btn-row">${this.cats.map(c=>`<button class="mini-btn cat-btn" onclick="G2.j(${i},'${c[0]}')" style="background:var(--azul-c);color:var(--azul)">${c[1]}</button>`).join("")}</div><div class="mini-fb" id="g2f${i}"></div></div>`).join("")+`<div id="g2fin"></div>`;},j(i,esc){if(this.rs[i]!=null)return;const it=G2I[i],ok=esc===it.cat;this.rs[i]=ok;document.querySelectorAll("#g2i"+i+" .mini-btn").forEach(btn=>{btn.disabled=true;const cls=btn.textContent.trim();const cat=this.cats.find(c=>c[1]===cls);if(cat&&cat[0]===it.cat)btn.style.background="var(--verde-c)";else if(cat&&cat[0]===esc&&!ok)btn.style.background="var(--vermelho-c)";});const fb=document.getElementById("g2f"+i);fb.className="mini-fb show "+(ok?"ok":"err");fb.innerHTML=(ok?"✓ ":"✗ ")+it.p;if(this.rs.filter(x=>x!=null).length===G2I.length){const ac=this.rs.filter(x=>x).length;saveRec("classif",ac);document.getElementById("g2fin").innerHTML=`<div class="jogo-final"><div class="big">${ac}/${G2I.length}</div><p>${ac===G2I.length?"Perfeito! 🥇":"Releia as justificativas."}</p><button class="btn ouro" onclick="G2.start()">↺ Jogar de novo</button></div>`;}}};
+
+const G4={i:0,pts:0,rounds:[],start(){this.i=0;this.pts=0;this.rounds=shuffle(G4R);this.render();},render(){const b=document.getElementById("g4-body");if(this.i>=this.rounds.length){saveRec("compl",this.pts);b.innerHTML=`<div class="jogo-final"><div class="big">${this.pts}/${this.rounds.length}</div><p>${this.pts===this.rounds.length?"Perfeito! 🥇":"Continue praticando."}</p><button class="btn ouro" onclick="G4.start()">↺ Jogar de novo</button></div>`;return;}const it=this.rounds[this.i];b.innerHTML=`<div class="jogo-mid"><span class="chip">Frase ${this.i+1}/${this.rounds.length}</span><span class="chip">${this.pts} acertos</span></div><p style="font-size:.82rem;color:var(--txt2);margin:.4rem 0">${it.ctx}</p><div class="mini-texto">${it.f}</div><div class="alts" id="g4-alts">${it.o.map((o,k)=>`<button class="alt" onclick="G4.resp(${k})"><span class="letra">${"ABCD"[k]}</span> ${o}</button>`).join("")}</div><div class="mini-fb" id="g4-fb"></div>`;},resp(k){const it=this.rounds[this.i],btns=document.querySelectorAll("#g4-alts .alt"),fb=document.getElementById("g4-fb");btns.forEach((a,j)=>{a.disabled=true;if(j===it.c)a.classList.add("ok");else if(j===k)a.classList.add("err");else a.classList.add("dim");});if(k===it.c){this.pts++;fb.className="mini-fb show ok";fb.textContent="✓ Exato!";}else{fb.className="mini-fb show err";fb.textContent="✗ Era: "+it.o[it.c]+".";}this.i++;setTimeout(()=>this.render(),1200);}};
+
+const G5={ri:0,start(){this.ri=0;this.renderRound();},renderRound(){const b=document.getElementById("g5-body");if(this.ri>=G5R.length){saveRec("ordene","✓");b.innerHTML=`<div class="jogo-final"><div class="big">✓</div><p>Raciocínio organizado! 🥇</p><button class="btn ouro" onclick="G5.start()">↺ Jogar de novo</button></div>`;return;}const rd=G5R[this.ri];const items=shuffle(rd.correct);b.innerHTML=`<div class="jogo-mid"><span class="chip">Passo a passo ${this.ri+1}/${G5R.length}</span></div><p style="font-size:.84rem;color:var(--txt2);margin-bottom:.6rem">Use ▲ ▼ para ordenar os passos. Depois clique em "Verificar".</p><ol class="ord-list" id="g5list">${items.map((it,i)=>`<li class="ord-item" data-txt="${encodeURIComponent(it)}">${it}<div class="ord-arrows"><button onclick="G5.move(${i},-1)">▲</button><button onclick="G5.move(${i},1)">▼</button></div></li>`).join("")}</ol><div style="text-align:center;margin-top:.6rem"><button class="btn ouro" onclick="G5.check()">✓ Verificar ordem</button></div><div class="mini-fb" id="g5fb"></div>`;},move(idx,dir){const list=document.getElementById("g5list");const items=[...list.children];const newIdx=idx+dir;if(newIdx<0||newIdx>=items.length)return;if(dir===-1)list.insertBefore(items[idx],items[newIdx]);else list.insertBefore(items[newIdx],items[idx]);[...list.children].forEach((li,i)=>{li.querySelector(".ord-arrows").innerHTML=`<button onclick="G5.move(${i},-1)">▲</button><button onclick="G5.move(${i},1)">▼</button>`;});},check(){const rd=G5R[this.ri];const list=document.getElementById("g5list");const items=[...list.children];const fb=document.getElementById("g5fb");let ok=true;items.forEach((li,i)=>{const txt=decodeURIComponent(li.dataset.txt);if(txt===rd.correct[i])li.classList.add("ok");else{li.classList.add("err");ok=false;}li.querySelectorAll("button").forEach(b=>b.disabled=true);});if(ok){fb.className="mini-fb show ok";fb.textContent="✓ Ordem perfeita!";this.ri++;setTimeout(()=>this.renderRound(),1400);}else{fb.className="mini-fb show err";fb.innerHTML='✗ Algumas posições estão trocadas. <button class="mini-btn" style="margin-left:.5rem" onclick="G5.renderRound()">Tentar de novo</button>';}}};
+
+function toggleGabAberta(id,btn){
+  var el=document.getElementById(id);if(!el)return;
+  if(el.style.display==='block'){el.style.display='none';btn.textContent='Ver gabarito';return;}
+  var pwd=prompt('Senha do professor:');
+  if(pwd===null)return;
+  if(pwd===SENHA_MODO_ESTUDO){el.style.display='block';btn.textContent='Ocultar';}
+  else{alert('Senha incorreta.');}
+}
+</script></body></html>

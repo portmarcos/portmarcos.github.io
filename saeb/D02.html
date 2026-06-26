@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAEB/SIMAVE – D2 | Localizar informações explícitas</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--azul:#1a3a5c;--azul-m:#235a8c;--azul-c:#d6e8f7;--ouro:#c9871f;--ouro-c:#fff8eb;--verde:#246b4a;--verde-c:#e6f4ed;--verm:#b02a2a;--verm-c:#fdecea;--bg:#f2f4f7;--borda:#d0d6e0;--branco:#fff;--txt:#1c2635;--txt2:#4a5568}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;line-height:1.5}
+header{background:var(--azul);color:#fff;padding:2.4rem 1.5rem 1.8rem;text-align:center;position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:rgba(201,135,31,.12)}
+.badge{display:inline-block;background:var(--ouro);color:var(--azul);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:.8rem}
+header h1{font-family:'Lora',serif;font-size:clamp(1.5rem,4vw,2.1rem);font-weight:600;line-height:1.3;margin-bottom:.4rem}
+header p{font-size:.92rem;opacity:.78;max-width:560px;margin:0 auto;line-height:1.6}
+.voltar-link{display:inline-block;margin-bottom:1rem;color:#fff;opacity:.7;text-decoration:none;font-size:.82rem}
+.voltar-link:hover{opacity:1}
+.tabs{background:var(--branco);border-bottom:1px solid var(--borda);position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.tabs-inner{max-width:840px;margin:0 auto;display:flex}
+.tab-btn{flex:1;background:none;border:none;padding:.95rem .5rem;font-family:'Inter',sans-serif;font-size:.88rem;font-weight:600;color:var(--txt2);cursor:pointer;border-bottom:3px solid transparent;transition:.15s;display:flex;align-items:center;justify-content:center;gap:.35rem}
+.tab-btn:hover{color:var(--azul-m);background:var(--bg)}
+.tab-btn.active{color:var(--azul);border-bottom-color:var(--ouro)}
+main{max-width:840px;margin:0 auto;padding:1.6rem 1.25rem 4rem}
+.tab-pane{display:none;flex-direction:column;gap:1.6rem}
+.tab-pane.active{display:flex}
+.painel{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.5rem 1.6rem}
+.painel h2{font-family:'Lora',serif;font-size:1.2rem;color:var(--azul);margin-bottom:.7rem}
+.painel h3{font-size:.95rem;color:var(--azul-m);margin:.9rem 0 .3rem}
+.painel p,.painel li{font-size:.9rem;margin-bottom:.5rem}
+.painel ul{margin:.2rem 0 .6rem 1.2rem}
+.painel strong{color:var(--azul)}
+.resumo-box{background:var(--azul);color:#fff;border-radius:14px;padding:1.4rem 1.6rem}
+.resumo-box h2{color:#fff;font-family:'Lora',serif;font-size:1.1rem;margin-bottom:.5rem}
+.resumo-box p{color:rgba(255,255,255,.9);font-size:.92rem;margin:0}
+.resumo-box .fc{display:block;margin-top:.7rem;font-style:italic;font-size:.88rem;background:rgba(255,255,255,.1);padding:.6rem .9rem;border-radius:8px;border-left:3px solid var(--ouro)}
+.dica-ouro{background:var(--ouro-c);border:1px solid #ecd9aa}
+.dica-ouro h2{color:#7a5310}.dica-ouro li{color:#4a3408}.dica-ouro strong{color:#7a5310}
+.glossario dt{font-weight:600;color:var(--azul-m);font-size:.88rem;margin-top:.5rem}
+.glossario dd{font-size:.86rem;color:var(--txt2);margin-left:0}
+.aviso-prof{background:#eef4fb;border:1px dashed var(--azul-m);border-radius:10px;padding:.9rem 1.1rem;font-size:.82rem;color:var(--azul-m)}
+.records{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.2rem 1.4rem}
+.records h2{font-family:'Lora',serif;font-size:1.1rem;color:var(--azul);margin-bottom:.6rem}
+.rec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.7rem}
+.rec-item{background:var(--bg);border-radius:10px;padding:.7rem;text-align:center}
+.rec-item .rv{font-size:1.5rem;font-weight:700;color:var(--azul-m)}
+.rec-item .rl{font-size:.72rem;color:var(--txt2)}
+.prog-wrap{background:var(--branco);border:1px solid var(--borda);border-radius:12px;padding:.85rem 1.1rem;display:flex;align-items:center;gap:14px}
+.prog-label{font-size:.78rem;font-weight:600;color:var(--azul-m);white-space:nowrap}
+.prog-track{flex:1;height:6px;background:var(--borda);border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--azul-m),var(--ouro));border-radius:99px;width:0%;transition:width .4s}
+.score{font-size:.78rem;font-weight:600;color:var(--txt2);white-space:nowrap}
+.card{background:var(--branco);border-radius:14px;border:1px solid var(--borda);overflow:hidden}
+.card-head{background:var(--azul);color:#fff;padding:.65rem 1.2rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.qnum{background:var(--ouro);color:var(--azul);font-size:.72rem;font-weight:700;padding:3px 11px;border-radius:20px}
+.qtipo{font-size:.74rem;opacity:.65;font-style:italic}
+.qnivel{font-size:.66rem;font-weight:700;text-transform:uppercase;padding:3px 9px;border-radius:20px;margin-left:auto}
+.qnivel.facil{background:var(--verde-c);color:var(--verde)}.qnivel.medio{background:var(--ouro-c);color:#a96e10}.qnivel.dificil{background:var(--verm-c);color:var(--verm)}
+.txt-base{background:var(--ouro-c);border-left:4px solid var(--ouro);margin:1rem 1.1rem 0;padding:1rem 1.1rem;border-radius:0 8px 8px 0;font-family:'Lora',serif;font-size:.94rem;line-height:1.85;color:#2b1d00;position:relative}
+.txt-fonte{font-family:'Inter',sans-serif;font-size:.72rem;color:var(--txt2);margin-top:.6rem;display:block;border-top:1px solid #e6d5b0;padding-top:.4rem}
+.btn-tts{position:absolute;top:.6rem;right:.6rem;background:none;border:1px solid #c9a14a;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;color:#8a6d1b;transition:.15s}
+.btn-tts:hover{background:#f5e6c1}
+.btn-tts.playing{background:var(--azul);color:#fff;border-color:var(--azul)}
+.img-slot{margin:.8rem 1.1rem 0;border:2px dashed var(--borda);border-radius:10px;padding:.8rem;text-align:center;color:var(--txt2);font-size:.76rem}
+.enunciado{padding:1rem 1.1rem .4rem;font-size:.92rem;line-height:1.6;font-weight:500;color:var(--azul)}
+.alts{padding:.4rem 1.1rem 1.1rem;display:flex;flex-direction:column;gap:.45rem}
+.alt{display:flex;align-items:flex-start;gap:10px;padding:.65rem .9rem;border:1.5px solid var(--borda);border-radius:9px;background:var(--branco);cursor:pointer;text-align:left;font-family:'Inter',sans-serif;font-size:.86rem;color:var(--txt);line-height:1.5;transition:.15s;width:100%}
+.alt:hover:not(:disabled){border-color:var(--azul-m);background:var(--azul-c);transform:translateX(2px)}
+.alt:disabled{cursor:default}
+.letra{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;border-radius:50%;background:var(--bg);font-size:.75rem;font-weight:700;color:var(--azul);flex-shrink:0}
+.alt.ok{border-color:var(--verde);background:var(--verde-c);color:var(--verde);font-weight:500}
+.alt.ok .letra{background:var(--verde);color:#fff}
+.alt.err{border-color:var(--verm);background:var(--verm-c);color:var(--verm)}
+.alt.err .letra{background:var(--verm);color:#fff}
+.alt.dim{opacity:.5}.alt.sel{border-color:var(--azul-m);background:var(--azul-c)}.alt.sel .letra{background:var(--azul-m);color:#fff}
+.fb{display:none;margin:0 1.1rem 1.1rem;padding:.8rem 1rem;border-radius:8px;font-size:.83rem;line-height:1.6}
+.fb.show{display:block}.fb.ok{background:var(--verde-c);border-left:3px solid var(--verde)}.fb.err{background:var(--verm-c);border-left:3px solid var(--verm)}
+.fb .ft{font-weight:600;margin-bottom:.3rem}.fb.ok .ft{color:var(--verde)}.fb.err .ft{color:var(--verm)}
+.fb .pq{margin-top:.5rem;border-top:1px solid rgba(0,0,0,.08);padding-top:.4rem}
+.fb .pq b{color:var(--azul)}
+.fb .pi{display:block;font-size:.8rem;color:var(--txt2);margin-bottom:.2rem}
+.fb .pi .l{font-weight:700;color:var(--azul)}
+#resultado{display:none;background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:2.4rem 2rem;text-align:center}
+#resultado h2{font-family:'Lora',serif;font-size:1.4rem;color:var(--azul)}
+.medalha{font-size:3rem;margin:.4rem 0}.nota{font-size:3.4rem;font-weight:700;color:var(--azul-m);line-height:1;margin:.4rem 0}
+#resultado p{color:var(--txt2);font-size:.9rem;max-width:480px;margin:.4rem auto 0}
+.btn{display:inline-block;background:var(--azul);color:#fff;padding:.65rem 1.5rem;border-radius:30px;border:none;font-size:.86rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;margin:.3rem}
+.btn:hover{background:var(--azul-m)}
+.btn.ouro{background:var(--ouro);color:var(--azul)}.btn.sec{background:var(--bg);color:var(--azul);border:1px solid var(--borda)}
+.jogo-card{background:var(--branco);border-radius:14px;border:1px solid var(--borda);overflow:hidden}
+.jogo-head{padding:1rem 1.3rem;border-bottom:1px solid var(--borda);display:flex;align-items:center;gap:.7rem}
+.jogo-ico{font-size:1.5rem}
+.jogo-head h3{font-family:'Lora',serif;font-size:1.1rem;color:var(--azul);margin:0}
+.jogo-head .desc{font-size:.78rem;color:var(--txt2)}
+.jogo-body{padding:1.2rem 1.3rem}
+.chip{font-size:.76rem;font-weight:600;padding:4px 11px;border-radius:20px;background:var(--azul-c);color:var(--azul)}
+.chip.timer{background:var(--ouro-c);color:#a96e10}
+.jogo-mid{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:.8rem}
+.timerbar{flex:1;min-width:100px;height:8px;background:var(--borda);border-radius:99px;overflow:hidden}
+.timerbar>div{height:100%;width:100%;background:linear-gradient(90deg,var(--verde),var(--ouro),var(--verm));border-radius:99px;transition:width .25s linear}
+.mini-texto{background:var(--ouro-c);border-left:4px solid var(--ouro);border-radius:0 8px 8px 0;padding:.85rem 1rem;font-family:'Lora',serif;font-size:.9rem;line-height:1.7;color:#2b1d00;margin-bottom:.8rem;position:relative}
+.mini-q{font-weight:600;color:var(--azul);margin-bottom:.6rem;font-size:.9rem}
+.mini-btn{border:1.5px solid var(--borda);background:var(--branco);border-radius:8px;padding:.45rem .8rem;font-size:.8rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;color:var(--azul);transition:.15s}
+.mini-btn:hover:not(:disabled){background:var(--azul-c);border-color:var(--azul-m)}
+.mini-btn:disabled{cursor:default}
+.mini-btn.ok{background:var(--verde-c);border-color:var(--verde);color:var(--verde)}
+.mini-btn.err{background:var(--verm-c);border-color:var(--verm);color:var(--verm)}
+.mini-fb{font-size:.8rem;margin-top:.5rem;padding:.45rem .65rem;border-radius:6px;display:none}
+.mini-fb.show{display:block}.mini-fb.ok{background:var(--verde-c);color:var(--verde)}.mini-fb.err{background:var(--verm-c);color:var(--verm)}
+.vf-item,.det-item{border:1.5px solid var(--borda);border-radius:10px;padding:.7rem .9rem;margin-bottom:.6rem}
+.vf-stm{font-size:.88rem;margin-bottom:.5rem}
+.btn-row{display:flex;gap:.5rem;flex-wrap:wrap}
+.jogo-final{text-align:center;padding:.8rem 0 .3rem}
+.jogo-final .big{font-size:2rem;font-weight:700;color:var(--azul-m)}
+.jogo-final p{font-size:.88rem;color:var(--txt2);margin:.2rem 0 .8rem}
+.ord-list{list-style:none;padding:0;counter-reset:ord}
+.ord-item{counter-increment:ord;display:flex;align-items:center;gap:10px;padding:.6rem .9rem;border:1.5px solid var(--borda);border-radius:9px;margin-bottom:.5rem;background:var(--branco);cursor:grab;font-size:.86rem;transition:.15s;user-select:none}
+.ord-item::before{content:counter(ord);display:flex;align-items:center;justify-content:center;min-width:24px;height:24px;border-radius:50%;background:var(--azul-c);font-size:.72rem;font-weight:700;color:var(--azul)}
+.ord-item:active{cursor:grabbing;box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.ord-item.ok{border-color:var(--verde);background:var(--verde-c)}
+.ord-item.err{border-color:var(--verm);background:var(--verm-c)}
+.ord-arrows{display:flex;flex-direction:column;gap:2px;margin-left:auto}
+.ord-arrows button{background:var(--bg);border:1px solid var(--borda);border-radius:4px;width:24px;height:20px;cursor:pointer;font-size:.65rem;display:flex;align-items:center;justify-content:center}
+.ord-arrows button:hover{background:var(--azul-c)}
+footer{text-align:center;padding:1.5rem;font-size:.76rem;color:var(--txt2)}
+@media print{.tabs,header,.prog-wrap,.btn,.btn-tts,.img-slot,.ord-arrows,footer,#resultado,.jogo-card,.records,.resumo-box,.dica-ouro,.glossario,.aviso-prof{display:none!important}.tab-pane{display:flex!important}.card{break-inside:avoid;border:1px solid #ccc;margin-bottom:1rem}.card-head{background:#333!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.fb{display:block!important;background:#f5f5f5!important;border-left:3px solid #999!important;color:#333!important}}
+@media(max-width:480px){.painel{padding:1.1rem}.tab-btn{font-size:.78rem;padding:.8rem .3rem}}
+
+/* ===== TELA DE IDENTIFICAÇÃO E MODO DE JOGO ===== */
+.quiz-gate{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.8rem 1.6rem;max-width:480px;margin:0 auto}
+.quiz-gate h2{font-family:'Lora',serif;font-size:1.25rem;color:var(--azul);margin-bottom:.4rem}
+.quiz-gate>p{font-size:.88rem;color:var(--txt2);margin-bottom:1.2rem}
+.gate-field{margin-bottom:1.1rem}
+.gate-field>label{display:block;font-size:.82rem;font-weight:600;color:var(--azul-m);margin-bottom:.4rem}
+.gate-field input[type=text]{width:100%;padding:.65rem .8rem;border:1.5px solid var(--borda);border-radius:9px;font-family:'Inter',sans-serif;font-size:.92rem;color:var(--txt)}
+.gate-field input[type=text]:focus{outline:none;border-color:var(--azul-m)}
+.modo-opcoes{display:flex;flex-direction:column;gap:.6rem}
+.modo-opcao{display:flex;align-items:flex-start;gap:.6rem;border:1.5px solid var(--borda);border-radius:10px;padding:.7rem .85rem;cursor:pointer;transition:.15s}
+.modo-opcao:hover{border-color:var(--azul-m)}
+.modo-opcao input[type=radio]{margin-top:.25rem;accent-color:var(--azul-m)}
+.modo-opcao input[type=radio]:checked~span b{color:var(--azul)}
+.modo-opcao span{font-size:.85rem}
+.modo-opcao small{color:var(--txt2);font-weight:400}
+.gate-aviso{color:var(--verm);font-size:.82rem;margin-top:.7rem;min-height:1.2em}
+.modo-opcao.bloqueado{opacity:.6;cursor:not-allowed}
+.modo-opcao.liberado{opacity:1;cursor:pointer;border-color:var(--verde)}
+.cadeado{font-size:.75rem}
+.senha-box{display:flex;gap:.5rem;margin-top:.6rem}
+.senha-box input[type=password]{flex:1;padding:.55rem .75rem;border:1.5px solid var(--borda);border-radius:9px;font-family:'Inter',sans-serif;font-size:.85rem}
+.senha-box input[type=password]:focus{outline:none;border-color:var(--azul-m)}
+.senha-btn{white-space:nowrap;font-size:.8rem;padding:.55rem 1rem}
+.senha-aviso{font-size:.78rem;margin-top:.4rem;min-height:1.1em}
+.senha-aviso.ok{color:var(--verde)}
+.senha-aviso.erro{color:var(--verm)}
+.modo-chip{font-size:.74rem;font-weight:700;padding:4px 12px;border-radius:20px;background:var(--azul-c);color:var(--azul-m);margin-left:auto}
+.envio-status{font-size:.82rem;margin-top:.8rem;padding:.6rem .9rem;border-radius:8px}
+.envio-status.enviando{background:var(--azul-c);color:var(--azul-m)}
+.envio-status.ok{background:var(--verde-c);color:var(--verde)}
+.envio-status.erro{background:var(--verm-c);color:var(--verm)}
+/* No modo prova, o feedback de cada questão fica escondido até o aluno terminar */
+.fb.prova-oculto{display:none!important}
+@media print{.quiz-gate,.modo-chip,.envio-status{display:none!important}#quizConteudo{display:block!important}}
+</style>
+</head>
+<body>
+<header>
+<a href="index.html" class="voltar-link">← Painel SAEB/SIMAVE</a>
+<div class="badge">SAEB · SIMAVE · Língua Portuguesa</div>
+<h1>Habilidade D2</h1>
+<p>Localizar informações explícitas em um texto</p>
+</header>
+<nav class="tabs"><div class="tabs-inner">
+<button class="tab-btn active" data-tab="estudar">📚 Estudar</button>
+<button class="tab-btn" data-tab="quiz">📝 Quiz</button>
+<button class="tab-btn" data-tab="jogos">🎮 Jogos</button>
+</div></nav>
+<main>
+<!-- ===== ESTUDAR ===== -->
+<section class="tab-pane active" id="pane-estudar">
+<div class="resumo-box"><h2>🎯 Em uma frase</h2><p>O D2 mede se você consegue <strong style="color:#ffd98a">encontrar uma informação que está escrita, com todas as letras, no texto</strong> — sem deduzir nem interpretar.</p><span class="fc">"A resposta está lá. Seu trabalho é caçá-la, não adivinhá-la."</span></div>
+<section class="painel"><h2>📌 O que essa habilidade avalia</h2><p>Localizar uma informação <strong>explícita</strong> significa encontrar um dado que aparece de forma direta no texto: nome, data, número, ação, lugar, fala. A resposta não exige interpretação.</p><h3>Como o enunciado costuma aparecer:</h3><ul><li>"De acordo com o texto, ..."</li><li>"Segundo o autor, ..."</li><li>"O texto afirma que ..."</li><li>"Conforme o relato, ..."</li></ul></section>
+<section class="dica-ouro painel"><h2>💡 Dica de ouro</h2><ul>
+<li><strong>Volte ao texto sempre.</strong> Releia o trecho antes de marcar.</li>
+<li><strong>Sublinhe palavras-chave do enunciado</strong> (quem? quando? quantos?) e procure-as no texto.</li>
+<li><strong>Cuidado com o distrator "quase certo"</strong> — usa palavras do texto, mas troca um detalhe.</li>
+<li><strong>Atenção à troca de papéis.</strong> Quem fez o quê?</li>
+<li><strong>Número certo, unidade certa.</strong> km² ≠ hectare; 92% ≠ 960.</li>
+</ul></section>
+<section class="painel glossario"><h2>📖 Glossário</h2><dl>
+<dt>Informação explícita</dt><dd>Dado escrito de forma direta; basta localizá-lo.</dd>
+<dt>Informação implícita</dt><dd>Dado subentendido, que exige dedução.</dd>
+<dt>Distrator</dt><dd>Alternativa errada criada para parecer plausível.</dd>
+<dt>Eu lírico</dt><dd>Quem "fala" dentro de um poema.</dd>
+</dl></section>
+<div class="aviso-prof"><b>Professor:</b> textos de domínio público ou CC-BY (Agência Brasil). Cada questão tem espaço para imagem. Use o botão 🖨️ Imprimir na aba Quiz para gerar folha com gabarito.</div>
+<div class="records" id="recordsEstudar"><h2>🏆 Seus melhores resultados</h2><div class="rec-grid" id="recGrid"></div></div>
+</section>
+<!-- ===== QUIZ ===== -->
+<section class="tab-pane" id="pane-quiz">
+
+<!-- ===== TELA DE IDENTIFICAÇÃO (aparece antes do quiz) ===== -->
+<div id="quizGate" class="quiz-gate">
+  <h2>👋 Antes de começar</h2>
+  <p>Preencha seus dados e escolha o modo de jogo.</p>
+  <div class="gate-field">
+    <label for="alunoNome">Nome do aluno</label>
+    <input type="text" id="alunoNome" placeholder="Seu nome completo" autocomplete="off">
+  </div>
+  <div class="gate-field">
+    <label for="alunoTurma">Turma / Série</label>
+    <input type="text" id="alunoTurma" placeholder="Ex: 9º Ano A" autocomplete="off">
+  </div>
+  <div class="gate-field">
+    <label>Modo de jogo</label>
+    <div class="modo-opcoes">
+      <label class="modo-opcao">
+        <input type="radio" name="modoQuiz" value="prova" checked>
+        <span><b>📝 Modo Prova</b><br><small>Sem feedback durante o quiz. As respostas certas só aparecem no final, como numa prova de verdade.</small></span>
+      </label>
+      <label class="modo-opcao" id="opcaoEstudo">
+        <input type="radio" name="modoQuiz" value="estudo" id="radioEstudo" disabled>
+        <span><b>📖 Modo Estudo</b> <span class="cadeado" id="cadeadoEstudo">🔒</span><br><small>Mostra se acertou ou errou — e a explicação — logo após cada resposta. Liberado pelo professor.</small></span>
+      </label>
+    </div>
+    <div class="senha-box" id="senhaBox">
+      <input type="password" id="senhaEstudo" placeholder="Senha do professor para liberar o Modo Estudo" autocomplete="off">
+      <button type="button" class="btn sec senha-btn" id="btnLiberarEstudo">Liberar</button>
+    </div>
+    <p class="senha-aviso" id="senhaAviso"></p>
+  </div>
+  <button class="btn" id="btnIniciarQuiz">▶ Começar o quiz</button>
+  <p class="gate-aviso" id="gateAviso"></p>
+</div>
+
+<!-- ===== QUIZ (fica oculto até o aluno preencher os dados acima) ===== -->
+<div id="quizConteudo" style="display:none">
+<div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.5rem;align-items:center">
+
+<button class="btn sec" onclick="location.reload()">🔀 Embaralhar e refazer</button>
+<span class="modo-chip" id="modoChip"></span>
+</div>
+<div class="prog-wrap"><span class="prog-label">Progresso</span><div class="prog-track"><div class="prog-fill" id="pFill"></div></div><span class="score" id="score">0 / 12</span></div>
+<div id="quiz" style="display:flex;flex-direction:column;gap:1.5rem"></div>
+<!-- ===== QUESTÕES ABERTAS (3 questões discursivas) ===== -->
+<div class="card" id="cardAberta1" style="margin-top:1.5rem">
+  <div class="card-head"><span class="qnum">Questão Aberta 1</span><span class="qtipo">Localizar informação implícita na estrutura</span><span class="qnivel facil">Aberta</span></div>
+  <div class="txt-base">Releia o texto "Raios!" (Questão 2).</div>
+  <p class="enunciado"><b>Questão aberta:</b> O texto explica que vemos o relâmpago antes de ouvir o trovão. <b>(a)</b> Qual informação explícita do texto justifica esse fenômeno? <b>(b)</b> Por que não seria correto dizer que o relâmpago é "mais forte" que o trovão como justificativa para ser visto primeiro?</p>
+  <textarea class="disc-area" placeholder="Escreva sua resposta aqui..." style="min-height:180px;width:100%;resize:vertical;"></textarea>
+  <div class="disc-actions"><button class="btn sec" onclick="toggleGabAberta('gabAberta1', this)">👁️ Ver gabarito</button></div>
+  <div class="fb" id="gabAberta1" style="display:none">
+    <div class="ft" style="color:var(--azul)">Gabarito sugerido</div>
+    <div><b>(a)</b> O texto afirma explicitamente: "a luz é mais rápida que o som, por isso ela chega primeiro até nós." Essa é a informação que justifica vermos o relâmpago antes de ouvirmos o trovão.<br><br><b>(b)</b> A velocidade de propagação (luz × som) não é a mesma coisa que intensidade ou força. O trovão é muito intenso — é o "barulho intenso" causado pelo deslocamento do ar. A diferença não é de potência, mas de velocidade de chegada ao observador.</div>
+  </div>
+</div>
+<div class="card" id="cardAberta2" style="margin-top:1rem">
+  <div class="card-head"><span class="qnum">Questão Aberta 2</span><span class="qtipo">Localizar e comparar informações explícitas</span><span class="qnivel medio">Aberta</span></div>
+  <div class="txt-base">Releia o texto sobre a Bienal do Livro 2025 (Questão 1) e o artigo "A tecnologia a abrir caminho" (Questão 8).</div>
+  <p class="enunciado"><b>Questão aberta:</b> Os dois textos apresentam dados e números específicos. <b>(a)</b> Retire do texto da Bienal uma informação numérica explícita. <b>(b)</b> Retire do texto sobre tecnologia uma informação numérica explícita diferente. <b>(c)</b> Qual dos dois dados você considera mais preciso e verificável? Justifique com base no próprio texto.</p>
+  <textarea class="disc-area" placeholder="Escreva sua resposta aqui..." style="min-height:180px;width:100%;resize:vertical;"></textarea>
+  <div class="disc-actions"><button class="btn sec" onclick="toggleGabAberta('gabAberta2', this)">👁️ Ver gabarito</button></div>
+  <div class="fb" id="gabAberta2" style="display:none">
+    <div class="ft" style="color:var(--azul)">Gabarito sugerido</div>
+    <div><b>(a)</b> Exemplos: "600 mil m²" (tamanho do Espaço Infantil); "25 anos de existência nas Bienais" (Café Literário).<br><br><b>(b)</b> Exemplos: "menos de 35 anos" (expectativa de vida em 1820); "80% das pessoas no mundo são alfabetizadas"; "65% das crianças desempenharão funções que ainda não existem".<br><br><b>(c)</b> Resposta pessoal, aceitável com qualquer justificativa coerente. Exemplo: o dado de 1820 é um dado histórico concreto que pode ser verificado em registros históricos. O dado de 65% é uma estimativa projetiva — mais difícil de verificar.</div>
+  </div>
+</div>
+<div class="card" id="cardAberta3" style="margin-top:1rem">
+  <div class="card-head"><span class="qnum">Questão Aberta 3</span><span class="qtipo">Localizar e analisar informação explícita em contexto formal</span><span class="qnivel dificil">Aberta</span></div>
+  <div class="txt-base">Releia a carta de reclamação (Questão 3) e a carta de leitor (Questão 12).</div>
+  <p class="enunciado"><b>Questão aberta:</b> Ambos os textos são cartas com objetivos diferentes. <b>(a)</b> Qual informação explícita revela o que cada autora quer do destinatário? Cite um trecho de cada carta. <b>(b)</b> Como você percebe, pelo próprio texto, que uma carta é formal e a outra também formal, mas com tom mais afetivo?</p>
+  <textarea class="disc-area" placeholder="Escreva sua resposta aqui..." style="min-height:180px;width:100%;resize:vertical;"></textarea>
+  <div class="disc-actions"><button class="btn sec" onclick="toggleGabAberta('gabAberta3', this)">👁️ Ver gabarito</button></div>
+  <div class="fb" id="gabAberta3" style="display:none">
+    <div class="ft" style="color:var(--azul)">Gabarito sugerido</div>
+    <div><b>(a)</b> Carta de reclamação: "solicito a devolução imediata do valor pago ou o envio do vale-presente" — quer uma solução concreta. Carta de leitor: "A vocês, equipe CHC, tenho apenas a agradecer!" — quer expressar gratidão.<br><br><b>(b)</b> A carta de reclamação usa linguagem formal burocrática ("Conforme consta no site de vocês", "solicito", "Atenciosamente"). A carta de leitor também usa registro formal ("Escrevo esta mensagem como pesquisadora"), mas inclui expressões afetivas ("com muito carinho", "Viva a ciência!") que revelam o vínculo emocional da autora com a revista.</div>
+  </div>
+</div>
+<div id="resultado"><h2>Quiz concluído!</h2><div class="medalha" id="medalha">🏅</div><div class="nota" id="notaFinal">—</div><p id="msgFinal"></p>
+<div id="envioStatus" class="envio-status"></div>
+<div style="margin-top:1rem"><button class="btn" onclick="location.reload()">↺ Embaralhar e refazer</button></div></div>
+</div>
+</section>
+<!-- ===== JOGOS ===== -->
+<section class="tab-pane" id="pane-jogos">
+<div class="resumo-box"><h2>🎮 Hora de jogar</h2><p>Cinco mini-games para treinar. Seus melhores resultados ficam salvos!</p></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">⏱️</span><div><h3>Caça à Informação</h3><div class="desc">Ache o dado certo antes que o tempo acabe!</div></div></div><div class="jogo-body" id="g1-body"><button class="btn ouro" onclick="G1.start()">▶ Começar</button></div></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">✅</span><div><h3>Verdadeiro ou Falso</h3><div class="desc">Julgue cada afirmação — a prova aparece depois!</div></div></div><div class="jogo-body" id="g2-body"><button class="btn ouro" onclick="G2.start()">▶ Começar</button></div></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">🕵️</span><div><h3>Detetive do Detalhe</h3><div class="desc">Separe o real do inventado.</div></div></div><div class="jogo-body" id="g3-body"><button class="btn ouro" onclick="G3.start()">▶ Começar</button></div></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">🧩</span><div><h3>Complete a Frase</h3><div class="desc">Escolha a palavra exata que falta.</div></div></div><div class="jogo-body" id="g4-body"><button class="btn ouro" onclick="G4.start()">▶ Começar</button></div></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">🔢</span><div><h3>Ordene os Fatos</h3><div class="desc">Coloque os eventos na ordem certa do texto.</div></div></div><div class="jogo-body" id="g5-body"><button class="btn ouro" onclick="G5.start()">▶ Começar</button></div></div>
+</section>
+</main>
+<footer>Portal do Professor Marcos Cruz · SAEB/SIMAVE · D2</footer>
+
+<script>
+/* ===== UTILITÁRIOS ===== */
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function stripHTML(s){const d=document.createElement("div");d.innerHTML=s;return d.textContent||"";}
+
+/* ===== TTS ===== */
+function toggleTTS(btn,id){
+  if(window.speechSynthesis.speaking){window.speechSynthesis.cancel();document.querySelectorAll(".btn-tts").forEach(b=>b.classList.remove("playing"));return;}
+  const el=document.getElementById(id);if(!el)return;
+  const text=stripHTML(el.innerHTML).replace(/\s+/g," ");
+  const u=new SpeechSynthesisUtterance(text);u.lang="pt-BR";u.rate=.9;
+  btn.classList.add("playing");
+  u.onend=()=>btn.classList.remove("playing");
+  u.onerror=()=>btn.classList.remove("playing");
+  window.speechSynthesis.speak(u);
+}
+
+/* ===== PLACAR (localStorage) ===== */
+const REC_KEY="saeb_d1_records";
+function loadRec(){try{return JSON.parse(localStorage.getItem(REC_KEY))||{};}catch{return {};}}
+function saveRec(k,v){const r=loadRec();if(!r[k]||v>r[k])r[k]=v;localStorage.setItem(REC_KEY,JSON.stringify(r));renderRec();}
+function renderRec(){
+  const r=loadRec(),g=document.getElementById("recGrid");if(!g)return;
+  const items=[{k:"quiz",l:"Quiz (de 12)"},{k:"caca",l:"Caça à Info"},{k:"vf",l:"V ou F"},{k:"detetive",l:"Detetive"},{k:"complete",l:"Complete"},{k:"ordene",l:"Ordene"}];
+  g.innerHTML=items.map(i=>`<div class="rec-item"><div class="rv">${r[i.k]!=null?r[i.k]:"—"}</div><div class="rl">${i.l}</div></div>`).join("");
+}
+renderRec();
+
+/* ===== TABS ===== */
+document.querySelectorAll(".tab-btn").forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll(".tab-pane").forEach(p=>p.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById("pane-"+btn.dataset.tab).classList.add("active");
+    window.scrollTo({top:0,behavior:"smooth"});
+  };
+});
+
+/* ===== CONFIGURAÇÃO DO ENVIO PARA GOOGLE SHEETS =====
+   Cole aqui a URL do seu Apps Script publicado como "App da Web".
+   Veja o arquivo google-apps-script.gs para instruções de instalação.
+   Enquanto estiver "SUBSTITUA_PELA_SUA_URL", o envio fica desativado
+   (o quiz funciona normalmente, só não manda nada para a planilha). */
+const SHEETS_URL = "https://script.google.com/macros/s/AKfycbwPcWRWW2IkMb8-WkyB2w1M2n9ivcYlfqWajYRgCzecLTC1T7aBetZtR2MDaOIxahc/exec";
+const DESCRITOR_PAGINA = "D2 - Localizar informações explícitas";
+const NOME_ARQUIVO = "D02.html";
+
+/* ===== ESTADO DO ALUNO E MODO DE JOGO ===== */
+let alunoNome = "";
+let alunoTurma = "";
+let modoJogo = "estudo"; // "estudo" ou "prova"
+const respostasDetalhadas = [];
+const selecoes = {}; // {dn: k} para revelar botões no fim do modo prova // uma entrada por questão respondida, na ordem em que aparecem
+
+/* ===== SENHA PARA LIBERAR O MODO ESTUDO =====
+   Troque a senha abaixo quando quiser. É a MESMA senha em todas as páginas
+   do portal (mais simples de lembrar e passar para os alunos quando for
+   hora de revisão). Lembre-se: como o quiz roda no navegador do aluno,
+   essa senha impede o uso casual do Modo Estudo, mas não é uma proteção
+   contra alguém que abra o código-fonte da página — as respostas já estão
+   no arquivo de qualquer forma, como em qualquer site estático como este. */
+const SENHA_MODO_ESTUDO = "professor123";
+
+document.getElementById("btnLiberarEstudo").onclick = () => {
+  const campo = document.getElementById("senhaEstudo");
+  const aviso = document.getElementById("senhaAviso");
+  if (campo.value === SENHA_MODO_ESTUDO) {
+    document.getElementById("radioEstudo").disabled = false;
+    document.getElementById("radioEstudo").checked = true;
+    document.getElementById("cadeadoEstudo").textContent = "🔓";
+    document.getElementById("opcaoEstudo").classList.add("liberado");
+    document.getElementById("senhaBox").style.display = "none";
+    aviso.className = "senha-aviso ok";
+    aviso.textContent = "✓ Modo Estudo liberado.";
+  } else {
+    aviso.className = "senha-aviso erro";
+    aviso.textContent = "Senha incorreta.";
+  }
+};
+// Também libera ao apertar Enter no campo de senha
+document.getElementById("senhaEstudo").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") document.getElementById("btnLiberarEstudo").click();
+});
+
+document.getElementById("btnIniciarQuiz").onclick = () => {
+  const nome = document.getElementById("alunoNome").value.trim();
+  const turma = document.getElementById("alunoTurma").value.trim();
+  const aviso = document.getElementById("gateAviso");
+  if (!nome || !turma) {
+    aviso.textContent = "Preencha nome e turma/série para continuar.";
+    return;
+  }
+  alunoNome = nome;
+  alunoTurma = turma;
+  modoJogo = document.querySelector('input[name="modoQuiz"]:checked').value;
+  document.getElementById("quizGate").style.display = "none";
+  document.getElementById("quizConteudo").style.display = "block";
+  const chip = document.getElementById("modoChip");
+  chip.textContent = modoJogo === "prova" ? "📝 Modo Prova" : "📖 Modo Estudo";
+};
+
+/* ===== ENVIO PARA O GOOGLE SHEETS ===== */
+function enviarParaSheets() {
+  const statusEl = document.getElementById("envioStatus");
+  if (!SHEETS_URL || SHEETS_URL.indexOf("SUBSTITUA") !== -1) {
+    statusEl.className = "envio-status";
+    statusEl.textContent = "";
+    return; // envio desativado até o professor configurar a URL
+  }
+  statusEl.className = "envio-status enviando";
+  statusEl.textContent = "Enviando resultado para a planilha...";
+
+  const payload = {
+    nome: alunoNome,
+    turma: alunoTurma,
+    descritor: DESCRITOR_PAGINA,
+    pagina: NOME_ARQUIVO,
+    modo: modoJogo === "prova" ? "Prova" : "Estudo",
+    respostas: respostasDetalhadas
+  };
+
+  fetch(SHEETS_URL, {
+    method: "POST",
+    mode: "no-cors", // Apps Script Web Apps não devolvem CORS; "no-cors" garante o envio mesmo sem ler a resposta
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(payload)
+  }).then(() => {
+    statusEl.className = "envio-status ok";
+    statusEl.textContent = "✓ Resultado enviado para a planilha do professor.";
+  }).catch(() => {
+    statusEl.className = "envio-status erro";
+    statusEl.textContent = "✗ Não foi possível enviar o resultado (verifique sua internet).";
+  });
+}
+
+/* ===== QUIZ ===== */
+const QRAW=[{"n": 1, "tipo": "Notícia (P0901)", "nivel": "facil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Notícia — Bienal do Livro no Rio terá novo formato em 2025</b><p>A Bienal do Livro do Rio em 2025 oferecerá novas experiências literárias ao público do evento. Quanto à programação, as atividades literárias serão adequadas a um novo formato, que contará, por exemplo, com uma roda-gigante literária. A atração, batizada de 'Leitura nas alturas', convida o visitante para uma volta dentro da história. Além disso, haverá o Palco Apoteose, voltado aos pré-adolescentes nas manhãs dos fins de semana. O Espaço Infantil continuará sendo o maior do evento, com cerca de 600 mil m². Já o Café Literário vai permitir aos visitantes navegar entre as histórias mais aprofundadas. Para o próximo ano, quando completa 25 anos de existência nas Bienais, o Café vai abrigar o 'Páginas no Palco', com performances de grandes personalidades do teatro.</p></div>", "fonte": "VALBÃO, Mariana. CNN Brasil, 22 nov. 2024. Adaptado. Avaliação Contínua P0901 — CAED/UFJF, 2025.", "enun": "Segundo o texto, qual atração convida o visitante para 'uma volta dentro da história'?", "alts": ["O Café Literário, que reúne performances e monólogos de grandes personalidades.", "A roda-gigante literária, chamada 'Leitura nas alturas'.", "O Palco Apoteose, voltado aos pré-adolescentes nas manhãs.", "O Espaço Infantil, o maior do evento, com 600 mil m²."], "correta": 1, "porque": ["O Café Literário reúne discussões e performances, mas não é o que 'convida para uma volta dentro da história'.", "O texto afirma explicitamente: 'A atração, batizada de Leitura nas alturas, convida o visitante para uma volta dentro da história'.", "O Palco Apoteose é voltado a pré-adolescentes, mas não é o que 'convida para uma volta dentro da história'.", "O Espaço Infantil é o maior espaço, mas não está associado à expressão citada no enunciado."]}, {"n": 2, "tipo": "Divulgação científica (P0802)", "nivel": "facil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Texto de divulgação científica — Raios! (fragmento)</b><p>Os relâmpagos são descargas elétricas, semelhantes às correntes elétricas que passam pelos fios de nossas casas e que fazem os eletrodomésticos funcionarem. Mas são milhares de vezes mais fortes. Tão fortes que ao passarem pela atmosfera <b>deslocam o ar</b> e produzem um barulho intenso — o trovão. Repare que vemos o relâmpago antes de ouvir o trovão: isso acontece porque a luz é mais rápida que o som.<br><br>Existem vários tipos de relâmpagos: dentro das nuvens, entre duas nuvens e até da nuvem para o alto. Os relâmpagos que ocorrem entre as nuvens e o solo são chamados raios. Como podem prejudicar as pessoas, os raios são bastante estudados. Normalmente caem em um único lugar, mas, às vezes, eles se dividem e atingem vários pontos.</p></div>", "fonte": "CIÊNCIA HOJE DAS CRIANÇAS. <b>Raios!</b> 2000. Adaptado. Avaliação Diagnóstica P0802 — CAED/UFJF, 2025.", "enun": "De acordo com o texto, o que produz o barulho do trovão?", "alts": ["A corrente elétrica que passa pelos fios das casas e faz os eletrodomésticos funcionarem.", "O deslocamento do ar causado pelos relâmpagos ao passarem pela atmosfera.", "A velocidade da luz ao se chocar com a velocidade do som durante a tempestade.", "A divisão dos raios em vários pontos ao atingirem o solo simultaneamente."], "correta": 1, "porque": ["Os fios e eletrodomésticos são citados como comparação para explicar o que são relâmpagos, não para explicar o trovão.", "O texto afirma: relâmpagos 'ao passarem pela atmosfera deslocam o ar e produzem um barulho intenso — o trovão'.", "O texto explica a diferença entre luz e som para justificar por que vemos o relâmpago antes de ouvi-lo, não para explicar o trovão.", "A divisão dos raios refere-se ao ponto de queda no solo, não à origem do som."]}, {"n": 3, "tipo": "Carta de reclamação (Reclame Aqui / P0901)", "nivel": "facil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Carta de reclamação — Vale-presente não entregue</b><p><em>Prezados,</em><br><br>No dia <b>05/03</b>, realizei a compra de um vale-presente através do site da livraria com o intuito de presentear uma amiga, Yasmin, no seu aniversário. Contudo, até o momento, o vale-presente não foi recebido por ela no e-mail informado, mesmo tendo os dados sido preenchidos corretamente. O status da compra no site informa que o vale ainda está <b>'em preparo'</b>, mas não houve a entrega do e-mail, o que gerou grande frustração, uma vez que o aniversário dela já passou.<br><br>Conforme consta no site de vocês, o vale-presente deveria ser enviado automaticamente ao e-mail do presenteado. Diante disso, solicito a devolução imediata do valor pago ou o envio do vale-presente, conforme prometido.<br><br><em>Atenciosamente, Thalya Roberta Salgueiro</em></p></div>", "fonte": "SALGUEIRO, Thalya Roberta. Reclame Aqui, 6 mar. 2025. Adaptado. Avaliação Contínua P0901 — CAED/UFJF, 2025.", "enun": "Qual é o status da compra exibido no site da livraria, conforme mencionado na carta?", "alts": ["'entregue ao destinatário'", "'em preparo'", "'cancelado por falha no sistema'", "'aguardando confirmação de pagamento'"], "correta": 1, "porque": ["A carta não menciona entrega confirmada; o problema é exatamente a não entrega.", "O texto afirma explicitamente: 'O status da compra no site informa que o vale ainda está em preparo'.", "Não há menção a cancelamento nem a falha no sistema.", "Não há informação sobre confirmação de pagamento; a compra já foi realizada."]}, {"n": 4, "tipo": "Fábula (Sandra Aymone / P0802)", "nivel": "facil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Fábula — Duplo Silêncio (fragmento)</b><p>Era uma vez duas capivaras, muito amigas, que moravam no campo. Cada uma tinha sua casa, mas trabalhavam juntas, cultivando <b>feijão</b>. Desde a hora em que o sol nascia até a noite, as duas passavam trabalhando. Roçavam a terra, aravam, semeavam, numa rotina diária.<br><br>Até que, finalmente, chegou a grande colheita! Tudo o que tinham plantado cresceu e brotou com força! As vagens de feijão se multiplicavam diante dos seus olhos. Com paciência, esperaram o momento certo da colheita, quando as vagens já estavam secas como palha. Depois de colher, outro trabalhão: bater com bambus nas vagens, para separar os grãos da palha. Em seguida, limpar tudo e colocar o feijão em sacas. Quando terminaram, <b>dividiram por igual</b>, e cada uma levou sua parte para casa.</p></div>", "fonte": "AYMONE, Sandra. <b>Duplo Silêncio</b>. Fundação Educar DPaschoal, 2019. Adaptado. Avaliação Diagnóstica P0802 — CAED/UFJF, 2025.", "enun": "Segundo o texto, como as capivaras dividiram o resultado da colheita?", "alts": ["Cada uma ficou com a parte que havia plantado individualmente.", "Dividiram por igual, cada uma levando a sua parte para casa.", "A capivara com família maior ficou com uma parte maior da colheita.", "Doaram metade para os vizinhos e ficaram com o restante."], "correta": 1, "porque": ["O texto não menciona divisão por quem plantou mais; elas trabalhavam juntas.", "O texto é explícito: 'Quando terminaram, dividiram por igual, e cada uma levou sua parte para casa'.", "A família da capivara é mencionada mais tarde no texto (como motivação), não como critério de divisão da colheita.", "Não há menção a doação para vizinhos no trecho apresentado."]}, {"n": 5, "tipo": "Notícia (CNN Brasil / P0802)", "nivel": "medio", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Notícia — Veja as descobertas de animais mais curiosas feitas pelos cientistas em 2024 (fragmento)</b><p>Um cogumelo com dentes. Uma piranha vegetariana com uma marca distinta. E um pequeno cavalo-marinho flutuando nas águas rasas do Oceano Índico. Essas maravilhas da natureza estão entre as centenas de espécies de animais, plantas e fungos desconhecidas que os cientistas descreveram e nomearam pela primeira vez em 2024.<br><br>'Os cientistas estimam que identificamos apenas um décimo de todas as espécies existentes no planeta', disse a Dra. Shannon Bennett, chefe de ciência da Academia de Ciências da Califórnia. Pesquisadores ligados à instituição descreveram <b>138 descobertas</b> em 2024, incluindo <b>32 peixes</b>. Um destaque foi um pequeno cavalo-marinho chamado <em>Cylix nkosi</em>, originalmente encontrado em 2021 nas águas temperadas da <b>Ilha Norte da Nova Zelândia</b>, mas a espécie descrita este ano foi descoberta nas águas subtropicais da África do Sul.</p></div>", "fonte": "HUNT, Katie. CNN Brasil, 1 jan. 2025. Adaptado. Avaliação Diagnóstica P0802 — CAED/UFJF, 2025.", "enun": "Segundo o texto, quantas descobertas foram descritas pelos pesquisadores da Academia de Ciências da Califórnia em 2024?", "alts": ["32 descobertas, incluindo diferentes espécies de fungos e plantas.", "138 descobertas, incluindo 32 peixes.", "Centenas de descobertas, todas referentes a espécies marinhas.", "Um décimo das espécies existentes no planeta."], "correta": 1, "porque": ["32 é o número de peixes descobertos, não o total de descobertas.", "O texto afirma: 'descreveram 138 descobertas em 2024, incluindo 32 peixes'.", "O texto menciona centenas de espécies em geral, mas o número da Academia especificamente é 138.", "'Um décimo das espécies' é uma estimativa global do quanto foi identificado, não o número de descobertas em 2024."]}, {"n": 6, "tipo": "Artigo de divulgação (P0901)", "nivel": "medio", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Artigo — Por que ler histórias em quadrinhos com as crianças? (fragmento)</b><p>Já faz algum tempo que a história em quadrinhos deixou de ser vista como um inimigo do livro. Ao contrário: são considerados grandes aliados para incentivar a leitura, principalmente para quem ainda está engatinhando no universo das letras. Afinal, os quadrinhos acabam sendo uma introdução ao mundo da literatura, usando não apenas escrita, mas também <b>ilustrações</b>.<br><br>As histórias em quadrinhos unem palavras e imagens, agradando tanto quem já lê quanto àqueles que ainda estão iniciando o processo de alfabetização. As HQs podem ser oferecidas às crianças mais novas como suporte às brincadeiras. Para aqueles que ainda não dominam a leitura, a curiosidade em saber o que está escrito dentro dos <b>balões de fala</b> pode ser um estímulo. Nas histórias em quadrinhos, os personagens vão à escola e aos parques, e é essa <b>proximidade com o cotidiano</b> que promove a conexão com o leitor.</p></div>", "fonte": "VIOLA, Lindsay. <b>Por que ler histórias em quadrinhos com as crianças?</b> Leiturinha, 2025. Adaptado. P0901.", "enun": "Segundo o texto, o que pode estimular crianças que ainda não dominam a leitura a querer aprender?", "alts": ["A proximidade dos personagens com o cotidiano das crianças, como ir à escola e aos parques.", "A curiosidade em saber o que está escrito dentro dos balões de fala das histórias.", "O uso exclusivo de ilustrações, sem nenhum texto para não dificultar a leitura.", "A possibilidade de usar os quadrinhos como suporte durante as brincadeiras livres."], "correta": 1, "porque": ["A proximidade com o cotidiano é mencionada como algo que promove conexão com o leitor, não especificamente como estímulo à leitura para quem não domina.", "O texto é explícito: 'Para aqueles que ainda não dominam a leitura, a curiosidade em saber o que está escrito dentro dos balões de fala pode ser um estímulo'.", "As HQs usam TANTO escrita quanto ilustrações; o texto não sugere uso exclusivo de imagens.", "O uso como suporte às brincadeiras é mencionado para crianças mais novas em geral, não especificamente para quem não sabe ler."]}, {"n": 7, "tipo": "Artigo (Portal Luneta / P0901)", "nivel": "medio", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Artigo — Entre páginas digitais e papel (fragmento)</b><p>No cenário literário contemporâneo, a ascensão da tecnologia redefine nossa relação com o ato da leitura. Em <b>2022</b>, as vendas em livrarias virtuais superaram as físicas, evidenciando uma mudança de comportamento. Muitos leitores optam por formatos digitais, citando economia, praticidade e a possibilidade de obter feedback de outros leitores.<br><br>Segundo a pesquisadora da <b>Universidade da Califórnia em Los Angeles (UCLA)</b>, Maryanne Wolf, o excesso de tempo em telas desde a infância está mudando radicalmente a forma como processamos a informação. A pesquisadora lançou um livro em <b>2019</b> — <em>O Cérebro no Mundo Digital</em> — que fala que o fato de lermos cada vez mais em telas pode estar dilapidando nossa capacidade de entender argumentos complexos e de criar empatia por pontos de vista diferentes.</p></div>", "fonte": "LEAL, Tamyris; DIAS, Alexia. Portal Luneta, 5 fev. 2024. Adaptado. P0901 — CAED/UFJF, 2025.", "enun": "De qual universidade é a pesquisadora Maryanne Wolf, citada no texto?", "alts": ["Universidade de Brasília (UnB), onde realizou pesquisas sobre hábitos digitais de estudantes.", "Universidade da Califórnia em Los Angeles (UCLA).", "Universidade Federal do Rio de Janeiro (UFRJ), em parceria com o Portal Luneta.", "Universidade de São Paulo (USP), pioneira em estudos sobre leitura digital no Brasil."], "correta": 1, "porque": ["O texto não menciona a Universidade de Brasília; os dados sobre Brasília aparecem em outro contexto.", "O texto é explícito: 'pesquisadora da Universidade da Califórnia em Los Angeles (UCLA), Maryanne Wolf'.", "A UFRJ não é mencionada no texto.", "A USP não é mencionada no texto; a pesquisadora é de uma universidade dos EUA."]}, {"n": 8, "tipo": "Artigo (TEK SAPO / P0802)", "nivel": "medio", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Artigo — A tecnologia a abrir caminho para o futuro (mais humano) — fragmento</b><p>A tecnologia tem o poder de fazer muitas coisas, e mudar o mundo tem sido uma delas. Se em <b>1820</b> podíamos esperar viver em média <b>menos de 35 anos</b>, e menos de 20% da população sabia ler e escrever, atualmente a esperança de vida duplicou e mais de 80% das pessoas no mundo são alfabetizadas. Para qualquer observador, é fácil verificar que estes avanços se devem primariamente à tecnologia.<br><br>Atualmente, é estimado que <b>65% das crianças</b> a entrar na escola primária hoje desempenharão funções que ainda não existem, uma indicação clara que será necessário reaplicar o conhecimento às capacidades que impulsionarão o mundo do trabalho no futuro. Mas, apesar dos ajustes necessários, é certo que somos privilegiados por viver numa altura em que a ciência e tecnologia nos podem assistir, tornando as nossas vidas mais fáceis.</p></div>", "fonte": "RODRIGUEZ, Fabio. TEK SAPO, 2020. Adaptado. Avaliação Diagnóstica P0802 — CAED/UFJF, 2025.", "enun": "Segundo o texto, em 1820, qual era a expectativa de vida média das pessoas?", "alts": ["Mais de 65 anos, graças aos avanços tecnológicos da Revolução Industrial.", "Menos de 35 anos, muito abaixo da expectativa atual.", "Cerca de 50 anos, sendo que apenas 20% da população sabia ler.", "Menos de 20 anos, época em que a alfabetização era praticamente inexistente."], "correta": 1, "porque": ["O texto indica que em 1820 a expectativa era baixa, não alta; ela apenas 'duplicou' com o tempo.", "O texto afirma: 'Se em 1820 podíamos esperar viver em média menos de 35 anos'.", "50 anos não é o dado mencionado; 20% refere-se à taxa de alfabetização, não à expectativa de vida.", "Menos de 20 anos não corresponde ao dado do texto; 'menos de 20%' é o percentual de alfabetizados, não a expectativa de vida."]}, {"n": 9, "tipo": "Artigo (Bibliotecas do Maranhão / P0901)", "nivel": "dificil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Artigo — A Importância da Biblioteca em uma Sociedade (fragmento)</b><p>Uma Biblioteca, seja ela pública, privada, universitária ou escolar, é de suma importância em uma comunidade, pois as Bibliotecas exercem um papel social determinante para a inclusão dos indivíduos na cultura da 'Era da informação'.<br><br>O papel social das bibliotecas, além da <b>disseminação da informação</b>, é também a <b>inserção das comunidades em geral ao conhecimento e suas práticas</b>. Uma biblioteca dispõe de vários mecanismos atrativos voltados à comunidade leitora mediante ações de dinamização junto ao público, como <b>oficinas, feiras culturais, projetos de leitura e exposições</b>.<br><br>Hoje as bibliotecas públicas servem também como apoio aos alunos do ensino formal, ensino médio e fundamental, educação de jovens e adultos. A biblioteca pública funciona como <b>alicerce da educação</b>.</p></div>", "fonte": "A IMPORTÂNCIA da Biblioteca em uma Sociedade. Bibliotecas do Maranhão, 2019. Adaptado. P0901.", "enun": "Além da disseminação da informação, qual outra função social as bibliotecas exercem, segundo o texto?", "alts": ["Garantir o acesso a livros físicos para estudantes de ensino superior e pós-graduação.", "Inserir as comunidades em geral ao conhecimento e suas práticas.", "Organizar eventos exclusivamente voltados a adultos e à educação de jovens.", "Substituir as escolas formais em regiões sem acesso à educação básica."], "correta": 1, "porque": ["O texto menciona suporte ao ensino fundamental, médio e EJA — não apenas ensino superior.", "O texto afirma explicitamente: 'O papel social das bibliotecas, além da disseminação da informação, é também a inserção das comunidades em geral ao conhecimento e suas práticas'.", "As ações mencionadas (oficinas, feiras, projetos de leitura) são voltadas à comunidade em geral, não apenas a adultos.", "O texto usa a metáfora 'alicerce da educação', mas não diz que substitui as escolas."]}, {"n": 10, "tipo": "Notícia (CNN Brasil / P0802)", "nivel": "dificil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Notícia — Veja as descobertas de animais mais curiosas feitas pelos cientistas em 2024 (fragmento)</b><p>Um destaque foi um pequeno cavalo-marinho chamado <em>Cylix nkosi</em>. O parente do cavalo-marinho foi originalmente encontrado em <b>2021</b> nas águas temperadas da <b>Ilha Norte da Nova Zelândia</b>, mas a espécie descrita este ano foi descoberta nas águas subtropicais da <b>África do Sul</b>, ampliando a distribuição conhecida deste grupo para o Oceano Índico.<br><br>'Os recifes sul-africanos apresentam condições de mergulho notoriamente difíceis, com clima adverso e ondas intensas e agitadas — sabíamos que teríamos apenas <b>um mergulho</b> para encontrá-lo', disse o fotógrafo subaquático e biólogo marinho Richard Smith. 'Avistamos uma fêmea camuflada entre algumas esponjas a cerca de uma <b>milha da costa</b>, no fundo arenoso do oceano', disse Richard Smith.</p></div>", "fonte": "HUNT, Katie. CNN Brasil, 1 jan. 2025. Adaptado. Avaliação Diagnóstica P0802 — CAED/UFJF, 2025.", "enun": "Em que local o cavalo-marinho <em>Cylix nkosi</em> foi originalmente encontrado, em 2021?", "alts": ["Nas águas subtropicais da África do Sul, no Oceano Índico.", "Nas águas temperadas da Ilha Norte da Nova Zelândia.", "No fundo arenoso do oceano, a cerca de uma milha da costa sul-africana.", "Nas águas rasas do Oceano Índico, próximo às esponjas marinhas."], "correta": 1, "porque": ["As águas subtropicais da África do Sul são onde a espécie foi descoberta NESTE ANO (2024), não em 2021.", "O texto afirma: 'originalmente encontrado em 2021 nas águas temperadas da Ilha Norte da Nova Zelândia'.", "O fundo arenoso próximo à costa sul-africana é o local do avistamento recente da fêmea, não da descoberta original.", "As 'águas rasas do Oceano Índico' são a localização do texto de abertura, não especificamente do Cylix nkosi em 2021."]}, {"n": 11, "tipo": "Crônica (Gerusa Florencio / P0901)", "nivel": "dificil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Crônica — Crônica da Escrita (fragmento)</b><p>Já faz tempo que eu escrevo; escrever é uma paixão que tenho desde a infância, mesmo antes de me alfabetizar. A ansiedade de escrever cresceu junto comigo.<br><br>Quando entrei na escola, essa vontade só aumentou. Enquanto meus colegas reclamavam por ter de copiar todo o conteúdo do quadro, lá estava eu, toda animada, escrevendo. E como se não bastasse, com canetas de várias cores e com regras para cada uma: para o <b>título</b>, usava sempre a <b>vermelha</b>; <b>subtítulo</b> de <b>preta</b>; e o restante em <b>azul</b>. Essa era a ordem.<br><br>Nas férias, comprava cadernos: um era para letras de música, outro para receitas (que eu nunca fiz) e mais um para poemas. Depois de alguns anos, juntei uma pilha de cadernos, todos escritos e com pouquíssimas folhas sobrando.</p></div>", "fonte": "FLORENCIO, Gerusa. <b>Crônica da Escrita</b>. 21 nov. 2017. Adaptado. P0901 — CAED/UFJF, 2025.", "enun": "Segundo a autora, qual cor de caneta ela usava para escrever o título dos seus textos na escola?", "alts": ["Azul, cor que usava para o restante do conteúdo dos textos.", "Vermelha, cor reservada exclusivamente para os títulos.", "Preta, cor que representava o início de cada novo texto.", "Verde, cor que escolhia para destacar as palavras mais importantes."], "correta": 1, "porque": ["O azul era a cor usada para 'o restante' do conteúdo, não para o título.", "O texto é explícito: 'para o título, usava sempre a vermelha; subtítulo de preta; e o restante em azul'.", "A preta era reservada ao subtítulo, não ao título.", "Verde não é mencionado no texto; as cores citadas são vermelha, preta e azul."]}, {"n": 12, "tipo": "Carta de leitor (Ciência Hoje das Crianças / P0901)", "nivel": "dificil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Carta de leitor — De leitora à cientista</b><p>Escrevo esta mensagem como uma pesquisadora profundamente marcada pela revista <b>Ciência Hoje das Crianças</b>. Me lembro da empolgação no ato de reconhecer uma edição que não havia lido; me lembro do cheiro das folhas, me lembro de um olhar encantado e maravilhado pela sensação da descoberta e do conhecimento ao folhear as páginas.<br><br>A vocês, equipe CHC, tenho apenas a agradecer! Viva a ciência, vivam as nossas crianças, viva a produção de conhecimento no Brasil. Com muito carinho.<br><br><b>Juliana Ferraz</b>, pesquisadora</p></div>", "fonte": "FERRAZ, Juliana. In: Ciência Hoje das Crianças, 4 maio 2023. Avaliação Contínua P0901.", "enun": "Segundo a carta, a quem Juliana Ferraz diz ter 'apenas a agradecer'?", "alts": ["À escola onde estudou, que lhe apresentou a revista ainda na infância.", "À equipe da revista Ciência Hoje das Crianças (CHC).", "Aos pais, que lhe presenteavam com edições da revista todo mês.", "Aos cientistas brasileiros que publicaram artigos que a inspiraram."], "correta": 1, "porque": ["A escola não é mencionada na carta; o agradecimento é direto à equipe da revista.", "O texto é explícito: 'A vocês, equipe CHC, tenho apenas a agradecer!'", "Os pais não são mencionados na carta.", "Cientistas brasileiros são mencionados indiretamente ('viva a produção de conhecimento'), mas o agradecimento explícito é à equipe CHC."]}];
+
+// Embaralhar questões e alternativas
+const QS=shuffle(QRAW).map((q,idx)=>{
+  const map=Array.from({length:q.alts.length},(_,i)=>i);
+  const smap=shuffle(map);
+  return{...q,dn:idx+1,alts:smap.map(i=>q.alts[i]),porque:smap.map(i=>q.porque[i]),correta:smap.indexOf(q.correta)};
+});
+
+const nivelLabel={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
+const quizEl=document.getElementById("quiz");
+QS.forEach((q,idx)=>{
+  const c=document.createElement("div");c.className="card";c.dataset.q=q.dn;
+  const tid="txt"+q.dn;
+  c.innerHTML=`<div class="card-head"><span class="qnum">Questão ${q.dn}</span><span class="qtipo">${q.tipo}</span><span class="qnivel ${q.nivel}">${nivelLabel[q.nivel]}</span></div>
+  <div class="txt-base" id="${tid}">${q.texto}<span class="txt-fonte">${q.fonte}</span><button class="btn-tts" onclick="toggleTTS(this,'${tid}')" title="Ouvir texto">🔊</button></div>
+  
+  <p class="enunciado">${q.enun}</p>
+  <div class="alts">${q.alts.map((t,i)=>`<button class="alt" onclick="resp(${q.dn},${i})"><span class="letra">${"ABCD"[i]}</span> ${t}</button>`).join("")}</div>
+  <div class="fb" id="fb${q.dn}"></div>`;
+  quizEl.appendChild(c);
+});
+
+let acertos=0;const feitas=new Set();
+function resp(n,k){
+  if(feitas.has(n))return;feitas.add(n);
+  const q=QS.find(x=>x.dn===n),card=quizEl.querySelector(`[data-q="${n}"]`),btns=card.querySelectorAll(".alt"),fb=document.getElementById("fb"+n);
+  const ok=k===q.correta;if(ok)acertos++;
+
+  // Registra a resposta detalhada desta questão para depois enviar ao Sheets
+  respostasDetalhadas.push({
+    questao: n,
+    tipo: q.tipo,
+    nivel: q.nivel,
+    respostaDada: k>=0 ? "ABCD"[k] : "(não respondeu)",
+    respostaCorreta: "ABCD"[q.correta],
+    acertou: ok
+  });
+
+  selecoes[n]=k;btns.forEach((b,i)=>{b.disabled=true;if(modoJogo==="estudo"){if(i===q.correta)b.classList.add("ok");else if(i===k)b.classList.add("err");else b.classList.add("dim");}else{if(i===k)b.classList.add("sel");else b.classList.add("dim");}});
+  const pq=q.alts.map((t,i)=>`<span class="pi"><span class="l">${"ABCD"[i]})</span> ${q.porque[i]}</span>`).join("");
+  fb.className="fb show "+(ok?"ok":"err")+(modoJogo==="prova"?" prova-oculto":"");
+  fb.innerHTML=`<div class="ft">${ok?"✓ Correto!":"✗ Incorreto — a correta é "+"ABCD"[q.correta]+"."}</div><div>${q.porque[q.correta]}</div><div class="pq"><b>Cada alternativa:</b>${pq}</div>`;
+  document.getElementById("pFill").style.width=(feitas.size/QS.length*100)+"%";
+  // No modo prova, a pontuação parcial fica escondida; só aparece no resultado final
+  document.getElementById("score").textContent=modoJogo==="prova" ? (feitas.size+" / "+QS.length+" respondidas") : (acertos+" / "+QS.length);
+  if(feitas.size===QS.length)setTimeout(quizFim,500);
+}
+function quizFim(){
+  // No modo prova, revela todo o feedback que ficou oculto durante o quiz
+  if(modoJogo==="prova"){
+    // gabarito bloqueado no modo prova
+    // modo estudo mostra gabarito por senha
+    document.getElementById("score").textContent=acertos+" / "+QS.length;
+  }
+  const r=document.getElementById("resultado");r.style.display="block";
+  document.getElementById("notaFinal").textContent=acertos+"/"+QS.length;
+  const p=acertos/QS.length;let m,msg;
+  if(p>=.9){m="🥇";msg="Ouro! Precisão de detetive.";}
+  else if(p>=.7){m="🥈";msg="Prata! Atenção aos distratores.";}
+  else if(p>=.5){m="🥉";msg="Bronze! Volte ao texto antes de marcar.";}
+  else{m="📖";msg="Treine mais. A resposta está sempre lá.";}
+  document.getElementById("medalha").textContent=m;document.getElementById("msgFinal").textContent=msg;
+  saveRec("quiz",acertos);
+  enviarParaSheets();
+  r.scrollIntoView({behavior:"smooth",block:"center"});
+}
+
+/* ===== JOGO 1: CAÇA CRONOMETRADA ===== */
+const G1={
+  rds:[
+    {t:"A biblioteca abre de terça a sábado, das 9h às 18h.",q:"A que horas a biblioteca abre?",o:["8h","9h","10h","7h"],c:1},
+    {t:"O voo 204 partirá de BH às 14h30, com destino a Salvador.",q:"Destino do voo 204?",o:["BH","Recife","Salvador","Natal"],c:2},
+    {t:"Pedro plantou 12 pés de tomate, 8 de alface e 5 de cenoura.",q:"Quantos pés de alface?",o:["5","8","12","25"],c:1},
+    {t:"A baleia-azul pode atingir 30 metros. É o maior animal já conhecido.",q:"Comprimento máximo da baleia-azul?",o:["13 m","20 m","30 m","300 m"],c:2},
+    {t:"A feira acontece no 2º domingo de cada mês, na praça central.",q:"Onde acontece a feira?",o:["Ginásio","Praça central","Escola","Mercado"],c:1}
+  ],
+  i:0,pts:0,tmr:null,tempo:0,
+  start(){this.i=0;this.pts=0;this.rds=shuffle(this.rds);this.render();},
+  render(){
+    const b=document.getElementById("g1-body");
+    if(this.i>=this.rds.length){saveRec("caca",this.pts);
+      b.innerHTML=`<div class="jogo-final"><div class="big">${this.pts} pts</div><p>${this.pts>=40?"Velocidade de campeão! 🥇":this.pts>=20?"Mandou bem!":"Continue treinando!"}</p><button class="btn ouro" onclick="G1.start()">↺ Jogar de novo</button></div>`;return;}
+    const r=this.rds[this.i];this.tempo=100;
+    b.innerHTML=`<div class="jogo-mid"><span class="chip">Rodada ${this.i+1}/${this.rds.length}</span><span class="chip timer">⏱️</span><div class="timerbar"><div id="g1bar"></div></div><span class="chip">${this.pts} pts</span></div>
+    <div class="mini-texto">${r.t}<button class="btn-tts" onclick="toggleTTS(this,'g1t')" style="position:absolute;top:.4rem;right:.4rem">🔊</button><span id="g1t" style="display:none">${r.t}</span></div>
+    <div class="mini-q">${r.q}</div>
+    <div class="alts" id="g1a">${r.o.map((o,k)=>`<button class="alt" onclick="G1.resp(${k})"><span class="letra">${"ABCD"[k]}</span> ${o}</button>`).join("")}</div>
+    <div class="mini-fb" id="g1fb"></div>`;
+    clearInterval(this.tmr);this.tmr=setInterval(()=>{this.tempo-=2;const bar=document.getElementById("g1bar");if(bar)bar.style.width=Math.max(0,this.tempo)+"%";if(this.tempo<=0)this.resp(-1);},400);
+  },
+  resp(k){clearInterval(this.tmr);const r=this.rds[this.i],btns=document.querySelectorAll("#g1a .alt"),fb=document.getElementById("g1fb");
+    btns.forEach((a,j)=>{a.disabled=true;if(j===r.c)a.classList.add("ok");else if(j===k)a.classList.add("err");else a.classList.add("dim");});
+    if(k===r.c){const g=5+Math.round(this.tempo/10);this.pts+=g;fb.className="mini-fb show ok";fb.textContent="✓ +"+g+" pts!";}
+    else{fb.className="mini-fb show err";fb.textContent=(k===-1?"⏱️ Tempo!":"✗")+" Resposta: "+"ABCD"[r.c]+".";}
+    this.i++;setTimeout(()=>this.render(),2500);}
+};
+
+/* ===== JOGO 2: V OU F ===== */
+const G2={
+  txt:`Dona Marta vende pães na feira às quartas e sábados. Seu filho Joaquim a ajuda só aos sábados, porque na quarta tem aula. O pão de queijo é o mais vendido.`,
+  its:[
+    {s:"Dona Marta vende pães às quartas e sábados.",v:true,p:"Literal no texto."},
+    {s:"Joaquim ajuda todos os dias.",v:false,p:"Diz 'só aos sábados'."},
+    {s:"O mais vendido é o pão de queijo.",v:true,p:"Literal."},
+    {s:"Joaquim falta na quarta por ter aula.",v:true,p:"'na quarta tem aula'."},
+    {s:"Dona Marta vende doces.",v:false,p:"Vende pães, não doces."}
+  ],
+  rs:[],
+  start(){this.rs=[];const b=document.getElementById("g2-body");
+    b.innerHTML=`<div class="mini-texto">${this.txt}<button class="btn-tts" onclick="toggleTTS(this,'g2t')">🔊</button><span id="g2t" style="display:none">${this.txt}</span></div>`+
+    this.its.map((it,i)=>`<div class="vf-item" id="g2i${i}"><div class="vf-stm"><b>${i+1}.</b> ${it.s}</div><div class="btn-row"><button class="mini-btn" onclick="G2.j(${i},true)">Verdadeiro</button><button class="mini-btn" onclick="G2.j(${i},false)">Falso</button></div><div class="mini-fb" id="g2f${i}"></div></div>`).join("")+`<div id="g2fin"></div>`;},
+  j(i,e){if(this.rs[i]!=null)return;const it=this.its[i],ok=e===it.v;this.rs[i]=ok;
+    document.querySelectorAll("#g2i"+i+" .mini-btn").forEach((b,k)=>{b.disabled=true;if((k===0)===it.v)b.classList.add("ok");else if((k===0)===e)b.classList.add("err");});
+    const fb=document.getElementById("g2f"+i);fb.className="mini-fb show "+(ok?"ok":"err");fb.innerHTML=(ok?"✓ ":"✗ ")+it.p;
+    if(this.rs.filter(x=>x!=null).length===this.its.length){const ac=this.rs.filter(x=>x).length;saveRec("vf",ac);
+      document.getElementById("g2fin").innerHTML=`<div class="jogo-final"><div class="big">${ac}/${this.its.length}</div><p>${ac===this.its.length?"Perfeito! 🥇":"Boa! Reveja as provas."}</p><button class="btn ouro" onclick="G2.start()">↺ Jogar de novo</button></div>`;}}
+};
+
+/* ===== JOGO 3: DETETIVE ===== */
+const G3={
+  txt:`O Pantanal é a maior planície alagável do mundo. Fica em Mato Grosso e Mato Grosso do Sul. Na estação das chuvas, grande parte fica submersa. É lar de animais como onça-pintada, capivara e arara-azul.`,
+  ps:[
+    {s:"É a maior planície alagável do mundo.",r:true},
+    {s:"Fica no Nordeste.",r:false},
+    {s:"A arara-azul vive lá.",r:true},
+    {s:"É o maior deserto do mundo.",r:false},
+    {s:"Na chuva, grande parte fica submersa.",r:true},
+    {s:"O pinguim é típico do Pantanal.",r:false}
+  ],
+  rs:[],
+  start(){this.rs=[];const b=document.getElementById("g3-body");
+    b.innerHTML=`<div class="mini-texto">${this.txt}<button class="btn-tts" onclick="toggleTTS(this,'g3t')">🔊</button><span id="g3t" style="display:none">${this.txt}</span></div>`+
+    this.ps.map((p,i)=>`<div class="det-item" id="g3i${i}"><div class="vf-stm"><b>Pista ${i+1}:</b> ${p.s}</div><div class="btn-row"><button class="mini-btn" onclick="G3.j(${i},true)">📄 No texto</button><button class="mini-btn" onclick="G3.j(${i},false)">🚫 Inventado</button></div><div class="mini-fb" id="g3f${i}"></div></div>`).join("")+`<div id="g3fin"></div>`;},
+  j(i,e){if(this.rs[i]!=null)return;const p=this.ps[i],ok=e===p.r;this.rs[i]=ok;
+    document.querySelectorAll("#g3i"+i+" .mini-btn").forEach((b,k)=>{b.disabled=true;if((k===0)===p.r)b.classList.add("ok");else if((k===0)===e)b.classList.add("err");});
+    const fb=document.getElementById("g3f"+i);fb.className="mini-fb show "+(ok?"ok":"err");fb.textContent=ok?(p.r?"✓ Está no texto.":"✓ Inventado mesmo!"):(p.r?"✗ Está no texto.":"✗ Não está no texto.");
+    if(this.rs.filter(x=>x!=null).length===this.ps.length){const ac=this.rs.filter(x=>x).length;saveRec("detetive",ac);
+      document.getElementById("g3fin").innerHTML=`<div class="jogo-final"><div class="big">${ac}/${this.ps.length}</div><p>${ac===this.ps.length?"Detetive nota 10! 🕵️🥇":"Reveja as pistas."}</p><button class="btn ouro" onclick="G3.start()">↺ Jogar de novo</button></div>`;}}
+};
+
+/* ===== JOGO 4: COMPLETE ===== */
+const G4={
+  its:[
+    {ctx:"Canção do Exílio:",f:"Minha terra tem palmeiras, onde canta o ___.",o:["Canário","Sabiá","Galo","Pardal"],c:1},
+    {ctx:"Meus oito anos:",f:"Saudades da ___ da minha vida.",o:["aurora","tarde","glória","escola"],c:0},
+    {ctx:"Notícia:",f:"O voo 204 tem destino a ___.",o:["Recife","Salvador","Natal","Belém"],c:1},
+    {ctx:"Texto informativo:",f:"A baleia-azul é o maior ___ já conhecido.",o:["peixe","réptil","animal","vegetal"],c:2},
+    {ctx:"Fábula:",f:"A Cigarra disse que ___ noite e dia.",o:["cantava","dormia","trabalhava","viajava"],c:0}
+  ],
+  i:0,pts:0,
+  start(){this.i=0;this.pts=0;this.its=shuffle(this.its);this.render();},
+  render(){const b=document.getElementById("g4-body");
+    if(this.i>=this.its.length){saveRec("complete",this.pts);
+      b.innerHTML=`<div class="jogo-final"><div class="big">${this.pts}/${this.its.length}</div><p>${this.pts===this.its.length?"Perfeito! 🧩🥇":"Reler o trecho ajuda."}</p><button class="btn ouro" onclick="G4.start()">↺ Jogar de novo</button></div>`;return;}
+    const it=this.its[this.i];
+    b.innerHTML=`<div class="jogo-mid"><span class="chip">Frase ${this.i+1}/${this.its.length}</span><span class="chip">${this.pts} acertos</span></div>
+    <p style="font-size:.82rem;color:var(--txt2);margin-bottom:.4rem">${it.ctx}</p>
+    <div class="mini-texto">${it.f}</div>
+    <div class="alts" id="g4a">${it.o.map((o,k)=>`<button class="alt" onclick="G4.resp(${k})"><span class="letra">${"ABCD"[k]}</span> ${o}</button>`).join("")}</div>
+    <div class="mini-fb" id="g4fb"></div>`;},
+  resp(k){const it=this.its[this.i],btns=document.querySelectorAll("#g4a .alt"),fb=document.getElementById("g4fb");
+    btns.forEach((a,j)=>{a.disabled=true;if(j===it.c)a.classList.add("ok");else if(j===k)a.classList.add("err");else a.classList.add("dim");});
+    if(k===it.c){this.pts++;fb.className="mini-fb show ok";fb.textContent="✓ Exato!";}
+    else{fb.className="mini-fb show err";fb.textContent="✗ Era "+it.o[it.c]+".";}
+    this.i++;setTimeout(()=>this.render(),1200);}
+};
+
+/* ===== JOGO 5: ORDENE OS FATOS ===== */
+const G5={
+  rounds:[
+    {title:"O Leão e o Rato",
+     correct:["O leão dormia à sombra.","O rato passou por cima das patas dele.","O leão prendeu o rato entre as garras.","O rato implorou e o leão soltou-o.","O leão caiu numa rede de caçadores.","O rato roeu as cordas e o libertou."]},
+    {title:"A Cigarra e a Formiga",
+     correct:["A Cigarra cantou o verão inteiro.","Chegou o inverno e ela ficou sem comida.","Ela foi pedir ajuda à Formiga.","A Formiga perguntou o que ela fizera no verão.","A Cigarra respondeu que cantara.","A Formiga mandou-a dançar."]},
+    {title:"A carona (crônica)",
+     correct:["Dona Ana esperava o ônibus sob chuva.","Já havia passado mais de 40 minutos.","O senhor Aurélio parou o carro.","Ele ofereceu uma carona a Dona Ana.","No caminho, ela soube que ele buscava farinha.","Dona Ana sorriu pela primeira vez na manhã."]}
+  ],
+  ri:0,
+  start(){this.ri=0;this.renderRound();},
+  renderRound(){
+    const b=document.getElementById("g5-body");
+    if(this.ri>=this.rounds.length){
+      b.innerHTML=`<div class="jogo-final"><div class="big">✓</div><p>Você ordenou todas as histórias! 🔢🥇</p><button class="btn ouro" onclick="G5.start()">↺ Jogar de novo</button></div>`;
+      saveRec("ordene","✓");return;
+    }
+    const rd=this.rounds[this.ri];
+    const items=shuffle(rd.correct);
+    b.innerHTML=`<div class="jogo-mid"><span class="chip">História ${this.ri+1}/${this.rounds.length}</span><span class="chip">${rd.title}</span></div>
+    <p style="font-size:.84rem;color:var(--txt2);margin-bottom:.7rem">Use as setas ▲ ▼ para colocar os fatos na ordem em que aparecem na história. Depois, clique em "Verificar".</p>
+    <ol class="ord-list" id="g5list">${items.map((it,i)=>`<li class="ord-item" data-txt='${it.replace(/'/g,"&#39;")}'>${it}<div class="ord-arrows"><button onclick="G5.move(${i},-1)">▲</button><button onclick="G5.move(${i},1)">▼</button></div></li>`).join("")}</ol>
+    <div style="text-align:center;margin-top:.6rem"><button class="btn ouro" onclick="G5.check()">✓ Verificar ordem</button></div>
+    <div class="mini-fb" id="g5fb"></div>`;
+  },
+  move(idx,dir){
+    const list=document.getElementById("g5list");
+    const items=[...list.children];
+    const newIdx=idx+dir;
+    if(newIdx<0||newIdx>=items.length)return;
+    if(dir===-1)list.insertBefore(items[idx],items[newIdx]);
+    else list.insertBefore(items[newIdx],items[idx]);
+    // re-attach events
+    [...list.children].forEach((li,i)=>{
+      li.querySelector(".ord-arrows").innerHTML=`<button onclick="G5.move(${i},-1)">▲</button><button onclick="G5.move(${i},1)">▼</button>`;
+    });
+  },
+  check(){
+    const rd=this.rounds[this.ri];
+    const list=document.getElementById("g5list");
+    const items=[...list.children];
+    const fb=document.getElementById("g5fb");
+    let allOk=true;
+    items.forEach((li,i)=>{
+      const txt=li.dataset.txt;
+      if(txt===rd.correct[i]){li.classList.add("ok");}
+      else{li.classList.add("err");allOk=false;}
+      li.querySelectorAll("button").forEach(b=>b.disabled=true);
+    });
+    if(allOk){fb.className="mini-fb show ok";fb.textContent="✓ Ordem perfeita!";this.ri++;setTimeout(()=>this.renderRound(),1500);}
+    else{fb.className="mini-fb show err";fb.innerHTML="✗ Algumas posições estão trocadas. <button class='mini-btn' style='margin-left:.5rem' onclick='G5.renderRound()'>Tentar de novo</button>";}
+  }
+};
+
+function toggleGabAberta(id,btn){
+  var el=document.getElementById(id);if(!el)return;
+  if(el.style.display==='block'){el.style.display='none';btn.textContent='Ver gabarito';return;}
+  var pwd=prompt('Senha do professor:');
+  if(pwd===null)return;
+  if(pwd===SENHA_MODO_ESTUDO){el.style.display='block';btn.textContent='Ocultar';}
+  else{alert('Senha incorreta.');}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAEB/SIMAVE – D13 | Marcas do locutor e interlocutor</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--azul:#1a3a5c;--azul-m:#235a8c;--azul-c:#d6e8f7;--ouro:#c9871f;--ouro-c:#fff8eb;--verde:#246b4a;--verde-c:#e6f4ed;--verm:#b02a2a;--verm-c:#fdecea;--bg:#f2f4f7;--borda:#d0d6e0;--branco:#fff;--txt:#1c2635;--txt2:#4a5568}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;line-height:1.5}
+header{background:var(--azul);color:#fff;padding:2.4rem 1.5rem 1.8rem;text-align:center;position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:rgba(201,135,31,.12)}
+.badge{display:inline-block;background:var(--ouro);color:var(--azul);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:.8rem}
+header h1{font-family:'Lora',serif;font-size:clamp(1.5rem,4vw,2.1rem);font-weight:600;line-height:1.3;margin-bottom:.4rem}
+header p{font-size:.92rem;opacity:.78;max-width:560px;margin:0 auto;line-height:1.6}
+.voltar-link{display:inline-block;margin-bottom:1rem;color:#fff;opacity:.7;text-decoration:none;font-size:.82rem}
+.voltar-link:hover{opacity:1}
+.tabs{background:var(--branco);border-bottom:1px solid var(--borda);position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.tabs-inner{max-width:840px;margin:0 auto;display:flex}
+.tab-btn{flex:1;background:none;border:none;padding:.95rem .5rem;font-family:'Inter',sans-serif;font-size:.88rem;font-weight:600;color:var(--txt2);cursor:pointer;border-bottom:3px solid transparent;transition:.15s;display:flex;align-items:center;justify-content:center;gap:.35rem}
+.tab-btn:hover{color:var(--azul-m);background:var(--bg)}
+.tab-btn.active{color:var(--azul);border-bottom-color:var(--ouro)}
+main{max-width:840px;margin:0 auto;padding:1.6rem 1.25rem 4rem}
+.tab-pane{display:none;flex-direction:column;gap:1.6rem}
+.tab-pane.active{display:flex}
+.painel{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.5rem 1.6rem}
+.painel h2{font-family:'Lora',serif;font-size:1.2rem;color:var(--azul);margin-bottom:.7rem}
+.painel h3{font-size:.95rem;color:var(--azul-m);margin:.9rem 0 .3rem}
+.painel p,.painel li{font-size:.9rem;margin-bottom:.5rem}
+.painel ul{margin:.2rem 0 .6rem 1.2rem}
+.painel strong{color:var(--azul)}
+.resumo-box{background:var(--azul);color:#fff;border-radius:14px;padding:1.4rem 1.6rem}
+.resumo-box h2{color:#fff;font-family:'Lora',serif;font-size:1.1rem;margin-bottom:.5rem}
+.resumo-box p{color:rgba(255,255,255,.9);font-size:.92rem;margin:0}
+.resumo-box .fc{display:block;margin-top:.7rem;font-style:italic;font-size:.88rem;background:rgba(255,255,255,.1);padding:.6rem .9rem;border-radius:8px;border-left:3px solid var(--ouro)}
+.dica-ouro{background:var(--ouro-c);border:1px solid #ecd9aa}
+.dica-ouro h2{color:#7a5310}.dica-ouro li{color:#4a3408}.dica-ouro strong{color:#7a5310}
+.glossario dt{font-weight:600;color:var(--azul-m);font-size:.88rem;margin-top:.5rem}
+.glossario dd{font-size:.86rem;color:var(--txt2);margin-left:0}
+.aviso-prof{background:#eef4fb;border:1px dashed var(--azul-m);border-radius:10px;padding:.9rem 1.1rem;font-size:.82rem;color:var(--azul-m)}
+.records{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.2rem 1.4rem}
+.records h2{font-family:'Lora',serif;font-size:1.1rem;color:var(--azul);margin-bottom:.6rem}
+.rec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.7rem}
+.rec-item{background:var(--bg);border-radius:10px;padding:.7rem;text-align:center}
+.rec-item .rv{font-size:1.5rem;font-weight:700;color:var(--azul-m)}
+.rec-item .rl{font-size:.72rem;color:var(--txt2)}
+.prog-wrap{background:var(--branco);border:1px solid var(--borda);border-radius:12px;padding:.85rem 1.1rem;display:flex;align-items:center;gap:14px}
+.prog-label{font-size:.78rem;font-weight:600;color:var(--azul-m);white-space:nowrap}
+.prog-track{flex:1;height:6px;background:var(--borda);border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--azul-m),var(--ouro));border-radius:99px;width:0%;transition:width .4s}
+.score{font-size:.78rem;font-weight:600;color:var(--txt2);white-space:nowrap}
+.card{background:var(--branco);border-radius:14px;border:1px solid var(--borda);overflow:hidden}
+.card-head{background:var(--azul);color:#fff;padding:.65rem 1.2rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.qnum{background:var(--ouro);color:var(--azul);font-size:.72rem;font-weight:700;padding:3px 11px;border-radius:20px}
+.qtipo{font-size:.74rem;opacity:.65;font-style:italic}
+.qnivel{font-size:.66rem;font-weight:700;text-transform:uppercase;padding:3px 9px;border-radius:20px;margin-left:auto}
+.qnivel.facil{background:var(--verde-c);color:var(--verde)}.qnivel.medio{background:var(--ouro-c);color:#a96e10}.qnivel.dificil{background:var(--verm-c);color:var(--verm)}
+.txt-base{background:var(--ouro-c);border-left:4px solid var(--ouro);margin:1rem 1.1rem 0;padding:1rem 1.1rem;border-radius:0 8px 8px 0;font-family:'Lora',serif;font-size:.94rem;line-height:1.85;color:#2b1d00;position:relative}
+.txt-fonte{font-family:'Inter',sans-serif;font-size:.72rem;color:var(--txt2);margin-top:.6rem;display:block;border-top:1px solid #e6d5b0;padding-top:.4rem}
+.btn-tts{position:absolute;top:.6rem;right:.6rem;background:none;border:1px solid #c9a14a;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;color:#8a6d1b;transition:.15s}
+.btn-tts:hover{background:#f5e6c1}
+.btn-tts.playing{background:var(--azul);color:#fff;border-color:var(--azul)}
+.img-slot{margin:.8rem 1.1rem 0;border:2px dashed var(--borda);border-radius:10px;padding:.8rem;text-align:center;color:var(--txt2);font-size:.76rem}
+.enunciado{padding:1rem 1.1rem .4rem;font-size:.92rem;line-height:1.6;font-weight:500;color:var(--azul)}
+.alts{padding:.4rem 1.1rem 1.1rem;display:flex;flex-direction:column;gap:.45rem}
+.alt{display:flex;align-items:flex-start;gap:10px;padding:.65rem .9rem;border:1.5px solid var(--borda);border-radius:9px;background:var(--branco);cursor:pointer;text-align:left;font-family:'Inter',sans-serif;font-size:.86rem;color:var(--txt);line-height:1.5;transition:.15s;width:100%}
+.alt:hover:not(:disabled){border-color:var(--azul-m);background:var(--azul-c);transform:translateX(2px)}
+.alt:disabled{cursor:default}
+.letra{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;border-radius:50%;background:var(--bg);font-size:.75rem;font-weight:700;color:var(--azul);flex-shrink:0}
+.alt.ok{border-color:var(--verde);background:var(--verde-c);color:var(--verde);font-weight:500}
+.alt.ok .letra{background:var(--verde);color:#fff}
+.alt.err{border-color:var(--verm);background:var(--verm-c);color:var(--verm)}
+.alt.err .letra{background:var(--verm);color:#fff}
+.alt.dim{opacity:.5}.alt.sel{border-color:var(--azul-m);background:var(--azul-c)}.alt.sel .letra{background:var(--azul-m);color:#fff}
+.fb{display:none;margin:0 1.1rem 1.1rem;padding:.8rem 1rem;border-radius:8px;font-size:.83rem;line-height:1.6}
+.fb.show{display:block}.fb.ok{background:var(--verde-c);border-left:3px solid var(--verde)}.fb.err{background:var(--verm-c);border-left:3px solid var(--verm)}
+.fb .ft{font-weight:600;margin-bottom:.3rem}.fb.ok .ft{color:var(--verde)}.fb.err .ft{color:var(--verm)}
+.fb .pq{margin-top:.5rem;border-top:1px solid rgba(0,0,0,.08);padding-top:.4rem}
+.fb .pq b{color:var(--azul)}
+.fb .pi{display:block;font-size:.8rem;color:var(--txt2);margin-bottom:.2rem}
+.fb .pi .l{font-weight:700;color:var(--azul)}
+#resultado{display:none;background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:2.4rem 2rem;text-align:center}
+#resultado h2{font-family:'Lora',serif;font-size:1.4rem;color:var(--azul)}
+.medalha{font-size:3rem;margin:.4rem 0}.nota{font-size:3.4rem;font-weight:700;color:var(--azul-m);line-height:1;margin:.4rem 0}
+#resultado p{color:var(--txt2);font-size:.9rem;max-width:480px;margin:.4rem auto 0}
+.btn{display:inline-block;background:var(--azul);color:#fff;padding:.65rem 1.5rem;border-radius:30px;border:none;font-size:.86rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;margin:.3rem}
+.btn:hover{background:var(--azul-m)}
+.btn.ouro{background:var(--ouro);color:var(--azul)}.btn.sec{background:var(--bg);color:var(--azul);border:1px solid var(--borda)}
+.jogo-card{background:var(--branco);border-radius:14px;border:1px solid var(--borda);overflow:hidden}
+.jogo-head{padding:1rem 1.3rem;border-bottom:1px solid var(--borda);display:flex;align-items:center;gap:.7rem}
+.jogo-ico{font-size:1.5rem}
+.jogo-head h3{font-family:'Lora',serif;font-size:1.1rem;color:var(--azul);margin:0}
+.jogo-head .desc{font-size:.78rem;color:var(--txt2)}
+.jogo-body{padding:1.2rem 1.3rem}
+.chip{font-size:.76rem;font-weight:600;padding:4px 11px;border-radius:20px;background:var(--azul-c);color:var(--azul)}
+.chip.timer{background:var(--ouro-c);color:#a96e10}
+.jogo-mid{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:.8rem}
+.timerbar{flex:1;min-width:100px;height:8px;background:var(--borda);border-radius:99px;overflow:hidden}
+.timerbar>div{height:100%;width:100%;background:linear-gradient(90deg,var(--verde),var(--ouro),var(--verm));border-radius:99px;transition:width .25s linear}
+.mini-texto{background:var(--ouro-c);border-left:4px solid var(--ouro);border-radius:0 8px 8px 0;padding:.85rem 1rem;font-family:'Lora',serif;font-size:.9rem;line-height:1.7;color:#2b1d00;margin-bottom:.8rem;position:relative}
+.mini-q{font-weight:600;color:var(--azul);margin-bottom:.6rem;font-size:.9rem}
+.mini-btn{border:1.5px solid var(--borda);background:var(--branco);border-radius:8px;padding:.45rem .8rem;font-size:.8rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;color:var(--azul);transition:.15s}
+.mini-btn:hover:not(:disabled){background:var(--azul-c);border-color:var(--azul-m)}
+.mini-btn:disabled{cursor:default}
+.mini-btn.ok{background:var(--verde-c);border-color:var(--verde);color:var(--verde)}
+.mini-btn.err{background:var(--verm-c);border-color:var(--verm);color:var(--verm)}
+.mini-fb{font-size:.8rem;margin-top:.5rem;padding:.45rem .65rem;border-radius:6px;display:none}
+.mini-fb.show{display:block}.mini-fb.ok{background:var(--verde-c);color:var(--verde)}.mini-fb.err{background:var(--verm-c);color:var(--verm)}
+.vf-item,.det-item{border:1.5px solid var(--borda);border-radius:10px;padding:.7rem .9rem;margin-bottom:.6rem}
+.vf-stm{font-size:.88rem;margin-bottom:.5rem}
+.btn-row{display:flex;gap:.5rem;flex-wrap:wrap}
+.cat-btn.cat-tema.ok{border-color:var(--azul-m);background:var(--azul-c);color:var(--azul)}
+.cat-btn.cat-detalhe.ok{border-color:var(--ouro);background:var(--ouro-c);color:#a96e10}
+.cat-btn.cat-foradotexto.ok{border-color:var(--verde);background:var(--verde-c);color:var(--verde)}
+.jogo-final{text-align:center;padding:.8rem 0 .3rem}
+.jogo-final .big{font-size:2rem;font-weight:700;color:var(--azul-m)}
+.jogo-final p{font-size:.88rem;color:var(--txt2);margin:.2rem 0 .8rem}
+.ord-list{list-style:none;padding:0;counter-reset:ord}
+.ord-item{counter-increment:ord;display:flex;align-items:center;gap:10px;padding:.6rem .9rem;border:1.5px solid var(--borda);border-radius:9px;margin-bottom:.5rem;background:var(--branco);font-size:.86rem;user-select:none}
+.ord-item::before{content:counter(ord);display:flex;align-items:center;justify-content:center;min-width:24px;height:24px;border-radius:50%;background:var(--azul-c);font-size:.72rem;font-weight:700;color:var(--azul)}
+.ord-item.ok{border-color:var(--verde);background:var(--verde-c)}
+.ord-item.err{border-color:var(--verm);background:var(--verm-c)}
+.ord-arrows{display:flex;flex-direction:column;gap:2px;margin-left:auto}
+.ord-arrows button{background:var(--bg);border:1px solid var(--borda);border-radius:4px;width:24px;height:20px;cursor:pointer;font-size:.65rem;display:flex;align-items:center;justify-content:center}
+.ord-arrows button:hover{background:var(--azul-c)}
+footer{text-align:center;padding:1.5rem;font-size:.76rem;color:var(--txt2)}
+@media print{.tabs,header,.prog-wrap,.btn,.btn-tts,.img-slot,footer,#resultado,.jogo-card,.records,.resumo-box,.dica-ouro,.glossario,.aviso-prof{display:none!important}.tab-pane{display:flex!important}.card{break-inside:avoid;border:1px solid #ccc;margin-bottom:1rem}.card-head{background:#333!important;-webkit-print-color-adjust:exact}.fb{display:block!important;background:#f5f5f5!important;border-left:3px solid #999!important;color:#333!important}}
+@media(max-width:480px){.painel{padding:1.1rem}.tab-btn{font-size:.78rem;padding:.8rem .3rem}}
+
+.genre-tag{display:inline-block;padding:3px 10px;border-radius:14px;font-size:.72rem;font-weight:700;margin-bottom:.5rem}
+.func-tag{display:inline-block;padding:4px 12px;border-radius:14px;font-size:.75rem;font-weight:700;margin:2px 4px 2px 0;color:#fff}
+.func-informar{background:#3498db}.func-narrar{background:#e74c3c}.func-opinar{background:#f39c12}.func-instruir{background:#27ae60}.func-definir{background:#9b59b6}.func-expressar{background:#1abc9c}
+.disc-area{width:calc(100% - 2.2rem);min-height:130px;border:1.5px solid var(--borda);border-radius:9px;padding:.7rem .9rem;font-family:'Inter',sans-serif;font-size:.88rem;resize:vertical;margin:0 1.1rem .4rem}
+.disc-actions{padding:0 1.1rem 1rem}
+@media print{.gabarito-print{display:block!important;break-before:page;border:1px solid #999;border-radius:8px;padding:1rem 1.2rem;margin-top:1rem}.gabarito-print h2{font-size:1.1rem;margin-bottom:.6rem}.gabarito-print ol{margin-left:1.2rem}.gabarito-print li{font-size:.86rem;margin-bottom:.3rem}.fb{display:none!important}.disc-actions{display:none!important}}
+
+.tese-box{background:#e3f2fd;border-left:4px solid #1976d2;padding:.8rem;margin:.8rem 0;border-radius:0 8px 8px 0}
+.disc-area{width:calc(100% - 2.2rem);min-height:130px;border:1.5px solid var(--borda);border-radius:9px;padding:.7rem .9rem;font-family:'Inter',sans-serif;font-size:.88rem;resize:vertical;margin:0 1.1rem .4rem}
+.disc-actions{padding:0 1.1rem 1rem}
+@media print{.gabarito-print{display:block!important;break-before:page}.fb{display:none!important}.disc-actions{display:none!important}}
+/* ===== TELA DE IDENTIFICAÇÃO E MODO DE JOGO ===== */
+.quiz-gate{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.8rem 1.6rem;max-width:480px;margin:0 auto}
+.quiz-gate h2{font-family:'Lora',serif;font-size:1.25rem;color:var(--azul);margin-bottom:.4rem}
+.quiz-gate>p{font-size:.88rem;color:var(--txt2);margin-bottom:1.2rem}
+.gate-field{margin-bottom:1.1rem}
+.gate-field>label{display:block;font-size:.82rem;font-weight:600;color:var(--azul-m);margin-bottom:.4rem}
+.gate-field input[type=text]{width:100%;padding:.65rem .8rem;border:1.5px solid var(--borda);border-radius:9px;font-family:'Inter',sans-serif;font-size:.92rem;color:var(--txt)}
+.gate-field input[type=text]:focus{outline:none;border-color:var(--azul-m)}
+.modo-opcoes{display:flex;flex-direction:column;gap:.6rem}
+.modo-opcao{display:flex;align-items:flex-start;gap:.6rem;border:1.5px solid var(--borda);border-radius:10px;padding:.7rem .85rem;cursor:pointer;transition:.15s}
+.modo-opcao:hover{border-color:var(--azul-m)}
+.modo-opcao input[type=radio]{margin-top:.25rem;accent-color:var(--azul-m)}
+.modo-opcao input[type=radio]:checked~span b{color:var(--azul)}
+.modo-opcao span{font-size:.85rem}
+.modo-opcao small{color:var(--txt2);font-weight:400}
+.gate-aviso{color:var(--verm);font-size:.82rem;margin-top:.7rem;min-height:1.2em}
+.modo-opcao.bloqueado{opacity:.6;cursor:not-allowed}
+.modo-opcao.liberado{opacity:1;cursor:pointer;border-color:var(--verde)}
+.cadeado{font-size:.75rem}
+.senha-box{display:flex;gap:.5rem;margin-top:.6rem}
+.senha-box input[type=password]{flex:1;padding:.55rem .75rem;border:1.5px solid var(--borda);border-radius:9px;font-family:'Inter',sans-serif;font-size:.85rem}
+.senha-box input[type=password]:focus{outline:none;border-color:var(--azul-m)}
+.senha-btn{white-space:nowrap;font-size:.8rem;padding:.55rem 1rem}
+.senha-aviso{font-size:.78rem;margin-top:.4rem;min-height:1.1em}
+.senha-aviso.ok{color:var(--verde)}
+.senha-aviso.erro{color:var(--verm)}
+.modo-chip{font-size:.74rem;font-weight:700;padding:4px 12px;border-radius:20px;background:var(--azul-c);color:var(--azul-m);margin-left:auto}
+.envio-status{font-size:.82rem;margin-top:.8rem;padding:.6rem .9rem;border-radius:8px}
+.envio-status.enviando{background:var(--azul-c);color:var(--azul-m)}
+.envio-status.ok{background:var(--verde-c);color:var(--verde)}
+.envio-status.erro{background:var(--verm-c);color:var(--verm)}
+/* No modo prova, o feedback de cada questão fica escondido até o aluno terminar */
+.fb.prova-oculto{display:none!important}
+@media print{.quiz-gate,.modo-chip,.envio-status{display:none!important}#quizConteudo{display:block!important}}
+</style>
+</head><body><header><a href="index.html" class="voltar-link">← Painel SAEB/SIMAVE</a><div class="badge">SAEB · SIMAVE · Língua Portuguesa</div><h1>Habilidade D13</h1><p>Identificar marcas linguísticas do locutor e do interlocutor</p></header>
+<nav class="tabs"><div class="tabs-inner"><button class="tab-btn active" data-tab="estudar">📚 Estudar</button><button class="tab-btn" data-tab="quiz">📝 Quiz</button><button class="tab-btn" data-tab="jogos">🎮 Jogos</button></div></nav><main><section class="tab-pane active" id="pane-estudar">
+<div class="resumo-box"><h2>🎯 Em uma frase</h2><p>O D13 mede se você consegue <strong style="color:#ffd98a">identificar marcas linguísticas</strong> que revelam quem fala (locutor) e para quem se fala (interlocutor) em um texto.</p></div>
+<section class="painel"><h2>📌 Locutor e interlocutor</h2>
+<div class="tese-box"><b>Locutor</b> é quem produz o texto/fala. <b>Interlocutor</b> é para quem o texto/fala é dirigido. As escolhas de palavras, grau de formalidade e tratamento revelam muito sobre os dois.</div></section>
+<section class="painel"><h2>🔍 O que observar</h2>
+<ul><li><b>Grau de formalidade:</b> 'Vossa Mercê' x 'meu povo' revelam registros muito diferentes.</li>
+<li><b>Marcas regionais:</b> grafias como 'munto', 'trabaiadô' indicam variação linguística regional.</li>
+<li><b>Verbos de elocução:</b> 'disse em entrevista' indica interlocutor público (leitores de notícia).</li>
+<li><b>Tratamento direto:</b> 'caro leitor', 'meu povo' revelam a relação que o locutor busca com quem lê/ouve.</li></ul></section>
+<div class="aviso-prof"><b>Fontes:</b> Agência Brasil/EBC, Machado de Assis (domínio público), tradição popular nordestina.</div>
+<div class="records" id="recordsEstudar"><h2>🏆 Resultados</h2><div class="rec-grid" id="recGrid"></div></div>
+</section><section class="tab-pane" id="pane-quiz">
+
+<!-- ===== TELA DE IDENTIFICAÇÃO (aparece antes do quiz) ===== -->
+<div id="quizGate" class="quiz-gate">
+  <h2>👋 Antes de começar</h2>
+  <p>Preencha seus dados e escolha o modo de jogo.</p>
+  <div class="gate-field">
+    <label for="alunoNome">Nome do aluno</label>
+    <input type="text" id="alunoNome" placeholder="Seu nome completo" autocomplete="off">
+  </div>
+  <div class="gate-field">
+    <label for="alunoTurma">Turma / Série</label>
+    <input type="text" id="alunoTurma" placeholder="Ex: 9º Ano A" autocomplete="off">
+  </div>
+  <div class="gate-field">
+    <label>Modo de jogo</label>
+    <div class="modo-opcoes">
+      <label class="modo-opcao">
+        <input type="radio" name="modoQuiz" value="prova" checked>
+        <span><b>📝 Modo Prova</b><br><small>Sem feedback durante o quiz. As respostas certas só aparecem no final, como numa prova de verdade.</small></span>
+      </label>
+      <label class="modo-opcao" id="opcaoEstudo">
+        <input type="radio" name="modoQuiz" value="estudo" id="radioEstudo" disabled>
+        <span><b>📖 Modo Estudo</b> <span class="cadeado" id="cadeadoEstudo">🔒</span><br><small>Mostra se acertou ou errou — e a explicação — logo após cada resposta. Liberado pelo professor.</small></span>
+      </label>
+    </div>
+    <div class="senha-box" id="senhaBox">
+      <input type="password" id="senhaEstudo" placeholder="Senha do professor para liberar o Modo Estudo" autocomplete="off">
+      <button type="button" class="btn sec senha-btn" id="btnLiberarEstudo">Liberar</button>
+    </div>
+    <p class="senha-aviso" id="senhaAviso"></p>
+  </div>
+  <button class="btn" id="btnIniciarQuiz">▶ Começar o quiz</button>
+  <p class="gate-aviso" id="gateAviso"></p>
+</div>
+
+<!-- ===== QUIZ (fica oculto até o aluno preencher os dados acima) ===== -->
+<div id="quizConteudo" style="display:none">
+<div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.5rem;align-items:center">
+
+<button class="btn sec" onclick="location.reload()">🔀 Embaralhar e refazer</button>
+<span class="modo-chip" id="modoChip"></span>
+</div>
+<div class="prog-wrap"><span class="prog-label">Progresso</span><div class="prog-track"><div class="prog-fill" id="pFill"></div></div><span class="score" id="score">0 / 12</span></div>
+<div id='quiz'></div><div class='card' id='cardDisc' style='margin-top:1.5rem'><div class='card-head'><span class='qnum'>Q13</span><span class='qtipo'>Crônica real</span><span class='qnivel dificil'>Aberta</span></div><div class='txt-base' id='txtDisc'>Leia o trecho:<br><br><em>"Hão de reconhecer que sou bem criado. [...] chego à porta, e o meu primeiro cuidado é dar-lhe os bons dias."</em> — Machado de Assis, Bons Dias!, 1888.<span class='txt-fonte'>Domínio público.</span></div><p class='enunciado'><b>a)</b> Identifique uma marca linguística do locutor (quem fala) nesse trecho.<br><b>b)</b> Como o locutor se dirige ao interlocutor (leitor)? Que relação ele busca estabelecer?<br><b>c)</b> Reescreva o mesmo conteúdo usando um registro bem mais informal, como se fosse dito hoje em uma rede social.</p><textarea class='disc-area'></textarea><div class='disc-actions'><button class="btn sec" id="btnDisc" onclick="(function(){var p=prompt('Senha do professor:');if(p===SENHA_MODO_ESTUDO){var fb=document.getElementById('fbDisc');if(fb){fb.style.display='block';}}else if(p!==null){alert('Senha incorreta.');}})()">👁️ Ver gabarito</button></div><div class='fb' id='fbDisc'><div class='ft' style='color:var(--azul)'>Gabarito</div><div><b>a)</b> O vocabulário elaborado ('Hão de reconhecer') e a construção formal típica do português do século XIX são marcas do locutor — um cronista culto, escrevendo para jornal.<br><b>b)</b> O locutor se dirige diretamente ao leitor ('dar-lhe os bons dias'), buscando uma relação de cortesia e proximidade, num tom de conversa educada.<br><b>c)</b> Resposta livre. Exemplo: 'Bom dia, galera! Sou super educado, viu? Sempre cumprimento todo mundo antes de falar qualquer coisa 😄'</div></div>
+<div id='resultado'><h2>Concluído!</h2><div class='medalha' id='medalha'>🏅</div><div class='nota' id='notaFinal'>—</div><p id='msgFinal'></p><div id="envioStatus" class="envio-status"></div><button class='btn' onclick='location.reload()'>↺ Refazer</button></div></div>
+</div>
+</section><section class='tab-pane' id='pane-jogos'><div class='resumo-box'><h2>🎮 Hora de jogar</h2><p>Cinco minijogos para treinar marcas do locutor e interlocutor.</p></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>⏱️</span><h3>Que registro é esse?</h3></div><div class='jogo-body' id='g1-body'><button class='btn ouro' onclick='G1.start()'>▶ Começar</button></div></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>🏷️</span><h3>Classifique</h3></div><div class='jogo-body' id='g2-body'><button class='btn ouro' onclick='G2.start()'>▶ Começar</button></div></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>🔎</span><h3>Pelas pistas</h3></div><div class='jogo-body' id='g3-body'><button class='btn ouro' onclick='G3.start()'>▶ Começar</button></div></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>🧩</span><h3>Complete</h3></div><div class='jogo-body' id='g4-body'><button class='btn ouro' onclick='G4.start()'>▶ Começar</button></div></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>🔢</span><h3>Ordene</h3></div><div class='jogo-body' id='g5-body'><button class='btn ouro' onclick='G5.start()'>▶ Começar</button></div></div>
+<!-- ===== QUESTÕES ABERTAS ===== -->
+<div class="card" id="cardAberta1" style="margin-top:1.5rem">
+  <div class="card-head"><span class="qnum">Questão Aberta 1</span><span class="qtipo">Marcas do locutor em diferentes registros</span><span class="qnivel facil">Aberta</span></div>
+  <div class="txt-base" style="margin:1rem 1.1rem 0"><b>Questão aberta 1:</b> Releia a carta de reclamação (Q2) e a carta de leitor (Q6). Em cada uma, cite uma expressão que marca claramente a presença do locutor e explique o que ela revela sobre quem fala.</div>
+  <textarea class="disc-area" placeholder="Escreva sua resposta aqui..." style="min-height:160px;width:calc(100% - 2.2rem);resize:vertical;margin:1rem 1.1rem .5rem;display:block"></textarea>
+  <div class="disc-actions" style="padding:0 1.1rem .8rem"><button class="btn sec" onclick="toggleGabAberta('gabA1_D13.html',this)">👁️ Ver gabarito</button></div>
+  <div class="fb" id="gabA1_D13.html" style="display:none;margin:0 1.1rem 1rem"><div class="ft" style="color:var(--azul)">Gabarito</div><div><b>Carta de reclamação:</b> "solicito a devolução imediata" — revela um locutor que assume uma postura assertiva e formal, exigindo uma ação concreta do interlocutor. <b>Carta de leitor:</b> "Escrevo esta mensagem como uma pesquisadora" — revela que o locutor fala a partir de uma identidade profissional específica, o que confere credibilidade ao agradecimento.</div></div>
+</div>
+<div class="card" id="cardAberta2" style="margin-top:1rem">
+  <div class="card-head"><span class="qnum">Questão Aberta 2</span><span class="qtipo">Interlocutor implícito e explícito</span><span class="qnivel medio">Aberta</span></div>
+  <div class="txt-base" style="margin:1rem 1.1rem 0"><b>Questão aberta 2:</b> Em qualquer texto desta atividade, o interlocutor pode ser explícito (nomeado) ou implícito (apenas sugerido). Escolha um texto com interlocutor explícito e outro com interlocutor implícito. Como cada um revela a quem se dirige?</div>
+  <textarea class="disc-area" placeholder="Escreva sua resposta aqui..." style="min-height:160px;width:calc(100% - 2.2rem);resize:vertical;margin:1rem 1.1rem .5rem;display:block"></textarea>
+  <div class="disc-actions" style="padding:0 1.1rem .8rem"><button class="btn sec" onclick="toggleGabAberta('gabA2_D13.html',this)">👁️ Ver gabarito</button></div>
+  <div class="fb" id="gabA2_D13.html" style="display:none;margin:0 1.1rem 1rem"><div class="ft" style="color:var(--azul)">Gabarito</div><div>Exemplo de explícito: carta de reclamação ("Prezados" nomeia a empresa). Exemplo de implícito: artigo de divulgação (não nomeia o leitor, mas usa verbos na 2ª pessoa do plural ou construções impessoais que pressupõem leitores adultos interessados em educação). O interlocutor implícito se revela pela escolha de vocabulário, nível de formalidade e pressupostos do texto.</div></div>
+</div>
+<div class="card" id="cardAberta3" style="margin-top:1rem">
+  <div class="card-head"><span class="qnum">Questão Aberta 3</span><span class="qtipo">Registro e poder na relação locutor-interlocutor</span><span class="qnivel dificil">Aberta</span></div>
+  <div class="txt-base" style="margin:1rem 1.1rem 0"><b>Questão aberta 3:</b> Compare uma declaração de autoridade (especialista ou político, Q3 ou Q5) com uma mensagem em linguagem informal (Q4). <b>(a)</b> Como o registro de cada locutor influencia a forma como ele se posiciona diante do interlocutor? <b>(b)</b> Qual deles você considera mais persuasivo? Justifique com elementos dos textos.</div>
+  <textarea class="disc-area" placeholder="Escreva sua resposta aqui..." style="min-height:160px;width:calc(100% - 2.2rem);resize:vertical;margin:1rem 1.1rem .5rem;display:block"></textarea>
+  <div class="disc-actions" style="padding:0 1.1rem .8rem"><button class="btn sec" onclick="toggleGabAberta('gabA3_D13.html',this)">👁️ Ver gabarito</button></div>
+  <div class="fb" id="gabA3_D13.html" style="display:none;margin:0 1.1rem 1rem"><div class="ft" style="color:var(--azul)">Gabarito</div><div><b>(a)</b> A declaração formal usa vocabulário técnico e pressupostos de conhecimento especializado — cria distância e autoridade. A mensagem informal aproxima o locutor do interlocutor, criando intimidade e cumplicidade. <b>(b)</b> Resposta pessoal; critério: o estudante deve justificar com elementos textuais concretos (palavras, tom, estratégia persuasiva).</div></div>
+</div>
+</section></main><footer>Portal do Professor Marcos Cruz · SAEB/SIMAVE · D13</footer><script>
+/* ===== CONFIGURAÇÃO DO ENVIO PARA GOOGLE SHEETS =====
+   Cole aqui a URL do seu Apps Script publicado como "App da Web".
+   Veja o arquivo google-apps-script.gs para instruções de instalação.
+   Enquanto estiver "SUBSTITUA_PELA_SUA_URL", o envio fica desativado
+   (o quiz funciona normalmente, só não manda nada para a planilha). */
+const SHEETS_URL = "https://script.google.com/macros/s/AKfycbwPcWRWW2IkMb8-WkyB2w1M2n9ivcYlfqWajYRgCzecLTC1T7aBetZtR2MDaOIxahc/exec";
+const DESCRITOR_PAGINA = "D13 - Identificar marcas linguísticas do locutor e interlocutor";
+const NOME_ARQUIVO = "D13.html";
+
+/* ===== ESTADO DO ALUNO E MODO DE JOGO ===== */
+let alunoNome = "";
+let alunoTurma = "";
+let modoJogo = "estudo"; // "estudo" ou "prova"
+const respostasDetalhadas = [];
+const selecoes = {}; // {dn: k} para revelar botões no fim do modo prova // uma entrada por questão respondida, na ordem em que aparecem
+
+/* ===== SENHA PARA LIBERAR O MODO ESTUDO =====
+   Troque a senha abaixo quando quiser. É a MESMA senha em todas as páginas
+   do portal (mais simples de lembrar e passar para os alunos quando for
+   hora de revisão). Lembre-se: como o quiz roda no navegador do aluno,
+   essa senha impede o uso casual do Modo Estudo, mas não é uma proteção
+   contra alguém que abra o código-fonte da página — as respostas já estão
+   no arquivo de qualquer forma, como em qualquer site estático como este. */
+const SENHA_MODO_ESTUDO = "professor123";
+
+document.getElementById("btnLiberarEstudo").onclick = () => {
+  const campo = document.getElementById("senhaEstudo");
+  const aviso = document.getElementById("senhaAviso");
+  if (campo.value === SENHA_MODO_ESTUDO) {
+    document.getElementById("radioEstudo").disabled = false;
+    document.getElementById("radioEstudo").checked = true;
+    document.getElementById("cadeadoEstudo").textContent = "🔓";
+    document.getElementById("opcaoEstudo").classList.add("liberado");
+    document.getElementById("senhaBox").style.display = "none";
+    aviso.className = "senha-aviso ok";
+    aviso.textContent = "✓ Modo Estudo liberado.";
+  } else {
+    aviso.className = "senha-aviso erro";
+    aviso.textContent = "Senha incorreta.";
+  }
+};
+// Também libera ao apertar Enter no campo de senha
+document.getElementById("senhaEstudo").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") document.getElementById("btnLiberarEstudo").click();
+});
+
+document.getElementById("btnIniciarQuiz").onclick = () => {
+  const nome = document.getElementById("alunoNome").value.trim();
+  const turma = document.getElementById("alunoTurma").value.trim();
+  const aviso = document.getElementById("gateAviso");
+  if (!nome || !turma) {
+    aviso.textContent = "Preencha nome e turma/série para continuar.";
+    return;
+  }
+  alunoNome = nome;
+  alunoTurma = turma;
+  modoJogo = document.querySelector('input[name="modoQuiz"]:checked').value;
+  document.getElementById("quizGate").style.display = "none";
+  document.getElementById("quizConteudo").style.display = "block";
+  const chip = document.getElementById("modoChip");
+  chip.textContent = modoJogo === "prova" ? "📝 Modo Prova" : "📖 Modo Estudo";
+};
+
+/* ===== ENVIO PARA O GOOGLE SHEETS ===== */
+function enviarParaSheets() {
+  const statusEl = document.getElementById("envioStatus");
+  if (!SHEETS_URL || SHEETS_URL.indexOf("SUBSTITUA") !== -1) {
+    statusEl.className = "envio-status";
+    statusEl.textContent = "";
+    return; // envio desativado até o professor configurar a URL
+  }
+  statusEl.className = "envio-status enviando";
+  statusEl.textContent = "Enviando resultado para a planilha...";
+
+  const payload = {
+    nome: alunoNome,
+    turma: alunoTurma,
+    descritor: DESCRITOR_PAGINA,
+    pagina: NOME_ARQUIVO,
+    modo: modoJogo === "prova" ? "Prova" : "Estudo",
+    respostas: respostasDetalhadas
+  };
+
+  fetch(SHEETS_URL, {
+    method: "POST",
+    mode: "no-cors", // Apps Script Web Apps não devolvem CORS; "no-cors" garante o envio mesmo sem ler a resposta
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(payload)
+  }).then(() => {
+    statusEl.className = "envio-status ok";
+    statusEl.textContent = "✓ Resultado enviado para a planilha do professor.";
+  }).catch(() => {
+    statusEl.className = "envio-status erro";
+    statusEl.textContent = "✗ Não foi possível enviar o resultado (verifique sua internet).";
+  });
+}
+
+/* ===== QUIZ ===== */
+const QRAW=[{"n": 1, "tipo": "Quadra popular (real)", "nivel": "facil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Quadra popular (tradição oral nordestina)</b><p><em>Quem inventou esse \"S\"<br>Com que se escreve saudade<br>Foi o mesmo que inventou<br>O \"F\" da falsidade<br><br>E o mesmo que fez o \"I\"<br>Da minha infelicidade<br><br>Mas também foi ele quem fez<br>O \"A\" da amizade<br>O \"E\" da esperança<br>E o \"M\" da minha vontade.</em></p></div>", "fonte": "Quadra popular nordestina, tradição oral da literatura de cordel. Domínio público.", "enun": "O uso de rima e linguagem simples e direta nesses versos indica que o locutor (quem fala) provavelmente pertence a:", "alts": ["Um meio acadêmico que estuda a poesia popular nordestina.", "Uma tradição de poesia popular e oral.", "Um tribunal formal de justiça.", "Uma reunião empresarial formal e corporativa."], "correta": 1, "porque": ["Incorreto: meio acadêmico que estuda poesia popular usaria metalinguagem ('o eu lírico', 'a sextilha', 'a tradição do cordel') — não produziria o texto em si com rima e linguagem coloquial.", "Correto: rima simples, linguagem coloquial, jogo com letras do alfabeto e tema emocional direto — marcas da tradição oral nordestina, transmitida de boca em boca e escrita em folhetos.", "Incorreto: texto de tribunal usa linguagem técnica-jurídica e impessoal ('considerando que', 'determino que'). Rima e emoção pessoal são incompatíveis com esse contexto.", "Incorreto: reunião empresarial usa linguagem objetiva e impessoal. 'Minha infelicidade' e o jogo poético com letras não têm função em ambiente corporativo formal."]}, {"n": 2, "tipo": "Reclamação formal (Reclame Aqui)", "nivel": "facil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Reclamação — Reclame Aqui (real)</b><p><em>Prezados,</em></p><p>No dia 05/03, realizei a compra de um vale-presente através do site da livraria com o intuito de presentear uma amiga, Yasmin, no seu aniversário. Contudo, até o momento, o vale-presente não foi recebido por ela no e-mail informado, mesmo tendo os dados sido preenchidos corretamente no momento da compra.</p><p>Diante disso, solicito a devolução imediata do valor pago ou o envio do vale-presente, conforme prometido. Aguardo uma solução rápida e eficaz.</p><p><em>Atenciosamente,<br>Thalya Roberta Salgueiro</em></p></div>", "fonte": "SALGUEIRO, Thalya Roberta. Publicação no Reclame Aqui, 6 mar. 2025. Adaptado para fins didáticos. Avaliação Contínua — P0901 — CAED/UFJF, 2025.", "enun": "Nesse texto, quem é o <b>locutor</b> (quem fala) e quem é o <b>interlocutor</b> (a quem se dirige)?", "alts": ["Locutor: a livraria; Interlocutor: Yasmin, a amiga que recebeu o vale.", "Locutor: Thalya Roberta Salgueiro; Interlocutor: a equipe da livraria ('Prezados').", "Locutor: Yasmin; Interlocutor: Thalya, que comprou o vale-presente.", "Locutor: o site da livraria; Interlocutor: os clientes em geral."], "correta": 1, "porque": ["A livraria é o destinatário da reclamação, não quem escreve; Yasmin é mencionada como terceira pessoa.", "Thalya assina o texto ('Atenciosamente, Thalya Roberta Salgueiro') — ela é a locutor. O vocativo 'Prezados' indica que a mensagem se dirige à equipe da livraria — o interlocutor.", "Yasmin é apenas citada como a pessoa que deveria receber o vale; ela não escreve o texto.", "O site da livraria não escreve a reclamação; a reclamação é feita por um cliente direcionada à livraria."]}, {"n": 3, "tipo": "Declaração real (Agência Brasil)", "nivel": "facil", "texto": "<em>\"Existe uma complexidade cultural quando se fala de Nordeste, porque Nordeste parece que só é a coisa regionalista, mas o Nordeste é múltiplo. Nosso grupo nunca fez peça regionalista, e não deixa de ser um grupo nordestino\"</em>, disse a atriz Quitéria Kelly, fundadora do Grupo Carmin, de Natal, em entrevista à Agência Brasil.", "fonte": "Agência Brasil/EBC, 23 maio 2023. Adaptado. agenciabrasil.ebc.com.br", "enun": "O uso de \"disse... em entrevista à Agência Brasil\" indica que o interlocutor (para quem o texto se dirige) é:", "alts": ["Apenas a atriz, em um diário pessoal de reflexão sobre sua carreira.", "O público leitor de uma agência de notícias.", "Um único amigo próximo, em conversa informal particular.", "Os membros da companhia de teatro Grupo Carmin."], "correta": 1, "porque": ["Incorreto: diário pessoal não cita 'disse... em entrevista'. O diário usa a primeira pessoa direta, sem intermediário jornalístico. A presença do verbo 'disse' indica que alguém reproduziu a fala para outros.", "Correto: 'entrevista à Agência Brasil' indica publicação destinada ao público leitor da agência — amplo e anônimo. A agência de notícias produz conteúdo para distribuição geral, não para destinatário específico.", "Incorreto: conversa particular não seria intermediada por agência de notícias nem registrada com atribuição formal ('disse a atriz... fundadora do Grupo Carmin'). A formalidade da atribuição indica publicação.", "Incorreto: se fosse para a própria companhia, o texto estaria em comunicado interno ou reunião — não em entrevista à Agência Brasil, que distribui para o público em geral."]}, {"n": 4, "tipo": "Texto digital informal (real)", "nivel": "medio", "texto": "<em>\"Diga, meu povo, tudo bem? A gente tá cheia de fuxico pra fazer. [...] Tenha nervo que ainda não acabaram os fuxicos! Peeense que a gente tá se achando também porque entrevistamos uma celebridade. 💅 [...] Quer receber o CajuZap? Basta mandar um 'oi'.\"</em>", "fonte": "Adaptado de newsletter da Agência Tatu (jornalismo de dados nordestino), via Cajueira/Substack.", "enun": "As marcas \"meu povo\", \"fuxico\", \"tá\" e o emoji indicam que o locutor se dirige a um interlocutor:", "alts": ["Formal e distante, como o leitor de um relatório técnico.", "Próximo e familiar, com relação de informalidade.", "Hierarquicamente superior, como um chefe ou gestor distante.", "Desconhecido e formal, como o destinatário de uma carta jurídica."], "correta": 1, "porque": ["Incorreto: relatório técnico usa linguagem impessoal e formal, sem gírias nem emojis. 'Meu povo' e 'fuxico' criam cumplicidade — o oposto da distância formal de um relatório.", "Correto: 'meu povo' (endereçamento coletivo e afetivo), 'fuxico' (gíria de intimidade), 'tá' (contração informal), emoji (recurso digital de aproximação) — todas marcas de interlocutor próximo e familiar.", "Incorreto: comunicação com superior hierárquico usaria linguagem formal e respeitosa. 'Meu povo' e 'tá se achando' são expressões de igualdade ou cumplicidade — não de hierarquia.", "Incorreto: carta jurídica usa 'Vossa Excelência', 'outrossim', linguagem padronizada. O estilo coloquial e afetivo do CajuZap pressupõe interlocutor já conhecido e parte da mesma comunidade."]}, {"n": 5, "tipo": "Declaração real (Agência Brasil)", "nivel": "medio", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Declaração — Regionalização do jornalismo (Agência Brasil)</b><p>Em um debate sobre a importância do jornalismo regional realizado no lançamento de uma iniciativa do setor, a cofundadora Mariama Correia defendeu que a cobertura jornalística de comunidades locais tem valor além das fronteiras geográficas. <b>\"O jornalismo regional também é de interesse nacional\"</b>, destacou ela, argumentando que os problemas e histórias das regiões menores do Brasil impactam diretamente questões nacionais como saúde, educação e políticas públicas. Segundo a jornalista, invisibilizar as regiões periféricas significa invisibilizar os próprios brasileiros que lá vivem.</p></div>", "fonte": "Adaptado de cobertura jornalística sobre o Troféu Mulher Imprensa, via Cajueira/Substack.", "enun": "O verbo \"destacou\" e o contexto de \"debate\" indicam que esse trecho pertence a um registro:", "alts": ["Informal, de conversa descontraída entre colegas de profissão.", "Formal, próprio de um evento profissional/institucional.", "Íntimo, de um diário pessoal sobre experiências jornalísticas.", "Oral e coloquial, de um podcast informal sobre jornalismo."], "correta": 1, "porque": ["Incorreto: conversa informal entre colegas não seria reproduzida com atribuição formal ('destacou a cofundadora Mariama Correia', com nome completo e cargo). Conversa informal não tem 'destacou' — tem 'falou', 'disse'.", "Correto: 'destacou' (verbo de discurso formal), nome completo com cargo (cofundadora), local e evento nomeados (Troféu Mulher Imprensa, São Paulo) — registro jornalístico de evento institucional.", "Incorreto: diário pessoal usa a primeira pessoa ('eu disse', 'pensei que'). Aqui a fala é reproduzida em terceira pessoa com atribuição jornalística — não é o registro íntimo de quem viveu a situação.", "Incorreto: podcast informal usaria linguagem mais próxima do coloquial e não teria atribuição com nome completo, cargo e evento. O registro aqui é o da cobertura jornalística formal."]}, {"n": 6, "tipo": "Carta de leitor (Ciência Hoje das Crianças)", "nivel": "medio", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Carta de leitor — De leitora à cientista</b><p>Escrevo esta mensagem como uma pesquisadora profundamente marcada pela revista Ciência Hoje das Crianças. Me lembro da empolgação no ato de reconhecer uma edição que não havia lido; me lembro do cheiro das folhas, me lembro de um olhar encantado e maravilhado pela sensação da descoberta e do conhecimento ao folhear as páginas. A vocês, equipe CHC, tenho apenas a agradecer! Viva a ciência, vivam as nossas crianças, viva a produção de conhecimento no Brasil. Com muito carinho.</p></div>", "fonte": "FERRAZ, Juliana. <b>De leitora à cientista</b>. In: Ciência Hoje das Crianças, 4 maio 2023. Avaliação Contínua — P0901 — CAED/UFJF, 2025.", "enun": "Nesse texto, qual expressão marca mais claramente a <b>presença do locutor</b> (quem escreve)?", "alts": ["\"Viva a ciência, vivam as nossas crianças\" — o uso do verbo no imperativo indica um discurso coletivo sem locutor definido.", "\"Escrevo esta mensagem como uma pesquisadora\" — o verbo em 1ª pessoa do singular marca a presença do sujeito que fala.", "\"a equipe CHC\" — referência direta ao interlocutor que revela quem é o locutor.", "\"Me lembro do cheiro das folhas\" — a memória sensorial apaga o locutor ao transportar o leitor para o passado."], "correta": 1, "porque": ["O imperativo ('Viva') marca emoção e conclama, mas não é o que marca mais claramente a presença do locutor — é o 'eu' que faz isso.", "A 1ª pessoa do singular ('Escrevo', 'Como uma pesquisadora') é a marca linguística mais direta da presença do locutor — é ela quem fala.", "'A equipe CHC' é a marca do interlocutor (a quem se dirige), não do locutor (quem fala).", "A memória sensorial é uma marca de subjetividade, mas por si só não apaga o locutor — ao contrário, reforça o ponto de vista pessoal de quem fala."]}, {"n": 7, "tipo": "Declaração real (Agência Brasil)", "nivel": "dificil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Declaração — Personalização de conteúdo (Agência Brasil)</b><p>Em entrevista ao portal de Agência Brasil, a jornalista Ademara Barros discutiu os desafios da credibilidade midiática na era das redes sociais. Segundo ela, o público está cada vez mais propenso a confiar em criadores de conteúdo individuais do que em grandes veículos de comunicação. <b>\"Acho que personalizar os conteúdos ajuda, porque cada vez mais as pessoas estão confiando mais em pessoas do que em empresas\"</b>, afirmou a jornalista, referindo-se à tendência de consumo de informação por meio de influenciadores e criadores digitais em vez de jornais e televisões tradicionais.</p></div>", "fonte": "Adaptado de cobertura da newsletter Cajueira/Substack sobre jornalismo regional.", "enun": "O uso da expressão \"Acho que\" (em vez de, por exemplo, \"Está comprovado que\") indica que o locutor:", "alts": ["Apresenta um dado verificável sobre a confiança do público nas empresas.", "Expressa uma opinião pessoal, informal e subjetiva.", "Está reproduzindo uma pesquisa científica sobre comportamento do consumidor.", "Está lendo em voz alta um trecho de um manual de jornalismo."], "correta": 1, "porque": ["Incorreto: 'acho que' nega o caráter objetivo do enunciado. Se fosse dado verificável, o locutor usaria 'pesquisas mostram que' ou 'segundo estudos' — não a primeira pessoa do singular com o verbo 'achar'.", "Correto: 'acho que' é marca explícita de subjetividade — indica que o que vem a seguir é a avaliação pessoal do locutor, não um fato comprovado. O contexto (entrevista via WhatsApp) reforça o caráter informal.", "Incorreto: pesquisa científica exigiria 'segundo estudos' ou 'a pesquisa X mostrou que'. 'Acho que' é o oposto — é a marca de que o que se afirma é impressão pessoal, não dado de pesquisa.", "Incorreto: manual técnico usa linguagem impessoal e não seria lido em entrevista por WhatsApp. O contexto e o 'acho que' indicam voz pessoal em situação informal."]}, {"n": 8, "tipo": "Cordel/quadra regional (real)", "nivel": "dificil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Cordel — É Munto Trabaiado (fragmento, tradição nordestina)</b><p><em>É munto trabaiadô<br>Quem tem o ingenho de pau,<br>Chega em nosso coração<br>Dos nossos canaviais.<br><br>O feitor bate no negro<br>Sem dó e sem piedade,<br>O senhor faz a riqueza<br>Com a nossa sofridade.<br><br>A cana que nos maltrata<br>É a mesma que adoça o café,<br>O mesmo açúcar que mata<br>É o que sustenta a fé.</em></p></div>", "fonte": "Adaptado de versos da tradição popular nordestina sobre o trabalho rural. Domínio público.", "enun": "A grafia \"munto\", \"trabaiadô\" e \"ingenho\" (em vez de \"muito\", \"trabalhador\", \"engenho\") indica que o texto representa:", "alts": ["Um erro de revisão: o autor não percebeu os desvios da norma padrão.", "Uma variação linguística regional/popular, registrada propositalmente na escrita.", "Um texto automaticamente traduzido de outro idioma por software.", "Uma linguagem técnica especializada de um campo específico do saber."], "correta": 1, "porque": ["Incorreto: se fosse erro de revisão, apareceria isolado — não sistematicamente em todas as palavras relevantes. A recorrência ('munto', 'trabaiadô', 'ingenho') revela escolha estilística deliberada de representar a fala.", "Correto: as grafias representam a pronúncia regional ('munto' = muito, 'trabaiadô' = trabalhador, 'ingenho' = engenho) — recurso literário e cultural para reproduzir na escrita a voz do locutor popular.", "Incorreto: tradução automática produz erros diferentes — geralmente de coerência semântica ou sintaxe estranha. Aqui as 'irregularidades' seguem um padrão fonológico reconhecível do português oral regional.", "Incorreto: linguagem técnica especializada teria termos precisos e definidos ('fotossíntese', 'jurisprudência'). Estas são formas coloquiais de palavras comuns — o oposto do vocabulário especializado."]}, {"n": 9, "tipo": "Declaração real (Agência Brasil)", "nivel": "dificil", "texto": "<em>\"Há vários nordestes e possibilidades de se exercitar as artes cênicas que estão aí\"</em>, disse o ator Vitorino Rodrigues, em entrevista à Agência Brasil sobre a presença de artistas nordestinos no cenário cultural nacional.", "fonte": "Agência Brasil/EBC, 23 maio 2023. Adaptado. agenciabrasil.ebc.com.br", "enun": "O plural \"vários nordestes\" (em vez de apenas \"o Nordeste\") é uma marca linguística que revela, sobre o locutor, que ele:", "alts": ["Cometeu ali um erro gramatical ao pluralizar um nome próprio.", "Reconhece e valoriza a diversidade interna da região.", "Está se referindo a diferentes países com características nordestinas.", "Demonstra desconhecimento geográfico sobre os estados do Nordeste."], "correta": 1, "porque": ["Incorreto: pluralizar nome próprio pode ser recurso estilístico — 'vários nordestes' significa 'várias formas de ser nordestino'. Não é erro gramatical; é escolha expressiva intencional do ator.", "Correto: ao dizer 'vários nordestes', o ator recusa a ideia de um Nordeste homogêneo — reconhece que há múltiplas identidades culturais dentro da região, não apenas a imagem regionalista mais conhecida.", "Incorreto: o contexto é claramente sobre o Nordeste brasileiro — o ator fala de artistas nordestinos no cenário cultural nacional. Não há nenhuma referência a outros países.", "Incorreto: o ator conhece a região profundamente — justamente por isso percebe sua diversidade interna. Quem não conhece tende a ter uma visão simplificada e uniforme, o oposto do que ele expressa."]}, {"n": 10, "tipo": "Crônica (Machado de Assis)", "nivel": "dificil", "texto": "<b>Bons Dias!</b> (trecho adaptado)<br><br><em>\"Tenho para mim, leitor amigo, que a melhor resposta às injúrias é o silêncio polido; mas reconheço que tal conselho é mais fácil de escrever do que de seguir, sobretudo para quem, como eu, tem a língua mais ágil que a paciência.\"</em>", "fonte": "Adaptado do espírito das crônicas de MACHADO DE ASSIS, 1888-1889. Domínio público.", "enun": "A expressão \"leitor amigo\" e o tom de confissão pessoal (\"tenho a língua mais ágil que a paciência\") revelam que o locutor busca, com o interlocutor, uma relação de:", "alts": ["Distanciamento formal, como em uma correspondência oficial.", "Proximidade afetiva, mesmo em registro formal.", "Indiferença neutra, como num texto informativo sem voz pessoal.", "Subordinação do autor ao leitor, reconhecendo sua autoridade."], "correta": 1, "porque": ["Incorreto: distanciamento formal usaria 'prezado leitor' ou nenhum endereçamento — não 'leitor amigo'. A confissão pessoal ('tenho a língua mais ágil que a paciência') também é incompatível com correspondência oficial.", "Correto: 'leitor amigo' estabelece vínculo afetivo; a confissão de um defeito pessoal ('língua mais ágil que a paciência') cria cumplicidade. O registro é culto (século XIX), mas a intenção é de aproximação.", "Incorreto: texto neutro e impessoal não teria 'leitor amigo' nem confissão pessoal. A voz do autor está presente em cada palavra — o oposto da neutralidade informativa.", "Incorreto: o autor confessa um defeito, mas isso não cria subordinação — é estratégia retórica para aproximar o leitor. O autor ainda detém a voz e a posição de quem escreve para o público."]}, {"n": 11, "tipo": "Declaração real (Agência Brasil)", "nivel": "medio", "texto": "<em>\"Quando se fala sobre um grupo nordestino, fala-se do Nordeste a partir de onde? Do Maranhão?\"</em>, questiona a atriz Quitéria Kelly, destacando que cada estado da região tem uma cultura específica e não deve ser tratado de forma genérica.", "fonte": "Agência Brasil/EBC, 23 maio 2023. Adaptado. agenciabrasil.ebc.com.br", "enun": "O uso da pergunta retórica (\"a partir de onde?\") revela que o locutor pretende:", "alts": ["Obter uma resposta literal e geográfica do interlocutor.", "Provocar reflexão no interlocutor sobre uma generalização equivocada.", "Encerrar a conversa ao mostrar que a pergunta não tem resposta.", "Demonstrar que ela conhece a localização exata do Maranhão."], "correta": 1, "porque": ["Incorreto: pergunta retórica não espera resposta literal. 'A partir de onde?' sugere que não existe um único ponto de referência para 'o Nordeste' — a pergunta nega a premissa, não busca uma coordenada geográfica.", "Correto: a pergunta 'a partir de onde?' desmonta a generalização 'um grupo nordestino'. Ao perguntar isso, a atriz revela que 'o Nordeste' não é um bloco uniforme — instiga o interlocutor a repensar a ideia.", "Incorreto: a pergunta não encerra a conversa — abre uma reflexão. A própria entrevista continua com a atriz explicando a diversidade da região. Perguntas retóricas provocam, não encerram.", "Incorreto: mencionar o Maranhão é um exemplo de questionamento, não prova de conhecimento geográfico. A atriz usa o estado como ilustração para mostrar que 'Nordeste' engloba realidades muito diferentes."]}, {"n": 12, "tipo": "Texto digital informal (real)", "nivel": "facil", "texto": "<em>\"Quer receber o CajuZap? Basta mandar um 'oi' para o número e salvar no seu celular 😉 Não esquece de fortalecer nosso trabalho mandando pix!\"</em>", "fonte": "Adaptado de newsletter da Agência Tatu (jornalismo de dados nordestino), via Cajueira/Substack.", "enun": "O uso do imperativo informal (\"manda\", \"não esquece\") e do emoji indica que esse trecho se dirige a um interlocutor:", "alts": ["Formal e distante, como um leitor de boletim informativo institucional.", "Próximo, com vínculo de informalidade digital já estabelecido.", "Hierarquicamente superior ao locutor, como um patrocinador ou chefe.", "Que não domina ainda as convenções da língua formal escrita."], "correta": 1, "porque": ["Incorreto: boletim informativo usa terceira pessoa e linguagem impessoal. 'Não esquece', 'manda um oi' e o emoji 😉 pressupõem familiaridade — o oposto do distanciamento formal.", "Correto: imperativo informal ('manda', 'não esquece'), emoji de cumplicidade (😉) e pedido de pix — recursos que pressupõem interlocutor que já conhece a newsletter e tem relação afetiva com ela.", "Incorreto: com superior hierárquico, o locutor usaria linguagem respeitosa e formal. Pedir pix com emoji a um chefe ou patrocinador seria inapropriado — o tom aqui é de comunidade entre iguais.", "Incorreto: o texto usa intencionalmente as convenções informais do digital — não é falta de domínio, é escolha de registro. O locutor domina a língua formal e opta pela informalidade para criar proximidade."]}];const G1R=[{"t": "'Hão de reconhecer que sou bem criado.' — Machado de Assis, 1888.", "q": "Que tipo de registro é esse?", "o": ["Informal/digital", "Formal, do século XIX", "Técnico-burocrático", "Infantil"], "c": 1}, {"t": "'Diga, meu povo, tudo bem? A gente tá cheia de fuxico.' — newsletter regional.", "q": "Que tipo de registro é esse?", "o": ["Formal acadêmico", "Informal e próximo", "Jurídico", "Científico"], "c": 1}, {"t": "'Em entrevista à Agência Brasil, disse a atriz...' — jornalismo.", "q": "Para qual tipo de interlocutor esse texto se dirige?", "o": ["Um amigo íntimo", "O público leitor de uma agência de notícias", "Um tribunal", "Uma criança"], "c": 1}, {"t": "'Vossa Mercê discordar das opiniões aqui expostas...' — crônica do século XIX.", "q": "Que marca linguística aparece aqui?", "o": ["Gíria contemporânea", "Tratamento formal e cortês", "Linguagem técnica", "Erro ortográfico"], "c": 1}, {"t": "'Munto trabaiadô / Quem tem o ingenho de pau...' — quadra popular nordestina.", "q": "O que essa grafia representa?", "o": ["Erro de digitação", "Variação linguística regional registrada propositalmente", "Tradução de outro idioma", "Linguagem técnica"], "c": 1}];const G2I=[{"s": "'Hão de reconhecer que sou bem criado.'", "cat": "formal", "p": "Vocabulário elaborado, típico do século XIX."}, {"s": "'A gente tá cheia de fuxico pra fazer.'", "cat": "informal", "p": "Gíria regional e redução 'tá'."}, {"s": "'Munto trabaiadô, quem tem o ingenho de pau.'", "cat": "regional", "p": "Grafia que reproduz pronúncia popular."}, {"s": "'Em entrevista à Agência Brasil, disse a atriz.'", "cat": "formal", "p": "Registro jornalístico padrão."}, {"s": "'Quer receber o CajuZap? Manda um oi! 😉'", "cat": "informal", "p": "Imperativo informal e emoji."}, {"s": "'Vossa Mercê discordar das opiniões...'", "cat": "formal", "p": "Tratamento cortês e formal do século XIX."}];const G2C=[["formal", "Formal"], ["informal", "Informal"], ["regional", "Regional"]];const G3R=[{"t": "Texto usa 'Vossa Mercê', vocabulário rebuscado e construções do século XIX.", "q": "Marca de:", "o": ["Informalidade digital", "Registro formal antigo", "Variação regional", "Erro de digitação"], "c": 1}, {"t": "Texto usa 'tá', gírias e emojis dirigidos a seguidores de uma newsletter.", "q": "Marca de:", "o": ["Formalidade extrema", "Proximidade e informalidade digital", "Linguagem jurídica", "Linguagem científica"], "c": 1}, {"t": "Texto reproduz pronúncia popular: 'munto', 'trabaiadô', 'ingenho'.", "q": "Marca de:", "o": ["Erro grave de português", "Variação linguística regional", "Tradução malfeita", "Linguagem técnica"], "c": 1}, {"t": "'Disse o ator, em entrevista à Agência Brasil' introduz uma fala.", "q": "Indica interlocutor:", "o": ["Um amigo íntimo", "O público leitor de uma agência de notícias", "Um juiz", "Uma criança pequena"], "c": 1}, {"t": "Pergunta retórica: 'Fala-se do Nordeste a partir de onde?'", "q": "Função dessa pergunta:", "o": ["Obter resposta literal", "Provocar reflexão no interlocutor", "Encerrar o assunto", "Demonstrar certeza absoluta"], "c": 1}];const G4R=[{"ctx": "'Hão de reconhecer que sou bem criado.'", "f": "Esse vocabulário indica um registro ___.", "o": ["informal", "formal", "técnico", "infantil"], "c": 1}, {"ctx": "'A gente tá cheia de fuxico pra fazer.'", "f": "A redução 'tá' é marca de registro ___.", "o": ["formal", "informal", "jurídico", "científico"], "c": 1}, {"ctx": "'Munto trabaiadô, quem tem o ingenho de pau.'", "f": "Essa grafia representa uma variação ___.", "o": ["temporal", "regional", "técnica", "estrangeira"], "c": 1}, {"ctx": "'Em entrevista à Agência Brasil, disse a atriz.'", "f": "O interlocutor aqui é o ___ de uma agência de notícias.", "o": ["chefe", "público leitor", "juiz", "professor particular"], "c": 1}, {"ctx": "'Vossa Mercê discordar das opiniões aqui expostas.'", "f": "Esse tratamento revela ___ entre locutor e interlocutor.", "o": ["hostilidade", "cortesia formal", "intimidade gírica", "indiferença"], "c": 1}];const G5R=[{"title": "Marcas do locutor (quem fala)", "correct": ["Vocabulário usado (formal, informal, técnico, regional) revela quem é o locutor.", "Construções gramaticais específicas de época (ex: 'Vossa Mercê') indicam período histórico.", "Grafias que reproduzem pronúncia popular indicam variação regional do locutor.", "Verbos de elocução ('disse', 'destacou', 'afirmou') ajudam a identificar o contexto da fala.", "O grau de formalidade do texto reflete a posição social ou profissional do locutor."]}, {"title": "Marcas do interlocutor (para quem se fala)", "correct": ["Expressões como 'leitor amigo' ou 'caro leitor' indicam proximidade buscada com o interlocutor.", "Imperativos informais ('manda', 'não esquece') sugerem interlocutor próximo e familiar.", "Expressões como 'em entrevista à Agência Brasil' indicam interlocutor público, leitor de notícias.", "Perguntas retóricas buscam provocar reflexão no interlocutor, não resposta literal.", "O nível de formalidade do tratamento revela o tipo de relação entre locutor e interlocutor."]}];
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function stripHTML(s){const d=document.createElement("div");d.innerHTML=s;return d.textContent||"";}
+function toggleTTS(btn,id){if(window.speechSynthesis.speaking){window.speechSynthesis.cancel();document.querySelectorAll(".btn-tts").forEach(b=>b.classList.remove("playing"));return;}const el=document.getElementById(id);if(!el)return;const u=new SpeechSynthesisUtterance(stripHTML(el.innerHTML));u.lang="pt-BR";u.rate=.9;btn.classList.add("playing");u.onend=()=>btn.classList.remove("playing");window.speechSynthesis.speak(u);}
+const RK="saeb_d13locutor_records";
+function loadRec(){try{return JSON.parse(localStorage.getItem(RK))||{};}catch{return {};}}
+function saveRec(k,v){const r=loadRec();if(!(k in r)||v>r[k])r[k]=v;localStorage.setItem(RK,JSON.stringify(r));renderRec();}
+function renderRec(){const r=loadRec(),g=document.getElementById("recGrid");if(!g)return;const items=[{k:"quiz",l:"Quiz"},{k:"qual",l:"Qual função?"},{k:"classif",l:"Classifique"},{k:"pistas",l:"Pelas pistas"},{k:"compl",l:"Complete"},{k:"ordene",l:"Ordene"}];g.innerHTML=items.map(i=>`<div class="rec-item"><div class="rv">${r[i.k]!=null?r[i.k]:"—"}</div><div class="rl">${i.l}</div></div>`).join("");}
+renderRec();
+document.querySelectorAll(".tab-btn").forEach(btn=>{btn.onclick=()=>{document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));document.querySelectorAll(".tab-pane").forEach(p=>p.classList.remove("active"));btn.classList.add("active");document.getElementById("pane-"+btn.dataset.tab).classList.add("active");window.scrollTo({top:0,behavior:"smooth"});};});
+const nivelLabel={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
+const QS=shuffle(QRAW).map((q,idx)=>{const smap=shuffle(Array.from({length:q.alts.length},(_,i)=>i));return{...q,dn:idx+1,alts:smap.map(i=>q.alts[i]),porque:smap.map(i=>q.porque[i]),correta:smap.indexOf(q.correta)};});
+const quizEl=document.getElementById("quiz");
+QS.forEach(q=>{const c=document.createElement("div");c.className="card";c.dataset.q=q.dn;const tid="txt"+q.dn;c.innerHTML=`<div class="card-head"><span class="qnum">Questão ${q.dn}</span><span class="qtipo">${q.tipo}</span><span class="qnivel ${q.nivel}">${nivelLabel[q.nivel]}</span></div><div class="txt-base" id="${tid}">${q.texto}<span class="txt-fonte">${q.fonte}</span><button class="btn-tts" onclick="toggleTTS(this,'${tid}')">🔊</button></div><p class="enunciado">${q.enun}</p><div class="alts">${q.alts.map((t,i)=>`<button class="alt" onclick="resp(${q.dn},${i})"><span class="letra">${"ABCD"[i]}</span> ${t}</button>`).join("")}</div><div class="fb" id="fb${q.dn}"></div>`;quizEl.appendChild(c);});
+let acertos=0;const feitas=new Set();
+function resp(n,k){
+  if(feitas.has(n))return;feitas.add(n);
+  const q=QS.find(x=>x.dn===n),card=quizEl.querySelector(`[data-q="${n}"]`),btns=card.querySelectorAll(".alt"),fb=document.getElementById("fb"+n);
+  const ok=k===q.correta;if(ok)acertos++;
+
+  // Registra a resposta detalhada desta questão para depois enviar ao Sheets
+  respostasDetalhadas.push({
+    questao: n,
+    tipo: q.tipo,
+    nivel: q.nivel,
+    respostaDada: k>=0 ? "ABCD"[k] : "(não respondeu)",
+    respostaCorreta: "ABCD"[q.correta],
+    acertou: ok
+  });
+
+  selecoes[n]=k;btns.forEach((b,i)=>{b.disabled=true;if(modoJogo==="estudo"){if(i===q.correta)b.classList.add("ok");else if(i===k)b.classList.add("err");else b.classList.add("dim");}else{if(i===k)b.classList.add("sel");else b.classList.add("dim");}});
+  const pq=q.alts.map((t,i)=>`<span class="pi"><span class="l">${"ABCD"[i]})</span> ${q.porque[i]}</span>`).join("");
+  fb.className="fb show "+(ok?"ok":"err")+(modoJogo==="prova"?" prova-oculto":"");
+  fb.innerHTML=`<div class="ft">${ok?"✓ Correto!":"✗ Incorreto — a correta é "+"ABCD"[q.correta]+"."}</div><div>${q.porque[q.correta]}</div><div class="pq"><b>Cada alternativa:</b>${pq}</div>`;
+  document.getElementById("pFill").style.width=(feitas.size/QS.length*100)+"%";
+  // No modo prova, a pontuação parcial fica escondida; só aparece no resultado final
+  document.getElementById("score").textContent=modoJogo==="prova" ? (feitas.size+" / "+QS.length+" respondidas") : (acertos+" / "+QS.length);
+  if(feitas.size===QS.length)setTimeout(quizFim,500);
+}
+function quizFim(){
+  // No modo prova, revela todo o feedback que ficou oculto durante o quiz
+  if(modoJogo==="prova"){
+    // gabarito bloqueado no modo prova
+    // modo estudo mostra gabarito por senha
+    document.getElementById("score").textContent=acertos+" / "+QS.length;
+  }
+  const r=document.getElementById("resultado");r.style.display="block";
+  document.getElementById("notaFinal").textContent=acertos+"/"+QS.length;
+  const p=acertos/QS.length;let m,msg;
+  if(p>=.9){m="🥇";msg="Ouro! Precisão de detetive.";}
+  else if(p>=.7){m="🥈";msg="Prata! Atenção aos distratores.";}
+  else if(p>=.5){m="🥉";msg="Bronze! Volte ao texto antes de marcar.";}
+  else{m="📖";msg="Treine mais. A resposta está sempre lá.";}
+  document.getElementById("medalha").textContent=m;document.getElementById("msgFinal").textContent=msg;
+  saveRec("quiz",acertos);
+  enviarParaSheets();
+  r.scrollIntoView({behavior:"smooth",block:"center"});
+}// gabarito disc protegido por senha no HTML;
+// gabPrint removido: gabarito protegido por senha
+
+function makeTimedGame(bodyId,rounds,rk){return{i:0,pts:0,tmr:null,tempo:0,rounds:[],start(){this.i=0;this.pts=0;this.rounds=shuffle(rounds);this.render();},render(){const b=document.getElementById(bodyId);if(this.i>=this.rounds.length){saveRec(rk,this.pts);b.innerHTML=`<div class="jogo-final"><div class="big">${this.pts} pts</div><p>${this.pts>=this.rounds.length*10?"Muito bem! 🥇":"Continue praticando."}</p><button class="btn ouro" onclick="${bodyId.split('-')[0].toUpperCase()}.start()">↺ Jogar de novo</button></div>`;return;}const r=this.rounds[this.i];this.tempo=100;b.innerHTML=`<div class="jogo-mid"><span class="chip">Rodada ${this.i+1}/${this.rounds.length}</span><div class="timerbar"><div id="${bodyId}-bar"></div></div><span class="chip">${this.pts} pts</span></div><div class="mini-texto">${r.t}</div><div class="mini-q">${r.q}</div><div class="alts" id="${bodyId}-alts">${r.o.map((o,k)=>`<button class="alt" onclick="${bodyId.split('-')[0].toUpperCase()}.resp(${k})"><span class="letra">${"ABCD"[k]}</span> ${o}</button>`).join("")}</div><div class="mini-fb" id="${bodyId}-fb"></div>`;clearInterval(this.tmr);this.tmr=setInterval(()=>{this.tempo-=2;const bar=document.getElementById(bodyId+"-bar");if(bar)bar.style.width=Math.max(0,this.tempo)+"%";if(this.tempo<=0)this.resp(-1);},400);},resp(k){clearInterval(this.tmr);const r=this.rounds[this.i],btns=document.querySelectorAll("#"+bodyId+"-alts .alt"),fb=document.getElementById(bodyId+"-fb");btns.forEach((a,j)=>{a.disabled=true;if(j===r.c)a.classList.add("ok");else if(j===k)a.classList.add("err");else a.classList.add("dim");});if(k===r.c){const g=5+Math.round(this.tempo/10);this.pts+=g;fb.className="mini-fb show ok";fb.textContent="✓ +"+g+" pts!";}else{fb.className="mini-fb show err";fb.textContent=(k===-1?"⏱️ Tempo!":"✗")+" Era: "+"ABCD"[r.c]+".";}this.i++;setTimeout(()=>this.render(),2500);}};}
+const G1=makeTimedGame("g1-body",G1R,"qual");const G3=makeTimedGame("g3-body",G3R,"pistas");
+
+const G2={rs:[],cats:G2C,start(){this.rs=[];const b=document.getElementById("g2-body");b.innerHTML=`<div style="font-size:.82rem;color:var(--txt2);margin-bottom:.8rem">Classifique cada texto pela sua função principal:</div>`+G2I.map((it,i)=>`<div class="vf-item" id="g2i${i}"><div class="vf-stm"><b>${i+1}.</b> ${it.s}</div><div class="btn-row">${this.cats.map(c=>`<button class="mini-btn cat-btn" onclick="G2.j(${i},'${c[0]}')">${c[1]}</button>`).join("")}</div><div class="mini-fb" id="g2f${i}"></div></div>`).join("")+`<div id="g2fin"></div>`;},j(i,esc){if(this.rs[i]!=null)return;const it=G2I[i],ok=esc===it.cat;this.rs[i]=ok;document.querySelectorAll("#g2i"+i+" .mini-btn").forEach(btn=>{btn.disabled=true;const txt=btn.textContent;const cat=this.cats.find(c=>c[1]===txt);if(cat&&cat[0]===it.cat)btn.style.background="var(--verde-c)";else if(cat&&cat[0]===esc&&!ok)btn.style.background="var(--vermelho-c)";});const fb=document.getElementById("g2f"+i);fb.className="mini-fb show "+(ok?"ok":"err");fb.innerHTML=(ok?"✓ ":"✗ ")+it.p;if(this.rs.filter(x=>x!=null).length===G2I.length){const ac=this.rs.filter(x=>x).length;saveRec("classif",ac);document.getElementById("g2fin").innerHTML=`<div class="jogo-final"><div class="big">${ac}/${G2I.length}</div><p>${ac===G2I.length?"Perfeito! 🥇":"Releia as justificativas."}</p><button class="btn ouro" onclick="G2.start()">↺ Jogar de novo</button></div>`;}}};
+
+const G4={i:0,pts:0,rounds:[],start(){this.i=0;this.pts=0;this.rounds=shuffle(G4R);this.render();},render(){const b=document.getElementById("g4-body");if(this.i>=this.rounds.length){saveRec("compl",this.pts);b.innerHTML=`<div class="jogo-final"><div class="big">${this.pts}/${this.rounds.length}</div><p>${this.pts===this.rounds.length?"Perfeito! 🥇":"Continue praticando."}</p><button class="btn ouro" onclick="G4.start()">↺ Jogar de novo</button></div>`;return;}const it=this.rounds[this.i];b.innerHTML=`<div class="jogo-mid"><span class="chip">Frase ${this.i+1}/${this.rounds.length}</span><span class="chip">${this.pts} acertos</span></div><p style="font-size:.82rem;color:var(--txt2);margin:.4rem 0">${it.ctx}</p><div class="mini-texto">${it.f}</div><div class="alts" id="g4-alts">${it.o.map((o,k)=>`<button class="alt" onclick="G4.resp(${k})"><span class="letra">${"ABCD"[k]}</span> ${o}</button>`).join("")}</div><div class="mini-fb" id="g4-fb"></div>`;},resp(k){const it=this.rounds[this.i],btns=document.querySelectorAll("#g4-alts .alt"),fb=document.getElementById("g4-fb");btns.forEach((a,j)=>{a.disabled=true;if(j===it.c)a.classList.add("ok");else if(j===k)a.classList.add("err");else a.classList.add("dim");});if(k===it.c){this.pts++;fb.className="mini-fb show ok";fb.textContent="✓ Exato!";}else{fb.className="mini-fb show err";fb.textContent="✗ Era: "+it.o[it.c]+".";}this.i++;setTimeout(()=>this.render(),1200);}};
+
+const G5={ri:0,start(){this.ri=0;this.renderRound();},renderRound(){const b=document.getElementById("g5-body");if(this.ri>=G5R.length){saveRec("ordene","✓");b.innerHTML=`<div class="jogo-final"><div class="big">✓</div><p>Raciocínio organizado! 🥇</p><button class="btn ouro" onclick="G5.start()">↺ Jogar de novo</button></div>`;return;}const rd=G5R[this.ri];const items=shuffle(rd.correct);b.innerHTML=`<div class="jogo-mid"><span class="chip">Passo a passo ${this.ri+1}/${G5R.length}</span></div><p style="font-size:.84rem;color:var(--txt2);margin-bottom:.6rem">Use ▲ ▼ para ordenar. Depois clique em "Verificar".</p><ol class="ord-list" id="g5list">${items.map((it,i)=>`<li class="ord-item" data-txt="${encodeURIComponent(it)}">${it}<div class="ord-arrows"><button onclick="G5.move(${i},-1)">▲</button><button onclick="G5.move(${i},1)">▼</button></div></li>`).join("")}</ol><div style="text-align:center;margin-top:.6rem"><button class="btn ouro" onclick="G5.check()">✓ Verificar ordem</button></div><div class="mini-fb" id="g5fb"></div>`;},move(idx,dir){const list=document.getElementById("g5list");const items=[...list.children];const newIdx=idx+dir;if(newIdx<0||newIdx>=items.length)return;if(dir===-1)list.insertBefore(items[idx],items[newIdx]);else list.insertBefore(items[newIdx],items[idx]);[...list.children].forEach((li,i)=>{li.querySelector(".ord-arrows").innerHTML=`<button onclick="G5.move(${i},-1)">▲</button><button onclick="G5.move(${i},1)">▼</button>`;});},check(){const rd=G5R[this.ri];const list=document.getElementById("g5list");const items=[...list.children];const fb=document.getElementById("g5fb");let ok=true;items.forEach((li,i)=>{const txt=decodeURIComponent(li.dataset.txt);if(txt===rd.correct[i])li.classList.add("ok");else{li.classList.add("err");ok=false;}li.querySelectorAll("button").forEach(b=>b.disabled=true);});if(ok){fb.className="mini-fb show ok";fb.textContent="✓ Ordem perfeita!";this.ri++;setTimeout(()=>this.renderRound(),1400);}else{fb.className="mini-fb show err";fb.innerHTML='✗ Trocadas. <button class="mini-btn" style="margin-left:.5rem" onclick="G5.renderRound()">Tentar de novo</button>';}}};
+
+function toggleGabAberta(id,btn){
+  var el=document.getElementById(id);if(!el)return;
+  if(el.style.display==='block'){el.style.display='none';btn.textContent='Ver gabarito';return;}
+  var pwd=prompt('Senha do professor:');
+  if(pwd===null)return;
+  if(pwd===SENHA_MODO_ESTUDO){el.style.display='block';btn.textContent='Ocultar';}
+  else{alert('Senha incorreta.');}
+}
+</script></body></html>
