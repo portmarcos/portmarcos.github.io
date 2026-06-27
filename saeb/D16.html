@@ -250,9 +250,9 @@ footer{text-align:center;padding:1.5rem;font-size:.76rem;color:var(--txt2)}
 </div>
 <div class="prog-wrap"><span class="prog-label">Progresso</span><div class="prog-track"><div class="prog-fill" id="pFill"></div></div><span class="score" id="score">0 / 12</span></div>
 <div id="quiz" style="display:flex;flex-direction:column;gap:1.5rem"></div>
-<div class="card" id="cardAberta1" style="margin-top:1.5rem"><div class="card-head"><span class="qnum">Questão Aberta 1</span><span class="qtipo">Efeito expressivo das figuras</span><span class="qnivel facil">Aberta</span></div><div class="txt-base" style="margin:1rem 1.1rem 0"><b>Q.A.1:</b> Releia: "A cidade devora seus filhos como Saturno" (Q12). (a) Que figuras estao presentes? (b) Qual seria o efeito se o autor escrevesse "A cidade e muito difícil para quem nela vive"? O que se perde?</div><textarea class="disc-area" style="min-height:160px;width:calc(100% - 2.2rem);resize:vertical;margin:1rem 1.1rem .5rem;display:block" placeholder="Escreva sua resposta..."></textarea><div class="disc-actions" style="padding:0 1.1rem .8rem"><button class="btn sec" onclick="toggleGabAberta('gabA1_d16',this)">Ver gabarito</button></div><div class="fb" id="gabA1_d16" style="display:none;margin:0 1.1rem 1rem"><div class="ft" style="color:var(--azul)">Gabarito sugerido</div><div>(a) Metafora (cidade como criatura), personificacao (a cidade age) e hiperbole (devorar = exagero da dureza urbana). (b) A versao simples e fria e abstrata; perde a forca expressiva, a imagem vivida e o impacto emocional. As figuras tornam o texto inesquecivel.</div></div></div>
-<div class="card" id="cardAberta2" style="margin-top:1.5rem"><div class="card-head"><span class="qnum">Questão Aberta 2</span><span class="qtipo">Figuras em contexto poetico</span><span class="qnivel medio">Aberta</span></div><div class="txt-base" style="margin:1rem 1.1rem 0"><b>Q.A.2:</b> Releia: "Sou feito dos livros que nao li" (Q10). (a) Que figura esta presente? (b) Por que o autor usou essa figura em vez de dizer "as ausencias me formaram"?</div><textarea class="disc-area" style="min-height:160px;width:calc(100% - 2.2rem);resize:vertical;margin:1rem 1.1rem .5rem;display:block" placeholder="Escreva sua resposta..."></textarea><div class="disc-actions" style="padding:0 1.1rem .8rem"><button class="btn sec" onclick="toggleGabAberta('gabA2_d16',this)">Ver gabarito</button></div><div class="fb" id="gabA2_d16" style="display:none;margin:0 1.1rem 1rem"><div class="ft" style="color:var(--azul)">Gabarito sugerido</div><div>(a) Paradoxo (ser feito do que nao aconteceu e logicamente impossivel - e por isso poeticamente poderoso). (b) "As ausencias me formaram" e abstrato e analitico. O verso concreto cria imagens vividissimas - o leitor visualiza livros, lugares. A figura aproxima o abstrato da experiencia sensivel.</div></div></div>
-<div class="card" id="cardAberta3" style="margin-top:1.5rem"><div class="card-head"><span class="qnum">Questão Aberta 3</span><span class="qtipo">Criar e analisar metafora</span><span class="qnivel dificil">Aberta</span></div><div class="txt-base" style="margin:1rem 1.1rem 0"><b>Q.A.3:</b> Crie uma metafora original sobre escola ou estudo. (a) Que dois dominios voce esta comparando? (b) Que sentido novo a metafora cria que a expressao literal nao criaria?</div><textarea class="disc-area" style="min-height:160px;width:calc(100% - 2.2rem);resize:vertical;margin:1rem 1.1rem .5rem;display:block" placeholder="Escreva sua resposta..."></textarea><div class="disc-actions" style="padding:0 1.1rem .8rem"><button class="btn sec" onclick="toggleGabAberta('gabA3_d16',this)">Ver gabarito</button></div><div class="fb" id="gabA3_d16" style="display:none;margin:0 1.1rem 1rem"><div class="ft" style="color:var(--azul)">Gabarito sugerido</div><div>Avalie: (a) a metafora deve ser original e clara; (b) os dois dominios devem ser identificaveis (ex: "a escola e um canteiro de obras" - construcao x educacao); (c) o estudante deve explicar o sentido novo. Criterio: metafora coerente + analise dos dominios.</div></div></div>
+
+
+
 <div id="resultado"><h2>Quiz concluído!</h2><div class="medalha" id="medalha">🏅</div><div class="nota" id="notaFinal">—</div><p id="msgFinal"></p><div id="envioStatus" class="envio-status"></div><div style="margin-top:1rem"><button class="btn" onclick="location.reload()">↺ Embaralhar e refazer</button></div></div>
 </div>
 </section>
@@ -402,7 +402,7 @@ document.querySelectorAll(".tab-btn").forEach(btn=>{
 });
 
 /* ---------- QUIZ ---------- */
-const QS = shuffle(QRAW).map((q,idx)=>{
+const QS = shuffle(QRAW.filter(q=>q.alts&&q.alts.length>0)).map((q,idx)=>{
   const map=Array.from({length:q.alts.length},(_,i)=>i);
   const smap=shuffle(map);
   return{...q,dn:idx+1,alts:smap.map(i=>q.alts[i]),porque:smap.map(i=>q.porque[i]),correta:smap.indexOf(q.correta)};
@@ -620,9 +620,6 @@ const G5 = {
   }
 };
 
-function toggleGabAberta(id,btn){
-  var el=document.getElementById(id);if(!el)return;
-  if(el.style.display==='block'){el.style.display='none';btn.textContent='Ver gabarito';return;}
   var pwd=prompt('Senha do professor:');
   if(pwd===null)return;
   if(pwd===SENHA_MODO_ESTUDO){el.style.display='block';btn.textContent='Ocultar';}
