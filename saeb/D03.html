@@ -54,8 +54,8 @@ main{max-width:840px;margin:0 auto;padding:1.6rem 1.25rem 4rem}
 .card-head{background:var(--azul);color:#fff;padding:.65rem 1.2rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .qnum{background:var(--ouro);color:var(--azul);font-size:.72rem;font-weight:700;padding:3px 11px;border-radius:20px}
 .qtipo{font-size:.74rem;opacity:.65;font-style:italic}
-.qnivel{font-size:.66rem;font-weight:700;text-transform:uppercase;padding:3px 9px;border-radius:20px;margin-left:auto}
-.qnivel.facil{background:var(--verde-c);color:var(--verde)}.qnivel.medio{background:var(--ouro-c);color:#a96e10}.qnivel.dificil{background:var(--verm-c);color:var(--verm)}
+
+
 .txt-base{background:var(--ouro-c);border-left:4px solid var(--ouro);margin:1rem 1.1rem 0;padding:1rem 1.1rem;border-radius:0 8px 8px 0;font-family:'Lora',serif;font-size:.94rem;line-height:1.85;color:#2b1d00;position:relative}
 .txt-fonte{font-family:'Inter',sans-serif;font-size:.72rem;color:var(--txt2);margin-top:.6rem;display:block;border-top:1px solid #e6d5b0;padding-top:.4rem}
 .btn-tts{position:absolute;top:.6rem;right:.6rem;background:none;border:1px solid #c9a14a;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;color:#8a6d1b;transition:.15s}
@@ -411,12 +411,11 @@ const QS = shuffle(QRAW.filter(q=>q.alts&&q.alts.length>0)).map((q,idx)=>{
   const smap=shuffle(map);
   return{...q,dn:idx+1,alts:smap.map(i=>q.alts[i]),porque:smap.map(i=>q.porque[i]),correta:smap.indexOf(q.correta)};
 });
-const nivelLabel={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
 const quizEl=document.getElementById("quiz");
 QS.forEach(q=>{
   const c=document.createElement("div");c.className="card";c.dataset.q=q.dn;
   const tid="txt"+q.dn;
-  c.innerHTML=`<div class="card-head"><span class="qnum">Questão ${q.dn}</span><span class="qtipo">${q.tipo}</span><span class="qnivel ${q.nivel}">${nivelLabel[q.nivel]}</span></div>
+  c.innerHTML=`<div class="card-head"><span class="qnum">Questão ${q.dn}</span><span class="qtipo">${q.tipo}</span></div>
   <div class="txt-base" id="${tid}">${q.texto}<span class="txt-fonte">${q.fonte}</span><button class="btn-tts" onclick="toggleTTS(this,'${tid}')" title="Ouvir texto">\uD83D\uDD0A</button></div>
   
   <p class="enunciado">${q.enun}</p>
