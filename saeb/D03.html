@@ -250,25 +250,6 @@ footer{text-align:center;padding:1.5rem;font-size:.76rem;color:var(--txt2)}
 </div>
 <div class="prog-wrap"><span class="prog-label">Progresso</span><div class="prog-track"><div class="prog-fill" id="pFill"></div></div><span class="score" id="score">0 / 12</span></div>
 <div id="quiz" style="display:flex;flex-direction:column;gap:1.5rem"></div>
-<!-- ===== QUESTÕES ABERTAS ===== -->
-<div class="card" id="cardAberta1" style="margin-top:1.5rem">
-  <div class="card-head"><span class="qnum">Questão Aberta 1</span><span class="qtipo">Inferência a partir de pistas textuais</span><span class="qnivel facil">Aberta</span></div>
-  <div class="txt-base"><p><b>Questão aberta 1:</b> Releia a tirinha da bolo "zero açúcar" (Q3). <b>(a)</b> Qual informação está implícita no último quadro? <b>(b)</b> Quais pistas visuais e contextuais permitem essa inferência?</p><textarea class="disc-area" placeholder="Resposta..." style="min-height:160px;width:100%;resize:vertical;margin:1rem 1.1rem .5rem;width:calc(100% - 2.2rem);display:block"></textarea></div>
-  <div class="disc-actions" style="padding:0 1.1rem .5rem"><button class="btn sec" onclick="toggleGabAberta('gabA1_D03.html',this)">👁️ Ver gabarito</button></div>
-  <div class="fb" id="gabA1_D03.html" style="display:none"><div class="ft" style="color:var(--azul)">Gabarito</div><div><b>(a)</b> O bolo continha açúcar, contrariando a afirmação "zero açúcar". <b>(b)</b> Pistas: formigas são atraídas por açúcar; elas aparecem exatamente no prato após o homem comer; o contraste com a promessa inicial cria a ironia que sustenta a inferência.</div></div>
-</div>
-<div class="card" id="cardAberta2" style="margin-top:1rem">
-  <div class="card-head"><span class="qnum">Questão Aberta 2</span><span class="qtipo">Distinguir inferência de opinião</span><span class="qnivel medio">Aberta</span></div>
-  <div class="txt-base"><p><b>Questão aberta 2:</b> Releia o trecho de Clarice Lispector em D05 Q8 (ou use a "Crônica da Escrita" Q1): <b>(a)</b> Identifique uma informação INFERIDA (não dita diretamente) pelo leitor. <b>(b)</b> Por que ela não é opinião do leitor, mas uma inferência legítima apoiada no texto?</p><textarea class="disc-area" placeholder="Resposta..." style="min-height:160px;width:100%;resize:vertical;margin:1rem 1.1rem .5rem;width:calc(100% - 2.2rem);display:block"></textarea></div>
-  <div class="disc-actions" style="padding:0 1.1rem .5rem"><button class="btn sec" onclick="toggleGabAberta('gabA2_D03.html',this)">👁️ Ver gabarito</button></div>
-  <div class="fb" id="gabA2_D03.html" style="display:none"><div class="ft" style="color:var(--azul)">Gabarito</div><div>Resposta variável conforme o texto escolhido. Critério: <b>(a)</b> a inferência deve ser sustentada por pistas textuais; <b>(b)</b> o estudante deve mostrar que a inferência não é livre — ela decorre de dados do texto, não de valores ou crenças pessoais do leitor.</div></div>
-</div>
-<div class="card" id="cardAberta3" style="margin-top:1rem">
-  <div class="card-head"><span class="qnum">Questão Aberta 3</span><span class="qtipo">Inferência em texto científico</span><span class="qnivel dificil">Aberta</span></div>
-  <div class="txt-base"><p><b>Questão aberta 3:</b> Releia "Entre páginas digitais e papel" (Q6). <b>(a)</b> O que se pode inferir sobre a posição da autora, mesmo que ela não afirme diretamente? <b>(b)</b> Que trechos do texto sustentam essa inferência? <b>(c)</b> Essa inferência poderia ser considerada diferente da que outro leitor faria? Explique.</p><textarea class="disc-area" placeholder="Resposta..." style="min-height:160px;width:100%;resize:vertical;margin:1rem 1.1rem .5rem;width:calc(100% - 2.2rem);display:block"></textarea></div>
-  <div class="disc-actions" style="padding:0 1.1rem .5rem"><button class="btn sec" onclick="toggleGabAberta('gabA3_D03.html',this)">👁️ Ver gabarito</button></div>
-  <div class="fb" id="gabA3_D03.html" style="display:none"><div class="ft" style="color:var(--azul)">Gabarito</div><div><b>(a)</b> Pode-se inferir que a autora defende o equilíbrio entre leitura digital e impressa — ela não rejeita nenhuma das duas. <b>(b)</b> A conclusão "é imperativo reconhecer as vantagens e desafios [...] mantendo um equilíbrio" sustenta essa inferência. <b>(c)</b> Sim: outro leitor poderia inferir que a autora é mais favorável ao digital (pela ênfase na igualdade de acesso) ou ao impresso (pela preocupação de Wolf). Inferências legítimas mas com ênfases diferentes.</div></div>
-</div>
 <div id="resultado"><h2>Quiz concluído!</h2><div class="medalha" id="medalha">🏅</div><div class="nota" id="notaFinal">—</div><p id="msgFinal"></p><div id="envioStatus" class="envio-status"></div><div style="margin-top:1rem"><button class="btn" onclick="location.reload()">↺ Embaralhar e refazer</button></div></div>
 </div>
 </section>
@@ -425,7 +406,7 @@ document.querySelectorAll(".tab-btn").forEach(btn=>{
 });
 
 /* ---------- QUIZ ---------- */
-const QS = shuffle(QRAW).map((q,idx)=>{
+const QS = shuffle(QRAW.filter(q=>q.alts&&q.alts.length>0)).map((q,idx)=>{
   const map=Array.from({length:q.alts.length},(_,i)=>i);
   const smap=shuffle(map);
   return{...q,dn:idx+1,alts:smap.map(i=>q.alts[i]),porque:smap.map(i=>q.porque[i]),correta:smap.indexOf(q.correta)};
@@ -643,9 +624,6 @@ const G5 = {
   }
 };
 
-function toggleGabAberta(id,btn){
-  var el=document.getElementById(id);if(!el)return;
-  if(el.style.display==='block'){el.style.display='none';btn.textContent='Ver gabarito';return;}
   var pwd=prompt('Senha do professor:');
   if(pwd===null)return;
   if(pwd===SENHA_MODO_ESTUDO){el.style.display='block';btn.textContent='Ocultar';}
