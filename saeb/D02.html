@@ -618,6 +618,7 @@ const G5={
   }
 };
 
+function liberarEstudo(el,btn){
   var pwd=prompt('Senha do professor:');
   if(pwd===null)return;
   if(pwd===SENHA_MODO_ESTUDO){el.style.display='block';btn.textContent='Ocultar';}
