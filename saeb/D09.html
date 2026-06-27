@@ -250,9 +250,9 @@ footer{text-align:center;padding:1.5rem;font-size:.76rem;color:var(--txt2)}
 </div>
 <div class="prog-wrap"><span class="prog-label">Progresso</span><div class="prog-track"><div class="prog-fill" id="pFill"></div></div><span class="score" id="score">0 / 12</span></div>
 <div id="quiz" style="display:flex;flex-direction:column;gap:1.5rem"></div>
-<div class="card" id="cardAberta1" style="margin-top:1.5rem"><div class="card-head"><span class="qnum">Questão Aberta 1</span><span class="qtipo">Registro e contexto comunicativo</span><span class="qnivel facil">Aberta</span></div><div class="txt-base" style="margin:1rem 1.1rem 0"><b>Q.A.1:</b> Releia o par Q10 (carta vs. chat). (a) Por que o mesmo assunto exige registros tao diferentes? (b) O que aconteceria se a autora usasse linguagem de chat para reclamar a empresa?</div><textarea class="disc-area" style="min-height:160px;width:calc(100% - 2.2rem);resize:vertical;margin:1rem 1.1rem .5rem;display:block" placeholder="Escreva sua resposta..."></textarea><div class="disc-actions" style="padding:0 1.1rem .8rem"><button class="btn sec" onclick="toggleGabAberta('gabA1_d09',this)">Ver gabarito</button></div><div class="fb" id="gabA1_d09" style="display:none;margin:0 1.1rem 1rem"><div class="ft" style="color:var(--azul)">Gabarito sugerido</div><div>(a) Interlocutores e objetivos diferentes: a empresa responde a criterios formais; a amiga e uma pessoa proxima. (b) A reclamacao perderia credibilidade e peso institucional; a empresa poderia nao levar a serio.</div></div></div>
-<div class="card" id="cardAberta2" style="margin-top:1.5rem"><div class="card-head"><span class="qnum">Questão Aberta 2</span><span class="qtipo">Marcas de registro formal e informal</span><span class="qnivel medio">Aberta</span></div><div class="txt-base" style="margin:1rem 1.1rem 0"><b>Q.A.2:</b> No par Q12 (cronica vs. autobiografia academica), cite 3 marcas concretas que diferenciam o registro informal do formal. Para cada marca, explique o que ela revela.</div><textarea class="disc-area" style="min-height:160px;width:calc(100% - 2.2rem);resize:vertical;margin:1rem 1.1rem .5rem;display:block" placeholder="Escreva sua resposta..."></textarea><div class="disc-actions" style="padding:0 1.1rem .8rem"><button class="btn sec" onclick="toggleGabAberta('gabA2_d09',this)">Ver gabarito</button></div><div class="fb" id="gabA2_d09" style="display:none;margin:0 1.1rem 1rem"><div class="ft" style="color:var(--azul)">Gabarito sugerido</div><div>(1) "Pra nao" (informal) x "A fim de" (formal) - revela intimidade vs. distancia; (2) "que eu nunca fiz" (comentario pessoal) x "que a autora nao chegou a executar" (impessoal); (3) 1a pessoa (eu, minha) x 3a pessoa (a autora) - informal pressupoe relacao direta; formal cria distanciamento.</div></div></div>
-<div class="card" id="cardAberta3" style="margin-top:1.5rem"><div class="card-head"><span class="qnum">Questão Aberta 3</span><span class="qtipo">Producao em dois registros</span><span class="qnivel dificil">Aberta</span></div><div class="txt-base" style="margin:1rem 1.1rem 0"><b>Q.A.3:</b> Escreva a mesma situacao (pedir para sair mais cedo do emprego) em dois registros: (a) mensagem de WhatsApp para um colega proximo; (b) pedido formal ao supervisor. Compare o que mudou.</div><textarea class="disc-area" style="min-height:160px;width:calc(100% - 2.2rem);resize:vertical;margin:1rem 1.1rem .5rem;display:block" placeholder="Escreva sua resposta..."></textarea><div class="disc-actions" style="padding:0 1.1rem .8rem"><button class="btn sec" onclick="toggleGabAberta('gabA3_d09',this)">Ver gabarito</button></div><div class="fb" id="gabA3_d09" style="display:none;margin:0 1.1rem 1rem"><div class="ft" style="color:var(--azul)">Gabarito sugerido</div><div>Avalie: os dois textos devem ter o mesmo assunto mas com vocabulario, tom e estrutura claramente diferentes. Criterio: (a) coloquial, direto, possiveis abreviacoes; (b) formal, vocativo adequado, verbo no imperativo educado ("solicito") e justificativa.</div></div></div>
+
+
+
 <div id="resultado"><h2>Quiz concluído!</h2><div class="medalha" id="medalha">🏅</div><div class="nota" id="notaFinal">—</div><p id="msgFinal"></p><div id="envioStatus" class="envio-status"></div><div style="margin-top:1rem"><button class="btn" onclick="location.reload()">↺ Embaralhar e refazer</button></div></div>
 </div>
 </section>
@@ -402,7 +402,7 @@ document.querySelectorAll(".tab-btn").forEach(btn=>{
 });
 
 /* ---------- QUIZ ---------- */
-const QS = shuffle(QRAW).map((q,idx)=>{
+const QS = shuffle(QRAW.filter(q=>q.alts&&q.alts.length>0)).map((q,idx)=>{
   const map=Array.from({length:q.alts.length},(_,i)=>i);
   const smap=shuffle(map);
   return{...q,dn:idx+1,alts:smap.map(i=>q.alts[i]),porque:smap.map(i=>q.porque[i]),correta:smap.indexOf(q.correta)};
@@ -620,9 +620,6 @@ const G5 = {
   }
 };
 
-function toggleGabAberta(id,btn){
-  var el=document.getElementById(id);if(!el)return;
-  if(el.style.display==='block'){el.style.display='none';btn.textContent='Ver gabarito';return;}
   var pwd=prompt('Senha do professor:');
   if(pwd===null)return;
   if(pwd===SENHA_MODO_ESTUDO){el.style.display='block';btn.textContent='Ocultar';}
