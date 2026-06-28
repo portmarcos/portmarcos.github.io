@@ -201,6 +201,80 @@ h1,h2,h3,h4,.num{font-family:'Montserrat',sans-serif}
   body{background:#fff}
   .rev-section,.corr-panel{box-shadow:none;border:1px solid #ccc}
 }
+
+/* ── AUTH ── */
+.auth-wrap{min-height:calc(100vh - 56px);display:flex;align-items:center;justify-content:center;padding:24px}
+.auth-card{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow2);padding:36px 32px;max-width:400px;width:100%}
+.auth-logo{text-align:center;font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.8rem;color:var(--az);margin-bottom:4px}
+.auth-sub{text-align:center;font-size:.83rem;color:var(--tx2);margin-bottom:28px}
+.auth-tabs{display:flex;gap:0;margin-bottom:24px;border-radius:var(--r2);overflow:hidden;border:1.5px solid var(--borda)}
+.auth-tab{flex:1;padding:9px;text-align:center;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.82rem;cursor:pointer;background:var(--card);color:var(--tx2);transition:.2s;border:none}
+.auth-tab.ativo{background:var(--az);color:#fff}
+.auth-field{margin-bottom:14px}
+.auth-field label{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.78rem;color:var(--tx2);display:block;margin-bottom:5px}
+.auth-input{width:100%;border:1.5px solid var(--borda);border-radius:var(--r2);padding:10px 14px;font-size:.9rem;font-family:'Open Sans',sans-serif;transition:.2s}
+.auth-input:focus{outline:none;border-color:var(--az);box-shadow:0 0 0 3px rgba(0,63,127,.08)}
+.auth-error{color:var(--verm);font-size:.78rem;margin-top:10px;display:none;padding:8px 12px;background:var(--vm-c);border-radius:var(--r2)}
+.auth-hint{font-size:.75rem;color:var(--tx3);margin-top:6px}
+.auth-btn{width:100%;padding:11px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.9rem;border:none;border-radius:var(--r2);background:var(--az);color:#fff;cursor:pointer;margin-top:6px;transition:.2s}
+.auth-btn:hover{background:var(--az2)}
+.sc-top-user{margin-left:auto;display:flex;align-items:center;gap:10px}
+.user-chip{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:4px 12px;font-size:.78rem;font-family:'Montserrat',sans-serif;color:#fff;font-weight:600}
+.btn-sair{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:20px;padding:5px 12px;cursor:pointer;font-size:.75rem;font-family:'Montserrat',sans-serif;font-weight:600;transition:.2s}
+.btn-sair:hover{background:rgba(255,255,255,.25)}
+
+/* ── DASHBOARD HOME ── */
+.dash-greeting{background:linear-gradient(135deg,#003F7F 60%,#0062CC);color:#fff;padding:32px 24px;text-align:center}
+.dash-greeting h2{font-size:1.4rem;font-weight:800}
+.dash-greeting p{font-size:.85rem;opacity:.8;margin-top:4px}
+.dash-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:700px;margin:-24px auto 0;padding:0 20px 32px;position:relative}
+.dash-card{background:var(--card);border-radius:var(--r);padding:22px;box-shadow:var(--shadow2);border:2px solid transparent;transition:.25s}
+.dash-card.disponivel{cursor:pointer}
+.dash-card.disponivel:hover{transform:translateY(-3px);border-color:var(--az2);box-shadow:0 8px 32px rgba(0,63,127,.18)}
+.dash-card.concluido{border-color:var(--verde);background:#F0FDF4}
+.dash-card.bloqueado{opacity:.55;cursor:not-allowed}
+.dc-ico{font-size:2rem;margin-bottom:10px;display:block}
+.dc-titulo{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.9rem;color:var(--az);margin-bottom:4px}
+.dc-status{font-size:.75rem;font-weight:700;font-family:'Montserrat',sans-serif;display:inline-block;padding:3px 10px;border-radius:20px;margin-top:6px}
+.dc-status.ok{background:var(--vd-c);color:var(--verde)}
+.dc-status.livre{background:var(--az3);color:var(--az2)}
+.dc-score{font-size:1.6rem;font-weight:900;font-family:'Montserrat',sans-serif;color:var(--verde);line-height:1}
+.dash-acoes{display:flex;gap:10px;justify-content:center;max-width:700px;margin:0 auto 32px;padding:0 20px;flex-wrap:wrap}
+
+/* ── PROGRESSO ── */
+.prog-wrap{max-width:820px;margin:0 auto;padding:24px 20px 60px}
+.prog-header{text-align:center;margin-bottom:28px}
+.prog-header h2{font-size:1.3rem;font-weight:800;color:var(--az)}
+.prog-header p{font-size:.83rem;color:var(--tx2);margin-top:4px}
+.prog-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px}
+.prog-stat{background:var(--card);border-radius:var(--r);padding:18px;text-align:center;box-shadow:var(--shadow)}
+.prog-stat .ps-val{font-size:1.8rem;font-weight:900;font-family:'Montserrat',sans-serif;color:var(--az);line-height:1}
+.prog-stat .ps-lbl{font-size:.72rem;color:var(--tx3);margin-top:4px;font-family:'Montserrat',sans-serif;font-weight:600}
+.prog-chart-wrap{background:var(--card);border-radius:var(--r);padding:24px;box-shadow:var(--shadow);margin-bottom:24px}
+.prog-chart-title{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.9rem;color:var(--tx);margin-bottom:20px}
+.prog-bars{display:flex;align-items:flex-end;gap:20px;height:140px;padding:0 8px}
+.prog-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;height:100%}
+.prog-bar-bg{flex:1;width:100%;background:var(--bg);border-radius:6px;overflow:hidden;display:flex;align-items:flex-end}
+.prog-bar-fill{width:100%;background:var(--az);border-radius:6px 6px 0 0;transition:height .6s ease;min-height:4px}
+.prog-bar-fill.alta{background:var(--verde)}
+.prog-bar-fill.media{background:#F39C12}
+.prog-bar-fill.baixa{background:var(--verm)}
+.prog-bar-val{font-family:'Montserrat',sans-serif;font-weight:800;font-size:.9rem;color:var(--tx)}
+.prog-bar-label{font-size:.72rem;color:var(--tx2);text-align:center;font-family:'Montserrat',sans-serif;font-weight:600;line-height:1.3}
+.prog-tema-card{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden}
+.prog-tema-head{background:var(--az);color:#fff;padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
+.prog-tema-head h3{font-size:.95rem;font-weight:700;font-family:'Montserrat',sans-serif}
+.prog-tema-score{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.1rem}
+.prog-tema-body{padding:20px}
+.prog-qs-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:16px}
+.prog-q{border-radius:var(--r2);padding:8px 4px;text-align:center;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.75rem}
+.prog-q.certa{background:var(--vd-c);color:var(--verde)}
+.prog-q.errada{background:var(--vm-c);color:var(--verm)}
+.prog-q.nao-respondida{background:var(--bg);color:var(--tx3)}
+.prog-tema-meta{font-size:.78rem;color:var(--tx3);font-family:'Montserrat',sans-serif}
+.prog-vazia{background:var(--card);border-radius:var(--r);padding:40px;text-align:center;box-shadow:var(--shadow);color:var(--tx2)}
+.prog-vazia span{font-size:3rem;display:block;margin-bottom:12px}
+@media(max-width:480px){.dash-cards{grid-template-columns:1fr}.prog-summary{grid-template-columns:repeat(3,1fr)}.prog-qs-grid{grid-template-columns:repeat(4,1fr)}}
 </style>
 </head>
 <body>
@@ -210,11 +284,74 @@ h1,h2,h3,h4,.num{font-family:'Montserrat',sans-serif}
     <div class="topo-logo">ENEM</div>
     <div class="topo-sub">Língua Portuguesa · Portal do Prof. Marcos</div>
   </div>
-  <button class="topo-btn" id="btnHome" onclick="irHome()">⌂ Início</button>
+  <div class="sc-top-user" id="topUser" style="display:none">
+    <span class="user-chip" id="userChip">—</span>
+    <button class="btn-sair" onclick="sair()">Sair</button>
+  </div>
+  <button class="topo-btn" id="btnHome" onclick="irHome()" style="display:none">⌂ Início</button>
 </div>
 
-<!-- SCREEN: HOME -->
-<div id="sc-home" class="screen ativo">
+<!-- SCREEN: AUTH -->
+<div id="sc-auth" class="screen ativo">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-logo">ENEM</div>
+      <div class="auth-sub">Portal Língua Portuguesa · Prof. Marcos Cruz</div>
+      <div class="auth-tabs">
+        <button class="auth-tab ativo" id="tab-login" onclick="trocarTabAuth('login')">Entrar</button>
+        <button class="auth-tab" id="tab-cadastro" onclick="trocarTabAuth('cadastro')">Primeira vez?</button>
+      </div>
+      <!-- LOGIN -->
+      <div id="form-login">
+        <div class="auth-field">
+          <label>Sua senha de acesso</label>
+          <input class="auth-input" type="password" id="loginSenha" placeholder="Digite sua senha" autocomplete="off">
+          <div class="auth-hint">A senha que você criou quando se cadastrou aqui.</div>
+        </div>
+        <div class="auth-error" id="loginErro"></div>
+        <button class="auth-btn" onclick="fazLogin()">Entrar →</button>
+      </div>
+      <!-- CADASTRO -->
+      <div id="form-cadastro" style="display:none">
+        <div class="auth-field">
+          <label>Seu nome completo</label>
+          <input class="auth-input" type="text" id="cadNome" placeholder="Ex: Maria da Silva" autocomplete="off">
+        </div>
+        <div class="auth-field">
+          <label>Turma / Série</label>
+          <input class="auth-input" type="text" id="cadTurma" placeholder="Ex: 9º Ano A" autocomplete="off">
+        </div>
+        <div class="auth-field">
+          <label>Crie uma senha</label>
+          <input class="auth-input" type="password" id="cadSenha" placeholder="Mínimo 4 caracteres" autocomplete="new-password">
+          <div class="auth-hint">Guarde sua senha! Você vai precisar dela toda vez que entrar.</div>
+        </div>
+        <div class="auth-field">
+          <label>Confirme a senha</label>
+          <input class="auth-input" type="password" id="cadConfirm" placeholder="Repita a senha" autocomplete="new-password">
+        </div>
+        <div class="auth-error" id="cadErro"></div>
+        <button class="auth-btn" onclick="fazCadastro()">Criar minha conta →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN: HOME LOGADO -->
+<div id="sc-home" class="screen">
+  <div class="dash-greeting">
+    <h2>Olá, <span id="dashNome">—</span>! 👋</h2>
+    <p id="dashTurma">—</p>
+  </div>
+  <div class="dash-cards" id="dashCards"></div>
+  <div class="dash-acoes">
+    <button class="btn btn-pri" onclick="irProgresso()">📊 Meu Desempenho</button>
+    <button class="btn btn-sec" onclick="irTemas()">✍️ Redação ENEM</button>
+  </div>
+</div>
+
+<!-- (home original removido) -->
+<div id="sc-home-old" style="display:none">
   <div class="home-hero">
     <h1>Preparação <span>ENEM</span></h1>
     <p>Língua Portuguesa · 9º ano · Prof. Marcos Cruz</p>
@@ -233,6 +370,16 @@ h1,h2,h3,h4,.num{font-family:'Montserrat',sans-serif}
       <span class="home-badge">5 temas · Correção C1-C5</span>
     </div>
   </div>
+</div>
+</div>
+
+<!-- SCREEN: PROGRESSO -->
+<div id="sc-progresso" class="screen">
+  <div class="section-header">
+    <h2>Meu Desempenho</h2>
+    <p id="progHeaderSub">—</p>
+  </div>
+  <div class="prog-wrap" id="progWrap"></div>
 </div>
 
 <!-- SCREEN: TÓPICOS -->
@@ -316,7 +463,7 @@ h1,h2,h3,h4,.num{font-family:'Montserrat',sans-serif}
   <div class="result-body">
     <div style="display:flex;gap:10px;justify-content:center;margin-bottom:24px;flex-wrap:wrap">
       <button class="btn btn-sec" onclick="irTopicos()">← Outros temas</button>
-      <button class="btn btn-pri" id="btnRefazer" onclick="refazer()">Refazer simulado</button>
+      <button class="btn btn-sec" onclick="irHome()">← Início</button><button class="btn btn-pri" onclick="irProgresso()">📊 Ver meu desempenho</button>
       <button class="btn btn-ouro" onclick="abrirGabarito()">Ver gabarito completo ▾</button>
     </div>
     <div id="gabaritoLista"></div>
@@ -822,6 +969,274 @@ const TEMAS = [
 }
 ];
 
+
+// ─── AUTENTICAÇÃO / PROGRESSO ────────────────────────────────────────────────
+
+const TEMAS_INFO = {
+  variacao:         {emoji:'🗣️', titulo:'Variação Linguística'},
+  intertextualidade:{emoji:'🔗', titulo:'Intertextualidade'},
+  generos:          {emoji:'📰', titulo:'Gêneros Textuais'}
+};
+
+const AUTH = {
+  current: null,
+
+  _key(s){ return 'enem_aluno_' + s.trim().toLowerCase(); },
+
+  _load(s){
+    try{ const d=localStorage.getItem(this._key(s)); return d?JSON.parse(d):null; }
+    catch(e){ return null; }
+  },
+
+  _save(){
+    if(!this.current) return;
+    try{ localStorage.setItem(this._key(this.current.senha), JSON.stringify(this.current)); }
+    catch(e){ console.warn('localStorage indisponível'); }
+  },
+
+  register(nome, turma, senha){
+    if(this._load(senha)) return {ok:false, msg:'Esta senha já está em uso. Escolha outra ou faça login.'};
+    this.current = {
+      nome: nome.trim(), turma: turma.trim(),
+      senha: senha.trim().toLowerCase(),
+      criado_em: new Date().toISOString(),
+      tentativas: {variacao:null, intertextualidade:null, generos:null}
+    };
+    this._save();
+    return {ok:true};
+  },
+
+  login(senha){
+    const d=this._load(senha);
+    if(!d) return {ok:false, msg:'Senha não encontrada. Verifique ou cadastre-se (guia "Primeira vez?").'};
+    this.current=d;
+    return {ok:true};
+  },
+
+  saveResult(topico, result){
+    if(!this.current) return;
+    this.current.tentativas[topico]=result;
+    this._save();
+  },
+
+  isLocked(topico){
+    return !!(this.current && this.current.tentativas[topico]);
+  },
+
+  logout(){
+    this.current=null;
+    document.getElementById('topUser').style.display='none';
+    document.getElementById('btnHome').style.display='none';
+    mostrar('sc-auth');
+  }
+};
+
+function trocarTabAuth(tab){
+  document.getElementById('form-login').style.display   = tab==='login'   ?'':'none';
+  document.getElementById('form-cadastro').style.display= tab==='cadastro'?'':'none';
+  document.getElementById('tab-login').className   = 'auth-tab'+(tab==='login'   ?' ativo':'');
+  document.getElementById('tab-cadastro').className= 'auth-tab'+(tab==='cadastro'?' ativo':'');
+}
+
+function showAuthErr(id, msg){
+  const el=document.getElementById(id);
+  el.textContent=msg; el.style.display='block';
+}
+function clearAuthErr(id){ document.getElementById(id).style.display='none'; }
+
+function fazLogin(){
+  clearAuthErr('loginErro');
+  const senha=document.getElementById('loginSenha').value.trim();
+  if(!senha){ showAuthErr('loginErro','Digite sua senha.'); return; }
+  const r=AUTH.login(senha);
+  if(!r.ok){ showAuthErr('loginErro', r.msg); return; }
+  document.getElementById('loginSenha').value='';
+  entrarPortal();
+}
+
+function fazCadastro(){
+  clearAuthErr('cadErro');
+  const nome   = document.getElementById('cadNome').value.trim();
+  const turma  = document.getElementById('cadTurma').value.trim();
+  const senha  = document.getElementById('cadSenha').value.trim();
+  const confirm= document.getElementById('cadConfirm').value.trim();
+  if(!nome||!turma||!senha){ showAuthErr('cadErro','Preencha todos os campos.'); return; }
+  if(senha.length<4){ showAuthErr('cadErro','A senha deve ter pelo menos 4 caracteres.'); return; }
+  if(senha!==confirm){ showAuthErr('cadErro','As senhas não coincidem.'); return; }
+  const r=AUTH.register(nome, turma, senha);
+  if(!r.ok){ showAuthErr('cadErro', r.msg); return; }
+  ['cadNome','cadTurma','cadSenha','cadConfirm'].forEach(id=>document.getElementById(id).value='');
+  entrarPortal();
+}
+
+function entrarPortal(){
+  const u=AUTH.current;
+  document.getElementById('userChip').textContent = u.nome.split(' ')[0];
+  document.getElementById('topUser').style.display='flex';
+  document.getElementById('btnHome').style.display='block';
+  irHome();
+}
+
+function sair(){
+  AUTH.logout();
+}
+
+// ─── DASHBOARD HOME ─────────────────────────────────────────────────────────
+
+function renderDashboard(){
+  const u=AUTH.current;
+  if(!u) return;
+  document.getElementById('dashNome').textContent  = u.nome.split(' ')[0];
+  document.getElementById('dashTurma').textContent = u.turma + ' · Portal ENEM LP';
+
+  const cont=document.getElementById('dashCards');
+  cont.innerHTML='';
+  const temas=['variacao','intertextualidade','generos'];
+
+  temas.forEach(t=>{
+    const info=TEMAS_INFO[t];
+    const res=u.tentativas[t];
+    const card=document.createElement('div');
+
+    if(res){
+      const pct=Math.round(res.score/res.total*100);
+      card.className='dash-card concluido';
+      card.innerHTML=`
+        <span class="dc-ico">${info.emoji}</span>
+        <div class="dc-titulo">${info.titulo}</div>
+        <div class="dc-score">${res.score}<span style="font-size:.8rem;font-weight:400;color:var(--tx2)">/${res.total}</span></div>
+        <span class="dc-status ok">✓ Concluído — ${pct}%</span>`;
+      card.onclick=()=>irProgresso();
+    } else {
+      card.className='dash-card disponivel';
+      card.innerHTML=`
+        <span class="dc-ico">${info.emoji}</span>
+        <div class="dc-titulo">${info.titulo}</div>
+        <div style="font-size:.78rem;color:var(--tx2);margin:4px 0">12 questões · 30 min</div>
+        <span class="dc-status livre">▶ Iniciar</span>`;
+      card.onclick=()=>iniciarQuiz(t);
+    }
+    cont.appendChild(card);
+  });
+
+  // Card de redação
+  const cr=document.createElement('div');
+  cr.className='dash-card disponivel';
+  cr.innerHTML=`<span class="dc-ico">✍️</span><div class="dc-titulo">Redação ENEM</div><div style="font-size:.78rem;color:var(--tx2);margin:4px 0">5 temas · escrita por etapas</div><span class="dc-status livre">▶ Acessar</span>`;
+  cr.onclick=()=>irTemas();
+  cont.appendChild(cr);
+}
+
+// ─── PROGRESSO ───────────────────────────────────────────────────────────────
+
+function irProgresso(){
+  if(!AUTH.current){ mostrar('sc-auth'); return; }
+  mostrar('sc-progresso');
+  renderProgresso();
+}
+
+function renderProgresso(){
+  const u=AUTH.current;
+  document.getElementById('progHeaderSub').textContent = u.nome + ' · ' + u.turma;
+
+  const wrap=document.getElementById('progWrap');
+  wrap.innerHTML='';
+
+  const temas=['variacao','intertextualidade','generos'];
+  const feitos=temas.filter(t=>u.tentativas[t]);
+
+  if(feitos.length===0){
+    wrap.innerHTML=`<div class="prog-vazia"><span>📭</span><p>Você ainda não completou nenhum simulado.<br>Volte ao início e escolha um tema para começar!</p></div>`;
+    return;
+  }
+
+  // Summary
+  const totalScore=feitos.reduce((a,t)=>a+u.tentativas[t].score,0);
+  const totalQs   =feitos.length*12;
+  const avgPct    =Math.round(totalScore/totalQs*100);
+
+  const sumDiv=document.createElement('div');
+  sumDiv.className='prog-summary';
+  sumDiv.innerHTML=`
+    <div class="prog-stat"><div class="ps-val">${feitos.length}/3</div><div class="ps-lbl">Temas concluídos</div></div>
+    <div class="prog-stat"><div class="ps-val">${totalScore}/${totalQs}</div><div class="ps-lbl">Acertos totais</div></div>
+    <div class="prog-stat"><div class="ps-val">${avgPct}%</div><div class="ps-lbl">Aproveitamento geral</div></div>`;
+  wrap.appendChild(sumDiv);
+
+  // Gráfico de barras
+  const chartDiv=document.createElement('div');
+  chartDiv.className='prog-chart-wrap';
+  let barsHTML='<div class="prog-chart-title">📊 Desempenho por tema</div><div class="prog-bars">';
+  temas.forEach(t=>{
+    const res=u.tentativas[t];
+    const info=TEMAS_INFO[t];
+    if(res){
+      const pct=Math.round(res.score/res.total*100);
+      const cls=pct>=75?'alta':pct>=50?'media':'baixa';
+      barsHTML+=`<div class="prog-bar-wrap">
+        <div class="prog-bar-val">${pct}%</div>
+        <div class="prog-bar-bg"><div class="prog-bar-fill ${cls}" style="height:${pct}%"></div></div>
+        <div class="prog-bar-label">${info.emoji}<br>${info.titulo.split(' ')[0]}</div>
+      </div>`;
+    } else {
+      barsHTML+=`<div class="prog-bar-wrap">
+        <div class="prog-bar-val" style="color:var(--tx3)">—</div>
+        <div class="prog-bar-bg"><div class="prog-bar-fill" style="height:4%;background:var(--borda)"></div></div>
+        <div class="prog-bar-label" style="color:var(--tx3)">${info.emoji}<br>${info.titulo.split(' ')[0]}</div>
+      </div>`;
+    }
+  });
+  barsHTML+='</div>';
+  chartDiv.innerHTML=barsHTML;
+  wrap.appendChild(chartDiv);
+
+  // Detalhamento por tema
+  feitos.forEach(t=>{
+    const res=u.tentativas[t];
+    const info=TEMAS_INFO[t];
+    const qs=BANCO[t].questoes;
+    const pct=Math.round(res.score/res.total*100);
+    const dataStr=new Date(res.data).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+    const m=Math.floor(res.tempo_seg/60), s=res.tempo_seg%60;
+    const tempoStr=`${m}min ${String(s).padStart(2,'0')}s`;
+
+    let gridHTML='';
+    res.respostas.forEach((r,i)=>{
+      const cls=r.escolhida<0?'nao-respondida':r.ok?'certa':'errada';
+      const ico=r.ok?'✓':'✗';
+      gridHTML+=`<div class="prog-q ${cls}" title="Q${i+1}: ${r.ok?'Correta':'Errada'}">${i+1}<br>${r.escolhida<0?'—':ico}</div>`;
+    });
+
+    const card=document.createElement('div');
+    card.className='prog-tema-card';
+    card.innerHTML=`
+      <div class="prog-tema-head">
+        <h3>${info.emoji} ${info.titulo}</h3>
+        <div class="prog-tema-score">${res.score}/${res.total} · ${pct}%</div>
+      </div>
+      <div class="prog-tema-body">
+        <div class="prog-qs-grid">${gridHTML}</div>
+        <div class="prog-tema-meta">📅 Realizado em: ${dataStr} &nbsp;|&nbsp; ⏱️ Tempo: ${tempoStr}</div>
+      </div>`;
+    wrap.appendChild(card);
+  });
+
+  // Botão voltar
+  const btnV=document.createElement('div');
+  btnV.style.cssText='text-align:center;margin-top:24px';
+  btnV.innerHTML=`<button class="btn btn-sec" onclick="irHome()">← Voltar ao início</button>`;
+  wrap.appendChild(btnV);
+}
+
+// Tecla Enter nos formulários de auth
+document.addEventListener('keydown', e=>{
+  if(e.key!=='Enter') return;
+  const fl=document.getElementById('form-login');
+  const fc=document.getElementById('form-cadastro');
+  if(fl && fl.style.display!=='none') fazLogin();
+  else if(fc && fc.style.display!=='none') fazCadastro();
+});
+
 // ─── ESTADO ───────────────────────────────────────────────────────────────────
 
 const S = {
@@ -846,13 +1261,29 @@ function mostrar(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('ativo'));
   document.getElementById(id).classList.add('ativo');
 }
-function irHome(){pararTimer();mostrar('sc-home');}
-function irTopicos(){pararTimer();mostrar('sc-topicos');}
+function irHome(){
+  pararTimer();
+  if(!AUTH.current){mostrar('sc-auth');return;}
+  mostrar('sc-home');
+  renderDashboard();
+}
+function irTopicos(){
+  pararTimer();
+  if(!AUTH.current){mostrar('sc-auth');return;}
+  mostrar('sc-topicos');
+}
 function irTemas(){mostrar('sc-temas');renderTemas();}
 
 // ─── QUIZ ─────────────────────────────────────────────────────────────────────
 
 function iniciarQuiz(topico){
+  if(!AUTH.current){mostrar('sc-auth');return;}
+  if(AUTH.isLocked(topico)){
+    alert('Você já realizou este simulado. Veja seu resultado em "Meu Desempenho".');
+    irHome();
+    return;
+  }
+
   S.topico = topico;
   S.qIdx = 0;
   S.respostas = new Array(12).fill(-1);
@@ -972,6 +1403,18 @@ function finalizarQuiz(){
   document.getElementById('rMsg').textContent=msgs.find(([v])=>pct>=v)[1];
   document.getElementById('gabaritoLista').innerHTML='';
   document.getElementById('btnRefazer').setAttribute('data-topico',S.topico);
+  // Salvar resultado no perfil do aluno
+  const respostasDetalhadas = S.respostas.map((r,i)=>({
+    escolhida: r,
+    correta: BANCO[S.topico].questoes[i].correta,
+    ok: r === BANCO[S.topico].questoes[i].correta
+  }));
+  AUTH.saveResult(S.topico, {
+    score: certas, total: 12,
+    data: new Date().toISOString(),
+    tempo_seg: Math.floor((S.endTime - S.startTime)/1000),
+    respostas: respostasDetalhadas
+  });
   mostrar('sc-result');
 }
 
