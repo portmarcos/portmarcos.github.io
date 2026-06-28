@@ -8,273 +8,347 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
+
+/* ── DESIGN PROFISSIONAL v3 ── */
 :root{
-  --az:#003F7F;--az2:#0062CC;--az3:#E8F0FB;
-  --ouro:#D4A800;--ouro-l:#FFF3B0;
-  --bg:#F4F7FC;--card:#fff;
-  --tx:#1A1A2E;--tx2:#4A5568;--tx3:#718096;
-  --verde:#1A7F4E;--vd-c:#D4EDDA;
-  --verm:#C0392B;--vm-c:#FDECEA;
-  --borda:#DDE3EE;
-  --r:12px;--r2:8px;
-  --shadow:0 2px 12px rgba(0,63,127,.10);
-  --shadow2:0 4px 24px rgba(0,63,127,.14);
+  --az:#003087;--az2:#0052CC;--az3:#E6EEFF;--az4:#1A1F5E;
+  --ouro:#FFB800;--ouro-l:#FFF8DC;
+  --bg:#F5F7FF;--card:#fff;
+  --tx:#0A1628;--tx2:#374151;--tx3:#6B7280;
+  --verde:#059669;--vd-c:#D1FAE5;
+  --verm:#DC2626;--vm-c:#FEE2E2;
+  --borda:#E5E9F5;
+  --r:16px;--r2:10px;--r3:24px;
+  --shadow:0 2px 8px rgba(0,48,135,.08);
+  --shadow2:0 8px 32px rgba(0,48,135,.14);
+  --shadow3:0 16px 64px rgba(0,48,135,.18);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh}
+body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;line-height:1.6}
 h1,h2,h3,h4,.num{font-family:'Montserrat',sans-serif}
 
 /* TOPO */
-.topo{background:var(--az);color:#fff;padding:14px 24px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.2)}
-.topo-logo{font-size:1.3rem;font-weight:900;letter-spacing:1px;color:#FFD700}
-.topo-sub{font-size:.75rem;opacity:.75;font-family:'Open Sans',sans-serif;font-weight:400}
-.topo-btn{margin-left:auto;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:20px;padding:6px 14px;cursor:pointer;font-size:.8rem;font-family:'Montserrat',sans-serif;font-weight:600;transition:.2s}
-.topo-btn:hover{background:rgba(255,255,255,.25)}
+.topo{background:linear-gradient(135deg,var(--az4) 0%,var(--az) 100%);color:#fff;padding:14px 24px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(0,0,0,.25)}
+.topo-logo{font-size:1.4rem;font-weight:900;letter-spacing:2px;color:var(--ouro);font-family:'Montserrat',sans-serif}
+.topo-sub{font-size:.72rem;opacity:.7;font-family:'Open Sans',sans-serif;font-weight:400;letter-spacing:.3px}
+.topo-btn{margin-left:auto;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:24px;padding:7px 16px;cursor:pointer;font-size:.78rem;font-family:'Montserrat',sans-serif;font-weight:700;transition:.2s;letter-spacing:.5px}
+.topo-btn:hover{background:rgba(255,255,255,.22);transform:translateY(-1px)}
 
 /* SCREENS */
-.screen{display:none;animation:fadeIn .3s ease}
+.screen{display:none;animation:fadeUp .35s ease}
 .screen.ativo{display:block}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 
-/* HOME */
-.home-hero{background:linear-gradient(135deg,#003F7F 60%,#0062CC);color:#fff;padding:48px 24px 56px;text-align:center;position:relative;overflow:hidden}
-.home-hero::before{content:'ENEM';font-family:'Montserrat',sans-serif;font-weight:900;font-size:9rem;color:rgba(255,255,255,.05);position:absolute;top:-10px;left:50%;transform:translateX(-50%);pointer-events:none;white-space:nowrap}
-.home-hero h1{font-size:2rem;font-weight:800;margin-bottom:8px;position:relative}
-.home-hero h1 span{color:#FFD700}
-.home-hero p{font-size:1rem;opacity:.85;position:relative}
-.home-cards{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:700px;margin:-28px auto 0;padding:0 20px 40px;position:relative}
-.home-card{background:var(--card);border-radius:var(--r);padding:28px 24px;box-shadow:var(--shadow2);cursor:pointer;transition:.25s;border:2px solid transparent;text-align:center}
-.home-card:hover{transform:translateY(-4px);box-shadow:0 8px 32px rgba(0,63,127,.18);border-color:var(--az2)}
-.home-card-icon{font-size:2.6rem;margin-bottom:12px;display:block}
-.home-card h2{font-size:1.05rem;font-weight:700;color:var(--az);margin-bottom:6px}
-.home-card p{font-size:.82rem;color:var(--tx2);line-height:1.5}
-.home-badge{display:inline-block;background:var(--ouro-l);color:var(--ouro);font-size:.7rem;font-weight:700;font-family:'Montserrat',sans-serif;padding:3px 10px;border-radius:20px;margin-top:10px;border:1px solid #e8cc70}
-@media(max-width:480px){.home-cards{grid-template-columns:1fr}.home-hero h1{font-size:1.6rem}}
+/* ── HOME DASHBOARD ── */
+.dash-greeting{background:linear-gradient(135deg,var(--az4) 0%,var(--az) 60%,var(--az2) 100%);color:#fff;padding:44px 24px 56px;text-align:center;position:relative;overflow:hidden}
+.dash-greeting::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.dash-greeting h2{font-size:1.8rem;font-weight:800;position:relative;margin-bottom:6px}
+.dash-greeting p{font-size:.9rem;opacity:.75;position:relative}
+.dash-nome-ouro{color:var(--ouro)}
+.dash-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;max-width:760px;margin:-28px auto 0;padding:0 20px 40px;position:relative}
+.dash-card{background:var(--card);border-radius:var(--r);padding:24px 20px;box-shadow:var(--shadow2);border:2px solid transparent;transition:.25s;position:relative;overflow:hidden}
+.dash-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--grad,var(--az));border-radius:var(--r) var(--r) 0 0}
+.dash-card.disponivel{cursor:pointer}
+.dash-card.disponivel:hover{transform:translateY(-5px);box-shadow:var(--shadow3);border-color:var(--az3)}
+.dash-card.concluido{--grad:var(--verde);border-color:#A7F3D0;background:linear-gradient(135deg,#fff 0%,#F0FDF4 100%)}
+.dc-ico{font-size:2.4rem;margin-bottom:12px;display:block}
+.dc-titulo{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.92rem;color:var(--az);margin-bottom:4px}
+.dc-score{font-size:2rem;font-weight:900;font-family:'Montserrat',sans-serif;color:var(--verde);line-height:1;margin:6px 0}
+.dc-status{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:700;font-family:'Montserrat',sans-serif;padding:5px 12px;border-radius:20px;margin-top:8px}
+.dc-status.ok{background:var(--vd-c);color:var(--verde)}
+.dc-status.livre{background:var(--az3);color:var(--az2)}
+.dc-desc{font-size:.78rem;color:var(--tx3);margin:4px 0}
+.dash-acoes{display:flex;gap:10px;justify-content:center;max-width:760px;margin:0 auto 40px;padding:0 20px;flex-wrap:wrap}
 
-/* TÓPICOS */
-.section-header{background:var(--az);color:#fff;padding:28px 24px 20px;text-align:center}
-.section-header h2{font-size:1.4rem;font-weight:800}
-.section-header p{font-size:.85rem;opacity:.8;margin-top:4px}
-.topic-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;max-width:800px;margin:32px auto;padding:0 20px}
-.topic-card{background:var(--card);border-radius:var(--r);padding:28px 20px;box-shadow:var(--shadow);cursor:pointer;transition:.25s;border-left:5px solid var(--cor,var(--az));text-align:center}
-.topic-card:hover{transform:translateY(-3px);box-shadow:var(--shadow2)}
-.topic-card span{font-size:2.2rem;display:block;margin-bottom:10px}
-.topic-card h3{font-size:1rem;font-weight:700;color:var(--az);margin-bottom:6px}
-.topic-card p{font-size:.78rem;color:var(--tx2)}
-.topic-card .tc-count{margin-top:10px;font-size:.75rem;font-weight:700;font-family:'Montserrat',sans-serif;color:var(--cor,var(--az));background:var(--az3);display:inline-block;padding:3px 10px;border-radius:20px}
+/* ── SEÇÃO HEADER ── */
+.section-header{background:linear-gradient(135deg,var(--az4),var(--az));color:#fff;padding:32px 24px 24px;text-align:center}
+.section-header h2{font-size:1.5rem;font-weight:800;margin-bottom:4px}
+.section-header p{font-size:.85rem;opacity:.8}
+.section-header .sh-badge{display:inline-block;background:var(--ouro);color:var(--az4);font-family:'Montserrat',sans-serif;font-weight:800;font-size:.72rem;padding:4px 14px;border-radius:20px;margin-top:10px;letter-spacing:.5px}
+
+/* ── TOPIC GRID ── */
+.topic-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;max-width:820px;margin:32px auto;padding:0 20px}
+.topic-card{background:var(--card);border-radius:var(--r);padding:28px 22px;box-shadow:var(--shadow);cursor:pointer;transition:.25s;border-top:5px solid var(--cor,var(--az));text-align:center;position:relative}
+.topic-card:hover{transform:translateY(-4px);box-shadow:var(--shadow2)}
+.topic-card span.tc-ico{font-size:2.4rem;display:block;margin-bottom:12px}
+.topic-card h3{font-size:1rem;font-weight:700;color:var(--az);margin-bottom:8px;font-family:'Montserrat',sans-serif}
+.topic-card p{font-size:.78rem;color:var(--tx2);line-height:1.55}
+.tc-count{margin-top:12px;font-size:.72rem;font-weight:700;font-family:'Montserrat',sans-serif;color:var(--cor,var(--az));background:var(--az3);display:inline-block;padding:4px 12px;border-radius:20px}
 .em-breve{opacity:.5;cursor:not-allowed !important}
 .em-breve:hover{transform:none !important;box-shadow:var(--shadow) !important}
 
-/* QUIZ */
-.quiz-header{background:var(--az);color:#fff;padding:14px 20px;display:flex;align-items:center;gap:16px}
-.quiz-topic-name{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.95rem}
-.timer-box{margin-left:auto;font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.2rem;padding:6px 16px;border-radius:20px;background:rgba(255,255,255,.15);transition:.4s;min-width:80px;text-align:center}
-.timer-box.warn{background:#F39C12;color:#fff}
-.timer-box.danger{background:#E74C3C;color:#fff;animation:pulsar .8s infinite}
-@keyframes pulsar{0%,100%{opacity:1}50%{opacity:.65}}
-.progress-bar{height:4px;background:rgba(255,255,255,.2)}
-.progress-fill{height:100%;background:#FFD700;transition:width .5s}
-.quiz-body{max-width:800px;margin:0 auto;padding:24px 20px}
-.q-nav{display:flex;justify-content:center;gap:6px;margin-bottom:20px;flex-wrap:wrap}
-.q-dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--borda);background:var(--card);cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.7rem;color:var(--tx3);transition:.2s;display:flex;align-items:center;justify-content:center}
-.q-dot.ativo{border-color:var(--az);color:var(--az);background:var(--az3)}
-.q-dot.respondida{background:var(--az);border-color:var(--az);color:#fff}
-.q-box{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:28px;margin-bottom:20px}
-.q-num{font-family:'Montserrat',sans-serif;font-size:.8rem;font-weight:700;color:var(--az2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:16px}
-.q-texto{background:var(--bg);border-left:4px solid var(--az2);border-radius:0 var(--r2) var(--r2) 0;padding:16px 18px;margin-bottom:18px;font-size:.9rem;line-height:1.75;white-space:pre-line}
-.q-fonte{font-size:.72rem;color:var(--tx3);margin-top:8px;font-style:italic}
-.q-enun{font-size:.95rem;line-height:1.65;margin-bottom:20px;font-weight:600}
-.alt-btn{display:flex;align-items:flex-start;gap:12px;width:100%;background:var(--card);border:1.5px solid var(--borda);border-radius:var(--r2);padding:12px 16px;cursor:pointer;text-align:left;transition:.2s;margin-bottom:8px;font-family:'Open Sans',sans-serif}
-.alt-btn:hover:not(.bloqueada){border-color:var(--az2);background:var(--az3)}
-.alt-letra{font-family:'Montserrat',sans-serif;font-weight:800;font-size:.85rem;color:var(--az);min-width:22px;padding-top:1px}
-.alt-txt{font-size:.88rem;line-height:1.55;color:var(--tx)}
-.alt-btn.selecionada{border-color:var(--az);background:var(--az3)}
-.alt-btn.selecionada .alt-letra{color:var(--az)}
-.quiz-nav-btns{display:flex;gap:12px;justify-content:space-between;margin-top:4px}
-.btn{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.85rem;padding:10px 22px;border-radius:20px;border:none;cursor:pointer;transition:.2s}
-.btn-sec{background:var(--card);border:1.5px solid var(--borda);color:var(--tx2)}
-.btn-sec:hover{border-color:var(--az);color:var(--az)}
-.btn-pri{background:var(--az);color:#fff}
-.btn-pri:hover{background:var(--az2)}
-.btn-ouro{background:#D4A800;color:#fff}
-.btn-ouro:hover{background:#b89000}
-.btn-verm{background:var(--verm);color:#fff}
-.btn-verm:hover{background:#a93226}
+/* ── QUIZ ── */
+.quiz-header{background:linear-gradient(135deg,var(--az4),var(--az));color:#fff;padding:16px 24px;display:flex;align-items:center;gap:16px}
+.quiz-topic-name{font-family:'Montserrat',sans-serif;font-weight:800;font-size:1rem;letter-spacing:.3px}
+.timer-box{margin-left:auto;font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.15rem;padding:8px 20px;border-radius:24px;background:rgba(255,255,255,.15);transition:.4s;min-width:88px;text-align:center;border:1.5px solid rgba(255,255,255,.2)}
+.timer-box.warn{background:#F59E0B;border-color:#F59E0B;color:#fff}
+.timer-box.danger{background:#EF4444;border-color:#EF4444;color:#fff;animation:pulsar .7s infinite}
+@keyframes pulsar{0%,100%{opacity:1}50%{opacity:.6}}
+.progress-bar{height:5px;background:rgba(255,255,255,.15)}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--ouro),#FBBF24);transition:width .5s;border-radius:0 3px 3px 0}
 
-/* RESULTADOS */
-.result-hero{background:linear-gradient(135deg,#003F7F,#0062CC);color:#fff;padding:40px 24px;text-align:center}
-.result-score{font-size:4rem;font-weight:900;color:#FFD700;line-height:1}
-.result-label{font-size:.9rem;opacity:.8;margin-top:6px}
-.result-msg{font-size:1.1rem;font-weight:700;margin-top:16px}
-.result-stats{display:flex;justify-content:center;gap:32px;margin-top:20px;flex-wrap:wrap}
-.result-stat{text-align:center}
-.result-stat .val{font-size:1.5rem;font-weight:800;font-family:'Montserrat',sans-serif}
-.result-stat .lbl{font-size:.75rem;opacity:.75}
-.result-body{max-width:800px;margin:0 auto;padding:28px 20px}
+/* Quiz body */
+.quiz-body{max-width:820px;margin:0 auto;padding:28px 20px}
+.q-nav{display:flex;justify-content:center;gap:7px;margin-bottom:24px;flex-wrap:wrap}
+.q-dot{width:32px;height:32px;border-radius:50%;border:2.5px solid var(--borda);background:var(--card);cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.72rem;color:var(--tx3);transition:.2s;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
+.q-dot.ativo{border-color:var(--az2);color:var(--az2);background:var(--az3);transform:scale(1.1)}
+.q-dot.respondida{background:var(--az);border-color:var(--az);color:#fff}
+
+.q-box{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow2);padding:32px;margin-bottom:24px}
+.q-num{display:flex;align-items:center;gap:8px;font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:700;color:var(--az2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:20px}
+.q-num::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--az3),transparent)}
+.q-texto{background:linear-gradient(135deg,#F8FAFF,var(--az3));border-left:4px solid var(--az2);border-radius:0 var(--r2) var(--r2) 0;padding:20px 22px;margin-bottom:22px;font-size:.9rem;line-height:1.8;white-space:pre-line}
+.q-fonte{font-size:.71rem;color:var(--tx3);margin-top:10px;font-style:italic;padding-top:8px;border-top:1px solid var(--borda)}
+.q-enun{font-size:.97rem;line-height:1.7;margin-bottom:24px;font-weight:600;color:var(--tx)}
+
+/* Alternativas */
+.alt-btn{display:flex;align-items:flex-start;gap:14px;width:100%;background:var(--card);border:2px solid var(--borda);border-radius:var(--r2);padding:14px 18px;cursor:pointer;text-align:left;transition:.2s;margin-bottom:10px;font-family:'Open Sans',sans-serif;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.alt-btn:hover:not(.bloqueada){border-color:var(--az2);background:var(--az3);transform:translateX(4px)}
+.alt-letra{font-family:'Montserrat',sans-serif;font-weight:900;font-size:.82rem;color:var(--az);min-width:26px;padding-top:2px;flex-shrink:0;width:28px;height:28px;background:var(--az3);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.alt-txt{font-size:.88rem;line-height:1.6;color:var(--tx);flex:1}
+.alt-btn.selecionada{border-color:var(--az);background:var(--az3);box-shadow:0 0 0 3px rgba(0,48,135,.1)}
+.alt-btn.selecionada .alt-letra{background:var(--az);color:#fff}
+
+/* Botões */
+.quiz-nav-btns{display:flex;gap:12px;justify-content:space-between;margin-top:8px}
+.btn{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.82rem;padding:11px 24px;border-radius:24px;border:none;cursor:pointer;transition:.2s;letter-spacing:.3px}
+.btn-sec{background:var(--card);border:2px solid var(--borda);color:var(--tx2);box-shadow:var(--shadow)}
+.btn-sec:hover{border-color:var(--az);color:var(--az);transform:translateY(-1px)}
+.btn-pri{background:linear-gradient(135deg,var(--az),var(--az2));color:#fff;box-shadow:0 4px 16px rgba(0,48,135,.3)}
+.btn-pri:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,48,135,.4)}
+.btn-ouro{background:linear-gradient(135deg,#D97706,var(--ouro));color:#fff;box-shadow:0 4px 16px rgba(217,119,6,.3)}
+.btn-ouro:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(217,119,6,.4)}
+.btn-verm{background:linear-gradient(135deg,#B91C1C,var(--verm));color:#fff}
+.btn-verde{background:linear-gradient(135deg,#047857,var(--verde));color:#fff;box-shadow:0 4px 16px rgba(5,150,105,.3)}
+.btn-verde:hover{transform:translateY(-2px)}
+
+/* ── RESULTADO ── */
+.result-hero{background:linear-gradient(135deg,var(--az4),var(--az),var(--az2));color:#fff;padding:48px 24px;text-align:center;position:relative;overflow:hidden}
+.result-score-wrap{display:inline-flex;align-items:center;justify-content:center;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.12);border:3px solid var(--ouro);margin-bottom:16px}
+.result-score{font-size:3.2rem;font-weight:900;color:var(--ouro);line-height:1;font-family:'Montserrat',sans-serif}
+.result-score-sub{font-size:.8rem;opacity:.7;margin-top:2px}
+.result-msg{font-size:1.15rem;font-weight:700;margin-top:8px}
+.result-stats{display:flex;justify-content:center;gap:28px;margin-top:24px;flex-wrap:wrap}
+.result-stat{text-align:center;background:rgba(255,255,255,.1);border-radius:12px;padding:12px 20px}
+.result-stat .val{font-size:1.6rem;font-weight:900;font-family:'Montserrat',sans-serif}
+.result-stat .lbl{font-size:.72rem;opacity:.7;margin-top:2px}
+.result-body{max-width:820px;margin:0 auto;padding:32px 20px}
+
+/* Gabarito */
 .gabarito-item{background:var(--card);border-radius:var(--r);margin-bottom:14px;overflow:hidden;box-shadow:var(--shadow)}
-.gabarito-head{padding:14px 18px;display:flex;align-items:center;gap:12px;cursor:pointer}
-.gabarito-head .g-num{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.85rem;color:var(--tx2)}
-.gabarito-head .g-status{margin-left:auto;font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:20px}
+.gabarito-head{padding:16px 20px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:.15s}
+.gabarito-head:hover{background:var(--bg)}
+.gabarito-head .g-num{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.82rem;color:var(--tx2)}
+.gabarito-head .g-status{margin-left:auto;font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:700;padding:4px 12px;border-radius:20px;flex-shrink:0}
 .g-status.certo{background:var(--vd-c);color:var(--verde)}
 .g-status.errou{background:var(--vm-c);color:var(--verm)}
-.g-status.pulou{background:#f0f0f0;color:#888}
-.gabarito-body{display:none;padding:0 18px 18px;border-top:1px solid var(--borda)}
+.g-status.pulou{background:#F3F4F6;color:#9CA3AF}
+.gabarito-body{display:none;padding:0 20px 20px;border-top:1px solid var(--borda)}
 .gabarito-body.aberto{display:block}
-.g-texto{background:var(--bg);border-left:4px solid var(--az2);border-radius:0 var(--r2) var(--r2) 0;padding:12px 14px;margin:12px 0;font-size:.85rem;line-height:1.65;white-space:pre-line}
-.g-enun{font-size:.88rem;line-height:1.6;margin:10px 0;font-weight:600}
-.g-alts{margin:10px 0}
-.g-alt{display:flex;gap:10px;padding:8px 12px;border-radius:var(--r2);font-size:.85rem;margin-bottom:4px;align-items:flex-start}
-.g-alt .gl{font-weight:800;font-family:'Montserrat',sans-serif;min-width:18px;font-size:.8rem}
+.g-texto{background:linear-gradient(135deg,#F8FAFF,var(--az3));border-left:4px solid var(--az2);border-radius:0 var(--r2) var(--r2) 0;padding:14px 16px;margin:14px 0;font-size:.85rem;line-height:1.7;white-space:pre-line}
+.g-enun{font-size:.9rem;line-height:1.65;margin:12px 0;font-weight:600}
+.g-alt{display:flex;gap:10px;padding:9px 14px;border-radius:var(--r2);font-size:.85rem;margin-bottom:5px;align-items:flex-start}
+.g-alt .gl{font-weight:900;font-family:'Montserrat',sans-serif;min-width:20px;font-size:.78rem;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .g-alt.correta-alt{background:var(--vd-c);color:var(--verde)}
+.g-alt.correta-alt .gl{background:var(--verde);color:#fff}
 .g-alt.escolhida-errada{background:var(--vm-c);color:var(--verm)}
-.g-expl{background:var(--az3);border-radius:var(--r2);padding:12px 14px;font-size:.83rem;line-height:1.6;margin-top:10px;color:var(--az)}
+.g-alt.escolhida-errada .gl{background:var(--verm);color:#fff}
+.g-expl{background:var(--az3);border-radius:var(--r2);padding:14px 16px;font-size:.83rem;line-height:1.65;margin-top:12px;color:var(--az);border-left:3px solid var(--az)}
 
-/* TEMAS REDAÇÃO */
-.tema-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;max-width:900px;margin:32px auto;padding:0 20px 40px}
-.tema-card{background:var(--card);border-radius:var(--r);padding:24px 20px;box-shadow:var(--shadow);cursor:pointer;transition:.25s;border-top:5px solid var(--cor,var(--az))}
-.tema-card:hover{transform:translateY(-4px);box-shadow:var(--shadow2)}
-.tema-emoji{font-size:2rem;margin-bottom:12px;display:block}
-.tema-card h3{font-size:1rem;font-weight:700;color:var(--az);margin-bottom:8px;line-height:1.4}
-.tema-card p{font-size:.8rem;color:var(--tx2);line-height:1.5}
+/* ── MATRIZ ENEM ── */
+.matriz-wrap{max-width:1100px;margin:0 auto;padding:32px 20px 60px}
+.matriz-intro{text-align:center;margin-bottom:36px}
+.matriz-intro h2{font-size:1.4rem;font-weight:800;color:var(--az);margin-bottom:8px}
+.matriz-intro p{font-size:.88rem;color:var(--tx2);max-width:600px;margin:0 auto}
+.comp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-bottom:40px}
+.comp-card{background:var(--card);border-radius:var(--r);padding:24px;box-shadow:var(--shadow);border-top:5px solid var(--cor)}
+.comp-card h3{font-family:'Montserrat',sans-serif;font-weight:800;font-size:.95rem;color:var(--az);margin-bottom:4px}
+.comp-card .comp-sub{font-size:.78rem;color:var(--tx3);margin-bottom:16px}
+.comp-peso{display:inline-flex;align-items:center;gap:6px;background:var(--ouro-l);color:#92400E;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.72rem;padding:4px 12px;border-radius:20px;margin-bottom:16px}
+.comp-item{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;font-size:.83rem;line-height:1.5;color:var(--tx2)}
+.comp-item::before{content:'';flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--cor);margin-top:7px}
+.macete-box{background:linear-gradient(135deg,#FFFBEB,#FEF3C7);border:1.5px solid #FCD34D;border-radius:var(--r2);padding:14px 16px;margin-top:14px}
+.macete-box strong{font-family:'Montserrat',sans-serif;font-size:.75rem;color:#92400E;display:block;margin-bottom:6px}
+.macete-box ul{list-style:none;padding:0}
+.macete-box li{font-size:.8rem;color:#78350F;margin-bottom:4px;display:flex;gap:6px;line-height:1.45}
+.macete-box li::before{content:'⚡';flex-shrink:0;font-size:.72rem}
+.temas-lp{margin-top:40px}
+.temas-lp h2{font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.2rem;color:var(--az);margin-bottom:20px;text-align:center}
+.lp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.lp-card{background:var(--card);border-radius:var(--r);padding:20px;box-shadow:var(--shadow);border-left:4px solid var(--cor)}
+.lp-card h4{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.88rem;color:var(--az);margin-bottom:8px}
+.lp-card .lp-freq{font-size:.72rem;font-weight:700;color:var(--cor);background:var(--bg);padding:3px 10px;border-radius:20px;display:inline-block;margin-bottom:10px;font-family:'Montserrat',sans-serif}
+.lp-card p{font-size:.8rem;color:var(--tx2);line-height:1.5}
+.lp-card ul{margin:8px 0 0 12px;font-size:.78rem;color:var(--tx2);line-height:1.6}
 
-/* REDAÇÃO */
-.essay-wrap{max-width:820px;margin:0 auto;padding:24px 20px 60px}
-.stepper{display:flex;align-items:center;margin-bottom:28px;overflow-x:auto;padding-bottom:4px}
-.step{display:flex;align-items:center;gap:6px;font-size:.78rem;font-family:'Montserrat',sans-serif;font-weight:600;color:var(--tx3);white-space:nowrap}
-.step-circle{width:28px;height:28px;border-radius:50%;border:2px solid var(--borda);background:var(--card);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;transition:.3s;flex-shrink:0}
-.step.ativo .step-circle{background:var(--az);border-color:var(--az);color:#fff}
+/* ── REPERTÓRIOS ── */
+.rep-wrap{max-width:1000px;margin:0 auto;padding:28px 20px 60px}
+.rep-tabs{display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap;overflow-x:auto;padding-bottom:4px}
+.rep-tab{padding:8px 18px;border-radius:24px;border:2px solid var(--borda);background:var(--card);font-family:'Montserrat',sans-serif;font-weight:700;font-size:.78rem;cursor:pointer;transition:.2s;white-space:nowrap;color:var(--tx2)}
+.rep-tab.ativo{background:var(--az);border-color:var(--az);color:#fff}
+.rep-tab:hover:not(.ativo){border-color:var(--az);color:var(--az)}
+.rep-panel{display:none}
+.rep-panel.ativo{display:block}
+.rep-card{background:var(--card);border-radius:var(--r);margin-bottom:14px;box-shadow:var(--shadow);overflow:hidden}
+.rep-card-head{background:var(--az3);padding:14px 20px;display:flex;align-items:center;gap:12px;cursor:pointer}
+.rep-card-head h4{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.88rem;color:var(--az);flex:1}
+.rep-card-head .rep-tag{font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:20px;background:var(--az);color:#fff;font-family:'Montserrat',sans-serif}
+.rep-card-body{display:none;padding:20px}
+.rep-card-body.aberto{display:block}
+.rep-paragrafo{background:linear-gradient(135deg,#F8FAFF,var(--az3));border-left:3px solid var(--az);border-radius:0 var(--r2) var(--r2) 0;padding:14px 16px;font-size:.85rem;line-height:1.75;margin-bottom:12px;font-style:italic;color:var(--tx)}
+.rep-uso{font-size:.78rem;color:var(--tx2);line-height:1.55;margin-bottom:10px}
+.rep-conclusao{background:linear-gradient(135deg,#ECFDF5,#D1FAE5);border-left:3px solid var(--verde);border-radius:0 var(--r2) var(--r2) 0;padding:12px 14px;font-size:.8rem;color:#065F46;margin-bottom:4px}
+.rep-conclusao strong{display:block;font-family:'Montserrat',sans-serif;font-size:.72rem;margin-bottom:4px}
+.rep-filtro{text-align:center;margin-bottom:20px}
+.rep-filtro select{padding:10px 18px;border:2px solid var(--borda);border-radius:24px;font-family:'Montserrat',sans-serif;font-weight:600;font-size:.82rem;color:var(--az);background:var(--card);cursor:pointer;outline:none}
+.rep-filtro select:focus{border-color:var(--az)}
+
+/* ── REDAÇÃO GUIADA ── */
+.essay-wrap{max-width:840px;margin:0 auto;padding:28px 20px 60px}
+.stepper{display:flex;align-items:center;margin-bottom:32px;overflow-x:auto;padding-bottom:4px;gap:0}
+.step{display:flex;align-items:center;gap:8px;font-size:.75rem;font-family:'Montserrat',sans-serif;font-weight:700;color:var(--tx3);white-space:nowrap;padding:0 4px}
+.step-circle{width:32px;height:32px;border-radius:50%;border:2.5px solid var(--borda);background:var(--card);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:800;transition:.3s;flex-shrink:0;box-shadow:var(--shadow)}
+.step.ativo .step-circle{background:linear-gradient(135deg,var(--az),var(--az2));border-color:var(--az);color:#fff;box-shadow:0 4px 12px rgba(0,48,135,.3)}
 .step.feito .step-circle{background:var(--verde);border-color:var(--verde);color:#fff}
 .step.ativo{color:var(--az)}
-.step-line{flex:1;height:2px;background:var(--borda);margin:0 4px;min-width:16px}
+.step.feito{color:var(--verde)}
+.step-line{flex:1;height:2.5px;background:var(--borda);min-width:20px;transition:.3s}
 .step-line.feita{background:var(--verde)}
-.essay-panel{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:28px}
-.essay-panel h3{font-size:1.1rem;font-weight:700;color:var(--az);margin-bottom:6px}
-.essay-tema-label{font-size:.8rem;color:var(--tx3);margin-bottom:18px}
-.guide-box{background:var(--az3);border-radius:var(--r2);padding:16px;margin-bottom:18px;font-size:.83rem;line-height:1.65;color:var(--az)}
-.guide-box strong{display:block;font-family:'Montserrat',sans-serif;font-size:.8rem;margin-bottom:6px;color:var(--az)}
-.essay-textarea{width:100%;min-height:200px;resize:vertical;border:1.5px solid var(--borda);border-radius:var(--r2);padding:14px;font-family:'Open Sans',sans-serif;font-size:.9rem;line-height:1.75;color:var(--tx);transition:.2s;background:var(--bg)}
-.essay-textarea:focus{outline:none;border-color:var(--az);background:#fff;box-shadow:0 0 0 3px rgba(0,63,127,.08)}
-.wcount{font-size:.75rem;color:var(--tx3);text-align:right;margin-top:6px;font-family:'Montserrat',sans-serif}
-.essay-nav{display:flex;gap:12px;justify-content:space-between;margin-top:20px}
-.textos-base{margin-bottom:20px}
-.texto-base-item{border:1px solid var(--borda);border-radius:var(--r2);padding:14px 16px;margin-bottom:10px;font-size:.83rem;line-height:1.65}
-.texto-base-item .tb-titulo{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.78rem;color:var(--az2);margin-bottom:6px;text-transform:uppercase;letter-spacing:.3px}
+.essay-panel{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow2);padding:32px}
+.essay-panel h3{font-size:1.1rem;font-weight:800;color:var(--az);margin-bottom:4px;font-family:'Montserrat',sans-serif}
+.essay-tema-label{font-size:.8rem;color:var(--tx3);margin-bottom:20px;display:flex;align-items:center;gap:6px}
+.guide-box{background:linear-gradient(135deg,#EFF6FF,#DBEAFE);border:1.5px solid #BFDBFE;border-radius:var(--r2);padding:18px 20px;margin-bottom:22px}
+.guide-box strong{display:block;font-family:'Montserrat',sans-serif;font-size:.78rem;color:#1E40AF;margin-bottom:8px;letter-spacing:.3px}
+.guide-box p,.guide-box ul{font-size:.83rem;line-height:1.65;color:#1E3A8A}
+.guide-box ul{margin-left:14px}
+.guide-box li{margin-bottom:4px}
+.c5-guide{background:linear-gradient(135deg,#F0FDF4,#DCFCE7);border:1.5px solid #86EFAC;border-radius:var(--r2);padding:18px 20px;margin-bottom:22px}
+.c5-guide strong{display:block;font-family:'Montserrat',sans-serif;font-size:.78rem;color:#065F46;margin-bottom:10px}
+.c5-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;font-size:.83rem;color:#14532D;line-height:1.5}
+.c5-label{font-family:'Montserrat',sans-serif;font-weight:800;font-size:.72rem;background:var(--verde);color:#fff;padding:2px 8px;border-radius:12px;flex-shrink:0;margin-top:2px}
+.essay-textarea{width:100%;min-height:210px;resize:vertical;border:2px solid var(--borda);border-radius:var(--r2);padding:16px;font-family:'Open Sans',sans-serif;font-size:.9rem;line-height:1.8;color:var(--tx);transition:.2s;background:#FAFBFF}
+.essay-textarea:focus{outline:none;border-color:var(--az2);background:#fff;box-shadow:0 0 0 4px rgba(0,48,135,.08)}
+.wcount{font-size:.74rem;color:var(--tx3);text-align:right;margin-top:6px;font-family:'Montserrat',sans-serif;font-weight:600}
+.essay-nav{display:flex;gap:12px;justify-content:space-between;margin-top:24px}
+.textos-base{margin-bottom:24px}
+.texto-base-item{border:1.5px solid var(--borda);border-radius:var(--r2);padding:16px 18px;margin-bottom:12px;background:#FAFBFF}
+.texto-base-item .tb-titulo{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.75rem;color:var(--az2);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
+.texto-base-item p{font-size:.84rem;line-height:1.7;color:var(--tx)}
+.tema-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:20px;max-width:920px;margin:32px auto;padding:0 20px 40px}
+.tema-card{background:var(--card);border-radius:var(--r);padding:26px 22px;box-shadow:var(--shadow);cursor:pointer;transition:.25s;border-top:5px solid var(--cor,var(--az));position:relative;overflow:hidden}
+.tema-card:hover{transform:translateY(-4px);box-shadow:var(--shadow2)}
+.tema-emoji{font-size:2.2rem;margin-bottom:12px;display:block}
+.tema-card h3{font-size:.98rem;font-weight:700;color:var(--az);margin-bottom:8px;line-height:1.4;font-family:'Montserrat',sans-serif}
+.tema-card p{font-size:.78rem;color:var(--tx2);line-height:1.55}
 
-/* REVISÃO */
+/* ── REVISÃO ── */
 .rev-section{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden}
-.rev-head{background:var(--az);color:#fff;padding:12px 18px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.9rem}
-.rev-body{padding:18px;font-size:.88rem;line-height:1.8;white-space:pre-wrap;color:var(--tx)}
-.rev-wcount{padding:8px 18px;font-size:.75rem;color:var(--tx3);border-top:1px solid var(--borda);font-family:'Montserrat',sans-serif}
-.total-wcount{text-align:center;font-family:'Montserrat',sans-serif;font-weight:700;font-size:1rem;color:var(--az);margin-bottom:24px}
+.rev-head{background:linear-gradient(135deg,var(--az4),var(--az));color:#fff;padding:14px 20px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.9rem}
+.rev-body{padding:20px;font-size:.9rem;line-height:1.85;white-space:pre-wrap;color:var(--tx)}
+.rev-wcount{padding:8px 20px;font-size:.74rem;color:var(--tx3);border-top:1px solid var(--borda);font-family:'Montserrat',sans-serif;font-weight:600}
+.total-wcount{text-align:center;font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.1rem;color:var(--az);margin-bottom:28px;padding:14px;background:var(--az3);border-radius:var(--r2)}
 
 /* CORREÇÃO PROFESSOR */
-.corr-panel{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:28px;margin-top:24px}
-.corr-panel h3{font-size:1.1rem;font-weight:700;color:var(--az);margin-bottom:20px;border-bottom:2px solid var(--az);padding-bottom:10px}
-.corr-crit{margin-bottom:18px}
-.corr-crit label{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.85rem;color:var(--tx);display:block;margin-bottom:8px}
-.corr-crit small{font-size:.75rem;color:var(--tx3);font-weight:400;display:block;margin-bottom:8px;line-height:1.4}
-.corr-pontos{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
-.pt-btn{padding:6px 14px;border-radius:20px;border:1.5px solid var(--borda);background:var(--card);font-family:'Montserrat',sans-serif;font-weight:700;font-size:.8rem;cursor:pointer;transition:.2s;color:var(--tx2)}
+.corr-panel{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow2);padding:32px;margin-top:28px}
+.corr-panel h3{font-size:1.1rem;font-weight:800;color:var(--az);margin-bottom:24px;border-bottom:2px solid var(--az);padding-bottom:12px;font-family:'Montserrat',sans-serif}
+.corr-crit{margin-bottom:22px;padding:16px;background:var(--bg);border-radius:var(--r2)}
+.corr-crit label{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.85rem;color:var(--tx);display:block;margin-bottom:6px}
+.corr-crit small{font-size:.75rem;color:var(--tx3);display:block;margin-bottom:10px;line-height:1.45}
+.corr-pontos{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.pt-btn{padding:7px 16px;border-radius:20px;border:2px solid var(--borda);background:var(--card);font-family:'Montserrat',sans-serif;font-weight:700;font-size:.8rem;cursor:pointer;transition:.2s;color:var(--tx2)}
 .pt-btn:hover{border-color:var(--az);color:var(--az)}
 .pt-btn.sel{background:var(--az);border-color:var(--az);color:#fff}
-.corr-comentario{width:100%;min-height:60px;resize:vertical;border:1.5px solid var(--borda);border-radius:var(--r2);padding:10px 12px;font-family:'Open Sans',sans-serif;font-size:.83rem;color:var(--tx)}
+.corr-comentario{width:100%;min-height:64px;resize:vertical;border:2px solid var(--borda);border-radius:var(--r2);padding:10px 14px;font-family:'Open Sans',sans-serif;font-size:.83rem;color:var(--tx)}
 .corr-comentario:focus{outline:none;border-color:var(--az)}
-.corr-total{background:var(--az);color:#fff;border-radius:var(--r2);padding:18px;text-align:center;margin-top:24px}
-.corr-total .ct-num{font-size:2.5rem;font-weight:900;font-family:'Montserrat',sans-serif;color:#FFD700}
+.corr-total{background:linear-gradient(135deg,var(--az4),var(--az));color:#fff;border-radius:var(--r2);padding:24px;text-align:center;margin-top:28px}
+.corr-total .ct-num{font-size:3rem;font-weight:900;font-family:'Montserrat',sans-serif;color:var(--ouro)}
 .corr-total .ct-label{font-size:.85rem;opacity:.8;margin-top:4px}
 
-/* MODAL SENHA */
-.modal-over{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:500;align-items:center;justify-content:center}
+/* MODAL */
+.modal-over{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:500;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
 .modal-over.show{display:flex}
-.modal-box{background:var(--card);border-radius:var(--r);padding:32px;max-width:340px;width:90%;box-shadow:0 8px 40px rgba(0,0,0,.2);text-align:center}
-.modal-box h3{font-size:1.1rem;font-weight:700;color:var(--az);margin-bottom:8px}
-.modal-box p{font-size:.85rem;color:var(--tx2);margin-bottom:18px}
-.modal-input{width:100%;border:1.5px solid var(--borda);border-radius:var(--r2);padding:10px 14px;font-size:.9rem;text-align:center;font-family:'Montserrat',sans-serif;letter-spacing:3px;margin-bottom:12px}
-.modal-input:focus{outline:none;border-color:var(--az)}
-.modal-erro{color:var(--verm);font-size:.8rem;margin-bottom:10px;display:none}
+.modal-box{background:var(--card);border-radius:var(--r3);padding:36px;max-width:360px;width:92%;box-shadow:var(--shadow3);text-align:center}
+.modal-box h3{font-size:1.2rem;font-weight:800;color:var(--az);margin-bottom:8px;font-family:'Montserrat',sans-serif}
+.modal-box p{font-size:.85rem;color:var(--tx2);margin-bottom:20px;line-height:1.6}
+.modal-input{width:100%;border:2px solid var(--borda);border-radius:var(--r2);padding:12px 16px;font-size:.95rem;text-align:center;font-family:'Montserrat',sans-serif;letter-spacing:4px;margin-bottom:14px;transition:.2s}
+.modal-input:focus{outline:none;border-color:var(--az);box-shadow:0 0 0 3px rgba(0,48,135,.1)}
+.modal-erro{color:var(--verm);font-size:.8rem;margin-bottom:12px;display:none;padding:8px 12px;background:var(--vm-c);border-radius:var(--r2)}
 .modal-btns{display:flex;gap:10px;justify-content:center}
 
-/* IMPRESSÃO */
-@media print{
-  .topo,.topo-btn,.quiz-nav-btns,.essay-nav,.stepper,.btn,.modal-over{display:none!important}
-  .screen{display:block!important}
-  body{background:#fff}
-  .rev-section,.corr-panel{box-shadow:none;border:1px solid #ccc}
-}
-
-/* ── AUTH ── */
-.auth-wrap{min-height:calc(100vh - 56px);display:flex;align-items:center;justify-content:center;padding:24px}
-.auth-card{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow2);padding:36px 32px;max-width:400px;width:100%}
-.auth-logo{text-align:center;font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.8rem;color:var(--az);margin-bottom:4px}
-.auth-sub{text-align:center;font-size:.83rem;color:var(--tx2);margin-bottom:28px}
-.auth-tabs{display:flex;gap:0;margin-bottom:24px;border-radius:var(--r2);overflow:hidden;border:1.5px solid var(--borda)}
-.auth-tab{flex:1;padding:9px;text-align:center;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.82rem;cursor:pointer;background:var(--card);color:var(--tx2);transition:.2s;border:none}
-.auth-tab.ativo{background:var(--az);color:#fff}
-.auth-field{margin-bottom:14px}
-.auth-field label{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.78rem;color:var(--tx2);display:block;margin-bottom:5px}
-.auth-input{width:100%;border:1.5px solid var(--borda);border-radius:var(--r2);padding:10px 14px;font-size:.9rem;font-family:'Open Sans',sans-serif;transition:.2s}
-.auth-input:focus{outline:none;border-color:var(--az);box-shadow:0 0 0 3px rgba(0,63,127,.08)}
-.auth-error{color:var(--verm);font-size:.78rem;margin-top:10px;display:none;padding:8px 12px;background:var(--vm-c);border-radius:var(--r2)}
-.auth-hint{font-size:.75rem;color:var(--tx3);margin-top:6px}
-.auth-btn{width:100%;padding:11px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.9rem;border:none;border-radius:var(--r2);background:var(--az);color:#fff;cursor:pointer;margin-top:6px;transition:.2s}
-.auth-btn:hover{background:var(--az2)}
-.sc-top-user{margin-left:auto;display:flex;align-items:center;gap:10px}
-.user-chip{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:4px 12px;font-size:.78rem;font-family:'Montserrat',sans-serif;color:#fff;font-weight:600}
-.btn-sair{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:20px;padding:5px 12px;cursor:pointer;font-size:.75rem;font-family:'Montserrat',sans-serif;font-weight:600;transition:.2s}
-.btn-sair:hover{background:rgba(255,255,255,.25)}
-
-/* ── DASHBOARD HOME ── */
-.dash-greeting{background:linear-gradient(135deg,#003F7F 60%,#0062CC);color:#fff;padding:32px 24px;text-align:center}
-.dash-greeting h2{font-size:1.4rem;font-weight:800}
-.dash-greeting p{font-size:.85rem;opacity:.8;margin-top:4px}
-.dash-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:700px;margin:-24px auto 0;padding:0 20px 32px;position:relative}
-.dash-card{background:var(--card);border-radius:var(--r);padding:22px;box-shadow:var(--shadow2);border:2px solid transparent;transition:.25s}
-.dash-card.disponivel{cursor:pointer}
-.dash-card.disponivel:hover{transform:translateY(-3px);border-color:var(--az2);box-shadow:0 8px 32px rgba(0,63,127,.18)}
-.dash-card.concluido{border-color:var(--verde);background:#F0FDF4}
-.dash-card.bloqueado{opacity:.55;cursor:not-allowed}
-.dc-ico{font-size:2rem;margin-bottom:10px;display:block}
-.dc-titulo{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.9rem;color:var(--az);margin-bottom:4px}
-.dc-status{font-size:.75rem;font-weight:700;font-family:'Montserrat',sans-serif;display:inline-block;padding:3px 10px;border-radius:20px;margin-top:6px}
-.dc-status.ok{background:var(--vd-c);color:var(--verde)}
-.dc-status.livre{background:var(--az3);color:var(--az2)}
-.dc-score{font-size:1.6rem;font-weight:900;font-family:'Montserrat',sans-serif;color:var(--verde);line-height:1}
-.dash-acoes{display:flex;gap:10px;justify-content:center;max-width:700px;margin:0 auto 32px;padding:0 20px;flex-wrap:wrap}
-
-/* ── PROGRESSO ── */
-.prog-wrap{max-width:820px;margin:0 auto;padding:24px 20px 60px}
-.prog-header{text-align:center;margin-bottom:28px}
-.prog-header h2{font-size:1.3rem;font-weight:800;color:var(--az)}
-.prog-header p{font-size:.83rem;color:var(--tx2);margin-top:4px}
-.prog-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px}
-.prog-stat{background:var(--card);border-radius:var(--r);padding:18px;text-align:center;box-shadow:var(--shadow)}
-.prog-stat .ps-val{font-size:1.8rem;font-weight:900;font-family:'Montserrat',sans-serif;color:var(--az);line-height:1}
+/* PROGRESSO */
+.prog-wrap{max-width:840px;margin:0 auto;padding:28px 20px 60px}
+.prog-header{text-align:center;margin-bottom:32px}
+.prog-header h2{font-size:1.4rem;font-weight:800;color:var(--az);font-family:'Montserrat',sans-serif}
+.prog-header p{font-size:.85rem;color:var(--tx2);margin-top:6px}
+.prog-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:32px}
+.prog-stat{background:var(--card);border-radius:var(--r);padding:20px;text-align:center;box-shadow:var(--shadow)}
+.prog-stat .ps-val{font-size:2rem;font-weight:900;font-family:'Montserrat',sans-serif;color:var(--az);line-height:1}
 .prog-stat .ps-lbl{font-size:.72rem;color:var(--tx3);margin-top:4px;font-family:'Montserrat',sans-serif;font-weight:600}
-.prog-chart-wrap{background:var(--card);border-radius:var(--r);padding:24px;box-shadow:var(--shadow);margin-bottom:24px}
-.prog-chart-title{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.9rem;color:var(--tx);margin-bottom:20px}
-.prog-bars{display:flex;align-items:flex-end;gap:20px;height:140px;padding:0 8px}
+.prog-chart-wrap{background:var(--card);border-radius:var(--r);padding:28px;box-shadow:var(--shadow);margin-bottom:24px}
+.prog-chart-title{font-family:'Montserrat',sans-serif;font-weight:800;font-size:.9rem;color:var(--tx);margin-bottom:24px}
+.prog-bars{display:flex;align-items:flex-end;gap:24px;height:150px;padding:0 8px}
 .prog-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;height:100%}
-.prog-bar-bg{flex:1;width:100%;background:var(--bg);border-radius:6px;overflow:hidden;display:flex;align-items:flex-end}
-.prog-bar-fill{width:100%;background:var(--az);border-radius:6px 6px 0 0;transition:height .6s ease;min-height:4px}
-.prog-bar-fill.alta{background:var(--verde)}
-.prog-bar-fill.media{background:#F39C12}
-.prog-bar-fill.baixa{background:var(--verm)}
-.prog-bar-val{font-family:'Montserrat',sans-serif;font-weight:800;font-size:.9rem;color:var(--tx)}
-.prog-bar-label{font-size:.72rem;color:var(--tx2);text-align:center;font-family:'Montserrat',sans-serif;font-weight:600;line-height:1.3}
+.prog-bar-bg{flex:1;width:100%;background:var(--bg);border-radius:8px;overflow:hidden;display:flex;align-items:flex-end}
+.prog-bar-fill{width:100%;border-radius:8px 8px 0 0;transition:height .8s ease;min-height:4px}
+.prog-bar-fill.alta{background:linear-gradient(180deg,#34D399,var(--verde))}
+.prog-bar-fill.media{background:linear-gradient(180deg,#FBBF24,#D97706)}
+.prog-bar-fill.baixa{background:linear-gradient(180deg,#F87171,var(--verm))}
+.prog-bar-val{font-family:'Montserrat',sans-serif;font-weight:900;font-size:.95rem;color:var(--tx)}
+.prog-bar-label{font-size:.7rem;color:var(--tx2);text-align:center;font-family:'Montserrat',sans-serif;font-weight:700;line-height:1.4}
 .prog-tema-card{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden}
-.prog-tema-head{background:var(--az);color:#fff;padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
+.prog-tema-head{background:linear-gradient(135deg,var(--az4),var(--az));color:#fff;padding:16px 22px;display:flex;align-items:center;justify-content:space-between}
 .prog-tema-head h3{font-size:.95rem;font-weight:700;font-family:'Montserrat',sans-serif}
-.prog-tema-score{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.1rem}
-.prog-tema-body{padding:20px}
+.prog-tema-score{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.15rem;color:var(--ouro)}
+.prog-tema-body{padding:22px}
 .prog-qs-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:16px}
-.prog-q{border-radius:var(--r2);padding:8px 4px;text-align:center;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.75rem}
+.prog-q{border-radius:var(--r2);padding:8px 4px;text-align:center;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.73rem}
 .prog-q.certa{background:var(--vd-c);color:var(--verde)}
 .prog-q.errada{background:var(--vm-c);color:var(--verm)}
 .prog-q.nao-respondida{background:var(--bg);color:var(--tx3)}
 .prog-tema-meta{font-size:.78rem;color:var(--tx3);font-family:'Montserrat',sans-serif}
-.prog-vazia{background:var(--card);border-radius:var(--r);padding:40px;text-align:center;box-shadow:var(--shadow);color:var(--tx2)}
-.prog-vazia span{font-size:3rem;display:block;margin-bottom:12px}
-@media(max-width:480px){.dash-cards{grid-template-columns:1fr}.prog-summary{grid-template-columns:repeat(3,1fr)}.prog-qs-grid{grid-template-columns:repeat(4,1fr)}}
+.prog-vazia{background:var(--card);border-radius:var(--r);padding:48px;text-align:center;box-shadow:var(--shadow);color:var(--tx2)}
+.prog-vazia span{font-size:3.5rem;display:block;margin-bottom:16px}
+
+/* AUTH */
+.auth-wrap{min-height:calc(100vh - 56px);display:flex;align-items:center;justify-content:center;padding:24px;background:linear-gradient(135deg,#EFF6FF 0%,#F5F7FF 100%)}
+.auth-card{background:var(--card);border-radius:var(--r3);box-shadow:var(--shadow3);padding:40px 36px;max-width:420px;width:100%}
+.auth-logo{text-align:center;font-family:'Montserrat',sans-serif;font-weight:900;font-size:2rem;color:var(--az);margin-bottom:4px;letter-spacing:2px}
+.auth-logo span{color:var(--ouro)}
+.auth-sub{text-align:center;font-size:.82rem;color:var(--tx3);margin-bottom:28px}
+.auth-tabs{display:flex;gap:0;margin-bottom:28px;border-radius:var(--r2);overflow:hidden;border:2px solid var(--borda)}
+.auth-tab{flex:1;padding:10px;text-align:center;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.82rem;cursor:pointer;background:var(--card);color:var(--tx2);transition:.2s;border:none}
+.auth-tab.ativo{background:linear-gradient(135deg,var(--az),var(--az2));color:#fff}
+.auth-field{margin-bottom:16px}
+.auth-field label{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.76rem;color:var(--tx);display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px}
+.auth-input{width:100%;border:2px solid var(--borda);border-radius:var(--r2);padding:12px 16px;font-size:.9rem;font-family:'Open Sans',sans-serif;transition:.2s;background:#FAFBFF}
+.auth-input:focus{outline:none;border-color:var(--az2);background:#fff;box-shadow:0 0 0 4px rgba(0,48,135,.08)}
+.auth-error{color:var(--verm);font-size:.78rem;margin-top:10px;display:none;padding:10px 14px;background:var(--vm-c);border-radius:var(--r2)}
+.auth-hint{font-size:.73rem;color:var(--tx3);margin-top:5px;line-height:1.4}
+.auth-btn{width:100%;padding:13px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:.9rem;border:none;border-radius:var(--r2);background:linear-gradient(135deg,var(--az),var(--az2));color:#fff;cursor:pointer;margin-top:8px;transition:.2s;letter-spacing:.5px;box-shadow:0 4px 16px rgba(0,48,135,.3)}
+.auth-btn:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,48,135,.4)}
+.sc-top-user{margin-left:auto;display:flex;align-items:center;gap:10px}
+.user-chip{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:5px 14px;font-size:.78rem;font-family:'Montserrat',sans-serif;color:#fff;font-weight:700}
+.btn-sair{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:20px;padding:6px 14px;cursor:pointer;font-size:.75rem;font-family:'Montserrat',sans-serif;font-weight:700;transition:.2s}
+.btn-sair:hover{background:rgba(255,255,255,.25)}
+.progHeaderSub-txt{font-size:.83rem;color:var(--tx3)}
+
+/* ── TEMAS REDAÇÃO ── */
+.section-header .sh-nav{display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+.nav-chip{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:20px;padding:6px 16px;cursor:pointer;font-size:.78rem;font-family:'Montserrat',sans-serif;font-weight:700;transition:.2s}
+.nav-chip:hover{background:rgba(255,255,255,.25)}
+
+@media(max-width:480px){
+  .dash-cards{grid-template-columns:1fr}
+  .prog-summary{grid-template-columns:repeat(3,1fr)}
+  .prog-qs-grid{grid-template-columns:repeat(4,1fr)}
+  .comp-grid{grid-template-columns:1fr}
+  .lp-grid{grid-template-columns:1fr}
+  .quiz-body{padding:16px 12px}
+  .q-box{padding:20px 16px}
+  .auth-card{padding:28px 20px}
+}
+@media print{.topo,.topo-btn,.sc-top-user,.quiz-nav-btns,.essay-nav,.stepper,.btn,.modal-over,.rep-tabs,.rep-filtro{display:none!important}body{background:#fff}.screen{display:block!important}.rev-section,.corr-panel{box-shadow:none;border:1px solid #ccc}}
+
 </style>
 </head>
 <body>
@@ -346,7 +420,8 @@ h1,h2,h3,h4,.num{font-family:'Montserrat',sans-serif}
   <div class="dash-cards" id="dashCards"></div>
   <div class="dash-acoes">
     <button class="btn btn-pri" onclick="irProgresso()">📊 Meu Desempenho</button>
-    <button class="btn btn-sec" onclick="irTemas()">✍️ Redação ENEM</button>
+    <button class="btn btn-verde" onclick="irMatriz()">📋 Preparatório Completo</button>
+    <button class="btn btn-sec" onclick="irTemas()">✍️ Redação</button>
   </div>
 </div>
 
@@ -467,6 +542,230 @@ h1,h2,h3,h4,.num{font-family:'Montserrat',sans-serif}
       <button class="btn btn-ouro" onclick="abrirGabarito()">Ver gabarito completo ▾</button>
     </div>
     <div id="gabaritoLista"></div>
+  </div>
+</div>
+
+<!-- SCREEN: MATRIZ / PREPARATÓRIO ─────────────────── -->
+<div id="sc-matriz" class="screen">
+  <div class="section-header">
+    <h2>📋 Preparatório ENEM · Língua Portuguesa</h2>
+    <p>Tudo que você precisa saber para mandar bem</p>
+    <div class="sh-nav">
+      <span class="nav-chip" onclick="document.getElementById('bloco-comp').scrollIntoView({behavior:'smooth'})">🎯 5 Competências</span>
+      <span class="nav-chip" onclick="document.getElementById('bloco-temas').scrollIntoView({behavior:'smooth'})">📚 Temas LP</span>
+      <span class="nav-chip" onclick="document.getElementById('bloco-rep').scrollIntoView({behavior:'smooth'})">💡 Repertório</span>
+    </div>
+  </div>
+  <div class="matriz-wrap">
+    
+    <!-- COMPETÊNCIAS -->
+    <div class="matriz-intro" id="bloco-comp">
+      <h2>🎯 As 5 Competências da Redação ENEM</h2>
+      <p>Cada competência vale até 200 pontos. Entenda o que cada uma avalia e como ser estratégico.</p>
+    </div>
+    <div class="comp-grid">
+      <div class="comp-card" style="--cor:#0052CC">
+        <h3>C1 — Domínio da Norma Culta</h3>
+        <div class="comp-sub">Ortografia, acentuação, concordância, pontuação, regência</div>
+        <div class="comp-peso">⚖️ 200 pontos · Nível de dificuldade: médio</div>
+        <div class="comp-item">Cada desvio grave de norma culta reduz pontos</div>
+        <div class="comp-item">Crase, vírgula e concordância são as maiores armadilhas</div>
+        <div class="comp-item">Extensão da redação não compensa erros gramaticais</div>
+        <div class="macete-box">
+          <strong>⚡ MACETES PARA C1</strong>
+          <ul>
+            <li>Evite "a nível de", "ao encontro de" confundido com "de encontro a"</li>
+            <li>Nunca inicie parágrafo com pronome oblíquo átono ("Me parece que...")</li>
+            <li>Vírgula antes de "que" subordinativo é ERRO clássico</li>
+            <li>Use "cujo/cuja" em vez de "que o/que a" quando for relativo possessivo</li>
+            <li>Dê preferência a períodos curtos — menos chance de erro sintático</li>
+          </ul>
+        </div>
+      </div>
+      <div class="comp-card" style="--cor:#7C3AED">
+        <h3>C2 — Compreensão da Proposta</h3>
+        <div class="comp-sub">Ler a proposta corretamente e não fugir do tema</div>
+        <div class="comp-peso">⚖️ 200 pontos · Nível de dificuldade: alto risco</div>
+        <div class="comp-item">Fuga total de tema = ZERO na redação inteira</div>
+        <div class="comp-item">Tangenciar o tema = máximo 40 pontos em C2</div>
+        <div class="comp-item">A proposta sempre indica a perspectiva esperada</div>
+        <div class="macete-box">
+          <strong>⚡ MACETES PARA C2</strong>
+          <ul>
+            <li>Repita as palavras-chave do tema ao longo do texto — sinaliza que você não fugiu</li>
+            <li>Os textos motivadores SÃO O TEMA — leia todos antes de escrever</li>
+            <li>Se citar repertório, conecte SEMPRE de volta ao tema central</li>
+            <li>Não escreva sobre causas do problema se a proposta pede soluções</li>
+            <li>Marque os verbos da proposta (analisar, discutir, propor) — eles definem o que fazer</li>
+          </ul>
+        </div>
+      </div>
+      <div class="comp-card" style="--cor:#D97706">
+        <h3>C3 — Seleção e Organização das Informações</h3>
+        <div class="comp-sub">Argumentar com repertório, dados e lógica</div>
+        <div class="comp-peso">⚖️ 200 pontos · Alta peso estratégico</div>
+        <div class="comp-item">Repertório sociocultural é o diferencial da nota 1000</div>
+        <div class="comp-item">Argumento deve ter: AFIRMAÇÃO + EXEMPLO + CONCLUSÃO</div>
+        <div class="comp-item">Dados reais (IBGE, ONU, pesquisas) elevam a nota</div>
+        <div class="macete-box">
+          <strong>⚡ MACETES PARA C3</strong>
+          <ul>
+            <li>Fórmula: "[Autor] afirma que... Nesse sentido, observa-se que... [dado/exemplo]"</li>
+            <li>Nunca use repertório sem conectar ao tema — repertório decorativo = sem pontos</li>
+            <li>Evite "como diz o ditado" ou "desde os primórdios" — clichês prejudicam</li>
+            <li>Use conceitos (não apenas nomes): "alienação" vale mais que só "Marx"</li>
+            <li>Exemplo brasileiro + contexto global = argumento completo</li>
+          </ul>
+        </div>
+      </div>
+      <div class="comp-card" style="--cor:#059669">
+        <h3>C4 — Coesão e Coerência</h3>
+        <div class="comp-sub">Conectivos, pronomes, progressão temática</div>
+        <div class="comp-peso">⚖️ 200 pontos · Nível de dificuldade: médio</div>
+        <div class="comp-item">Conectivos inadequados derrubam a nota para 80 pontos</div>
+        <div class="comp-item">Cada parágrafo deve ter tópico frasal claro</div>
+        <div class="comp-item">Progressão: cada parágrafo avança — não repete</div>
+        <div class="macete-box">
+          <strong>⚡ MACETES PARA C4</strong>
+          <ul>
+            <li>Não use "entretanto" antes de argumento que CONFIRMA o anterior (use "ademais")</li>
+            <li>"Portanto" só na conclusão — introduz consequência lógica</li>
+            <li>Substitua "mas" por "contudo", "no entanto", "todavia" — mais formal</li>
+            <li>Evite "e também", "além disso, também", "igualmente, também"</li>
+            <li>Pronomes: use-os para retomar sem repetir; nunca deixe referente ambíguo</li>
+            <li>Releia cada parágrafo e pergunte: "isso avança a ideia anterior?"</li>
+          </ul>
+        </div>
+      </div>
+      <div class="comp-card" style="--cor:#DC2626">
+        <h3>C5 — Proposta de Intervenção</h3>
+        <div class="comp-sub">Quem faz? O quê? Como? Por quê? Detalhamento?</div>
+        <div class="comp-peso">⚖️ 200 pontos · Estratégia mais cobrada</div>
+        <div class="comp-item">5 elementos obrigatórios — faltando um = no máximo 120</div>
+        <div class="comp-item">Proposta vaga = máximo 80 pontos</div>
+        <div class="comp-item">Deve respeitar direitos humanos (sem violência)</div>
+        <div class="macete-box">
+          <strong>⚡ MACETES PARA C5</strong>
+          <ul>
+            <li>Estrutura: AGENTE + AÇÃO + MEIO/MODO + FINALIDADE + DETALHAMENTO/EFEITO</li>
+            <li>Agente específico > vago: "Ministério da Educação" > "o governo"</li>
+            <li>Meio específico > vago: "por meio de oficinas nas escolas" > "por meio de políticas"</li>
+            <li>Nunca proponha punição sem ressocialização — fere direitos humanos</li>
+            <li>Use "a fim de" ou "com vistas a" para introduzir a finalidade</li>
+            <li>O "detalhamento" é o resultado esperado: "...a fim de [X], resultando em [Y]"</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- TEMAS LP -->
+    <div class="temas-lp" id="bloco-temas">
+      <h2>📚 O que mais cai em Língua Portuguesa no ENEM</h2>
+      <div class="lp-grid">
+        <div class="lp-card" style="--cor:#0052CC">
+          <h4>Intertextualidade</h4>
+          <span class="lp-freq">🔴 CERTA — todo ano</span>
+          <p>Relação entre textos: paródia, paráfrase, alusão, citação, adaptação. O ENEM sempre apresenta dois textos em diálogo.</p>
+          <ul>
+            <li>Identifique o tipo: a paródia transforma; a paráfrase preserva</li>
+            <li>A alusão evoca sem citar diretamente</li>
+            <li>A charge usa intertexto visual + verbal</li>
+          </ul>
+        </div>
+        <div class="lp-card" style="--cor:#7C3AED">
+          <h4>Variação Linguística</h4>
+          <span class="lp-freq">🔴 CERTA — todo ano</span>
+          <p>Dialetos, registros, norma culta vs. norma padrão, preconceito linguístico, variedades regionais, gírias, neologismos.</p>
+          <ul>
+            <li>Variação diafásica = situacional (formal/informal)</li>
+            <li>Variação diatópica = regional (Norte/Sul)</li>
+            <li>Norma culta ≠ norma padrão (Faraco)</li>
+          </ul>
+        </div>
+        <div class="lp-card" style="--cor:#059669">
+          <h4>Gêneros Textuais</h4>
+          <span class="lp-freq">🔴 CERTA — todo ano</span>
+          <p>Crônica, charge, reportagem, artigo de opinião, conto, HQ, infográfico, blog, thread, publicidade.</p>
+          <ul>
+            <li>Função social + suporte + esfera = gênero</li>
+            <li>Compare dois gêneros sobre o mesmo tema</li>
+            <li>Identifique linguagem verbal + não verbal</li>
+          </ul>
+        </div>
+        <div class="lp-card" style="--cor:#D97706">
+          <h4>Figuras de Linguagem</h4>
+          <span class="lp-freq">🟠 MUITO FREQUENTE</span>
+          <p>Metáfora, metonímia, ironia, eufemismo, hipérbole, antítese, paradoxo, polissemia.</p>
+          <ul>
+            <li>Não basta nomear — explique o EFEITO no texto</li>
+            <li>Ironia: diz o contrário do que pensa</li>
+            <li>Eufemismo: suaviza o impacto</li>
+          </ul>
+        </div>
+        <div class="lp-card" style="--cor:#DC2626">
+          <h4>Argumentação e Coesão</h4>
+          <span class="lp-freq">🟠 MUITO FREQUENTE</span>
+          <p>Tese, argumento, contra-argumento, conectivos, operadores argumentativos, estrutura dissertativa.</p>
+          <ul>
+            <li>"Embora" = concessão (admite o oposto)</li>
+            <li>"Portanto" = conclusão lógica</li>
+            <li>Identifique a tese implícita do texto</li>
+          </ul>
+        </div>
+        <div class="lp-card" style="--cor:#0891B2">
+          <h4>Literatura Brasileira</h4>
+          <span class="lp-freq">🟠 MUITO FREQUENTE</span>
+          <p>Modernismo, Pré-modernismo, Regionalismo, obras do vestibular, adaptações literárias.</p>
+          <ul>
+            <li>1ª fase do Modernismo: ruptura, nacionalismo, experimental</li>
+            <li>2ª fase: engajamento social (Drummond, Graciliano)</li>
+            <li>Machado de Assis: ironia, narrador não confiável</li>
+          </ul>
+        </div>
+        <div class="lp-card" style="--cor:#6B21A8">
+          <h4>Efeitos de Sentido</h4>
+          <span class="lp-freq">🟡 FREQUENTE</span>
+          <p>Como recursos morfossintáticos (inversão, paralelismo, elipse) e lexicais (escolha de palavra) criam significado.</p>
+          <ul>
+            <li>Voz passiva: apaga o agente da ação</li>
+            <li>Inversão sintática: cria ênfase no elemento deslocado</li>
+            <li>Campo semântico: coesão lexical temática</li>
+          </ul>
+        </div>
+        <div class="lp-card" style="--cor:#9D174D">
+          <h4>Linguagem Não Verbal</h4>
+          <span class="lp-freq">🟡 FREQUENTE</span>
+          <p>Charges, tirinhas, infográficos, fotografia, obras de arte integradas a textos verbais.</p>
+          <ul>
+            <li>Descreva o que VÊ antes de interpretar</li>
+            <li>Verbal + não verbal se complementam ou contrastam</li>
+            <li>A ironia na charge é sempre visual + verbal</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- REPERTÓRIO -->
+    <div class="temas-lp" id="bloco-rep" style="margin-top:48px">
+      <h2>💡 Banco de Repertório para Redação</h2>
+      <div class="rep-filtro">
+        <select id="repSelect" onchange="filtrarRep(this.value)">
+          <option value="todos">🗂️ Todos os temas</option>
+          <option value="educacao">📚 Educação</option>
+          <option value="cultura">🎨 Cultura</option>
+          <option value="direitos">⚖️ Cidadania e Direitos Humanos</option>
+          <option value="saude">🏥 Saúde e Bem-estar</option>
+          <option value="ambiente">🌿 Meio Ambiente</option>
+          <option value="tecnologia">💻 Tecnologia</option>
+          <option value="trabalho">🔧 Trabalho e Economia</option>
+        </select>
+      </div>
+      <div id="repLista"></div>
+    </div>
+
+    <div style="text-align:center;margin-top:32px">
+      <button class="btn btn-sec" onclick="irHome()">← Voltar ao início</button>
+    </div>
   </div>
 </div>
 
@@ -640,124 +939,160 @@ intertextualidade:{
   questoes:[
   {
     texto:`TEXTO I
-A 13 de fevereiro de 1946, Graciliano Ramos escreve uma carta a Cândido Portinari:
-
-"Não há trabalho mais digno, penso eu. Dizem que somos pessimistas e exibimos deformações; contudo, as deformações e essa miséria existem fora da arte e são cultivadas pelos que nos censuram. Dos quadros que você me mostrou quando almocei no Cosme Velho pela última vez, o que mais me comoveu foi aquela mãe com a criança morta. Numa sociedade sem classes e sem miséria, seria possível fazer-se aquilo? Chego a pensar que teríamos cromos, anjinhos cor-de-rosa, e isto me horroriza."
+É pau, é pedra, é o fim do caminho
+É um resto de toco, é um pouco sozinho
+É um caco de vidro, é a vida, é o sol
+É a noite, é a morte, é o laço, é o anzol
+[...]
+TOM JOBIM. Águas de março, 1972 (fragmento).
 
 TEXTO II
-"Houve um tempo — tão perto, e, ó, tão longe — em que a arte era um holofote na unha encravada, não um campeonato de melhores esmaltes. A realidade é confusa. Contraditória. Muitas vezes incompreensível. A arte é onde tentamos nos mostrar nus, com todos os nossos defeitos."
-
-PRATA, A. Disponível em: folha.uol.com.br, 2024 (adaptado).`,
-    fonte:`ENEM 2024 — Questão 29`,
-    enun:`No que diz respeito à arte, o posicionamento de Antônio Prata, no Texto II, aproxima-se da tese de Graciliano Ramos, no Texto I, uma vez que ambos`,
-    alts:['defendem a dignidade do ofício dos artistas.','concluem que a arte reforça crenças pessoais do leitor.','apresentam a pobreza como única inspiração legítima para a arte.','afirmam o necessário caráter desestabilizador da arte.','atestam que há mudanças significativas na produção artística contemporânea.'],
-    correta:3,
-    expl:`Tanto Graciliano quanto Prata defendem que a arte deve questionar a realidade e mostrar seus problemas — não suavizá-los. Graciliano horroriza-se com a possibilidade de arte decorativa e feliz; Prata critica a arte que reforça certezas em vez de abalá-las. Os dois compartilham a tese de que a arte deve ter um caráter desestabilizador, que incomoda e confronta.`
-  },
-  {
-    texto:`Às vezes, no silêncio da noite, eu fico imaginando: que graça teria a vida sem música? Sem ela não há paz, não há beleza. Nos dias de festa e nas madrugadas de pranto, nas trilhas dos filmes e nas corridas no parque, o que seria de nós sem as canções?
-
-Quem nunca curou uma dor de cotovelo dançando lambada ou terminou de se afundar ouvindo sertanejo sofrência? Quantos já criticaram funk e fecharam a noite descendo até o chão? Raul nos ensinou que é preferível ser essa metamorfose ambulante do que ter aquela velha opinião formada sobre tudo.
-
-É pau, é pedra, é o fim do caminho. Há uma nuvem de lágrimas sobre os olhos, você está na lanterna dos afogados, o coração despedaçado. Mas, como um sopro, da janela do vizinho, entra o samba que reanima a mente. Levanta, sacode a poeira, dá a volta por cima.`,
-    fonte:`BITTAR, L. Disponível em: revistabula.com. Acesso em: 21 nov. 2021 (adaptado). | ENEM 2024 — Questão 22`,
-    enun:`Defendendo a importância da música para o bem-estar das pessoas, a autora usa, como recurso persuasivo, a`,
-    alts:['contradição, ao associar o coração despedaçado à alegria repentina no final do texto.','metáfora, ao citar a imagem da "metamorfose ambulante" como símbolo de transformação.','intertextualidade, ao resgatar versos de letras de canções conhecidas do público.','enumeração, ao mencionar diferentes ritmos musicais ao longo do texto.','hipérbole, ao falar em "sofrência", "tragédias" e "afogados".'],
-    correta:2,
-    expl:`A autora usa a intertextualidade ao resgatar versos e expressões de músicas conhecidas: "É pau, é pedra" (Tom Jobim), "metamorfose ambulante" (Raul Seixas), "Levanta, sacode a poeira" (Alceu Valença), "lanterna dos afogados" (Chico Buarque). Essas referências reforçam o argumento sobre o impacto emocional da música.`
-  },
-  {
-    texto:`O sol começa a descer por trás da vegetação da Ilha da Restinga, na outra margem do rio Paraíba, colorindo o céu de amarelo, laranja e lilás.
-
-Então se ouvem as primeiras notas do Bolero, do compositor francês Maurice Ravel, executadas pelo saxofonista Jurandy.
-
-É assim o pôr do sol da praia do Jacaré, em Cabedelo (Grande João Pessoa). Depois do Bolero, Jurandy toca Asa Branca, de Luiz Gonzaga, e Meu Sublime Torrão, de Genival Macedo, espécie de hino não oficial da Paraíba.`,
-    fonte:`PINHEIRO, A. Sol se põe embalado pelo Bolero de Ravel. Disponível em: tools.folha.com.br, 2012 (adaptado). | ENEM 2023 — Questão 32`,
-    enun:`A interpretação musical de Jurandy do Sax apresenta um repertório caracterizado pela`,
-    alts:['inter-relação de referenciais estéticos aparentemente distanciados.','valorização de músicas que revelam mensagens de serenidade e contemplação.','consagração do repertório erudito como cultura dominante em contextos populares.','iniciativa de estímulo à vocação turística da cidade de Cabedelo.','divisão hierárquica entre gêneros e estilos musicais distintos.'],
+"[...] nada vem do nada. Para ninguém, nem mesmo para Tom Jobim. Duas fontes são razoavelmente conhecidas. A primeira é o poema O caçador de esmeraldas, do mestre parnasiano Olavo Bilac: 'Foi em março, ao findar da chuva, quase à entrada do outono [...]'. E a outra é um ponto de macumba, gravado com sucesso por J. B. Carvalho, do Conjunto Tupi: 'É pau, é pedra, é seixo miúdo, roda a baiana por cima de tudo'. Combinar Olavo Bilac e macumba já seria bom; mas o que se vê em Águas de março vai muito além: tudo se transforma numa outra coisa e numa outra música, que recompõem o mundo para nós."
+NESTROVSKI, A. Três canções de Tom Jobim. São Paulo: Cosac Naify, 2004.`,
+    fonte:`ENEM 2020 — 1ª aplicação`,
+    enun:`Ao situar a composição no panorama cultural brasileiro, o Texto II destaca o(a)`,
+    alts:['diálogo que a letra da canção estabelece com diferentes tradições da cultura nacional.','singularidade com que o compositor converte referências eruditas em populares.','caráter inovador com que o compositor concebe o processo de criação artística.','relativização que a letra da canção promove na concepção tradicional de originalidade.','resgate que a letra da canção promove de obras pouco conhecidas pelo público no país.'],
     correta:0,
-    expl:`O repertório de Jurandy combina o Bolero de Ravel (música erudita europeia) com Asa Branca de Luiz Gonzaga (forró nordestino) e um hino paraibano — estilos aparentemente opostos que convivem no mesmo espetáculo. Isso exemplifica intertextualidade cultural: referenciais estéticos de origens distintas dialogando em um mesmo contexto.`
+    expl:`Nestrovski aponta que Tom Jobim bebeu em Olavo Bilac (literatura erudita parnasiana) e num ponto de macumba (cultura popular afro-brasileira) — tradições aparentemente opostas. O texto destaca exatamente esse diálogo intertextual com diferentes tradições culturais do Brasil, não a singularidade ou a inovação processual do compositor.`
+  },
+  {
+    texto:`CHARGE DE IOTTI — "O trânsito no feriadão é sempre um quadro dramático!"
+
+Na charge, o chargista Iotti reconstrói criativamente uma cena de Guernica, painel de Pablo Picasso que retrata os horrores e a destruição provocados pelo bombardeio a uma pequena cidade da Espanha durante a Guerra Civil. Na releitura, publicada no período de carnaval, destaca-se um carro no centro da composição — elemento introduzido por Iotti. A legenda verbal diz: "O trânsito no feriadão é sempre um quadro dramático!"
+[Jornal Zero Hora, 2 mar. 2006]`,
+    fonte:`ENEM 2014 — 1ª aplicação`,
+    enun:`Além da figura do carro, a linguagem verbal contribui para estabelecer um diálogo entre a obra de Picasso e a charge, ao explorar`,
+    alts:['uma referência ao contexto, "trânsito no feriadão", esclarecendo o referente tanto do texto de Iotti quanto da obra de Picasso.','uma referência ao tempo presente, com o emprego da forma verbal "é", evidenciando a atualidade do tema abordado.','um termo pejorativo, "trânsito", reforçando a imagem negativa de mundo caótico presente em Guernica.','uma referência temporal, "sempre", referindo-se à permanência de tragédias retratadas em Guernica e na charge.','uma expressão polissêmica, "quadro dramático", remetendo tanto à obra pictórica quanto ao contexto do trânsito brasileiro.'],
+    correta:4,
+    expl:`A expressão "quadro dramático" é polissêmica: "quadro" remete à tela de Picasso (obra pictórica) e "dramático" à tragédia representada em Guernica; simultaneamente, "quadro dramático" descreve o caos do trânsito no feriadão. Essa dupla remissão verbal ao intertexto (Guernica) e ao contexto (trânsito) é o recurso que o enunciado pergunta.`
+  },
+  {
+    texto:`TEXTO I — "A promessa da felicidade" (HQ)
+Quadrinhos da artista surda Ju Loyola: história sem palavras que acompanha uma jovem olhando para um mundo fantástico, com flores, e uma criança que a presenteia — narrativa visual completa, sem nenhuma palavra escrita.
+[JU LOYOLA. The promise of happiness. Disponível em: ladyscomics.com.br, 2018.]
+
+TEXTO II — Quadrinista surda faz sucesso na CCXP com narrativas silenciosas
+"A artista não escreve roteiros convencionais para suas obras. Sua experiência de ter que entender a comunicação pelo que vê faz com que ela se identifique muito mais com o que observa do que com o que as pessoas dizem. [...] Elas não são histórias em quadrinhos que perderam as palavras, mas sim que ganharam uma nova perspectiva."
+[Disponível em: catracalivre.com.br, 2018.]`,
+    fonte:`ENEM 2019 — 1ª aplicação`,
+    enun:`O Texto I exemplifica a obra de uma artista surda, que promove uma experiência de leitura inovadora, divulgada no Texto II. Independentemente de seus objetivos, ambos os textos`,
+    alts:['incentivam a produção de roteiros compostos por imagens.','colaboram para a valorização de enredos românticos.','revelam o sucesso de um evento de cartunistas.','contribuem com o processo de acessibilidade.','questionam o padrão tradicional das HQ.'],
+    correta:3,
+    expl:`O Texto I é uma HQ sem palavras — acessível a pessoas surdas e a leitores de qualquer língua. O Texto II divulga essa obra inovadora. Ambos, independentemente de seus propósitos específicos (criar arte / divulgar evento), contribuem com a acessibilidade: um ao produzir, outro ao difundir uma arte que alcança públicos antes excluídos por barreiras linguísticas.`
+  },
+  {
+    texto:`TEXTO I — Notícia
+"280 novos veículos por dia no estado. A cada dia, uma média de 280 novos veículos chega às ruas do Espírito Santo, segundo dados do Detran-ES. No final do mês passado, a frota já era de 1.395.342 unidades. O diretor-geral do Detran-ES relaciona o crescimento à facilidade de crédito: 'Como oferecemos um transporte coletivo que ainda precisa ser melhorado, inevitavelmente o cidadão que pode adquire seu próprio veículo.'"
+[Disponível em: gazetaonline.globo.com, 2012.]
+
+TEXTO II — Charge de Amarildo
+[Charge mostrando uma professora dizendo a um aluno: "Você pode me dizer onde dois corpos podem ocupar o mesmo espaço ao mesmo tempo?" — enquanto o aluno lê um jornal com a manchete "280 carros a mais por dia no estado".]
+[LIMA, A. Disponível em: amarildocharge.wordpress.com, 2012.]`,
+    fonte:`ENEM 2016 — 2ª aplicação`,
+    enun:`Os textos I e II tratam do mesmo tema, embora sejam de gêneros diferentes. Estabelecendo-se as relações entre os dois textos, entende-se que o Texto II tem a função de`,
+    alts:['reprovar as medidas do governo de incentivo à aquisição do carro próprio.','apontar uma possível alternativa para resolver a questão do excesso de veículos.','mostrar a dificuldade de solução imediata para resolver o problema do crescimento da frota.','criticar, por meio da sátira, as consequências do aumento da frota de veículos.','responsabilizar a má qualidade do serviço de transporte pelo crescimento do número de veículos.'],
+    correta:3,
+    expl:`A charge usa a lei física ("dois corpos não podem ocupar o mesmo espaço ao mesmo tempo") como ironia para satirizar o caos do trânsito causado pelo crescimento da frota. A professora faz a pergunta de física enquanto o aluno lê sobre 280 carros novos por dia — a charge não reprovamos o governo nem sugere solução; sua função é a crítica satírica às consequências do excesso de veículos.`
+  },
+  {
+    texto:`[Imagem de adaptação em quadrinhos de Grande sertão: veredas, de Guimarães Rosa. Os painéis mostram, com imagens expressionistas em preto e branco, cenas do sertão com linguagem visual intensa — formas desproporcionais de animais e personagens criando dramaticidade — enquanto o texto verbal reproduz trechos do romance: "Daí, vieram me chamar, causa dum bezerro... Um bezerro branco, erroso, os olhos de nem ser — se viu — e com máscara de cachorro... Determinaram — era o demo." / "Mataram. Dono dele nem sei quem for. Vieram emprestar minhas armas. Cedi. Não tenho abusões. O senhor ri certas risadas. Olhe: quando é tiro de verdade, primeiro a cachorrada pega a latir, depois, então, se vai ver se deu mortos. Senhor tolere, isto é o sertão."]
+ROSA, R. Grande sertão: veredas: adaptação. São Paulo: Globo, 2014.`,
+    fonte:`ENEM 2018 — 1ª aplicação`,
+    enun:`Na representação gráfica, a inter-relação de diferentes linguagens caracteriza-se por`,
+    alts:['romper com a linearidade das ações da narrativa literária.','ilustrar de modo fidedigno passagens representativas da história.','articular a tensão do romance à desproporcionalidade das formas.','potencializar a dramaticidade do episódio com recursos das artes visuais.','desconstruir a diagramação do texto literário pelo desequilíbrio da composição.'],
+    correta:3,
+    expl:`A adaptação em quadrinhos potencializa a dramaticidade do texto de Guimarães Rosa — já denso e tenso — adicionando recursos visuais como o contraste extremo em preto e branco, as formas expressionistas e a composição das imagens. A linguagem visual amplifica o que o texto verbal cria, intensificando o impacto emocional do episódio. Não há ruptura de linearidade nem desconstrução gráfica — há potencialização dramática.`
   },
   {
     texto:`TEXTO I
-"De tudo ao meu amor serei atento / Antes, e com tal zelo, e sempre, e tanto / Que mesmo em face do maior encanto / Dele se encante mais meu pensamento."
-(Vinícius de Moraes, "Soneto de Fidelidade", 1939)
+"Por 'complexo de vira-latas' entendo eu a inferioridade em que o brasileiro se coloca, voluntariamente, em face do resto do mundo. [...] Em Wembley, por que perdemos? Porque, diante do quadro inglês, louro e sardento, a equipe brasileira ganiu de humildade. Jamais foi tão evidente e, eu diria mesmo, espetacular o nosso vira-latismo [...]. É um problema de fé em si mesmo."
+RODRIGUES, N. À sombra das chuteiras imortais. São Paulo: Cia. das Letras, 1993.
+
+TEXTO II — Titãs: A melhor banda de todos os tempos da última semana
+"As músicas mais pedidas / Os discos que vendem mais / As novidades antigas / Nas páginas dos jornais / Um idiota em inglês / Se é idiota, é bem menos que nós / [...] / O melhor disco brasileiro de música americana / O melhor disco dos últimos anos de sucessos do passado / O maior sucesso de todos os tempos entre os dez maiores fracassos."
+TITÃS. A melhor banda de todos os tempos da última semana. São Paulo: Abril Music, 2001.`,
+    fonte:`ENEM 2018 — 2ª aplicação`,
+    enun:`O verso do Texto II que estabelece a adequada relação temática com "o nosso vira-latismo", presente no Texto I, é:`,
+    alts:['"As novidades antigas".', '"Os discos que vendem mais".', '"O melhor disco brasileiro de música americana".', '"A melhor banda de todos os tempos da última semana".', '"O maior sucesso de todos os tempos entre os dez maiores fracassos".'],
+    correta:2,
+    expl:`O "vira-latismo" de Nelson Rodrigues é a autodesvalorização do brasileiro em relação ao estrangeiro. O verso "O melhor disco brasileiro de música americana" expressa exatamente isso: o adjetivo "melhor" é esvaziado porque o produto é "brasileiro" tentando ser "americano" — um disco que se define pela referência ao outro. O brasileiro que se nega e imita o estrangeiro como forma de prestígio. Os outros versos são paradoxos irônicos, mas não dialogam especificamente com a inferioridade em relação ao exterior.`
+  },
+  {
+    texto:`TEXTO I
+[Imagem de anúncio: foto de uma mulher musculosa com a inscrição em maiúsculas: "AQUELES QUE PENSAM QUE NÃO TÊM TEMPO PARA FAZER EXERCÍCIO, MAIS CEDO OU MAIS TARDE SERÃO OBRIGADOS A TER TEMPO PARA AS DOENÇAS."]
 
 TEXTO II
-"De tudo ao meu Wi-Fi serei atento / Antes, e com tal zelo, e sempre, e tanto / Que mesmo em face do maior sinal fraco / Meu celular não perca nem um pacote."
-(Paródia anônima, circulação em redes sociais)`,
-    fonte:`Texto I: domínio público. Texto II: circulação anônima. | Questão elaborada — Estilo ENEM · Competência 5`,
-    enun:`A relação entre os textos configura uma paródia porque`,
-    alts:['reproduz literalmente o texto original, apenas atualizando palavras para o contexto digital.','mantém aspectos formais do texto de origem e transforma seu conteúdo para criar efeito cômico.','apresenta o mesmo tema amoroso de maneira mais direta e acessível ao leitor contemporâneo.','cita o texto original para embasar uma argumentação sobre o uso excessivo de tecnologia.','inverte completamente a forma e o conteúdo do texto de Vinícius, tornando-o irreconhecível.'],
+"Imaginemos um cidadão, residente na periferia de um grande centro urbano, que diariamente acorda às 5h para trabalhar, enfrenta em média duas horas de transporte público, em geral lotado, para chegar às 8h ao trabalho. Termina o expediente às 17h e chega em casa às 19h para, aí sim, cuidar dos afazeres domésticos, dos filhos etc. Como dizer a essa pessoa que ela deve praticar exercícios, pois é importante para sua saúde? [...] A probabilidade de essa pessoa praticar exercícios regularmente é significativamente menor que a de pessoas da classe média/alta que vivem outra realidade. Nesse caso, a abordagem individual do problema tende a fazer com que a pessoa se sinta impotente e, consequentemente, culpada pelo fato de ser ou estar sedentária."
+FERREIRA, M. S. RBCE, n. 2, jan. 2001.`,
+    fonte:`ENEM 2018 — 1ª aplicação`,
+    enun:`O segundo texto, que propõe uma reflexão sobre o primeiro acerca do impacto de mudanças no estilo de vida na saúde, apresenta uma visão`,
+    alts:['medicalizada, que relaciona a prática de exercícios físicos por qualquer indivíduo à promoção da saúde.','ampliada, que considera aspectos sociais intervenientes na prática de exercícios no cotidiano.','crítica, que associa a interferência das tarefas da casa ao sedentarismo do indivíduo.','focalizada, que atribui ao indivíduo a responsabilidade pela prevenção de doenças.','geracional, que preconiza a representação do culto à jovialidade.'],
     correta:1,
-    expl:`A paródia mantém a forma do texto original (estrutura do soneto, ritmo, esquema de rimas) mas transforma o conteúdo — o amor é substituído pelo Wi-Fi — gerando efeito cômico. Diferente da paráfrase (que mantém o sentido), a paródia subverte o conteúdo preservando a forma reconhecível.`
+    expl:`O Texto I responsabiliza individualmente quem não se exercita. O Texto II desloca o problema para o âmbito social: mostra que o trabalhador periférico não tem tempo para exercícios por razões estruturais (jornada, transporte, afazeres domésticos), não por falta de vontade. Essa é uma visão ampliada, que incorpora os determinantes sociais da saúde — não um problema individual, mas coletivo e estrutural.`
   },
   {
-    texto:`Em entrevista, a ministra alertou: "Se ficarmos chamando o povo para se preocupar sem que a crise chegue de verdade, vamos acabar como a história de Pedro e o Lobo — e quando o problema de fato bater à porta, ninguém vai acreditar."`,
-    fonte:`Situação hipotética para fins pedagógicos. | Questão elaborada — Estilo ENEM · Competência 5`,
-    enun:`A referência à "história de Pedro e o Lobo" funciona, nesse contexto, como`,
-    alts:['citação literal da fábula, que empresta autoridade literária ao discurso da ministra.','paráfrase que reescreve o conteúdo da fábula com outras palavras para fins argumentativos.','alusão que ativa o conhecimento prévio do leitor sobre a fábula para reforçar a ideia de falsos alarmes.','paródia que transforma o sentido original da fábula para criar um efeito irônico e crítico.','epígrafe que introduz o argumento principal a ser desenvolvido pela ministra.'],
-    correta:2,
-    expl:`A alusão é uma referência indireta a outro texto ou narrativa, sem citá-lo explicitamente. A ministra não conta a fábula — apenas menciona seu título, esperando que o leitor reconheça a moral (quem grita falsamente "lobo" acaba ignorado quando o perigo é real). Esse reconhecimento prévio é o que torna a alusão eficaz argumentativamente.`
-  },
-  {
-    texto:`Uma graphic novel brasileira reconta o "Hamlet" de Shakespeare no ambiente de uma universidade pública contemporânea: Hamlet é um estudante de filosofia que descobre que seu pai foi assassinado pelo reitor (tio Cláudio). Ofélia é uma DJ que perde a razão após a perseguição ao namorado. Polônio é um professor delator.`,
-    fonte:`Obra fictícia para fins pedagógicos. | Questão elaborada — Estilo ENEM · Competência 5`,
-    enun:`A relação entre a graphic novel e o texto shakespeariano caracteriza`,
-    alts:['uma paráfrase, pois a obra reproduz fielmente as ideias e estrutura do original em formato visual.','um plágio, pois utiliza personagens e trama de obra alheia sem atribuição ou autorização.','uma adaptação intertextual que estabelece diálogo produtivo entre o clássico e a realidade contemporânea.','uma citação explícita, pois reproduz os diálogos originais de Shakespeare em português.','uma epígrafe visual, pois a HQ funciona como introdução ilustrada ao texto original.'],
-    correta:2,
-    expl:`A adaptação intertextual transpõe personagens, temas e estrutura dramática de uma obra para um novo contexto sem ser plágio — porque transforma e recria, não copia. A graphic novel dialoga com Hamlet de Shakespeare, atualizando conflitos universais (traição, poder, loucura) para o contexto universitário brasileiro.`
-  },
-  {
-    texto:`No conto, a protagonista — uma mulher de meia-idade em cidade do interior — espera há dois anos o retorno do marido emigrado para São Paulo. Durante o dia, desfaz os planos que traça à noite para a vida deles juntos. Os vizinhos passaram a chamá-la de "a nova Penélope".`,
-    fonte:`Texto fictício para fins pedagógicos. | Questão elaborada — Estilo ENEM · Competência 5`,
-    enun:`A alusão ao mito de Penélope serve, no conto, para`,
-    alts:['comparar diretamente a situação contemporânea da personagem com o contexto da Guerra de Troia.','indicar que a personagem tem formação clássica e conhece a mitologia grega com profundidade.','iluminar, pelo mito, a experiência da espera criativa como forma de resistência à solidão e ao tempo.','criticar o papel submisso da mulher na sociedade contemporânea por meio da figura mitológica.','sugerir que a personagem usa a espera como estratégia de manipulação.'],
-    correta:2,
-    expl:`Penélope, na Odisseia, esperava Ulisses desfazendo à noite a tapeçaria que tecia de dia — usando a criatividade como modo de resistir ao tempo. A alusão enriquece a personagem contemporânea: sua espera não é passividade, mas ato criativo e resistente. O mito ilumina o presente sem precisar ser relatado.`
-  },
-  {
-    texto:`Em grupos de WhatsApp, circula uma imagem de Leonardo DiCaprio, do filme "O Grande Gatsby", brindando com uma taça de champanhe. A imagem passou a ser usada para celebrar qualquer pequena conquista cotidiana: passar na prova, encontrar a carteira perdida, conseguir vaga no estacionamento.`,
-    fonte:`Fenômeno de circulação digital, para fins pedagógicos. | Questão elaborada — Estilo ENEM · Competência 5`,
-    enun:`O meme descrito funciona como intertextualidade porque`,
-    alts:['reproduz literalmente uma cena do filme para criticar o consumo exagerado de cinema hollywoodiano.','cria um novo texto cujo sentido depende do reconhecimento de uma referência cultural compartilhada.','é uma paródia do filme que inverte o sentido da cena original para produzir efeito cômico deliberado.','cita explicitamente a fonte cinematográfica para garantir a correta atribuição autoral.','adapta esteticamente o conteúdo do filme para um novo contexto, constituindo releitura artística sofisticada.'],
-    correta:1,
-    expl:`O meme é uma forma contemporânea de intertextualidade: seu sentido depende de o receptor reconhecer a imagem de DiCaprio e associá-la a um sentimento de euforia comemorativa. Quem não conhece a referência cultural não entende o meme. É intertextualidade: um texto que só faz sentido pleno a partir de outro texto anterior.`
-  },
-  {
-    texto:`TEXTO A: "Como já dizia Carlos Drummond de Andrade, 'no meio do caminho tinha uma pedra', e no meio do nosso projeto também tinha uma: a burocracia."
+    texto:`TEXTO I
+"O Estatuto do Idoso completou 15 anos em 2018 e só no primeiro semestre o Disque 100 recebeu 16 mil denúncias de violação de direitos dos idosos em todo o país. [...] O Brasil está ficando para trás e é preciso levar em consideração que o país envelhece (tendência mundial) sem estar preparado para arcar com os desafios."
+[Disponível em: folhadelondrina.com.br, 2018.]
 
-TEXTO B: "O poema avança por entre pedras, obstáculos, pedregulhos que insistem em voltar — sempre a mesma pedra, sempre o mesmo tropeço, sempre o mesmo caminho bloqueado."`,
-    fonte:`Textos fictícios para fins pedagógicos. | Questão elaborada — Estilo ENEM · Competência 5`,
-    enun:`A diferença entre os tipos de intertextualidade presentes nos textos A e B é que`,
-    alts:['o Texto A apresenta intertextualidade implícita; o Texto B, intertextualidade explícita.','o Texto A apresenta intertextualidade explícita; o Texto B, intertextualidade implícita.','ambos apresentam intertextualidade explícita, pois os dois dialogam com a mesma obra de Drummond.','ambos apresentam intertextualidade implícita, pois nenhum reproduz o poema original na íntegra.','o Texto A apresenta paráfrase; o Texto B, paródia da obra de Drummond.'],
+TEXTO II — Infográfico: "Direito dos Idosos"
+Estatuto do Idoso e a Constituição Federal asseguram: Atendimento preferencial no SUS · Prioridade na tramitação de processos judiciais · Vagas preferenciais em estacionamentos · Meia-entrada em eventos culturais, esportivos e de lazer.
+Aos idosos de baixa renda também estão garantidos: Viagem gratuita em ônibus interestadual · Assistência de um salário mínimo · Acesso a mais de 20 programas sociais.
+[Disponível em: brasil.gov.br, 2018.]`,
+    fonte:`ENEM 2019 — 1ª aplicação`,
+    enun:`Na comparação entre os textos, conclui-se que as regras do Estatuto do Idoso`,
+    alts:['apresentam vantagens em relação às de outros países.','são ignoradas pelas famílias responsáveis por idosos.','alteram a qualidade de vida das pessoas com mais de 60 anos.','precisam ser revistas em razão do envelhecimento da população.','contrastam com as condições de vida proporcionadas pelo país.'],
+    correta:4,
+    expl:`O Texto II lista os direitos garantidos pelo Estatuto do Idoso (o que deveria ser). O Texto I mostra a realidade: 16 mil denúncias de violação nesses direitos em apenas um semestre, e um país que envelhece sem estar preparado. Esse contraste entre o que a lei garante (Texto II) e o que o país efetivamente oferece (Texto I) é a conclusão direta da comparação entre os dois textos.`
+  },
+  {
+    texto:`TEXTO I — Euclides da Cunha, Os sertões
+"O sertanejo é, antes de tudo, um forte. Não tem o raquitismo exaustivo dos mestiços do litoral. A sua aparência, entretanto, no primeiro lance de vista, revela o contrário. É desgracioso, desengonçado, torto. Hércules-Quasímodo é o homem permanentemente fatigado. Entretanto, toda essa aparência de cansaço ilude. No revés o homem transfigura-se e da figura vulgar do tabaréu canhestro reponta, inesperadamente, o aspecto dominador de um titã acobreado e potente, num desdobramento surpreendente de força e agilidade extraordinárias."
+
+TEXTO II — Drummond & Ziraldo, O pipoqueiro da esquina
+[Charge mostrando figuras esquálidas, desmilinguidas, caídas no chão, com crianças "barrigudinhas" e a frase em destaque: "O SERTANEJO É ANTES DE TUDO UM AGITADOR!"]`,
+    fonte:`UFF 2010 — adaptada`,
+    enun:`A alternativa que caracteriza os efeitos de sentido que a intertextualidade do Texto II apresenta com o fragmento de Os sertões é`,
+    alts:['O Texto II utiliza da ironia para fazer uma crítica à ideologia do senso comum sobre os nordestinos de modo geral e se opõe ao retrato do sertanejo apresentado no texto I.','No texto de Drummond e Ziraldo, os aspectos verbais e não verbais contribuem para que o sertanejo seja visto como desordeiro, isto é, indomável e rebelde.','As marcas visuais presentes no Texto II (figuras esquálidas, caídas no chão, a criança "barrigudinha" etc.) reforçam os significados descritos no Texto I, de Euclides da Cunha.','Euclides da Cunha denuncia a realidade dos refugiados do clima do semiárido brasileiro no trecho da obra Os sertões.','A exclamativa "O sertanejo é antes de tudo um agitador!" se contrapõe à frase simbólica do narrador do Texto I na medida em que desprestigia o povo nordestino.'],
+    correta:0,
+    expl:`Euclides da Cunha escreve com admiração sobre a força oculta do sertanejo — uma visão épica, ainda que carregada de determinismo. Drummond e Ziraldo usam a ironia: as imagens mostram figuras miseráveis, famintas, crianças desnutridas — a realidade da seca e da exclusão —, e a frase "O sertanejo é antes de tudo um agitador!" subverte e critica a visão épica de Euclides, denunciando o senso comum que romantiza a pobreza nordestina.`
+  },
+  {
+    texto:`"[...] Agora, por que é que nenhuma dessas caprichosas me fez esquecer a primeira amada do meu coração? Talvez porque nenhuma tinha os olhos de ressaca, nem os de cigana oblíqua e dissimulada. Mas não é este propriamente o resto do livro. O resto é saber se a Capitu da praia da Glória já estava dentro da de Matacavalos, ou se esta foi mudada naquela por efeito de algum caso incidente. Jesus, filho de Sirach, se soubesse dos meus primeiros ciúmes, dir-me-ia, como no seu cap. IX, vers. 1: 'Não tenhas ciúmes de tua mulher para que ela não se meta a enganar-te com a malícia que aprender de ti'. Mas eu creio que não, e tu concordarás comigo; se te lembras bem da Capitu menina, hás de reconhecer que uma estava dentro da outra, como a fruta dentro da casca."
+ASSIS, Machado de. Dom Casmurro. Rio de Janeiro: Nova Aguilar, 1994.`,
+    fonte:`Questão baseada em Dom Casmurro — Intertextualidade`,
+    enun:`No enunciado retirado da obra machadiana Dom Casmurro, o emprego das aspas configura`,
+    alts:['discurso indireto livre e contextualidade, pois mistura os discursos direto e indireto e situa o leitor na situação comunicativa.','discurso direto e intencionalidade, pois reproduz diretamente trecho de outra obra com a intenção de envolver o leitor na narrativa.','discurso indireto e intertextualidade, pois transcreve indiretamente a fala de personagens em outro capítulo da obra.','discurso direto e intertextualidade, pois faz uma referência direta, literal a um texto religioso (Eclesiástico), dentro da narrativa.','discurso indireto e textualidade, pois registra indiretamente a fala dos personagens e garante a coerência do trecho.'],
+    correta:3,
+    expl:`O narrador Bentinho (Dom Casmurro) cita textualmente o Livro do Eclesiástico (Jesus, filho de Sirach), indicando com aspas a citação direta. Isso configura discurso direto (reprodução literal das palavras do texto sagrado) e intertextualidade explícita (referência com fonte identificada — cap. IX, vers. 1). Não se trata de fala de personagem, nem de discurso indireto.`
+  },
+  {
+    texto:`TEXTO I — "Nova canção do exílio" (Carlos Drummond de Andrade)
+Um sabiá / na palmeira, longe. / Estas aves cantam / um outro canto. / O céu cintila / sobre flores úmidas. / Vozes na mata, / e o maior amor. / Só, na noite, / seria feliz: / um sabiá, / na palmeira, longe. / Onde é tudo belo / e fantástico, / só, na noite, / seria feliz. / (Um sabiá, / na palmeira, longe.) / Ainda um grito de vida e / voltar / para onde é tudo belo / e fantástico: / a palmeira, o sabiá, / o longe.
+[ANDRADE, C. D. A rosa do povo.]
+
+TEXTO II — "Canção do exílio facilitada" (José Paulo Paes)
+lá? / ah! / sabiá... / papá... / maná... / sofá... / sinhá... / cá? / bah!
+[PAES, J. P. Poesias reunidas. São Paulo: Brasiliense, 1986.]`,
+    fonte:`Questão sobre paráfrase e paródia — Intertextualidade`,
+    enun:`Os textos I e II reportam à "Canção do exílio", de Gonçalves Dias. Sobre a relação intertextual com a obra original, pode-se afirmar que`,
+    alts:['no poema original, o exílio a que Gonçalves Dias se refere tem dimensão geográfica, o que é reproduzido essencialmente nos textos I e II.','Carlos Drummond de Andrade optou pela paráfrase, retomando a ideia inicial com outras palavras, enquanto José Paulo Paes atribui tom humorístico em uma paródia.','não se pode afirmar que o poema de José Paulo Paes é uma paródia, visto que não explora um tom crítico e irônico característico desse mecanismo.','a exaltação da natureza é a principal característica do Texto II, que retoma elementos do texto original com uma estratégia de rimas.','o poema de José Paulo Paes, em oposição ao texto de Gonçalves Dias, revela distanciamento geográfico do poeta em relação à pátria.'],
     correta:1,
-    expl:`A intertextualidade explícita identifica e cita a fonte (Texto A: "Como já dizia Carlos Drummond..."). A intertextualidade implícita evoca o universo de um texto sem citá-lo diretamente (Texto B: usa as imagens de pedra e caminho do universo drummondiano sem mencionar o poeta). A diferença está na visibilidade da fonte.`
+    expl:`O Texto I (Drummond) retoma os símbolos da Canção do exílio (sabiá, palmeira, saudade da pátria) com palavras próprias, preservando o sentido de nostalgia — isso é paráfrase. O Texto II (José Paulo Paes) reduz o poema romântico a um jogo de rimas em "á" e termina com "bah!" — desfazendo o lirismo original com humor e ironia — isso é paródia. A alternativa B descreve corretamente essa distinção.`
   },
   {
-    texto:`A canção "Aquele Abraço" (Gilberto Gil, 1969) foi composta semanas antes de Gil partir para o exílio, imposto pela ditadura militar. A letra é uma série de saudações afetivas a amigos, lugares e instituições cariocas — aparentemente inofensiva, mas que funcionava, para quem entendia o contexto, como um manifesto velado de despedida e resistência.`,
-    fonte:`Informação histórico-musical para fins pedagógicos. | Questão elaborada — Estilo ENEM · Competência 5`,
-    enun:`A estratégia comunicativa de Gil, diante da censura vigente, consistia em`,
-    alts:['utilizar linguagem política explícita para denunciar publicamente a repressão do regime militar.','criar letras sem qualquer conteúdo político para garantir a aprovação pela censura sem risco.','usar linguagem aparentemente afetiva e cotidiana para veicular, de forma velada, um posicionamento político.','adaptar músicas estrangeiras ao contexto brasileiro como forma de burlar a fiscalização da censura.','compor apenas músicas instrumentais, evitando qualquer referência verbal que pudesse ser censurada.'],
-    correta:2,
-    expl:`Diante da censura, artistas da MPB usavam linguagem aparentemente apolítica para transmitir mensagens políticas. Gil usou linguagem afetiva — mas os ouvintes reconheciam o subtexto. A canção funciona em dois níveis: o literal (saudações) e o intertextual-político (despedida e resistência).`
-  },
-  {
-    texto:`Folheto de cordel:
-"Mateus foi ao Banco do Povo / enfrentar o dragão burocrático / Com a espada de seus documentos / e o escudo do seu número de protocolo / Três horas de fila ele enfrentou / sem perder a fé nem o controle / que São Jorge também esperou / antes de vencer o seu monstro."`,
-    fonte:`Composição para fins pedagógicos. | Questão elaborada — Estilo ENEM · Competência 5`,
-    enun:`O efeito expressivo criado no cordel decorre principalmente de`,
-    alts:['comparação religiosa entre a figura de São Jorge e as instituições financeiras brasileiras.','denúncia direta da corrupção nos bancos por meio da metáfora do dragão como símbolo do crime.','aproximação cômica entre o universo épico-religioso da tradição popular e uma situação banal do cotidiano.','crítica à burocracia estatal por meio de referências à mitologia greco-romana clássica.','exaltação da resiliência nordestina como capacidade de superar qualquer desafio com fé e coragem.'],
-    correta:2,
-    expl:`O humor do cordel nasce do contraste: a fila de banco (situação corriqueira e burocrática) é narrada com a linguagem épico-religiosa do cordel nordestino (São Jorge, dragão, espada, escudo). Essa aproximação entre o grandioso e o trivial é o procedimento que gera o efeito cômico e crítico.`
-  },
-  {
-    texto:`Em uma minissérie brasileira, o protagonista é um assistente social chamado Macabéa — clara referência ao romance "A Hora da Estrela", de Clarice Lispector — que trabalha no Nordeste contemporâneo ajudando mulheres vítimas de violência doméstica. A produção usa o nome e a fragilidade da personagem original, mas inverte seu destino: este Macabéa sobrevive e se torna agente de transformação social.`,
-    fonte:`Obra fictícia para fins pedagógicos. | Questão elaborada — Estilo ENEM · Competência 5`,
-    enun:`A relação entre a minissérie e o romance de Clarice Lispector pode ser descrita como`,
-    alts:['paráfrase, pois a minissérie reproduz o enredo do romance em linguagem audiovisual.','plágio, pois usa o nome da personagem original sem autorização ou indicação da fonte.','intertextualidade de inversão: retoma a personagem original e transforma seu destino para novo significado.','citação explícita, pois reproduz os trechos mais famosos do romance na voz dos personagens.','paródia crítica do feminismo presente no romance de Clarice Lispector.'],
-    correta:2,
-    expl:`A minissérie retoma deliberadamente o nome e traços da Macabéa de Clarice, criando um diálogo intertextual com o romance. Mas ao inverter o destino da personagem (sobrevivência e agência em vez de morte e submissão), a minissérie ressignifica a referência para um novo contexto — isso é intertextualidade transformadora, não plágio.`
+    texto:`[Tira da Mafalda (Quino)]
+Cena 1: Mafalda vê um homem pobre deitado na calçada e diz: "Quando eu vejo um pobre fico com o coração apertado! Eu também."
+Cena 2: Seu amigo diz: "Deviam dar casa, trabalho, proteção e bem-estar aos pobres!"
+Cena 3: Mafalda responde: "Pra quê tudo isso? Era só escondê-los!"
+[Disponível em: clubedamafalda.blogspot.com.br, 2021.]
+
+Tem-se como interdiscursividade a concepção de que os discursos se relacionam a outros discursos. Dessa forma, são tecidos entre si, seja pelos já ditos, em um dado lugar e momento histórico, seja por aqueles a serem ainda produzidos.`,
+    fonte:`Questão sobre interdiscursividade — Mafalda (Quino)`,
+    enun:`A esse respeito, pode-se dizer que a tira de Mafalda`,
+    alts:['faz referência aos discursos de ódio reproduzidos na sociedade que inferiorizam os cidadãos em condição de vulnerabilidade social.','confirma a ideia de que o fenômeno da invisibilidade atinge tão somente aqueles que estão à margem da sociedade.','denuncia a condição lastimável a que pessoas em situação de rua estão submetidas, como a fome e o frio.','dialoga com a postura passiva de parcela social que permanece em uma zona de conforto, alheia aos problemas urbanos.','reproduz a expectativa do povo de que políticas públicas devem ser tomadas imediatamente.'],
+    correta:3,
+    expl:`A ironia de Mafalda é dirigida ao discurso da indiferença social: ao invés de propor solução real (casa, trabalho, proteção), o personagem sugere "esconder" os pobres — satirizando a postura daqueles que, incomodados com a visibilidade da pobreza, preferem ignorar a questão. A tira dialoga com esse discurso social de apatia e conforto de quem está em zona de conforto, alheio à desigualdade.`
   }
   ]
 },
@@ -969,6 +1304,148 @@ const TEMAS = [
 }
 ];
 
+
+
+// ─── BANCO DE REPERTÓRIOS ────────────────────────────────────────────────────
+const REPERTORIO = [
+  // EDUCAÇÃO
+  {tema:'educacao', autor:'Pierre Bourdieu', obra:'A Reprodução', conceito:'Reprodução das desigualdades sociais pelo sistema educacional',
+   paragrafo:'Pierre Bourdieu, sociólogo francês, afirma, em "A Reprodução", que o sistema educacional tende a reproduzir as desigualdades sociais ao valorizar o capital cultural das classes dominantes. Nesse sentido, observa-se que o acesso à educação de qualidade ainda é restrito no Brasil, perpetuando privilégios.',
+   como:'Use no Desenvolvimento 1 para mostrar que o problema é estrutural, não individual.',
+   conclusao:'O Governo Federal deve ampliar investimentos em educação pública e implementar programas de permanência estudantil, a fim de democratizar o acesso ao conhecimento e reduzir as desigualdades históricas.'},
+  {tema:'educacao', autor:'Paulo Freire', obra:'Pedagogia do Oprimido', conceito:'Educação bancária vs. educação problematizadora',
+   paragrafo:'Paulo Freire, educador brasileiro, defende, em "Pedagogia do Oprimido", que a educação deve promover a consciência crítica e a autonomia, em contraposição ao modelo "bancário", que trata o aluno como receptor passivo. Contudo, o ensino tradicional ainda limita esse desenvolvimento no Brasil.',
+   como:'Use para criticar o modelo de ensino conteudista. Essencial em temas de educação e cidadania.',
+   conclusao:'O Ministério da Educação deve incentivar metodologias ativas e a formação continuada de professores, com vistas a promover a autonomia intelectual dos estudantes e superar o ensino meramente transmissivo.'},
+  {tema:'educacao', autor:'Umberto Eco', obra:'O Nome da Rosa', conceito:'Controle do conhecimento como forma de poder',
+   paragrafo:'Na obra "O Nome da Rosa", Umberto Eco retrata como a restrição ao acesso ao conhecimento serve como instrumento de controle social. Essa realidade literária dialoga com desafios contemporâneos, nos quais desigualdades no acesso à educação de qualidade limitam a formação crítica de parcelas da população.',
+   como:'Use como repertório sofisticado para enriquecer temas de educação, democracia e desigualdade.',
+   conclusao:'Escola e Estado devem garantir o acesso democrático ao conhecimento, democratizando bibliotecas, plataformas digitais e recursos pedagógicos de qualidade para todos os estudantes.'},
+  // CULTURA
+  {tema:'cultura', autor:'Theodor Adorno', obra:'Dialética do Esclarecimento', conceito:'Indústria cultural e homogeneização',
+   paragrafo:'Theodor Adorno afirma, em "Dialética do Esclarecimento", que a indústria cultural padroniza comportamentos e produtos, contribuindo para a homogeneização cultural e para o esvaziamento do pensamento crítico. Dessa forma, a diversidade cultural cede espaço à lógica do mercado.',
+   como:'Use para criticar cultura de massa, alienação e consumismo cultural.',
+   conclusao:'O Ministério da Cultura deve fomentar a produção cultural diversificada, por meio de editais e financiamentos para manifestações artísticas independentes, a fim de preservar a pluralidade da identidade brasileira.'},
+  {tema:'cultura', autor:'Stuart Hall', obra:'A Identidade Cultural na Pós-modernidade', conceito:'Identidade cultural construída socialmente',
+   paragrafo:'O sociólogo jamaicano Stuart Hall, em "A Identidade Cultural na Pós-modernidade", afirma que as identidades são construídas socialmente e influenciadas por fatores históricos, midiáticos e globais. No Brasil, a diversidade cultural é, ao mesmo tempo, riqueza e campo de disputa.',
+   como:'Use para discutir representatividade, diversidade, identidade nacional e impactos da mídia.',
+   conclusao:'A escola deve valorizar as identidades culturais dos estudantes, incorporando conteúdos sobre culturas afro-brasileiras, indígenas e regionais, com vistas a promover o respeito à diversidade.'},
+  {tema:'cultura', autor:'Antonio Gramsci', obra:'Cadernos do Cárcere', conceito:'Hegemonia cultural',
+   paragrafo:'Antonio Gramsci evidencia, em seus "Cadernos do Cárcere", que a cultura dominante exerce hegemonia, perpetuando valores e comportamentos que favorecem determinados grupos. No Brasil, essa dinâmica se manifesta na invisibilidade de culturas periféricas nos meios de comunicação e nas instituições.',
+   como:'Use para mostrar dominação cultural, silenciamento de minorias e desigualdade na representação.',
+   conclusao:'O Estado deve democratizar o acesso aos meios de produção cultural, por meio de políticas públicas que ampliem a visibilidade de grupos historicamente marginalizados.'},
+  // DIREITOS HUMANOS
+  {tema:'direitos', autor:'Michel Foucault', obra:'Vigiar e Punir', conceito:'Controle social e poder disciplinar',
+   paragrafo:'Michel Foucault, em "Vigiar e Punir", evidencia que o poder moderno se manifesta por meio da vigilância e do controle dos indivíduos. No Brasil, determinados grupos sociais são mais intensamente monitorados e punidos, o que compromete a efetivação da cidadania e revela falhas na garantia dos direitos humanos.',
+   como:'Use no Desenvolvimento 1 para mostrar que o problema é estrutural. Excelente para temas de desigualdade, segurança e exclusão.',
+   conclusao:'O Estado deve qualificar as forças de segurança e implementar controle externo efetivo das instituições penais, a fim de garantir que o sistema de segurança pública proteja a todos os cidadãos com equidade.'},
+  {tema:'direitos', autor:'Hannah Arendt', obra:'Origens do Totalitarismo', conceito:'Direito a ter direitos',
+   paragrafo:'Hannah Arendt, em "Origens do Totalitarismo", formulou o conceito de "direito a ter direitos" — a ideia de que a pertença a uma comunidade política é condição para que qualquer direito humano seja efetivado. No Brasil, grupos marginalizados ainda carecem dessa pertença plena.',
+   como:'Use para temas de exclusão social, minorias, refugees, apátridas e cidadania.',
+   conclusao:'O Governo Federal deve ampliar políticas de inclusão social e garantir a efetivação dos direitos constitucionais, por meio de marcos legais específicos e fiscalização rigorosa de seu cumprimento.'},
+  {tema:'direitos', autor:'Émile Durkheim', obra:'O Suicídio', conceito:'Anomia e integração social',
+   paragrafo:'Émile Durkheim, em "O Suicídio", demonstra que a falta de integração social compromete o equilíbrio coletivo e individual. Nesse sentido, a exclusão de determinados grupos — sejam populações periféricas, pessoas com deficiência ou comunidades indígenas — evidencia falhas na construção da cidadania no Brasil.',
+   como:'Use para mostrar impactos sociais da exclusão. Adaptável a temas de violência, saúde mental e desigualdade.',
+   conclusao:'A escola e o Estado devem ampliar projetos de convivência e inclusão social, a fim de fortalecer os laços comunitários e garantir a integração plena de todos os cidadãos à vida coletiva.'},
+  // SAÚDE
+  {tema:'saude', autor:'Byung-Chul Han', obra:'Sociedade do Cansaço', conceito:'Esgotamento e pressão por desempenho',
+   paragrafo:'O filósofo sul-coreano Byung-Chul Han, em "Sociedade do Cansaço", afirma que a lógica contemporânea de desempenho constante — intensificada pelas redes sociais e pela hiperconectividade — contribui para o aumento de quadros de ansiedade, depressão e burnout, especialmente entre jovens.',
+   como:'Use em temas de saúde mental, pressão escolar, saúde do trabalhador e redes sociais.',
+   conclusao:'Escolas e empresas devem implementar programas de saúde mental preventiva, por meio de atendimento psicológico e redução de práticas de hipercompetitividade, com vistas a preservar o bem-estar dos estudantes e trabalhadores.'},
+  {tema:'saude', autor:'Michel Foucault', obra:'História da Sexualidade', conceito:'Biopolítica — controle sobre os corpos',
+   paragrafo:'Michel Foucault, ao discutir a biopolítica, evidencia que o Estado exerce controle sobre a vida e os corpos da população. Nesse sentido, as políticas de saúde pública podem tanto proteger quanto restringir direitos, especialmente quando aplicadas de forma desigual entre diferentes grupos sociais.',
+   como:'Use para discutir limites entre cuidado e controle. Ideal para pandemias, vacinação e acesso à saúde.',
+   conclusao:'O Ministério da Saúde deve garantir políticas equitativas e transparentes, assegurando que o acesso à saúde pública seja um direito universal, e não um privilégio determinado pela classe social.'},
+  {tema:'saude', autor:'OMS', obra:'Definição de Saúde', conceito:'Saúde como bem-estar integral',
+   paragrafo:'A Organização Mundial da Saúde define saúde como "um estado de completo bem-estar físico, mental e social, e não apenas ausência de doenças". Essa concepção ampliada evidencia que as políticas de saúde não devem se restringir ao tratamento de enfermidades, mas abranger a prevenção e a promoção do bem-estar.',
+   como:'Use na introdução ou para ampliar o conceito de saúde além da dimensão física.',
+   conclusao:'O Governo Federal deve integrar políticas de saúde física e mental no SUS, por meio de equipes multidisciplinares e centros de atenção psicossocial, a fim de garantir o bem-estar integral da população brasileira.'},
+  // MEIO AMBIENTE
+  {tema:'ambiente', autor:'Milton Santos', obra:'Por uma outra globalização', conceito:'Globalização perversa e desigualdades territoriais',
+   paragrafo:'O geógrafo brasileiro Milton Santos, em "Por uma outra globalização", critica a globalização hegemônica por promover desigualdades econômicas e ambientais. Ao privilegiar o lucro em detrimento da sustentabilidade, esse modelo aprofunda os impactos ambientais sobre as populações mais vulneráveis.',
+   como:'Use em crítica à globalização, desmatamento, exploração de recursos e desigualdade ambiental.',
+   conclusao:'O Estado deve incentivar um modelo de economia sustentável, por meio de legislação rigorosa de proteção ambiental e fomento à economia verde, a fim de compatibilizar desenvolvimento e preservação.'},
+  {tema:'ambiente', autor:'Ailton Krenak', obra:'Ideias para Adiar o Fim do Mundo', conceito:'Perspectiva indígena sobre a natureza',
+   paragrafo:'O líder indígena Ailton Krenak, em "Ideias para Adiar o Fim do Mundo", critica a separação entre humanidade e natureza promovida pelo pensamento ocidental moderno. Para Krenak, a Terra não é um recurso a ser explorado, mas um ser vivo com quem os humanos precisam aprender a conviver.',
+   como:'Use em temas ambientais, povos indígenas, sustentabilidade e mudanças climáticas.',
+   conclusao:'O Governo Federal deve fortalecer a demarcação de terras indígenas e reconhecer os saberes tradicionais como patrimônio ambiental, a fim de proteger os biomas e garantir a sobrevivência cultural dos povos originários.'},
+  {tema:'ambiente', autor:'Hans Jonas', obra:'O Princípio Responsabilidade', conceito:'Ética da responsabilidade com as gerações futuras',
+   paragrafo:'Hans Jonas, em "O Princípio Responsabilidade", defende que a humanidade deve agir com responsabilidade diante das futuras gerações, especialmente em relação às consequências ambientais de suas escolhas. Esse imperativo ético é fundamental para enfrentar a crise climática contemporânea.',
+   como:'Use para fundamentar ética ambiental, sustentabilidade e responsabilidade intergeracional.',
+   conclusao:'O Estado deve implementar educação ambiental obrigatória e legislação climática rigorosa, por meio de metas claras de redução de emissões, com vistas a garantir um planeta habitável para as próximas gerações.'},
+  // TECNOLOGIA
+  {tema:'tecnologia', autor:'Manuel Castells', obra:'A Sociedade em Rede', conceito:'Centralidade das redes digitais na sociedade contemporânea',
+   paragrafo:'Manuel Castells, em "A Sociedade em Rede", afirma que a sociedade contemporânea é marcada pela centralidade das redes digitais, que transformam relações sociais, econômicas e políticas. No Brasil, entretanto, a desigualdade no acesso à internet aprofunda exclusões já existentes.',
+   como:'Use em transformação digital, exclusão digital, fake news e democracia on-line.',
+   conclusao:'O Governo Federal deve investir em inclusão digital e conectividade pública, por meio de programas de expansão de internet em áreas rurais e periféricas, a fim de democratizar o acesso às oportunidades da economia digital.'},
+  {tema:'tecnologia', autor:'Byung-Chul Han', obra:'No Enxame', conceito:'Hiperconectividade e superficialidade das relações',
+   paragrafo:'Byung-Chul Han, em "No Enxame", critica a hiperconectividade contemporânea, que favorece a superficialidade nas relações humanas e o excesso de estímulos. Nas redes sociais, a velocidade da informação inviabiliza a reflexão, tornando os usuários mais suscetíveis à desinformação e ao isolamento afetivo.',
+   como:'Use em vício digital, fake news, ansiedade, isolamento social e saúde mental.',
+   conclusao:'Escolas devem implementar programas de letramento digital crítico, por meio de disciplinas sobre uso consciente das redes e avaliação de fontes, com vistas a formar cidadãos capazes de navegar no ambiente digital com autonomia.'},
+  {tema:'tecnologia', autor:'George Orwell', obra:'1984', conceito:'Vigilância e manipulação da informação',
+   paragrafo:'Em "1984", George Orwell retrata uma sociedade em que o poder controla a informação e vigia os indivíduos de forma totalitária. Esse cenário distópico guarda semelhanças com o contexto contemporâneo de disseminação de fake news e o uso de dados pessoais por plataformas digitais sem transparência.',
+   como:'Use como analogia poderosa para fake news, vigilância digital, autoritarismo e liberdade de imprensa.',
+   conclusao:'O Estado deve regulamentar as plataformas digitais e garantir a transparência algorítmica, por meio de legislação específica de proteção de dados, a fim de preservar a privacidade dos cidadãos e a integridade do debate democrático.'},
+  // TRABALHO
+  {tema:'trabalho', autor:'Karl Marx', obra:'O Capital', conceito:'Alienação do trabalhador',
+   paragrafo:'Karl Marx afirma, em "O Capital", que, em sistemas produtivos desiguais, o trabalhador pode tornar-se alienado do produto de seu trabalho, de si mesmo e dos demais trabalhadores. No Brasil contemporâneo, a precarização e a uberização das relações de trabalho atualizam essa análise.',
+   como:'Use em exploração, precarização, uberização e desigualdade econômica.',
+   conclusao:'O Governo Federal deve fortalecer a fiscalização trabalhista e atualizar a legislação para as novas formas de trabalho digital, a fim de garantir direitos básicos a trabalhadores de plataformas e reduzir a precarização do emprego.'},
+  {tema:'trabalho', autor:'Zygmunt Bauman', obra:'Modernidade Líquida', conceito:'Instabilidade e fluidez das relações de trabalho',
+   paragrafo:'Zygmunt Bauman, em "Modernidade Líquida", afirma que a contemporaneidade é marcada por relações instáveis e pela lógica do descarte. No mercado de trabalho, essa liquidez se traduz em empregos temporários, contratos flexíveis e na crescente sensação de insegurança entre os trabalhadores.',
+   como:'Use em temas de informalidade, instabilidade profissional e impactos psicológicos do trabalho precário.',
+   conclusao:'O Estado deve criar políticas de estabilidade e qualificação profissional, por meio de parcerias entre governo, empresas e sindicatos, com vistas a oferecer redes de proteção social aos trabalhadores em situação de vulnerabilidade.'},
+  {tema:'trabalho', autor:'Yuval Noah Harari', obra:'21 Lições para o Século 21', conceito:'Inteligência artificial e futuro do trabalho',
+   paragrafo:'Yuval Noah Harari, em "21 Lições para o Século 21", alerta que a inteligência artificial e a automação tendem a transformar profundamente o mercado de trabalho, tornando obsoletas profissões inteiras e exigindo constante requalificação dos trabalhadores, especialmente os menos escolarizados.',
+   como:'Use em inteligência artificial, desemprego tecnológico e necessidade de educação continuada.',
+   conclusao:'O Governo Federal deve investir em programas de requalificação tecnológica, por meio de parcerias com instituições de ensino e empresas de tecnologia, a fim de preparar os trabalhadores brasileiros para as demandas da economia digital e reduzir o desemprego estrutural.'}
+];
+
+function filtrarRep(tema){
+  const lista = document.getElementById('repLista');
+  lista.innerHTML='';
+  const filtrado = tema==='todos' ? REPERTORIO : REPERTORIO.filter(r=>r.tema===tema);
+  
+  if(filtrado.length===0){
+    lista.innerHTML='<p style="text-align:center;color:var(--tx3);padding:40px">Nenhum repertório encontrado.</p>';
+    return;
+  }
+  
+  filtrado.forEach((r,i)=>{
+    const card=document.createElement('div');
+    card.className='rep-card';
+    card.innerHTML=`
+      <div class="rep-card-head" onclick="toggleRep(this)">
+        <div style="flex:1">
+          <h4>${r.autor} — <em>${r.obra}</em></h4>
+          <div style="font-size:.75rem;color:var(--tx3);margin-top:3px">${r.conceito}</div>
+        </div>
+        <span class="rep-tag">${r.tema.toUpperCase()}</span>
+        <span style="margin-left:10px;font-size:.85rem;color:var(--tx3)">▾</span>
+      </div>
+      <div class="rep-card-body">
+        <div style="font-size:.75rem;font-weight:700;color:var(--tx3);margin-bottom:8px;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:.4px">📝 Parágrafo pronto</div>
+        <div class="rep-paragrafo">${r.paragrafo}</div>
+        <div style="font-size:.75rem;font-weight:700;color:var(--tx3);margin-bottom:6px;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:.4px">💡 Como usar</div>
+        <div class="rep-uso">${r.como}</div>
+        <div class="rep-conclusao"><strong>🎯 Conclusão C5 sugerida</strong>${r.conclusao}</div>
+      </div>`;
+    lista.appendChild(card);
+  });
+}
+
+function toggleRep(head){
+  const body=head.nextElementSibling;
+  body.classList.toggle('aberto');
+  const arr=head.querySelector('span:last-child');
+  if(arr) arr.textContent=body.classList.contains('aberto')?'▴':'▾';
+}
+
+function irMatriz(){
+  if(!AUTH.current){mostrar('sc-auth');return;}
+  mostrar('sc-matriz');
+  filtrarRep('todos');
+}
 
 // ─── AUTENTICAÇÃO / PROGRESSO ────────────────────────────────────────────────
 
@@ -1353,7 +1830,7 @@ function renderQ(){
   q.alts.forEach((alt,i)=>{
     const btn=document.createElement('button');
     btn.className='alt-btn'+(S.respostas[S.qIdx]===i?' selecionada':'');
-    btn.innerHTML='<span class="alt-letra">'+letras[i]+'</span><span class="alt-txt">'+alt.substring(2)+'</span>';
+    btn.innerHTML='<span class="alt-letra">'+letras[i]+'</span><span class="alt-txt">'+alt+'</span>';
     btn.onclick=()=>selecionarAlt(i);
     aDiv.appendChild(btn);
   });
@@ -1440,7 +1917,7 @@ function abrirGabarito(){
       let cls='g-alt';
       if(ai===certa) cls+=' correta-alt';
       else if(ai===resp&&resp!==certa) cls+=' escolhida-errada';
-      return '<div class="'+cls+'"><span class="gl">'+letras[ai]+'</span><span>'+a.substring(2)+'</span></div>';
+      return '<div class="'+cls+'"><span class="gl">'+letras[ai]+'</span><span>'+a+'</span></div>';
     }).join('');
     item.innerHTML='<div class="gabarito-head" onclick="toggleGab(this)"><span class="g-num">Questão '+(i+1)+'</span><span>&nbsp;'+qst.enun.substring(0,60)+'…</span><span class="g-status '+status+'">'+stLabel+'</span></div><div class="gabarito-body"><div>'+textoHtml+'<div class="g-enun">'+qst.enun+'</div><div class="g-alts">'+altsHtml+'</div><div class="g-expl">💡 '+qst.expl+'</div></div></div>';
     cont.appendChild(item);
