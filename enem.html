@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal ENEM · Língua Portuguesa</title>
+<meta name="description" content="Portal de preparação ENEM — Língua Portuguesa · Prof. Marcos Cruz">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --az:#003F7F;--az2:#0062CC;--az3:#E8F0FB;
+  --ouro:#D4A800;--ouro-l:#FFF3B0;
+  --bg:#F4F7FC;--card:#fff;
+  --tx:#1A1A2E;--tx2:#4A5568;--tx3:#718096;
+  --verde:#1A7F4E;--vd-c:#D4EDDA;
+  --verm:#C0392B;--vm-c:#FDECEA;
+  --borda:#DDE3EE;
+  --r:12px;--r2:8px;
+  --shadow:0 2px 12px rgba(0,63,127,.10);
+  --shadow2:0 4px 24px rgba(0,63,127,.14);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh}
+h1,h2,h3,h4,.num{font-family:'Montserrat',sans-serif}
+
+/* TOPO */
+.topo{background:var(--az);color:#fff;padding:14px 24px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.2)}
+.topo-logo{font-size:1.3rem;font-weight:900;letter-spacing:1px;color:#FFD700}
+.topo-sub{font-size:.75rem;opacity:.75;font-family:'Open Sans',sans-serif;font-weight:400}
+.topo-btn{margin-left:auto;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:20px;padding:6px 14px;cursor:pointer;font-size:.8rem;font-family:'Montserrat',sans-serif;font-weight:600;transition:.2s}
+.topo-btn:hover{background:rgba(255,255,255,.25)}
+
+/* SCREENS */
+.screen{display:none;animation:fadeIn .3s ease}
+.screen.ativo{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* HOME */
+.home-hero{background:linear-gradient(135deg,#003F7F 60%,#0062CC);color:#fff;padding:48px 24px 56px;text-align:center;position:relative;overflow:hidden}
+.home-hero::before{content:'ENEM';font-family:'Montserrat',sans-serif;font-weight:900;font-size:9rem;color:rgba(255,255,255,.05);position:absolute;top:-10px;left:50%;transform:translateX(-50%);pointer-events:none;white-space:nowrap}
+.home-hero h1{font-size:2rem;font-weight:800;margin-bottom:8px;position:relative}
+.home-hero h1 span{color:#FFD700}
+.home-hero p{font-size:1rem;opacity:.85;position:relative}
+.home-cards{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:700px;margin:-28px auto 0;padding:0 20px 40px;position:relative}
+.home-card{background:var(--card);border-radius:var(--r);padding:28px 24px;box-shadow:var(--shadow2);cursor:pointer;transition:.25s;border:2px solid transparent;text-align:center}
+.home-card:hover{transform:translateY(-4px);box-shadow:0 8px 32px rgba(0,63,127,.18);border-color:var(--az2)}
+.home-card-icon{font-size:2.6rem;margin-bottom:12px;display:block}
+.home-card h2{font-size:1.05rem;font-weight:700;color:var(--az);margin-bottom:6px}
+.home-card p{font-size:.82rem;color:var(--tx2);line-height:1.5}
+.home-badge{display:inline-block;background:var(--ouro-l);color:var(--ouro);font-size:.7rem;font-weight:700;font-family:'Montserrat',sans-serif;padding:3px 10px;border-radius:20px;margin-top:10px;border:1px solid #e8cc70}
+@media(max-width:480px){.home-cards{grid-template-columns:1fr}.home-hero h1{font-size:1.6rem}}
+
+/* TÓPICOS */
+.section-header{background:var(--az);color:#fff;padding:28px 24px 20px;text-align:center}
+.section-header h2{font-size:1.4rem;font-weight:800}
+.section-header p{font-size:.85rem;opacity:.8;margin-top:4px}
+.topic-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;max-width:800px;margin:32px auto;padding:0 20px}
+.topic-card{background:var(--card);border-radius:var(--r);padding:28px 20px;box-shadow:var(--shadow);cursor:pointer;transition:.25s;border-left:5px solid var(--cor,var(--az));text-align:center}
+.topic-card:hover{transform:translateY(-3px);box-shadow:var(--shadow2)}
+.topic-card span{font-size:2.2rem;display:block;margin-bottom:10px}
+.topic-card h3{font-size:1rem;font-weight:700;color:var(--az);margin-bottom:6px}
+.topic-card p{font-size:.78rem;color:var(--tx2)}
+.topic-card .tc-count{margin-top:10px;font-size:.75rem;font-weight:700;font-family:'Montserrat',sans-serif;color:var(--cor,var(--az));background:var(--az3);display:inline-block;padding:3px 10px;border-radius:20px}
+.em-breve{opacity:.5;cursor:not-allowed !important}
+.em-breve:hover{transform:none !important;box-shadow:var(--shadow) !important}
+
+/* QUIZ */
+.quiz-header{background:var(--az);color:#fff;padding:14px 20px;display:flex;align-items:center;gap:16px}
+.quiz-topic-name{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.95rem}
+.timer-box{margin-left:auto;font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.2rem;padding:6px 16px;border-radius:20px;background:rgba(255,255,255,.15);transition:.4s;min-width:80px;text-align:center}
+.timer-box.warn{background:#F39C12;color:#fff}
+.timer-box.danger{background:#E74C3C;color:#fff;animation:pulsar .8s infinite}
+@keyframes pulsar{0%,100%{opacity:1}50%{opacity:.65}}
+.progress-bar{height:4px;background:rgba(255,255,255,.2)}
+.progress-fill{height:100%;background:#FFD700;transition:width .5s}
+.quiz-body{max-width:800px;margin:0 auto;padding:24px 20px}
+.q-nav{display:flex;justify-content:center;gap:6px;margin-bottom:20px;flex-wrap:wrap}
+.q-dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--borda);background:var(--card);cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.7rem;color:var(--tx3);transition:.2s;display:flex;align-items:center;justify-content:center}
+.q-dot.ativo{border-color:var(--az);color:var(--az);background:var(--az3)}
+.q-dot.respondida{background:var(--az);border-color:var(--az);color:#fff}
+.q-box{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:28px;margin-bottom:20px}
+.q-num{font-family:'Montserrat',sans-serif;font-size:.8rem;font-weight:700;color:var(--az2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:16px}
+.q-texto{background:var(--bg);border-left:4px solid var(--az2);border-radius:0 var(--r2) var(--r2) 0;padding:16px 18px;margin-bottom:18px;font-size:.9rem;line-height:1.75;white-space:pre-line}
+.q-fonte{font-size:.72rem;color:var(--tx3);margin-top:8px;font-style:italic}
+.q-enun{font-size:.95rem;line-height:1.65;margin-bottom:20px;font-weight:600}
+.alt-btn{display:flex;align-items:flex-start;gap:12px;width:100%;background:var(--card);border:1.5px solid var(--borda);border-radius:var(--r2);padding:12px 16px;cursor:pointer;text-align:left;transition:.2s;margin-bottom:8px;font-family:'Open Sans',sans-serif}
+.alt-btn:hover:not(.bloqueada){border-color:var(--az2);background:var(--az3)}
+.alt-letra{font-family:'Montserrat',sans-serif;font-weight:800;font-size:.85rem;color:var(--az);min-width:22px;padding-top:1px}
+.alt-txt{font-size:.88rem;line-height:1.55;color:var(--tx)}
+.alt-btn.selecionada{border-color:var(--az);background:var(--az3)}
+.alt-btn.selecionada .alt-letra{color:var(--az)}
+.quiz-nav-btns{display:flex;gap:12px;justify-content:space-between;margin-top:4px}
+.btn{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.85rem;padding:10px 22px;border-radius:20px;border:none;cursor:pointer;transition:.2s}
+.btn-sec{background:var(--card);border:1.5px solid var(--borda);color:var(--tx2)}
+.btn-sec:hover{border-color:var(--az);color:var(--az)}
+.btn-pri{background:var(--az);color:#fff}
+.btn-pri:hover{background:var(--az2)}
+.btn-ouro{background:#D4A800;color:#fff}
+.btn-ouro:hover{background:#b89000}
+.btn-verm{background:var(--verm);color:#fff}
+.btn-verm:hover{background:#a93226}
+
+/* RESULTADOS */
+.result-hero{background:linear-gradient(135deg,#003F7F,#0062CC);color:#fff;padding:40px 24px;text-align:center}
+.result-score{font-size:4rem;font-weight:900;color:#FFD700;line-height:1}
+.result-label{font-size:.9rem;opacity:.8;margin-top:6px}
+.result-msg{font-size:1.1rem;font-weight:700;margin-top:16px}
+.result-stats{display:flex;justify-content:center;gap:32px;margin-top:20px;flex-wrap:wrap}
+.result-stat{text-align:center}
+.result-stat .val{font-size:1.5rem;font-weight:800;font-family:'Montserrat',sans-serif}
+.result-stat .lbl{font-size:.75rem;opacity:.75}
+.result-body{max-width:800px;margin:0 auto;padding:28px 20px}
+.gabarito-item{background:var(--card);border-radius:var(--r);margin-bottom:14px;overflow:hidden;box-shadow:var(--shadow)}
+.gabarito-head{padding:14px 18px;display:flex;align-items:center;gap:12px;cursor:pointer}
+.gabarito-head .g-num{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.85rem;color:var(--tx2)}
+.gabarito-head .g-status{margin-left:auto;font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:20px}
+.g-status.certo{background:var(--vd-c);color:var(--verde)}
+.g-status.errou{background:var(--vm-c);color:var(--verm)}
+.g-status.pulou{background:#f0f0f0;color:#888}
+.gabarito-body{display:none;padding:0 18px 18px;border-top:1px solid var(--borda)}
+.gabarito-body.aberto{display:block}
+.g-texto{background:var(--bg);border-left:4px solid var(--az2);border-radius:0 var(--r2) var(--r2) 0;padding:12px 14px;margin:12px 0;font-size:.85rem;line-height:1.65;white-space:pre-line}
+.g-enun{font-size:.88rem;line-height:1.6;margin:10px 0;font-weight:600}
+.g-alts{margin:10px 0}
+.g-alt{display:flex;gap:10px;padding:8px 12px;border-radius:var(--r2);font-size:.85rem;margin-bottom:4px;align-items:flex-start}
+.g-alt .gl{font-weight:800;font-family:'Montserrat',sans-serif;min-width:18px;font-size:.8rem}
+.g-alt.correta-alt{background:var(--vd-c);color:var(--verde)}
+.g-alt.escolhida-errada{background:var(--vm-c);color:var(--verm)}
+.g-expl{background:var(--az3);border-radius:var(--r2);padding:12px 14px;font-size:.83rem;line-height:1.6;margin-top:10px;color:var(--az)}
+
+/* TEMAS REDAÇÃO */
+.tema-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;max-width:900px;margin:32px auto;padding:0 20px 40px}
+.tema-card{background:var(--card);border-radius:var(--r);padding:24px 20px;box-shadow:var(--shadow);cursor:pointer;transition:.25s;border-top:5px solid var(--cor,var(--az))}
+.tema-card:hover{transform:translateY(-4px);box-shadow:var(--shadow2)}
+.tema-emoji{font-size:2rem;margin-bottom:12px;display:block}
+.tema-card h3{font-size:1rem;font-weight:700;color:var(--az);margin-bottom:8px;line-height:1.4}
+.tema-card p{font-size:.8rem;color:var(--tx2);line-height:1.5}
+
+/* REDAÇÃO */
+.essay-wrap{max-width:820px;margin:0 auto;padding:24px 20px 60px}
+.stepper{display:flex;align-items:center;margin-bottom:28px;overflow-x:auto;padding-bottom:4px}
+.step{display:flex;align-items:center;gap:6px;font-size:.78rem;font-family:'Montserrat',sans-serif;font-weight:600;color:var(--tx3);white-space:nowrap}
+.step-circle{width:28px;height:28px;border-radius:50%;border:2px solid var(--borda);background:var(--card);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;transition:.3s;flex-shrink:0}
+.step.ativo .step-circle{background:var(--az);border-color:var(--az);color:#fff}
+.step.feito .step-circle{background:var(--verde);border-color:var(--verde);color:#fff}
+.step.ativo{color:var(--az)}
+.step-line{flex:1;height:2px;background:var(--borda);margin:0 4px;min-width:16px}
+.step-line.feita{background:var(--verde)}
+.essay-panel{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:28px}
+.essay-panel h3{font-size:1.1rem;font-weight:700;color:var(--az);margin-bottom:6px}
+.essay-tema-label{font-size:.8rem;color:var(--tx3);margin-bottom:18px}
+.guide-box{background:var(--az3);border-radius:var(--r2);padding:16px;margin-bottom:18px;font-size:.83rem;line-height:1.65;color:var(--az)}
+.guide-box strong{display:block;font-family:'Montserrat',sans-serif;font-size:.8rem;margin-bottom:6px;color:var(--az)}
+.essay-textarea{width:100%;min-height:200px;resize:vertical;border:1.5px solid var(--borda);border-radius:var(--r2);padding:14px;font-family:'Open Sans',sans-serif;font-size:.9rem;line-height:1.75;color:var(--tx);transition:.2s;background:var(--bg)}
+.essay-textarea:focus{outline:none;border-color:var(--az);background:#fff;box-shadow:0 0 0 3px rgba(0,63,127,.08)}
+.wcount{font-size:.75rem;color:var(--tx3);text-align:right;margin-top:6px;font-family:'Montserrat',sans-serif}
+.essay-nav{display:flex;gap:12px;justify-content:space-between;margin-top:20px}
+.textos-base{margin-bottom:20px}
+.texto-base-item{border:1px solid var(--borda);border-radius:var(--r2);padding:14px 16px;margin-bottom:10px;font-size:.83rem;line-height:1.65}
+.texto-base-item .tb-titulo{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.78rem;color:var(--az2);margin-bottom:6px;text-transform:uppercase;letter-spacing:.3px}
+
+/* REVISÃO */
+.rev-section{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden}
+.rev-head{background:var(--az);color:#fff;padding:12px 18px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.9rem}
+.rev-body{padding:18px;font-size:.88rem;line-height:1.8;white-space:pre-wrap;color:var(--tx)}
+.rev-wcount{padding:8px 18px;font-size:.75rem;color:var(--tx3);border-top:1px solid var(--borda);font-family:'Montserrat',sans-serif}
+.total-wcount{text-align:center;font-family:'Montserrat',sans-serif;font-weight:700;font-size:1rem;color:var(--az);margin-bottom:24px}
+
+/* CORREÇÃO PROFESSOR */
+.corr-panel{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:28px;margin-top:24px}
+.corr-panel h3{font-size:1.1rem;font-weight:700;color:var(--az);margin-bottom:20px;border-bottom:2px solid var(--az);padding-bottom:10px}
+.corr-crit{margin-bottom:18px}
+.corr-crit label{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.85rem;color:var(--tx);display:block;margin-bottom:8px}
+.corr-crit small{font-size:.75rem;color:var(--tx3);font-weight:400;display:block;margin-bottom:8px;line-height:1.4}
+.corr-pontos{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.pt-btn{padding:6px 14px;border-radius:20px;border:1.5px solid var(--borda);background:var(--card);font-family:'Montserrat',sans-serif;font-weight:700;font-size:.8rem;cursor:pointer;transition:.2s;color:var(--tx2)}
+.pt-btn:hover{border-color:var(--az);color:var(--az)}
+.pt-btn.sel{background:var(--az);border-color:var(--az);color:#fff}
+.corr-comentario{width:100%;min-height:60px;resize:vertical;border:1.5px solid var(--borda);border-radius:var(--r2);padding:10px 12px;font-family:'Open Sans',sans-serif;font-size:.83rem;color:var(--tx)}
+.corr-comentario:focus{outline:none;border-color:var(--az)}
+.corr-total{background:var(--az);color:#fff;border-radius:var(--r2);padding:18px;text-align:center;margin-top:24px}
+.corr-total .ct-num{font-size:2.5rem;font-weight:900;font-family:'Montserrat',sans-serif;color:#FFD700}
+.corr-total .ct-label{font-size:.85rem;opacity:.8;margin-top:4px}
+
+/* MODAL SENHA */
+.modal-over{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:500;align-items:center;justify-content:center}
+.modal-over.show{display:flex}
+.modal-box{background:var(--card);border-radius:var(--r);padding:32px;max-width:340px;width:90%;box-shadow:0 8px 40px rgba(0,0,0,.2);text-align:center}
+.modal-box h3{font-size:1.1rem;font-weight:700;color:var(--az);margin-bottom:8px}
+.modal-box p{font-size:.85rem;color:var(--tx2);margin-bottom:18px}
+.modal-input{width:100%;border:1.5px solid var(--borda);border-radius:var(--r2);padding:10px 14px;font-size:.9rem;text-align:center;font-family:'Montserrat',sans-serif;letter-spacing:3px;margin-bottom:12px}
+.modal-input:focus{outline:none;border-color:var(--az)}
+.modal-erro{color:var(--verm);font-size:.8rem;margin-bottom:10px;display:none}
+.modal-btns{display:flex;gap:10px;justify-content:center}
+
+/* IMPRESSÃO */
+@media print{
+  .topo,.topo-btn,.quiz-nav-btns,.essay-nav,.stepper,.btn,.modal-over{display:none!important}
+  .screen{display:block!important}
+  body{background:#fff}
+  .rev-section,.corr-panel{box-shadow:none;border:1px solid #ccc}
+}
+</style>
+</head>
+<body>
+
+<div class="topo">
+  <div>
+    <div class="topo-logo">ENEM</div>
+    <div class="topo-sub">Língua Portuguesa · Portal do Prof. Marcos</div>
+  </div>
+  <button class="topo-btn" id="btnHome" onclick="irHome()">⌂ Início</button>
+</div>
+
+<!-- SCREEN: HOME -->
+<div id="sc-home" class="screen ativo">
+  <div class="home-hero">
+    <h1>Preparação <span>ENEM</span></h1>
+    <p>Língua Portuguesa · 9º ano · Prof. Marcos Cruz</p>
+  </div>
+  <div class="home-cards">
+    <div class="home-card" onclick="irTopicos()">
+      <span class="home-card-icon">📝</span>
+      <h2>Questões por Tema</h2>
+      <p>Simulados temáticos com cronômetro e gabarito comentado</p>
+      <span class="home-badge">30 min · 12 questões</span>
+    </div>
+    <div class="home-card" onclick="irTemas()">
+      <span class="home-card-icon">✍️</span>
+      <h2>Redação ENEM</h2>
+      <p>Escreva por etapas: introdução, desenvolvimento e conclusão</p>
+      <span class="home-badge">5 temas · Correção C1-C5</span>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN: TÓPICOS -->
+<div id="sc-topicos" class="screen">
+  <div class="section-header">
+    <h2>Escolha o Tema</h2>
+    <p>Cada simulado tem 12 questões e 30 minutos</p>
+  </div>
+  <div class="topic-grid">
+    <div class="topic-card" style="--cor:#0062CC" onclick="iniciarQuiz('variacao')">
+      <span>🗣️</span>
+      <h3>Variação Linguística</h3>
+      <p>Dialetos, registros, preconceito linguístico, norma culta e padrão</p>
+      <span class="tc-count">12 questões</span>
+    </div>
+    <div class="topic-card" style="--cor:#7B2FBE" onclick="iniciarQuiz('intertextualidade')">
+      <span>🔗</span>
+      <h3>Intertextualidade</h3>
+      <p>Paródia, paráfrase, alusão, citação e diálogos entre textos</p>
+      <span class="tc-count">12 questões</span>
+    </div>
+    <div class="topic-card" style="--cor:#1A7F4E" onclick="iniciarQuiz('generos')">
+      <span>📰</span>
+      <h3>Gêneros Textuais</h3>
+      <p>Crônica, charge, notícia, conto, infográfico, blog e mais</p>
+      <span class="tc-count">12 questões</span>
+    </div>
+    <div class="topic-card em-breve" style="--cor:#E07B39">
+      <span>💬</span>
+      <h3>Figuras de Linguagem</h3>
+      <p>Metáfora, ironia, hipérbole, eufemismo e outras figuras</p>
+      <span class="home-badge">Em breve</span>
+    </div>
+    <div class="topic-card em-breve" style="--cor:#C0392B">
+      <span>🧩</span>
+      <h3>Argumentação</h3>
+      <p>Estratégias, conectivos, coesão e coerência argumentativa</p>
+      <span class="home-badge">Em breve</span>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN: QUIZ -->
+<div id="sc-quiz" class="screen">
+  <div class="quiz-header">
+    <div>
+      <div class="quiz-topic-name" id="qTopicName">—</div>
+    </div>
+    <div class="timer-box" id="timer">30:00</div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progFill" style="width:0%"></div></div>
+  <div class="quiz-body">
+    <div class="q-nav" id="qNav"></div>
+    <div class="q-box">
+      <div class="q-num" id="qNum"></div>
+      <div id="qTexto"></div>
+      <div class="q-enun" id="qEnun"></div>
+      <div id="qAlts"></div>
+    </div>
+    <div class="quiz-nav-btns">
+      <button class="btn btn-sec" id="btnAnterior" onclick="navQ(-1)">← Anterior</button>
+      <button class="btn btn-ouro" onclick="finalizarQuiz()">Finalizar ✓</button>
+      <button class="btn btn-pri" id="btnProximo" onclick="navQ(1)">Próxima →</button>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN: RESULTADOS -->
+<div id="sc-result" class="screen">
+  <div class="result-hero">
+    <div class="result-score" id="rScore">—</div>
+    <div class="result-label">de 12 questões corretas</div>
+    <div class="result-msg" id="rMsg"></div>
+    <div class="result-stats">
+      <div class="result-stat"><div class="val" id="rCertas" style="color:#4EE89A">0</div><div class="lbl">Certas</div></div>
+      <div class="result-stat"><div class="val" id="rErradas" style="color:#FF6B6B">0</div><div class="lbl">Erradas</div></div>
+      <div class="result-stat"><div class="val" id="rPuladas" style="color:#FFD700">0</div><div class="lbl">Sem resp.</div></div>
+      <div class="result-stat"><div class="val" id="rTempo">—</div><div class="lbl">Tempo</div></div>
+    </div>
+  </div>
+  <div class="result-body">
+    <div style="display:flex;gap:10px;justify-content:center;margin-bottom:24px;flex-wrap:wrap">
+      <button class="btn btn-sec" onclick="irTopicos()">← Outros temas</button>
+      <button class="btn btn-pri" id="btnRefazer" onclick="refazer()">Refazer simulado</button>
+      <button class="btn btn-ouro" onclick="abrirGabarito()">Ver gabarito completo ▾</button>
+    </div>
+    <div id="gabaritoLista"></div>
+  </div>
+</div>
+
+<!-- SCREEN: TEMAS REDAÇÃO -->
+<div id="sc-temas" class="screen">
+  <div class="section-header">
+    <h2>Redação ENEM</h2>
+    <p>Escolha um tema e escreva por etapas</p>
+  </div>
+  <div class="tema-grid" id="temaGrid"></div>
+</div>
+
+<!-- SCREEN: REDAÇÃO -->
+<div id="sc-essay" class="screen">
+  <div class="essay-wrap">
+    <div class="stepper" id="stepper"></div>
+    <div id="essayContent"></div>
+  </div>
+</div>
+
+<!-- MODAL SENHA PROFESSOR -->
+<div class="modal-over" id="modalSenha">
+  <div class="modal-box">
+    <h3>🔑 Modo Professor</h3>
+    <p>Digite a senha para acessar o gabarito e a grade de correção.</p>
+    <input class="modal-input" type="password" id="senhaInput" placeholder="••••••••••••" onkeydown="if(event.key==='Enter')verificarSenha()">
+    <div class="modal-erro" id="senhaErro">Senha incorreta. Tente novamente.</div>
+    <div class="modal-btns">
+      <button class="btn btn-sec" onclick="fecharModal()">Cancelar</button>
+      <button class="btn btn-pri" onclick="verificarSenha()">Entrar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const SENHA = 'professor123';
+
+// ─── BANCO DE QUESTÕES ───────────────────────────────────────────────────────
+
+const BANCO = {
+
+variacao:{
+  titulo:'Variação Linguística',
+  emoji:'🗣️',
+  questoes:[
+  {
+    texto:`Evanildo Bechara prepara a sua aposentadoria de pouco em pouco, como se a adiasse ao máximo. Aos 95 anos, o imortal da Academia Brasileira de Letras (ABL) alcançou um status de astro pop no mundo da filologia e da gramática.
+
+— "Qual o seu tipo preferido de leitura?"
+— "A minha leitura está dividida em duas partes, a científica e a literária, estabelecendo uma relação de causa e efeito entre elas." — responde.
+
+Ainda adolescente, Bechara descobriu a lexicologia. Um "novo mundo" se abriu para o pernambucano, que se mantém atento às metamorfoses do nosso idioma. Seu colega de ABL, Ricardo Cavaliere, lembra de quando deu carona para o mestre e este encucou com os estrangeirismos do aplicativo de navegação: "Esse 'reportado' é uma importação, né?"`,
+    fonte:`Disponível em: oglobo.globo.com. Acesso em: 3 jan. 2024 (adaptado). | ENEM 2024 — Questão 42`,
+    enun:`As falas atribuídas a Evanildo Bechara são representativas da variedade linguística`,
+    alts:['situacional, pois o contexto exige o uso da linguagem formal.','regional, pois ele traz marcas do falar de seu local de nascimento.','sociocultural, pois sua formação pressupõe o uso de linguagem rebuscada.','geracional, pois ele emprega termos característicos de sua faixa etária.','ocupacional, pois ele faz uso de termos específicos de sua área de atuação.'],
+    correta:4,
+    expl:`A variedade ocupacional é definida pelo uso de terminologia técnica específica de uma área de atuação profissional. Bechara usa termos como "lexicologia", "filologia" e "estrangeirismos" — vocabulário típico de sua área (linguística/gramática), não da sua região, geração ou situação comunicativa específica.`
+  },
+  {
+    texto:`No dia 6 de agosto de 1910, Emma Riccini Rubinato pariu um garoto sapeca em Valinhos e deu a ele o nome de João Rubinato. Na escola, João não passou do terceiro ano. Fez o que apareceu: foi ser garçom, metalúrgico, até virar radialista, comediante, ator e compositor. De samba.
+
+Como tinha sobrenome italiano, João resolveu mudar para emplacar seu samba. E como ia mudar o sobrenome, mudou o nome. Virou Adoniran Barbosa. O cara falava errado, voz rouca, pinta de malandro da roça.
+
+"Gosto de samba e não foi fácil, pra mim, ser aceito como compositor, porque ninguém queria nada com as minhas letras que falavam 'nóis vai', 'nóis fumo', 'nóis fizemo', 'nóis peguemo'. Acontece que é preciso saber falar errado. Falar errado é uma arte, senão vira deboche."`,
+    fonte:`PEREIRA, E. Disponível em: tribunapr.com.br. Acesso em: 8 jul. 2024 (adaptado). | ENEM 2024 — Questão 24`,
+    enun:`O "falar errado" a que o texto se refere constitui um preconceito em relação ao uso que Adoniran Barbosa fazia da língua em suas composições, pois esse uso`,
+    alts:['marcava a linguagem dos comediantes no mesmo período histórico.','prejudicava a compreensão das canções pelo público ouvinte.','denunciava a ausência de estilo nas letras do compositor.','restringia a criação poética nas letras de canção do artista.','transgredia a norma-padrão vigente à época.'],
+    correta:4,
+    expl:`O uso de formas como "nóis vai", "nóis fumo" etc. fazia parte da variedade popular urbana, que se distancia da norma-padrão prescrita pelas gramáticas. O preconceito linguístico sofrido por Adoniran tinha origem exatamente nessa transgressão às convenções da norma culta escrita — não em qualquer problema de comunicação ou estilo.`
+  },
+  {
+    texto:`Maranhenses que moram longe matam a saudade da terra natal usando expressões próprias do estado. Se o maranhês impressiona e desperta a curiosidade de quem mora no próprio Maranhão, imagine de quem vem de outros estados?
+
+Com saudades do Maranhão, morando há 16 anos no Rio de Janeiro, um fotógrafo maranhense criou um perfil na internet com o 'dicionário' maranhês. "A primeira vez que fui a uma padaria no Rio, na inocência, pedi 3 reais de 'pães misturados'. Quando falei isso, as pessoas pararam e me olharam de uma forma bem engraçada, aí já fiquei 'encabulado, ó' e o atendente sorriu e explicou que lá não existia pão misturado e, sim, pão francês e suíço", contou o fotógrafo.`,
+    fonte:`Disponível em: oimparcial.com.br. Acesso em: 1 nov. 2021 (adaptado). | ENEM 2024 — Questão 27`,
+    enun:`A vivência relatada no texto evidencia que as variedades linguísticas`,
+    alts:['impedem o entendimento mútuo entre falantes de diferentes regiões do Brasil.','enaltecem o português falado no Maranhão como superior a outras variedades.','são constitutivas do português brasileiro e fazem parte de seus diferentes modos de uso.','exigem a dicionarização dos termos regionais para garantir sua preservação cultural.','são restritas a situações coloquiais informais de comunicação cotidiana.'],
+    correta:2,
+    expl:`A situação do fotógrafo não evidencia incomunicabilidade (eles se entenderam após a explicação), mas sim a diversidade legítima do português brasileiro. Expressões como "pão misturado" e "encabulado" são parte de variedades regionais que compõem o português do Brasil — não erros, mas diferenças constitutivas da língua.`
+  },
+  {
+    texto:`"O preconceito linguístico se baseia, em grande parte, na crença de que existe uma única língua portuguesa correta, imutável, que deve ser idêntica em todo o território nacional e em todas as situações de uso. Tudo o que se afasta desse modelo imaginário é considerado erro, ignorância ou falta de educação."
+
+BAGNO, Marcos. Preconceito linguístico. São Paulo: Loyola, 2007. (adaptado)`,
+    fonte:`Questão elaborada — Estilo ENEM · Competência 3`,
+    enun:`Segundo o texto, o preconceito linguístico fundamenta-se na crença de que`,
+    alts:['a língua popular é inferior e deve ser ensinada na escola como forma errada a ser corrigida.','os dialetos regionais impedem a comunicação eficaz entre brasileiros de diferentes estados.','existe uma variedade linguística superior às demais, desconsiderando a variação natural da língua viva.','o sistema educacional tem o papel de uniformizar o português falado em todo o país.','a mídia é a principal responsável pela degradação do vocabulário dos falantes brasileiros.'],
+    correta:2,
+    expl:`Bagno argumenta que o preconceito linguístico nasce da crença equivocada em uma única forma "correta" de falar português. A alternativa C reproduz fielmente esse argumento: não há variedade superior — toda língua viva apresenta variações naturais e legítimas.`
+  },
+  {
+    texto:`Durante uma reunião com diretores, o gerente apresentou os dados do trimestre com vocabulário técnico e tom formal. Ao chegar em casa à noite, contou para os filhos que o chefe tinha "ficado na bronca" porque os números tinham "ido ladeira abaixo".`,
+    fonte:`Situação hipotética para fins pedagógicos. | Questão elaborada — Estilo ENEM · Competência 3`,
+    enun:`A variação linguística observada no comportamento do gerente classifica-se como`,
+    alts:['variação diatópica, pois revela a origem geográfica do falante em cada contexto.','variação diacrônica, decorrente das mudanças da língua ao longo do tempo histórico.','variação diastrática, pois indica a posição socioeconômica do falante perante os interlocutores.','variação diafásica, determinada pelo contexto e pela situação de comunicação em cada momento.','variação diamésica, associada ao canal utilizado — oral ou escrito — para a comunicação.'],
+    correta:3,
+    expl:`A variação diafásica (ou situacional) ocorre quando o mesmo falante adapta sua linguagem conforme o contexto. O gerente usa registro formal no trabalho e informal em casa — não muda de região (diatópica), de época (diacrônica) ou de classe social (diastrática): apenas a situação.`
+  },
+  {
+    texto:`"Norma culta e norma padrão não são sinônimos. A norma culta é o conjunto de usos linguísticos efetivamente praticados pelos falantes com maior escolaridade em situações de maior formalidade. Já a norma padrão é uma abstração codificada nas gramáticas tradicionais, um modelo ideal que nenhum falante real usa integralmente no dia a dia."
+
+FARACO, Carlos Alberto. Norma culta brasileira. São Paulo: Parábola, 2008. (adaptado)`,
+    fonte:`Questão elaborada — Estilo ENEM · Competência 3`,
+    enun:`A distinção apresentada no texto permite concluir que`,
+    alts:['norma culta e norma padrão são conceitos equivalentes, ambos referindo-se ao uso correto da língua.','a norma padrão é a forma efetivamente usada pelos falantes com maior grau de escolaridade.','a norma culta é aquela descrita nas gramáticas normativas como modelo ideal de correção.','a norma culta corresponde ao uso real de falantes escolarizados em situações formais, podendo variar regionalmente.','a norma padrão varia de região para região, enquanto a norma culta é uniforme em todo o território.'],
+    correta:3,
+    expl:`Faraco distingue norma culta (uso real e variável de falantes escolarizados em contextos formais) de norma padrão (modelo prescritivo abstrato). A alternativa D é a única que reproduz essa distinção com precisão: a norma culta é real, efetiva e pode variar regionalmente.`
+  },
+  {
+    texto:`Chegando a São Paulo aos 23 anos, Antônio logo percebeu que seu sotaque nordestino provocava sorrisos e comentários nos locais de trabalho. Passou a sentir vergonha de falar, a tentar "esconder" o sotaque, até que um colega lhe disse: "Você não fala errado. Você fala diferente."`,
+    fonte:`Situação hipotética para fins pedagógicos. | Questão elaborada — Estilo ENEM · Competência 3`,
+    enun:`O texto evidencia que a língua, além de ser instrumento de comunicação, funciona também como`,
+    alts:['barreira intransponível à integração social de migrantes em grandes centros urbanos.','marcador de identidade cultural e regional que pode ser alvo de preconceito e discriminação.','fator determinante da capacidade intelectual dos falantes de diferentes variedades regionais.','obstáculo ao desenvolvimento econômico das regiões com maior diversidade dialetal.','elemento neutro que não interfere nas relações sociais estabelecidas entre os indivíduos.'],
+    correta:1,
+    expl:`O sotaque de Antônio é um marcador identitário — carrega sua origem e cultura. Em contexto de preconceito linguístico, essa diferença se torna alvo de discriminação social. A fala do colega resume a perspectiva sociolinguística: a diferença não é erro.`
+  },
+  {
+    texto:`Entre os jovens brasileiros, verbos e expressões de origem inglesa circulam com naturalidade: "stalkear" alguém nas redes, "printar" a tela, "deletar" um contato, "checar" as mensagens. Alguns puristas classificam esses usos como "erro" ou "corrupção" da língua portuguesa.`,
+    fonte:`Observação de uso linguístico contemporâneo. | Questão elaborada — Estilo ENEM · Competência 3`,
+    enun:`O fenômeno linguístico descrito no texto é melhor caracterizado como`,
+    alts:['degeneração do vocabulário português pela influência indevida e crescente do inglês.','impossibilidade de a língua portuguesa se adaptar aos avanços tecnológicos sem empréstimos.','criação de neologismos por empréstimo e adaptação de termos estrangeiros ao sistema do português.','substituição progressiva e irreversível do léxico português por termos de origem anglófona.','erro linguístico sistemático que o sistema educacional tem a obrigação de corrigir.'],
+    correta:2,
+    expl:`Toda língua viva incorpora termos de outras línguas por necessidade comunicativa — especialmente em áreas novas como tecnologia. O fenômeno é neologismo por empréstimo: "stalkear", "printar", "deletar" foram adaptados ao sistema morfológico do português (verbos da 1ª conjugação). Não é degeneração, mas evolução natural.`
+  },
+  {
+    texto:`Em 2002, o Brasil reconheceu a Língua Brasileira de Sinais (Libras) como meio legal de comunicação e expressão das comunidades surdas (Lei 10.436/2002). Mais recentemente, dezenas de municípios brasileiros co-oficializaram línguas indígenas ao lado do português como línguas oficiais de suas comunidades.`,
+    fonte:`Informação baseada em legislação brasileira vigente. | Questão elaborada — Estilo ENEM · Competência 3`,
+    enun:`As políticas linguísticas descritas no texto representam um avanço porque`,
+    alts:['substituem gradualmente as línguas regionais pelo português, garantindo a unidade nacional.','confirmam que o Brasil é um país monolíngue, com o português como única língua plenamente legítima.','reconhecem a diversidade linguística do Brasil e valorizam línguas de comunidades historicamente marginalizadas.','determinam que todas as escolas brasileiras devem ensinar Libras como primeira língua de todas as crianças.','eliminam definitivamente a necessidade de intérpretes na comunicação entre surdos e ouvintes.'],
+    correta:2,
+    expl:`Reconhecer a Libras e co-oficializar línguas indígenas são políticas de valorização da diversidade linguística — o oposto do monolinguismo imposto. Essas medidas reconhecem que o Brasil sempre foi multilíngue e que comunidades surdas e indígenas têm direito a suas próprias línguas.`
+  },
+  {
+    texto:`"Uma língua é um dialeto com exército e marinha."
+
+WEINREICH, Max. YIVO Bleter, 1945. (tradução nossa)`,
+    fonte:`Questão elaborada — Estilo ENEM · Competência 3`,
+    enun:`A afirmação de Weinreich sugere que a distinção entre "língua" e "dialeto" é fundamentalmente`,
+    alts:['linguística, baseada na maior complexidade gramatical da língua em relação ao dialeto.','determinada pelo número de falantes nativos de cada variedade linguística.','primordialmente política e social, e não uma questão de estrutura linguística.','estabelecida pela tradição oral e pela literatura produzida em cada variedade.','resultado direto da incapacidade de compreensão mútua entre falantes das duas variedades.'],
+    correta:2,
+    expl:`A frase de Weinreich é uma das mais citadas na sociolinguística: uma variedade é chamada de "língua" quando tem poder político por trás (Estado, prestígio), e "dialeto" quando não tem — não porque seja linguisticamente inferior. A distinção é política, não estrutural.`
+  },
+  {
+    texto:`Fragmento de carta do século XVIII:
+"Minha muy cara Senhora, espero que Vossa Mercê se ache em perfeyta saude como a mim Deos me dá, pois em verdade não he cousa pequena ter saude nestes tempos calamitosos."
+
+Tradução livre para o português atual:
+"Minha querida senhora, espero que a senhora esteja com saúde, como Deus me concede, pois saúde não é coisa pequena nestes tempos difíceis."`,
+    fonte:`Carta adaptada do século XVIII, domínio público. | Questão elaborada — Estilo ENEM · Competência 3`,
+    enun:`O contraste entre os dois fragmentos exemplifica a variação linguística diacrônica, que pode ser definida como`,
+    alts:['as diferenças linguísticas entre falantes de diferentes regiões geográficas de um mesmo país.','as mudanças que a língua sofre ao longo do tempo, em diferentes períodos históricos.','as variações no uso da língua conforme o grau de formalidade exigido pela situação.','as diferenças linguísticas decorrentes do nível de escolaridade dos falantes.','a coexistência de diferentes variedades linguísticas em uma mesma região geográfica.'],
+    correta:1,
+    expl:`A variação diacrônica diz respeito às mudanças que a língua sofre ao longo do tempo histórico. O contraste entre a carta do século XVIII (com "Vossa Mercê", "perfeyta", ortografia arcaica) e o português atual é exemplo clássico — a mesma língua, em épocas distintas.`
+  },
+  {
+    texto:`"Quando dizemos que alguém 'fala errado', estamos, na verdade, emitindo um julgamento sobre o grupo social de origem dessa pessoa — sua classe, sua região, sua escolaridade. A língua, nesse caso, é apenas o pretexto. O julgamento é social."
+
+BAGNO, Marcos. A língua de Eulália. São Paulo: Contexto, 1997. (adaptado)`,
+    fonte:`Questão elaborada — Estilo ENEM · Competência 3`,
+    enun:`A tese central do texto é a de que`,
+    alts:['todos os falantes deveriam aprender a norma padrão para evitar a discriminação no ambiente escolar.','a escola tem o papel de corrigir os "erros" linguísticos dos alunos de origem socioeconômica popular.','o julgamento de que uma variedade linguística é "errada" é, na verdade, um julgamento social, não linguístico.','existe uma hierarquia legítima entre as variedades linguísticas, com a norma culta no nível mais elevado.','a língua popular deve ser preservada em contextos informais, mas não tem lugar nas situações formais.'],
+    correta:2,
+    expl:`Bagno propõe que chamar o falar de alguém de "errado" é uma forma de discriminação social disfarçada de julgamento linguístico. A língua é o pretexto; o alvo real é a pessoa e seu grupo de origem. A alternativa C reproduz essa tese central com precisão.`
+  }
+  ]
+},
+
+intertextualidade:{
+  titulo:'Intertextualidade',
+  emoji:'🔗',
+  questoes:[
+  {
+    texto:`TEXTO I
+A 13 de fevereiro de 1946, Graciliano Ramos escreve uma carta a Cândido Portinari:
+
+"Não há trabalho mais digno, penso eu. Dizem que somos pessimistas e exibimos deformações; contudo, as deformações e essa miséria existem fora da arte e são cultivadas pelos que nos censuram. Dos quadros que você me mostrou quando almocei no Cosme Velho pela última vez, o que mais me comoveu foi aquela mãe com a criança morta. Numa sociedade sem classes e sem miséria, seria possível fazer-se aquilo? Chego a pensar que teríamos cromos, anjinhos cor-de-rosa, e isto me horroriza."
+
+TEXTO II
+"Houve um tempo — tão perto, e, ó, tão longe — em que a arte era um holofote na unha encravada, não um campeonato de melhores esmaltes. A realidade é confusa. Contraditória. Muitas vezes incompreensível. A arte é onde tentamos nos mostrar nus, com todos os nossos defeitos."
+
+PRATA, A. Disponível em: folha.uol.com.br, 2024 (adaptado).`,
+    fonte:`ENEM 2024 — Questão 29`,
+    enun:`No que diz respeito à arte, o posicionamento de Antônio Prata, no Texto II, aproxima-se da tese de Graciliano Ramos, no Texto I, uma vez que ambos`,
+    alts:['defendem a dignidade do ofício dos artistas.','concluem que a arte reforça crenças pessoais do leitor.','apresentam a pobreza como única inspiração legítima para a arte.','afirmam o necessário caráter desestabilizador da arte.','atestam que há mudanças significativas na produção artística contemporânea.'],
+    correta:3,
+    expl:`Tanto Graciliano quanto Prata defendem que a arte deve questionar a realidade e mostrar seus problemas — não suavizá-los. Graciliano horroriza-se com a possibilidade de arte decorativa e feliz; Prata critica a arte que reforça certezas em vez de abalá-las. Os dois compartilham a tese de que a arte deve ter um caráter desestabilizador, que incomoda e confronta.`
+  },
+  {
+    texto:`Às vezes, no silêncio da noite, eu fico imaginando: que graça teria a vida sem música? Sem ela não há paz, não há beleza. Nos dias de festa e nas madrugadas de pranto, nas trilhas dos filmes e nas corridas no parque, o que seria de nós sem as canções?
+
+Quem nunca curou uma dor de cotovelo dançando lambada ou terminou de se afundar ouvindo sertanejo sofrência? Quantos já criticaram funk e fecharam a noite descendo até o chão? Raul nos ensinou que é preferível ser essa metamorfose ambulante do que ter aquela velha opinião formada sobre tudo.
+
+É pau, é pedra, é o fim do caminho. Há uma nuvem de lágrimas sobre os olhos, você está na lanterna dos afogados, o coração despedaçado. Mas, como um sopro, da janela do vizinho, entra o samba que reanima a mente. Levanta, sacode a poeira, dá a volta por cima.`,
+    fonte:`BITTAR, L. Disponível em: revistabula.com. Acesso em: 21 nov. 2021 (adaptado). | ENEM 2024 — Questão 22`,
+    enun:`Defendendo a importância da música para o bem-estar das pessoas, a autora usa, como recurso persuasivo, a`,
+    alts:['contradição, ao associar o coração despedaçado à alegria repentina no final do texto.','metáfora, ao citar a imagem da "metamorfose ambulante" como símbolo de transformação.','intertextualidade, ao resgatar versos de letras de canções conhecidas do público.','enumeração, ao mencionar diferentes ritmos musicais ao longo do texto.','hipérbole, ao falar em "sofrência", "tragédias" e "afogados".'],
+    correta:2,
+    expl:`A autora usa a intertextualidade ao resgatar versos e expressões de músicas conhecidas: "É pau, é pedra" (Tom Jobim), "metamorfose ambulante" (Raul Seixas), "Levanta, sacode a poeira" (Alceu Valença), "lanterna dos afogados" (Chico Buarque). Essas referências reforçam o argumento sobre o impacto emocional da música.`
+  },
+  {
+    texto:`O sol começa a descer por trás da vegetação da Ilha da Restinga, na outra margem do rio Paraíba, colorindo o céu de amarelo, laranja e lilás.
+
+Então se ouvem as primeiras notas do Bolero, do compositor francês Maurice Ravel, executadas pelo saxofonista Jurandy.
+
+É assim o pôr do sol da praia do Jacaré, em Cabedelo (Grande João Pessoa). Depois do Bolero, Jurandy toca Asa Branca, de Luiz Gonzaga, e Meu Sublime Torrão, de Genival Macedo, espécie de hino não oficial da Paraíba.`,
+    fonte:`PINHEIRO, A. Sol se põe embalado pelo Bolero de Ravel. Disponível em: tools.folha.com.br, 2012 (adaptado). | ENEM 2023 — Questão 32`,
+    enun:`A interpretação musical de Jurandy do Sax apresenta um repertório caracterizado pela`,
+    alts:['inter-relação de referenciais estéticos aparentemente distanciados.','valorização de músicas que revelam mensagens de serenidade e contemplação.','consagração do repertório erudito como cultura dominante em contextos populares.','iniciativa de estímulo à vocação turística da cidade de Cabedelo.','divisão hierárquica entre gêneros e estilos musicais distintos.'],
+    correta:0,
+    expl:`O repertório de Jurandy combina o Bolero de Ravel (música erudita europeia) com Asa Branca de Luiz Gonzaga (forró nordestino) e um hino paraibano — estilos aparentemente opostos que convivem no mesmo espetáculo. Isso exemplifica intertextualidade cultural: referenciais estéticos de origens distintas dialogando em um mesmo contexto.`
+  },
+  {
+    texto:`TEXTO I
+"De tudo ao meu amor serei atento / Antes, e com tal zelo, e sempre, e tanto / Que mesmo em face do maior encanto / Dele se encante mais meu pensamento."
+(Vinícius de Moraes, "Soneto de Fidelidade", 1939)
+
+TEXTO II
+"De tudo ao meu Wi-Fi serei atento / Antes, e com tal zelo, e sempre, e tanto / Que mesmo em face do maior sinal fraco / Meu celular não perca nem um pacote."
+(Paródia anônima, circulação em redes sociais)`,
+    fonte:`Texto I: domínio público. Texto II: circulação anônima. | Questão elaborada — Estilo ENEM · Competência 5`,
+    enun:`A relação entre os textos configura uma paródia porque`,
+    alts:['reproduz literalmente o texto original, apenas atualizando palavras para o contexto digital.','mantém aspectos formais do texto de origem e transforma seu conteúdo para criar efeito cômico.','apresenta o mesmo tema amoroso de maneira mais direta e acessível ao leitor contemporâneo.','cita o texto original para embasar uma argumentação sobre o uso excessivo de tecnologia.','inverte completamente a forma e o conteúdo do texto de Vinícius, tornando-o irreconhecível.'],
+    correta:1,
+    expl:`A paródia mantém a forma do texto original (estrutura do soneto, ritmo, esquema de rimas) mas transforma o conteúdo — o amor é substituído pelo Wi-Fi — gerando efeito cômico. Diferente da paráfrase (que mantém o sentido), a paródia subverte o conteúdo preservando a forma reconhecível.`
+  },
+  {
+    texto:`Em entrevista, a ministra alertou: "Se ficarmos chamando o povo para se preocupar sem que a crise chegue de verdade, vamos acabar como a história de Pedro e o Lobo — e quando o problema de fato bater à porta, ninguém vai acreditar."`,
+    fonte:`Situação hipotética para fins pedagógicos. | Questão elaborada — Estilo ENEM · Competência 5`,
+    enun:`A referência à "história de Pedro e o Lobo" funciona, nesse contexto, como`,
+    alts:['citação literal da fábula, que empresta autoridade literária ao discurso da ministra.','paráfrase que reescreve o conteúdo da fábula com outras palavras para fins argumentativos.','alusão que ativa o conhecimento prévio do leitor sobre a fábula para reforçar a ideia de falsos alarmes.','paródia que transforma o sentido original da fábula para criar um efeito irônico e crítico.','epígrafe que introduz o argumento principal a ser desenvolvido pela ministra.'],
+    correta:2,
+    expl:`A alusão é uma referência indireta a outro texto ou narrativa, sem citá-lo explicitamente. A ministra não conta a fábula — apenas menciona seu título, esperando que o leitor reconheça a moral (quem grita falsamente "lobo" acaba ignorado quando o perigo é real). Esse reconhecimento prévio é o que torna a alusão eficaz argumentativamente.`
+  },
+  {
+    texto:`Uma graphic novel brasileira reconta o "Hamlet" de Shakespeare no ambiente de uma universidade pública contemporânea: Hamlet é um estudante de filosofia que descobre que seu pai foi assassinado pelo reitor (tio Cláudio). Ofélia é uma DJ que perde a razão após a perseguição ao namorado. Polônio é um professor delator.`,
+    fonte:`Obra fictícia para fins pedagógicos. | Questão elaborada — Estilo ENEM · Competência 5`,
+    enun:`A relação entre a graphic novel e o texto shakespeariano caracteriza`,
+    alts:['uma paráfrase, pois a obra reproduz fielmente as ideias e estrutura do original em formato visual.','um plágio, pois utiliza personagens e trama de obra alheia sem atribuição ou autorização.','uma adaptação intertextual que estabelece diálogo produtivo entre o clássico e a realidade contemporânea.','uma citação explícita, pois reproduz os diálogos originais de Shakespeare em português.','uma epígrafe visual, pois a HQ funciona como introdução ilustrada ao texto original.'],
+    correta:2,
+    expl:`A adaptação intertextual transpõe personagens, temas e estrutura dramática de uma obra para um novo contexto sem ser plágio — porque transforma e recria, não copia. A graphic novel dialoga com Hamlet de Shakespeare, atualizando conflitos universais (traição, poder, loucura) para o contexto universitário brasileiro.`
+  },
+  {
+    texto:`No conto, a protagonista — uma mulher de meia-idade em cidade do interior — espera há dois anos o retorno do marido emigrado para São Paulo. Durante o dia, desfaz os planos que traça à noite para a vida deles juntos. Os vizinhos passaram a chamá-la de "a nova Penélope".`,
+    fonte:`Texto fictício para fins pedagógicos. | Questão elaborada — Estilo ENEM · Competência 5`,
+    enun:`A alusão ao mito de Penélope serve, no conto, para`,
+    alts:['comparar diretamente a situação contemporânea da personagem com o contexto da Guerra de Troia.','indicar que a personagem tem formação clássica e conhece a mitologia grega com profundidade.','iluminar, pelo mito, a experiência da espera criativa como forma de resistência à solidão e ao tempo.','criticar o papel submisso da mulher na sociedade contemporânea por meio da figura mitológica.','sugerir que a personagem usa a espera como estratégia de manipulação.'],
+    correta:2,
+    expl:`Penélope, na Odisseia, esperava Ulisses desfazendo à noite a tapeçaria que tecia de dia — usando a criatividade como modo de resistir ao tempo. A alusão enriquece a personagem contemporânea: sua espera não é passividade, mas ato criativo e resistente. O mito ilumina o presente sem precisar ser relatado.`
+  },
+  {
+    texto:`Em grupos de WhatsApp, circula uma imagem de Leonardo DiCaprio, do filme "O Grande Gatsby", brindando com uma taça de champanhe. A imagem passou a ser usada para celebrar qualquer pequena conquista cotidiana: passar na prova, encontrar a carteira perdida, conseguir vaga no estacionamento.`,
+    fonte:`Fenômeno de circulação digital, para fins pedagógicos. | Questão elaborada — Estilo ENEM · Competência 5`,
+    enun:`O meme descrito funciona como intertextualidade porque`,
+    alts:['reproduz literalmente uma cena do filme para criticar o consumo exagerado de cinema hollywoodiano.','cria um novo texto cujo sentido depende do reconhecimento de uma referência cultural compartilhada.','é uma paródia do filme que inverte o sentido da cena original para produzir efeito cômico deliberado.','cita explicitamente a fonte cinematográfica para garantir a correta atribuição autoral.','adapta esteticamente o conteúdo do filme para um novo contexto, constituindo releitura artística sofisticada.'],
+    correta:1,
+    expl:`O meme é uma forma contemporânea de intertextualidade: seu sentido depende de o receptor reconhecer a imagem de DiCaprio e associá-la a um sentimento de euforia comemorativa. Quem não conhece a referência cultural não entende o meme. É intertextualidade: um texto que só faz sentido pleno a partir de outro texto anterior.`
+  },
+  {
+    texto:`TEXTO A: "Como já dizia Carlos Drummond de Andrade, 'no meio do caminho tinha uma pedra', e no meio do nosso projeto também tinha uma: a burocracia."
+
+TEXTO B: "O poema avança por entre pedras, obstáculos, pedregulhos que insistem em voltar — sempre a mesma pedra, sempre o mesmo tropeço, sempre o mesmo caminho bloqueado."`,
+    fonte:`Textos fictícios para fins pedagógicos. | Questão elaborada — Estilo ENEM · Competência 5`,
+    enun:`A diferença entre os tipos de intertextualidade presentes nos textos A e B é que`,
+    alts:['o Texto A apresenta intertextualidade implícita; o Texto B, intertextualidade explícita.','o Texto A apresenta intertextualidade explícita; o Texto B, intertextualidade implícita.','ambos apresentam intertextualidade explícita, pois os dois dialogam com a mesma obra de Drummond.','ambos apresentam intertextualidade implícita, pois nenhum reproduz o poema original na íntegra.','o Texto A apresenta paráfrase; o Texto B, paródia da obra de Drummond.'],
+    correta:1,
+    expl:`A intertextualidade explícita identifica e cita a fonte (Texto A: "Como já dizia Carlos Drummond..."). A intertextualidade implícita evoca o universo de um texto sem citá-lo diretamente (Texto B: usa as imagens de pedra e caminho do universo drummondiano sem mencionar o poeta). A diferença está na visibilidade da fonte.`
+  },
+  {
+    texto:`A canção "Aquele Abraço" (Gilberto Gil, 1969) foi composta semanas antes de Gil partir para o exílio, imposto pela ditadura militar. A letra é uma série de saudações afetivas a amigos, lugares e instituições cariocas — aparentemente inofensiva, mas que funcionava, para quem entendia o contexto, como um manifesto velado de despedida e resistência.`,
+    fonte:`Informação histórico-musical para fins pedagógicos. | Questão elaborada — Estilo ENEM · Competência 5`,
+    enun:`A estratégia comunicativa de Gil, diante da censura vigente, consistia em`,
+    alts:['utilizar linguagem política explícita para denunciar publicamente a repressão do regime militar.','criar letras sem qualquer conteúdo político para garantir a aprovação pela censura sem risco.','usar linguagem aparentemente afetiva e cotidiana para veicular, de forma velada, um posicionamento político.','adaptar músicas estrangeiras ao contexto brasileiro como forma de burlar a fiscalização da censura.','compor apenas músicas instrumentais, evitando qualquer referência verbal que pudesse ser censurada.'],
+    correta:2,
+    expl:`Diante da censura, artistas da MPB usavam linguagem aparentemente apolítica para transmitir mensagens políticas. Gil usou linguagem afetiva — mas os ouvintes reconheciam o subtexto. A canção funciona em dois níveis: o literal (saudações) e o intertextual-político (despedida e resistência).`
+  },
+  {
+    texto:`Folheto de cordel:
+"Mateus foi ao Banco do Povo / enfrentar o dragão burocrático / Com a espada de seus documentos / e o escudo do seu número de protocolo / Três horas de fila ele enfrentou / sem perder a fé nem o controle / que São Jorge também esperou / antes de vencer o seu monstro."`,
+    fonte:`Composição para fins pedagógicos. | Questão elaborada — Estilo ENEM · Competência 5`,
+    enun:`O efeito expressivo criado no cordel decorre principalmente de`,
+    alts:['comparação religiosa entre a figura de São Jorge e as instituições financeiras brasileiras.','denúncia direta da corrupção nos bancos por meio da metáfora do dragão como símbolo do crime.','aproximação cômica entre o universo épico-religioso da tradição popular e uma situação banal do cotidiano.','crítica à burocracia estatal por meio de referências à mitologia greco-romana clássica.','exaltação da resiliência nordestina como capacidade de superar qualquer desafio com fé e coragem.'],
+    correta:2,
+    expl:`O humor do cordel nasce do contraste: a fila de banco (situação corriqueira e burocrática) é narrada com a linguagem épico-religiosa do cordel nordestino (São Jorge, dragão, espada, escudo). Essa aproximação entre o grandioso e o trivial é o procedimento que gera o efeito cômico e crítico.`
+  },
+  {
+    texto:`Em uma minissérie brasileira, o protagonista é um assistente social chamado Macabéa — clara referência ao romance "A Hora da Estrela", de Clarice Lispector — que trabalha no Nordeste contemporâneo ajudando mulheres vítimas de violência doméstica. A produção usa o nome e a fragilidade da personagem original, mas inverte seu destino: este Macabéa sobrevive e se torna agente de transformação social.`,
+    fonte:`Obra fictícia para fins pedagógicos. | Questão elaborada — Estilo ENEM · Competência 5`,
+    enun:`A relação entre a minissérie e o romance de Clarice Lispector pode ser descrita como`,
+    alts:['paráfrase, pois a minissérie reproduz o enredo do romance em linguagem audiovisual.','plágio, pois usa o nome da personagem original sem autorização ou indicação da fonte.','intertextualidade de inversão: retoma a personagem original e transforma seu destino para novo significado.','citação explícita, pois reproduz os trechos mais famosos do romance na voz dos personagens.','paródia crítica do feminismo presente no romance de Clarice Lispector.'],
+    correta:2,
+    expl:`A minissérie retoma deliberadamente o nome e traços da Macabéa de Clarice, criando um diálogo intertextual com o romance. Mas ao inverter o destino da personagem (sobrevivência e agência em vez de morte e submissão), a minissérie ressignifica a referência para um novo contexto — isso é intertextualidade transformadora, não plágio.`
+  }
+  ]
+},
+
+generos:{
+  titulo:'Gêneros Textuais',
+  emoji:'📰',
+  questoes:[
+  {
+    texto:`Há quem diga que o Brasil nunca mais foi o mesmo depois dos memes. Na economia da velocidade, alguns apostam no humor, outros no engajamento político, e tem gente investindo alto na mentira também. Diante desse cenário, uma pergunta se torna essencial: será que todo mundo está conseguindo traduzir as mensagens postadas, curtidas e compartilhadas?
+
+Essa dúvida incentivou uma professora de língua portuguesa a desenvolver uma proposta de leitura e análise crítica de memes com estudantes do ensino fundamental. "Percebi que muitos alunos e pais estavam divulgando conteúdos sem saber o que havia por trás das palavras", relata a professora. Letramento político e midiático é um desafio intergeracional.`,
+    fonte:`Disponível em: lunetas.com.br. Acesso em: 15 jan. 2024 (adaptado). | ENEM 2024 — Questão 17`,
+    enun:`Ao abordar a relação dos memes com a educação, a reportagem sustenta uma crítica à`,
+    alts:['falta de fiscalização no uso de aplicativos de mensagens por crianças e adolescentes.','divulgação de informação manipulada em postagens virtuais sem análise crítica.','utilização de ferramentas digitais no trabalho educacional em escolas públicas.','exploração de conteúdos humorísticos nas mídias sociais por empresas de tecnologia.','propagação de mensagens com objetivos exclusivamente políticos nas redes sociais.'],
+    correta:1,
+    expl:`A reportagem destaca como memes podem disseminar informações manipuladas (fake news) quando consumidos sem letramento midiático crítico. A professora identificou que alunos compartilhavam conteúdos sem compreender "o que havia por trás das palavras" — a crítica central é à divulgação irrefletida de informação manipulada.`
+  },
+  {
+    texto:`Os Jogos Olímpicos já não são mais os mesmos. E isso não é nem uma crítica, nem um elogio. É uma constatação. Esse movimento começou com o vôlei de praia em 1996 e agora atinge seu momento mais insólito com a inclusão do break dance como modalidade dos Jogos de Paris, em 2024. Para os mais tradicionalistas, o cruzamento da linha que delimitava o que é esporte e o que é cultura é uma afronta ao espírito dos Jogos. Para o Comitê Olímpico Internacional, a decisão faz parte de uma estratégia de se comunicar com jovens urbanos que se exercitam e se entretêm de uma maneira muito diferente da dos seus avós.`,
+    fonte:`Disponível em: uol.com.br. Acesso em: 19 nov. 2021 (adaptado). | ENEM 2024 — Questão 16`,
+    enun:`A mudança no programa olímpico mencionada no texto mostra que o esporte está se`,
+    alts:['aproximando da aventura e do risco como valor central das competições modernas.','mantendo em sua forma padrão, apenas incorporando modalidades de maior audiência.','tornando uma forma de dança e expressão artística, perdendo seu caráter competitivo.','afastando de elementos culturais tradicionais para privilegiar o rendimento técnico.','adaptando às demandas do seu tempo, incorporando práticas da cultura juvenil urbana.'],
+    correta:4,
+    expl:`O texto apresenta a inclusão do break dance como exemplo de estratégia do COI para dialogar com jovens urbanos — ou seja, o esporte se adapta às demandas culturais contemporâneas. O autor não emite julgamento (diz que não é crítica nem elogio), mas constata a transformação como resposta ao tempo histórico.`
+  },
+  {
+    texto:`O Brasil somou cerca de 60 mil novos casos de câncer de mama até o final de 2019, número que corresponde a 25% de todos os diagnósticos registrados no país. Apesar do Outubro Rosa ser o mês de conscientização sobre o tema, é muito importante lembrar que um dos grandes mitos da medicina é o de que o câncer de mama não afeta o sexo masculino.
+
+Fatores importantes para detectar o câncer de mama masculino:
+1. Genética: se houver casos na família, as chances são um pouco mais elevadas.
+2. Hormônios: homens podem desenvolver tecido mamário por tomarem certos medicamentos.
+3. Caroços: é necessário que os médicos se atentem a sintomas suspeitos na área do tórax.
+4. Retração na pele: em situações mais graves, é possível ocorrer retração do mamilo.`,
+    fonte:`Disponível em: pebmed.com.br. Acesso em: 24 nov. 2021 (adaptado). | ENEM 2024 — Questão 7`,
+    enun:`As informações dessa reportagem auxiliam no combate ao câncer de mama masculino por apresentarem um alerta sobre`,
+    alts:['os sinais indicadores da doença que facilitam o diagnóstico precoce.','o índice de crescimento de casos no Brasil ao longo da última década.','os exames disponíveis para o diagnóstico de tumor em tecido mamário.','os mitos a respeito da herança genética como único fator de risco.','o período de campanhas de conscientização sobre o tema no calendário.'],
+    correta:0,
+    expl:`O texto lista quatro fatores — genética, hormônios, caroços, retração da pele — que são sinais indicadores da doença, cuja identificação facilita o diagnóstico precoce. A reportagem tem função de alerta sobre os sintomas, não de apresentação de exames, dados históricos ou datas de campanhas.`
+  },
+  {
+    texto:`"Os gêneros textuais são formas de ação social relativamente estáveis, reconhecíveis por seus participantes, que surgem em resposta a situações recorrentes de comunicação. Não são moldes fixos, mas padrões flexíveis que se transformam conforme as necessidades e práticas sociais de cada época."
+
+MARCUSCHI, Luiz Antônio. Produção textual, análise de gêneros e compreensão. São Paulo: Parábola, 2008. (adaptado)`,
+    fonte:`Questão elaborada — Estilo ENEM · Competência 4`,
+    enun:`Com base no texto, é correto afirmar que os gêneros textuais`,
+    alts:['são formas fixas e imutáveis, determinadas pelas tradições culturais de cada sociedade.','definem-se exclusivamente pela estrutura formal, independentemente do contexto de produção.','são entidades sociodiscursivas que surgem das necessidades comunicativas e evoluem com elas.','existem apenas na modalidade escrita, pois a fala não apresenta formas discursivas organizadas.','confundem-se com os tipos textuais, sendo ambas as categorias classificações equivalentes.'],
+    correta:2,
+    expl:`Marcuschi define gêneros como "formas de ação social" — não são estruturas formais fixas, mas padrões flexíveis que mudam com as práticas sociais. A alternativa C capta os dois elementos essenciais da definição: origem nas necessidades comunicativas e capacidade de evolução.`
+  },
+  {
+    texto:`TEXTO A — Notícia:
+"Incêndio destrói 40 casas na Vila Esperança. O fogo começou por volta das 22h. Não há vítimas fatais. A Defesa Civil aguarda avaliação dos estragos."
+
+TEXTO B — Reportagem:
+"A Vila Esperança já registrou sete incêndios em quatro anos. Moradores relatam que atrasos na regularização fundiária impedem a instalação de hidrantes. Especialistas apontam que a densidade habitacional, sem infraestrutura adequada, cria risco permanente. 'A gente sabe que pode acontecer de novo', diz Maria, 42 anos, que perdeu tudo pela segunda vez."`,
+    fonte:`Textos fictícios para fins pedagógicos. | Questão elaborada — Estilo ENEM · Competência 4`,
+    enun:`A diferença fundamental entre os textos reside no fato de que`,
+    alts:['a notícia apresenta linguagem subjetiva, enquanto a reportagem mantém objetividade jornalística total.','a reportagem contextualiza o fato, incorpora múltiplas vozes e analisa causas, enquanto a notícia se limita ao registro factual imediato.','a notícia é mais longa e aprofundada, enquanto a reportagem privilegia o resumo para o leitor apressado.','a reportagem destina-se a especialistas, enquanto a notícia se dirige ao público geral não especializado.','a notícia inclui opinião do repórter, enquanto a reportagem se restringe aos fatos verificáveis.'],
+    correta:1,
+    expl:`A notícia é o relato objetivo do fato recente (o quê, quando, onde). A reportagem vai além: contextualiza historicamente, investiga causas, ouve diferentes fontes (moradores, especialistas) e aprofunda a análise. O Texto A tem apenas os dados imediatos; o Texto B tem memória, análise e humanização.`
+  },
+  {
+    texto:`"[Charge: um político sorridente aparece diante de uma tribuna, segurando bem à frente um cartaz que diz 'COMBATO A CORRUPÇÃO'. Atrás dele, parcialmente visível para o leitor mas oculto para o público da plateia, há outro cartaz que completa: '...DOS OUTROS.']"`,
+    fonte:`Charge fictícia para fins pedagógicos. | Questão elaborada — Estilo ENEM · Competência 4`,
+    enun:`O efeito crítico da charge é produzido principalmente pelo(a)`,
+    alts:['ironia verbal que contradiz o tom solene do discurso político apresentado na tribuna.','ausência de texto verbal, deixando a crítica exclusivamente para a interpretação da imagem.','contraste entre o texto visível ao público e o texto revelado ao leitor, expondo a contradição entre discurso e prática.','exagero das feições físicas do político, recurso gráfico típico da sátira na charge.','referência explícita a um político real e identificável pelo público leitor da charge.'],
+    correta:2,
+    expl:`O recurso da charge é mostrar ao leitor o que o público retratado não vê. O segundo cartaz ("dos outros") completa o sentido e expõe a hipocrisia do personagem. Esse contraste entre o discurso público e a intenção real — visível apenas para o leitor — é o mecanismo central de crítica política da charge.`
+  },
+  {
+    texto:`O dia em que fui ao DETRAN renascer.
+
+Cheguei às 7h da manhã. A fila já dobrava a esquina duas vezes. Peguei uma senha com o número 847. O painel mostrava: "Agora atendendo senha 203."
+Sentei numa cadeira de plástico alaranjado e comecei a refletir sobre o tempo — essa coisa que a gente jura que tem, mas que escapa pelos buracos da burocracia como água por entre os dedos.
+Quando chamaram minha senha, eram 14h37. Eu havia envelhecido. Mas também havia aprendido algo: que a fila é um espelho da vida — você nunca sabe quando chega a sua vez.`,
+    fonte:`Texto fictício — estilo crônica jornalístico-literária. | Questão elaborada — Estilo ENEM · Competência 4`,
+    enun:`O texto apresenta características que o identificam como crônica jornalístico-literária, EXCETO`,
+    alts:['linguagem acessível com recursos estilísticos literários, como metáforas e ironia.','abordagem de um fato cotidiano como pretexto para uma reflexão mais ampla sobre a vida.','linguagem técnica especializada e uso de jargão burocrático-administrativo ao longo do texto.','presença da voz do cronista com perspectiva subjetiva e tom reflexivo-irônico.','brevidade e destinação original ao suporte jornalístico (jornal, revista).'],
+    correta:2,
+    expl:`A crônica jornalístico-literária caracteriza-se por linguagem acessível, subjetividade, ironia e reflexão sobre o cotidiano. A alternativa que descreve o que NÃO é crônica é (C): uso de jargão técnico e linguagem especializada — esses são atributos de gêneros como o relatório técnico ou o artigo científico.`
+  },
+  {
+    texto:`O tema "desmatamento" aparece em:
+• Tweet de celebridade: "Salva a floresta! 🌿 #Amazônia"
+• Reportagem do Globo Rural: análise de dados do INPE sobre desmatamento em 2023
+• Artigo científico na revista Nature: estudo sobre impacto do desmatamento na pluviometria
+• Cartaz de campanha do IBAMA: "Preservar é lei. Desmatar, crime."`,
+    fonte:`Exemplos criados para fins pedagógicos. | Questão elaborada — Estilo ENEM · Competência 4`,
+    enun:`O que determina que cada texto seja um gênero diferente, apesar de tratarem do mesmo tema, é`,
+    alts:['o conteúdo informativo de cada texto, que varia conforme a profundidade e a extensão do tratamento.','a intenção pessoal do autor em cada caso, que muda a natureza do texto independentemente do contexto.','o suporte, a esfera de circulação e a situação comunicativa em que cada texto é produzido e recebido.','o grau de formalidade da linguagem utilizada, que varia do informal ao técnico em cada exemplo.','a extensão de cada texto, que determina sua profundidade e, consequentemente, seu gênero.'],
+    correta:2,
+    expl:`O mesmo tema se configura em gêneros radicalmente diferentes porque cada texto responde a uma situação comunicativa distinta (onde circula, para quem, com que propósito, em que suporte). O tweet circula em rede social; o artigo científico, em revista acadêmica. Suporte + esfera + situação = gênero.`
+  },
+  {
+    texto:`Reduzir a maioridade penal não resolverá a violência. Países que reduziram a imputabilidade criminal não registraram queda nos índices de criminalidade juvenil. Ao contrário, o encarceramento precoce aumenta a reincidência e rompe projetos de vida. A solução está na educação de qualidade, no acesso ao esporte e à cultura — não em punição mais severa para quem ainda não tem pleno desenvolvimento neurológico.`,
+    fonte:`Texto de opinião hipotético para fins pedagógicos. | Questão elaborada — Estilo ENEM · Competência 4`,
+    enun:`O texto pertence ao gênero artigo de opinião porque`,
+    alts:['relata eventos factuais de forma objetiva e imparcial, sem expressar julgamentos do autor.','apresenta dados estatísticos internacionais que comprovam a ineficácia da redução da maioridade.','assume explicitamente uma tese e a defende com argumentos sustentados por evidências e lógica.','expõe diferentes pontos de vista sobre o tema sem comprometer-se com nenhuma posição específica.','usa linguagem técnica jurídica para analisar a proposta de emenda constitucional ao debate.'],
+    correta:2,
+    expl:`O artigo de opinião caracteriza-se por assumir uma posição clara (tese) e defendê-la com argumentos. No texto, a tese é "reduzir a maioridade penal não resolverá a violência" — sustentada por argumentos (comparação internacional, efeito do encarceramento, alternativas). O autor é opinativo e argumentativo, não imparcial.`
+  },
+  {
+    texto:`Post de blog pessoal, 14 de março:
+"Oi, pessoal! Então, finalmente fui à aquela cachoeira que vocês ficaram me perguntando no comentário do mês passado. E gente, foi INCRÍVEL!! Coloca nas fotos abaixo — fiz questão de não usar filtro pra vocês verem do jeito que é mesmo haha. Quem já foi? Me conta nos comentários! 🌊✨"`,
+    fonte:`Post fictício para fins pedagógicos. | Questão elaborada — Estilo ENEM · Competência 4`,
+    enun:`O texto apresenta características típicas do gênero blog pessoal, EXCETO`,
+    alts:['uso da primeira pessoa com tom conversacional e linguagem informal.','relato de experiência pessoal compartilhada com o público leitor.','convite explícito à interação do leitor por meio de comentários.','rigor gramatical formal exigido pela norma padrão culta da língua.','publicação em suporte digital com possibilidade de atualização e interação.'],
+    correta:3,
+    expl:`O blog pessoal caracteriza-se pela informalidade, primeira pessoa, convite à interação e linguagem coloquial. O que NÃO caracteriza o gênero é o "rigor gramatical formal" (D): o blog pessoal é um gênero digital informal, onde gírias, abreviações e emoticons são esperados e aceitos.`
+  },
+  {
+    texto:`Em um perfil de professor universitário no Twitter/X, uma série de publicações encadeadas e numeradas ("1/15", "2/15"...) explica, de forma didática, as causas da Revolução Francesa. Cada tweet desenvolve um ponto do argumento e termina com "👇 continua" para indicar a sequência.`,
+    fonte:`Prática de circulação digital para fins pedagógicos. | Questão elaborada — Estilo ENEM · Competência 4`,
+    enun:`A thread descrita representa uma inovação nos gêneros digitais porque`,
+    alts:['substitui completamente os gêneros textuais tradicionais, tornando artigos e livros obsoletos.','adapta o formato fragmentado das redes sociais para organizar uma sequência argumentativa coesa.','demonstra que os gêneros digitais são totalmente livres de estrutura, podendo se organizar de qualquer forma.','elimina a necessidade de conhecimento especializado para produzir textos sobre qualquer assunto.','apresenta a mesma estrutura formal do artigo científico, mas em suporte digital mais acessível.'],
+    correta:1,
+    expl:`A thread é um gênero nativo do ambiente digital que emerge de uma limitação (o limite de caracteres por tweet) e transforma essa limitação em estrutura: a fragmentação em unidades numeradas cria coesão narrativa ou argumentativa por encadeamento. É uma inovação porque usa o suporte digital de forma que gêneros tradicionais não conseguem replicar.`
+  },
+  {
+    texto:`"Pesquisadores da USP descobriram uma cepa de bactéria capaz de degradar plástico em temperatura ambiente. O microrganismo, chamado de 'engolidor de plástico' pelos cientistas, atua como um exército microscópico que digere as moléculas do polietileno como se fossem açúcar. A descoberta pode representar um passo importante na luta contra a poluição dos oceanos, segundo o professor coordenador da pesquisa."`,
+    fonte:`Texto fictício — estilo divulgação científica. | Questão elaborada — Estilo ENEM · Competência 4`,
+    enun:`A principal estratégia discursiva do texto de divulgação científica é`,
+    alts:['utilizar linguagem técnica especializada para garantir a precisão e a credibilidade científica.','omitir deliberadamente a fonte das pesquisas para não sobrecarregar o leitor com referências.','tornar acessível ao público geral um conhecimento produzido em contexto científico especializado.','apresentar apenas hipóteses científicas preliminares, evitando afirmações conclusivas por prudência.','criticar a comunidade científica pela lentidão na produção e divulgação de suas descobertas.'],
+    correta:2,
+    expl:`A divulgação científica tem como função fundamental mediar entre o conhecimento técnico-científico e o público leigo. Para isso, usa metáforas ("exército microscópico", "como se fossem açúcar"), cita fontes de forma acessível e evita jargão excessivo. A alternativa C define com precisão esse propósito fundamental do gênero.`
+  }
+  ]
+}
+
+};
+// ─── TEMAS DE REDAÇÃO ─────────────────────────────────────────────────────────
+
+const TEMAS = [
+{
+  id:'ia', emoji:'🤖', cor:'#0062CC',
+  titulo:'Inteligência Artificial e o mercado de trabalho no Brasil',
+  textos:[
+    {rotulo:'Texto 1 — Dados',conteudo:'Segundo o Fórum Econômico Mundial (2023), a automação pode substituir 85 milhões de empregos globalmente até 2025, mas criará 97 milhões de novas funções. No Brasil, estima-se que 54% dos trabalhadores exercem atividades com alto risco de automação, concentradas nos setores de serviços básicos e operações industriais.'},
+    {rotulo:'Texto 2 — Perspectiva social',conteudo:'Pesquisadores apontam que os impactos da IA no mercado de trabalho não serão uniformes: trabalhadores de baixa renda, com menor escolaridade, enfrentam maior risco de substituição, enquanto profissionais qualificados tendem a ser ampliados pela tecnologia, não substituídos. Isso tende a aprofundar desigualdades já existentes.'},
+    {rotulo:'Texto 3 — Perspectiva histórica',conteudo:'A Revolução Industrial também gerou temores de desemprego em massa. A longo prazo, criou mais empregos do que eliminou — mas o período de transição foi marcado por intensa exclusão social. Economistas debatem se a IA representa uma ruptura mais profunda, dado o ritmo de mudança sem precedentes históricos.'}
+  ],
+  dicas:{
+    intro:'📌 Contextualize o avanço tecnológico no cenário atual → apresente o paradoxo (IA cria e elimina empregos) → formule sua tese sobre o principal desafio a enfrentar no Brasil.',
+    dev1:'📌 1º argumento: aprofunde a desigualdade no impacto da automação. Use dados (% de trabalhadores em risco, setores afetados). Mostre que os mais vulneráveis são os que menos têm acesso à requalificação.',
+    dev2:'📌 2º argumento: aborde a ausência de políticas públicas de requalificação profissional no Brasil. Conecte com a velocidade da mudança tecnológica e o despreparo das instituições de ensino.',
+    conclusao:'📌 Retome a tese. Proponha intervenção com todos os elementos C5: Agente (Estado brasileiro) + Ação (programa de requalificação) + Meio (parceria com universidades e empresas de tecnologia) + Objetivo (preparar trabalhadores para a economia digital) + Resultado esperado (transição tecnológica com justiça social).'
+  }
+},
+{
+  id:'dv', emoji:'💻', cor:'#7B2FBE',
+  titulo:'Violência contra a mulher na era digital',
+  textos:[
+    {rotulo:'Texto 1 — Dados',conteudo:'O Brasil registrou 1,6 milhão de casos de violência contra a mulher em 2022 (Monitor da Violência/G1). A violência digital — revenge porn, perseguição virtual, ameaças em redes sociais e exposição não consentida — cresceu 50% em cinco anos, afetando desproporcionalmente mulheres negras, jovens e periféricas.'},
+    {rotulo:'Texto 2 — Marco legal',conteudo:'A Lei Carolina Dieckmann (2012) e a Lei nº 14.132/2021 (crime de perseguição/stalking) representaram avanços, mas especialistas apontam subnotificação, morosidade judicial e despreparo das delegacias para lidar com evidências digitais como obstáculos à efetividade da proteção legal.'},
+    {rotulo:'Texto 3 — Perspectiva estrutural',conteudo:'"O ambiente digital não criou o machismo — ele apenas deu a ele uma nova arma e uma escala sem precedentes." (Djamila Ribeiro, adaptado). O combate à violência digital requer, além de legislação, transformação cultural, educação midiática e responsabilização das plataformas.'}
+  ],
+  dicas:{
+    intro:'📌 Contextualize o crescimento do espaço digital na vida social → apresente o paradoxo (tecnologia que conecta também que violenta) → tese: o principal desafio no combate à violência digital contra a mulher.',
+    dev1:'📌 1º argumento: lacunas na aplicação da lei vigente (subnotificação, despreparo policial, morosidade). Use os dados e a lei citados. Mostre que o problema não é apenas legal, mas estrutural.',
+    dev2:'📌 2º argumento: dimensão cultural e o papel das plataformas digitais. Traga Djamila Ribeiro. Argumente que sem educação midiática e responsabilização das plataformas, as leis têm alcance limitado.',
+    conclusao:'📌 Retome a tese. Proposta C5 completa: Agente (Ministério da Mulher + plataformas digitais) + Ação (implementar protocolos de resposta rápida e educação digital nas escolas) + Meio (parceria público-privada) + Objetivo (reduzir a violência digital) + Resultado (ambiente digital mais seguro para mulheres).'
+  }
+},
+{
+  id:'sm', emoji:'🧠', cor:'#1A7F4E',
+  titulo:'Saúde mental dos jovens brasileiros na era pós-pandemia',
+  textos:[
+    {rotulo:'Texto 1 — Dados',conteudo:'Uma em cada quatro crianças e adolescentes brasileiros apresenta sintomas de transtornos mentais, segundo a FIOCRUZ (2023). Ansiedade e depressão cresceram 30% entre jovens de 14 a 19 anos nos últimos cinco anos. O isolamento social da pandemia acelerou essa tendência.'},
+    {rotulo:'Texto 2 — Acesso ao tratamento',conteudo:'O Brasil tem 3,2 psicólogos por 100 mil habitantes — abaixo da média da OMS. Nas regiões Norte e Nordeste, a proporção cai ainda mais. Apenas 27% dos jovens que precisam de atendimento psicológico têm acesso a ele, concentrado nas classes mais altas e nos grandes centros urbanos.'},
+    {rotulo:'Texto 3 — Redes sociais',conteudo:'Pesquisadores associam o uso excessivo de redes sociais ao aumento da ansiedade e da baixa autoestima em adolescentes, especialmente meninas. A comparação constante com padrões estéticos irreais e o cyberbullying são fatores de risco identificados em múltiplos estudos internacionais.'}
+  ],
+  dicas:{
+    intro:'📌 Contextualize o cenário: pandemia, redes sociais e seus impactos na saúde mental → apresente a dimensão do problema com dado concreto → tese: o principal obstáculo ao enfrentamento da crise de saúde mental juvenil no Brasil.',
+    dev1:'📌 1º argumento: causas sociais e digitais (redes sociais, cyberbullying, pressão estética). Use o Texto 3. Conecte com dados do Texto 1. Mostre como o ambiente digital intensifica vulnerabilidades já existentes.',
+    dev2:'📌 2º argumento: ausência de políticas públicas de saúde mental escolar. Use dados do Texto 2 (desigualdade no acesso). Argumente que a escola é espaço estratégico de prevenção ainda subutilizado.',
+    conclusao:'📌 Retome a tese. Proposta C5: Agente (Ministério da Saúde + municípios) + Ação (programa de saúde mental nas escolas públicas) + Meio (contratação de psicólogos escolares e formação de professores) + Objetivo (prevenção e identificação precoce de transtornos) + Resultado (redução de crises e melhora no desempenho escolar).'
+  }
+},
+{
+  id:'ind', emoji:'🌿', cor:'#C0392B',
+  titulo:'Desafios para a valorização das culturas indígenas no Brasil',
+  textos:[
+    {rotulo:'Texto 1 — Marco legal',conteudo:'A Constituição Federal de 1988 reconhece os direitos dos povos indígenas às suas terras, línguas, culturas e tradições (Art. 231). Contudo, apenas 13% das terras indígenas estão regularizadas. A pressão do agronegócio, do garimpo ilegal e da mineração sobre esses territórios representa ameaça direta à sobrevivência cultural.'},
+    {rotulo:'Texto 2 — Pensamento indígena',conteudo:'"Os povos indígenas não somos relíquias do passado. Somos guardiões de saberes sobre como viver no planeta sem destruí-lo." (Ailton Krenak, adaptado). As terras indígenas protegem 80% da Amazônia ainda preservada, evidenciando a conexão entre preservação cultural e ambiental.'},
+    {rotulo:'Texto 3 — Educação e mídia',conteudo:'A Lei 11.645/2008 tornou obrigatório o ensino de história e cultura indígena nas escolas brasileiras. Pesquisas indicam, porém, que a maioria dos materiais didáticos ainda representa os indígenas de forma estereotipada e homogênea, ignorando a diversidade de mais de 300 povos diferentes no Brasil.'}
+  ],
+  dicas:{
+    intro:'📌 Contextualize: Brasil tem mais de 300 povos indígenas, riqueza cultural e territorial reconhecida pela Constituição → apresente o paradoxo (proteção legal vs. violações reais) → tese: o principal obstáculo à valorização das culturas indígenas hoje.',
+    dev1:'📌 1º argumento: ameaça territorial como ameaça cultural (sem terra, não há língua, ritual, conhecimento). Use os dados do Texto 1 e o pensamento de Krenak. Mostre a conexão cultura-território-meio ambiente.',
+    dev2:'📌 2º argumento: invisibilidade e estereotipagem nos materiais didáticos. Use o Texto 3 (Lei 11.645 existe mas não se efetiva). Argumente que a escola reproduz preconceitos em vez de combatê-los.',
+    conclusao:'📌 Proposta C5: Agente (MEC + comunidades indígenas) + Ação (revisão e cocriação de materiais didáticos com participação de representantes dos povos indígenas) + Meio (parceria com universidades indígenas e institutos de pesquisa) + Objetivo (combater estereótipos e valorizar diversidade) + Resultado (educação mais justa e cidadania plena).'
+  }
+},
+{
+  id:'fk', emoji:'📱', cor:'#D4A800',
+  titulo:'Desinformação, redes sociais e os desafios para a democracia brasileira',
+  textos:[
+    {rotulo:'Texto 1 — Escala do problema',conteudo:'O Brasil é o segundo país do mundo em uso de WhatsApp, com mais de 165 milhões de usuários. 53% dos brasileiros recebem notícias principalmente por aplicativos de mensagem. Pesquisa do Reuters Institute (2023) aponta que 85% dos brasileiros já receberam informações falsas nessas plataformas.'},
+    {rotulo:'Texto 2 — Impacto democrático',conteudo:'O TSE registrou mais de 600 inquéritos sobre desinformação eleitoral nas últimas eleições. Fake news sobre urnas eletrônicas e processos eleitorais foram identificadas como fatores de erosão da confiança nas instituições democráticas. Informações falsas se propagam seis vezes mais rápido que as verdadeiras (MIT, 2018).'},
+    {rotulo:'Texto 3 — Abordagens de solução',conteudo:'Especialistas divergem sobre as soluções: uns defendem a regulamentação das plataformas digitais; outros alertam para o risco de censura prévia. Há consenso de que a educação midiática e o jornalismo independente são ferramentas fundamentais para fortalecer a esfera pública democrática.'}
+  ],
+  dicas:{
+    intro:'📌 Contextualize a centralidade das redes sociais na vida pública contemporânea → apresente o paradoxo (tecnologia que democratiza o acesso à informação também desinforma em escala) → tese: o principal desafio para preservar a democracia diante da desinformação digital.',
+    dev1:'📌 1º argumento: o papel dos algoritmos na amplificação da desinformação. Use dados do Texto 2 (velocidade de propagação das fake news). Mostre que o problema não é apenas de má-fé individual, mas de incentivos estruturais das plataformas.',
+    dev2:'📌 2º argumento: a ausência de letramento midiático como vulnerabilidade democrática. Use o Texto 1 (% de brasileiros que recebem notícias por WhatsApp). Argumente que cidadãos sem ferramentas críticas são mais vulneráveis à manipulação.',
+    conclusao:'📌 Proposta C5: Agente (Ministério da Educação) + Ação (implementar letramento midiático e informacional como componente curricular obrigatório) + Meio (formação de professores e parceria com veículos de jornalismo independente) + Objetivo (desenvolver cidadãos críticos e resistentes à desinformação) + Resultado (democracia mais robusta e participação política mais qualificada).'
+  }
+}
+];
+
+// ─── ESTADO ───────────────────────────────────────────────────────────────────
+
+const S = {
+  topico: null,
+  qIdx: 0,
+  respostas: [],
+  timerSeg: 1800,
+  timerInterval: null,
+  startTime: null,
+  endTime: null,
+  tema: null,
+  etapa: 1,
+  texto: {intro:'', dev1:'', dev2:'', conclusao:''},
+  profMode: false,
+  correcao: {c1:-1, c2:-1, c3:-1, c4:-1, c5:-1},
+  corComents: {c1:'', c2:'', c3:'', c4:'', c5:''}
+};
+
+// ─── NAVEGAÇÃO ────────────────────────────────────────────────────────────────
+
+function mostrar(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('ativo'));
+  document.getElementById(id).classList.add('ativo');
+}
+function irHome(){pararTimer();mostrar('sc-home');}
+function irTopicos(){pararTimer();mostrar('sc-topicos');}
+function irTemas(){mostrar('sc-temas');renderTemas();}
+
+// ─── QUIZ ─────────────────────────────────────────────────────────────────────
+
+function iniciarQuiz(topico){
+  S.topico = topico;
+  S.qIdx = 0;
+  S.respostas = new Array(12).fill(-1);
+  S.timerSeg = 1800;
+  S.startTime = Date.now();
+  S.endTime = null;
+  mostrar('sc-quiz');
+  const t = BANCO[topico];
+  document.getElementById('qTopicName').textContent = t.emoji + ' ' + t.titulo;
+  renderNavDots();
+  renderQ();
+  iniciarTimer();
+}
+
+function iniciarTimer(){
+  pararTimer();
+  atualizarTimer();
+  S.timerInterval = setInterval(()=>{
+    S.timerSeg--;
+    atualizarTimer();
+    if(S.timerSeg<=0){pararTimer();finalizarQuiz();}
+  },1000);
+}
+function pararTimer(){clearInterval(S.timerInterval);S.timerInterval=null;}
+
+function atualizarTimer(){
+  const m=Math.floor(S.timerSeg/60), s=S.timerSeg%60;
+  const el=document.getElementById('timer');
+  el.textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+  el.className='timer-box';
+  if(S.timerSeg<=300) el.classList.add('danger');
+  else if(S.timerSeg<=600) el.classList.add('warn');
+  // progresso
+  const q = BANCO[S.topico].questoes;
+  const resp = S.respostas.filter(r=>r>=0).length;
+  document.getElementById('progFill').style.width=(resp/q.length*100)+'%';
+}
+
+function renderNavDots(){
+  const q=BANCO[S.topico].questoes;
+  const nav=document.getElementById('qNav');
+  nav.innerHTML='';
+  q.forEach((_,i)=>{
+    const d=document.createElement('div');
+    d.className='q-dot'+(i===S.qIdx?' ativo':'')+(S.respostas[i]>=0?' respondida':'');
+    d.textContent=i+1;
+    d.onclick=()=>{S.qIdx=i;renderQ();renderNavDots();};
+    nav.appendChild(d);
+  });
+}
+
+function renderQ(){
+  const q=BANCO[S.topico].questoes[S.qIdx];
+  document.getElementById('qNum').textContent='Questão '+(S.qIdx+1)+' de 12';
+  // texto base
+  const tDiv=document.getElementById('qTexto');
+  if(q.texto&&q.texto.trim()){
+    tDiv.innerHTML='<div class="q-texto">'+q.texto.replace(/\n/g,'<br>')+'<div class="q-fonte">'+q.fonte+'</div></div>';
+  } else {
+    tDiv.innerHTML='';
+  }
+  document.getElementById('qEnun').textContent=q.enun;
+  // alternativas
+  const aDiv=document.getElementById('qAlts');
+  const letras=['A','B','C','D','E'];
+  aDiv.innerHTML='';
+  q.alts.forEach((alt,i)=>{
+    const btn=document.createElement('button');
+    btn.className='alt-btn'+(S.respostas[S.qIdx]===i?' selecionada':'');
+    btn.innerHTML='<span class="alt-letra">'+letras[i]+'</span><span class="alt-txt">'+alt.substring(2)+'</span>';
+    btn.onclick=()=>selecionarAlt(i);
+    aDiv.appendChild(btn);
+  });
+  document.getElementById('btnAnterior').disabled=S.qIdx===0;
+  document.getElementById('btnProximo').disabled=S.qIdx===11;
+}
+
+function selecionarAlt(i){
+  S.respostas[S.qIdx]=i;
+  renderQ();
+  renderNavDots();
+  // progresso
+  const resp=S.respostas.filter(r=>r>=0).length;
+  document.getElementById('progFill').style.width=(resp/12*100)+'%';
+}
+
+function navQ(dir){
+  const novoIdx=S.qIdx+dir;
+  if(novoIdx>=0&&novoIdx<12){S.qIdx=novoIdx;renderQ();renderNavDots();}
+}
+
+function finalizarQuiz(){
+  pararTimer();
+  S.endTime=Date.now();
+  const q=BANCO[S.topico].questoes;
+  let certas=0, erradas=0, puladas=0;
+  S.respostas.forEach((r,i)=>{
+    if(r<0) puladas++;
+    else if(r===q[i].correta) certas++;
+    else erradas++;
+  });
+  const pct=Math.round(certas/12*100);
+  document.getElementById('rScore').textContent=certas;
+  document.getElementById('rCertas').textContent=certas;
+  document.getElementById('rErradas').textContent=erradas;
+  document.getElementById('rPuladas').textContent=puladas;
+  const seg=Math.floor((S.endTime-S.startTime)/1000);
+  const m=Math.floor(seg/60), s=seg%60;
+  document.getElementById('rTempo').textContent=m+'min '+s+'s';
+  const msgs=[
+    [90,'🏆 Excelente! Nível avançado.'],
+    [75,'💪 Muito bem! Acima da média.'],
+    [60,'✅ Bom resultado! Continue praticando.'],
+    [40,'📚 Metade do caminho. Revise os erros.'],
+    [0,'🔁 Continue estudando — cada erro ensina.']
+  ];
+  document.getElementById('rMsg').textContent=msgs.find(([v])=>pct>=v)[1];
+  document.getElementById('gabaritoLista').innerHTML='';
+  document.getElementById('btnRefazer').setAttribute('data-topico',S.topico);
+  mostrar('sc-result');
+}
+
+function refazer(){iniciarQuiz(S.topico);}
+
+function abrirGabarito(){
+  const q=BANCO[S.topico].questoes;
+  const letras=['A','B','C','D','E'];
+  const cont=document.getElementById('gabaritoLista');
+  if(cont.innerHTML.trim()) {cont.innerHTML='';return;}
+  q.forEach((qst,i)=>{
+    const resp=S.respostas[i];
+    const certa=qst.correta;
+    let status='pulou', stLabel='Sem resposta';
+    if(resp>=0){
+      if(resp===certa){status='certo';stLabel='✓ Correta';}
+      else {status='errou';stLabel='✗ Errada';}
+    }
+    const item=document.createElement('div');
+    item.className='gabarito-item';
+    const textoHtml=qst.texto?'<div class="g-texto">'+qst.texto.replace(/\n/g,'<br>')+'</div>':'';
+    const altsHtml=qst.alts.map((a,ai)=>{
+      let cls='g-alt';
+      if(ai===certa) cls+=' correta-alt';
+      else if(ai===resp&&resp!==certa) cls+=' escolhida-errada';
+      return '<div class="'+cls+'"><span class="gl">'+letras[ai]+'</span><span>'+a.substring(2)+'</span></div>';
+    }).join('');
+    item.innerHTML='<div class="gabarito-head" onclick="toggleGab(this)"><span class="g-num">Questão '+(i+1)+'</span><span>&nbsp;'+qst.enun.substring(0,60)+'…</span><span class="g-status '+status+'">'+stLabel+'</span></div><div class="gabarito-body"><div>'+textoHtml+'<div class="g-enun">'+qst.enun+'</div><div class="g-alts">'+altsHtml+'</div><div class="g-expl">💡 '+qst.expl+'</div></div></div>';
+    cont.appendChild(item);
+  });
+}
+
+function toggleGab(head){
+  const body=head.nextElementSibling;
+  body.classList.toggle('aberto');
+}
+
+// ─── REDAÇÃO ──────────────────────────────────────────────────────────────────
+
+function renderTemas(){
+  const grid=document.getElementById('temaGrid');
+  grid.innerHTML='';
+  TEMAS.forEach(t=>{
+    const c=document.createElement('div');
+    c.className='tema-card';
+    c.style.setProperty('--cor',t.cor);
+    c.innerHTML='<span class="tema-emoji">'+t.emoji+'</span><h3>'+t.titulo+'</h3><p>'+t.textos[0].conteudo.substring(0,100)+'…</p>';
+    c.onclick=()=>iniciarRedacao(t.id);
+    grid.appendChild(c);
+  });
+}
+
+function iniciarRedacao(id){
+  S.tema=TEMAS.find(t=>t.id===id);
+  S.etapa=1;
+  S.texto={intro:'',dev1:'',dev2:'',conclusao:''};
+  S.profMode=false;
+  S.correcao={c1:-1,c2:-1,c3:-1,c4:-1,c5:-1};
+  mostrar('sc-essay');
+  renderEssay();
+}
+
+const ETAPAS=[
+  {key:'intro',label:'Introdução',num:1},
+  {key:'dev1',label:'Desenv. 1',num:2},
+  {key:'dev2',label:'Desenv. 2',num:3},
+  {key:'conclusao',label:'Conclusão',num:4},
+  {key:'revisao',label:'Revisão',num:5}
+];
+
+function renderEssay(){
+  // stepper
+  const st=document.getElementById('stepper');
+  st.innerHTML='';
+  ETAPAS.forEach((e,i)=>{
+    if(i>0){
+      const ln=document.createElement('div');
+      ln.className='step-line'+(e.num<S.etapa?' feita':'');
+      st.appendChild(ln);
+    }
+    const s=document.createElement('div');
+    s.className='step'+(e.num===S.etapa?' ativo':e.num<S.etapa?' feito':'');
+    s.innerHTML='<div class="step-circle">'+(e.num<S.etapa?'✓':e.num)+'</div>'+e.label;
+    st.appendChild(s);
+  });
+
+  const cont=document.getElementById('essayContent');
+  if(S.etapa===5){renderRevisao(cont);return;}
+
+  const etapa=ETAPAS[S.etapa-1];
+  const dica=S.tema.dicas[etapa.key]||'';
+  const txtKey=etapa.key;
+  const titulos=['Introdução','1º Parágrafo de Desenvolvimento','2º Parágrafo de Desenvolvimento','Conclusão com Proposta de Intervenção'];
+
+  // textos de apoio só na etapa 1
+  let textosHtml='';
+  if(S.etapa===1){
+    textosHtml='<div class="textos-base">';
+    S.tema.textos.forEach(t=>{
+      textosHtml+='<div class="texto-base-item"><div class="tb-titulo">'+t.rotulo+'</div>'+t.conteudo+'</div>';
+    });
+    textosHtml+='</div>';
+  }
+
+  cont.innerHTML='<div class="essay-panel"><h3>'+titulos[S.etapa-1]+'</h3><p class="essay-tema-label">📌 '+S.tema.titulo+'</p>'+textosHtml+'<div class="guide-box"><strong>Guia para esta etapa:</strong>'+dica+'</div><textarea class="essay-textarea" id="essayTA" placeholder="Escreva aqui seu texto..." oninput="atualizarWC()">'+S.texto[txtKey]+'</textarea><div class="wcount" id="wc">0 palavras</div><div class="essay-nav">'+(S.etapa>1?'<button class="btn btn-sec" onclick="navEssay(-1)">← Anterior</button>':'<span></span>')+'<button class="btn btn-pri" onclick="navEssay(1)">'+(S.etapa===4?'Finalizar ✓':'Próxima →')+'</button></div></div>';
+
+  setTimeout(atualizarWC,50);
+}
+
+function atualizarWC(){
+  const ta=document.getElementById('essayTA');
+  if(!ta) return;
+  const txt=ta.value.trim();
+  const words=txt?txt.split(/\s+/).length:0;
+  const el=document.getElementById('wc');
+  if(el) el.textContent=words+' palavra'+(words!==1?'s':'');
+}
+
+function navEssay(dir){
+  const ta=document.getElementById('essayTA');
+  if(ta){
+    const k=ETAPAS[S.etapa-1].key;
+    S.texto[k]=ta.value;
+  }
+  S.etapa+=dir;
+  renderEssay();
+}
+
+function renderRevisao(cont){
+  const secoes=[
+    {titulo:'Introdução',key:'intro'},
+    {titulo:'1º Parágrafo de Desenvolvimento',key:'dev1'},
+    {titulo:'2º Parágrafo de Desenvolvimento',key:'dev2'},
+    {titulo:'Conclusão',key:'conclusao'}
+  ];
+  let total=0;
+  let html='<div class="total-wcount" id="totalWC"></div>';
+  secoes.forEach(s=>{
+    const txt=S.texto[s.key]||'(não preenchido)';
+    const words=txt.trim()?txt.trim().split(/\s+/).length:0;
+    total+=words;
+    html+='<div class="rev-section"><div class="rev-head">'+s.titulo+'</div><div class="rev-body">'+escHtml(txt)+'</div><div class="rev-wcount">'+words+' palavras</div></div>';
+  });
+  html+='<div style="display:flex;gap:10px;justify-content:center;margin:24px 0;flex-wrap:wrap"><button class="btn btn-sec" onclick="navEssay(-1)">← Editar conclusão</button><button class="btn btn-ouro" onclick="pedirSenha()">🔑 Modo Professor</button><button class="btn btn-pri" onclick="window.print()">🖨️ Imprimir</button></div>';
+  html+='<div id="corrPanel" style="display:none"></div>';
+  cont.innerHTML=html;
+  document.getElementById('totalWC').textContent='Total: '+total+' palavra'+(total!==1?'s':'')+' · Redação completa';
+}
+
+function escHtml(str){
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+}
+
+function pedirSenha(){
+  document.getElementById('modalSenha').classList.add('show');
+  setTimeout(()=>document.getElementById('senhaInput').focus(),100);
+}
+function fecharModal(){
+  document.getElementById('modalSenha').classList.remove('show');
+  document.getElementById('senhaInput').value='';
+  document.getElementById('senhaErro').style.display='none';
+}
+function verificarSenha(){
+  const v=document.getElementById('senhaInput').value;
+  if(v===SENHA){fecharModal();S.profMode=true;renderCorrPanel();}
+  else{document.getElementById('senhaErro').style.display='block';}
+}
+
+const CRITERIOS=[
+  {id:'c1',label:'C1 — Domínio da norma culta',desc:'Avalia o domínio da modalidade escrita formal da língua portuguesa.'},
+  {id:'c2',label:'C2 — Compreensão da proposta',desc:'Avalia se o texto atende à proposta e desenvolve o tema com pertinência.'},
+  {id:'c3',label:'C3 — Argumentação',desc:'Avalia a seleção, organização e interpretação de argumentos e informações.'},
+  {id:'c4',label:'C4 — Coesão textual',desc:'Avalia o uso de mecanismos linguísticos para articular as partes do texto.'},
+  {id:'c5',label:'C5 — Proposta de intervenção',desc:'Avalia a elaboração da proposta de intervenção completa e respeitosa aos direitos humanos.'}
+];
+
+function renderCorrPanel(){
+  const panel=document.getElementById('corrPanel');
+  panel.style.display='block';
+  let html='<div class="corr-panel"><h3>📋 Grade de Correção — Modo Professor</h3>';
+  CRITERIOS.forEach(c=>{
+    const sel=S.correcao[c.id];
+    html+='<div class="corr-crit"><label>'+c.label+'</label><small>'+c.desc+'</small><div class="corr-pontos">';
+    [0,40,80,120,160,200].forEach(p=>{
+      html+='<button class="pt-btn'+(sel===p?' sel':'')+'" onclick="setCorr(\''+c.id+'\','+p+')">'+p+'</button>';
+    });
+    html+='</div><textarea class="corr-comentario" placeholder="Comentário opcional..." oninput="setComent(\''+c.id+'\',this.value)">'+S.corComents[c.id]+'</textarea></div>';
+  });
+  html+='<div class="corr-total"><div class="ct-num" id="totalCorr">0</div><div class="ct-label">pontos / 1000</div></div></div>';
+  panel.innerHTML=html;
+  atualizarTotal();
+}
+
+function setCorr(id,val){
+  S.correcao[id]=val;
+  renderCorrPanel();
+}
+function setComent(id,val){S.corComents[id]=val;}
+
+function atualizarTotal(){
+  const t=Object.values(S.correcao).filter(v=>v>=0).reduce((a,b)=>a+b,0);
+  const el=document.getElementById('totalCorr');
+  if(el) el.textContent=t;
+}
+
+// Modal: fechar clicando fora
+document.getElementById('modalSenha').addEventListener('click',function(e){
+  if(e.target===this) fecharModal();
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape') fecharModal();});
+
+</script>
+</body>
+</html>
