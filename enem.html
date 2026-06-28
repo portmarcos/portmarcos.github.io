@@ -10,6 +10,9 @@
 <style>
 
 /* ── DESIGN PROFISSIONAL v3 ── */
+.dc-num{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.6rem;color:var(--az);opacity:.15;line-height:1;margin-bottom:10px}
+.dash-card.concluido .dc-num{opacity:.3;color:var(--verde)}
+
 :root{
   --az:#003087;--az2:#0052CC;--az3:#E6EEFF;--az4:#1A1F5E;
   --ouro:#FFB800;--ouro-l:#FFF8DC;
@@ -349,6 +352,26 @@ h1,h2,h3,h4,.num{font-family:'Montserrat',sans-serif}
 }
 @media print{.topo,.topo-btn,.sc-top-user,.quiz-nav-btns,.essay-nav,.stepper,.btn,.modal-over,.rep-tabs,.rep-filtro{display:none!important}body{background:#fff}.screen{display:block!important}.rev-section,.corr-panel{box-shadow:none;border:1px solid #ccc}}
 
+
+/* ── DESIGN V4 ── */
+/* Dashboard com 6 temas: 3 colunas em desktop */
+.dash-cards{grid-template-columns:repeat(3,1fr);max-width:900px}
+@media(max-width:720px){.dash-cards{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:460px){.dash-cards{grid-template-columns:1fr}}
+
+/* Topic grid aprimorado */
+.topic-grid{grid-template-columns:repeat(auto-fit,minmax(200px,1fr));max-width:900px}
+#sc-topicos .topic-card{border-top:none;border-left:4px solid rgba(255,255,255,.3);text-align:left;padding:24px 20px}
+#sc-topicos .topic-card:hover{border-left-color:rgba(255,255,255,.6)}
+
+/* Número do tema */
+.tc-num{font-family:'Montserrat',sans-serif;font-weight:900;font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:12px;display:block}
+#sc-topicos .topic-card h3{font-size:.92rem;font-weight:700;margin-bottom:6px}
+#sc-topicos .tc-count{font-size:.7rem;font-weight:600;color:rgba(255,255,255,.65);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);padding:3px 12px;border-radius:20px;display:inline-block;margin-top:10px;font-family:'Montserrat',sans-serif}
+
+/* Melhorias gerais */
+.q-texto b{font-weight:700;color:var(--az)}
+.q-texto img{max-width:100%;border-radius:8px;margin:10px auto;display:block;box-shadow:var(--shadow)}
 </style>
 </head>
 <body>
@@ -463,39 +486,44 @@ h1,h2,h3,h4,.num{font-family:'Montserrat',sans-serif}
     <h2>Escolha o Tema</h2>
     <p>Cada simulado tem 12 questões e 30 minutos</p>
   </div>
-  <div class="topic-grid">
+    <div class="topic-grid">
     <div class="topic-card" style="--cor:#0062CC" onclick="iniciarQuiz('variacao')">
-      <span>🗣️</span>
+      <span class="tc-num">01 — Competência 5</span>
       <h3>Variação Linguística</h3>
-      <p>Dialetos, registros, preconceito linguístico, norma culta e padrão</p>
-      <span class="tc-count">12 questões</span>
+      <p>Dialetos, registros, preconceito linguístico, norma culta, padrão e popular</p>
+      <span class="tc-count">12 questões reais ENEM</span>
     </div>
     <div class="topic-card" style="--cor:#7B2FBE" onclick="iniciarQuiz('intertextualidade')">
-      <span>🔗</span>
+      <span class="tc-num">02 — Competência 5</span>
       <h3>Intertextualidade</h3>
-      <p>Paródia, paráfrase, alusão, citação e diálogos entre textos</p>
-      <span class="tc-count">12 questões</span>
+      <p>Paródia, paráfrase, alusão, citação, charge, HQ e diálogos entre textos</p>
+      <span class="tc-count">12 questões reais ENEM · com imagens</span>
     </div>
     <div class="topic-card" style="--cor:#1A7F4E" onclick="iniciarQuiz('generos')">
-      <span>📰</span>
+      <span class="tc-num">03 — Competência 4</span>
       <h3>Gêneros Textuais</h3>
-      <p>Crônica, charge, notícia, conto, infográfico, blog e mais</p>
-      <span class="tc-count">12 questões</span>
+      <p>Crônica, charge, notícia, reportagem, conto, infográfico, blog e mais</p>
+      <span class="tc-count">12 questões reais ENEM</span>
     </div>
-    <div class="topic-card em-breve" style="--cor:#E07B39">
-      <span>💬</span>
-      <h3>Figuras de Linguagem</h3>
-      <p>Metáfora, ironia, hipérbole, eufemismo e outras figuras</p>
-      <span class="home-badge">Em breve</span>
+    <div class="topic-card" style="--cor:#D97706" onclick="iniciarQuiz('coesao')">
+      <span class="tc-num">04 — Competência 4</span>
+      <h3>Coesão e Coerência</h3>
+      <p>Progressão textual, conectivos, referência, substituição e ellipse</p>
+      <span class="tc-count">12 questões reais ENEM 2023-25</span>
     </div>
-    <div class="topic-card em-breve" style="--cor:#C0392B">
-      <span>🧩</span>
-      <h3>Argumentação</h3>
-      <p>Estratégias, conectivos, coesão e coerência argumentativa</p>
-      <span class="home-badge">Em breve</span>
+    <div class="topic-card" style="--cor:#DC2626" onclick="iniciarQuiz('funcoes')">
+      <span class="tc-num">05 — Competência 3</span>
+      <h3>Funções de Linguagem</h3>
+      <p>Referencial, emotiva, conativa, poética, fática e metalinguística</p>
+      <span class="tc-count">12 questões reais ENEM 2023-25</span>
     </div>
-  </div>
-</div>
+    <div class="topic-card" style="--cor:#0891B2" onclick="iniciarQuiz('argumentacao')">
+      <span class="tc-num">06 — Competências 3 e 5</span>
+      <h3>Argumentação e Gêneros</h3>
+      <p>Estratégias argumentativas, tese, dados, conectivos e gêneros opinativos</p>
+      <span class="tc-count">12 questões reais ENEM 2023-25</span>
+    </div>
+  </div></div>
 
 <!-- SCREEN: QUIZ -->
 <div id="sc-quiz" class="screen">
@@ -663,105 +691,138 @@ h1,h2,h3,h4,.num{font-family:'Montserrat',sans-serif}
       <h2>📚 O que mais cai em Língua Portuguesa no ENEM</h2>
       <div class="lp-grid">
         <div class="lp-card" style="--cor:#0052CC">
-          <h4>Intertextualidade</h4>
-          <span class="lp-freq">🔴 CERTA — todo ano</span>
-          <p>Relação entre textos: paródia, paráfrase, alusão, citação, adaptação. O ENEM sempre apresenta dois textos em diálogo.</p>
+          <h4>Interpretação de Texto</h4>
+          <span class="lp-freq">🔴 SEMPRE — todo ano, múltiplas vezes</span>
+          <p>Identificar tema central, inferir sentidos, distinguir fato/opinião, reconhecer implícitos e compreender relações entre textos.</p>
           <ul>
-            <li>Identifique o tipo: a paródia transforma; a paráfrase preserva</li>
-            <li>A alusão evoca sem citar diretamente</li>
-            <li>A charge usa intertexto visual + verbal</li>
+            <li><b>Como o ENEM cobra:</b> enunciado pede o "tema central", "objetivo do texto", "estratégia argumentativa" ou "conclusão que se pode inferir"</li>
+            <li><b>Macete:</b> leia PRIMEIRO a questão, depois o texto — saberá exatamente o que procurar</li>
+            <li><b>Macete:</b> alternativas com "sempre", "nunca" ou "apenas" costumam estar erradas</li>
+            <li><b>Cuidado:</b> nunca use conhecimento externo — a resposta está sempre no texto</li>
           </ul>
         </div>
         <div class="lp-card" style="--cor:#7C3AED">
-          <h4>Variação Linguística</h4>
-          <span class="lp-freq">🔴 CERTA — todo ano</span>
-          <p>Dialetos, registros, norma culta vs. norma padrão, preconceito linguístico, variedades regionais, gírias, neologismos.</p>
+          <h4>Gêneros Textuais</h4>
+          <span class="lp-freq">🔴 SEMPRE — cai todo ano</span>
+          <p>Crônica, conto, notícia, reportagem, charge, tirinha, infográfico, carta, anúncio, artigo de opinião, publicidade.</p>
           <ul>
-            <li>Variação diafásica = situacional (formal/informal)</li>
-            <li>Variação diatópica = regional (Norte/Sul)</li>
-            <li>Norma culta ≠ norma padrão (Faraco)</li>
+            <li><b>Como o ENEM cobra:</b> "Qual a função desse texto?" / "O gênero X caracteriza-se por..." / comparação entre dois gêneros</li>
+            <li><b>Macete:</b> todo gênero tem FUNÇÃO SOCIAL, SUPORTE e ESFERA — use esses três para identificar</li>
+            <li><b>Macete:</b> crônica = cotidiano + reflexão + 1ª pessoa; charge = crítica social + imagem + ironia</li>
+            <li><b>Foco:</b> gêneros multimodais (infográfico, cartaz, anúncio) aparecem em até 30% das questões</li>
           </ul>
         </div>
         <div class="lp-card" style="--cor:#059669">
-          <h4>Gêneros Textuais</h4>
-          <span class="lp-freq">🔴 CERTA — todo ano</span>
-          <p>Crônica, charge, reportagem, artigo de opinião, conto, HQ, infográfico, blog, thread, publicidade.</p>
+          <h4>Variação e Modalidade Linguística</h4>
+          <span class="lp-freq">🔴 SEMPRE — até 6 questões por prova</span>
+          <p>Dialetos, registros, preconceito linguístico, norma culta × norma padrão, variedades regionais, Libras.</p>
           <ul>
-            <li>Função social + suporte + esfera = gênero</li>
-            <li>Compare dois gêneros sobre o mesmo tema</li>
-            <li>Identifique linguagem verbal + não verbal</li>
+            <li><b>Como o ENEM cobra:</b> "A variedade linguística usada por X é chamada de..." / "O preconceito linguístico nesse texto se deve a..."</li>
+            <li><b>Macete:</b> diatópica = regional · diafásica = situacional · diastrática = sociocultural · diageracional = etária · diaocupacional = profissional</li>
+            <li><b>Atenção:</b> o ENEM NUNCA defende que uma variedade é "errada" — a resposta correta reconhece a legitimidade de todas as variedades</li>
+            <li><b>Norma culta ≠ norma padrão</b> (Faraco) — conceito muito cobrado</li>
           </ul>
         </div>
         <div class="lp-card" style="--cor:#D97706">
-          <h4>Figuras de Linguagem</h4>
-          <span class="lp-freq">🟠 MUITO FREQUENTE</span>
-          <p>Metáfora, metonímia, ironia, eufemismo, hipérbole, antítese, paradoxo, polissemia.</p>
+          <h4>Coesão e Coerência</h4>
+          <span class="lp-freq">🔴 MUITO FREQUENTE — cresce a cada ano</span>
+          <p>Conectivos, pronomes anafóricos, reiteração lexical, progressão temática, referência, elipse.</p>
           <ul>
-            <li>Não basta nomear — explique o EFEITO no texto</li>
-            <li>Ironia: diz o contrário do que pensa</li>
-            <li>Eufemismo: suaviza o impacto</li>
+            <li><b>Como o ENEM cobra:</b> "O recurso que garante a progressão textual é..." / "O pronome X retoma..."</li>
+            <li><b>Tipos de coesão:</b> Referencial (pronomes/sinônimos), Sequencial (conectivos), Lexical (repetição/sinonímia)</li>
+            <li><b>Macete conectivos:</b> "embora/apesar de" = concessão · "portanto/logo" = conclusão · "ademais/além disso" = adição · "contudo/todavia" = oposição</li>
+            <li><b>Cuidado:</b> conectivo mal usado = incoerência, mesmo que a frase seja gramaticalmente correta</li>
           </ul>
         </div>
         <div class="lp-card" style="--cor:#DC2626">
-          <h4>Argumentação e Coesão</h4>
+          <h4>Funções de Linguagem</h4>
           <span class="lp-freq">🟠 MUITO FREQUENTE</span>
-          <p>Tese, argumento, contra-argumento, conectivos, operadores argumentativos, estrutura dissertativa.</p>
+          <p>Referencial, emotiva/expressiva, conativa/apelativa, poética, fática, metalinguística (Jakobson).</p>
           <ul>
-            <li>"Embora" = concessão (admite o oposto)</li>
-            <li>"Portanto" = conclusão lógica</li>
-            <li>Identifique a tese implícita do texto</li>
+            <li><b>Como o ENEM cobra:</b> "A função predominante nesse texto é..." / "A função X cumpre o propósito de..."</li>
+            <li><b>Macete das 6 funções:</b> REF = informa · EMOTIVA = sente · CONATIVA = ordena/pede · POÉTICA = forma · FÁTICA = mantém contato · META = fala sobre si</li>
+            <li><b>Atenção:</b> poética ≠ literária — qualquer texto pode ter função poética quando a forma chama atenção</li>
+            <li><b>Fática:</b> "Alô?", "Tá me ouvindo?", "Né" — serve para verificar o canal de comunicação</li>
           </ul>
         </div>
         <div class="lp-card" style="--cor:#0891B2">
-          <h4>Literatura Brasileira</h4>
-          <span class="lp-freq">🟠 MUITO FREQUENTE</span>
-          <p>Modernismo, Pré-modernismo, Regionalismo, obras do vestibular, adaptações literárias.</p>
+          <h4>Figuras de Linguagem</h4>
+          <span class="lp-freq">🟠 FREQUENTE</span>
+          <p>Metáfora, metonímia, sinestesia, ironia, eufemismo, hipérbole, antítese, paradoxo, prosopopeia, polissemia.</p>
           <ul>
-            <li>1ª fase do Modernismo: ruptura, nacionalismo, experimental</li>
-            <li>2ª fase: engajamento social (Drummond, Graciliano)</li>
-            <li>Machado de Assis: ironia, narrador não confiável</li>
+            <li><b>Como o ENEM cobra:</b> "Qual figura está presente?" / "Qual o EFEITO dessa figura no texto?" (o efeito vale mais que o nome)</li>
+            <li><b>Macete:</b> metáfora = comparação SEM como/qual · metonímia = parte→todo, autor→obra, marca→produto</li>
+            <li><b>Ironia:</b> diz o contrário do que pensa — o contexto sempre revela · Eufemismo: suaviza o impacto</li>
+            <li><b>Atenção:</b> o ENEM pede o EFEITO DE SENTIDO produzido, não apenas a identificação</li>
           </ul>
         </div>
         <div class="lp-card" style="--cor:#6B21A8">
-          <h4>Efeitos de Sentido</h4>
-          <span class="lp-freq">🟡 FREQUENTE</span>
-          <p>Como recursos morfossintáticos (inversão, paralelismo, elipse) e lexicais (escolha de palavra) criam significado.</p>
+          <h4>Gramática e Morfossintaxe</h4>
+          <span class="lp-freq">🟠 FREQUENTE</span>
+          <p>Concordância, regência, crase, pontuação, vozes verbais, tempos verbais, período composto.</p>
           <ul>
-            <li>Voz passiva: apaga o agente da ação</li>
-            <li>Inversão sintática: cria ênfase no elemento deslocado</li>
-            <li>Campo semântico: coesão lexical temática</li>
+            <li><b>Como o ENEM cobra:</b> efeito de sentido de recurso morfossintático, não regra gramatical isolada</li>
+            <li><b>O que mais cai:</b> voz passiva (apaga o agente), inversão sintática (dá ênfase), gerúndio (progressão/meio)</li>
+            <li><b>Macete:</b> o ENEM não pede "encontre o erro" — pede o EFEITO de uma escolha gramatical no texto</li>
+            <li><b>Tempos verbais:</b> presente histórico cria dramaticidade; imperfeito indica habitualidade; futuro do pretérito = hipótese</li>
           </ul>
         </div>
         <div class="lp-card" style="--cor:#9D174D">
-          <h4>Linguagem Não Verbal</h4>
+          <h4>Contexto e Semântica</h4>
           <span class="lp-freq">🟡 FREQUENTE</span>
-          <p>Charges, tirinhas, infográficos, fotografia, obras de arte integradas a textos verbais.</p>
+          <p>Campo semântico, polissemia, ambiguidade, sinonímia, antonímia, denotação × conotação, sentido contextual.</p>
           <ul>
-            <li>Descreva o que VÊ antes de interpretar</li>
-            <li>Verbal + não verbal se complementam ou contrastam</li>
-            <li>A ironia na charge é sempre visual + verbal</li>
+            <li><b>Como o ENEM cobra:</b> "No contexto, o termo X assume o sentido de..." / "A ambiguidade do título X reside em..."</li>
+            <li><b>Macete:</b> palavras têm sentido no contexto, não no dicionário — o ENEM sempre usa o contexto como chave</li>
+            <li><b>Polissemia:</b> uma palavra, vários sentidos possíveis (depende do contexto) — ex: "banco" = assento/banco financeiro</li>
+            <li><b>Campo semântico:</b> grupo de palavras com sentidos relacionados — cria coesão lexical no texto</li>
           </ul>
         </div>
-      </div>
-    </div>
-
-    <!-- REPERTÓRIO -->
-    <div class="temas-lp" id="bloco-rep" style="margin-top:48px">
-      <h2>💡 Banco de Repertório para Redação</h2>
-      <div class="rep-filtro">
-        <select id="repSelect" onchange="filtrarRep(this.value)">
-          <option value="todos">🗂️ Todos os temas</option>
-          <option value="educacao">📚 Educação</option>
-          <option value="cultura">🎨 Cultura</option>
-          <option value="direitos">⚖️ Cidadania e Direitos Humanos</option>
-          <option value="saude">🏥 Saúde e Bem-estar</option>
-          <option value="ambiente">🌿 Meio Ambiente</option>
-          <option value="tecnologia">💻 Tecnologia</option>
-          <option value="trabalho">🔧 Trabalho e Economia</option>
-        </select>
-      </div>
-      <div id="repLista"></div>
-    </div>
+        <div class="lp-card" style="--cor:#065F46">
+          <h4>Hipertexto e Multimodalidade</h4>
+          <span class="lp-freq">🟡 FREQUENTE</span>
+          <p>Textos com imagem, infográfico, charge, meme, tirinhas, linguagem não verbal e verbal integradas.</p>
+          <ul>
+            <li><b>Como o ENEM cobra:</b> "A relação entre o texto verbal e a imagem..." / "O elemento não verbal contribui para..."</li>
+            <li><b>Macete:</b> descreva a imagem ANTES de interpretar — o que está representado? Há ironia? Há contraste com o verbal?</li>
+            <li><b>Hipertexto:</b> não-linear, com links, navegação por escolha — blogs, wikis, sites — cobrado por características do gênero</li>
+            <li><b>Multimodal:</b> texto que combina linguagem verbal + visual + sonora — campanha, infográfico, HQ</li>
+          </ul>
+        </div>
+        <div class="lp-card" style="--cor:#374151">
+          <h4>Tipos Textuais</h4>
+          <span class="lp-freq">🟡 FREQUENTE</span>
+          <p>Narrativo, descritivo, dissertativo, injuntivo, expositivo — distintos dos gêneros textuais.</p>
+          <ul>
+            <li><b>Atenção:</b> TIPO ≠ GÊNERO. Tipo é estrutural (narrativo, descritivo...); gênero é social (conto, notícia...)</li>
+            <li><b>Como o ENEM cobra:</b> "Esse texto pertence ao tipo textual X" ou "A sequência textual presente é..."</li>
+            <li><b>Macete:</b> Narrativo = personagens + tempo + espaço + enredo · Dissertativo = tese + argumentos + conclusão</li>
+            <li><b>Injuntivo:</b> instrução/ordem ("faça", "adicione") — bula, receita, manual — verbos no imperativo</li>
+          </ul>
+        </div>
+        <div class="lp-card" style="--cor:#7C3AED">
+          <h4>Intertextualidade</h4>
+          <span class="lp-freq">🔴 SEMPRE — cai todo ano</span>
+          <p>Paródia, paráfrase, alusão, citação, releitura, pastiche, intertexto visual (charge, HQ, arte).</p>
+          <ul>
+            <li><b>Como o ENEM cobra:</b> dois textos em diálogo — "O Texto II, em relação ao Texto I..." / "A intertextualidade é marcada por..."</li>
+            <li><b>Paráfrase:</b> preserva o sentido original com novas palavras · <b>Paródia:</b> transforma/subverte o original com crítica ou humor</li>
+            <li><b>Macete:</b> para identificar o tipo, pergunte: o sentido original foi preservado (paráfrase) ou invertido/criticado (paródia)?</li>
+            <li><b>Charge:</b> sempre tem intertexto — com fato real, lei, notícia ou obra de arte</li>
+          </ul>
+        </div>
+        <div class="lp-card" style="--cor:#B45309">
+          <h4>Denotação e Conotação</h4>
+          <span class="lp-freq">🟡 FREQUENTE</span>
+          <p>Sentido literal × sentido figurado; linguagem objetiva × subjetiva; efeitos expressivos da escolha lexical.</p>
+          <ul>
+            <li><b>Como o ENEM cobra:</b> "Em sentido conotativo, o termo X significa..." / "O uso figurado de Y cria o efeito de..."</li>
+            <li><b>Macete:</b> denotação = sentido do dicionário (literal) · conotação = sentido construído no contexto (figurado)</li>
+            <li><b>Atenção:</b> textos literários e publicitários usam muito a conotação — o ENEM valoriza a interpretação contextual</li>
+            <li><b>Exemplo clássico:</b> "coração frio" — denotativamente (órgão+temperatura) vs. conotativamente (pessoa insensível)</li>
+          </ul>
+        </div>
+      </div></div>
 
     <div style="text-align:center;margin-top:32px">
       <button class="btn btn-sec" onclick="irHome()">← Voltar ao início</button>
@@ -1160,8 +1221,308 @@ Quando chamaram minha senha, eram 14h37. Eu havia envelhecido. Mas também havia
     expl:`A divulgação científica tem como função fundamental mediar entre o conhecimento técnico-científico e o público leigo. Para isso, usa metáforas ("exército microscópico", "como se fossem açúcar"), cita fontes de forma acessível e evita jargão excessivo. A alternativa C define com precisão esse propósito fundamental do gênero.`
   }
   ]
-}
+},
 
+coesao:{
+  titulo:'Coesão e Coerência',
+  emoji:'',
+  questoes:[
+  {
+    texto:`"E assim as coisas continuaram acontecendo entre os dois, em quase sustos, um grande por acaso com cacoetes de gestos definitivos. Com o Nunca Mais se oferecendo o tempo todo, bastaria dizer foi um prazer ter te conhecido, bastaria não trocar telefones nem e-mails e enterrar a casualidade com a cal da sabedoria — nada poderia ser definitivo, os encontros duravam duas horas ou duas décadas ou duas vezes isso, mas em algum momento necessariamente seria o fim. De todos os grandes amores. De todos os pequenos. De todas as juras, das promessas, de todos os na-alegria-e-na-tristeza. De todos os não amores, os desamores, os casamentos para sempre, os rancores para sempre, de todas as paralelas que só se viabilizam na abstração da geometria, de todas as pequenas paixões e de todas as grandes paixões, de tudo que para na antessala da paixão, de todos os vínculos não experimentados, de todos."\nLISBOA, A. Rakushisha. Rio de Janeiro: Objetiva, 2014.`,
+    fonte:`ENEM 2023`,
+    enun:`O recurso que promove a progressão textual, contribuindo para a construção da ideia de que as relações amorosas têm um enredo comum, é a`,
+    alts:['repetição do pronome indefinido "todos".','utilização do travessão na marcação do aposto.','retomada do antecedente pelo pronome "isso".','contraposição de ideias marcada pela conjunção "mas".','substantivação de expressões pela anteposição do artigo.'],
+    correta:0,
+    expl:`A repetição insistente de "todos" / "de todos os" constrói a ideia de universalidade: todo tipo de relação amorosa tem o mesmo destino inevitável. É um recurso de COESÃO LEXICAL POR REITERAÇÃO — a palavra-chave se repete para criar unidade temática e progressão. As demais opções identificam recursos presentes, mas nenhum é o mecanismo principal da progressão temática.`
+  },
+  {
+    texto:`Sempre passo nervoso quando leio minha crônica neste jornal e percebo que escapuliu a palavra "coisa" em alguma frase. Acontece que "coisa" está entre as coisas mais deliciosas do mundo.\n\nO primeiro banho da minha filha foi embalado pela minha voz dizendo, ao fundo, "cuidado, ela ainda é uma coisinha tão pequena". "Viu só que amor? Nunca vi coisa assim". O amor que não dá conta de explicação é "a coisa" em seu esplendor e excelência. "Alguma coisa acontece no meu coração" é a frase mais bonita que alguém já disse sobre São Paulo. [...] \n\n"Coisar" é verbo de quem está com pressa ou tem lapsos de memória. É pra quando "mexe qualquer coisa dentro doida". [...]\nTATI BERNARDI. Disponível em: www1.folha.uol.com.br.`,
+    fonte:`ENEM 2024`,
+    enun:`O recurso utilizado na progressão textual para garantir a unidade temática dessa crônica é a`,
+    alts:['intertextualidade, marcada pela citação de versos de letras de canções.','metalinguagem, marcada pela referência à escrita de crônicas pela autora.','reiteração, marcada pela repetição de uma determinada palavra e de seus cognatos.','conexão, marcada pela presença dos conectores lógicos "quando" e "porque" entre orações.','pronominalização, marcada pela retomada de "minha filha" pelos pronomes possessivos.'],
+    correta:2,
+    expl:`A palavra "coisa" e seus derivados (coisinha, coisar) permeiam toda a crônica, criando COESÃO LEXICAL POR REITERAÇÃO. A repetição não é erro — é recurso estilístico intencional que garante a unidade temática: toda a crônica orbita o conceito de "coisa". Esse é o recurso que mantém a progressão sem precisar mudar de assunto.`
+  },
+  {
+    texto:`Antes do inverno chegar.\n\nEla tinha olhinhos brilhantes. Os mesmos de antes. Antes da fome. Antes das 17 mudanças de cidade. Dos sete filhos e dos muitos anos de trabalho dentro e fora de casa.\n\nEla fazia ambrosia, bolo de fubá e pedacinhos de queijo. Antes do inverno, ela plantava flores novas e diferentes para nos esperar nas próximas férias de verão.\n\nEla tinha o jeito de menina. [...] O mesmo jeito de antes. Antes do marido (e mesmo com o marido). Antes do cansaço dos anos. Antes da dureza do trato com a terra.\n\n[...] Eu era sua neta. Antes do Alzheimer chegar, eu era sua neta. Mas ela é e sempre será minha avó.\nPERSON, C. R. Borboletas no estômago. São Paulo: Ed. das Autoras, 2021.`,
+    fonte:`ENEM 2025`,
+    enun:`A narradora, ao resgatar memórias da história de vida da avó, faz uso recorrente da locução "antes de". Esse termo colabora para a progressão temática na medida em que`,
+    alts:['relaciona eventos ocorridos simultaneamente.','estabelece uma comparação entre as lembranças.','ressalta fatos que ressignificam o momento presente.','sinaliza uma sequência que denota ações consecutivas.','apresenta uma explicação para as memórias resgatadas.'],
+    correta:2,
+    expl:`A locução "antes de" não apenas ordena cronologicamente — ela ressignifica o presente: a avó com Alzheimer é comparada à avó vibrante de antes. Cada uso de "antes de" reforça a perda que o presente representa, criando uma progressão temática de contraste entre passado pleno e presente doloroso. É COESÃO TEMPORAL a serviço do sentido.`
+  },
+  {
+    texto:`O mais assustador do meteoro que cruzou o céu da Sibéria e explodiu no ar como várias bombas atômicas é que ele chegou sem ser anunciado. Com todas as atenções voltadas para o outro asteroide, o que passou de raspão, o asteroide da Sibéria entrou pela porta dos fundos sem ser detectado. A desculpa é que era pequeno demais para chamar a atenção e por isso os alarmes não funcionaram. Nossa ilusão, até agora, era que qualquer detrito espacial que se aproximasse de nós seria identificado e rotulado, e sua trajetória calculada até o último milímetro com grande antecedência, o que nos daria tempo para preparar o espírito — ou usar nossos cartões de crédito até o limite — no caso da colisão com a Terra ser inevitável.\nVERISSIMO, L. F. Disponível em: www.estadao.com.br.`,
+    fonte:`ENEM 2025`,
+    enun:`Com base na organização coesiva desse texto, o(a)`,
+    alts:['oração "que passou de raspão" refere-se ao "meteoro que cruzou o céu da Sibéria".','expressão "sua trajetória" refere-se ao elemento textual "qualquer detrito espacial".','palavra "isso" remete ao segmento textual posterior "os alarmes não funcionaram".','pronome "o" em "o que nos daria tempo" remete a "usar nossos cartões de crédito".','fragmento "o asteroide da Sibéria" introduz um elemento novo no texto.'],
+    correta:1,
+    expl:`"Sua trajetória" (l.6) refere-se catafórica/anaforicamente ao antecedente imediato: "qualquer detrito espacial que se aproximasse de nós". O pronome possessivo "sua" retoma esse elemento pela COESÃO REFERENCIAL PRONOMINAL. As demais alternativas apresentam equívocos: "que passou de raspão" refere-se ao "outro asteroide" (diferente do meteoro da Sibéria), e "isso" é catáfora — aponta para o que vem antes, não depois.`
+  },
+  {
+    texto:`Estranhei muito na primeira vez que escutei a expressão "de próprio punho". [...] Depois dos teclados de computador, ela rateia bastante. Minha letra, hoje, tem uma espécie de alternância: dia sim, dia não, trêmula e firme, forte e fraca, mais rotunda e mais cheia de arestas.\n\n[...] As formas de escrever mudam, as necessidades também, e o resultado é um elenco complexo, em que nada dispensa nada, a depender da tarefa ou da importância das coisas ou de suas funções, claro. [...] "Do punho ao pixel" não é uma frase filosoficamente correta. O negócio é mais "o punho e o pixel".\nRIBEIRO, A. E. Disponível em: https://rascunho.com.`,
+    fonte:`ENEM 2025 — "De próprio punho"`,
+    enun:`O recurso linguístico usado para marcar a síntese da opinião da autora sobre a temática desenvolvida foi o(a)`,
+    alts:['emprego da primeira pessoa em "Estranhei muito na primeira vez que escutei a expressão".','utilização de locução adverbial em "Na verdade, o que importava era a autenticidade da minha caligrafia".','uso de pronome possessivo em "Minha letra, hoje, tem uma espécie de alternância".','adoção de termo autorreflexivo em "No escritório, costumo ser mais suave comigo mesma".','substituição da expressão "Do punho ao pixel" pela expressão "o punho e o pixel".'],
+    correta:4,
+    expl:`A troca de "Do punho ao pixel" (ideia de substituição/exclusão) por "o punho e o pixel" (ideia de coexistência/adição) é o ponto de virada do texto: a autora conclui que as tecnologias de escrita NÃO se excluem, mas coexistem. Esse recurso SINTETIZA toda a argumentação desenvolvida — é a conclusão que reorganiza semanticamente a tese. A conjunção "e" vs. a preposição "ao" muda fundamentalmente o significado.`
+  },
+  {
+    texto:`Muitos pensam que narrativa curta é sinônimo de conto, perdendo de vista gêneros que, por tradição ruim, continuam à margem da nobreza. Acontece que o conto tem uma densidade específica, centrando-se na exemplaridade de um instante da condição humana, sem que essa exemplaridade se refira à valoração moral, já que uma grande mazela pode muito bem exemplificar uma das nossas faces. A crônica não tem essa característica. Conserva a marca do registro circunstancial feito por narrador-repórter que relata um fato para muitos leitores que formam um público determinado. [...] Ocorre ainda o limite de espaço, uma vez que a página comporta várias matérias, o que impõe a cada uma delas um número restrito de laudas, obrigando o redator a explorar, da maneira mais econômica possível, o pequeno espaço de que dispõe. É dessa economia que nasce sua riqueza estrutural.\nSÁ, J. A crônica. São Paulo: Ática, 1987.`,
+    fonte:`ENEM 2025`,
+    enun:`De acordo com esse texto, o aspecto tecnológico que influencia a composição do gênero crônica advém da`,
+    alts:['conexão ideológica.','densidade temática.','ênfase no público leitor.','apresentação de uma moral.','restrição espacial do suporte.'],
+    correta:4,
+    expl:`O autor argumenta que o suporte físico (a página do jornal) impõe LIMITE DE ESPAÇO, o que obriga o cronista a ser econômico — e é dessa economia que nasce a riqueza estrutural da crônica. Portanto, a COERÊNCIA TEXTUAL identifica que o aspecto tecnológico que determina a forma do gênero é a restrição espacial do suporte jornalístico, não a ideologia nem o público.`
+  },
+  {
+    texto:`A diferença entre briga e luta é a existência de juízes e medalhas? A briga desumaniza o outro e pode até matá-lo. Já na luta, as intenções do outro são consideradas sua proposta combativa e suas habilidades, enfim, sua meta de vencer. Na luta, o desenvolvimento passa pelo contato com a agressividade, a raiva, a frustração, o orgulho, a determinação e a fraqueza. Daí também a luta não ser apenas com o outro, mas consigo mesmo, num combate contra as próprias limitações, sobretudo, contra o próprio orgulho.\nBARREIRA, C. A briga desumaniza. A luta, não. O Estado de S. Paulo, 22 ago. 2010.`,
+    fonte:`ENEM 2025`,
+    enun:`Esse texto apresenta as diferenças entre briga e luta, na medida em que aponta o(a)`,
+    alts:['superação pessoal na luta.','violência evidenciada na luta.','predomínio de regras na briga.','desafio externo presente na luta.','habilidade desenvolvida na briga.'],
+    correta:0,
+    expl:`O texto usa a COMPARAÇÃO CONTRASTIVA como recurso de coerência: briga (desumaniza, pode matar) × luta (respeito ao adversário, autoconhecimento). A progressão argumentativa culmina na ideia de que a luta envolve "combate contra as próprias limitações" — superação pessoal. A COERÊNCIA TEMÁTICA é garantida pelo contraste sistemático entre os dois conceitos.`
+  },
+  {
+    texto:`"Ganhei 25 medalhas em mundiais, sete em Jogos Olímpicos, e sou uma sobrevivente de abuso sexual." Foi assim que Simone Biles se apresentou ao comitê do Senado norte-americano que investiga as supostas falhas do FBI no caso Larry Nassar. [...] Biles esclareceu que culpa Larry Nassar e "todo o sistema que o permitiu e o perpetrou", acusando a Federação de Ginástica e o Comitê Olímpico dos Estados Unidos de saberem "muito antes" que ela havia sofrido abusos. A melhor ginasta do mundo é um ícone. Nos Jogos Olímpicos de Tóquio, uma lesão psicológica a impediu de competir como previa. No entanto, ela chegou ao topo como uma líder no trabalho de acabar com o preconceito com os problemas de saúde mental.\nDisponível em: https://brasil.elpais.com.`,
+    fonte:`ENEM 2023`,
+    enun:`O fato relatado na notícia chama a atenção acerca da necessidade de reflexão sobre a relação entre o esporte e`,
+    alts:['o desempenho atlético internacional.','a dimensão emocional dos atletas.','os comitês olímpicos nacionais.','as instituições de inteligência.','as federações esportivas.'],
+    correta:1,
+    expl:`A COERÊNCIA INTERNA do texto conecta os elementos: conquistas esportivas → abuso → lesão psicológica → luta pela saúde mental. Todos os detalhes convergem para o mesmo ponto: o esporte exige atenção à dimensão EMOCIONAL do atleta. O conector "No entanto" articula a adversidade entre o que se espera (desempenho físico) e o que o texto defende (cuidado emocional).`
+  },
+  {
+    texto:`Só entende os corações desse lugar quem mergulha nesse mar a perder de vista e recoberto de cana caiana, cana fita, cana roxa, cana-de-macaco, açúcar, melado, rapadura, aguardente, fumo, mandioca, quiabos, pimentas, moendas, frutas, fruta-pão, sobrados, senzalas, tachos, casa de purgar. Um reino dentro do outro, com tudo o que se tem direito: reis, rainhas, príncipes e princesas, bobos da corte, cortesãos, conselheiros e escravos, muitos escravos. […]\n\nA corte do massapé, como qualquer outra na história da humanidade, fazia tudo para não deixar escapar nenhum mísero grão dos seus domínios para quem estivesse de fora do seu apertado círculo. Os nomes se repetiam de pai para filho, para sobrinho, para netos e bisnetos, de forma concêntrica e repetitiva.\nCRUZ, E. A. Água de barrela. Rio de Janeiro: Malê, 2018.`,
+    fonte:`ENEM 2025`,
+    enun:`Nesse fragmento, o narrador enumera o resultado do trabalho com a terra, o qual, no contexto em que aparece,`,
+    alts:['espelha a permanência dos privilégios de classe.','oferece um panorama da população do campo.','mostra os benefícios da fartura na agricultura.','defende a importância da atividade coletiva.','valoriza o trabalho ao longo das gerações.'],
+    correta:0,
+    expl:`A enumeração de produtos (açúcar, melado, rapadura...) seguida da estrutura "reis, rainhas, escravos" cria COERÊNCIA ARGUMENTATIVA: a abundância da terra beneficia apenas os de dentro do "apertado círculo". A repetição dos nomes familiares reforça que os privilégios se perpetuam. A coerência global do texto aponta para a crítica da concentração de poder e riqueza.`
+  },
+  {
+    texto:`Passando por aqui para lembrar algumas palavras, frases e expressões que nos infernizaram em 2023. Inclusive passando por aqui. Se você for proativo, vai achar que é o novo normal. Estarão na sua zona de conforto. Mas, se for reativo como eu, achar que é uma narrativa que precisa ser ressignificada.\n\nÉ uma questão de empatia. É sobre entregar um discurso mais robusto e empoderado. Sei bem que não tenho lugar de fala para harmonizar certos pontos fora da curva e que preciso aplicar toda a minha resiliência para fazer um realinhamento. O nível de fitness está hoje num sarrafo muito alto.\n\nO fato é que acho cringe essas falas fora da caixinha. [...] Frases feitas são aquelas que entram por um ouvido e saem pelo outro sem um estágio intermediário no cérebro. A boca fala por conta própria, dispensando-nos de pensar. E não tem problema nisso. Ou as ditas frases se incorporam à língua ou morrem e nascem outras. A língua é assim. Simples assim.\nCASTRO, R. Disponível em: www1.folha.uol.com.br.`,
+    fonte:`ENEM 2025`,
+    enun:`Nesse texto, a estratégia empregada para criticar a constante exposição a palavras, frases e expressões automatizadas é o(a)`,
+    alts:['menção feita à efemeridade de alguns usos linguísticos aleatórios.','subjetividade marcada pela reflexão que se desenvolve em primeira pessoa.','efeito estilístico da repetição intencional da palavra "assim" no último parágrafo.','sedução sugerida pelo envolvimento direto do leitor marcado nos usos de "você" e "sua".','humor gerado pelo uso das estruturas linguísticas que são objeto da reflexão desenvolvida.'],
+    correta:4,
+    expl:`O autor usa as próprias expressões "buzzwords" que critica ("proativo", "nova normal", "zona de conforto", "ressignificada", "empoderado", "resiliência", "cringe", "fora da caixinha") para construir o texto crítico sobre elas. É METALINGUAGEM COM IRONIA: a forma (uso dos jargões) contradiz o conteúdo (crítica a esses jargões). Esse paradoxo gera o efeito de humor que é a principal estratégia do texto.`
+  },
+  {
+    texto:`O meu medo é entrar na faculdade e tirar zero eu que nunca fui bom de matemática fraco no inglês eu que nunca gostei de química geografia e português o que é que eu faço agora hein mãe não sei. [...]\n\nO meu medo é a vida piorar e eu não conseguir arranjar emprego nem de faxineiro nem de porteiro nem de ajudante de pedreiro e o pessoal dizer que o governo já fez o que pôde já pôde o que fez já deu a sua cota de participação hein mãe não sei.\n\nO meu medo é que mesmo com diploma debaixo do braço andando por aí desiludido e desempregado o policial me olhe de cara feia e eu acabe fazendo uma burrice sei lá uma besteira será que eu vou ter direito a uma cela especial hein mãe não sei.\nFREIRE, M. Contos negreiros. Rio de Janeiro: Record, 2005.`,
+    fonte:`ENEM 2025`,
+    enun:`Nesse texto, a reiteração dos medos e das angústias do narrador exprime`,
+    alts:['inseguranças sobre o futuro familiar.','dilemas resultantes de seu fracasso escolar.','incertezas centradas em sua condição social.','hesitações em relação à sua formação profissional.','preocupações com as políticas públicas assistenciais.'],
+    correta:2,
+    expl:`A estrutura anafórica "O meu medo é..." se repete três vezes, escalando em gravidade: escola → desemprego → criminalização. A COESÃO ANAFÓRICA cria um retrato de vulnerabilidade social sistêmica — não é fracasso individual, mas medo enraizado na CONDIÇÃO SOCIAL: ser negro, pobre, desempregado, e ainda assim ser visto como suspeito. O refrão "hein mãe não sei" reforça o desamparo.`
+  },
+  {
+    texto:`— Vou deixar que você se vá.\n\n[Cartaz da Campanha do Agasalho com uma mulher segurando uma jaqueta azul, rosto sorridente. Texto do cartaz: "Deixe suas roupas aquecerem quem mais precisa. CAMPANHA DO AGASALHO. Doe roupas, calçados e cobertores em bom estado. Sua doação ajuda muita gente."]\nDisponível em: https://defesacivil.rs.gov.br.`,
+    fonte:`ENEM 2024`,
+    enun:`Nesse cartaz, a expressão "Vou deixar que você se vá", em conjunto com os elementos não verbais utilizados, tem a finalidade de`,
+    alts:['incentivar o descarte de itens defeituosos.','promover a reciclagem de produtos usados.','garantir a conservação de roupas de inverno.','relacionar o gesto de doação à ideia de desapego.','comparar a peça de roupa ao sentimento de despedida.'],
+    correta:3,
+    expl:`A COERÊNCIA MULTIMODAL do cartaz é construída pela combinação: "Vou deixar que você se vá" (fala afetiva, como se a roupa fosse um ser querido) + imagem (mulher sorrindo ao segurar jaqueta) + texto de campanha (doe roupas). O efeito é a PERSONIFICAÇÃO da roupa, transformando o ato de doação em gesto de desapego emocional nobre. A coesão verbal e visual criam sentido que nenhum dos elementos criaria sozinho.`
+  }
+  ]
+},
+
+funcoes:{
+  titulo:'Funções de Linguagem',
+  emoji:'',
+  questoes:[
+  {
+    texto:`A garganta é a gruta que guarda o som\nA garganta está entre a mente e o coração\nVem coisa de cima, vem coisa de baixo e de [repente um nó (e o que eu quero dizer?)\nÀs vezes, acontece um negócio esquisito\nQuando eu quero falar eu grito, quando eu quero [gritar eu falo, o resultado\nCalo.\nESTRELA D'ALVA, R. Disponível em: https://claudia.abril.com.br.`,
+    fonte:`ENEM 2023`,
+    enun:`A função emotiva presente no poema cumpre o propósito do eu lírico de`,
+    alts:['revelar as desilusões amorosas.','refletir sobre a censura à sua voz.','expressar a dificuldade de comunicação.','ressaltar a existência de pressões externas.','manifestar as dores do processo de criação.'],
+    correta:2,
+    expl:`A FUNÇÃO EMOTIVA ou EXPRESSIVA centra-se no EMISSOR e na expressão de suas emoções. O poema é um monólogo interior: o eu lírico descreve, em primeira pessoa, sua própria incapacidade de comunicar o que sente — grita quando quer falar, fala quando quer gritar, e termina em silêncio ("Calo"). Não há censura externa (B), nem dores de criação (E): é a expressão direta da DIFICULDADE INTERNA de comunicação.`
+  },
+  {
+    texto:`Diante do pouco dinheiro para produtos básicos de sobrevivência, são as adolescentes o alvo mais vulnerável à precariedade menstrual. [...]\n\nA falta do absorvente afeta diretamente o desempenho escolar dessas estudantes e, como consequência, restringe o desenvolvimento de seu potencial na vida adulta. Dados da Pesquisa Nacional de Saúde (PNS), do IBGE, revelaram que [...] 2,88% deixaram de fazê-la por problemas menstruais. [...]\n\nDados da ONU apontam que, no mundo, uma em cada dez meninas falta às aulas durante o período menstrual. No Brasil, esse número é ainda maior: uma entre quatro estudantes já deixou de ir à escola por não ter absorventes.\nDisponível em: www12.senado.leg.br.`,
+    fonte:`ENEM 2024`,
+    enun:`Esse texto é marcado pela função referencial da linguagem, uma vez que cumpre o propósito de`,
+    alts:['sugerir soluções para um problema de ordem social.','estabelecer uma relação entre menstruação e gravidez.','comparar o desempenho acadêmico de mulheres e homens.','informar o leitor sobre o impacto da pobreza menstrual na vida das mulheres.','orientar o público sobre a necessidade de rotinas de autocuidado.'],
+    correta:3,
+    expl:`A FUNÇÃO REFERENCIAL (ou DENOTATIVA) centra-se no REFERENTE — o assunto, o mundo externo. Seu objetivo é INFORMAR com objetividade e impessoalidade. O texto usa dados do IBGE e ONU, percentuais precisos, linguagem neutra — todos traços da função referencial. Não sugere soluções (A) nem compara desempenhos (C). A marca linguística é o uso de verbos na 3ª pessoa e dados estatísticos como evidência.`
+  },
+  {
+    texto:`[Capa da Revista Galileu, edição 371, fevereiro de 2023. Na capa há uma ilustração colorida com personagens em situações diversas e o texto em destaque: "VOCÊ (NÃO) ESTÁ SOZINHO". Abaixo: "NO BRASIL, METADE DA POPULAÇÃO SE SENTE SOLITÁRIA, E A MESMA SENSAÇÃO CRESCE EM OUTRAS PARTES DO MUNDO. POR QUE DEVEMOS REPENSAR NOSSAS RELAÇÕES?"]\nDisponível em: https://revistagalileu.globo.com.`,
+    fonte:`ENEM 2025`,
+    enun:`Com base na relação dos elementos não verbais com a frase "VOCÊ (NÃO) ESTÁ SOZINHO", nessa capa de revista, a função poética fica evidente, pois`,
+    alts:['essa frase informa sobre os riscos de um determinado comportamento social.','o conteúdo da mensagem expressa a atitude do enunciador sobre o tema.','a construção dessa frase possibilita mais de uma interpretação.','essa frase estabelece um diálogo direto com o leitor.','a linguagem utilizada volta-se para si mesma.'],
+    correta:2,
+    expl:`A FUNÇÃO POÉTICA centra-se na própria MENSAGEM — como ela é construída chama mais atenção que o conteúdo. "VOCÊ (NÃO) ESTÁ SOZINHO" é AMBÍGUA: com o "NÃO" entre parênteses, pode-se ler "Você está sozinho" (sem o NÃO) ou "Você NÃO está sozinho" (com o NÃO). Essa dupla leitura é o efeito poético. Não é metalinguagem (E, que seria a linguagem falando sobre si mesma) nem apelativa (D, que seria chamar o leitor a agir).`
+  },
+  {
+    texto:`Como é bom reencontrar os leitores da Revista da Cultura por meio de uma publicação com outro visual, conteúdo de qualidade e interesses ampliados! ]cultura[, este nome simples, e eu diria mesmo familiar, nasce entre dois colchetes voltados para fora. E não é por acaso: são sinais abertos, receptivos, propícios à circulação de ideias. O DNA da publicação se mantém o mesmo, afinal, por longos anos montamos nossas edições com assuntos saídos das estantes de uma grande livraria — e assim continuará sendo. Literatura, sociologia, filosofia, artes... nunca será difícil montar a pauta da revista porque os livros nos ensinam que monotonia é só para quem não lê.\nHERZ, P. ]cultura[, n. 1, jun. 2018.`,
+    fonte:`ENEM 2023`,
+    enun:`O uso não padrão dos colchetes para nomear a revista atribui-lhes uma nova função e está correlacionado ao(à)`,
+    alts:['perfil de público-alvo, constituído por leitores exigentes e especializados em leitura acadêmica.','propósito do editor, chamando a atenção para o rigor normativo nos textos da revista.','exclusividade na seleção temática, direcionada para a área das ciências humanas.','identidade da revista, voltada para a recepção e a promoção de ideias circulantes em livros.','padrão editorial dos artigos, organizados em torno de uma proposta de design inovador.'],
+    correta:3,
+    expl:`A FUNÇÃO METALINGUÍSTICA aparece quando a linguagem se volta para si mesma. Aqui, o editorial explica o próprio nome ]cultura[: os colchetes "voltados para fora" representam abertura, receptividade à circulação de ideias — metáfora da missão da revista. O editor usa a linguagem para descrever a própria linguagem da publicação, criando uma FUNÇÃO METALINGUÍSTICA integrada à identidade editorial. O colchete como símbolo aberto = abertura às ideias dos livros.`
+  },
+  {
+    texto:`Nesse cartaz, a utilização de frases que projetam a vida profissional de duas crianças tem como objetivo...\n\n[Cartaz do UNICEF: "Em um mundo de diferenças, enxergue a igualdade". Foto de dois rostos de crianças — um menino indígena com pintura facial e uma menina negra. Sobre as fotos: "Carlos Pataxicoré, aos 36 anos, médico e o futuro todo pela frente" e "Quézia Silva, aos 29 anos, advogada e o futuro todo pela frente". Texto: "O Brasil tem 31 milhões de crianças negras e indígenas. A maioria sofre com discriminação racial, sem ter acesso à educação, à saúde e ao desenvolvimento. Ajude a mudar essa realidade. Contribua para uma infância sem racismo."\nDisponível em: www.unicef.org.br.`,
+    fonte:`ENEM 2025`,
+    enun:`Nesse cartaz, a utilização de frases que projetam a vida profissional de duas crianças tem como objetivo`,
+    alts:['sugerir a arrecadação de fundos para o sustento de povos originários no país.','sensibilizar a sociedade sobre os benefícios decorrentes do combate ao racismo.','indicar a importância da orientação vocacional na educação de crianças no Brasil.','chamar a atenção sobre a necessidade de ações voltadas para a educação infantil.','valorizar o trabalho de agências internacionais na luta contra a discriminação racial.'],
+    correta:1,
+    expl:`A FUNÇÃO CONATIVA ou APELATIVA centra-se no RECEPTOR — visa influenciar o comportamento ou as emoções do leitor. O cartaz projeta futuros profissionais para crianças vulneráveis ("médico", "advogada") para SENSIBILIZAR o espectador sobre o potencial desperdiçado pelo racismo. O imperativo "Ajude a mudar" e "Contribua" são marcas típicas da função apelativa. O objetivo não é informar, mas COMOVER e MOBILIZAR.`
+  },
+  {
+    texto:`Esse anúncio publicitário, veiculado durante o contexto da pandemia de covid-19, tem por finalidade...\n\n[Anúncio da Defensoria Pública: "#JuntasSomosMaisFortes. A Defensoria não para! Eu uso máscara mas não me calo! Em tempos de isolamento social por conta da pandemia de covid-19, a Defensoria Pública alerta para o aumento da violência contra a mulher! Não se cale! Denuncie! Disque 180"]\nDisponível em: www.defensoriapublica.mt.gov.br.`,
+    fonte:`ENEM 2023`,
+    enun:`Esse anúncio publicitário, veiculado durante o contexto da pandemia de covid-19, tem por finalidade`,
+    alts:['divulgar o canal telefônico de atendimento a casos de violência contra a mulher.','informar sobre a atuação de uma entidade defensora da mulher vítima de violência.','evidenciar o trabalho da Defensoria Pública em relação ao problema do abuso contra a mulher.','alertar a sociedade sobre o aumento da violência contra a mulher em decorrência do coronavírus.','incentivar o público feminino a denunciar crimes de violência contra a mulher durante o período de isolamento.'],
+    correta:4,
+    expl:`A FUNÇÃO APELATIVA (conativa) domina o anúncio: imperativo "Não se cale! Denuncie!", hashtag de engajamento, número de denúncia. O foco é no RECEPTOR (mulheres em situação de violência doméstica) e no objetivo de INCITAR UMA AÇÃO (denunciar). Embora o Disque 180 apareça (A) e haja informação (D), esses são recursos a serviço do objetivo principal: persuadir as vítimas a agir.`
+  },
+  {
+    texto:`O Ministério do Esporte no Brasil lançou o programa Maré Inclusiva, em 2024, ano dos Jogos Paralímpicos de Paris. Esse programa visa ampliar as oportunidades para pessoas com deficiência que desejam praticar o surf. O parasurf é a prática do surf adaptada para permitir que pessoas com deficiência pratiquem o esporte em todas as suas categorias, modalidades e manifestações. Para a Secretaria Nacional do Paradesporto, a iniciativa é mais do que um programa de esporte, é uma iniciativa que busca transformar vidas e promover a inclusão por meio do parasurf, criando um legado de igualdade e respeito.\nDisponível em: www.gov.br/esporte.`,
+    fonte:`ENEM 2025`,
+    enun:`De acordo com esse texto, o programa voltado ao estímulo da prática do parasurf evidencia a`,
+    alts:['adesão de diferentes países a programas inclusivos.','preocupação política em atender a demandas paralímpicas.','importância de uma política pública esportiva para a inclusão.','eficiência das iniciativas de inclusão em megaeventos esportivos.','escassez de investimento em práticas corporais de aventura na natureza.'],
+    correta:2,
+    expl:`O texto usa predominantemente a FUNÇÃO REFERENCIAL: informa objetivamente sobre o programa Maré Inclusiva, suas metas e impactos. A COERÊNCIA TEXTUAL aponta que a conclusão central é a importância de uma POLÍTICA PÚBLICA para a inclusão pelo esporte. As alternativas A, B, D e E distorcem o foco: o texto não compara países, não menciona eficiência comprovada, nem fala em escassez. O programa é apresentado como evidência do papel do Estado na inclusão.`
+  },
+  {
+    texto:`Porque ler para crianças é um ato de amor\n\nParece que, com o avanço da tecnologia, os livros têm enfrentado cada vez mais concorrência. Por isso, é nossa função lembrar a importância da leitura em todas as fases da vida, mas principalmente na primeira infância (entre 0 e 5 anos), quando o desenvolvimento das crianças acontece de forma mais intensa.\n\nO ato de ler com uma criança ou ler para ela vai muito além de apenas aproveitar uma história em conjunto. É um laço de amorosidade [...]\n\nSe você precisa de uma motivação extra para entrar nessa rede de incentivo, fique ligado nos motivos a seguir. Adotar esse hábito em casa:\n1 – cria um laço emocional com a criança;\n2 – ajuda no desenvolvimento das capacidades cognitivas;\n3 – ensina sobre o mundo;\n4 – incentiva o processamento de informações e a imaginação.\nDisponível em: www.huffpost.com.br.`,
+    fonte:`ENEM 2025`,
+    enun:`Para persuadir o interlocutor sobre a importância de ler para as crianças, esse texto recorre à estratégia de`,
+    alts:['propor uma condição aos pais, pelo emprego da conjunção "se".','relativizar a opinião apresentada pelo autor, com o uso de "Parece que".','empregar uma linguagem metafórica, com o uso da expressão "laço de amorosidade".','enumerar razões pertinentes a esse ato, como no exemplo "ensina sobre o mundo".','implicar o autor do texto como corresponsável pela campanha, pelo uso de "é nossa função".'],
+    correta:3,
+    expl:`A FUNÇÃO APELATIVA (conativa) é o objetivo do texto: persuadir pais a ler para seus filhos. A estratégia mais eficaz é a ENUMERAÇÃO DE RAZÕES (lista 1-4) — recurso argumentativo que apresenta benefícios concretos e verificáveis. As outras alternativas identificam recursos reais, mas secundários ao propósito persuasivo central: a lista de benefícios é a principal ferramenta de convencimento.`
+  },
+  {
+    texto:`"São tantas formas de matar um preto\nQue para alguns sua morte é justificada\nDevia tá fazendo coisa errada\nSe não era bandido, um dia ia ser\nPor ser PRETO sua morte é defendida\nO PRETO sempre merece morrer".\n\nA estrofe acima é do poeta e educador social Baticum Proletário, que atua na periferia de Fortaleza, no Ceará. [...] É a partir da arte que Baticum consegue envolver a juventude em um projeto de fortalecimento dessa população ao promover batalhas de rimas, slams e saraus com temáticas que discutem os problemas sociais. Não por acaso, o tema mais explorado nas rimas, versos e prosas é a violência. De acordo com o mais recente Atlas da violência, em 2019, os negros representaram 77% das vítimas de homicídios.\nMENDONÇA, F. Disponível em: www.cartacapital.com.br.`,
+    fonte:`ENEM 2023`,
+    enun:`O uso de citação e de dados estatísticos nesse texto tem o objetivo de`,
+    alts:['ressaltar a importância da poesia para denunciar a morte de negros, que cresce a cada dia.','destacar o crescimento exponencial da temática do preconceito na produção literária no Brasil.','demonstrar o incremento no quantitativo de expressões artísticas na discussão de problemas sociais.','evidenciar argumentos que reforçam a ideia de que os negros são vítimas em potencial da violência.','salientar o aumento da participação de jovens nos movimentos de resistência na área da cultura.'],
+    correta:3,
+    expl:`A FUNÇÃO REFERENCIAL aparece nos dados estatísticos (77% das vítimas de homicídios são negros), que funcionam como EVIDÊNCIA ARGUMENTATIVA. A citação do poema ilustra o PROBLEMA. Juntos, poema + dados reforçam a tese central: negros são vítimas sistemáticas da violência. A alternativa D capta essa articulação entre recurso (dados) e propósito (evidenciar argumento). Não é sobre a importância da poesia (A), mas sobre o que os dados provam.`
+  },
+  {
+    texto:`Em tempos de isolamento\nsocial por conta da pandemia de\ncovid-19, a Defensoria Pública\nalerta para o aumento da\nviolência contra a mulher!\nNão se cale! Denuncie!\nA Defensoria não para!\n#JuntasSomosMaisFortes\nDisque 180\n\n[Anúncio da Defensoria Pública com mulheres com máscara e frases de encorajamento sobre denúncia de violência doméstica]\nDisponível em: www.defensoriapublica.mt.gov.br.`,
+    fonte:`ENEM 2023`,
+    enun:`Essa campanha publicitária do Ministério da Saúde visa`,
+    alts:['divulgar um conjunto de benefícios proporcionados pela amamentação.','apresentar tratamentos para infecções respiratórias em bebês.','defender o direito das mulheres de amamentar em público.','orientar sobre os exercícios para uma boa amamentação.','informar sobre o aumento de anticorpos nas mães.'],
+    correta:0,
+    expl:`A FUNÇÃO REFERENCIAL predomina quando um texto informa objetivamente sobre um tema. A campanha de amamentação lista de forma clara e direta os BENEFÍCIOS do aleitamento materno (anticorpos, prevenção de doenças, desenvolvimento). Esse é o objetivo do gênero publicitário de saúde pública: INFORMAR para CONVENCER. A função apelativa ("amamente!") está implícita, mas a estratégia principal é listar benefícios referencialmente.`
+  },
+  {
+    texto:`Essa é um trecho do discurso de Rui Barbosa na Academia Brasileira de Letras em homenagem a Machado de Assis por ocasião de sua morte.\n\n"Mestre e companheiro, disse eu que nos íamos despedir. Mas disse mal. A morte não extingue: transforma; não aniquila: renova; não divorcia: aproxima. [...] Para os eleitos do mundo das ideias a miséria está na decadência, e não na morte. A nobreza de uma nos preserva das ruínas da outra. Quando eles atravessavam essa passagem do invisível, que os conduz à região da verdade sem mescla, então é que entramos a sentir o começo do seu reino, o reino dos mortos sobre os vivos."\nBARBOSA, R. O adeus da Academia a Machado de Assis. Rio de Janeiro: Agir, 1962.`,
+    fonte:`ENEM 2023`,
+    enun:`Uma das características desse discurso de homenagem é a presença de`,
+    alts:['metáforas relacionadas à trajetória pessoal e criadora do homenageado.','recursos fonológicos empregados para a valorização do ritmo do texto.','frases curtas e diretas no relato da vida e da morte do homenageado.','contraposição de ideias presentes na obra do homenageado.','seleção vocabular representativa do sentimento de nostalgia.'],
+    correta:0,
+    expl:`A FUNÇÃO POÉTICA aparece nas METÁFORAS que transformam a morte em experiência filosófica: "A morte não extingue: transforma; não aniquila: renova; não divorcia: aproxima." O paralelismo antitético é recurso estilístico que valoriza a MENSAGEM em si. A metáfora do "reino dos mortos sobre os vivos" (influência permanente de Machado) retoma alegoricamente a trajetória criadora do homenageado — característica do gênero discurso laudatório.`
+  }
+  ]
+},
+
+argumentacao:{
+  titulo:'Argumentação e Gêneros',
+  emoji:'',
+  questoes:[
+  {
+    texto:`Maio foi colorido de amarelo, e o foi porque mundialmente amarelo é a cor convencionada para as advertências. No trânsito, essas advertências têm sido fatais. A estimativa, caso nada seja feito, é a de que se atinjam assustadoras 2,4 milhões de mortes no trânsito em 2030 em todo o mundo.\n\nA pressa constante, o sentimento de invencibilidade, a certeza de invulnerabilidade, a necessidade de poder, a falta de civilidade, a certeza de impunidade, a ausência de solidariedade, a inexistência de compaixão e o desrespeito por si próprio são circunstâncias reais que, não raro, concorrem para o comportamento violento no trânsito.\n\nO Maio Amarelo, que preconiza a atenção pela vida, é uma das iniciativas nesse sentido. [...] Reafirmar e praticar esses princípios e valores talvez seja um caminho mais seguro e menos violento, que garanta a vida e não celebre a morte.\nDisponível em: http://portaldotransito.com.br.`,
+    fonte:`ENEM 2023`,
+    enun:`Considerando os procedimentos argumentativos utilizados, infere-se que o objetivo desse texto é`,
+    alts:['enumerar as causas determinantes da violência no trânsito.','contextualizar a campanha de advertência no cenário mundial.','divulgar dados numéricos alarmantes sobre acidentes de trânsito.','sensibilizar o público para a importância de uma direção responsável.','restringir os problemas da violência no trânsito a aspectos emocionais.'],
+    correta:3,
+    expl:`O texto usa TRÊS ESTRATÉGIAS ARGUMENTATIVAS: (1) dados numéricos alarmantes (2,4 milhões de mortes previstas) para criar urgência; (2) enumeração das causas comportamentais para mostrar que são corrigíveis; (3) apresentação da campanha como solução viável. O conjunto desses recursos converge para SENSIBILIZAR e MOBILIZAR o leitor para mudar seu comportamento. A enumerar causas (A) e contextualizar (B) são meio, não fim.`
+  },
+  {
+    texto:`Já ouvi gente falando que o podcast é o renascimento do rádio. O rádio é genial, uma mídia imorredoura, mas podcast não tem nada a ver com ele. O formato está mais próximo do ensaio literário do que de um programa de ondas curtas, médias ou longas.\n\nPodcasts são antípodas das redes sociais. Enquanto elas são dispersivas, levam à evasão e à desinformação, os podcasts são uma possibilidade de imersão, concentração, aprendizado. Depois que eles surgiram, lavar a louça e me locomover pela cidade viraram um programaço. Um pós-almoço de domingo e aprendo tudo sobre bonobos e gorilas. Um táxi pro aeroporto e chego ao embarque PhD em reforma tributária.\nPRATA, A. Disponível em: www1.folha.uol.com.br.`,
+    fonte:`ENEM 2024`,
+    enun:`Segundo a argumentação construída nesse texto, o podcast`,
+    alts:['provoca dispersão da atenção em seu público.','funciona por meio de uma frequência de ondas curtas.','propicia divulgação de conhecimento para seus usuários.','tem um formato de interação semelhante ao das redes sociais.','constitui uma evolução na transmissão de informações via rádio.'],
+    correta:2,
+    expl:`O texto usa o ARGUMENTO POR CONTRASTE: podcast (imersão, concentração, aprendizado) × redes sociais (dispersão, evasão, desinformação). O autor também refuta a comparação com o rádio (argumento de distinção). O resultado argumentativo central é que podcasts PROPICIAM CONHECIMENTO — os exemplos pessoais ("aprendo tudo sobre bonobos", "PhD em reforma tributária") funcionam como ILUSTRAÇÃO ARGUMENTATIVA dessa tese.`
+  },
+  {
+    texto:`Pressão, depressão, estresse e crise de ansiedade. Os males da sociedade contemporânea também estão no esporte. A tenista Naomi Osaka, do Japão [...] retirou-se do torneio de Roland Garros de 2021 porque não estava conseguindo administrar as crises de ansiedade. O tenista australiano Nick Kyrgios revelou sua "situação triste e solitária" enquanto lutava contra a depressão. O jogador de basquete americano Kevin Love também tornou público seu quadro de ansiedade e depressão. O mundo do atleta é solitário e distante da família. O que vemos numa partida não reflete a rotina desgastante. A imprensa denomina atletas como heróis, como se aquele corpo fosse indestrutível, mas a mente é o ponto fraco da história.\nDisponível em: www.uol.com.br.`,
+    fonte:`ENEM 2024`,
+    enun:`As causas do desequilíbrio na saúde mental apontadas no texto estão relacionadas às`,
+    alts:['nacionalidades diversificadas dos praticantes.','modalidades esportivas distintas.','faixas etárias aproximadas.','representações heroicas dos atletas.','pressões constantes dos eventos e da mídia.'],
+    correta:4,
+    expl:`O texto usa EXEMPLOS MÚLTIPLOS (Osaka, Kyrgios, Kevin Love) para construir o argumento indutivo de que o fenômeno é SISTÊMICO. As CAUSAS identificadas explicitamente são: pressão de grandes eventos, exposição à imprensa, isolamento da família, e a falsa imagem heroica que impede o atleta de ser visto como humano. A TESE CENTRAL está na última frase: "a mente é o ponto fraco da história" — a pressão constante é a causa.`
+  },
+  {
+    texto:`Volta e meia recebo cartinhas de fãs, e alguns são bem jovens, contando como meu trabalho com a música mudou a vida deles. Fico no céu lendo essas coisas e me emociono quando escrevem que não são aceitos pelos pais por serem diferentes, e como minhas músicas são uma companhia e os libertam nessas horas de solidão.\n\nSinto que é mais complicado ser jovem hoje, já que nunca tivemos essa superpopulação no planeta: haja competitividade, culto à beleza, ter filho ou não, estudar, ralar para arranjar trabalho, ser mal remunerado, ser bombardeado com trocentas informações, lavagens cerebrais...\n\nQueria dar beijinhos e carinhos sem ter fim nessa moçada e dizer a ela que a barra é pesada mesmo, mas que a juventude está a seu favor [...]. Diria também um monte de clichê: que vale a pena estudar mais, pesquisar mais, ler mais. Diria que não é sinal de saúde estar bem-adaptado a uma sociedade doente.\n\nMeninada, sintam-se beijados pela vovó Rita.\nRITA LEE. Outra autobiografia. São Paulo: Globo Livros, 2023.`,
+    fonte:`ENEM 2024`,
+    enun:`Como estratégia para se aproximar de seu leitor, a autora usa uma postura de empatia explicitada em`,
+    alts:['"Volta e meia recebo cartinhas de fãs, e alguns são bem jovens".', '"Fico no céu lendo essas coisas".', '"Sinto que é mais complicado ser jovem hoje".', '"Queria dar beijinhos e carinhos sem ter fim nessa moçada".', '"Diria que não é sinal de saúde estar bem-adaptado a uma sociedade doente".'],
+    correta:3,
+    expl:`A EMPATIA como estratégia argumentativa cria vínculo emocional entre emissor e receptor. "Queria dar beijinhos e carinhos sem ter fim nessa moçada" é o ponto de maior AFETIVIDADE EXPLÍCITA do texto: não apenas diz que entende, mas expressa carinho físico (metafórico). A LINGUAGEM COLOQUIAL ("moçada", "beijinhos") reforça a aproximação. As outras opções são informativas ou reflexivas, não de afeto direto.`
+  },
+  {
+    texto:`"Ganhei 25 medalhas em mundiais, sete em Jogos Olímpicos, e sou uma sobrevivente de abuso sexual." Foi assim que Simone Biles se apresentou ao comitê do Senado norte-americano [...]. Biles esclareceu que culpa Larry Nassar e "todo o sistema que o permitiu e o perpetrou". [...]\n\nNo entanto, ela chegou ao topo como uma líder no trabalho de acabar com o preconceito com os problemas de saúde mental. "Não quero que nenhum outro atleta olímpico sofra o horror que eu e outras centenas suportamos e continuamos suportando até hoje", afirmou.\nDisponível em: https://brasil.elpais.com.`,
+    fonte:`ENEM 2023`,
+    enun:`O fato relatado na notícia chama a atenção acerca da necessidade de reflexão sobre a relação entre o esporte e`,
+    alts:['o desempenho atlético internacional.','a dimensão emocional dos atletas.','os comitês olímpicos nacionais.','as instituições de inteligência.','as federações esportivas.'],
+    correta:1,
+    expl:`A estrutura argumentativa da notícia usa o CONTRASTE: Biles (25 medalhas, ícone) × vítima de abuso + lesão psicológica. O conector "No entanto" sinaliza o ponto argumentativo central: o sucesso esportivo não protegeu Biles da vulnerabilidade emocional. A TESE IMPLÍCITA é que o esporte precisa reconhecer e cuidar da DIMENSÃO EMOCIONAL dos atletas — não apenas o desempenho físico.`
+  },
+  {
+    texto:`Essa campanha publicitária do Ministério da Saúde\n\n[Imagem de campanha: "POR QUE É TÃO IMPORTANTE AMAMENTAR? O bebê recebe os anticorpos da mãe para proteção contra diversas doenças, como diarreia e como infecções, principalmente respiratórias. Diminui o risco de asma, diabetes e obesidade em crianças. É um ótimo exercício para o desenvolvimento da face do bebê e para o crescimento de dentes fortes e bonitos. Desenvolve a fala e uma boa respiração."]\nDisponível em: www.facebook.com/minsaude.`,
+    fonte:`ENEM 2023`,
+    enun:`Essa campanha publicitária do Ministério da Saúde visa`,
+    alts:['divulgar um conjunto de benefícios proporcionados pela amamentação.','apresentar tratamentos para infecções respiratórias em bebês.','defender o direito das mulheres de amamentar em público.','orientar sobre os exercícios para uma boa amamentação.','informar sobre o aumento de anticorpos nas mães.'],
+    correta:0,
+    expl:`O gênero CAMPANHA PUBLICITÁRIA de saúde pública usa a ENUMERAÇÃO DE BENEFÍCIOS como estratégia argumentativa central. O título ("Por que é tão importante amamentar?") é a tese implícita, e os tópicos respondem com evidências. Esse é um TEXTO ARGUMENTATIVO EXPOSITIVO: persuade informando. A alternativa A capta o propósito global do texto; as outras focam em benefícios específicos, não no objetivo da campanha como um todo.`
+  },
+  {
+    texto:`Uma pequena editora brasileira, a Urutau, acaba de lançar em Lisboa uma "antologia antirracista de poetas estrangeiros em Portugal", com o título Volta para a tua terra.\n\nO livro denuncia as diversas formas de racismo a que os imigrantes estão sujeitos. Alguns dos poetas brasileiros antologiados queixam-se do desdém com que um grande número de portugueses acolhe o português brasileiro. É uma queixa frequente.\n\n"Aqui em Portugal eles dizem / — eles dizem — / que nosso português é errado, que nós não falamos português", escreve a poetisa paulista Maria Giulia Pinheiro, para concluir: "Se a sua linguagem, a lusitana, / ainda conserva a palavra da opressão / ela não é a mais bonita do mundo. / Ela é uma das mais violentas".\nAGUALUSA, J. E. Disponível em: https://oglobo.globo.com.`,
+    fonte:`ENEM 2023`,
+    enun:`O texto de Agualusa tematiza o preconceito em relação ao português brasileiro. Com base no trecho citado pelo autor, infere-se que esse preconceito se deve`,
+    alts:['à dificuldade de consolidação da literatura brasileira em outros países.','aos diferentes graus de instrução formal entre os falantes de língua portuguesa.','à existência de uma língua ideal que alguns falantes lusitanos creem ser a falada em Portugal.','ao intercâmbio cultural que ocorre entre os povos dos diferentes países de língua portuguesa.','à distância territorial entre os falantes do português que vivem em Portugal e no Brasil.'],
+    correta:2,
+    expl:`A inferência argumentativa parte do verso citado: "que nosso português é errado" → implica que existe um PADRÃO CORRETO (o lusitano) em oposição ao DESVIO (o brasileiro). A resposta da poeta é filosófica: uma língua que carrega "a palavra da opressão" não pode ser a "mais bonita". O preconceito linguístico nasce da crença em uma LÍNGUA IDEAL — traço típico de preconceito com variedades linguísticas.`
+  },
+  {
+    texto:`As reações à sétima temporada foram o ápice do último estágio em Game of Thrones. De forma alguma, este que vos fala seria capaz de argumentar que a série é perfeita, mas os defeitos que existem aqui sempre existiram, de uma forma ou de outra, durante os sete anos em que ela esteve no ar. [...]\n\nA verdade é que, com tudo isso e mais Ramin Djawadi evocando sentimentos e ambientes improváveis com sua trilha sonora magistral, a série não conseguiria ser ruim nem se tentasse, mas continua sendo uma pena que, ao buscar o seu final com tanta sede e tanta celeridade, Benioff e Weiss tenham tirado sua qualidade mais preciosa: o fôlego, a paciência e o detalhismo.\nDisponível em: https://observatoriodocinema.uol.com.br.`,
+    fonte:`ENEM 2024`,
+    enun:`Ainda que faça uma avaliação positiva da série, nessa resenha, o autor aponta aspectos negativos da obra ao utilizar`,
+    alts:['marcas de impessoalidade que disfarçam a opinião do especialista.','expressões adversativas para fazer ressalvas às afirmações elogiosas.','interlocução com o leitor para corroborar opiniões contrárias à adaptação.','eufemismos que minimizam as críticas feitas à construção das personagens.','antíteses que opõem a fragilidade do roteiro à beleza da trilha sonora da série.'],
+    correta:1,
+    expl:`O GÊNERO RESENHA equilibra elogio e crítica. O autor usa CONECTORES ADVERSATIVOS ("mas", "continua sendo uma pena que") para introduzir as ressalvas: "a série não conseguiria ser ruim nem se tentasse, MAS continua sendo uma pena que...". Esse recurso é típico da ARGUMENTAÇÃO CONCESSIVA: concede um ponto positivo antes de apresentar a crítica. As expressões adversativas são a marca linguística desse movimento argumentativo.`
+  },
+  {
+    texto:`No predomínio das mulheres pretas brasileiras nos Jogos Olímpicos de 2024, uma coisa chamou a atenção no pódio: elas valorizam a parte psicológica. As duas medalhistas de ouro, a judoca Beatriz Souza e a ginasta Rebeca Andrade, ressaltam, em várias entrevistas, a importância da saúde mental. Em uma dessas entrevistas, Rebeca sinaliza: "Acho que não é só sobre vencer a Simone, é sobre vencer a mim mesma. A minha briga está na minha cabeça, não está com outras pessoas. Para conseguir fazer as minhas apresentações, preciso controlar a minha cabeça, o meu corpo, e essa é a briga".\nDisponível em: https://iclnoticias.com.br.`,
+    fonte:`ENEM 2025`,
+    enun:`Nesse texto, as atletas brasileiras defendem o(a)`,
+    alts:['investimento na modernização de equipamentos.','subordinação do treinamento físico ao mental.','estímulo à competição entre adversárias.','aprimoramento da expressão corporal.','importância da saúde emocional.'],
+    correta:4,
+    expl:`O texto usa o recurso do ARGUMENTO DE AUTORIDADE: especialistas no tema (as próprias atletas medalhistas) defendem a saúde mental como componente essencial do desempenho. A CITAÇÃO DIRETA de Rebeca Andrade ("vencer a mim mesma", "briga está na minha cabeça") funciona como PROVA ARGUMENTATIVA. A tese não é que o mental supera o físico (B), mas que a SAÚDE EMOCIONAL é tão importante quanto o treinamento físico.`
+  },
+  {
+    texto:`Com 20 anos de experiência no futebol de alto rendimento, Marina, ex-jogadora da seleção brasileira de futebol, salienta que, por trás do espetáculo apresentado nas mídias, com mensagens de motivação e superação, o esporte não é tão inclusivo assim. [...] Para a profissional, é preciso analisar com cautela "a ideia romântica que a mídia passa para os telespectadores". A realidade é muito mais dura do que as imagens espetaculosas que principalmente a televisão busca transmitir para a audiência.\nROSOLEN, N. Disponível em: www.uninter.com.`,
+    fonte:`ENEM 2025`,
+    enun:`Nesse texto, a visão crítica de uma ex-atleta de futebol revela que`,
+    alts:['os meios de comunicação invisibilizam as dificuldades presentes no esporte.','o treinamento atlético de alto nível é desestimulante para os indivíduos.','o trabalho contínuo é desvalorizado no contexto esportivo profissional.','as ações de incentivo financeiro a jovens atletas são precárias.','as publicações da mídia esportiva rotulam atletas iniciantes.'],
+    correta:0,
+    expl:`O texto usa o ARGUMENTO DE AUTORIDADE (experiência de 20 anos de Marina) para CONTRADIZER a narrativa midiática. A estrutura argumentativa é: mídia apresenta (espetáculo, motivação, superação) × realidade é (muito mais dura). O PONTO CEGO identificado pela crítica é que a televisão INVISIBILIZA as dificuldades reais para criar "imagens espetaculosas". A tese central é que a mídia esportiva distorce a realidade.`
+  },
+  {
+    texto:`A Carta aberta à população brasileira\n\nPrezados Cidadãos e Cidadãs,\nO envelhecimento populacional é um fenômeno mundial. Infelizmente, nosso país ainda não está preparado para atender às demandas dessa população.\n\nEste é o retrato da saúde pública no Brasil, que, apesar dos indiscutíveis avanços, apresenta um cenário de deficiências e falta de integração em todos os níveis de atenção à saúde: primária (atendimento deficiente nas unidades de saúde da atenção básica), secundária (carência de centros de referência com atendimento por especialistas) e terciária (atendimento hospitalar com abordagem ao idoso centrada na doença). [...]\n\nEsperamos que tanto nossos atuais quanto os futuros governantes e legisladores reflitam sobre a necessidade de investir na saúde e na qualidade de vida associada ao envelhecimento.\nSociedade Brasileira de Geriatria e Gerontologia.`,
+    fonte:`ENEM 2023`,
+    enun:`O objetivo desse texto é`,
+    alts:['sensibilizar o idoso a respeito dos cuidados com a saúde.','alertar os governantes sobre os cuidados requeridos pelo idoso.','divulgar o trabalho da Sociedade Brasileira de Geriatria e Gerontologia.','informar o setor público sobre o retrocesso da legislação destinada à população idosa.','chamar a atenção da população sobre a qualidade dos serviços de saúde pública para o idoso.'],
+    correta:4,
+    expl:`O gênero CARTA ABERTA tem como característica principal o DESTINATÁRIO DUPLO: a carta é nominalmente direcionada a governantes ("Esperamos que [...] governantes reflitam"), mas na prática é endereçada ao PÚBLICO GERAL — daí "carta aberta". O propósito é MOBILIZAR A OPINIÃO PÚBLICA sobre a precariedade dos serviços de saúde para idosos. Não é para o idoso (A), nem para governantes diretamente (B), mas para a POPULAÇÃO em geral.`
+  },
+  {
+    texto:`Havia um tempo — tão perto, e, ó, tão longe — em que a arte era um holofote na unha encravada, não um campeonato de melhores esmaltes.\n\nRaskolnikov matava velhinhas, a família de Gregor Samsa o assassinava a "maçãzadas", Memórias póstumas de Brás Cubas (Machado de Assis) é o retrato mais perfeito de tudo o que tem de pior na sociedade brasileira, uma sequência tristemente hilária de ações moralmente condenáveis, atitudes pusilânimes, cálculos mesquinhos e maus passos cretinos.\n\nA literatura, o cinema e o teatro vêm se transformando num exercício de lacração: o mal está sempre no outro, os protagonistas são ironmen/women da virtude. [...] A realidade é confusa. Contraditória. Muitas vezes incompreensível. A arte é onde tentamos nos mostrar nus, com todos os nossos defeitos.\nPRATA, A. Disponível em: www1.folha.uol.com.br.`,
+    fonte:`ENEM 2024`,
+    enun:`No que diz respeito à arte, o posicionamento de Antônio Prata, no Texto II, aproxima-se da tese de Graciliano Ramos, uma vez que ambos`,
+    alts:['defendem a dignidade do ofício dos artistas.','concluem que a arte reforça crenças pessoais.','apresentam a pobreza como inspiração para a arte.','afirmam o necessário caráter desestabilizador da arte.','atestam que há mudanças significativas na produção artística.'],
+    correta:3,
+    expl:`Tanto Graciliano (carta a Portinari: "Dizem que somos pessimistas... mas as deformações existem fora da arte") quanto Prata ("a arte era um holofote na unha encravada") defendem que a arte deve INCOMODAR, DESESTABILIZAR, mostrar o que é feio e difícil — não ser um "campeonato de melhores esmaltes". A TESE COMPARTILHADA é que a arte genuína precisa ter CARÁTER DESESTABILIZADOR para ser verdadeira.`
+  }
+  ]
+},
 };
 // ─── TEMAS DE REDAÇÃO ─────────────────────────────────────────────────────────
 
@@ -1389,9 +1750,12 @@ function irMatriz(){
 // ─── AUTENTICAÇÃO / PROGRESSO ────────────────────────────────────────────────
 
 const TEMAS_INFO = {
-  variacao:         {emoji:'🗣️', titulo:'Variação Linguística'},
-  intertextualidade:{emoji:'🔗', titulo:'Intertextualidade'},
-  generos:          {emoji:'📰', titulo:'Gêneros Textuais'}
+  variacao:         {titulo:'Variação Linguística',    num:'01', cor:'#0062CC'},
+  intertextualidade:{titulo:'Intertextualidade',       num:'02', cor:'#7B2FBE'},
+  generos:          {titulo:'Gêneros Textuais',        num:'03', cor:'#1A7F4E'},
+  coesao:           {titulo:'Coesão e Coerência',      num:'04', cor:'#D97706'},
+  funcoes:          {titulo:'Funções de Linguagem',    num:'05', cor:'#DC2626'},
+  argumentacao:     {titulo:'Argumentação',            num:'06', cor:'#0891B2'}
 };
 
 const AUTH = {
@@ -1416,7 +1780,7 @@ const AUTH = {
       nome: nome.trim(), turma: turma.trim(),
       senha: senha.trim().toLowerCase(),
       criado_em: new Date().toISOString(),
-      tentativas: {variacao:null, intertextualidade:null, generos:null}
+      tentativas: {variacao:null, intertextualidade:null, generos:null, coesao:null, funcoes:null, argumentacao:null}
     };
     this._save();
     return {ok:true};
@@ -1507,7 +1871,7 @@ function renderDashboard(){
 
   const cont=document.getElementById('dashCards');
   cont.innerHTML='';
-  const temas=['variacao','intertextualidade','generos'];
+  const temas=['variacao','intertextualidade','generos','coesao','funcoes','argumentacao'];
 
   temas.forEach(t=>{
     const info=TEMAS_INFO[t];
@@ -1518,7 +1882,7 @@ function renderDashboard(){
       const pct=Math.round(res.score/res.total*100);
       card.className='dash-card concluido';
       card.innerHTML=`
-        <span class="dc-ico">${info.emoji}</span>
+        <div class="dc-num">${info.num}</div>
         <div class="dc-titulo">${info.titulo}</div>
         <div class="dc-score">${res.score}<span style="font-size:.8rem;font-weight:400;color:var(--tx2)">/${res.total}</span></div>
         <span class="dc-status ok">✓ Concluído — ${pct}%</span>`;
@@ -1526,7 +1890,7 @@ function renderDashboard(){
     } else {
       card.className='dash-card disponivel';
       card.innerHTML=`
-        <span class="dc-ico">${info.emoji}</span>
+        <div class="dc-num">${info.num}</div>
         <div class="dc-titulo">${info.titulo}</div>
         <div style="font-size:.78rem;color:var(--tx2);margin:4px 0">12 questões · 30 min</div>
         <span class="dc-status livre">▶ Iniciar</span>`;
@@ -1558,7 +1922,7 @@ function renderProgresso(){
   const wrap=document.getElementById('progWrap');
   wrap.innerHTML='';
 
-  const temas=['variacao','intertextualidade','generos'];
+  const temas=['variacao','intertextualidade','generos','coesao','funcoes','argumentacao'];
   const feitos=temas.filter(t=>u.tentativas[t]);
 
   if(feitos.length===0){
