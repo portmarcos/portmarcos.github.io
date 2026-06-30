@@ -381,61 +381,11 @@ h1,h2,h3,h4,.num{font-family:'Montserrat',sans-serif}
     <div class="topo-logo">ENEM</div>
     <div class="topo-sub">Língua Portuguesa · Portal do Prof. Marcos</div>
   </div>
-  <div class="sc-top-user" id="topUser" style="display:none">
-    <span class="user-chip" id="userChip">—</span>
-    <button class="btn-sair" onclick="sair()">Sair</button>
-  </div>
-  <button class="topo-btn" id="btnHome" onclick="irHome()" style="display:none">⌂ Início</button>
-</div>
-
-<!-- SCREEN: AUTH -->
-<div id="sc-auth" class="screen ativo">
-  <div class="auth-wrap">
-    <div class="auth-card">
-      <div class="auth-logo">ENEM</div>
-      <div class="auth-sub">Portal Língua Portuguesa · Prof. Marcos Cruz</div>
-      <div class="auth-tabs">
-        <button class="auth-tab ativo" id="tab-login" onclick="trocarTabAuth('login')">Entrar</button>
-        <button class="auth-tab" id="tab-cadastro" onclick="trocarTabAuth('cadastro')">Primeira vez?</button>
-      </div>
-      <!-- LOGIN -->
-      <div id="form-login">
-        <div class="auth-field">
-          <label>Sua senha de acesso</label>
-          <input class="auth-input" type="password" id="loginSenha" placeholder="Digite sua senha" autocomplete="off">
-          <div class="auth-hint">A senha que você criou quando se cadastrou aqui.</div>
-        </div>
-        <div class="auth-error" id="loginErro"></div>
-        <button class="auth-btn" onclick="fazLogin()">Entrar →</button>
-      </div>
-      <!-- CADASTRO -->
-      <div id="form-cadastro" style="display:none">
-        <div class="auth-field">
-          <label>Seu nome completo</label>
-          <input class="auth-input" type="text" id="cadNome" placeholder="Ex: Maria da Silva" autocomplete="off">
-        </div>
-        <div class="auth-field">
-          <label>Turma / Série</label>
-          <input class="auth-input" type="text" id="cadTurma" placeholder="Ex: 9º Ano A" autocomplete="off">
-        </div>
-        <div class="auth-field">
-          <label>Crie uma senha</label>
-          <input class="auth-input" type="password" id="cadSenha" placeholder="Mínimo 4 caracteres" autocomplete="new-password">
-          <div class="auth-hint">Guarde sua senha! Você vai precisar dela toda vez que entrar.</div>
-        </div>
-        <div class="auth-field">
-          <label>Confirme a senha</label>
-          <input class="auth-input" type="password" id="cadConfirm" placeholder="Repita a senha" autocomplete="new-password">
-        </div>
-        <div class="auth-error" id="cadErro"></div>
-        <button class="auth-btn" onclick="fazCadastro()">Criar minha conta →</button>
-      </div>
-    </div>
-  </div>
+  <button class="topo-btn" id="btnHome" onclick="irHome()">⌂ Início</button>
 </div>
 
 <!-- SCREEN: HOME LOGADO -->
-<div id="sc-home" class="screen">
+<div id="sc-home" class="screen ativo">
   <div class="dash-greeting">
     <h2>Olá, <span id="dashNome">—</span>! 👋</h2>
     <p id="dashTurma">—</p>
@@ -459,7 +409,7 @@ h1,h2,h3,h4,.num{font-family:'Montserrat',sans-serif}
       <span class="home-card-icon">📝</span>
       <h2>Questões por Tema</h2>
       <p>Simulados temáticos com cronômetro e gabarito comentado</p>
-      <span class="home-badge">30 min · 12 questões</span>
+      <span class="home-badge">30 min · 16 questões</span>
     </div>
     <div class="home-card" onclick="irTemas()">
       <span class="home-card-icon">✍️</span>
@@ -484,44 +434,44 @@ h1,h2,h3,h4,.num{font-family:'Montserrat',sans-serif}
 <div id="sc-topicos" class="screen">
   <div class="section-header">
     <h2>Escolha o Tema</h2>
-    <p>Cada simulado tem 12 questões e 30 minutos</p>
+    <p>Cada simulado tem 16 questões e 30 minutos</p>
   </div>
     <div class="topic-grid">
     <div class="topic-card" style="--cor:#0062CC" onclick="iniciarQuiz('variacao')">
       <span class="tc-num">01 — Competência 5</span>
       <h3>Variação Linguística</h3>
       <p>Dialetos, registros, preconceito linguístico, norma culta, padrão e popular</p>
-      <span class="tc-count">15 questões reais ENEM</span>
+      <span class="tc-count">16 questões reais ENEM</span>
     </div>
     <div class="topic-card" style="--cor:#7B2FBE" onclick="iniciarQuiz('intertextualidade')">
       <span class="tc-num">02 — Competência 5</span>
       <h3>Intertextualidade</h3>
       <p>Paródia, paráfrase, alusão, citação, charge, HQ e diálogos entre textos</p>
-      <span class="tc-count">15 questões reais ENEM · com imagens</span>
+      <span class="tc-count">16 questões reais ENEM · com imagens</span>
     </div>
     <div class="topic-card" style="--cor:#1A7F4E" onclick="iniciarQuiz('generos')">
       <span class="tc-num">03 — Competência 4</span>
       <h3>Gêneros Textuais</h3>
       <p>Crônica, charge, notícia, reportagem, conto, infográfico, blog e mais</p>
-      <span class="tc-count">15 questões reais ENEM</span>
+      <span class="tc-count">16 questões reais ENEM</span>
     </div>
     <div class="topic-card" style="--cor:#D97706" onclick="iniciarQuiz('coesao')">
       <span class="tc-num">04 — Competência 4</span>
       <h3>Coesão e Coerência</h3>
       <p>Progressão textual, conectivos, referência, substituição e ellipse</p>
-      <span class="tc-count">15 questões reais ENEM 2023-25</span>
+      <span class="tc-count">16 questões reais ENEM 2023-25</span>
     </div>
     <div class="topic-card" style="--cor:#DC2626" onclick="iniciarQuiz('funcoes')">
       <span class="tc-num">05 — Competência 3</span>
       <h3>Funções de Linguagem</h3>
       <p>Referencial, emotiva, conativa, poética, fática e metalinguística</p>
-      <span class="tc-count">15 questões reais ENEM 2023-25</span>
+      <span class="tc-count">16 questões reais ENEM 2023-25</span>
     </div>
     <div class="topic-card" style="--cor:#0891B2" onclick="iniciarQuiz('argumentacao')">
       <span class="tc-num">06 — Competências 3 e 5</span>
       <h3>Argumentação e Gêneros</h3>
       <p>Estratégias argumentativas, tese, dados, conectivos e gêneros opinativos</p>
-      <span class="tc-count">15 questões reais ENEM 2023-25</span>
+      <span class="tc-count">16 questões reais ENEM 2023-25</span>
     </div>
   </div>
 
@@ -616,7 +566,7 @@ h1,h2,h3,h4,.num{font-family:'Montserrat',sans-serif}
 <div id="sc-result" class="screen">
   <div class="result-hero">
     <div class="result-score" id="rScore">—</div>
-    <div class="result-label">de 12 questões corretas</div>
+    <div class="result-label">de <span id="rTotal">16</span> questões corretas</div>
     <div class="result-msg" id="rMsg"></div>
     <div class="result-stats">
       <div class="result-stat"><div class="val" id="rCertas" style="color:#4EE89A">0</div><div class="lbl">Certas</div></div>
@@ -627,6 +577,7 @@ h1,h2,h3,h4,.num{font-family:'Montserrat',sans-serif}
   </div>
   <div class="result-body">
     <div style="display:flex;gap:10px;justify-content:center;margin-bottom:24px;flex-wrap:wrap">
+      <button class="btn btn-sec" id="btnRefazer" onclick="refazer()">🔁 Refazer este tema</button>
       <button class="btn btn-sec" onclick="irTopicos()">← Outros temas</button>
       <button class="btn btn-sec" onclick="irHome()">← Início</button><button class="btn btn-pri" onclick="irProgresso()">📊 Ver meu desempenho</button>
       <button class="btn btn-ouro" onclick="abrirGabarito()">Ver gabarito completo ▾</button>
@@ -1078,6 +1029,15 @@ BAGNO, Marcos. A língua de Eulália. São Paulo: Contexto, 1997. (adaptado)`,
     correta:4,
     expl:`O autor usa o exagero humorístico de um linguajar jurídico numa situação cotidiana (comprar pão) para mostrar que cada situação comunicativa exige um registro diferente. O exemplo evidencia que o problema não é falar "difícil" ou "fácil", mas saber adequar a linguagem ao contexto — variação diafásica.`
   }
+
+  ,{
+    texto:`Os linguistas têm notado a expansão do tratamento informal. "Tenho 78 anos e devia ser tratado por senhor, mas meus alunos mais jovens me tratam por você", diz o professor Ataliba Castilho, aparentemente sem se incomodar com a informalidade, inconcebível em seus tempos de estudante. O você, porém, não reinará sozinho. O tu predomina em Porto Alegre e convive com você no Rio de Janeiro e em Recife, enquanto você é o tratamento predominante em São Paulo, Curitiba, Belo Horizonte e Salvador. O tu já era mais próximo e menos informal que você nas quase 500 cartas do acervo on-line de uma instituição universitária, quase todas de poetas, políticos e outras personalidades do final do século XIX e início do XX.`,
+    fonte:`Disponível em: http://revistapesquisa.fapesp.br. Acesso em: 21 abr. 2015 (adaptado). | ENEM 2021 — Questão 22`,
+    enun:`No texto, constata-se que os usos de pronomes variaram ao longo do tempo e que atualmente têm empregos diversos pelas regiões do Brasil. Esse processo revela que`,
+    alts:['a escolha de "você" ou de "tu" está condicionada à idade da pessoa que usa o pronome.','a possibilidade de se usar tanto "tu" quanto "você" caracteriza a diversidade da língua.','o pronome "tu" tem sido empregado em situações informais por todo o país.','a ocorrência simultânea de "tu" e de "você" evidencia a inexistência da distinção entre níveis de formalidade.','o emprego de "você" nos documentos escritos demonstra que a língua tende a se manter inalterada.'],
+    correta:1,
+    expl:`O texto mapeia como duas formas pronominais — "tu" e "você" — coexistem e predominam em diferentes regiões do Brasil (tu em Porto Alegre, você em São Paulo, ambos no Rio e Recife), além de mostrar mudança ao longo do tempo. Essa convivência de formas distintas para a mesma função é exatamente a definição de diversidade linguística: a língua portuguesa não é uniforme, mas varia geograficamente e historicamente.`
+  }
   ]
 },
 
@@ -1205,6 +1165,15 @@ intertextualidade:{
     alts:['incentivam a produção de roteiros compostos por imagens.','colaboram para a valorização de enredos românticos.','revelam o sucesso de um evento de cartunistas.','contribuem com o processo de acessibilidade.','questionam o padrão tradicional das HQ.'],
     correta:3,
     expl:`Independentemente de seus gêneros e objetivos — Texto I é uma HQ silenciosa; Texto II é uma reportagem —, ambos convergem para o mesmo resultado: ampliar a acessibilidade. O Texto I cria HQ sem palavras, compreensíveis por surdos e por pessoas de qualquer língua; o Texto II divulga essa iniciativa. Juntos, a linguagem está a serviço da inclusão.`
+  }
+
+  ,{
+    texto:`MEIRELLES, V. <i>Moema</i>. Óleo sobre tela, 129 cm x 190 cm. Masp, São Paulo, 1866. A obra retrata uma cena do poema épico brasileiro Caramuru: a indígena Moema, desfalecida na praia após nadar em vão atrás do navio que levava seu amado embora.`,
+    fonte:`Disponível em: www.masp.art.br. Acesso em: 13 ago. 2012 (adaptado). | ENEM 2021 — Questão 18`,
+    enun:`Nessa obra, que retrata uma cena de Caramuru, célebre poema épico brasileiro, a filiação à estética romântica manifesta-se na`,
+    alts:['exaltação do retrato fiel da beleza feminina.','tematização da fragilidade humana diante da morte.','ressignificação de obras do cânone literário nacional.','representação dramática e idealizada do corpo da índia.','oposição entre a condição humana e a natureza primitiva.'],
+    correta:3,
+    expl:`A pintura não retrata um afogamento de forma realista: a pele de Moema é perfeita e iluminada, sua pose é elegante e serena, sem sinais de sofrimento físico. Essa transformação do corpo indígena em algo belo e dramático ao mesmo tempo é a marca registrada do Romantismo — a idealização estética somada à dramaticidade da cena, típicas do indianismo romântico brasileiro inspirado no poema de Santa Rita Durão.`
   }
   ]
 },
@@ -1357,6 +1326,15 @@ Quando chamaram minha senha, eram 14h37. Eu havia envelhecido. Mas também havia
     correta:4,
     expl:`O texto tem as marcas definidoras da notícia: título chamativo, exposição objetiva de fato recente, citação de fontes confiáveis (New England Journal of Medicine, Washington Post), linguagem impessoal e informativa. O foco é divulgar o acontecimento ao público — função informativa típica da notícia jornalística.`
   }
+
+  ,{
+    texto:`Quadrinho em 4 quadros: [1] Duas mulheres conversam sobre um livro — "A pesquisa foi o primeiro passo na produção deste livro" / "Deixa de drama, a maior parte do material está on-line". [2] "Seguida da seleção das informações e da elaboração de um roteiro". [3] "O desenho feito à tinta" / "Não olha ainda!". [4] "E depois editado e colorizado digitalmente" — terminando com "Depois de todo esse trabalho, este livro só precisa de mais uma coisa: ser lido."`,
+    fonte:`LEMOS, A. Artistas brasileiras. Belo Horizonte: Miguilim, 2018. | ENEM 2021 — Questão 33`,
+    enun:`O que assegura o reconhecimento desse texto em quadrinhos como prefácio é o(a)`,
+    alts:['função de apresentação do livro.','apelo emocional apoiado nas imagens.','descrição do processo criativo da autora.','referência à mescla dos trabalhos manual e digital.','uso de elementos gráficos voltados para o público-alvo.'],
+    correta:0,
+    expl:`Apesar de descrever o processo criativo (pesquisa, roteiro, desenho, edição), o que caracteriza o texto como PREFÁCIO — e não apenas um relato de bastidores — é sua função social de APRESENTAR a obra ao leitor antes da leitura principal, preparando-o para o conteúdo, e culminando no convite explícito: "este livro só precisa de mais uma coisa: ser lido." Essa função de apresentação é o traço definidor do gênero prefácio, independentemente do suporte (HQ) escolhido.`
+  }
   ]
 },
 
@@ -1484,6 +1462,15 @@ coesao:{
     alts:['conclusão de uma ação.','realização de um evento.','repetição de uma prática.','continuidade de um processo.','transferência de responsabilidade.'],
     correta:3,
     expl:`O decreto satírico "demite" o gerúndio por associá-lo à ideia de ação em andamento indefinido — "estamos verificando", "vamos estar resolvendo" — expressões que prolongam a ação sem indicar conclusão. O gerúndio, como aspecto verbal de CONTINUIDADE (aspecto imperfectivo), pode ser usado para justificar a ineficiência: o problema "está sendo resolvido", sempre em processo, nunca concluído.`
+  }
+
+  ,{
+    texto:`Os velhos papéis, quando não são consumidos pelo fogo, às vezes acordam de seu sono para contar notícias do passado. É assim que se descobre algo novo de um nome antigo, sobre o qual já se julgava saber tudo, como Machado de Assis. Por exemplo, você provavelmente não sabe que o autor carioca, morto em 1908, escreveu uma letra do hino nacional em 1867 — e não poderia saber mesmo, porque os versos seguiam inéditos. Até hoje. Essa letra acaba de ser descoberta, em um jornal antigo de Florianópolis, pelo pesquisador independente Felipe Rissato. "Das florestas em que habito/ Solto um canto varonil:/ Em honra e glória de Pedro/ O gigante do Brasil", diz o começo do hino, composto de sete estrofes em redondilhas maiores. O Pedro mencionado é o imperador Dom Pedro II. O bruxo do Cosme Velho compôs a letra para o aniversário de 42 anos do monarca.`,
+    fonte:`Disponível em: www.revistaprosaversoarte.com. Acesso em: 4 dez. 2018 (adaptado). | ENEM 2021 — Questão 26`,
+    enun:`Considerando-se as operações de retomada de informações na estruturação do texto, há interdependência entre as expressões`,
+    alts:['"Os velhos papéis" e "É assim".','"algo novo" e "sobre o qual".','"um nome antigo" e "Por exemplo".','"O gigante do Brasil" e "O Pedro mencionado".','"o imperador Dom Pedro II" e "O bruxo do Cosme Velho".'],
+    correta:3,
+    expl:`"O Pedro mencionado" retoma diretamente "Pedro" da expressão "O gigante do Brasil" (verso do hino) — há um mecanismo claro de retomada anafórica: a segunda expressão aponta de volta para a primeira, explicitando quem é esse "Pedro" citado nos versos. As demais alternativas combinam expressões que apenas se relacionam tematicamente ao texto, sem que uma retome diretamente a outra (por exemplo, "o imperador Dom Pedro II" e "O bruxo do Cosme Velho" são duas pessoas diferentes, sem relação referencial entre si).`
   }
   ]
 },
@@ -1613,6 +1600,15 @@ funcoes:{
     correta:1,
     expl:`A campanha usa a antítese entre os poderes positivo e negativo das palavras para alertar que liberdade de expressão vem acompanhada de responsabilidade. A função social é CONATIVA (apelativa): busca conscientizar e provocar mudança de comportamento — mostrando que direitos (liberdade de expressão) implicam deveres (responsabilidade no uso das palavras).`
   }
+
+  ,{
+    texto:`Noite dessas, ciscando num desses canais a cabo, vi uns caras oferecendo maravilhas eletrônicas, bastava telefonar e eu receberia um notebook capaz de me ajudar a fabricar um navio, uma estação espacial. [...] De repente, como vem acontecendo nos últimos tempos, houve um corte na memória e vi diante de mim o meu primeiro estojo escolar. Tinha 5 anos e ia para o jardim de infância. Era uma caixinha comprida, envernizada, com uma tampa que corria nas bordas do corpo principal. Dentro, arrumados em divisões, havia lápis coloridos, um apontador, uma lapiseira cromada, uma régua de 20 cm e uma borracha para apagar meus erros. [...] Da caixinha vinha um cheiro gostoso, cheiro que nunca esqueci e que me tonteava de prazer. [...] O notebook que agora abro é negro e, em matéria de cheiro, é abominável. Cheira vilmente a telefone celular, a cabine de avião, a aparelho de ultrassonografia onde outro dia uma moça veio ver como sou por dentro. Acho que piorei de estojo e de vida.`,
+    fonte:`CONY, C. H. Crônicas para ler na escola. São Paulo: Objetiva, 2009 (adaptado). | ENEM 2021 — Questão 32`,
+    enun:`No texto, há marcas da função da linguagem que nele predomina. Essas marcas são responsáveis por colocar em foco o(a)`,
+    alts:['mensagem, elevando-a à categoria de objeto estético do mundo das artes.','código, transformando a linguagem utilizada no texto na própria temática abordada.','contexto, fazendo das informações presentes no texto seu aspecto essencial.','enunciador, buscando expressar sua atitude em relação ao conteúdo do enunciado.','interlocutor, considerando-o responsável pelo direcionamento dado à narrativa pelo enunciador.'],
+    correta:3,
+    expl:`O texto usa primeira pessoa e palavras valorativas o tempo todo — "cheiro gostoso que me tonteava de prazer", "é abominável", "acho que piorei de estojo e de vida" — revelando opiniões e sentimentos do próprio narrador diante do que descreve. É a FUNÇÃO EMOTIVA (centrada no enunciador) predominando: o texto não busca informar objetivamente sobre objetos, mas expressar a atitude e a nostalgia de quem narra diante da troca do estojo escolar pelo notebook.`
+  }
   ]
 },
 
@@ -1715,8 +1711,8 @@ argumentacao:{
     alts:['defendem a dignidade do ofício dos artistas.','concluem que a arte reforça crenças pessoais.','apresentam a pobreza como inspiração para a arte.','afirmam o necessário caráter desestabilizador da arte.','atestam que há mudanças significativas na produção artística.'],
     correta:3,
     expl:`Tanto Graciliano (carta a Portinari: "Dizem que somos pessimistas... mas as deformações existem fora da arte") quanto Prata ("a arte era um holofote na unha encravada") defendem que a arte deve INCOMODAR, DESESTABILIZAR, mostrar o que é feio e difícil — não ser um "campeonato de melhores esmaltes". A TESE COMPARTILHADA é que a arte genuína precisa ter CARÁTER DESESTABILIZADOR para ser verdadeira.`
-
-  ,{
+  },
+  {
     texto:`São vários os fatores que influenciam os hábitos das pessoas no acesso à internet. A utilização das tecnologias de informação e comunicação está diretamente relacionada a aspectos como: conhecimento de seu uso, acesso à linguagem letrada, nível de instrução, escolaridade, letramento digital. Os que detêm tais recursos (os mais escolarizados) são os que mais acessam a rede. A análise dos dados nos possibilita dizer que a falta de acesso à rede repete as mesmas adversidades e exclusões já verificadas na sociedade brasileira no que se refere a analfabetos, menos escolarizados, negros, população indígena e desempregados. Isso significa dizer que a internet, se não produz diretamente a exclusão, certamente a reproduz.\n\nSILVA, F. A. B.; ZIVIANE, P.; GHEZZI, D. R. As tecnologias digitais e seus usos. Ipea, 2019 (adaptado).`,
     fonte:`SILVA, F. A. B. et al. As tecnologias digitais e seus usos. Ipea, 2019 (adaptado). | ENEM 2022 — Questão 13`,
     enun:`Ao analisarem a correlação entre os hábitos e o perfil socioeconômico dos usuários da internet no Brasil, os pesquisadores`,
@@ -1739,7 +1735,14 @@ argumentacao:{
     alts:['otimização do tempo.','confiabilidade dos sites.','contribuição dos usuários.','quantidade de informação.','colaboração de intelectuais.'],
     correta:2,
     expl:`Lévy argumenta que a rede é um instrumento de comunicação em que as comunidades ajudam seus membros a aprender — mas que a inteligência coletiva jamais substituirá o esforço individual de cada usuário. A circulação de saberes na rede depende da CONTRIBUIÇÃO ATIVA dos usuários: são eles que alimentam, pesquisam, avaliam e integram as comunidades virtuais.`
-  }
+  },
+  {
+    texto:`Infográfico "Os riscos para crianças do uso do celular antes de dormir": estudo do King's College conclui que essas crianças e adolescentes têm maior risco de obesidade, baixo sistema imunológico, crescimento atrofiado e depressão. A falta de sono no longo prazo reduz hormônios (melatonina, leptina, cortisol). A forte luz penetra no olho e confunde o relógio biológico; a criança demora a dormir, acorda mais vezes e descansa menos. O que fazer? Ficar entre 30 minutos e 2 horas sem telas antes de ir para a cama; reduzir a intensidade da luz emitida; manter o telefone longe, porém no quarto não resolve.`,
+    fonte:`Disponível em: https://g1.globo.com. Acesso em: 18 jun. 2019 (adaptado). | ENEM 2021 — Questão 34`,
+    enun:`No texto, os recursos verbais e não verbais empregados têm por objetivo`,
+    alts:['divulgar informações científicas sobre o uso indiscriminado de aparelhos celulares.','influenciar o leitor a mudar atitudes e hábitos considerados prejudiciais às crianças.','relacionar o uso da tecnologia aos efeitos decorrentes da falta de exercícios físicos.','indicar medidas eficazes para desestimular a utilização de telefones pelo público infantil.','sugerir aos pais e responsáveis a substituição de dispositivos móveis por atividades lúdicas.'],
+    correta:1,
+    expl:`O infográfico combina dados científicos (riscos à saúde) com orientações práticas ("O que fazer?") direcionadas a pais e responsáveis. O objetivo não é apenas informar (alternativa A) nem apenas listar medidas (alternativa D), mas usar essas informações como ARGUMENTO para PERSUADIR o leitor a mudar comportamentos prejudiciais às crianças — função apelativa/conativa da linguagem a serviço da argumentação.`
   }
   ]
 },
@@ -1962,7 +1965,6 @@ function toggleRep(head){
 }
 
 function irMatriz(){
-  if(!AUTH.current){mostrar('sc-auth');return;}
   mostrar('sc-matriz');
   filtrarRep('todos');
 }
@@ -1980,37 +1982,30 @@ const TEMAS_INFO = {
 
 const AUTH = {
   current: null,
+  _LK: 'enem_progresso_local',
 
-  _key(s){ return 'enem_aluno_' + s.trim().toLowerCase(); },
-
-  _load(s){
-    try{ const d=localStorage.getItem(this._key(s)); return d?JSON.parse(d):null; }
+  _load(){
+    try{ const d=localStorage.getItem(this._LK); return d?JSON.parse(d):null; }
     catch(e){ return null; }
   },
 
   _save(){
     if(!this.current) return;
-    try{ localStorage.setItem(this._key(this.current.senha), JSON.stringify(this.current)); }
+    try{ localStorage.setItem(this._LK, JSON.stringify(this.current)); }
     catch(e){ console.warn('localStorage indisponível'); }
   },
 
-  register(nome, turma, senha){
-    if(this._load(senha)) return {ok:false, msg:'Esta senha já está em uso. Escolha outra ou faça login.'};
-    this.current = {
-      nome: nome.trim(), turma: turma.trim(),
-      senha: senha.trim().toLowerCase(),
-      criado_em: new Date().toISOString(),
-      tentativas: {variacao:null, intertextualidade:null, generos:null, coesao:null, funcoes:null, argumentacao:null}
-    };
-    this._save();
-    return {ok:true};
-  },
-
-  login(senha){
-    const d=this._load(senha);
-    if(!d) return {ok:false, msg:'Senha não encontrada. Verifique ou cadastre-se (guia "Primeira vez?").'};
+  init(){
+    let d=this._load();
+    if(!d){
+      d = {
+        nome:'Estudante', turma:'ENEM',
+        criado_em:new Date().toISOString(),
+        tentativas:{variacao:null, intertextualidade:null, generos:null, coesao:null, funcoes:null, argumentacao:null}
+      };
+    }
     this.current=d;
-    return {ok:true};
+    this._save();
   },
 
   saveResult(topico, result){
@@ -2023,63 +2018,13 @@ const AUTH = {
     return !!(this.current && this.current.tentativas[topico]);
   },
 
-  logout(){
-    this.current=null;
-    document.getElementById('topUser').style.display='none';
-    document.getElementById('btnHome').style.display='none';
-    mostrar('sc-auth');
+  resetProgresso(){
+    this.current.tentativas = {variacao:null, intertextualidade:null, generos:null, coesao:null, funcoes:null, argumentacao:null};
+    this._save();
   }
 };
 
-function trocarTabAuth(tab){
-  document.getElementById('form-login').style.display   = tab==='login'   ?'':'none';
-  document.getElementById('form-cadastro').style.display= tab==='cadastro'?'':'none';
-  document.getElementById('tab-login').className   = 'auth-tab'+(tab==='login'   ?' ativo':'');
-  document.getElementById('tab-cadastro').className= 'auth-tab'+(tab==='cadastro'?' ativo':'');
-}
-
-function showAuthErr(id, msg){
-  const el=document.getElementById(id);
-  el.textContent=msg; el.style.display='block';
-}
-function clearAuthErr(id){ document.getElementById(id).style.display='none'; }
-
-function fazLogin(){
-  clearAuthErr('loginErro');
-  const senha=document.getElementById('loginSenha').value.trim();
-  if(!senha){ showAuthErr('loginErro','Digite sua senha.'); return; }
-  const r=AUTH.login(senha);
-  if(!r.ok){ showAuthErr('loginErro', r.msg); return; }
-  document.getElementById('loginSenha').value='';
-  entrarPortal();
-}
-
-function fazCadastro(){
-  clearAuthErr('cadErro');
-  const nome   = document.getElementById('cadNome').value.trim();
-  const turma  = document.getElementById('cadTurma').value.trim();
-  const senha  = document.getElementById('cadSenha').value.trim();
-  const confirm= document.getElementById('cadConfirm').value.trim();
-  if(!nome||!turma||!senha){ showAuthErr('cadErro','Preencha todos os campos.'); return; }
-  if(senha.length<4){ showAuthErr('cadErro','A senha deve ter pelo menos 4 caracteres.'); return; }
-  if(senha!==confirm){ showAuthErr('cadErro','As senhas não coincidem.'); return; }
-  const r=AUTH.register(nome, turma, senha);
-  if(!r.ok){ showAuthErr('cadErro', r.msg); return; }
-  ['cadNome','cadTurma','cadSenha','cadConfirm'].forEach(id=>document.getElementById(id).value='');
-  entrarPortal();
-}
-
-function entrarPortal(){
-  const u=AUTH.current;
-  document.getElementById('userChip').textContent = u.nome.split(' ')[0];
-  document.getElementById('topUser').style.display='flex';
-  document.getElementById('btnHome').style.display='block';
-  irHome();
-}
-
-function sair(){
-  AUTH.logout();
-}
+// Login removido — progresso salvo automaticamente neste navegador.
 
 // ─── DASHBOARD HOME ─────────────────────────────────────────────────────────
 
@@ -2112,7 +2057,7 @@ function renderDashboard(){
       card.innerHTML=`
         <div class="dc-num">${info.num}</div>
         <div class="dc-titulo">${info.titulo}</div>
-        <div style="font-size:.78rem;color:var(--tx2);margin:4px 0">12 questões · 30 min</div>
+        <div style="font-size:.78rem;color:var(--tx2);margin:4px 0">16 questões · 30 min</div>
         <span class="dc-status livre">▶ Iniciar</span>`;
       card.onclick=()=>iniciarQuiz(t);
     }
@@ -2130,7 +2075,6 @@ function renderDashboard(){
 // ─── PROGRESSO ───────────────────────────────────────────────────────────────
 
 function irProgresso(){
-  if(!AUTH.current){ mostrar('sc-auth'); return; }
   mostrar('sc-progresso');
   renderProgresso();
 }
@@ -2228,14 +2172,7 @@ function renderProgresso(){
   wrap.appendChild(btnV);
 }
 
-// Tecla Enter nos formulários de auth
-document.addEventListener('keydown', e=>{
-  if(e.key!=='Enter') return;
-  const fl=document.getElementById('form-login');
-  const fc=document.getElementById('form-cadastro');
-  if(fl && fl.style.display!=='none') fazLogin();
-  else if(fc && fc.style.display!=='none') fazCadastro();
-});
+
 
 // ─── ESTADO ───────────────────────────────────────────────────────────────────
 
@@ -2263,13 +2200,11 @@ function mostrar(id){
 }
 function irHome(){
   pararTimer();
-  if(!AUTH.current){mostrar('sc-auth');return;}
   mostrar('sc-home');
   renderDashboard();
 }
 function irTopicos(){
   pararTimer();
-  if(!AUTH.current){mostrar('sc-auth');return;}
   mostrar('sc-topicos');
 }
 function irTemas(){mostrar('sc-temas');renderTemas();}
@@ -2277,7 +2212,6 @@ function irTemas(){mostrar('sc-temas');renderTemas();}
 // ─── QUIZ ─────────────────────────────────────────────────────────────────────
 
 function iniciarQuiz(topico){
-  if(!AUTH.current){mostrar('sc-auth');return;}
   if(AUTH.isLocked(topico)){
     alert('Você já realizou este simulado. Veja seu resultado em "Meu Desempenho".');
     irHome();
@@ -2336,8 +2270,9 @@ function renderNavDots(){
 }
 
 function renderQ(){
+  const total=BANCO[S.topico].questoes.length;
   const q=BANCO[S.topico].questoes[S.qIdx];
-  document.getElementById('qNum').textContent='Questão '+(S.qIdx+1)+' de 12';
+  document.getElementById('qNum').textContent='Questão '+(S.qIdx+1)+' de '+total;
   // texto base
   const tDiv=document.getElementById('qTexto');
   if(q.texto&&q.texto.trim()){
@@ -2358,7 +2293,7 @@ function renderQ(){
     aDiv.appendChild(btn);
   });
   document.getElementById('btnAnterior').disabled=S.qIdx===0;
-  document.getElementById('btnProximo').disabled=S.qIdx===11;
+  document.getElementById('btnProximo').disabled=S.qIdx===total-1;
 }
 
 function selecionarAlt(i){
@@ -2366,13 +2301,15 @@ function selecionarAlt(i){
   renderQ();
   renderNavDots();
   // progresso
+  const total=BANCO[S.topico].questoes.length;
   const resp=S.respostas.filter(r=>r>=0).length;
-  document.getElementById('progFill').style.width=(resp/12*100)+'%';
+  document.getElementById('progFill').style.width=(resp/total*100)+'%';
 }
 
 function navQ(dir){
   const novoIdx=S.qIdx+dir;
-  if(novoIdx>=0&&novoIdx<12){S.qIdx=novoIdx;renderQ();renderNavDots();}
+  const total=BANCO[S.topico].questoes.length;
+  if(novoIdx>=0&&novoIdx<total){S.qIdx=novoIdx;renderQ();renderNavDots();}
 }
 
 function finalizarQuiz(){
@@ -2385,8 +2322,9 @@ function finalizarQuiz(){
     else if(r===q[i].correta) certas++;
     else erradas++;
   });
-  const pct=Math.round(certas/12*100);
+  const pct=Math.round(certas/q.length*100);
   document.getElementById('rScore').textContent=certas;
+  document.getElementById('rTotal').textContent=q.length;
   document.getElementById('rCertas').textContent=certas;
   document.getElementById('rErradas').textContent=erradas;
   document.getElementById('rPuladas').textContent=puladas;
@@ -2410,7 +2348,7 @@ function finalizarQuiz(){
     ok: r === BANCO[S.topico].questoes[i].correta
   }));
   AUTH.saveResult(S.topico, {
-    score: certas, total: 12,
+    score: certas, total: q.length,
     data: new Date().toISOString(),
     tempo_seg: Math.floor((S.endTime - S.startTime)/1000),
     respostas: respostasDetalhadas
@@ -2625,6 +2563,10 @@ document.getElementById('modalSenha').addEventListener('click',function(e){
   if(e.target===this) fecharModal();
 });
 document.addEventListener('keydown',e=>{if(e.key==='Escape') fecharModal();});
+
+// ─── INICIALIZAÇÃO (sem login — progresso salvo automaticamente) ──────────────
+AUTH.init();
+renderDashboard();
 
 </script>
 </body>
