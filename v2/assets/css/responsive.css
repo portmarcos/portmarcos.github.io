@@ -1,0 +1,156 @@
+/* ============================================================
+   RESPONSIVE — Prof. Marcos Cruz v2
+   responsive.css
+   ============================================================ */
+
+/* ── Tablet ≤ 900px ───────────────────────────────────────── */
+@media (max-width: 900px) {
+
+  /* Navbar */
+  .navbar__links    { display: none; }
+  .navbar__search-trigger { display: none; }
+  .navbar__hamburger { display: flex; }
+
+  /* Hero */
+  .hero__inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .hero__visual {
+    order: -1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero__avatar-wrap {
+    width: clamp(120px, 30vw, 180px);
+  }
+
+  .hero__sub { margin-inline: auto; }
+
+  .hero__actions { justify-content: center; }
+
+  .hero__stats {
+    justify-content: center;
+    gap: var(--space-8);
+  }
+
+  /* Professor */
+  .professor__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .professor__photo-wrap {
+    max-width: 360px;
+    margin-inline: auto;
+  }
+
+  .professor__photo-card {
+    aspect-ratio: 1;
+  }
+
+  /* Footer */
+  .footer__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-8);
+  }
+
+  .footer__grid > :first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ── Mobile ≤ 600px ───────────────────────────────────────── */
+@media (max-width: 600px) {
+
+  /* Navbar */
+  .navbar__logo span { display: none; }
+
+  /* Hero stats em coluna */
+  .hero__stats {
+    flex-direction: column;
+    gap: var(--space-6);
+    text-align: center;
+  }
+
+  /* Botões hero em coluna */
+  .hero__actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero__actions .btn {
+    width: 100%;
+    justify-content: center;
+    max-width: 320px;
+  }
+
+  /* Seção stats */
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .stat-card + .stat-card::before { display: none; }
+
+  /* Footer */
+  .footer__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+
+  .footer__bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--space-2);
+  }
+
+  /* Search modal */
+  .search-overlay {
+    align-items: flex-end;
+    padding-top: 0;
+  }
+
+  .search-modal {
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  }
+
+  /* Toast */
+  .toast-container {
+    left: var(--space-4);
+    right: var(--space-4);
+    bottom: var(--space-4);
+  }
+
+  .toast { max-width: 100%; }
+
+  /* Professor */
+  .professor__photo-card { aspect-ratio: 4/3; }
+}
+
+/* ── Large screens ≥ 1440px ───────────────────────────────── */
+@media (min-width: 1440px) {
+  :root {
+    --container-max: 1320px;
+  }
+}
+
+/* ── Print ────────────────────────────────────────────────── */
+@media print {
+  .navbar,
+  .cursor,
+  .cursor__ring,
+  .search-overlay,
+  .mobile-nav,
+  .hero__dots,
+  .hero__glow-1,
+  .hero__glow-2 {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #111;
+    cursor: auto;
+  }
+}
