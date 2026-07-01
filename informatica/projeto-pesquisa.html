@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projeto de Pesquisa — Informática Técnica · Prof. Marcos Cruz</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Nunito:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f3ff;
+  --surface:#ffffff;
+  --surface2:#f5f3ff;
+  --border:#ddd6fe;
+  --border2:#c4b5fd;
+  --txt:#1e1b3a;
+  --txt2:#4c3d6b;
+  --txt3:#7c6f9e;
+  --ink:#4338ca;
+  --ink2:#3730a3;
+  --ink3:#818cf8;
+  --ink-bg:#eef2ff;
+  --ink-bd:#c7d2fe;
+  --gold:#b45309;
+  --gold2:#d97706;
+  --gold-bg:#fffbeb;
+  --gold-bd:#fde68a;
+  --ok:#059669;
+  --ok-bg:#ecfdf5;
+  --shadow:0 2px 10px rgba(67,56,202,.08);
+  --shadow2:0 14px 36px rgba(67,56,202,.18);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--txt);line-height:1.65;overflow-x:hidden}
+h1,h2,h3{font-family:'Playfair Display',serif}
+a{color:inherit}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:300;background:rgba(245,243,255,.95);backdrop-filter:blur(10px);
+  border-bottom:1.5px solid var(--border);padding:0 24px;min-height:58px;
+  display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.nav-back{font-size:.78rem;font-weight:800;color:var(--ink);text-decoration:none;padding:7px 14px;
+  border:1.5px solid var(--ink-bd);border-radius:9px;background:var(--surface);transition:.2s;white-space:nowrap}
+.nav-back:hover{background:var(--ink-bg)}
+.nav-mid{display:flex;align-items:center;gap:10px;flex:1;min-width:160px}
+#prog-txt{font-size:.68rem;font-weight:800;color:var(--txt2);white-space:nowrap}
+#prog-bar{flex:1;max-width:220px;height:7px;background:var(--border);border-radius:4px;overflow:hidden}
+#prog-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--ink),var(--ink3));border-radius:4px;transition:width .4s ease}
+.nav-actions{display:flex;gap:8px}
+.btn-sm{padding:7px 13px;border-radius:9px;font-size:.72rem;font-weight:800;cursor:pointer;
+  border:1.5px solid var(--ink-bd);background:var(--surface);color:var(--ink);transition:.2s;white-space:nowrap}
+.btn-sm:hover{background:var(--ink-bg)}
+
+/* HERO */
+.hero{background:linear-gradient(-45deg,#eef2ff,#ede9fe,#faf5ff,#eef2ff);background-size:400% 400%;
+  animation:gbg 12s ease infinite;padding:52px 24px 40px;position:relative;overflow:hidden}
+@keyframes gbg{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.hero-inner{max-width:880px;margin:0 auto;position:relative;z-index:1}
+.breadcrumb{font-size:.72rem;color:var(--txt3);margin-bottom:14px}
+.breadcrumb a{text-decoration:none;color:var(--ink)}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(67,56,202,.1);
+  border:1px solid var(--ink-bd);color:var(--ink);padding:5px 14px;border-radius:30px;
+  font-size:.68rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px}
+.hero-titulo{font-size:clamp(1.9rem,4.4vw,3rem);font-weight:900;letter-spacing:-.02em;
+  color:var(--txt);line-height:1.08;margin-bottom:12px}
+.hero-titulo em{font-style:italic;color:var(--ink)}
+.hero-sub{color:var(--txt2);font-size:.94rem;max-width:640px;margin-bottom:24px}
+.hero-note{background:var(--gold-bg);border:1.5px dashed var(--gold-bd);border-radius:12px;
+  padding:14px 18px;font-size:.82rem;color:#78350f;max-width:640px}
+.hero-note b{color:var(--gold)}
+
+/* TOC pills */
+.toc-strip{position:sticky;top:58px;z-index:280;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);
+  border-bottom:1.5px solid var(--border);padding:10px 24px;overflow-x:auto;white-space:nowrap}
+.toc-strip::-webkit-scrollbar{height:5px}
+.toc-strip a{display:inline-block;font-size:.71rem;font-weight:700;color:var(--txt2);
+  padding:6px 12px;border-radius:20px;text-decoration:none;margin-right:6px;transition:.2s;border:1.5px solid transparent}
+.toc-strip a:hover{background:var(--ink-bg);color:var(--ink)}
+.toc-strip a.done{color:var(--ok)}
+.toc-strip a.done::before{content:'✓ ';font-weight:900}
+
+.main{max-width:880px;margin:0 auto;padding:44px 24px 80px}
+
+/* SECTION CARD */
+.psec{background:var(--surface);border:1.5px solid var(--border);border-radius:18px;
+  padding:28px 26px;margin-bottom:22px;position:relative;overflow:hidden;scroll-margin-top:130px}
+.psec::before{content:'';position:absolute;top:0;left:0;bottom:0;width:4px;background:linear-gradient(180deg,var(--ink),var(--ink3))}
+.psec-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:14px}
+.psec-num{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--ink),var(--ink2));
+  color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.95rem;flex-shrink:0}
+.psec-titles{flex:1}
+.psec-titulo{font-size:1.22rem;font-weight:900;color:var(--txt);letter-spacing:-.01em}
+.psec-parte{font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-top:2px}
+
+.psec-box{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:12px}
+.psec-box h4{font-size:.68rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);margin-bottom:6px}
+.psec-box p{font-size:.85rem;color:var(--txt2);line-height:1.65}
+.psec-box.exemplo{background:var(--gold-bg);border-color:var(--gold-bd)}
+.psec-box.exemplo h4{color:var(--gold)}
+.psec-box.exemplo p{color:#78350f;font-style:italic}
+.psec-box ul{margin-left:18px;font-size:.85rem;color:var(--txt2);line-height:1.8}
+.psec-box code{font-family:'JetBrains Mono',monospace;font-size:.78rem;background:#fff;
+  padding:1px 6px;border-radius:4px;border:1px solid var(--border)}
+
+.field-label{font-size:.72rem;font-weight:800;color:var(--txt2);letter-spacing:.04em;
+  text-transform:uppercase;margin-bottom:6px;display:block}
+.finput,.ftext{width:100%;background:var(--surface2);border:1.5px solid var(--border);color:var(--txt);
+  padding:11px 14px;font-family:'Nunito',sans-serif;font-size:.9rem;border-radius:10px;outline:none;
+  transition:.2s;resize:vertical}
+.finput:focus,.ftext:focus{border-color:var(--ink3);background:#fff;box-shadow:0 0 0 3px rgba(67,56,202,.12)}
+.ftext{min-height:100px;line-height:1.6}
+.frow{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.fcol{flex:1;min-width:180px}
+.fcount{font-size:.68rem;color:var(--txt3);margin-top:5px;text-align:right}
+
+/* CRONOGRAMA */
+.crono-table{width:100%;border-collapse:collapse;margin-top:6px}
+.crono-table th{background:var(--ink-bg);color:var(--ink2);font-size:.68rem;font-weight:800;
+  text-transform:uppercase;letter-spacing:.04em;padding:9px 12px;text-align:left;border:1px solid var(--border)}
+.crono-table td{padding:8px 12px;border:1px solid var(--border);font-size:.85rem}
+.crono-table input{width:100%;border:none;background:transparent;font-size:.85rem;padding:4px;font-family:'Nunito',sans-serif;color:var(--txt)}
+.crono-table input:focus{outline:none;background:var(--ink-bg);border-radius:6px}
+
+/* PREVIEW / FINAL */
+.final-box{background:linear-gradient(135deg,var(--ink-bg),#f5f3ff);border:1.5px solid var(--ink-bd);
+  border-radius:18px;padding:28px 26px;margin-top:10px}
+.final-box h3{font-size:1.3rem;font-weight:900;color:var(--ink2);margin-bottom:8px}
+.final-box p{font-size:.86rem;color:var(--txt2);margin-bottom:18px;max-width:560px}
+.final-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--ink),var(--ink2));
+  color:#fff;padding:12px 22px;border-radius:10px;font-weight:800;font-size:.85rem;border:none;cursor:pointer;
+  transition:.25s;box-shadow:0 4px 14px rgba(67,56,202,.3)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(67,56,202,.4)}
+.btn-outline{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--ink);
+  padding:12px 22px;border-radius:10px;font-weight:800;font-size:.85rem;border:1.5px solid var(--ink-bd);cursor:pointer;transition:.2s}
+.btn-outline:hover{background:var(--ink-bg)}
+.btn-danger{background:#fff;color:var(--red,#dc2626);border:1.5px solid #fecaca}
+.btn-danger:hover{background:#fef2f2}
+#preview-out{width:100%;min-height:220px;background:#1e1b3a;color:#e0e7ff;font-family:'JetBrains Mono',monospace;
+  font-size:.78rem;line-height:1.65;padding:18px;border-radius:12px;border:none;resize:vertical;white-space:pre-wrap}
+#copy-msg{font-size:.78rem;font-weight:800;color:var(--ok);margin-top:8px;display:none}
+
+.checklist{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin-bottom:18px}
+.chk-item{display:flex;align-items:center;gap:8px;font-size:.78rem;font-weight:700;color:var(--txt3);
+  background:#fff;border:1px solid var(--border);border-radius:9px;padding:8px 12px}
+.chk-item.on{color:var(--ok);border-color:#6ee7b7;background:var(--ok-bg)}
+.chk-dot{width:8px;height:8px;border-radius:50%;background:var(--border);flex-shrink:0}
+.chk-item.on .chk-dot{background:var(--ok)}
+
+footer{background:var(--txt);color:rgba(255,255,255,.65);padding:32px 24px;text-align:center;font-size:.75rem}
+footer .fg{color:#a5b4fc;font-weight:700}
+
+@media(max-width:640px){
+  nav{padding:0 16px}
+  .hero{padding:40px 16px 32px}
+  .main{padding:32px 16px 60px}
+  .psec{padding:22px 18px}
+  .toc-strip{padding:8px 16px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-back">← Informática Técnica</a>
+  <div class="nav-mid">
+    <span id="prog-txt">0% concluído</span>
+    <div id="prog-bar"><div id="prog-fill"></div></div>
+  </div>
+  <div class="nav-actions">
+    <button class="btn-sm" onclick="document.getElementById('final').scrollIntoView({behavior:'smooth'})">Ver projeto final ↓</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="breadcrumb"><a href="../index.html">Início</a> / <a href="index.html">Informática Técnica</a> / Projeto de Pesquisa</div>
+    <div class="hero-badge">📑 Curso Técnico · Módulo II</div>
+    <h1 class="hero-titulo">Projeto de <em>Pesquisa</em></h1>
+    <p class="hero-sub">Aqui você vai montar, passo a passo, toda a estrutura do seu projeto de pesquisa — da capa às referências bibliográficas. Cada parte tem uma explicação, um exemplo e um espaço para você escrever. O que você digitar fica salvo automaticamente neste navegador enquanto você trabalha.</p>
+    <div class="hero-note"><b>Atenção:</b> Prazo de entrega e forma de envio: <em>[PROFESSOR: preencher aqui antes de publicar]</em>. Ao terminar, use o botão "Copiar projeto completo" no final da página e envie o texto para correção.</div>
+  </div>
+</div>
+
+<!-- TOC -->
+<div class="toc-strip" id="toc">
+  <a href="#capa" data-key="capa-titulo">1. Capa</a>
+  <a href="#folha-rosto" data-key="fr-natureza">2. Folha de Rosto</a>
+  <a href="#introducao" data-key="introducao">3. Introdução</a>
+  <a href="#tema" data-key="tema">4. Tema</a>
+  <a href="#problema" data-key="problema">5. Problema de Pesquisa</a>
+  <a href="#justificativa" data-key="justificativa">6. Justificativa</a>
+  <a href="#objetivos" data-key="obj-geral">7. Objetivos</a>
+  <a href="#hipoteses" data-key="hipoteses">8. Hipóteses</a>
+  <a href="#referencial" data-key="referencial">9. Referencial Teórico</a>
+  <a href="#metodologia" data-key="metodologia">10. Metodologia</a>
+  <a href="#cronograma" data-key="crono-1">11. Cronograma</a>
+  <a href="#referencias" data-key="referencias">12. Referências</a>
+</div>
+
+<div class="main">
+
+  <!-- 1. CAPA -->
+  <section class="psec" id="capa">
+    <div class="psec-head">
+      <div class="psec-num">1</div>
+      <div class="psec-titles">
+        <div class="psec-parte">Elementos pré-textuais</div>
+        <div class="psec-titulo">Capa</div>
+      </div>
+    </div>
+    <div class="psec-box">
+      <h4>O que é</h4>
+      <p>A primeira página do trabalho. Traz as informações que identificam quem escreveu, onde, sobre o quê e quando — sem enfeites, de forma centralizada e objetiva (NBR 14724).</p>
+    </div>
+    <div class="frow">
+      <div class="fcol"><label class="field-label">Instituição de ensino</label>
+        <input class="finput track" data-key="capa-instituicao" placeholder="E.E. Prefeito Odílio Fernandes Costa"></div>
+      <div class="fcol"><label class="field-label">Curso</label>
+        <input class="finput track" data-key="capa-curso" placeholder="Curso Técnico em Informática"></div>
+    </div>
+    <div class="frow">
+      <div class="fcol" style="flex:2 1 100%"><label class="field-label">Título do projeto</label>
+        <input class="finput track" data-key="capa-titulo" placeholder="Ex: A importância dos antivírus na proteção de dados pessoais"></div>
+    </div>
+    <div class="frow">
+      <div class="fcol"><label class="field-label">Autor(es)</label>
+        <input class="finput track" data-key="capa-autor" placeholder="Seu nome completo"></div>
+      <div class="fcol"><label class="field-label">Cidade</label>
+        <input class="finput track" data-key="capa-cidade" placeholder="Santo Antônio do Retiro – MG"></div>
+      <div class="fcol" style="max-width:120px"><label class="field-label">Ano</label>
+        <input class="finput track" data-key="capa-ano" placeholder="2026"></div>
+    </div>
+    <div class="psec-box exemplo">
+      <h4>Dica</h4>
+      <p>O título deve dizer, em poucas palavras, exatamente sobre o que é o projeto. Evite títulos genéricos como "Trabalho de Informática" — prefira algo específico como "Redes Wi-Fi domésticas: riscos de segurança e boas práticas de configuração".</p>
+    </div>
+  </section>
+
+  <!-- 2. FOLHA DE ROSTO -->
+  <section class="psec" id="folha-rosto">
+    <div class="psec-head">
+      <div class="psec-num">2</div>
+      <div class="psec-titles">
+        <div class="psec-parte">Elementos pré-textuais</div>
+        <div class="psec-titulo">Folha de Rosto</div>
+      </div>
+    </div>
+    <div class="psec-box">
+      <h4>O que é</h4>
+      <p>Repete os dados da capa, mas acrescenta a <b>natureza do trabalho</b> (para que ele serve) e o nome do professor orientador.</p>
+    </div>
+    <label class="field-label">Natureza do trabalho</label>
+    <textarea class="ftext track" data-key="fr-natureza" placeholder="Ex: Projeto de pesquisa apresentado à disciplina de Informática Técnica do Curso Técnico em Informática, como requisito avaliativo do Módulo II."></textarea>
+    <div class="frow" style="margin-top:12px">
+      <div class="fcol"><label class="field-label">Professor(a) orientador(a)</label>
+        <input class="finput track" data-key="fr-orientador" placeholder="Prof. Marcos Cruz"></div>
+    </div>
+  </section>
+
+  <!-- 3. INTRODUÇÃO -->
+  <section class="psec" id="introducao">
+    <div class="psec-head">
+      <div class="psec-num">3</div>
+      <div class="psec-titles">
+        <div class="psec-parte">Elementos textuais</div>
+        <div class="psec-titulo">Introdução</div>
+      </div>
+    </div>
+    <div class="psec-box">
+      <h4>O que é</h4>
+      <p>Um texto curto que apresenta o assunto ao leitor: do que se trata, por que é relevante hoje em dia, e o que o projeto pretende mostrar. É a "porta de entrada" do trabalho.</p>
+    </div>
+    <div class="psec-box">
+      <h4>Perguntas para te ajudar a escrever</h4>
+      <ul>
+        <li>Qual é a área/assunto geral do seu projeto?</li>
+        <li>Por que esse assunto é importante ou está em evidência atualmente?</li>
+        <li>O que o leitor vai encontrar nas próximas seções?</li>
+      </ul>
+    </div>
+    <label class="field-label">Sua introdução</label>
+    <textarea class="ftext track" data-key="introducao" placeholder="Escreva aqui a introdução do seu projeto (sugestão: 8 a 12 linhas)..."></textarea>
+    <div class="fcount" data-count-for="introducao">0 palavras</div>
+  </section>
+
+  <!-- 4. TEMA -->
+  <section class="psec" id="tema">
+    <div class="psec-head">
+      <div class="psec-num">4</div>
+      <div class="psec-titles">
+        <div class="psec-parte">Elementos textuais</div>
+        <div class="psec-titulo">Tema e Delimitação do Tema</div>
+      </div>
+    </div>
+    <div class="psec-box">
+      <h4>O que é</h4>
+      <p>O <b>tema</b> é o assunto amplo (ex: "Segurança da Informação"). A <b>delimitação</b> é a parte específica desse assunto que você vai estudar (ex: "Segurança de redes Wi-Fi em residências").</p>
+    </div>
+    <div class="psec-box exemplo">
+      <h4>Exemplo</h4>
+      <p>Tema amplo: Segurança da Informação. Tema delimitado: Boas práticas de configuração de redes Wi-Fi domésticas para prevenir invasões.</p>
+    </div>
+    <label class="field-label">Tema (amplo) e delimitação (específica)</label>
+    <textarea class="ftext track" data-key="tema" placeholder="Escreva o tema geral e depois a parte específica que você vai pesquisar..."></textarea>
+  </section>
+
+  <!-- 5. PROBLEMA -->
+  <section class="psec" id="problema">
+    <div class="psec-head">
+      <div class="psec-num">5</div>
+      <div class="psec-titles">
+        <div class="psec-parte">Elementos textuais</div>
+        <div class="psec-titulo">Problema de Pesquisa</div>
+      </div>
+    </div>
+    <div class="psec-box">
+      <h4>O que é</h4>
+      <p>A pergunta central que o projeto quer responder. Toda pesquisa nasce de uma dúvida real. Deve ser uma pergunta clara, objetiva, e terminar com "?".</p>
+    </div>
+    <div class="psec-box exemplo">
+      <h4>Exemplo</h4>
+      <p>"Quais são os principais riscos de segurança em redes Wi-Fi domésticas configuradas sem senha forte, e como preveni-los?"</p>
+    </div>
+    <label class="field-label">Qual é a pergunta que sua pesquisa quer responder?</label>
+    <textarea class="ftext track" data-key="problema" placeholder="Escreva sua pergunta de pesquisa..." style="min-height:70px"></textarea>
+  </section>
+
+  <!-- 6. JUSTIFICATIVA -->
+  <section class="psec" id="justificativa">
+    <div class="psec-head">
+      <div class="psec-num">6</div>
+      <div class="psec-titles">
+        <div class="psec-parte">Elementos textuais</div>
+        <div class="psec-titulo">Justificativa</div>
+      </div>
+    </div>
+    <div class="psec-box">
+      <h4>O que é</h4>
+      <p>Explica <b>por que vale a pena</b> pesquisar esse tema. Pode envolver relevância social (ajuda a comunidade?), pessoal (interesse do autor?) ou profissional (útil para a área de Informática?).</p>
+    </div>
+    <div class="psec-box">
+      <h4>Perguntas para te ajudar a escrever</h4>
+      <ul>
+        <li>Quem se beneficia com essa pesquisa?</li>
+        <li>Que problema real ela ajuda a entender ou resolver?</li>
+        <li>Por que você escolheu esse tema?</li>
+      </ul>
+    </div>
+    <label class="field-label">Sua justificativa</label>
+    <textarea class="ftext track" data-key="justificativa" placeholder="Explique por que essa pesquisa é importante..."></textarea>
+  </section>
+
+  <!-- 7. OBJETIVOS -->
+  <section class="psec" id="objetivos">
+    <div class="psec-head">
+      <div class="psec-num">7</div>
+      <div class="psec-titles">
+        <div class="psec-parte">Elementos textuais</div>
+        <div class="psec-titulo">Objetivos</div>
+      </div>
+    </div>
+    <div class="psec-box">
+      <h4>O que é</h4>
+      <p>O <b>objetivo geral</b> é a meta principal do projeto, escrita em uma frase com verbo no infinitivo (analisar, identificar, investigar...). Os <b>objetivos específicos</b> são passos menores que, juntos, levam ao objetivo geral.</p>
+    </div>
+    <div class="psec-box exemplo">
+      <h4>Exemplo</h4>
+      <p>Geral: Analisar os principais riscos de segurança em redes Wi-Fi domésticas. Específicos: 1) Identificar as vulnerabilidades mais comuns; 2) Comparar métodos de criptografia (WEP, WPA2, WPA3); 3) Propor um guia de boas práticas de configuração.</p>
+    </div>
+    <label class="field-label">Objetivo geral</label>
+    <textarea class="ftext track" data-key="obj-geral" placeholder="Escreva o objetivo geral (uma frase, verbo no infinitivo)..." style="min-height:70px"></textarea>
+    <div style="height:14px"></div>
+    <label class="field-label">Objetivos específicos (um por linha, mínimo 3)</label>
+    <textarea class="ftext track" data-key="obj-especificos" placeholder="1) ...&#10;2) ...&#10;3) ..." style="min-height:110px"></textarea>
+  </section>
+
+  <!-- 8. HIPÓTESES -->
+  <section class="psec" id="hipoteses">
+    <div class="psec-head">
+      <div class="psec-num">8</div>
+      <div class="psec-titles">
+        <div class="psec-parte">Elementos textuais</div>
+        <div class="psec-titulo">Hipóteses</div>
+      </div>
+    </div>
+    <div class="psec-box">
+      <h4>O que é</h4>
+      <p>São respostas <b>possíveis</b> (ainda não confirmadas) para o problema de pesquisa. A pesquisa vai confirmar ou refutar essas hipóteses ao longo do trabalho.</p>
+    </div>
+    <div class="psec-box exemplo">
+      <h4>Exemplo</h4>
+      <p>H1: Redes sem senha forte são mais vulneráveis a ataques de força bruta. H2: A maioria dos usuários domésticos não altera as configurações padrão do roteador.</p>
+    </div>
+    <label class="field-label">Suas hipóteses (mínimo 2)</label>
+    <textarea class="ftext track" data-key="hipoteses" placeholder="H1: ...&#10;H2: ..." style="min-height:90px"></textarea>
+  </section>
+
+  <!-- 9. REFERENCIAL TEÓRICO -->
+  <section class="psec" id="referencial">
+    <div class="psec-head">
+      <div class="psec-num">9</div>
+      <div class="psec-titles">
+        <div class="psec-parte">Elementos textuais</div>
+        <div class="psec-titulo">Referencial Teórico</div>
+      </div>
+    </div>
+    <div class="psec-box">
+      <h4>O que é</h4>
+      <p>Um resumo do que outros autores/fontes já escreveram sobre o seu tema. Mostra que você pesquisou antes de opinar. Pode citar livros, sites confiáveis, apostilas da disciplina, artigos.</p>
+    </div>
+    <div class="psec-box">
+      <h4>Perguntas para te ajudar a escrever</h4>
+      <ul>
+        <li>Quais fontes você já leu ou pretende usar sobre esse assunto?</li>
+        <li>O que essas fontes dizem sobre o tema?</li>
+        <li>Existe algum conceito importante que precisa ser explicado antes de começar a pesquisa?</li>
+      </ul>
+    </div>
+    <label class="field-label">Sua fundamentação teórica</label>
+    <textarea class="ftext track" data-key="referencial" placeholder="Resuma o que você já leu/sabe sobre o tema, citando de onde veio a informação..."></textarea>
+  </section>
+
+  <!-- 10. METODOLOGIA -->
+  <section class="psec" id="metodologia">
+    <div class="psec-head">
+      <div class="psec-num">10</div>
+      <div class="psec-titles">
+        <div class="psec-parte">Elementos textuais</div>
+        <div class="psec-titulo">Metodologia</div>
+      </div>
+    </div>
+    <div class="psec-box">
+      <h4>O que é</h4>
+      <p>Explica <b>como</b> a pesquisa vai ser feita: tipo de pesquisa (bibliográfica, de campo, experimental...), quais instrumentos serão usados (questionário, entrevista, testes práticos) e as etapas do processo.</p>
+    </div>
+    <div class="psec-box exemplo">
+      <h4>Exemplo</h4>
+      <p>"A pesquisa será de natureza bibliográfica e exploratória, utilizando artigos e sites especializados em segurança da informação. Também será aplicado um questionário com 10 perguntas a moradores da cidade sobre hábitos de configuração de rede doméstica."</p>
+    </div>
+    <label class="field-label">Como você vai fazer sua pesquisa</label>
+    <textarea class="ftext track" data-key="metodologia" placeholder="Descreva o tipo de pesquisa e os instrumentos que você vai usar..."></textarea>
+  </section>
+
+  <!-- 11. CRONOGRAMA -->
+  <section class="psec" id="cronograma">
+    <div class="psec-head">
+      <div class="psec-num">11</div>
+      <div class="psec-titles">
+        <div class="psec-parte">Elementos textuais</div>
+        <div class="psec-titulo">Cronograma de Execução</div>
+      </div>
+    </div>
+    <div class="psec-box">
+      <h4>O que é</h4>
+      <p>Um plano com as etapas da pesquisa e quando cada uma será feita. Ajuda a organizar o tempo e não deixar tudo para a última hora.</p>
+    </div>
+    <table class="crono-table">
+      <thead><tr><th>Etapa</th><th>Data ou semana prevista</th></tr></thead>
+      <tbody>
+        <tr><td>Escolha e delimitação do tema</td><td><input class="track" data-key="crono-1" placeholder="ex: Semana 1"></td></tr>
+        <tr><td>Pesquisa bibliográfica</td><td><input class="track" data-key="crono-2" placeholder="ex: Semana 2"></td></tr>
+        <tr><td>Coleta de dados (questionário/entrevista)</td><td><input class="track" data-key="crono-3" placeholder="ex: Semana 3"></td></tr>
+        <tr><td>Análise dos dados coletados</td><td><input class="track" data-key="crono-4" placeholder="ex: Semana 4"></td></tr>
+        <tr><td>Redação do texto final</td><td><input class="track" data-key="crono-5" placeholder="ex: Semana 5"></td></tr>
+        <tr><td>Revisão e entrega</td><td><input class="track" data-key="crono-6" placeholder="ex: Semana 6"></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 12. REFERÊNCIAS -->
+  <section class="psec" id="referencias">
+    <div class="psec-head">
+      <div class="psec-num">12</div>
+      <div class="psec-titles">
+        <div class="psec-parte">Elementos pós-textuais</div>
+        <div class="psec-titulo">Referências Bibliográficas</div>
+      </div>
+    </div>
+    <div class="psec-box">
+      <h4>O que é</h4>
+      <p>A lista de todas as fontes que você usou (livros, sites, apostilas, vídeos), em ordem alfabética, seguindo as regras da <b>NBR 6023</b>. Sem referências, o trabalho não tem base — e é considerado plágio usar informação sem citar a fonte.</p>
+    </div>
+    <div class="psec-box">
+      <h4>Modelos ABNT (NBR 6023)</h4>
+      <p><code>LIVRO</code> — SOBRENOME, Nome. <i>Título da obra</i>: subtítulo. Edição. Cidade: Editora, Ano.</p>
+      <p style="margin-top:6px"><code>SITE</code> — SOBRENOME, Nome (ou instituição). <i>Título da página</i>. Disponível em: &lt;endereço do link&gt;. Acesso em: dia mês. ano.</p>
+      <p style="margin-top:6px"><code>ARTIGO</code> — SOBRENOME, Nome. Título do artigo. <i>Nome da Revista</i>, Cidade, v. X, n. X, p. XX-XX, ano.</p>
+    </div>
+    <label class="field-label">Suas referências (uma por linha, ordem alfabética, mínimo 3)</label>
+    <textarea class="ftext track" data-key="referencias" placeholder="SOBRENOME, Nome. Título...&#10;SOBRENOME, Nome. Título..." style="min-height:120px"></textarea>
+  </section>
+
+  <!-- FINAL -->
+  <div class="final-box" id="final">
+    <h3>📤 Revisão e envio</h3>
+    <p>Confira abaixo quais partes você já preencheu. Quando terminar tudo, copie ou baixe o projeto completo e envie para o professor Marcos corrigir.</p>
+    <div class="checklist" id="checklist"></div>
+    <div class="final-actions">
+      <button class="btn-primary" onclick="gerarPreview()">📄 Gerar projeto completo</button>
+      <button class="btn-outline" onclick="copiarProjeto()">📋 Copiar tudo</button>
+      <button class="btn-outline" onclick="baixarProjeto()">⬇️ Baixar .txt</button>
+      <button class="btn-danger" onclick="limparTudo()">🗑️ Limpar tudo</button>
+    </div>
+    <span id="copy-msg">✓ Copiado! Agora é só colar no Word ou enviar para o professor.</span>
+    <textarea id="preview-out" readonly placeholder="Clique em 'Gerar projeto completo' para ver aqui o texto final do seu projeto, já organizado por seções..."></textarea>
+  </div>
+
+</div>
+
+<footer>
+  Prof. Marcos Cruz · Informática Técnica · E.E. Prefeito Odílio Fernandes Costa — Santo Antônio do Retiro, MG
+  <br><span class="fg">portmarcos.github.io/informatica</span>
+</footer>
+
+<script>
+const CAMPOS = ['capa-instituicao','capa-curso','capa-titulo','capa-autor','capa-cidade','capa-ano',
+  'fr-natureza','fr-orientador','introducao','tema','problema','justificativa','obj-geral',
+  'obj-especificos','hipoteses','referencial','metodologia','crono-1','crono-2','crono-3','crono-4',
+  'crono-5','crono-6','referencias'];
+
+const LABELS = {
+  'introducao':'introducao'
+};
+
+function storageKey(k){ return 'pp_'+k; }
+
+// Carrega valores salvos
+CAMPOS.forEach(k=>{
+  const el = document.querySelector('[data-key="'+k+'"]');
+  if(!el) return;
+  const saved = localStorage.getItem(storageKey(k));
+  if(saved) el.value = saved;
+});
+
+// Salva ao digitar + atualiza progresso e contadores
+document.querySelectorAll('.track').forEach(el=>{
+  el.addEventListener('input', ()=>{
+    localStorage.setItem(storageKey(el.dataset.key), el.value);
+    atualizarProgresso();
+    atualizarContador(el);
+  });
+});
+
+function atualizarContador(el){
+  const counter = document.querySelector('[data-count-for="'+el.dataset.key+'"]');
+  if(counter){
+    const words = el.value.trim().split(/\s+/).filter(Boolean).length;
+    counter.textContent = words + ' palavras';
+  }
+}
+
+function campoPreenchido(k){
+  const el = document.querySelector('[data-key="'+k+'"]');
+  return el && el.value.trim().length > 0;
+}
+
+function atualizarProgresso(){
+  const total = CAMPOS.length;
+  const preenchidos = CAMPOS.filter(campoPreenchido).length;
+  const pct = Math.round((preenchidos/total)*100);
+  document.getElementById('prog-fill').style.width = pct+'%';
+  document.getElementById('prog-txt').textContent = pct+'% concluído';
+
+  // marca pills do TOC
+  document.querySelectorAll('.toc-strip a').forEach(a=>{
+    const key = a.dataset.key;
+    if(key && campoPreenchido(key)) a.classList.add('done');
+    else if(key) a.classList.remove('done');
+  });
+
+  // checklist
+  const secoes = [
+    ['Capa','capa-titulo'],['Folha de Rosto','fr-natureza'],['Introdução','introducao'],
+    ['Tema','tema'],['Problema','problema'],['Justificativa','justificativa'],
+    ['Objetivos','obj-geral'],['Hipóteses','hipoteses'],['Referencial Teórico','referencial'],
+    ['Metodologia','metodologia'],['Cronograma','crono-1'],['Referências','referencias']
+  ];
+  const cl = document.getElementById('checklist');
+  cl.innerHTML = secoes.map(([nome,key])=>{
+    const on = campoPreenchido(key);
+    return '<div class="chk-item'+(on?' on':'')+'"><span class="chk-dot"></span>'+nome+'</div>';
+  }).join('');
+}
+
+function v(k){
+  const el = document.querySelector('[data-key="'+k+'"]');
+  return el ? el.value.trim() : '';
+}
+
+function montarTexto(){
+  const L = '\n';
+  let t = '';
+  t += '========================================'+L;
+  t += 'CAPA'+L;
+  t += '========================================'+L+L;
+  t += (v('capa-instituicao')||'[Instituição]')+L;
+  t += (v('capa-curso')||'[Curso]')+L+L+L;
+  t += (v('capa-titulo')||'[Título do Projeto]')+L+L+L;
+  t += 'Autor(es): '+(v('capa-autor')||'[Nome]')+L+L+L;
+  t += (v('capa-cidade')||'[Cidade]')+L;
+  t += (v('capa-ano')||'[Ano]')+L+L;
+
+  t += '========================================'+L;
+  t += 'FOLHA DE ROSTO'+L;
+  t += '========================================'+L+L;
+  t += (v('capa-titulo')||'[Título do Projeto]')+L+L;
+  t += (v('fr-natureza')||'[Natureza do trabalho]')+L+L;
+  t += 'Professor(a) orientador(a): '+(v('fr-orientador')||'[Nome]')+L+L;
+  t += (v('capa-cidade')||'[Cidade]')+' — '+(v('capa-ano')||'[Ano]')+L+L;
+
+  t += '1 INTRODUÇÃO'+L+L;
+  t += (v('introducao')||'[não preenchido]')+L+L;
+
+  t += '2 TEMA'+L+L;
+  t += (v('tema')||'[não preenchido]')+L+L;
+
+  t += '3 PROBLEMA DE PESQUISA'+L+L;
+  t += (v('problema')||'[não preenchido]')+L+L;
+
+  t += '4 JUSTIFICATIVA'+L+L;
+  t += (v('justificativa')||'[não preenchido]')+L+L;
+
+  t += '5 OBJETIVOS'+L+L;
+  t += '5.1 Objetivo Geral'+L;
+  t += (v('obj-geral')||'[não preenchido]')+L+L;
+  t += '5.2 Objetivos Específicos'+L;
+  t += (v('obj-especificos')||'[não preenchido]')+L+L;
+
+  t += '6 HIPÓTESES'+L+L;
+  t += (v('hipoteses')||'[não preenchido]')+L+L;
+
+  t += '7 REFERENCIAL TEÓRICO'+L+L;
+  t += (v('referencial')||'[não preenchido]')+L+L;
+
+  t += '8 METODOLOGIA'+L+L;
+  t += (v('metodologia')||'[não preenchido]')+L+L;
+
+  t += '9 CRONOGRAMA DE EXECUÇÃO'+L+L;
+  const etapas = ['Escolha e delimitação do tema','Pesquisa bibliográfica','Coleta de dados',
+    'Análise dos dados coletados','Redação do texto final','Revisão e entrega'];
+  etapas.forEach((nome,i)=>{
+    t += nome+': '+(v('crono-'+(i+1))||'[a definir]')+L;
+  });
+  t += L;
+
+  t += '========================================'+L;
+  t += 'REFERÊNCIAS'+L;
+  t += '========================================'+L+L;
+  t += (v('referencias')||'[não preenchido]')+L;
+
+  return t;
+}
+
+function gerarPreview(){
+  document.getElementById('preview-out').value = montarTexto();
+}
+
+function copiarProjeto(){
+  const texto = montarTexto();
+  document.getElementById('preview-out').value = texto;
+  const msg = document.getElementById('copy-msg');
+  navigator.clipboard.writeText(texto).then(()=>{
+    msg.style.display='inline';
+    setTimeout(()=>msg.style.display='none', 3500);
+  }).catch(()=>{
+    const ta = document.getElementById('preview-out');
+    ta.select();
+    document.execCommand('copy');
+    msg.style.display='inline';
+    setTimeout(()=>msg.style.display='none', 3500);
+  });
+}
+
+function baixarProjeto(){
+  const texto = montarTexto();
+  const nomeAluno = (v('capa-autor')||'projeto').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+  const blob = new Blob([texto], {type:'text/plain;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'projeto-pesquisa-'+(nomeAluno||'aluno')+'.txt';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function limparTudo(){
+  if(!confirm('Isso vai apagar TODAS as respostas que você já escreveu neste navegador. Tem certeza?')) return;
+  CAMPOS.forEach(k=>{
+    localStorage.removeItem(storageKey(k));
+    const el = document.querySelector('[data-key="'+k+'"]');
+    if(el) el.value = '';
+  });
+  document.getElementById('preview-out').value = '';
+  atualizarProgresso();
+}
+
+// smooth scroll ativo no TOC
+document.querySelectorAll('.toc-strip a[href^="#"]').forEach(a=>{
+  a.addEventListener('click', e=>{
+    e.preventDefault();
+    document.querySelector(a.getAttribute('href')).scrollIntoView({behavior:'smooth', block:'start'});
+  });
+});
+
+atualizarProgresso();
+document.querySelectorAll('.track').forEach(atualizarContador);
+</script>
+</body>
+</html>
