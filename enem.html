@@ -409,7 +409,7 @@ h1,h2,h3,h4,.num{font-family:'Montserrat',sans-serif}
       <span class="home-card-icon">📝</span>
       <h2>Questões por Tema</h2>
       <p>Simulados temáticos com cronômetro e gabarito comentado</p>
-      <span class="home-badge">30 min · 16 questões</span>
+      <span class="home-badge">50 min · 16 questões</span>
     </div>
     <div class="home-card" onclick="irTemas()">
       <span class="home-card-icon">✍️</span>
@@ -434,7 +434,7 @@ h1,h2,h3,h4,.num{font-family:'Montserrat',sans-serif}
 <div id="sc-topicos" class="screen">
   <div class="section-header">
     <h2>Escolha o Tema</h2>
-    <p>Cada simulado tem 16 questões e 30 minutos</p>
+    <p>Cada simulado tem entre 4 e 19 questões e 50 minutos</p>
   </div>
     <div class="topic-grid">
     <div class="topic-card" style="--cor:#0062CC" onclick="iniciarQuiz('variacao')">
@@ -2510,7 +2510,7 @@ function renderDashboard(){
       card.innerHTML=`
         <div class="dc-num">${info.num}</div>
         <div class="dc-titulo">${info.titulo}</div>
-        <div style="font-size:.78rem;color:var(--tx2);margin:4px 0">${BANCO[t].questoes.length} questões · 30 min</div>
+        <div style="font-size:.78rem;color:var(--tx2);margin:4px 0">${BANCO[t].questoes.length} questões · 50 min</div>
         <span class="dc-status livre">▶ Iniciar</span>`;
       card.onclick=()=>iniciarQuiz(t);
     }
@@ -2633,10 +2633,11 @@ const S = {
   topico: null,
   qIdx: 0,
   respostas: [],
-  timerSeg: 1800,
+  timerSeg: 3000,
   timerInterval: null,
   startTime: null,
   endTime: null,
+  gabaritoLiberado: false,
   tema: null,
   etapa: 1,
   texto: {intro:'', dev1:'', dev2:'', conclusao:''},
@@ -2664,6 +2665,14 @@ function irTemas(){mostrar('sc-temas');renderTemas();}
 
 // ─── QUIZ ─────────────────────────────────────────────────────────────────────
 
+function embaralhar(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
 function iniciarQuiz(topico){
   if(AUTH.isLocked(topico)){
     alert('Você já realizou este simulado. Veja seu resultado em "Meu Desempenho".');
@@ -2672,12 +2681,14 @@ function iniciarQuiz(topico){
   }
 
   const t = BANCO[topico];
+  embaralhar(t.questoes);
   S.topico = topico;
   S.qIdx = 0;
   S.respostas = new Array(t.questoes.length).fill(-1);
-  S.timerSeg = 1800;
+  S.timerSeg = 3000;
   S.startTime = Date.now();
   S.endTime = null;
+  S.gabaritoLiberado = false;
   mostrar('sc-quiz');
   document.getElementById('qTopicName').textContent = t.emoji + ' ' + t.titulo;
   renderNavDots();
@@ -2811,11 +2822,24 @@ function finalizarQuiz(){
 
 function refazer(){iniciarQuiz(S.topico);}
 
+const SENHA_GABARITO = 'enem2026';
+
 function abrirGabarito(){
-  const q=BANCO[S.topico].questoes;
-  const letras=['A','B','C','D','E'];
   const cont=document.getElementById('gabaritoLista');
   if(cont.innerHTML.trim()) {cont.innerHTML='';return;}
+
+  if(!S.gabaritoLiberado){
+    const tentativa = prompt('Este gabarito é protegido pelo professor.\nDigite a senha para liberar:');
+    if(tentativa === null) return;
+    if(tentativa.trim() !== SENHA_GABARITO){
+      alert('Senha incorreta. Peça a senha ao seu professor.');
+      return;
+    }
+    S.gabaritoLiberado = true;
+  }
+
+  const q=BANCO[S.topico].questoes;
+  const letras=['A','B','C','D','E'];
   q.forEach((qst,i)=>{
     const resp=S.respostas[i];
     const certa=qst.correta;
