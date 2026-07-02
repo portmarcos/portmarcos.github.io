@@ -1,0 +1,41 @@
+╔══════════════════════════════════════════════════════════════╗
+║  ATUALIZAÇÃO — Acessibilidade por teclado nos quizzes         ║
+╚══════════════════════════════════════════════════════════════╝
+
+O QUE MUDOU
+───────────
+1) NAVEGAÇÃO POR TECLADO (acessibilidade) — assets/js/quiz-engine.js
+   Agora TODOS os quizzes e simulados podem ser respondidos sem
+   mouse, o que inclui alunos que usam leitor de tela ou só
+   teclado:
+     • Teclas A, B, C, D, E… selecionam a alternativa direto
+     • Setas ↑ ↓ ← → movem o foco entre as alternativas
+     • Enter / barra de espaço confirmam a resposta
+     • As alternativas agora têm rótulos (aria-label) que o
+       leitor de tela anuncia corretamente ("A: ...", "B: ...")
+     • Aparece uma dica discreta na 1ª questão explicando isso
+   Isso vale para os 22 quizzes de uma vez, porque todos usam
+   o mesmo motor — não foi preciso mexer em cada página.
+
+2) Cache do app atualizado (sw.js: v14 → v15) para os celulares
+   que já abriram o portal receberem a novidade.
+
+SOBRE OS DISTRATORES (alternativas erradas)
+───────────────────────────────────────────
+Auditei os quizzes de Ensino Médio e técnicos (obras II, redes,
+vídeos). A conclusão honesta: eles JÁ estão em bom nível — as
+alternativas erradas representam erros plausíveis de raciocínio,
+não "pegadinhas óbvias". Os simulados ENEM, então, já nascem no
+padrão da prova. Por isso, não inflei mudanças onde não havia
+ganho real. O reforço pesado de distratores fará mais sentido
+no projeto futuro do SAEB por descritor, que combinamos.
+
+COMO SUBIR (GitHub Desktop)
+───────────────────────────
+1. Copie por cima do repositório local:
+      assets/js/quiz-engine.js
+      sw.js
+      dados/quiz-bncc.js
+      dados/simulado-enem-2025.js
+      dados/simulado-saeb-avancado.js
+2. Commit → Push origin.

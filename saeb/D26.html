@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAEB/SIMAVE – D26 | Identificar a tese e argumentos que a sustentam</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--azul:#1a3a5c;--azul-m:#235a8c;--azul-c:#d6e8f7;--ouro:#c9871f;--ouro-c:#fff8eb;--verde:#246b4a;--verde-c:#e6f4ed;--verm:#b02a2a;--verm-c:#fdecea;--bg:#f2f4f7;--borda:#d0d6e0;--branco:#fff;--txt:#1c2635;--txt2:#4a5568}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;line-height:1.5}
+header{background:var(--azul);color:#fff;padding:2.4rem 1.5rem 1.8rem;text-align:center;position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:rgba(201,135,31,.12)}
+.badge{display:inline-block;background:var(--ouro);color:var(--azul);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:.8rem}
+header h1{font-family:'Lora',serif;font-size:clamp(1.5rem,4vw,2.1rem);font-weight:600;line-height:1.3;margin-bottom:.4rem}
+header p{font-size:.92rem;opacity:.78;max-width:560px;margin:0 auto;line-height:1.6}
+.voltar-link{display:inline-block;margin-bottom:1rem;color:#fff;opacity:.7;text-decoration:none;font-size:.82rem}
+.voltar-link:hover{opacity:1}
+.tabs{background:var(--branco);border-bottom:1px solid var(--borda);position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.tabs-inner{max-width:840px;margin:0 auto;display:flex}
+.tab-btn{flex:1;background:none;border:none;padding:.95rem .5rem;font-family:'Inter',sans-serif;font-size:.88rem;font-weight:600;color:var(--txt2);cursor:pointer;border-bottom:3px solid transparent;transition:.15s;display:flex;align-items:center;justify-content:center;gap:.35rem}
+.tab-btn:hover{color:var(--azul-m);background:var(--bg)}
+.tab-btn.active{color:var(--azul);border-bottom-color:var(--ouro)}
+main{max-width:840px;margin:0 auto;padding:1.6rem 1.25rem 4rem}
+.tab-pane{display:none;flex-direction:column;gap:1.6rem}
+.tab-pane.active{display:flex}
+.painel{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.5rem 1.6rem}
+.painel h2{font-family:'Lora',serif;font-size:1.2rem;color:var(--azul);margin-bottom:.7rem}
+.painel h3{font-size:.95rem;color:var(--azul-m);margin:.9rem 0 .3rem}
+.painel p,.painel li{font-size:.9rem;margin-bottom:.5rem}
+.painel ul{margin:.2rem 0 .6rem 1.2rem}
+.painel strong{color:var(--azul)}
+.resumo-box{background:var(--azul);color:#fff;border-radius:14px;padding:1.4rem 1.6rem}
+.resumo-box h2{color:#fff;font-family:'Lora',serif;font-size:1.1rem;margin-bottom:.5rem}
+.resumo-box p{color:rgba(255,255,255,.9);font-size:.92rem;margin:0}
+.resumo-box .fc{display:block;margin-top:.7rem;font-style:italic;font-size:.88rem;background:rgba(255,255,255,.1);padding:.6rem .9rem;border-radius:8px;border-left:3px solid var(--ouro)}
+.dica-ouro{background:var(--ouro-c);border:1px solid #ecd9aa}
+.dica-ouro h2{color:#7a5310}.dica-ouro li{color:#4a3408}.dica-ouro strong{color:#7a5310}
+.glossario dt{font-weight:600;color:var(--azul-m);font-size:.88rem;margin-top:.5rem}
+.glossario dd{font-size:.86rem;color:var(--txt2);margin-left:0}
+.aviso-prof{background:#eef4fb;border:1px dashed var(--azul-m);border-radius:10px;padding:.9rem 1.1rem;font-size:.82rem;color:var(--azul-m)}
+.records{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.2rem 1.4rem}
+.records h2{font-family:'Lora',serif;font-size:1.1rem;color:var(--azul);margin-bottom:.6rem}
+.rec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.7rem}
+.rec-item{background:var(--bg);border-radius:10px;padding:.7rem;text-align:center}
+.rec-item .rv{font-size:1.5rem;font-weight:700;color:var(--azul-m)}
+.rec-item .rl{font-size:.72rem;color:var(--txt2)}
+.prog-wrap{background:var(--branco);border:1px solid var(--borda);border-radius:12px;padding:.85rem 1.1rem;display:flex;align-items:center;gap:14px}
+.prog-label{font-size:.78rem;font-weight:600;color:var(--azul-m);white-space:nowrap}
+.prog-track{flex:1;height:6px;background:var(--borda);border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--azul-m),var(--ouro));border-radius:99px;width:0%;transition:width .4s}
+.score{font-size:.78rem;font-weight:600;color:var(--txt2);white-space:nowrap}
+.card{background:var(--branco);border-radius:14px;border:1px solid var(--borda);overflow:hidden}
+.card-head{background:var(--azul);color:#fff;padding:.65rem 1.2rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.qnum{background:var(--ouro);color:var(--azul);font-size:.72rem;font-weight:700;padding:3px 11px;border-radius:20px}
+.qtipo{font-size:.74rem;opacity:.65;font-style:italic}
+.qnivel{font-size:.66rem;font-weight:700;text-transform:uppercase;padding:3px 9px;border-radius:20px;margin-left:auto}
+.qnivel.facil{background:var(--verde-c);color:var(--verde)}.qnivel.medio{background:var(--ouro-c);color:#a96e10}.qnivel.dificil{background:var(--verm-c);color:var(--verm)}
+.txt-base{background:var(--ouro-c);border-left:4px solid var(--ouro);margin:1rem 1.1rem 0;padding:1rem 1.1rem;border-radius:0 8px 8px 0;font-family:'Lora',serif;font-size:.94rem;line-height:1.85;color:#2b1d00;position:relative}
+.txt-fonte{font-family:'Inter',sans-serif;font-size:.72rem;color:var(--txt2);margin-top:.6rem;display:block;border-top:1px solid #e6d5b0;padding-top:.4rem}
+.btn-tts{position:absolute;top:.6rem;right:.6rem;background:none;border:1px solid #c9a14a;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;color:#8a6d1b;transition:.15s}
+.btn-tts:hover{background:#f5e6c1}
+.btn-tts.playing{background:var(--azul);color:#fff;border-color:var(--azul)}
+.img-slot{margin:.8rem 1.1rem 0;border:2px dashed var(--borda);border-radius:10px;padding:.8rem;text-align:center;color:var(--txt2);font-size:.76rem}
+.enunciado{padding:1rem 1.1rem .4rem;font-size:.92rem;line-height:1.6;font-weight:500;color:var(--azul)}
+.alts{padding:.4rem 1.1rem 1.1rem;display:flex;flex-direction:column;gap:.45rem}
+.alt{display:flex;align-items:flex-start;gap:10px;padding:.65rem .9rem;border:1.5px solid var(--borda);border-radius:9px;background:var(--branco);cursor:pointer;text-align:left;font-family:'Inter',sans-serif;font-size:.86rem;color:var(--txt);line-height:1.5;transition:.15s;width:100%}
+.alt:hover:not(:disabled){border-color:var(--azul-m);background:var(--azul-c);transform:translateX(2px)}
+.alt:disabled{cursor:default}
+.letra{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;border-radius:50%;background:var(--bg);font-size:.75rem;font-weight:700;color:var(--azul);flex-shrink:0}
+.alt.ok{border-color:var(--verde);background:var(--verde-c);color:var(--verde);font-weight:500}
+.alt.ok .letra{background:var(--verde);color:#fff}
+.alt.err{border-color:var(--verm);background:var(--verm-c);color:var(--verm)}
+.alt.err .letra{background:var(--verm);color:#fff}
+.alt.dim{opacity:.5}.alt.sel{border-color:var(--azul-m);background:var(--azul-c)}.alt.sel .letra{background:var(--azul-m);color:#fff}
+.fb{display:none;margin:0 1.1rem 1.1rem;padding:.8rem 1rem;border-radius:8px;font-size:.83rem;line-height:1.6}
+.fb.show{display:block}.fb.ok{background:var(--verde-c);border-left:3px solid var(--verde)}.fb.err{background:var(--verm-c);border-left:3px solid var(--verm)}
+.fb .ft{font-weight:600;margin-bottom:.3rem}.fb.ok .ft{color:var(--verde)}.fb.err .ft{color:var(--verm)}
+.fb .pq{margin-top:.5rem;border-top:1px solid rgba(0,0,0,.08);padding-top:.4rem}
+.fb .pq b{color:var(--azul)}
+.fb .pi{display:block;font-size:.8rem;color:var(--txt2);margin-bottom:.2rem}
+.fb .pi .l{font-weight:700;color:var(--azul)}
+#resultado{display:none;background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:2.4rem 2rem;text-align:center}
+#resultado h2{font-family:'Lora',serif;font-size:1.4rem;color:var(--azul)}
+.medalha{font-size:3rem;margin:.4rem 0}.nota{font-size:3.4rem;font-weight:700;color:var(--azul-m);line-height:1;margin:.4rem 0}
+#resultado p{color:var(--txt2);font-size:.9rem;max-width:480px;margin:.4rem auto 0}
+.btn{display:inline-block;background:var(--azul);color:#fff;padding:.65rem 1.5rem;border-radius:30px;border:none;font-size:.86rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;margin:.3rem}
+.btn:hover{background:var(--azul-m)}
+.btn.ouro{background:var(--ouro);color:var(--azul)}.btn.sec{background:var(--bg);color:var(--azul);border:1px solid var(--borda)}
+.jogo-card{background:var(--branco);border-radius:14px;border:1px solid var(--borda);overflow:hidden}
+.jogo-head{padding:1rem 1.3rem;border-bottom:1px solid var(--borda);display:flex;align-items:center;gap:.7rem}
+.jogo-ico{font-size:1.5rem}
+.jogo-head h3{font-family:'Lora',serif;font-size:1.1rem;color:var(--azul);margin:0}
+.jogo-head .desc{font-size:.78rem;color:var(--txt2)}
+.jogo-body{padding:1.2rem 1.3rem}
+.chip{font-size:.76rem;font-weight:600;padding:4px 11px;border-radius:20px;background:var(--azul-c);color:var(--azul)}
+.chip.timer{background:var(--ouro-c);color:#a96e10}
+.jogo-mid{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:.8rem}
+.timerbar{flex:1;min-width:100px;height:8px;background:var(--borda);border-radius:99px;overflow:hidden}
+.timerbar>div{height:100%;width:100%;background:linear-gradient(90deg,var(--verde),var(--ouro),var(--verm));border-radius:99px;transition:width .25s linear}
+.mini-texto{background:var(--ouro-c);border-left:4px solid var(--ouro);border-radius:0 8px 8px 0;padding:.85rem 1rem;font-family:'Lora',serif;font-size:.9rem;line-height:1.7;color:#2b1d00;margin-bottom:.8rem;position:relative}
+.mini-q{font-weight:600;color:var(--azul);margin-bottom:.6rem;font-size:.9rem}
+.mini-btn{border:1.5px solid var(--borda);background:var(--branco);border-radius:8px;padding:.45rem .8rem;font-size:.8rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;color:var(--azul);transition:.15s}
+.mini-btn:hover:not(:disabled){background:var(--azul-c);border-color:var(--azul-m)}
+.mini-btn:disabled{cursor:default}
+.mini-btn.ok{background:var(--verde-c);border-color:var(--verde);color:var(--verde)}
+.mini-btn.err{background:var(--verm-c);border-color:var(--verm);color:var(--verm)}
+.mini-fb{font-size:.8rem;margin-top:.5rem;padding:.45rem .65rem;border-radius:6px;display:none}
+.mini-fb.show{display:block}.mini-fb.ok{background:var(--verde-c);color:var(--verde)}.mini-fb.err{background:var(--verm-c);color:var(--verm)}
+.vf-item,.det-item{border:1.5px solid var(--borda);border-radius:10px;padding:.7rem .9rem;margin-bottom:.6rem}
+.vf-stm{font-size:.88rem;margin-bottom:.5rem}
+.btn-row{display:flex;gap:.5rem;flex-wrap:wrap}
+.cat-btn.cat-tema.ok{border-color:var(--azul-m);background:var(--azul-c);color:var(--azul)}
+.cat-btn.cat-detalhe.ok{border-color:var(--ouro);background:var(--ouro-c);color:#a96e10}
+.cat-btn.cat-foradotexto.ok{border-color:var(--verde);background:var(--verde-c);color:var(--verde)}
+.jogo-final{text-align:center;padding:.8rem 0 .3rem}
+.jogo-final .big{font-size:2rem;font-weight:700;color:var(--azul-m)}
+.jogo-final p{font-size:.88rem;color:var(--txt2);margin:.2rem 0 .8rem}
+.ord-list{list-style:none;padding:0;counter-reset:ord}
+.ord-item{counter-increment:ord;display:flex;align-items:center;gap:10px;padding:.6rem .9rem;border:1.5px solid var(--borda);border-radius:9px;margin-bottom:.5rem;background:var(--branco);font-size:.86rem;user-select:none}
+.ord-item::before{content:counter(ord);display:flex;align-items:center;justify-content:center;min-width:24px;height:24px;border-radius:50%;background:var(--azul-c);font-size:.72rem;font-weight:700;color:var(--azul)}
+.ord-item.ok{border-color:var(--verde);background:var(--verde-c)}
+.ord-item.err{border-color:var(--verm);background:var(--verm-c)}
+.ord-arrows{display:flex;flex-direction:column;gap:2px;margin-left:auto}
+.ord-arrows button{background:var(--bg);border:1px solid var(--borda);border-radius:4px;width:24px;height:20px;cursor:pointer;font-size:.65rem;display:flex;align-items:center;justify-content:center}
+.ord-arrows button:hover{background:var(--azul-c)}
+footer{text-align:center;padding:1.5rem;font-size:.76rem;color:var(--txt2)}
+@media print{.tabs,header,.prog-wrap,.btn,.btn-tts,.img-slot,footer,#resultado,.jogo-card,.records,.resumo-box,.dica-ouro,.glossario,.aviso-prof{display:none!important}.tab-pane{display:flex!important}.card{break-inside:avoid;border:1px solid #ccc;margin-bottom:1rem}.card-head{background:#333!important;-webkit-print-color-adjust:exact}.fb{display:block!important;background:#f5f5f5!important;border-left:3px solid #999!important;color:#333!important}}
+@media(max-width:480px){.painel{padding:1.1rem}.tab-btn{font-size:.78rem;padding:.8rem .3rem}}
+
+.genre-tag{display:inline-block;padding:3px 10px;border-radius:14px;font-size:.72rem;font-weight:700;margin-bottom:.5rem}
+.func-tag{display:inline-block;padding:4px 12px;border-radius:14px;font-size:.75rem;font-weight:700;margin:2px 4px 2px 0;color:#fff}
+.func-informar{background:#3498db}.func-narrar{background:#e74c3c}.func-opinar{background:#f39c12}.func-instruir{background:#27ae60}.func-definir{background:#9b59b6}.func-expressar{background:#1abc9c}
+.disc-area{width:calc(100% - 2.2rem);min-height:130px;border:1.5px solid var(--borda);border-radius:9px;padding:.7rem .9rem;font-family:'Inter',sans-serif;font-size:.88rem;resize:vertical;margin:0 1.1rem .4rem}
+.disc-actions{padding:0 1.1rem 1rem}
+@media print{.gabarito-print{display:block!important;break-before:page;border:1px solid #999;border-radius:8px;padding:1rem 1.2rem;margin-top:1rem}.gabarito-print h2{font-size:1.1rem;margin-bottom:.6rem}.gabarito-print ol{margin-left:1.2rem}.gabarito-print li{font-size:.86rem;margin-bottom:.3rem}.fb{display:none!important}.disc-actions{display:none!important}}
+
+.tese-box{background:#e3f2fd;border-left:4px solid #1976d2;padding:.8rem;margin:.8rem 0;border-radius:0 8px 8px 0}
+.disc-area{width:calc(100% - 2.2rem);min-height:130px;border:1.5px solid var(--borda);border-radius:9px;padding:.7rem .9rem;font-family:'Inter',sans-serif;font-size:.88rem;resize:vertical;margin:0 1.1rem .4rem}
+.disc-actions{padding:0 1.1rem 1rem}
+@media print{.gabarito-print{display:block!important;break-before:page}.fb{display:none!important}.disc-actions{display:none!important}}
+/* ===== TELA DE IDENTIFICAÇÃO E MODO DE JOGO ===== */
+.quiz-gate{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.8rem 1.6rem;max-width:480px;margin:0 auto}
+.quiz-gate h2{font-family:'Lora',serif;font-size:1.25rem;color:var(--azul);margin-bottom:.4rem}
+.quiz-gate>p{font-size:.88rem;color:var(--txt2);margin-bottom:1.2rem}
+.gate-field{margin-bottom:1.1rem}
+.gate-field>label{display:block;font-size:.82rem;font-weight:600;color:var(--azul-m);margin-bottom:.4rem}
+.gate-field input[type=text]{width:100%;padding:.65rem .8rem;border:1.5px solid var(--borda);border-radius:9px;font-family:'Inter',sans-serif;font-size:.92rem;color:var(--txt)}
+.gate-field input[type=text]:focus{outline:none;border-color:var(--azul-m)}
+.modo-opcoes{display:flex;flex-direction:column;gap:.6rem}
+.modo-opcao{display:flex;align-items:flex-start;gap:.6rem;border:1.5px solid var(--borda);border-radius:10px;padding:.7rem .85rem;cursor:pointer;transition:.15s}
+.modo-opcao:hover{border-color:var(--azul-m)}
+.modo-opcao input[type=radio]{margin-top:.25rem;accent-color:var(--azul-m)}
+.modo-opcao input[type=radio]:checked~span b{color:var(--azul)}
+.modo-opcao span{font-size:.85rem}
+.modo-opcao small{color:var(--txt2);font-weight:400}
+.gate-aviso{color:var(--verm);font-size:.82rem;margin-top:.7rem;min-height:1.2em}
+.modo-opcao.bloqueado{opacity:.6;cursor:not-allowed}
+.modo-opcao.liberado{opacity:1;cursor:pointer;border-color:var(--verde)}
+.cadeado{font-size:.75rem}
+.senha-box{display:flex;gap:.5rem;margin-top:.6rem}
+.senha-box input[type=password]{flex:1;padding:.55rem .75rem;border:1.5px solid var(--borda);border-radius:9px;font-family:'Inter',sans-serif;font-size:.85rem}
+.senha-box input[type=password]:focus{outline:none;border-color:var(--azul-m)}
+.senha-btn{white-space:nowrap;font-size:.8rem;padding:.55rem 1rem}
+.senha-aviso{font-size:.78rem;margin-top:.4rem;min-height:1.1em}
+.senha-aviso.ok{color:var(--verde)}
+.senha-aviso.erro{color:var(--verm)}
+.modo-chip{font-size:.74rem;font-weight:700;padding:4px 12px;border-radius:20px;background:var(--azul-c);color:var(--azul-m);margin-left:auto}
+.envio-status{font-size:.82rem;margin-top:.8rem;padding:.6rem .9rem;border-radius:8px}
+.envio-status.enviando{background:var(--azul-c);color:var(--azul-m)}
+.envio-status.ok{background:var(--verde-c);color:var(--verde)}
+.envio-status.erro{background:var(--verm-c);color:var(--verm)}
+/* No modo prova, o feedback de cada questão fica escondido até o aluno terminar */
+.fb.prova-oculto{display:none!important}
+@media print{.quiz-gate,.modo-chip,.envio-status{display:none!important}#quizConteudo{display:block!important}}
+</style>
+</head><body><header><a href="index.html" class="voltar-link">← Painel SAEB/SIMAVE</a><div class="badge">SAEB · SIMAVE · Língua Portuguesa</div><h1>Habilidade D26</h1><p>Identificar a tese e os argumentos que a sustentam</p></header>
+<nav class="tabs"><div class="tabs-inner"><button class="tab-btn active" data-tab="estudar">📚 Estudar</button><button class="tab-btn" data-tab="quiz">📝 Quiz</button><button class="tab-btn" data-tab="jogos">🎮 Jogos</button></div></nav><main><section class="tab-pane active" id="pane-estudar">
+<div class="resumo-box"><h2>🎯 Em uma frase</h2><p>O D26 mede se você consegue identificar não só <strong style="color:#ffd98a">a tese</strong> de um texto, mas também <strong style="color:#ffd98a">os argumentos</strong> que a sustentam.</p></div>
+<section class="painel"><h2>📌 Tese e argumentos</h2>
+<div class="tese-box"><b>Tese</b> é a posição defendida. <b>Argumentos</b> são as razões, dados ou exemplos que sustentam essa posição — sem eles, a tese seria apenas uma opinião sem fundamento.<br><br>
+<b>Exemplo real:</b> Tese: "Água e saneamento são centrais para a ação climática." Argumento: "Comunidades sem saneamento sofrem mais com enchentes e doenças em eventos extremos."</div></section>
+<section class="painel"><h2>🔍 Tipos de argumento</h2>
+<ul><li><b>Estatístico:</b> números e dados concretos (inflação, percentuais).</li>
+<li><b>Causa e efeito:</b> relaciona uma ação a uma consequência.</li>
+<li><b>Autoridade:</b> cita um especialista reconhecido.</li>
+<li><b>Precedente:</b> usa experiências anteriores como evidência.</li>
+<li><b>Custo-benefício:</b> compara vantagens e desvantagens.</li></ul></section>
+<div class="aviso-prof"><b>Fontes:</b> Agência Brasil/EBC, Machado de Assis (domínio público).</div>
+<div class="records" id="recordsEstudar"><h2>🏆 Resultados</h2><div class="rec-grid" id="recGrid"></div></div>
+</section><section class="tab-pane" id="pane-quiz">
+
+<!-- ===== TELA DE IDENTIFICAÇÃO (aparece antes do quiz) ===== -->
+<div id="quizGate" class="quiz-gate">
+  <h2>👋 Antes de começar</h2>
+  <p>Preencha seus dados e escolha o modo de jogo.</p>
+  <div class="gate-field">
+    <label for="alunoNome">Nome do aluno</label>
+    <input type="text" id="alunoNome" placeholder="Seu nome completo" autocomplete="off">
+  </div>
+  <div class="gate-field">
+    <label for="alunoTurma">Turma / Série</label>
+    <input type="text" id="alunoTurma" placeholder="Ex: 9º Ano A" autocomplete="off">
+  </div>
+  <div class="gate-field">
+    <label>Modo de jogo</label>
+    <div class="modo-opcoes">
+      <label class="modo-opcao">
+        <input type="radio" name="modoQuiz" value="prova" checked>
+        <span><b>📝 Modo Prova</b><br><small>Sem feedback durante o quiz. As respostas certas só aparecem no final, como numa prova de verdade.</small></span>
+      </label>
+      <label class="modo-opcao" id="opcaoEstudo">
+        <input type="radio" name="modoQuiz" value="estudo" id="radioEstudo" disabled>
+        <span><b>📖 Modo Estudo</b> <span class="cadeado" id="cadeadoEstudo">🔒</span><br><small>Mostra se acertou ou errou — e a explicação — logo após cada resposta. Liberado pelo professor.</small></span>
+      </label>
+    </div>
+    <div class="senha-box" id="senhaBox">
+      <input type="password" id="senhaEstudo" placeholder="Senha do professor para liberar o Modo Estudo" autocomplete="off">
+      <button type="button" class="btn sec senha-btn" id="btnLiberarEstudo">Liberar</button>
+    </div>
+    <p class="senha-aviso" id="senhaAviso"></p>
+  </div>
+  <button class="btn" id="btnIniciarQuiz">▶ Começar o quiz</button>
+  <p class="gate-aviso" id="gateAviso"></p>
+</div>
+
+<!-- ===== QUIZ (fica oculto até o aluno preencher os dados acima) ===== -->
+<div id="quizConteudo" style="display:none">
+<div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.5rem;align-items:center">
+
+<button class="btn sec" onclick="location.reload()">🔀 Embaralhar e refazer</button>
+<span class="modo-chip" id="modoChip"></span>
+</div>
+<div class="prog-wrap"><span class="prog-label">Progresso</span><div class="prog-track"><div class="prog-fill" id="pFill"></div></div><span class="score" id="score">0 / 12</span></div>
+<div id='quiz'></div><div class='card' id='cardDisc' style='margin-top:1.5rem'><div class='card-head'><span class='qnum'>Q13</span><span class='qtipo'>Declaração real</span><span class='qnivel dificil'>Aberta</span></div><div class='txt-base' id='txtDisc'>Leia o trecho:<br><br><em>"Água e saneamento, portanto, não são temas periféricos – são centrais para a ação climática."</em> O especialista argumenta que comunidades sem saneamento sofrem mais com enchentes e doenças em eventos climáticos extremos.<span class='txt-fonte'>Agência Brasil/EBC, 22 nov. 2025. Adaptado.</span></div><p class='enunciado'><b>a)</b> Identifique a tese central do trecho.<br><b>b)</b> Identifique o argumento (evidência) que sustenta essa tese.<br><b>c)</b> Esse argumento é eficaz para convencer o leitor? Justifique brevemente.</p><textarea class='disc-area'></textarea><div class='disc-actions'><button class="btn sec" id="btnDisc" onclick="(function(){var p=prompt('Senha do professor:');if(p===SENHA_MODO_ESTUDO){var fb=document.getElementById('fbDisc');if(fb){fb.style.display='block';}}else if(p!==null){alert('Senha incorreta.');}})()">👁️ Ver gabarito</button></div><div class='fb' id='fbDisc'><div class='ft' style='color:var(--azul)'>Gabarito</div><div><b>a)</b> A tese é que água e saneamento devem ser tratados como temas centrais, e não periféricos, na ação climática.<br><b>b)</b> O argumento é que comunidades sem saneamento sofrem mais com enchentes e doenças durante eventos climáticos extremos — uma relação de causa e efeito concreta.<br><b>c)</b> Resposta livre, mas espera-se que o estudante reconheça que o argumento é eficaz por apresentar uma relação causal verificável (falta de saneamento → mais sofrimento em eventos climáticos), e não apenas uma opinião vaga.</div></div>
+<div id='resultado'><h2>Concluído!</h2><div class='medalha' id='medalha'>🏅</div><div class='nota' id='notaFinal'>—</div><p id='msgFinal'></p><div id="envioStatus" class="envio-status"></div><button class='btn' onclick='location.reload()'>↺ Refazer</button></div></div>
+</div>
+</section><section class='tab-pane' id='pane-jogos'><div class='resumo-box'><h2>🎮 Hora de jogar</h2><p>Cinco minijogos para treinar a identificação de tese e argumentos.</p></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>⏱️</span><h3>Qual é o argumento?</h3></div><div class='jogo-body' id='g1-body'><button class='btn ouro' onclick='G1.start()'>▶ Começar</button></div></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>🏷️</span><h3>Classifique</h3></div><div class='jogo-body' id='g2-body'><button class='btn ouro' onclick='G2.start()'>▶ Começar</button></div></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>🔎</span><h3>Pelas pistas</h3></div><div class='jogo-body' id='g3-body'><button class='btn ouro' onclick='G3.start()'>▶ Começar</button></div></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>🧩</span><h3>Complete</h3></div><div class='jogo-body' id='g4-body'><button class='btn ouro' onclick='G4.start()'>▶ Começar</button></div></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>🔢</span><h3>Ordene</h3></div><div class='jogo-body' id='g5-body'><button class='btn ouro' onclick='G5.start()'>▶ Começar</button></div></div>
+</section></main><footer>Portal do Professor Marcos Cruz · SAEB/SIMAVE · D26</footer><script>
+/* ===== CONFIGURAÇÃO DO ENVIO PARA GOOGLE SHEETS =====
+   Cole aqui a URL do seu Apps Script publicado como "App da Web".
+   Veja o arquivo google-apps-script.gs para instruções de instalação.
+   Enquanto estiver "SUBSTITUA_PELA_SUA_URL", o envio fica desativado
+   (o quiz funciona normalmente, só não manda nada para a planilha). */
+const SHEETS_URL = "https://script.google.com/macros/s/AKfycbwPcWRWW2IkMb8-WkyB2w1M2n9ivcYlfqWajYRgCzecLTC1T7aBetZtR2MDaOIxahc/exec";
+const DESCRITOR_PAGINA = "D26 - Identificar a tese e os argumentos que a sustentam";
+const NOME_ARQUIVO = "D26.html";
+
+/* ===== ESTADO DO ALUNO E MODO DE JOGO ===== */
+let alunoNome = "";
+let alunoTurma = "";
+let modoJogo = "estudo"; // "estudo" ou "prova"
+const respostasDetalhadas = [];
+const selecoes = {}; // {dn: k} para revelar botões no fim do modo prova // uma entrada por questão respondida, na ordem em que aparecem
+
+/* ===== SENHA PARA LIBERAR O MODO ESTUDO =====
+   Troque a senha abaixo quando quiser. É a MESMA senha em todas as páginas
+   do portal (mais simples de lembrar e passar para os alunos quando for
+   hora de revisão). Lembre-se: como o quiz roda no navegador do aluno,
+   essa senha impede o uso casual do Modo Estudo, mas não é uma proteção
+   contra alguém que abra o código-fonte da página — as respostas já estão
+   no arquivo de qualquer forma, como em qualquer site estático como este. */
+const SENHA_MODO_ESTUDO = "professor123";
+
+document.getElementById("btnLiberarEstudo").onclick = () => {
+  const campo = document.getElementById("senhaEstudo");
+  const aviso = document.getElementById("senhaAviso");
+  if (campo.value === SENHA_MODO_ESTUDO) {
+    document.getElementById("radioEstudo").disabled = false;
+    document.getElementById("radioEstudo").checked = true;
+    document.getElementById("cadeadoEstudo").textContent = "🔓";
+    document.getElementById("opcaoEstudo").classList.add("liberado");
+    document.getElementById("senhaBox").style.display = "none";
+    aviso.className = "senha-aviso ok";
+    aviso.textContent = "✓ Modo Estudo liberado.";
+  } else {
+    aviso.className = "senha-aviso erro";
+    aviso.textContent = "Senha incorreta.";
+  }
+};
+// Também libera ao apertar Enter no campo de senha
+document.getElementById("senhaEstudo").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") document.getElementById("btnLiberarEstudo").click();
+});
+
+document.getElementById("btnIniciarQuiz").onclick = () => {
+  const nome = document.getElementById("alunoNome").value.trim();
+  const turma = document.getElementById("alunoTurma").value.trim();
+  const aviso = document.getElementById("gateAviso");
+  if (!nome || !turma) {
+    aviso.textContent = "Preencha nome e turma/série para continuar.";
+    return;
+  }
+  alunoNome = nome;
+  alunoTurma = turma;
+  modoJogo = document.querySelector('input[name="modoQuiz"]:checked').value;
+  document.getElementById("quizGate").style.display = "none";
+  document.getElementById("quizConteudo").style.display = "block";
+  const chip = document.getElementById("modoChip");
+  chip.textContent = modoJogo === "prova" ? "📝 Modo Prova" : "📖 Modo Estudo";
+};
+
+/* ===== ENVIO PARA O GOOGLE SHEETS ===== */
+function enviarParaSheets() {
+  const statusEl = document.getElementById("envioStatus");
+  if (!SHEETS_URL || SHEETS_URL.indexOf("SUBSTITUA") !== -1) {
+    statusEl.className = "envio-status";
+    statusEl.textContent = "";
+    return; // envio desativado até o professor configurar a URL
+  }
+  statusEl.className = "envio-status enviando";
+  statusEl.textContent = "Enviando resultado para a planilha...";
+
+  const payload = {
+    nome: alunoNome,
+    turma: alunoTurma,
+    descritor: DESCRITOR_PAGINA,
+    pagina: NOME_ARQUIVO,
+    modo: modoJogo === "prova" ? "Prova" : "Estudo",
+    respostas: respostasDetalhadas
+  };
+
+  fetch(SHEETS_URL, {
+    method: "POST",
+    mode: "no-cors", // Apps Script Web Apps não devolvem CORS; "no-cors" garante o envio mesmo sem ler a resposta
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(payload)
+  }).then(() => {
+    statusEl.className = "envio-status ok";
+    statusEl.textContent = "✓ Resultado enviado para a planilha do professor.";
+  }).catch(() => {
+    statusEl.className = "envio-status erro";
+    statusEl.textContent = "✗ Não foi possível enviar o resultado (verifique sua internet).";
+  });
+}
+
+/* ===== QUIZ ===== */
+const QRAW=[{"n": 1, "tipo": "Declaração de especialista (real)", "nivel": "facil", "texto": "<b>Especialista alerta para urgência do saneamento na crise climática</b><br><br><em>\"Água e saneamento, portanto, não são temas periféricos – são centrais para a ação climática\"</em>, defende o especialista José Gesti. Ele argumenta que comunidades sem acesso a saneamento básico sofrem mais com enchentes e doenças durante eventos climáticos extremos, e que investir nessa área reduz a vulnerabilidade da população.", "fonte": "Agência Brasil/EBC, 22 nov. 2025. Adaptado. agenciabrasil.ebc.com.br", "enun": "Qual argumento sustenta a tese de que saneamento deve ser central na ação climática?", "alts": ["O custo do saneamento é menor do que o custo gerado pelos desastres climáticos.", "Comunidades sem saneamento sofrem mais com enchentes e doenças.", "O saneamento filtra poluentes do ar, reduzindo o efeito estufa.", "Apenas comunidades rurais sofrem com a falta de saneamento em eventos extremos."], "correta": 1, "porque": ["Incorreto: o texto não compara custos financeiros do saneamento com os de desastres. Esse raciocínio de custo-benefício aparece em outro trecho — aqui o argumento é sobre vulnerabilidade das comunidades.", "Correto: o argumento direto do especialista é que comunidades sem saneamento são mais vulneráveis durante eventos climáticos extremos — o que sustenta a tese de que saneamento é questão central da ação climática.", "Incorreto: o texto não menciona filtro de poluentes atmosféricos. Saneamento, aqui, refere-se ao tratamento de água e esgoto — não à qualidade do ar. O argumento é sobre saúde e enchentes.", "Incorreto: o texto não faz distinção entre comunidades rurais e urbanas. O argumento é sobre comunidades 'sem acesso a saneamento básico' — categoria que existe tanto em áreas rurais quanto periurbanas."]}, {"n": 2, "tipo": "Declaração de especialista (real)", "nivel": "facil", "texto": "<b>Observatório do Clima entrega recomendações para transição energética</b><br><br><em>\"Um mapa do caminho justo e inclusivo reduz riscos no curto prazo, amplia oportunidades de crescimento sustentável no longo prazo e representa uma escolha econômica racional para o Brasil\"</em>, explica o especialista Ricardo Fujii, da WWF-Brasil.", "fonte": "Agência Brasil/EBC, 28 jan. 2026. Adaptado. agenciabrasil.ebc.com.br", "enun": "Quantos argumentos distintos o especialista apresenta para sustentar a tese de que a transição energética justa é vantajosa?", "alts": ["Apenas um argumento: a redução de riscos no curto prazo.", "Três: redução de riscos, mais oportunidades e racionalidade econômica.", "Nenhum — a frase é uma afirmação sem fundamentação.", "Quatro, contando a menção ao Brasil como argumento adicional."], "correta": 1, "porque": ["Incorreto: a frase enumera explicitamente três benefícios distintos: reduzir riscos (curto prazo), ampliar oportunidades (longo prazo) e ser 'escolha econômica racional'. Contar apenas um ignora a estrutura completa do argumento.", "Correto: 'reduz riscos no curto prazo' (argumento 1) + 'amplia oportunidades no longo prazo' (argumento 2) + 'escolha econômica racional' (argumento 3) — três pilares distintos de sustentação da tese.", "Incorreto: a frase é inteiramente argumentativa — cada segmento separado pela vírgula apresenta um benefício. 'Reduz', 'amplia' e 'representa' são verbos que estruturam os três argumentos.", "Incorreto: 'para o Brasil' especifica o destinatário do argumento, não um argumento adicional. Os três argumentos (risco, oportunidade, racionalidade) são os únicos presentes."]}, {"n": 3, "tipo": "Crônica (Machado de Assis)", "nivel": "medio", "texto": "<b>Bons Dias!</b> (trecho adaptado)<br><br><em>\"Defendo que a verdadeira cortesia não está nos grandes gestos, mas nos pequenos: o cumprimento ao vizinho, o lugar cedido no bonde, o silêncio guardado quando a palavra feriria sem necessidade. Quem cultiva essas pequenas gentilezas constrói, sem perceber, uma sociedade mais habitável.\"</em>", "fonte": "Adaptado do espírito das crônicas de MACHADO DE ASSIS, série Bons Dias!, 1888-1889. Domínio público.", "enun": "Quais exemplos o cronista usa como argumentos para sustentar sua tese sobre cortesia?", "alts": ["Apenas grandes gestos públicos — o cronista contradiz a tese ao dar exemplos grandes.", "Pequenos gestos cotidianos: cumprimentar o vizinho e ceder lugar.", "Apenas o silêncio — os outros exemplos são descartados como insuficientes.", "Nenhum exemplo concreto — o cronista apenas afirma a tese sem exemplificar."], "correta": 1, "porque": ["Incorreto: os exemplos dados são explicitamente 'pequenos' — cumprimento ao vizinho, ceder lugar no bonde, guardar silêncio. O cronista não usa grandes gestos; ele os recusa como critério de verdadeira cortesia.", "Correto: o cronista lista três exemplos concretos de pequenos gestos — 'o cumprimento ao vizinho, o lugar cedido no bonde, o silêncio guardado quando a palavra feriria'. Todos são cotidianos e acessíveis.", "Incorreto: o silêncio é apenas um dos três exemplos dados. Os outros dois (cumprimento e ceder lugar) são igualmente mencionados como argumentos. Nenhum é hierarquicamente superior aos outros.", "Incorreto: o cronista fornece três exemplos concretos após a tese ('a verdadeira cortesia não está nos grandes gestos, mas nos pequenos'). A ausência de exemplos tornaria o argumento vazio — mas eles estão presentes."]}, {"n": 4, "tipo": "Reportagem com declaração (real)", "nivel": "medio", "texto": "<b>Brasil tem 'vazio estratégico' em minerais críticos, diz especialista</b><br><br>Luciana Bauer argumenta que a falta de um plano estratégico de longo prazo impede o Brasil de aproveitar seu potencial geológico. Ela cita como evidência a disputa entre China e Estados Unidos pelo controle de jazidas de minerais críticos, insumos essenciais para tecnologia e indústria automobilística.", "fonte": "Agência Brasil/EBC, 5 maio 2026. Adaptado. agenciabrasil.ebc.com.br", "enun": "Que evidência a especialista usa para sustentar a urgência de um plano estratégico no Brasil?", "alts": ["O fato de o Brasil já exportar minerais críticos para os dois países.", "A disputa internacional entre China e EUA por minerais críticos.", "A ausência de jazidas de minerais críticos em outros países da América Latina.", "Um acordo de cooperação mineral entre Brasil, China e EUA já em vigor."], "correta": 1, "porque": ["Incorreto: o texto não menciona exportação atual do Brasil para esses países. O argumento é sobre o potencial não explorado — não sobre exportações já existentes.", "Correto: a especialista cita a disputa geopolítica entre China e EUA como evidência da importância estratégica dos minerais críticos — e, portanto, da urgência de o Brasil ter um plano para aproveitá-los.", "Incorreto: o texto não compara o Brasil com outros países latino-americanos. O argumento é sobre a disputa global — que demonstra o valor estratégico dos minerais que o Brasil possui.", "Incorreto: o texto menciona a disputa, não um acordo. A ausência de acordo entre esses países é justamente parte do contexto que torna a posição do Brasil estratégica — não um fato que já resolve o problema."]}, {"n": 5, "tipo": "Artigo de opinião — Tecnologia e futuro (P0802)", "nivel": "medio", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Artigo — A tecnologia a abrir caminho para o futuro (mais humano) — fragmento</b><p>A tecnologia tem o poder de fazer muitas coisas, e mudar o mundo tem sido uma delas. Se em 1820 podíamos esperar viver em média menos de 35 anos, e menos de 20% da população sabia ler e escrever, atualmente a esperança de vida duplicou e mais de 80% das pessoas no mundo são alfabetizadas. Para qualquer observador, é fácil verificar que estes avanços se devem primariamente à tecnologia, ao início da revolução industrial e consecutiva transição para a era da informação.</p><p>Atualmente, é estimado que 65% das crianças a entrar na escola primária hoje desempenharão funções que ainda não existem, uma indicação clara que será necessário reaplicar o conhecimento e tecnologia que temos às capacidades que impulsionarão o mundo do trabalho no futuro. Mas, apesar dos ajustes necessários, é certo que somos privilegiados por viver numa altura em que a ciência e tecnologia nos podem assistir, tornando as nossas vidas mais fáceis e fazendo-nos repensar as maneiras de desempenhar as nossas funções diárias.</p></div>", "fonte": "RODRIGUEZ, Fabio. <b>A tecnologia a abrir caminho para o futuro (mais humano)</b>. TEK SAPO, 2020. Adaptado para fins didáticos. Avaliação Diagnóstica P0802 — CAED/UFJF, 2025.", "enun": "Qual alternativa apresenta corretamente a <b>tese</b> desse texto e um <b>argumento</b> usado para sustentá-la?", "alts": ["Tese: a tecnologia é responsável por todos os problemas da humanidade. Argumento: 65% das crianças de hoje farão funções que ainda não existem.", "Tese: somos privilegiados por ter a tecnologia como aliada no progresso humano. Argumento: desde 1820, avanços como o aumento da expectativa de vida e da alfabetização se devem à tecnologia.", "Tese: a tecnologia vai substituir os professores nas próximas décadas. Argumento: 65% das crianças de hoje trabalharão em funções ainda inexistentes.", "Tese: a tecnologia duplicou a expectativa de vida. Argumento: em 1820, apenas 20% da população sabia ler e escrever."], "correta": 1, "porque": ["O texto não afirma que a tecnologia causa problemas; sua posição é favorável à tecnologia como agente de progresso.", "A tese ('somos privilegiados') está na frase final do segundo parágrafo; o argumento histórico (expectativa de vida, alfabetização) sustenta a ideia de que a tecnologia muda o mundo positivamente.", "O texto não fala em substituição de professores; o dado sobre funções inexistentes ilustra a necessidade de adaptação, não de substituição.", "A expectativa de vida duplicar é um dado/argumento, não a tese — a tese é a afirmação central que o autor quer provar."]}, {"n": 6, "tipo": "Crônica (Machado de Assis)", "nivel": "dificil", "texto": "<b>Bons Dias!</b> (trecho adaptado)<br><br><em>\"Não há pior tirania que aquela exercida em nome da urgência. Tudo se justifica com a pressa: abrevia-se o pensamento, descarta-se a dúvida, sacrifica-se a reflexão. Mas as decisões tomadas com pressa raramente envelhecem bem; o tempo, cedo ou tarde, cobra a conta do que foi decidido sem ele.\"</em>", "fonte": "Adaptado do espírito das crônicas de MACHADO DE ASSIS, série Bons Dias!, 1888-1889. Domínio público.", "enun": "Qual argumento o cronista usa para sustentar a tese de que decisões apressadas são problemáticas?", "alts": ["O argumento de que a pressa é necessária em situações de emergência real.", "O argumento de que decisões sem reflexão 'raramente envelhecem bem'.", "O argumento de que ninguém na história tomou decisões apressadas com bons resultados.", "O argumento de que a reflexão é sempre mais lenta do que a decisão correta."], "correta": 1, "porque": ["Incorreto: o texto não faz distinção entre emergências reais e urgências artificiais. A crítica é à tirania exercida 'em nome da urgência' — ou seja, ao uso da pressa como justificativa, não à emergência genuína.", "Correto: 'as decisões tomadas com pressa raramente envelhecem bem; o tempo, cedo ou tarde, cobra a conta' — é o argumento central: o teste do tempo desmascarar a decisão apressada.", "Incorreto: o cronista usa 'raramente' — não 'nunca'. A afirmação não é absoluta. O texto reconhece exceções implicitamente ao usar 'raramente', mas sustenta que a tendência é de resultados ruins.", "Incorreto: o texto não faz essa afirmação. O argumento é sobre o custo futuro das decisões sem reflexão — não sobre a velocidade comparativa entre reflexão e decisão certa."]}, {"n": 7, "tipo": "Mensagem oficial da ONU (real)", "nivel": "dificil", "texto": "<b>ONU dedica Dia Mundial do Ambiente ao combate ao plástico</b><br><br><em>\"Os resíduos de plástico entopem os rios, poluem os oceanos e põem em perigo a vida selvagem\"</em>, diz o secretário-geral da ONU, sustentando a tese de que a poluição plástica exige ação imediata e coletiva.", "fonte": "Agência Brasil/EBC, 4 jun. 2025. Adaptado. agenciabrasil.ebc.com.br", "enun": "Quantos efeitos negativos distintos da poluição plástica são citados como argumentos na mensagem?", "alts": ["Apenas um: a poluição dos oceanos, o mais grave segundo a ONU.", "Três: entupimento de rios, poluição de oceanos e perigo à vida.", "Nenhum efeito específico: apenas afirma que o plástico é prejudicial.", "Dois: apenas rios e oceanos, sem mencionar a vida selvagem."], "correta": 1, "porque": ["Incorreto: a frase lista três efeitos explicitamente — rios, oceanos e vida selvagem. Escolher apenas um (oceanos) ignora dois argumentos presentes na mesma frase, conectados pela conjunção 'e'.", "Correto: 'entopem os rios' (efeito 1) + 'poluem os oceanos' (efeito 2) + 'põem em perigo a vida selvagem' (efeito 3) — três argumentos distintos enumerados na mesma frase.", "Incorreto: a frase especifica três efeitos com verbos diferentes ('entopem', 'poluem', 'põem em perigo'). Cada verbo introduz um argumento distinto — a especificidade é exatamente o que torna o argumento forte.", "Incorreto: 'põem em perigo a vida selvagem' é o terceiro efeito, separado por 'e'. Ignorar essa parte da frase é mistura de leitura seletiva — o terceiro argumento está claramente enunciado."]}, {"n": 8, "tipo": "Artigo — Tecnologia e leitura (P0901)", "nivel": "dificil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Artigo — Entre páginas digitais e papel (fragmento)</b><p>Segundo a pesquisadora Maryanne Wolf, o excesso de tempo em telas desde a infância está mudando radicalmente a forma como muitos de nós processamos a informação que lemos. \"Passar os olhos\" superficialmente em múltiplos textos on-line pode estar dilapidando nossa capacidade de entender argumentos complexos e de criar empatia por pontos de vista diferentes.</p><p>Em contrapartida, a estudante de direito Emmily Cavalcante argumenta que a leitura digital promove igualdade: \"Não são todas as pessoas que possuem condições de comprar livros físicos; as versões digitais facilitam esse acesso\".</p><p>Nesse cenário em constante evolução, é imperativo reconhecer as vantagens e desafios da leitura digital, mantendo um equilíbrio entre a conveniência dos dispositivos eletrônicos e a riqueza sensorial dos livros físicos.</p></div>", "fonte": "LEAL, Tamyris; DIAS, Alexia. <b>Entre páginas digitais e papel</b>. Portal Luneta, 5 fev. 2024. Adaptado para fins didáticos. Avaliação Contínua — P0901 — CAED/UFJF, 2025.", "enun": "No texto, o argumento da pesquisadora Maryanne Wolf <b>sustenta</b> que tese?", "alts": ["A leitura digital deve ser proibida nas escolas para proteger as habilidades cognitivas dos estudantes.", "O excesso de leitura em telas pode comprometer habilidades cognitivas importantes, como a compreensão profunda e a empatia.", "As versões digitais de livros são prejudiciais somente para crianças pequenas, mas úteis para adultos.", "A leitura digital é superiora à impressa porque facilita o acesso a múltiplos textos simultaneamente."], "correta": 1, "porque": ["O texto não propõe proibição; o argumento de Wolf alerta para riscos, mas a conclusão do artigo é de equilíbrio.", "Wolf argumenta que o 'passar os olhos' superficialmente em telas 'pode estar dilapidando' capacidade de compreensão complexa e empatia — essa é a tese que seu argumento sustenta.", "O texto não restringe os riscos a crianças pequenas; fala de 'desde a infância até a vida adulta'.", "Wolf defende exatamente o oposto: que a leitura superficial em múltiplos textos digitais pode prejudicar a compreensão profunda."]}, {"n": 9, "tipo": "Crônica (Machado de Assis)", "nivel": "dificil", "texto": "<b>Bons Dias!</b> (trecho adaptado)<br><br><em>\"Quem confunde cortesia com fraqueza nunca compreendeu nenhuma das duas. A cortesia é disciplina, é domínio sobre o impulso de revidar à altura de quem agride. Há mais força em ceder o passo com dignidade do que em vencer uma discussão pela última palavra.\"</em>", "fonte": "Adaptado do espírito das crônicas de MACHADO DE ASSIS, série Bons Dias!, 1888-1889. Domínio público.", "enun": "Que argumento o cronista usa para defender que cortesia é força, e não fraqueza?", "alts": ["O argumento de que cortesia é um comportamento natural, que não exige esforço.", "O argumento de que a cortesia exige disciplina e autocontrole.", "O argumento de que ser cortês é suficiente para evitar todos os conflitos.", "O argumento de que ninguém consegue ser verdadeiramente cortês na prática."], "correta": 1, "porque": ["Incorreto: o cronista afirma o oposto — cortesia é 'disciplina' e 'domínio sobre o impulso'. Definir cortesia como algo que exige esforço é justamente o argumento que refuta a ideia de que é fraqueza ou passividade.", "Correto: 'a cortesia é disciplina, é domínio sobre o impulso de revidar' — o argumento é que ceder o passo exige mais força interior do que revidar. A cortesia requer autocontrole ativo, não passividade.", "Incorreto: o texto não faz essa promessa. O argumento é sobre a natureza da cortesia como força, não sobre sua capacidade de resolver todos os conflitos. A cortesia é apresentada como virtude pessoal, não como solução universal.", "Incorreto: o cronista não descreve a cortesia como inatingível. Ele a apresenta como algo possível — e desejável — justamente porque exige esforço. O argumento é normativo (como se deve ser), não pessimista."]}, {"n": 10, "tipo": "Reportagem com citação (real)", "nivel": "dificil", "texto": "<b>Tratado do Alto-Mar: entenda o que muda para o Brasil</b><br><br>O oceanógrafo Andrei Polejack argumenta que o Brasil tem muito a contribuir nas negociações, citando como evidência o conhecimento diplomático e científico acumulado em outros tratados internacionais, como os criados na Eco92, sobre clima e biodiversidade.", "fonte": "Agência Brasil/EBC, 31 jan. 2026. Adaptado. agenciabrasil.ebc.com.br", "enun": "Que evidência o especialista usa para sustentar que o Brasil tem capacidade de contribuir no Tratado do Alto-Mar?", "alts": ["O fato de o Brasil ser o maior país em extensão da América Latina.", "A experiência acumulada em outros tratados, como os da Eco92.", "O fato de o Brasil não ter assinado acordos ambientais anteriores.", "A criação recente de um órgão brasileiro específico para negociações marinhas."], "correta": 1, "porque": ["Incorreto: extensão territorial não é argumento para capacidade diplomática. O especialista cita o conhecimento acumulado em negociações, não o tamanho geográfico do país.", "Correto: 'conhecimento diplomático e científico desenvolvido na atuação em outros tratados internacionais, como os criados na Eco92' — a experiência histórica em acordos ambientais é a evidência de capacidade.", "Incorreto: o texto afirma o contrário — o Brasil participou ativamente da Eco92. A experiência prévia é citada como ativo, não como lacuna.", "Incorreto: o texto não menciona nenhum órgão recentemente criado. O argumento baseia-se na experiência histórica — não em estruturas institucionais novas."]}, {"n": 11, "tipo": "Declaração de especialista (real)", "nivel": "medio", "texto": "<b>Brasil reafirma urgência de financiamento para ações climáticas</b><br><br>Anabella Rosemberg argumenta que apenas diálogos não são suficientes para garantir uma transição justa, defendendo a criação de um mecanismo multilateral estável. Ela observa que grupos de diferentes setores (sindicatos, feministas, jovens) já vêm pressionando nessa direção.", "fonte": "Agência Brasil/EBC, 14 out. 2025. Adaptado. agenciabrasil.ebc.com.br", "enun": "Que argumento reforça a tese de que é preciso ir além dos diálogos?", "alts": ["O fato de a ONU já ter aprovado uma resolução criando o mecanismo multilateral.", "A mobilização de grupos sociais, mostrando que diálogos isolados não bastam.", "A ausência de interesse dos governos nacionais pelos diálogos climáticos.", "Um relatório técnico que prova que os diálogos atuais falharam em suas metas."], "correta": 1, "porque": ["Incorreto: o texto não menciona nenhuma resolução da ONU sobre esse mecanismo. O argumento é justamente que o mecanismo ainda precisa ser criado — a aprovação seria o objetivo, não a evidência.", "Correto: 'grupos de diferentes setores (sindicatos, feministas, jovens) já vêm pressionando' — a diversidade e a pressão desses grupos mostra que há demanda real por algo além dos diálogos existentes.", "Incorreto: o texto não afirma desinteresse dos governos. Há negociações em andamento (como a Pré-COP mencionada em outro trecho). A especialista argumenta que essas negociações são insuficientes, não que os governos não se importam.", "Incorreto: o texto não cita relatório técnico sobre fracasso dos diálogos. O argumento é baseado na mobilização social — evidência política e social, não técnica."]}, {"n": 12, "tipo": "Citação ministerial (real)", "nivel": "dificil", "texto": "<b>Censo registra queda de 1 milhão de matrículas na educação básica</b><br><br>O ministro Camilo Santana argumenta que a redução nas matrículas não é um retrocesso, citando como evidência a queda da distorção idade-série (quando o aluno está em série incompatível com sua idade) como sinal de melhoria do sistema.", "fonte": "Agência Brasil/EBC, fev. 2026. Adaptado. agenciabrasil.ebc.com.br", "enun": "Que dado o ministro usa como argumento para sustentar que a queda nas matrículas reflete melhoria, e não retrocesso?", "alts": ["O crescimento no orçamento destinado à educação básica nos últimos dois anos.", "A queda da distorção idade-série, indicando alunos na série correta.", "O aumento no número de professores concursados nas escolas públicas.", "A melhoria nos resultados do Brasil no Pisa em comparação com países vizinhos."], "correta": 1, "porque": ["Incorreto: o texto não menciona crescimento do orçamento educacional como argumento do ministro. O dado citado é a queda da distorção idade-série — indicador que conecta diretamente a redução de matrículas à melhoria da eficiência do sistema.", "Correto: 'a queda da distorção idade-série' é o dado explícito citado pelo ministro. Menos alunos atrasados = menos matrículas em séries que não correspondem à idade. A queda de matrículas, portanto, reflete alunos mais bem alocados.", "Incorreto: o texto não cita aumento no número de professores. O argumento do ministro é sobre a qualidade do fluxo escolar (alunos na série certa) — não sobre o corpo docente.", "Incorreto: o texto não menciona o Pisa nem comparações internacionais. O argumento é interno ao sistema brasileiro, baseado em um indicador específico do Censo Escolar."]}];const G1R=[{"t": "Tese: 'Saneamento é central na ação climática.' Argumento: comunidades sem saneamento sofrem mais com enchentes e doenças.", "q": "Qual é o argumento que sustenta a tese?", "o": ["O saneamento é barato", "Relação entre falta de saneamento e maior sofrimento em eventos climáticos", "Saneamento não importa", "Apenas grandes cidades precisam"], "c": 1}, {"t": "Tese: 'Decisões apressadas são problemáticas.' Argumento: 'raramente envelhecem bem; o tempo cobra a conta.'", "q": "Qual é o tipo de argumento usado?", "o": ["Argumento de autoridade", "Argumento baseado em consequência temporal negativa", "Argumento emocional vazio", "Nenhum argumento"], "c": 1}, {"t": "Tese: 'O Brasil pode contribuir no Tratado do Alto-Mar.' Argumento: experiência em tratados como a Eco92.", "q": "Que tipo de evidência sustenta a tese?", "o": ["Inexperiência total", "Histórico concreto de participação em tratados anteriores", "Um tratado nunca antes assinado", "Falta de conhecimento científico"], "c": 1}, {"t": "Tese: 'Agir pela adaptação poupa recursos.' Argumento: comparação entre custo de prevenção e custo de desastres não evitados.", "q": "Que tipo de raciocínio é esse?", "o": ["Raciocínio emocional", "Raciocínio de custo-benefício", "Raciocínio baseado em tradição", "Nenhum raciocínio lógico"], "c": 1}, {"t": "Tese: 'Queda nas matrículas reflete melhoria.' Argumento: queda na distorção idade-série.", "q": "Que dado sustenta essa tese?", "o": ["Aumento de escolas construídas", "Melhoria no ajuste entre idade e série escolar", "Novos exames nacionais", "Aumento de professores"], "c": 1}];const G2I=[{"s": "'Água e saneamento são centrais para a ação climática.'", "cat": "tese", "p": "Posição central defendida."}, {"s": "'Comunidades sem saneamento sofrem mais com enchentes.'", "cat": "argumento", "p": "Evidência que sustenta a tese."}, {"s": "'José Gesti, especialista em saneamento.'", "cat": "autor", "p": "Quem defende a posição."}, {"s": "'Decisões com pressa raramente envelhecem bem.'", "cat": "argumento", "p": "Razão que sustenta a tese sobre pressa."}, {"s": "'Agir pela adaptação significa poupar vidas e recursos.'", "cat": "tese", "p": "Posição central sobre adaptação climática."}, {"s": "'A experiência em tratados como a Eco92.'", "cat": "argumento", "p": "Evidência concreta que sustenta a tese sobre capacidade brasileira."}];const G2C=[["tese", "Tese"], ["argumento", "Argumento/Evidência"], ["autor", "Autor"]];const G3R=[{"t": "Frase que apresenta um dado, exemplo ou razão concreta para justificar uma posição.", "q": "Isso é:", "o": ["A tese", "Um argumento/evidência", "A fonte", "O autor"], "c": 1}, {"t": "'Comunidades sem saneamento sofrem mais com enchentes e doenças.'", "q": "Função desse trecho:", "o": ["É a tese principal", "É um argumento que sustenta a tese", "É apenas a fonte", "É uma citação irrelevante"], "c": 1}, {"t": "Texto que cita números específicos (R$ 3.574, 4,26%, 17,4 milhões) para sustentar uma afirmação.", "q": "Esse é um argumento do tipo:", "o": ["Emocional", "Estatístico/factual", "De autoridade vazio", "Nenhum argumento"], "c": 1}, {"t": "'A experiência em tratados anteriores' usada para justificar capacidade futura.", "q": "Esse argumento se baseia em:", "o": ["Pura opinião sem base", "Histórico/precedente concreto", "Emoção", "Tradição sem fundamento"], "c": 1}, {"t": "Comparação entre custo de agir preventivamente x custo de lidar com consequências depois.", "q": "Esse é um argumento de tipo:", "o": ["Emocional", "Custo-benefício", "De autoridade", "Nenhum argumento lógico"], "c": 1}];const G4R=[{"ctx": "'Saneamento é central na ação climática.'", "f": "O argumento que sustenta essa tese é que comunidades sem saneamento sofrem mais com ___.", "o": ["festas", "enchentes e doenças", "viagens", "esportes"], "c": 1}, {"ctx": "'Decisões com pressa raramente envelhecem bem.'", "f": "Esse argumento se baseia na ideia de ___ negativa ao longo do tempo.", "o": ["consequência", "alegria", "sorte", "tradição"], "c": 0}, {"ctx": "'O Brasil tem experiência em tratados como a Eco92.'", "f": "Esse argumento usa um ___ concreto como evidência.", "o": ["sonho", "histórico/precedente", "boato", "desejo"], "c": 1}, {"ctx": "'Agir pela adaptação poupa recursos.'", "f": "Esse argumento compara custo de ___ com custo de não agir.", "o": ["prevenção", "lazer", "viagem", "festa"], "c": 0}, {"ctx": "'Queda na distorção idade-série indica melhoria.'", "f": "Esse é um argumento baseado em ___ educacional concreto.", "o": ["boato", "dado/indicador", "desejo", "opinião vaga"], "c": 1}];const G5R=[{"title": "Como identificar argumentos que sustentam uma tese", "correct": ["Procure dados, exemplos ou evidências concretas logo após a apresentação da tese.", "Observe conectivos como 'porque', 'já que', 'pois', que costumam introduzir argumentos.", "Argumentos podem ser estatísticos (números), causais (causa e efeito) ou de autoridade (especialistas).", "Um bom argumento estabelece uma relação clara entre a evidência e a tese defendida.", "Verifique se o argumento responde à pergunta: por que devo acreditar nessa tese?"]}, {"title": "Tipos de argumentos comuns em textos reais", "correct": ["Argumento estatístico: usa números e dados concretos (ex: 'inflação caiu para 4,26%').", "Argumento de causa e efeito: relaciona uma ação a uma consequência (ex: 'falta de saneamento causa mais doenças').", "Argumento de autoridade: cita um especialista reconhecido na área.", "Argumento de precedente histórico: usa experiências anteriores como evidência (ex: 'experiência na Eco92').", "Argumento de custo-benefício: compara vantagens e desvantagens de duas opções."]}];
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function stripHTML(s){const d=document.createElement("div");d.innerHTML=s;return d.textContent||"";}
+function toggleTTS(btn,id){if(window.speechSynthesis.speaking){window.speechSynthesis.cancel();document.querySelectorAll(".btn-tts").forEach(b=>b.classList.remove("playing"));return;}const el=document.getElementById(id);if(!el)return;const u=new SpeechSynthesisUtterance(stripHTML(el.innerHTML));u.lang="pt-BR";u.rate=.9;btn.classList.add("playing");u.onend=()=>btn.classList.remove("playing");window.speechSynthesis.speak(u);}
+const RK="saeb_d26argum_records";
+function loadRec(){try{return JSON.parse(localStorage.getItem(RK))||{};}catch{return {};}}
+function saveRec(k,v){const r=loadRec();if(!(k in r)||v>r[k])r[k]=v;localStorage.setItem(RK,JSON.stringify(r));renderRec();}
+function renderRec(){const r=loadRec(),g=document.getElementById("recGrid");if(!g)return;const items=[{k:"quiz",l:"Quiz"},{k:"qual",l:"Qual função?"},{k:"classif",l:"Classifique"},{k:"pistas",l:"Pelas pistas"},{k:"compl",l:"Complete"},{k:"ordene",l:"Ordene"}];g.innerHTML=items.map(i=>`<div class="rec-item"><div class="rv">${r[i.k]!=null?r[i.k]:"—"}</div><div class="rl">${i.l}</div></div>`).join("");}
+renderRec();
+document.querySelectorAll(".tab-btn").forEach(btn=>{btn.onclick=()=>{document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));document.querySelectorAll(".tab-pane").forEach(p=>p.classList.remove("active"));btn.classList.add("active");document.getElementById("pane-"+btn.dataset.tab).classList.add("active");window.scrollTo({top:0,behavior:"smooth"});};});
+const nivelLabel={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
+const QS=shuffle(QRAW.filter(q=>q.alts&&q.alts.length>0)).map((q,idx)=>{const smap=shuffle(Array.from({length:q.alts.length},(_,i)=>i));return{...q,dn:idx+1,alts:smap.map(i=>q.alts[i]),porque:smap.map(i=>q.porque[i]),correta:smap.indexOf(q.correta)};});
+const quizEl=document.getElementById("quiz");
+QS.forEach(q=>{const c=document.createElement("div");c.className="card";c.dataset.q=q.dn;const tid="txt"+q.dn;c.innerHTML=`<div class="card-head"><span class="qnum">Questão ${q.dn}</span><span class="qtipo">${q.tipo}</span><span class="qnivel ${q.nivel}">${nivelLabel[q.nivel]}</span></div><div class="txt-base" id="${tid}">${q.texto}<span class="txt-fonte">${q.fonte}</span><button class="btn-tts" onclick="toggleTTS(this,'${tid}')">🔊</button></div><p class="enunciado">${q.enun}</p><div class="alts">${q.alts.map((t,i)=>`<button class="alt" onclick="resp(${q.dn},${i})"><span class="letra">${"ABCD"[i]}</span> ${t}</button>`).join("")}</div><div class="fb" id="fb${q.dn}"></div>`;quizEl.appendChild(c);});
+let acertos=0;const feitas=new Set();
+function resp(n,k){
+  if(feitas.has(n))return;feitas.add(n);
+  const q=QS.find(x=>x.dn===n),card=quizEl.querySelector(`[data-q="${n}"]`),btns=card.querySelectorAll(".alt"),fb=document.getElementById("fb"+n);
+  const ok=k===q.correta;if(ok)acertos++;
+
+  // Registra a resposta detalhada desta questão para depois enviar ao Sheets
+  respostasDetalhadas.push({
+    questao: n,
+    tipo: q.tipo,
+    nivel: q.nivel,
+    respostaDada: k>=0 ? "ABCD"[k] : "(não respondeu)",
+    respostaCorreta: "ABCD"[q.correta],
+    acertou: ok
+  });
+
+  selecoes[n]=k;btns.forEach((b,i)=>{b.disabled=true;if(modoJogo==="estudo"){if(i===q.correta)b.classList.add("ok");else if(i===k)b.classList.add("err");else b.classList.add("dim");}else{if(i===k)b.classList.add("sel");else b.classList.add("dim");}});
+  const pq=q.alts.map((t,i)=>`<span class="pi"><span class="l">${"ABCD"[i]})</span> ${q.porque[i]}</span>`).join("");
+  fb.className="fb show "+(ok?"ok":"err")+(modoJogo==="prova"?" prova-oculto":"");
+  fb.innerHTML=`<div class="ft">${ok?"✓ Correto!":"✗ Incorreto — a correta é "+"ABCD"[q.correta]+"."}</div><div>${q.porque[q.correta]}</div><div class="pq"><b>Cada alternativa:</b>${pq}</div>`;
+  document.getElementById("pFill").style.width=(feitas.size/QS.length*100)+"%";
+  // No modo prova, a pontuação parcial fica escondida; só aparece no resultado final
+  document.getElementById("score").textContent=modoJogo==="prova" ? (feitas.size+" / "+QS.length+" respondidas") : (acertos+" / "+QS.length);
+  if(feitas.size===QS.length)setTimeout(quizFim,500);
+}
+function quizFim(){
+  // No modo prova, revela todo o feedback que ficou oculto durante o quiz
+  if(modoJogo==="prova"){
+    // gabarito bloqueado no modo prova
+    // modo estudo mostra gabarito por senha
+    document.getElementById("score").textContent=acertos+" / "+QS.length;
+  }
+  const r=document.getElementById("resultado");r.style.display="block";
+  document.getElementById("notaFinal").textContent=acertos+"/"+QS.length;
+  const p=acertos/QS.length;let m,msg;
+  if(p>=.9){m="🥇";msg="Ouro! Precisão de detetive.";}
+  else if(p>=.7){m="🥈";msg="Prata! Atenção aos distratores.";}
+  else if(p>=.5){m="🥉";msg="Bronze! Volte ao texto antes de marcar.";}
+  else{m="📖";msg="Treine mais. A resposta está sempre lá.";}
+  document.getElementById("medalha").textContent=m;document.getElementById("msgFinal").textContent=msg;
+  saveRec("quiz",acertos);
+  enviarParaSheets();
+  r.scrollIntoView({behavior:"smooth",block:"center"});
+}// gabarito disc protegido por senha no HTML;
+// gabPrint removido: gabarito protegido por senha
+
+function makeTimedGame(bodyId,rounds,rk){return{i:0,pts:0,tmr:null,tempo:0,rounds:[],start(){this.i=0;this.pts=0;this.rounds=shuffle(rounds);this.render();},render(){const b=document.getElementById(bodyId);if(this.i>=this.rounds.length){saveRec(rk,this.pts);b.innerHTML=`<div class="jogo-final"><div class="big">${this.pts} pts</div><p>${this.pts>=this.rounds.length*10?"Muito bem! 🥇":"Continue praticando."}</p><button class="btn ouro" onclick="${bodyId.split('-')[0].toUpperCase()}.start()">↺ Jogar de novo</button></div>`;return;}const r=this.rounds[this.i];this.tempo=100;b.innerHTML=`<div class="jogo-mid"><span class="chip">Rodada ${this.i+1}/${this.rounds.length}</span><div class="timerbar"><div id="${bodyId}-bar"></div></div><span class="chip">${this.pts} pts</span></div><div class="mini-texto">${r.t}</div><div class="mini-q">${r.q}</div><div class="alts" id="${bodyId}-alts">${r.o.map((o,k)=>`<button class="alt" onclick="${bodyId.split('-')[0].toUpperCase()}.resp(${k})"><span class="letra">${"ABCD"[k]}</span> ${o}</button>`).join("")}</div><div class="mini-fb" id="${bodyId}-fb"></div>`;clearInterval(this.tmr);this.tmr=setInterval(()=>{this.tempo-=2;const bar=document.getElementById(bodyId+"-bar");if(bar)bar.style.width=Math.max(0,this.tempo)+"%";if(this.tempo<=0)this.resp(-1);},400);},resp(k){clearInterval(this.tmr);const r=this.rounds[this.i],btns=document.querySelectorAll("#"+bodyId+"-alts .alt"),fb=document.getElementById(bodyId+"-fb");btns.forEach((a,j)=>{a.disabled=true;if(j===r.c)a.classList.add("ok");else if(j===k)a.classList.add("err");else a.classList.add("dim");});if(k===r.c){const g=5+Math.round(this.tempo/10);this.pts+=g;fb.className="mini-fb show ok";fb.textContent="✓ +"+g+" pts!";}else{fb.className="mini-fb show err";fb.textContent=(k===-1?"⏱️ Tempo!":"✗")+" Era: "+"ABCD"[r.c]+".";}this.i++;setTimeout(()=>this.render(),2500);}};}
+const G1=makeTimedGame("g1-body",G1R,"qual");const G3=makeTimedGame("g3-body",G3R,"pistas");
+
+const G2={rs:[],cats:G2C,start(){this.rs=[];const b=document.getElementById("g2-body");b.innerHTML=`<div style="font-size:.82rem;color:var(--txt2);margin-bottom:.8rem">Classifique cada texto pela sua função principal:</div>`+G2I.map((it,i)=>`<div class="vf-item" id="g2i${i}"><div class="vf-stm"><b>${i+1}.</b> ${it.s}</div><div class="btn-row">${this.cats.map(c=>`<button class="mini-btn cat-btn" onclick="G2.j(${i},'${c[0]}')">${c[1]}</button>`).join("")}</div><div class="mini-fb" id="g2f${i}"></div></div>`).join("")+`<div id="g2fin"></div>`;},j(i,esc){if(this.rs[i]!=null)return;const it=G2I[i],ok=esc===it.cat;this.rs[i]=ok;document.querySelectorAll("#g2i"+i+" .mini-btn").forEach(btn=>{btn.disabled=true;const txt=btn.textContent;const cat=this.cats.find(c=>c[1]===txt);if(cat&&cat[0]===it.cat)btn.style.background="var(--verde-c)";else if(cat&&cat[0]===esc&&!ok)btn.style.background="var(--vermelho-c)";});const fb=document.getElementById("g2f"+i);fb.className="mini-fb show "+(ok?"ok":"err");fb.innerHTML=(ok?"✓ ":"✗ ")+it.p;if(this.rs.filter(x=>x!=null).length===G2I.length){const ac=this.rs.filter(x=>x).length;saveRec("classif",ac);document.getElementById("g2fin").innerHTML=`<div class="jogo-final"><div class="big">${ac}/${G2I.length}</div><p>${ac===G2I.length?"Perfeito! 🥇":"Releia as justificativas."}</p><button class="btn ouro" onclick="G2.start()">↺ Jogar de novo</button></div>`;}}};
+
+const G4={i:0,pts:0,rounds:[],start(){this.i=0;this.pts=0;this.rounds=shuffle(G4R);this.render();},render(){const b=document.getElementById("g4-body");if(this.i>=this.rounds.length){saveRec("compl",this.pts);b.innerHTML=`<div class="jogo-final"><div class="big">${this.pts}/${this.rounds.length}</div><p>${this.pts===this.rounds.length?"Perfeito! 🥇":"Continue praticando."}</p><button class="btn ouro" onclick="G4.start()">↺ Jogar de novo</button></div>`;return;}const it=this.rounds[this.i];b.innerHTML=`<div class="jogo-mid"><span class="chip">Frase ${this.i+1}/${this.rounds.length}</span><span class="chip">${this.pts} acertos</span></div><p style="font-size:.82rem;color:var(--txt2);margin:.4rem 0">${it.ctx}</p><div class="mini-texto">${it.f}</div><div class="alts" id="g4-alts">${it.o.map((o,k)=>`<button class="alt" onclick="G4.resp(${k})"><span class="letra">${"ABCD"[k]}</span> ${o}</button>`).join("")}</div><div class="mini-fb" id="g4-fb"></div>`;},resp(k){const it=this.rounds[this.i],btns=document.querySelectorAll("#g4-alts .alt"),fb=document.getElementById("g4-fb");btns.forEach((a,j)=>{a.disabled=true;if(j===it.c)a.classList.add("ok");else if(j===k)a.classList.add("err");else a.classList.add("dim");});if(k===it.c){this.pts++;fb.className="mini-fb show ok";fb.textContent="✓ Exato!";}else{fb.className="mini-fb show err";fb.textContent="✗ Era: "+it.o[it.c]+".";}this.i++;setTimeout(()=>this.render(),1200);}};
+
+const G5={ri:0,start(){this.ri=0;this.renderRound();},renderRound(){const b=document.getElementById("g5-body");if(this.ri>=G5R.length){saveRec("ordene","✓");b.innerHTML=`<div class="jogo-final"><div class="big">✓</div><p>Raciocínio organizado! 🥇</p><button class="btn ouro" onclick="G5.start()">↺ Jogar de novo</button></div>`;return;}const rd=G5R[this.ri];const items=shuffle(rd.correct);b.innerHTML=`<div class="jogo-mid"><span class="chip">Passo a passo ${this.ri+1}/${G5R.length}</span></div><p style="font-size:.84rem;color:var(--txt2);margin-bottom:.6rem">Use ▲ ▼ para ordenar. Depois clique em "Verificar".</p><ol class="ord-list" id="g5list">${items.map((it,i)=>`<li class="ord-item" data-txt="${encodeURIComponent(it)}">${it}<div class="ord-arrows"><button onclick="G5.move(${i},-1)">▲</button><button onclick="G5.move(${i},1)">▼</button></div></li>`).join("")}</ol><div style="text-align:center;margin-top:.6rem"><button class="btn ouro" onclick="G5.check()">✓ Verificar ordem</button></div><div class="mini-fb" id="g5fb"></div>`;},move(idx,dir){const list=document.getElementById("g5list");const items=[...list.children];const newIdx=idx+dir;if(newIdx<0||newIdx>=items.length)return;if(dir===-1)list.insertBefore(items[idx],items[newIdx]);else list.insertBefore(items[newIdx],items[idx]);[...list.children].forEach((li,i)=>{li.querySelector(".ord-arrows").innerHTML=`<button onclick="G5.move(${i},-1)">▲</button><button onclick="G5.move(${i},1)">▼</button>`;});},check(){const rd=G5R[this.ri];const list=document.getElementById("g5list");const items=[...list.children];const fb=document.getElementById("g5fb");let ok=true;items.forEach((li,i)=>{const txt=decodeURIComponent(li.dataset.txt);if(txt===rd.correct[i])li.classList.add("ok");else{li.classList.add("err");ok=false;}li.querySelectorAll("button").forEach(b=>b.disabled=true);});if(ok){fb.className="mini-fb show ok";fb.textContent="✓ Ordem perfeita!";this.ri++;setTimeout(()=>this.renderRound(),1400);}else{fb.className="mini-fb show err";fb.innerHTML='✗ Trocadas. <button class="mini-btn" style="margin-left:.5rem" onclick="G5.renderRound()">Tentar de novo</button>';}}};
+
+function liberarEstudo(el,btn){
+  var pwd=prompt('Senha do professor:');
+  if(pwd===null)return;
+  if(pwd===SENHA_MODO_ESTUDO){el.style.display='block';btn.textContent='Ocultar';}
+  else{alert('Senha incorreta.');}
+}
+</script></body></html>

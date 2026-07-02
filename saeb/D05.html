@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAEB/SIMAVE – D5 | Inferir o sentido de palavra ou expressão</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--azul:#1a3a5c;--azul-m:#235a8c;--azul-c:#d6e8f7;--ouro:#c9871f;--ouro-c:#fff8eb;--verde:#246b4a;--verde-c:#e6f4ed;--verm:#b02a2a;--verm-c:#fdecea;--bg:#f2f4f7;--borda:#d0d6e0;--branco:#fff;--txt:#1c2635;--txt2:#4a5568}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;line-height:1.5}
+header{background:var(--azul);color:#fff;padding:2.4rem 1.5rem 1.8rem;text-align:center;position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:rgba(201,135,31,.12)}
+.badge{display:inline-block;background:var(--ouro);color:var(--azul);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:.8rem}
+header h1{font-family:'Lora',serif;font-size:clamp(1.5rem,4vw,2.1rem);font-weight:600;line-height:1.3;margin-bottom:.4rem}
+header p{font-size:.92rem;opacity:.78;max-width:560px;margin:0 auto;line-height:1.6}
+.voltar-link{display:inline-block;margin-bottom:1rem;color:#fff;opacity:.7;text-decoration:none;font-size:.82rem}
+.voltar-link:hover{opacity:1}
+.tabs{background:var(--branco);border-bottom:1px solid var(--borda);position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.tabs-inner{max-width:840px;margin:0 auto;display:flex}
+.tab-btn{flex:1;background:none;border:none;padding:.95rem .5rem;font-family:'Inter',sans-serif;font-size:.88rem;font-weight:600;color:var(--txt2);cursor:pointer;border-bottom:3px solid transparent;transition:.15s;display:flex;align-items:center;justify-content:center;gap:.35rem}
+.tab-btn:hover{color:var(--azul-m);background:var(--bg)}
+.tab-btn.active{color:var(--azul);border-bottom-color:var(--ouro)}
+main{max-width:840px;margin:0 auto;padding:1.6rem 1.25rem 4rem}
+.tab-pane{display:none;flex-direction:column;gap:1.6rem}
+.tab-pane.active{display:flex}
+.painel{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.5rem 1.6rem}
+.painel h2{font-family:'Lora',serif;font-size:1.2rem;color:var(--azul);margin-bottom:.7rem}
+.painel h3{font-size:.95rem;color:var(--azul-m);margin:.9rem 0 .3rem}
+.painel p,.painel li{font-size:.9rem;margin-bottom:.5rem}
+.painel ul{margin:.2rem 0 .6rem 1.2rem}
+.painel strong{color:var(--azul)}
+.resumo-box{background:var(--azul);color:#fff;border-radius:14px;padding:1.4rem 1.6rem}
+.resumo-box h2{color:#fff;font-family:'Lora',serif;font-size:1.1rem;margin-bottom:.5rem}
+.resumo-box p{color:rgba(255,255,255,.9);font-size:.92rem;margin:0}
+.resumo-box .fc{display:block;margin-top:.7rem;font-style:italic;font-size:.88rem;background:rgba(255,255,255,.1);padding:.6rem .9rem;border-radius:8px;border-left:3px solid var(--ouro)}
+.dica-ouro{background:var(--ouro-c);border:1px solid #ecd9aa}
+.dica-ouro h2{color:#7a5310}.dica-ouro li{color:#4a3408}.dica-ouro strong{color:#7a5310}
+.glossario dt{font-weight:600;color:var(--azul-m);font-size:.88rem;margin-top:.5rem}
+.glossario dd{font-size:.86rem;color:var(--txt2);margin-left:0}
+.aviso-prof{background:#eef4fb;border:1px dashed var(--azul-m);border-radius:10px;padding:.9rem 1.1rem;font-size:.82rem;color:var(--azul-m)}
+.records{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.2rem 1.4rem}
+.records h2{font-family:'Lora',serif;font-size:1.1rem;color:var(--azul);margin-bottom:.6rem}
+.rec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.7rem}
+.rec-item{background:var(--bg);border-radius:10px;padding:.7rem;text-align:center}
+.rec-item .rv{font-size:1.5rem;font-weight:700;color:var(--azul-m)}
+.rec-item .rl{font-size:.72rem;color:var(--txt2)}
+.prog-wrap{background:var(--branco);border:1px solid var(--borda);border-radius:12px;padding:.85rem 1.1rem;display:flex;align-items:center;gap:14px}
+.prog-label{font-size:.78rem;font-weight:600;color:var(--azul-m);white-space:nowrap}
+.prog-track{flex:1;height:6px;background:var(--borda);border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--azul-m),var(--ouro));border-radius:99px;width:0%;transition:width .4s}
+.score{font-size:.78rem;font-weight:600;color:var(--txt2);white-space:nowrap}
+.card{background:var(--branco);border-radius:14px;border:1px solid var(--borda);overflow:hidden}
+.card-head{background:var(--azul);color:#fff;padding:.65rem 1.2rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.qnum{background:var(--ouro);color:var(--azul);font-size:.72rem;font-weight:700;padding:3px 11px;border-radius:20px}
+.qtipo{font-size:.74rem;opacity:.65;font-style:italic}
+
+
+.txt-base{background:var(--ouro-c);border-left:4px solid var(--ouro);margin:1rem 1.1rem 0;padding:1rem 1.1rem;border-radius:0 8px 8px 0;font-family:'Lora',serif;font-size:.94rem;line-height:1.85;color:#2b1d00;position:relative}
+.txt-fonte{font-family:'Inter',sans-serif;font-size:.72rem;color:var(--txt2);margin-top:.6rem;display:block;border-top:1px solid #e6d5b0;padding-top:.4rem}
+.btn-tts{position:absolute;top:.6rem;right:.6rem;background:none;border:1px solid #c9a14a;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;color:#8a6d1b;transition:.15s}
+.btn-tts:hover{background:#f5e6c1}
+.btn-tts.playing{background:var(--azul);color:#fff;border-color:var(--azul)}
+.img-slot{margin:.8rem 1.1rem 0;border:2px dashed var(--borda);border-radius:10px;padding:.8rem;text-align:center;color:var(--txt2);font-size:.76rem}
+.enunciado{padding:1rem 1.1rem .4rem;font-size:.92rem;line-height:1.6;font-weight:500;color:var(--azul)}
+.alts{padding:.4rem 1.1rem 1.1rem;display:flex;flex-direction:column;gap:.45rem}
+.alt{display:flex;align-items:flex-start;gap:10px;padding:.65rem .9rem;border:1.5px solid var(--borda);border-radius:9px;background:var(--branco);cursor:pointer;text-align:left;font-family:'Inter',sans-serif;font-size:.86rem;color:var(--txt);line-height:1.5;transition:.15s;width:100%}
+.alt:hover:not(:disabled){border-color:var(--azul-m);background:var(--azul-c);transform:translateX(2px)}
+.alt:disabled{cursor:default}
+.letra{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;border-radius:50%;background:var(--bg);font-size:.75rem;font-weight:700;color:var(--azul);flex-shrink:0}
+.alt.ok{border-color:var(--verde);background:var(--verde-c);color:var(--verde);font-weight:500}
+.alt.ok .letra{background:var(--verde);color:#fff}
+.alt.err{border-color:var(--verm);background:var(--verm-c);color:var(--verm)}
+.alt.err .letra{background:var(--verm);color:#fff}
+.alt.dim{opacity:.5}.alt.sel{border-color:var(--azul-m);background:var(--azul-c)}.alt.sel .letra{background:var(--azul-m);color:#fff}
+.fb{display:none;margin:0 1.1rem 1.1rem;padding:.8rem 1rem;border-radius:8px;font-size:.83rem;line-height:1.6}
+.fb.show{display:block}.fb.ok{background:var(--verde-c);border-left:3px solid var(--verde)}.fb.err{background:var(--verm-c);border-left:3px solid var(--verm)}
+.fb .ft{font-weight:600;margin-bottom:.3rem}.fb.ok .ft{color:var(--verde)}.fb.err .ft{color:var(--verm)}
+.fb .pq{margin-top:.5rem;border-top:1px solid rgba(0,0,0,.08);padding-top:.4rem}
+.fb .pq b{color:var(--azul)}
+.fb .pi{display:block;font-size:.8rem;color:var(--txt2);margin-bottom:.2rem}
+.fb .pi .l{font-weight:700;color:var(--azul)}
+#resultado{display:none;background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:2.4rem 2rem;text-align:center}
+#resultado h2{font-family:'Lora',serif;font-size:1.4rem;color:var(--azul)}
+.medalha{font-size:3rem;margin:.4rem 0}.nota{font-size:3.4rem;font-weight:700;color:var(--azul-m);line-height:1;margin:.4rem 0}
+#resultado p{color:var(--txt2);font-size:.9rem;max-width:480px;margin:.4rem auto 0}
+.btn{display:inline-block;background:var(--azul);color:#fff;padding:.65rem 1.5rem;border-radius:30px;border:none;font-size:.86rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;margin:.3rem}
+.btn:hover{background:var(--azul-m)}
+.btn.ouro{background:var(--ouro);color:var(--azul)}.btn.sec{background:var(--bg);color:var(--azul);border:1px solid var(--borda)}
+.jogo-card{background:var(--branco);border-radius:14px;border:1px solid var(--borda);overflow:hidden}
+.jogo-head{padding:1rem 1.3rem;border-bottom:1px solid var(--borda);display:flex;align-items:center;gap:.7rem}
+.jogo-ico{font-size:1.5rem}
+.jogo-head h3{font-family:'Lora',serif;font-size:1.1rem;color:var(--azul);margin:0}
+.jogo-head .desc{font-size:.78rem;color:var(--txt2)}
+.jogo-body{padding:1.2rem 1.3rem}
+.chip{font-size:.76rem;font-weight:600;padding:4px 11px;border-radius:20px;background:var(--azul-c);color:var(--azul)}
+.chip.timer{background:var(--ouro-c);color:#a96e10}
+.jogo-mid{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:.8rem}
+.timerbar{flex:1;min-width:100px;height:8px;background:var(--borda);border-radius:99px;overflow:hidden}
+.timerbar>div{height:100%;width:100%;background:linear-gradient(90deg,var(--verde),var(--ouro),var(--verm));border-radius:99px;transition:width .25s linear}
+.mini-texto{background:var(--ouro-c);border-left:4px solid var(--ouro);border-radius:0 8px 8px 0;padding:.85rem 1rem;font-family:'Lora',serif;font-size:.9rem;line-height:1.7;color:#2b1d00;margin-bottom:.8rem;position:relative}
+.mini-q{font-weight:600;color:var(--azul);margin-bottom:.6rem;font-size:.9rem}
+.mini-btn{border:1.5px solid var(--borda);background:var(--branco);border-radius:8px;padding:.45rem .8rem;font-size:.8rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;color:var(--azul);transition:.15s}
+.mini-btn:hover:not(:disabled){background:var(--azul-c);border-color:var(--azul-m)}
+.mini-btn:disabled{cursor:default}
+.mini-btn.ok{background:var(--verde-c);border-color:var(--verde);color:var(--verde)}
+.mini-btn.err{background:var(--verm-c);border-color:var(--verm);color:var(--verm)}
+.mini-fb{font-size:.8rem;margin-top:.5rem;padding:.45rem .65rem;border-radius:6px;display:none}
+.mini-fb.show{display:block}.mini-fb.ok{background:var(--verde-c);color:var(--verde)}.mini-fb.err{background:var(--verm-c);color:var(--verm)}
+.vf-item,.det-item{border:1.5px solid var(--borda);border-radius:10px;padding:.7rem .9rem;margin-bottom:.6rem}
+.vf-stm{font-size:.88rem;margin-bottom:.5rem}
+.btn-row{display:flex;gap:.5rem;flex-wrap:wrap}
+.cat-btn.cat-literal.ok,.cat-btn.cat-explicito.ok{border-color:var(--azul-m);background:var(--azul-c);color:var(--azul)}
+.cat-btn.cat-figurado.ok,.cat-btn.cat-inferivel.ok{border-color:var(--ouro);background:var(--ouro-c);color:#a96e10}
+.cat-btn.cat-giria.ok,.cat-btn.cat-extrapolacao.ok{border-color:var(--verde);background:var(--verde-c);color:var(--verde)}
+.jogo-final{text-align:center;padding:.8rem 0 .3rem}
+.jogo-final .big{font-size:2rem;font-weight:700;color:var(--azul-m)}
+.jogo-final p{font-size:.88rem;color:var(--txt2);margin:.2rem 0 .8rem}
+.ord-list{list-style:none;padding:0;counter-reset:ord}
+.ord-item{counter-increment:ord;display:flex;align-items:center;gap:10px;padding:.6rem .9rem;border:1.5px solid var(--borda);border-radius:9px;margin-bottom:.5rem;background:var(--branco);font-size:.86rem;user-select:none}
+.ord-item::before{content:counter(ord);display:flex;align-items:center;justify-content:center;min-width:24px;height:24px;border-radius:50%;background:var(--azul-c);font-size:.72rem;font-weight:700;color:var(--azul)}
+.ord-item.ok{border-color:var(--verde);background:var(--verde-c)}
+.ord-item.err{border-color:var(--verm);background:var(--verm-c)}
+.ord-arrows{display:flex;flex-direction:column;gap:2px;margin-left:auto}
+.ord-arrows button{background:var(--bg);border:1px solid var(--borda);border-radius:4px;width:24px;height:20px;cursor:pointer;font-size:.65rem;display:flex;align-items:center;justify-content:center}
+.ord-arrows button:hover{background:var(--azul-c)}
+footer{text-align:center;padding:1.5rem;font-size:.76rem;color:var(--txt2)}
+@media print{.tabs,header,.prog-wrap,.btn,.btn-tts,.img-slot,footer,#resultado,.jogo-card,.records,.resumo-box,.dica-ouro,.glossario,.aviso-prof{display:none!important}.tab-pane{display:flex!important}.card{break-inside:avoid;border:1px solid #ccc;margin-bottom:1rem}.card-head{background:#333!important;-webkit-print-color-adjust:exact}.fb{display:block!important;background:#f5f5f5!important;border-left:3px solid #999!important;color:#333!important}}
+@media(max-width:480px){.painel{padding:1.1rem}.tab-btn{font-size:.78rem;padding:.8rem .3rem}}
+/* ===== TELA DE IDENTIFICAÇÃO E MODO DE JOGO ===== */
+.quiz-gate{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.8rem 1.6rem;max-width:480px;margin:0 auto}
+.quiz-gate h2{font-family:'Lora',serif;font-size:1.25rem;color:var(--azul);margin-bottom:.4rem}
+.quiz-gate>p{font-size:.88rem;color:var(--txt2);margin-bottom:1.2rem}
+.gate-field{margin-bottom:1.1rem}
+.gate-field>label{display:block;font-size:.82rem;font-weight:600;color:var(--azul-m);margin-bottom:.4rem}
+.gate-field input[type=text]{width:100%;padding:.65rem .8rem;border:1.5px solid var(--borda);border-radius:9px;font-family:'Inter',sans-serif;font-size:.92rem;color:var(--txt)}
+.gate-field input[type=text]:focus{outline:none;border-color:var(--azul-m)}
+.modo-opcoes{display:flex;flex-direction:column;gap:.6rem}
+.modo-opcao{display:flex;align-items:flex-start;gap:.6rem;border:1.5px solid var(--borda);border-radius:10px;padding:.7rem .85rem;cursor:pointer;transition:.15s}
+.modo-opcao:hover{border-color:var(--azul-m)}
+.modo-opcao input[type=radio]{margin-top:.25rem;accent-color:var(--azul-m)}
+.modo-opcao input[type=radio]:checked~span b{color:var(--azul)}
+.modo-opcao span{font-size:.85rem}
+.modo-opcao small{color:var(--txt2);font-weight:400}
+.gate-aviso{color:var(--verm);font-size:.82rem;margin-top:.7rem;min-height:1.2em}
+.modo-opcao.bloqueado{opacity:.6;cursor:not-allowed}
+.modo-opcao.liberado{opacity:1;cursor:pointer;border-color:var(--verde)}
+.cadeado{font-size:.75rem}
+.senha-box{display:flex;gap:.5rem;margin-top:.6rem}
+.senha-box input[type=password]{flex:1;padding:.55rem .75rem;border:1.5px solid var(--borda);border-radius:9px;font-family:'Inter',sans-serif;font-size:.85rem}
+.senha-box input[type=password]:focus{outline:none;border-color:var(--azul-m)}
+.senha-btn{white-space:nowrap;font-size:.8rem;padding:.55rem 1rem}
+.senha-aviso{font-size:.78rem;margin-top:.4rem;min-height:1.1em}
+.senha-aviso.ok{color:var(--verde)}
+.senha-aviso.erro{color:var(--verm)}
+.modo-chip{font-size:.74rem;font-weight:700;padding:4px 12px;border-radius:20px;background:var(--azul-c);color:var(--azul-m);margin-left:auto}
+.envio-status{font-size:.82rem;margin-top:.8rem;padding:.6rem .9rem;border-radius:8px}
+.envio-status.enviando{background:var(--azul-c);color:var(--azul-m)}
+.envio-status.ok{background:var(--verde-c);color:var(--verde)}
+.envio-status.erro{background:var(--verm-c);color:var(--verm)}
+/* No modo prova, o feedback de cada questão fica escondido até o aluno terminar */
+.fb.prova-oculto{display:none!important}
+@media print{.quiz-gate,.modo-chip,.envio-status{display:none!important}#quizConteudo{display:block!important}}
+</style>
+</head>
+<body>
+<header>
+<a href="index.html" class="voltar-link">← Painel SAEB/SIMAVE</a>
+<div class="badge">SAEB · SIMAVE · Língua Portuguesa</div>
+<h1>Habilidade D05</h1>
+<p>Inferir o sentido de uma palavra ou expressão a partir do contexto</p>
+</header>
+<nav class="tabs"><div class="tabs-inner">
+<button class="tab-btn active" data-tab="estudar">📚 Estudar</button>
+<button class="tab-btn" data-tab="quiz">📝 Quiz</button>
+<button class="tab-btn" data-tab="jogos">🎮 Jogos</button>
+</div></nav>
+<main>
+<section class="tab-pane active" id="pane-estudar">
+<div class="resumo-box"><h2>🎯 Em uma frase</h2><p>O D5 mede se você consegue <strong style="color:#ffd98a">descobrir o significado de uma palavra ou expressão usando as pistas do texto ao redor</strong> — mesmo que essa palavra tenha outro sentido no dicionário, ou que você nunca tenha visto essa expressão antes.</p><span class="fc">"A palavra ganha sentido pela companhia que ela tem no texto."</span></div>
+
+<section class="painel"><h2>📌 O que essa habilidade avalia</h2><p>Toda palavra pode ter mais de um sentido. O D4 pede que você descubra <strong>qual sentido</strong> uma palavra ou expressão assume <strong>naquele texto específico</strong> — e não o sentido mais comum, nem o primeiro que aparece no dicionário.</p><p>Isso inclui: gírias, regionalismos, neologismos, expressões idiomáticas (“engolir o sapo”, “arregaçar as mangas”), termos técnicos explicados pelo contexto, e palavras usadas em sentido figurado/metáforico.</p>
+<h3>Como o enunciado costuma aparecer:</h3>
+<ul><li>"A palavra ___ , no texto, significa..."</li><li>"A expressão ___ pode ser substituída, sem mudar o sentido, por..."</li><li>"No contexto, ___ tem o sentido de..."</li></ul>
+</section>
+
+<section class="dica-ouro painel"><h2>💡 Dica de ouro</h2><ul>
+<li><strong>Releia a frase inteira</strong> — antes e depois da palavra. O contexto quase sempre "explica" ou "substitui" o sentido.</li>
+<li><strong>Teste um sinônimo.</strong> Troque a palavra por outra que você imagina e veja se a frase continua fazendo sentido.</li>
+<li><strong>Cuidado com o "sentido de dicionário".</strong> A alternativa que repete o significado mais comum da palavra costuma ser a pegadinha.</li>
+<li><strong>Expressões valem pelo conjunto.</strong> "Engolir o sapo" não tem nada a ver com sapo de verdade — pense no todo, não em cada palavra isolada.</li>
+<li><strong>Gírias e regionalismos</strong> costumam ter pistas de tom/emoção logo ao redor (riso, espanto, cansaço, elogio).</li>
+</ul></section>
+
+<section class="painel glossario"><h2>📖 Glossário</h2><dl>
+<dt>Sentido literal</dt><dd>O significado mais comum, "de dicionário", de uma palavra.</dd>
+<dt>Sentido figurado</dt><dd>Um significado novo, criado pelo contexto, diferente do literal (metáforas, comparações).</dd>
+<dt>Gíria</dt><dd>Palavra/expressão informal, usada por um grupo, com sentido próprio.</dd>
+<dt>Expressão idiomática</dt><dd>Conjunto de palavras com sentido próprio, que não se entende traduzindo palavra por palavra.</dd>
+<dt>Regionalismo</dt><dd>Palavra/expressão típica de uma região do país.</dd>
+<dt>Polissemia</dt><dd>Quando uma mesma palavra tem mais de um significado possível.</dd>
+</dl></section>
+
+<div class="aviso-prof"><b>Professor:</b> os textos abaixo são originais ou recontos de obras de domínio público, escritos especialmente para trabalhar vocabulário em contexto — podem ser publicados sem risco de direitos autorais.</div>
+
+<div class="records" id="recordsEstudar"><h2>🏆 Seus melhores resultados</h2><div class="rec-grid" id="recGrid"></div></div>
+</section>
+<section class="tab-pane" id="pane-quiz">
+
+<!-- ===== TELA DE IDENTIFICAÇÃO (aparece antes do quiz) ===== -->
+<div id="quizGate" class="quiz-gate">
+  <h2>👋 Antes de começar</h2>
+  <p>Preencha seus dados e escolha o modo de jogo.</p>
+  <div class="gate-field">
+    <label for="alunoNome">Nome do aluno</label>
+    <input type="text" id="alunoNome" placeholder="Seu nome completo" autocomplete="off">
+  </div>
+  <div class="gate-field">
+    <label for="alunoTurma">Turma / Série</label>
+    <input type="text" id="alunoTurma" placeholder="Ex: 9º Ano A" autocomplete="off">
+  </div>
+  <div class="gate-field">
+    <label>Modo de jogo</label>
+    <div class="modo-opcoes">
+      <label class="modo-opcao">
+        <input type="radio" name="modoQuiz" value="prova" checked>
+        <span><b>📝 Modo Prova</b><br><small>Sem feedback durante o quiz. As respostas certas só aparecem no final, como numa prova de verdade.</small></span>
+      </label>
+      <label class="modo-opcao" id="opcaoEstudo">
+        <input type="radio" name="modoQuiz" value="estudo" id="radioEstudo" disabled>
+        <span><b>📖 Modo Estudo</b> <span class="cadeado" id="cadeadoEstudo">🔒</span><br><small>Mostra se acertou ou errou — e a explicação — logo após cada resposta. Liberado pelo professor.</small></span>
+      </label>
+    </div>
+    <div class="senha-box" id="senhaBox">
+      <input type="password" id="senhaEstudo" placeholder="Senha do professor para liberar o Modo Estudo" autocomplete="off">
+      <button type="button" class="btn sec senha-btn" id="btnLiberarEstudo">Liberar</button>
+    </div>
+    <p class="senha-aviso" id="senhaAviso"></p>
+  </div>
+  <button class="btn" id="btnIniciarQuiz">▶ Começar o quiz</button>
+  <p class="gate-aviso" id="gateAviso"></p>
+</div>
+
+<!-- ===== QUIZ (fica oculto até o aluno preencher os dados acima) ===== -->
+<div id="quizConteudo" style="display:none">
+<div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.5rem;align-items:center">
+
+<button class="btn sec" onclick="location.reload()">🔀 Embaralhar e refazer</button>
+<span class="modo-chip" id="modoChip"></span>
+</div>
+<div class="prog-wrap"><span class="prog-label">Progresso</span><div class="prog-track"><div class="prog-fill" id="pFill"></div></div><span class="score" id="score">0 / 12</span></div>
+<div id="quiz" style="display:flex;flex-direction:column;gap:1.5rem"></div>
+
+
+
+<div id="resultado"><h2>Quiz concluído!</h2><div class="medalha" id="medalha">🏅</div><div class="nota" id="notaFinal">—</div><p id="msgFinal"></p><div id="envioStatus" class="envio-status"></div><div style="margin-top:1rem"><button class="btn" onclick="location.reload()">↺ Embaralhar e refazer</button></div></div>
+</div>
+</section>
+<section class="tab-pane" id="pane-jogos">
+<div class="resumo-box"><h2>🎮 Hora de jogar</h2><p>Cinco mini-games para treinar a leitura de palavras e expressões em contexto. Seus melhores resultados ficam salvos!</p></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">⏱️</span><div><h3>Qual o sentido?</h3><div class="desc">Leia o trecho e escolha o significado certo, antes que o tempo acabe!</div></div></div><div class="jogo-body" id="g1-body"><button class="btn ouro" onclick="G1.start()">▶ Começar</button></div></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">🏷️</span><div><h3>Literal, Figurado ou Gíria?</h3><div class="desc">Classifique cada expressão do texto.</div></div></div><div class="jogo-body" id="g2-body"><button class="btn ouro" onclick="G2.start()">▶ Começar</button></div></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">🔁</span><div><h3>Troca de Sinônimo</h3><div class="desc">Qual palavra substitui o termo sem mudar o sentido?</div></div></div><div class="jogo-body" id="g3-body"><button class="btn ouro" onclick="G3.start()">▶ Começar</button></div></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">🧩</span><div><h3>Complete com a palavra certa</h3><div class="desc">Escolha a palavra que faz sentido no contexto.</div></div></div><div class="jogo-body" id="g4-body"><button class="btn ouro" onclick="G4.start()">▶ Começar</button></div></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">🔢</span><div><h3>Ordene o raciocínio</h3><div class="desc">Coloque os passos do raciocínio na ordem certa.</div></div></div><div class="jogo-body" id="g5-body"><button class="btn ouro" onclick="G5.start()">▶ Começar</button></div></div>
+</section>
+</main>
+<footer>Portal do Professor Marcos Cruz · SAEB/SIMAVE · D5</footer>
+
+<script>
+/* ===== CONFIGURAÇÃO DO ENVIO PARA GOOGLE SHEETS =====
+   Cole aqui a URL do seu Apps Script publicado como "App da Web".
+   Veja o arquivo google-apps-script.gs para instruções de instalação.
+   Enquanto estiver "SUBSTITUA_PELA_SUA_URL", o envio fica desativado
+   (o quiz funciona normalmente, só não manda nada para a planilha). */
+const SHEETS_URL = "https://script.google.com/macros/s/AKfycbwPcWRWW2IkMb8-WkyB2w1M2n9ivcYlfqWajYRgCzecLTC1T7aBetZtR2MDaOIxahc/exec";
+const DESCRITOR_PAGINA = "D5 - Reconhecer o sentido de palavra/expressão";
+const NOME_ARQUIVO = "D05.html";
+
+/* ===== ESTADO DO ALUNO E MODO DE JOGO ===== */
+let alunoNome = "";
+let alunoTurma = "";
+let modoJogo = "estudo"; // "estudo" ou "prova"
+const respostasDetalhadas = [];
+const selecoes = {}; // {dn: k} para revelar botões no fim do modo prova // uma entrada por questão respondida, na ordem em que aparecem
+
+/* ===== SENHA PARA LIBERAR O MODO ESTUDO =====
+   Troque a senha abaixo quando quiser. É a MESMA senha em todas as páginas
+   do portal (mais simples de lembrar e passar para os alunos quando for
+   hora de revisão). Lembre-se: como o quiz roda no navegador do aluno,
+   essa senha impede o uso casual do Modo Estudo, mas não é uma proteção
+   contra alguém que abra o código-fonte da página — as respostas já estão
+   no arquivo de qualquer forma, como em qualquer site estático como este. */
+const SENHA_MODO_ESTUDO = "professor123";
+
+document.getElementById("btnLiberarEstudo").onclick = () => {
+  const campo = document.getElementById("senhaEstudo");
+  const aviso = document.getElementById("senhaAviso");
+  if (campo.value === SENHA_MODO_ESTUDO) {
+    document.getElementById("radioEstudo").disabled = false;
+    document.getElementById("radioEstudo").checked = true;
+    document.getElementById("cadeadoEstudo").textContent = "🔓";
+    document.getElementById("opcaoEstudo").classList.add("liberado");
+    document.getElementById("senhaBox").style.display = "none";
+    aviso.className = "senha-aviso ok";
+    aviso.textContent = "✓ Modo Estudo liberado.";
+  } else {
+    aviso.className = "senha-aviso erro";
+    aviso.textContent = "Senha incorreta.";
+  }
+};
+// Também libera ao apertar Enter no campo de senha
+document.getElementById("senhaEstudo").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") document.getElementById("btnLiberarEstudo").click();
+});
+
+document.getElementById("btnIniciarQuiz").onclick = () => {
+  const nome = document.getElementById("alunoNome").value.trim();
+  const turma = document.getElementById("alunoTurma").value.trim();
+  const aviso = document.getElementById("gateAviso");
+  if (!nome || !turma) {
+    aviso.textContent = "Preencha nome e turma/série para continuar.";
+    return;
+  }
+  alunoNome = nome;
+  alunoTurma = turma;
+  modoJogo = document.querySelector('input[name="modoQuiz"]:checked').value;
+  document.getElementById("quizGate").style.display = "none";
+  document.getElementById("quizConteudo").style.display = "block";
+  const chip = document.getElementById("modoChip");
+  chip.textContent = modoJogo === "prova" ? "📝 Modo Prova" : "📖 Modo Estudo";
+};
+
+/* ===== ENVIO PARA O GOOGLE SHEETS ===== */
+function enviarParaSheets() {
+  const statusEl = document.getElementById("envioStatus");
+  if (!SHEETS_URL || SHEETS_URL.indexOf("SUBSTITUA") !== -1) {
+    statusEl.className = "envio-status";
+    statusEl.textContent = "";
+    return; // envio desativado até o professor configurar a URL
+  }
+  statusEl.className = "envio-status enviando";
+  statusEl.textContent = "Enviando resultado para a planilha...";
+
+  const payload = {
+    nome: alunoNome,
+    turma: alunoTurma,
+    descritor: DESCRITOR_PAGINA,
+    pagina: NOME_ARQUIVO,
+    modo: modoJogo === "prova" ? "Prova" : "Estudo",
+    respostas: respostasDetalhadas
+  };
+
+  fetch(SHEETS_URL, {
+    method: "POST",
+    mode: "no-cors", // Apps Script Web Apps não devolvem CORS; "no-cors" garante o envio mesmo sem ler a resposta
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(payload)
+  }).then(() => {
+    statusEl.className = "envio-status ok";
+    statusEl.textContent = "✓ Resultado enviado para a planilha do professor.";
+  }).catch(() => {
+    statusEl.className = "envio-status erro";
+    statusEl.textContent = "✗ Não foi possível enviar o resultado (verifique sua internet).";
+  });
+}
+
+/* ===== QUIZ ===== */
+const QRAW=[{"n": 1, "tipo": "Divulgação científica", "nivel": "facil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Texto de divulgação científica — Raios! (fragmento)</b><p>Durante o verão a cena é comum. Nuvens escuras surgem de repente e a chuva começa. Em seguida, um relâmpago <b>risca</b> o céu. Que bonito! Logo depois vem o barulho do trovão. Que medo!</p><p>Os relâmpagos são descargas elétricas, semelhantes às correntes elétricas que passam pelos fios de nossas casas. Mas são milhares de vezes mais fortes. Tão fortes que ao passarem pela atmosfera deslocam o ar e produzem um barulho intenso, o trovão. Repare que vemos o relâmpago antes de ouvir o trovão: isso acontece porque a luz é mais rápida que o som.</p><p>Os relâmpagos que ocorrem entre as nuvens e o solo são chamados raios. Como podem prejudicar as pessoas, os raios são bastante estudados. [...]</p><span class=\"txt-fonte\">Ciência Hoje das Crianças. Avaliação Diagnóstica P0802 — CAED/UFJF, 2025.</span></div>", "fonte": "", "enun": "Nesse texto, a palavra 'risca' (1º parágrafo) foi utilizada para", "alts": ["indicar que os relâmpagos fazem o céu escurecer repentinamente.", "mostrar que os relâmpagos parecem traços desenhados no céu.", "revelar que os relâmpagos têm sempre um traçado perfeitamente reto.", "sinalizar que os relâmpagos atravessam o céu de forma rápida e intensa."], "correta": 3, "porque": ["O escurecimento do céu não é o sentido de 'risca' — é causado pelas nuvens, não pelo relâmpago.", "Embora a aparência de traço seja visual, 'risca' aqui não descreve um desenho passivo — indica movimento intenso e rápido de atravessar.", "A palavra não implica geometria perfeita — relâmpagos podem ter formatos variados.", "Correto: 'risca' é um verbo de movimento intenso — como uma linha riscada de um ponto ao outro. Aqui descreve o relâmpago cruzando o céu com velocidade e força, produzindo o traço luminoso característico."]}, {"n": 2, "tipo": "Crônica", "nivel": "facil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Crônica — A caneta tinteiro (fragmento)</b><p>Íamos pra escola carregando na mala o mata-borrão. [...] Era um pedaço de papel bem poroso que a gente usava pra limpar a tinta que vazava da caneta tinteiro.</p><p>Caneta que vazava? Como assim? É, vazava, soltava tinta. A gente tinha que carregar também, além da caneta, um potinho de vidro cheio de tinta preta ou azul, para encher a carga da caneta. <b>Era uma trabalheira danada!</b></p><p>E mesmo com todo cuidado a caneta vazava, estragava o estojo de couro, comprado <b>a duras penas</b>, sujava a blusa, deixava aquela mancha envergonhada no branco da blusa do uniforme. Estojo de couro, uniforme! Puxa, vó, que irado! [...]</p><span class=\"txt-fonte\">Disponível em: viveragora.com.br/cronicas-rapidas. Avaliação Diagnóstica P0902 — CAED/UFJF, 2025.</span></div>", "fonte": "", "enun": "Nesse texto, a expressão 'a duras penas' foi utilizada para", "alts": ["indicar o ressecamento que a tinta da caneta causava no papel do estojo.", "mostrar o material de penas de pássaro usado para fazer as canetas antigas.", "revelar a insatisfação em usar um estojo de couro em vez de plástico.", "sinalizar a dificuldade e o esforço necessários para comprar o estojo de couro."], "correta": 3, "porque": ["A expressão não tem relação com ressecamento — refere-se a custo e esforço humano.", "'Penas' aqui é figura de linguagem (sofrimento, esforço) — não é referência literal a penas de pássaro.", "O texto não expressa insatisfação com o material do estojo — ao contrário, o estojo de couro é apresentado como algo valioso.", "Correto: 'a duras penas' é expressão idiomática que significa 'com grande dificuldade, com muito esforço'. O estojo de couro era caro — comprá-lo custava sacrifício financeiro."]}, {"n": 3, "tipo": "Crônica", "nivel": "facil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Crônica — As flores bailarinas (fragmento)</b><p>Um pedaço de algodão flutuava no ar ao sabor do vento leve, tinha momentos que ele praticamente parava em pleno ar <b>tal qual um helicóptero</b>. Eu fiquei admirando, pois soltava muitos algodõezinhos soprando-os e deixando o vento levar.</p><p>As flores pareciam ter vida depois dessas 'visitas', começaram então a mexer suas pétalas e se desprenderam dos galhos, flutuaram juntas com seus 'pares' (os algodões) e o vento ajudou levando-as para cima e para baixo dando um ar de graça que <b>meus olhos se abismaram</b> e minhas mãos aplaudiram.</p><p><b>As flores com os algodões formaram um baile</b>, iniciaram uma apresentação mesmo sem música, mas meu cérebro se encarregou disso imaginando um clássico e deixando-as 'felizes' nesse bailado aéreo maravilhoso. [...] até que olhei atentamente para o jardim e percebi que estava delirando, as flores lá estavam.</p><span class=\"txt-fonte\">RODRIGUES, Moacir. Recanto das letras. Avaliação Diagnóstica P0902 — CAED/UFJF, 2025.</span></div>", "fonte": "", "enun": "No terceiro parágrafo, no trecho 'As flores com os algodões formaram um baile', o recurso estilístico foi utilizado para", "alts": ["atribuir características humanas às flores, que passam a ter comportamento e expressividade.", "enfatizar a quantidade de flores e algodões que se moviam ao mesmo tempo.", "expressar exagero no movimento das flores, que nunca dançariam na realidade.", "representar o som musical que as flores fazem ao se moverem no vento."], "correta": 0, "porque": ["Correto: 'formaram um baile' é personificação — flores não formam bailes, isso é atividade humana. O recurso atribui comportamento e organização social às flores, tornando-as sujeitos de uma ação humana.", "A ênfase na quantidade seria hipérbole ou enumeração, não baile — o termo 'baile' não indica quantidade.", "Exagero (hipérbole) seria dizer que as flores dançavam 'mais rápido que qualquer dançarina'. 'Formaram um baile' é personificação, não hipérbole.", "O texto não menciona sons — o autor even diz que a apresentação aconteceu 'mesmo sem música'."]}, {"n": 4, "tipo": "Conto (Machado de Assis)", "nivel": "medio", "texto": "<b>O Espelho — fragmento</b><br><br><em>\"Jacobina olhava-se no espelho com uma pertinácia tal que acabou por descobrir outra alma dentro de si — uma alma exterior, feita de galões e de brilho. O uniforme de alferes era, afinal, mais do que um pano bordado; era uma espécie de personalidade nova que ele havia adotado sem perceber.\"</em>", "fonte": "ASSIS, Machado de. <b>O Espelho</b> (fragmento adaptado). In: Papéis Avulsos, 1882. Domínio público.", "enun": "No trecho, a expressão <b>\"alma exterior\"</b> pode ser compreendida como:", "alts": ["a parte espiritual de Jacobina que habitava fora de seu corpo.", "a identidade social e aparente de Jacobina, construída pela farda e reconhecida pelos outros.", "um espírito maligno que dominava o comportamento do personagem.", "a imagem refletida no espelho, que Jacobina via como sendo outra pessoa."], "correta": 1, "porque": ["A expressão não tem sentido sobrenatural literal; é metáfora para a identidade construída socialmente.", "Machado usa 'alma exterior' para a identidade pública de Jacobina — aquela que existe no olhar dos outros, sustentada pela farda de alferes.", "Não há sentido de dominação maligna no trecho; o tom é de reflexão filosófica sobre identidade.", "O espelho reflete a imagem, mas 'alma exterior' refere-se à identidade social construída pelo uniforme, não à imagem visual em si."]}, {"n": 5, "tipo": "Divulgação científica", "nivel": "medio", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Texto de divulgação científica — Por que os escorpiões brilham na luz negra? (fragmento)</b><p>Os escorpiões são animais muito interessantes que fazem parte de um grupo chamado aracnídeos. Quando iluminados por raios ultravioletas (UV) presentes na luz negra, ficam com uma cor azul neon muito bonita.</p><p>Não se sabe ao certo por que isso ocorre, mas pesquisadores acreditam que o fenômeno pode ter a função de ajudar os escorpiões a medir a quantidade de luz da lua no ambiente. Como são animais noturnos, eles precisam saber se poderão ser vistos por predadores ou não. E quanto mais estiverem refletindo a luz, mais escondidos precisarão ficar para <b>passar despercebidos</b>.</p><span class=\"txt-fonte\">DOMENICHELLI, Guilherme. Jornal Joca. Avaliação Diagnóstica P0602 — CAED/UFJF, 2025.</span></div>", "fonte": "", "enun": "No último parágrafo, a expressão 'passar despercebidos' foi utilizada para", "alts": ["indicar que os escorpiões passam rapidamente por lugares perigosos sem se machucar.", "mostrar que os escorpiões atravessam o ambiente sem serem notados pelos predadores.", "revelar que os escorpiões não percebem a presença de predadores ao seu redor.", "sinalizar que os escorpiões passam por transformações que os tornam invisíveis."], "correta": 1, "porque": ["'Passar' aqui não significa atravessar um lugar com rapidez — significa existir/estar sem ser notado.", "Correto: 'passar despercebido' significa não ser percebido, não chamar atenção. Os escorpiões que refletem mais luz ficam mais visíveis — para não serem notados pelos predadores, precisam se esconder. A expressão descreve o objetivo deles: existir sem ser percebido.", "A sentença oposta: são os predadores que não perceberiam os escorpiões, não o contrário.", "'Despercebido' é o efeito (não ser notado) — não é uma transformação física como invisibilidade."]}, {"n": 6, "tipo": "Poema (Carlos Drummond de Andrade)", "nivel": "medio", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Poema — No meio do caminho (Carlos Drummond de Andrade, 1928)</b><p><em>No meio do caminho tinha uma pedra<br>tinha uma pedra no meio do caminho<br>tinha uma pedra<br>no meio do caminho tinha uma pedra.<br><br>Nunca me esquecerei desse acontecimento<br>na vida de minhas retinas tão fatigadas.<br><br>Nunca me esquecerei que no meio do caminho<br>tinha uma pedra<br>tinha uma pedra no meio do caminho<br>no meio do caminho tinha uma pedra.</em></p></div>", "fonte": "ANDRADE, Carlos Drummond de. <b>No meio do caminho</b>. In: <em>Alguma Poesia</em>. Belo Horizonte, 1930. Domínio público.", "enun": "No poema, a expressão <b>\"retinas tão fatigadas\"</b> pode ser interpretada como:", "alts": ["um problema médico de visão que o poeta desenvolveu por ler muito.", "um cansaço do olhar, sugerindo que o poeta se sente exausto de tantos obstáculos vividos.", "a dificuldade de o poeta enxergar a pedra no escuro da noite.", "uma referência ao trabalho excessivo do poeta como jornalista e escritor."], "correta": 1, "porque": ["O poema não trata de problemas fisiológicos de visão; a linguagem é figurada.", "As 'retinas fatigadas' sugerem um olhar cansado de tanto ver obstáculos — o poema usa a pedra como símbolo de tudo que nos atravessa o caminho na vida.", "Não há elemento noturno no poema; a expressão é figurada, não literal.", "A referência ao trabalho jornalístico não tem base no poema; a expressão tem sentido figurado ligado à trajetória de vida."]}, {"n": 7, "tipo": "Poema", "nivel": "dificil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Poema — De Que Somos Feitos (fragmento)</b><p>Sou feito dos livros que não li<br>dos lugares que não frequentei [...]<br>Sou feito das pessoas que não conheci<br>das línguas que não aprendi [...]<br>Sou feito dos brinquedos que não tive<br>das músicas que nunca escutei<br>dos sabores e cheiros que não senti [...]<br>das águas dos mares que não mergulhei [...]<br>das paisagens que não <b>contemplei</b></p><p>A minha história é o contrário<br>das histórias que não vivi<br>não tive, não sofri, nem fiz<br>A minha história é a história<br>que a História fez de mim</p><span class=\"txt-fonte\">CESÁRIO, Joaquim. Autores.com.br, 2023. Avaliação Diagnóstica P0802 — CAED/UFJF, 2025.</span></div>", "fonte": "", "enun": "Nesse poema, no verso 'das paisagens que não contemplei', a palavra destacada significa", "alts": ["admirar com atenção e envolvimento.", "meditar profundamente sobre algo abstrato.", "notar brevemente, sem prestar atenção especial.", "proteger ou guardar com cuidado."], "correta": 0, "porque": ["Correto: 'contemplar' é observar com atenção e apreciação intensa — não é apenas 'ver', mas parar para admirar. O contexto do poema (paisagens que poderiam ter sido apreciadas, mas não foram) reforça esse sentido de observação plena e envolvida.", "'Meditar' implica reflexão interior — 'contemplar' aqui refere-se à experiência sensorial de olhar e apreciar, não a reflexão filosófica.", "'Notar brevemente' seria o oposto de contemplar — que implica tempo e atenção dedicados.", "'Proteger' é sentido completamente alheio ao contexto — não há indicação de guarda ou cuidado."]}, {"n": 8, "tipo": "Conto (Clarice Lispector)", "nivel": "dificil", "texto": "<b>Amor — fragmento</b><br><br><em>\"No ônibus, o cego mascava chiclete. A mulher que o viu sentiu uma náusea súbita — não de repulsa, mas de reconhecimento. Havia naquele homem uma serenidade que ela nunca soubera nomear em si mesma. O coração bateu devagar, pesado. Ela tinha a impressão de ter faltado a um compromisso muito antigo.\"</em>", "fonte": "LISPECTOR, Clarice. <b>Amor</b> (fragmento adaptado). In: <em>Laços de Família</em>, 1960. Domínio público.", "enun": "No trecho, a expressão <b>\"faltado a um compromisso muito antigo\"</b> sugere que a personagem:", "alts": ["esqueceu de um encontro marcado com o cego no passado.", "sente que negligenciou algo essencial em si mesma — uma forma de viver ou sentir que havia deixado de lado.", "se arrependeu de não ter dado atenção ao cego quando passou por ele.", "reconheceu no cego alguém que havia conhecido muito tempo atrás."], "correta": 1, "porque": ["Não há encontro marcado entre os personagens; a expressão é figurada.", "O 'compromisso' é com a própria essência da personagem — a serenidade que ela via no cego e que ela própria havia perdido ou nunca cultivado.", "Não é sobre a interação com o cego especificamente, mas sobre o que ele revelou na personagem.", "O cego é um estranho; não há reconhecimento literal de identidade."]}, {"n": 9, "tipo": "Crônica (Rubem Braga) — Questão discursiva", "nivel": "dificil", "texto": "<b>A borboleta amarela — fragmento</b><br><br><em>\"Hoje vi uma borboleta amarela e senti que estava sendo muito feliz. Mas parei logo — feliz por quê? Por causa de uma borboleta? Depois parei de raciocinar, porque percebi que os raciocínios estavam me impedindo de ser feliz, e aquela era uma borboleta muito amarela mesmo.\"</em>", "fonte": "BRAGA, Rubem. <b>A borboleta amarela</b> (fragmento). Obra em domínio público.", "enun": "(Questão aberta) Releia o trecho de Rubem Braga. <b>(a)</b> A que sentido o autor atribui a expressão \"muito amarela mesmo\" ao final? <b>(b)</b> O que a frase \"os raciocínios estavam me impedindo de ser feliz\" revela sobre a posição do narrador diante do pensamento racional?", "alts": [], "correta": -1, "porque": ["(a) 'Muito amarela mesmo' reforça a intensidade da presença real da borboleta — o advérbio 'mesmo' enfatiza a concretude, a vivacidade da experiência sensorial que supera qualquer análise.", "(b) O narrador percebe que o pensamento racional ('raciocínios') atrapalha a experiência espontânea da felicidade — ele valoriza o sentir imediato acima do analisar.", "A crônica propõe que a felicidade está no instante presente, não na explicação racional dele.", "O humor da cena está no absurdo de questionar a própria alegria — o narrador ri de si mesmo por tentar 'justificar' uma emoção simples."]}, {"n": 10, "tipo": "Peça teatral (P0802)", "nivel": "facil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Peça teatral — A lebre e a tartaruga (fragmento, P0802)</b><p><b>Lebre:</b> <em>Sou dessas!</em><br><b>Tartaruga:</b> <em>Dessas o quê?</em><br><b>Lebre:</b> <em>Dessas que sempre vencem! Afinal, sou a maior velocista de todos os tempos! Nunca perdi, queridinha!</em><br><b>Tartaruga:</b> <em>(pensando) Sabe de uma coisa, eu acho que posso te vencer numa corrida!</em><br><b>Lebre:</b> <em>(surpresa) Como é? Você? Me vencer? Hahaha, nunca!</em><br><b>Tartaruga:</b> <em>Por que nunca?</em><br><b>Lebre:</b> <em>Porque eu nunca perdi, queridinha! Sou rápida feito o vento!</em><br><b>Tartaruga:</b> <em>Então tá na hora, queridona! Vamos correr. E que o melhor vença!</em><br><b>Lebre:</b> <em>(rindo) Você vai se arrepender disso! Eu vou até dormir no meio do caminho e ainda chego antes!</em><br><b>Tartaruga:</b> <em>(determinada) A gente vai ver...</em></p></div>", "fonte": "SOLLER, Regis de. A lebre e a tartaruga. Adaptado. P0802.", "enun": "No trecho, a expressão <b>'Sou dessas!'</b> pode ser compreendida como:", "alts": ["'Sou uma dessas tolas que acreditam que nunca podem perder.'", "'Sou do tipo das que sempre vencem — é assim que me vejo e me apresento.'", "'Sou uma das tartarugas mais rápidas que já existiram.'", "'Sou dessas que gostam de participar de corridas com outros animais.'"], "correta": 1, "porque": ["A ironia de a lebre ser tola só se revela no desfecho da história; no contexto, 'dessas' é pura autoafirmação arrogante.", "A fala seguinte confirma o sentido: 'Dessas que sempre vencem!' — a expressão apresenta a lebre como alguém que se enquadra na categoria das vencedoras eternas.", "A tartaruga não tem nada a ver com a fala; a lebre está falando de si mesma como vencedora.", "Participar de corridas não é o sentido — 'dessas' refere-se a ser do tipo das que vencem sempre, não das que competem."]}, {"n": 11, "tipo": "Conto (P0802)", "nivel": "medio", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Conto — Conversa de Cozinha (fragmento, P0802)</b><p>Um dia, a dona delas comprou um apartamento novo e encaixotou tudo para mudar. Os carregadores foram descuidados e esqueceram a caixa das panelas ao lado da lixeira. A criançada da rua estava voltando da escola e tiveram a ideia de reaproveitá-las para formar uma banda. A <b>troca de função</b> provocou mudanças radicais nas três. Caçarola às vezes faz de conta que é um banjo e brinca de música country. <b>Essa encontrou sua missão de vida.</b></p></div>", "fonte": "ALTOE, Maria Elaine Mana. Conversa de cozinha. Adaptado. P0802.", "enun": "No trecho, a expressão <b>'Essa encontrou sua missão de vida'</b> significa que a caçarola", "alts": ["finalmente aprendeu a cozinhar de um jeito que agradasse a todos ao redor.", "descobriu no papel de instrumento musical um propósito que a realizava de verdade.", "foi escolhida pelas crianças como a mais importante da banda por seu tamanho.", "resolveu deixar de ser usada como panela e se tornar cantora profissional."], "correta": 1, "porque": ["Cozinhar era a função original das panelas — a 'missão de vida' encontrada é justamente uma nova função, não a velha.", "'Missão de vida' refere-se ao papel que dá sentido à existência — no contexto, tocar como instrumento (especialmente 'fazer de conta que é um banjo') é o que realiza a caçarola.", "O tamanho não é mencionado; a missão está relacionada ao som e ao papel musical, não à hierarquia.", "A caçarola não é cantora; ela virou instrumento percussivo. 'Missão de vida' é expressão figurada."]}, {"n": 12, "tipo": "Notícia (P0901)", "nivel": "medio", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Notícia — Bienal do Livro no Rio (fragmento, P0901)</b><p>Quanto à programação, as atividades literárias serão adequadas a um novo formato do evento, que contará, por exemplo, com uma roda-gigante literária. Além disso, haverá o Palco Apoteose, um grande espaço como um livro aberto, voltado aos pré-adolescentes, nas manhãs dos fins de semana. O Apoteose ainda receberá a programação do <b>pulsante</b> palco 'Páginas na Tela', que conecta as narrativas do entretenimento.</p></div>", "fonte": "VALBÃO, Mariana. CNN Brasil, 22 nov. 2024. Adaptado. P0901.", "enun": "No texto, a palavra <b>'pulsante'</b> (aplicada ao palco) pode ser compreendida como:", "alts": ["que tem formato circular, semelhante ao de um coração.", "vibrante, cheio de vida e energia, com programação intensa e dinâmica.", "que oferece apenas espetáculos de música ao vivo com batidas fortes.", "instável ou imprevisível, com programação que muda constantemente."], "correta": 1, "porque": ["'Pulsante' vem de 'pulsar' (bater, vibrar), não de formato físico circular.", "No contexto de programação cultural, 'pulsante' é adjetivo de valoração — indica um palco cheio de vida e dinamismo, que 'pulsa' de atividade.", "A palavra não se restringe a música; descreve a energia geral da programação do palco.", "'Instável' seria sentido negativo; 'pulsante' no contexto é claramente positivo — valoriza o palco."]}, {"n": 13, "tipo": "Artigo (P0901)", "nivel": "dificil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Artigo — A Importância da Biblioteca (fragmento, P0901)</b><p>Uma Biblioteca é de suma importância em uma comunidade, pois as Bibliotecas exercem um papel social determinante para a inclusão dos indivíduos na cultura da 'Era da informação'. O papel social das bibliotecas, além da disseminação da informação, é também a inserção das comunidades em geral ao conhecimento e suas práticas. A biblioteca pública funciona como <b>alicerce</b> da educação.</p></div>", "fonte": "A IMPORTÂNCIA da Biblioteca em uma Sociedade. Bibliotecas do Maranhão, 2019. P0901.", "enun": "No texto, a palavra <b>'alicerce'</b> (em 'alicerce da educação') significa:", "alts": ["substituto: a biblioteca pode ocupar o lugar das escolas onde elas não existem.", "base fundamental: a biblioteca é a estrutura que sustenta e apoia o desenvolvimento educacional.", "destaque: a biblioteca é o elemento mais visível e reconhecido do sistema educacional.", "complemento opcional: a biblioteca melhora a educação, mas não é essencial a ela."], "correta": 1, "porque": ["'Alicerce' não significa substituto; a biblioteca apoia a educação formal, não a substitui.", "'Alicerce' é a base de sustentação de uma construção — transferido para o campo educacional, significa a estrutura que sustenta e torna possível o desenvolvimento educacional, assim como o alicerce sustenta o edifício.", "'Alicerce' é a parte oculta e fundamental, não o destaque visível; é a base, não a fachada.", "O contexto deixa claro que a biblioteca é apresentada como elemento fundamental ('suma importância'), não opcional."]}];
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function stripHTML(s){const d=document.createElement("div");d.innerHTML=s;return d.textContent||"";}
+
+function toggleTTS(btn,id){
+  if(window.speechSynthesis.speaking){window.speechSynthesis.cancel();document.querySelectorAll(".btn-tts").forEach(b=>b.classList.remove("playing"));return;}
+  const el=document.getElementById(id);if(!el)return;
+  const text=stripHTML(el.innerHTML).replace(/\s+/g," ");
+  const u=new SpeechSynthesisUtterance(text);u.lang="pt-BR";u.rate=.9;
+  btn.classList.add("playing");
+  u.onend=()=>btn.classList.remove("playing");
+  u.onerror=()=>btn.classList.remove("playing");
+  window.speechSynthesis.speak(u);
+}
+
+const REC_KEY="saeb_d4_records";
+function loadRec(){try{return JSON.parse(localStorage.getItem(REC_KEY))||{};}catch{return {};}}
+function saveRec(k,v){const r=loadRec();if(!(k in r)||v>r[k])r[k]=v;localStorage.setItem(REC_KEY,JSON.stringify(r));renderRec();}
+function renderRec(){
+  const r=loadRec(),g=document.getElementById("recGrid");if(!g)return;
+  const items=[{k:"quiz",l:"Quiz (de 12)"},{k:"sentido",l:"Qual o sentido?"},{k:"classificar",l:"Literal/Figurado/Gíria"},{k:"sinonimo",l:"Troca de Sinônimo"},{k:"complete",l:"Complete"},{k:"ordene",l:"Ordene"}];
+  g.innerHTML=items.map(i=>`<div class="rec-item"><div class="rv">${r[i.k]!=null?r[i.k]:"\u2014"}</div><div class="rl">${i.l}</div></div>`).join("");
+}
+renderRec();
+
+document.querySelectorAll(".tab-btn").forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll(".tab-pane").forEach(p=>p.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById("pane-"+btn.dataset.tab).classList.add("active");
+    window.scrollTo({top:0,behavior:"smooth"});
+  };
+});
+
+/* ---------- QUIZ ---------- */
+const QS = shuffle(QRAW.filter(q=>q.alts&&q.alts.length>0)).map((q,idx)=>{
+  const map=Array.from({length:q.alts.length},(_,i)=>i);
+  const smap=shuffle(map);
+  return{...q,dn:idx+1,alts:smap.map(i=>q.alts[i]),porque:smap.map(i=>q.porque[i]),correta:smap.indexOf(q.correta)};
+});
+const quizEl=document.getElementById("quiz");
+QS.forEach(q=>{
+  const c=document.createElement("div");c.className="card";c.dataset.q=q.dn;
+  const tid="txt"+q.dn;
+  c.innerHTML=`<div class="card-head"><span class="qnum">Questão ${q.dn}</span><span class="qtipo">${q.tipo}</span></div>
+  <div class="txt-base" id="${tid}">${q.texto}<span class="txt-fonte">${q.fonte}</span><button class="btn-tts" onclick="toggleTTS(this,'${tid}')" title="Ouvir texto">\uD83D\uDD0A</button></div>
+  
+  <p class="enunciado">${q.enun}</p>
+  <div class="alts">${q.alts.map((t,i)=>`<button class="alt" onclick="resp(${q.dn},${i})"><span class="letra">${"ABCD"[i]}</span> ${t}</button>`).join("")}</div>
+  <div class="fb" id="fb${q.dn}"></div>`;
+  quizEl.appendChild(c);
+});
+let acertos=0;const feitas=new Set();
+function resp(n,k){
+  if(feitas.has(n))return;feitas.add(n);
+  const q=QS.find(x=>x.dn===n),card=quizEl.querySelector(`[data-q="${n}"]`),btns=card.querySelectorAll(".alt"),fb=document.getElementById("fb"+n);
+  const ok=k===q.correta;if(ok)acertos++;
+
+  // Registra a resposta detalhada desta questão para depois enviar ao Sheets
+  respostasDetalhadas.push({
+    questao: n,
+    tipo: q.tipo,
+    nivel: q.nivel,
+    respostaDada: k>=0 ? "ABCD"[k] : "(não respondeu)",
+    respostaCorreta: "ABCD"[q.correta],
+    acertou: ok
+  });
+
+  selecoes[n]=k;btns.forEach((b,i)=>{b.disabled=true;if(modoJogo==="estudo"){if(i===q.correta)b.classList.add("ok");else if(i===k)b.classList.add("err");else b.classList.add("dim");}else{if(i===k)b.classList.add("sel");else b.classList.add("dim");}});
+  const pq=q.alts.map((t,i)=>`<span class="pi"><span class="l">${"ABCD"[i]})</span> ${q.porque[i]}</span>`).join("");
+  fb.className="fb show "+(ok?"ok":"err")+(modoJogo==="prova"?" prova-oculto":"");
+  fb.innerHTML=`<div class="ft">${ok?"✓ Correto!":"✗ Incorreto — a correta é "+"ABCD"[q.correta]+"."}</div><div>${q.porque[q.correta]}</div><div class="pq"><b>Cada alternativa:</b>${pq}</div>`;
+  document.getElementById("pFill").style.width=(feitas.size/QS.length*100)+"%";
+  // No modo prova, a pontuação parcial fica escondida; só aparece no resultado final
+  document.getElementById("score").textContent=modoJogo==="prova" ? (feitas.size+" / "+QS.length+" respondidas") : (acertos+" / "+QS.length);
+  if(feitas.size===QS.length)setTimeout(quizFim,500);
+}
+function quizFim(){
+  // No modo prova, revela todo o feedback que ficou oculto durante o quiz
+  if(modoJogo==="prova"){
+    // gabarito bloqueado no modo prova
+    // modo estudo mostra gabarito por senha
+    document.getElementById("score").textContent=acertos+" / "+QS.length;
+  }
+  const r=document.getElementById("resultado");r.style.display="block";
+  document.getElementById("notaFinal").textContent=acertos+"/"+QS.length;
+  const p=acertos/QS.length;let m,msg;
+  if(p>=.9){m="🥇";msg="Ouro! Precisão de detetive.";}
+  else if(p>=.7){m="🥈";msg="Prata! Atenção aos distratores.";}
+  else if(p>=.5){m="🥉";msg="Bronze! Volte ao texto antes de marcar.";}
+  else{m="📖";msg="Treine mais. A resposta está sempre lá.";}
+  document.getElementById("medalha").textContent=m;document.getElementById("msgFinal").textContent=msg;
+  saveRec("quiz",acertos);
+  enviarParaSheets();
+  r.scrollIntoView({behavior:"smooth",block:"center"});
+}
+
+/* ---------- FACTORY: JOGO CRONOMETRADO (G1 e G3) ---------- */
+function makeTimedGame(bodyId, roundsSrc, recordKey){
+  return {
+    i:0, pts:0, tmr:null, tempo:0, rounds:[],
+    start(){ this.i=0; this.pts=0; this.rounds=shuffle(roundsSrc); this.render(); },
+    render(){
+      const b=document.getElementById(bodyId);
+      if(this.i>=this.rounds.length){
+        saveRec(recordKey,this.pts);
+        const max=this.rounds.length*15;
+        const msg = this.pts>=max*0.7 ? "Muito bem! Leitura rápida e precisa. \uD83E\uDD47" : this.pts>=max*0.4 ? "Bom trabalho! Continue treinando." : "Vamos treinar mais um pouco?";
+        b.innerHTML=`<div class="jogo-final"><div class="big">${this.pts} pts</div><p>${msg}</p><button class="btn ouro" onclick="${bodyId.split('-')[0].toUpperCase()}.start()">\u21BA Jogar de novo</button></div>`;
+        return;
+      }
+      const r=this.rounds[this.i]; this.tempo=100;
+      const ttsId=bodyId+"-tts";
+      b.innerHTML=`<div class="jogo-mid"><span class="chip">Rodada ${this.i+1}/${this.rounds.length}</span><span class="chip timer">\u23F1\uFE0F</span><div class="timerbar"><div id="${bodyId}-bar"></div></div><span class="chip">${this.pts} pts</span></div>
+      <div class="mini-texto">${r.t}<button class="btn-tts" onclick="toggleTTS(this,'${ttsId}')">\uD83D\uDD0A</button><span id="${ttsId}" style="display:none">${r.t}</span></div>
+      <div class="mini-q">${r.q}</div>
+      <div class="alts" id="${bodyId}-alts">${r.o.map((o,k)=>`<button class="alt" onclick="${bodyId.split('-')[0].toUpperCase()}.resp(${k})"><span class="letra">${"ABCD"[k]}</span> ${o}</button>`).join("")}</div>
+      <div class="mini-fb" id="${bodyId}-fb"></div>`;
+      clearInterval(this.tmr);
+      this.tmr=setInterval(()=>{
+        this.tempo-=2;
+        const bar=document.getElementById(bodyId+"-bar");
+        if(bar)bar.style.width=Math.max(0,this.tempo)+"%";
+        if(this.tempo<=0)this.resp(-1);
+      },400);
+    },
+    resp(k){
+      clearInterval(this.tmr);
+      const r=this.rounds[this.i],btns=document.querySelectorAll("#"+bodyId+"-alts .alt"),fb=document.getElementById(bodyId+"-fb");
+      btns.forEach((a,j)=>{a.disabled=true;if(j===r.c)a.classList.add("ok");else if(j===k)a.classList.add("err");else a.classList.add("dim");});
+      if(k===r.c){const g=5+Math.round(this.tempo/10);this.pts+=g;fb.className="mini-fb show ok";fb.textContent="\u2713 +"+g+" pts!";}
+      else{fb.className="mini-fb show err";fb.textContent=(k===-1?"\u23F1\uFE0F Tempo!":"\u2717")+" Resposta: "+"ABCD"[r.c]+".";}
+      this.i++; setTimeout(()=>this.render(),2500);
+    }
+  };
+}
+const G1 = makeTimedGame("g1-body", G1_ROUNDS, "sentido");
+const G3 = makeTimedGame("g3-body", G3_ROUNDS, "sinonimo");
+
+/* ---------- G2: Literal, Figurado ou Gíria? ---------- */
+const G2 = {
+  rs:[],
+  cats:[["literal","Literal"],["figurado","Figurado"],["giria","Gíria"]],
+  start(){
+    this.rs=[];
+    const b=document.getElementById("g2-body");
+    b.innerHTML=`<div class="mini-texto">${G2_TEXT}<button class="btn-tts" onclick="toggleTTS(this,'g2t')">\uD83D\uDD0A</button><span id="g2t" style="display:none">${G2_TEXT}</span></div>
+    <p style="font-size:.82rem;color:var(--txt2);margin-bottom:.6rem">Para cada expressão destacada, diga se o sentido é <b>Literal</b>, <b>Figurado</b> ou <b>Gíria</b>.</p>`+
+    G2_ITEMS.map((it,i)=>`<div class="vf-item" id="g2i${i}"><div class="vf-stm"><b>${i+1}.</b> ${it.s}</div>
+      <div class="btn-row">${this.cats.map(c=>`<button class="mini-btn cat-btn cat-${c[0]}" onclick="G2.j(${i},'${c[0]}')">${c[1]}</button>`).join("")}</div>
+      <div class="mini-fb" id="g2f${i}"></div></div>`).join("")+`<div id="g2fin"></div>`;
+  },
+  j(i,escolha){
+    if(this.rs[i]!=null)return;
+    const it=G2_ITEMS[i], ok = escolha===it.cat;
+    this.rs[i]=ok;
+    document.querySelectorAll("#g2i"+i+" .mini-btn").forEach(btn=>{
+      btn.disabled=true;
+      const cls=btn.className.match(/cat-(\w+)/)[1];
+      if(cls===it.cat) btn.classList.add("ok");
+      else if(cls===escolha && !ok) btn.classList.add("err");
+    });
+    const fb=document.getElementById("g2f"+i);
+    fb.className="mini-fb show "+(ok?"ok":"err");
+    fb.innerHTML=(ok?"\u2713 ":"\u2717 ")+it.p;
+    if(this.rs.filter(x=>x!=null).length===G2_ITEMS.length){
+      const ac=this.rs.filter(x=>x).length;
+      saveRec("classificar",ac);
+      document.getElementById("g2fin").innerHTML=`<div class="jogo-final"><div class="big">${ac}/${G2_ITEMS.length}</div><p>${ac===G2_ITEMS.length?"Perfeito! Você distingue muito bem os sentidos. \uD83E\uDD47":"Bom trabalho! Releia as justificativas."}</p><button class="btn ouro" onclick="G2.start()">\u21BA Jogar de novo</button></div>`;
+    }
+  }
+};
+
+/* ---------- G4: Complete com a palavra certa (cloze) ---------- */
+const G4 = {
+  i:0, pts:0, rounds:[],
+  start(){ this.i=0; this.pts=0; this.rounds=shuffle(G4_ROUNDS); this.render(); },
+  render(){
+    const b=document.getElementById("g4-body");
+    if(this.i>=this.rounds.length){
+      saveRec("complete",this.pts);
+      b.innerHTML=`<div class="jogo-final"><div class="big">${this.pts}/${this.rounds.length}</div><p>${this.pts===this.rounds.length?"Perfeito! \uD83E\uDDE9\uD83E\uDD47":"Reler o contexto ajuda a escolher a palavra certa."}</p><button class="btn ouro" onclick="G4.start()">\u21BA Jogar de novo</button></div>`;
+      return;
+    }
+    const it=this.rounds[this.i];
+    b.innerHTML=`<div class="jogo-mid"><span class="chip">Frase ${this.i+1}/${this.rounds.length}</span><span class="chip">${this.pts} acertos</span></div>
+    <p style="font-size:.82rem;color:var(--txt2);margin-bottom:.4rem">${it.ctx}</p>
+    <div class="mini-texto">${it.f}</div>
+    <div class="alts" id="g4-alts">${it.o.map((o,k)=>`<button class="alt" onclick="G4.resp(${k})"><span class="letra">${"ABCD"[k]}</span> ${o}</button>`).join("")}</div>
+    <div class="mini-fb" id="g4-fb"></div>`;
+  },
+  resp(k){
+    const it=this.rounds[this.i],btns=document.querySelectorAll("#g4-alts .alt"),fb=document.getElementById("g4-fb");
+    btns.forEach((a,j)=>{a.disabled=true;if(j===it.c)a.classList.add("ok");else if(j===k)a.classList.add("err");else a.classList.add("dim");});
+    if(k===it.c){this.pts++;fb.className="mini-fb show ok";fb.textContent="\u2713 Exato!";}
+    else{fb.className="mini-fb show err";fb.textContent="\u2717 A palavra certa era \""+it.o[it.c]+"\".";}
+    this.i++; setTimeout(()=>this.render(),1200);
+  }
+};
+
+/* ---------- G5: Ordene o raciocínio ---------- */
+const G5 = {
+  ri:0,
+  start(){ this.ri=0; this.renderRound(); },
+  renderRound(){
+    const b=document.getElementById("g5-body");
+    if(this.ri>=G5_ROUNDS.length){
+      saveRec("ordene","\u2713");
+      b.innerHTML=`<div class="jogo-final"><div class="big">\u2713</div><p>Você organizou todo o raciocínio! \uD83D\uDD22\uD83E\uDD47</p><button class="btn ouro" onclick="G5.start()">\u21BA Jogar de novo</button></div>`;
+      return;
+    }
+    const rd=G5_ROUNDS[this.ri];
+    const items=shuffle(rd.correct);
+    b.innerHTML=`<div class="jogo-mid"><span class="chip">Passo a passo ${this.ri+1}/${G5_ROUNDS.length}</span><span class="chip">${rd.title}</span></div>
+    <p style="font-size:.84rem;color:var(--txt2);margin-bottom:.7rem">Use as setas \u25B2 \u25BC para colocar os passos do raciocínio na ordem correta. Depois, clique em "Verificar".</p>
+    <ol class="ord-list" id="g5list">${items.map((it,i)=>`<li class="ord-item" data-txt="${encodeURIComponent(it)}">${it}<div class="ord-arrows"><button onclick="G5.move(${i},-1)">\u25B2</button><button onclick="G5.move(${i},1)">\u25BC</button></div></li>`).join("")}</ol>
+    <div style="text-align:center;margin-top:.6rem"><button class="btn ouro" onclick="G5.check()">\u2713 Verificar ordem</button></div>
+    <div class="mini-fb" id="g5fb"></div>`;
+  },
+  move(idx,dir){
+    const list=document.getElementById("g5list");
+    const items=[...list.children];
+    const newIdx=idx+dir;
+    if(newIdx<0||newIdx>=items.length)return;
+    if(dir===-1) list.insertBefore(items[idx], items[newIdx]);
+    else list.insertBefore(items[newIdx], items[idx]);
+    [...list.children].forEach((li,i)=>{
+      li.querySelector(".ord-arrows").innerHTML=`<button onclick="G5.move(${i},-1)">\u25B2</button><button onclick="G5.move(${i},1)">\u25BC</button>`;
+    });
+  },
+  check(){
+    const rd=G5_ROUNDS[this.ri];
+    const list=document.getElementById("g5list");
+    const items=[...list.children];
+    const fb=document.getElementById("g5fb");
+    let allOk=true;
+    items.forEach((li,i)=>{
+      const txt=decodeURIComponent(li.dataset.txt);
+      if(txt===rd.correct[i]) li.classList.add("ok");
+      else { li.classList.add("err"); allOk=false; }
+      li.querySelectorAll("button").forEach(b=>b.disabled=true);
+    });
+    if(allOk){
+      fb.className="mini-fb show ok"; fb.textContent="\u2713 Ordem perfeita!";
+      this.ri++; setTimeout(()=>this.renderRound(),1400);
+    } else {
+      fb.className="mini-fb show err";
+      fb.innerHTML="\u2717 Algumas posições estão trocadas. <button class=\"mini-btn\" style=\"margin-left:.5rem\" onclick=\"G5.renderRound()\">Tentar de novo</button>";
+    }
+  }
+};
+
+function liberarEstudo(el,btn){
+  var pwd=prompt('Senha do professor:');
+  if(pwd===null)return;
+  if(pwd===SENHA_MODO_ESTUDO){el.style.display='block';btn.textContent='Ocultar';}
+  else{alert('Senha incorreta.');}
+}
+</script>
+</body>
+</html>

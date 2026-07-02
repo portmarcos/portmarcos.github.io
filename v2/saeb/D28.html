@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAEB/SIMAVE – D28 | Efeitos de sentido da escolha lexical</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--azul:#1a3a5c;--azul-m:#235a8c;--azul-c:#d6e8f7;--ouro:#c9871f;--ouro-c:#fff8eb;--verde:#246b4a;--verde-c:#e6f4ed;--verm:#b02a2a;--verm-c:#fdecea;--bg:#f2f4f7;--borda:#d0d6e0;--branco:#fff;--txt:#1c2635;--txt2:#4a5568}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;line-height:1.5}
+header{background:var(--azul);color:#fff;padding:2.4rem 1.5rem 1.8rem;text-align:center;position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:rgba(201,135,31,.12)}
+.badge{display:inline-block;background:var(--ouro);color:var(--azul);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:.8rem}
+header h1{font-family:'Lora',serif;font-size:clamp(1.5rem,4vw,2.1rem);font-weight:600;line-height:1.3;margin-bottom:.4rem}
+header p{font-size:.92rem;opacity:.78;max-width:560px;margin:0 auto;line-height:1.6}
+.voltar-link{display:inline-block;margin-bottom:1rem;color:#fff;opacity:.7;text-decoration:none;font-size:.82rem}
+.voltar-link:hover{opacity:1}
+.tabs{background:var(--branco);border-bottom:1px solid var(--borda);position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.tabs-inner{max-width:840px;margin:0 auto;display:flex}
+.tab-btn{flex:1;background:none;border:none;padding:.95rem .5rem;font-family:'Inter',sans-serif;font-size:.88rem;font-weight:600;color:var(--txt2);cursor:pointer;border-bottom:3px solid transparent;transition:.15s;display:flex;align-items:center;justify-content:center;gap:.35rem}
+.tab-btn:hover{color:var(--azul-m);background:var(--bg)}
+.tab-btn.active{color:var(--azul);border-bottom-color:var(--ouro)}
+main{max-width:840px;margin:0 auto;padding:1.6rem 1.25rem 4rem}
+.tab-pane{display:none;flex-direction:column;gap:1.6rem}
+.tab-pane.active{display:flex}
+.painel{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.5rem 1.6rem}
+.painel h2{font-family:'Lora',serif;font-size:1.2rem;color:var(--azul);margin-bottom:.7rem}
+.painel h3{font-size:.95rem;color:var(--azul-m);margin:.9rem 0 .3rem}
+.painel p,.painel li{font-size:.9rem;margin-bottom:.5rem}
+.painel ul{margin:.2rem 0 .6rem 1.2rem}
+.painel strong{color:var(--azul)}
+.resumo-box{background:var(--azul);color:#fff;border-radius:14px;padding:1.4rem 1.6rem}
+.resumo-box h2{color:#fff;font-family:'Lora',serif;font-size:1.1rem;margin-bottom:.5rem}
+.resumo-box p{color:rgba(255,255,255,.9);font-size:.92rem;margin:0}
+.resumo-box .fc{display:block;margin-top:.7rem;font-style:italic;font-size:.88rem;background:rgba(255,255,255,.1);padding:.6rem .9rem;border-radius:8px;border-left:3px solid var(--ouro)}
+.dica-ouro{background:var(--ouro-c);border:1px solid #ecd9aa}
+.dica-ouro h2{color:#7a5310}.dica-ouro li{color:#4a3408}.dica-ouro strong{color:#7a5310}
+.glossario dt{font-weight:600;color:var(--azul-m);font-size:.88rem;margin-top:.5rem}
+.glossario dd{font-size:.86rem;color:var(--txt2);margin-left:0}
+.aviso-prof{background:#eef4fb;border:1px dashed var(--azul-m);border-radius:10px;padding:.9rem 1.1rem;font-size:.82rem;color:var(--azul-m)}
+.records{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.2rem 1.4rem}
+.records h2{font-family:'Lora',serif;font-size:1.1rem;color:var(--azul);margin-bottom:.6rem}
+.rec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.7rem}
+.rec-item{background:var(--bg);border-radius:10px;padding:.7rem;text-align:center}
+.rec-item .rv{font-size:1.5rem;font-weight:700;color:var(--azul-m)}
+.rec-item .rl{font-size:.72rem;color:var(--txt2)}
+.prog-wrap{background:var(--branco);border:1px solid var(--borda);border-radius:12px;padding:.85rem 1.1rem;display:flex;align-items:center;gap:14px}
+.prog-label{font-size:.78rem;font-weight:600;color:var(--azul-m);white-space:nowrap}
+.prog-track{flex:1;height:6px;background:var(--borda);border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--azul-m),var(--ouro));border-radius:99px;width:0%;transition:width .4s}
+.score{font-size:.78rem;font-weight:600;color:var(--txt2);white-space:nowrap}
+.card{background:var(--branco);border-radius:14px;border:1px solid var(--borda);overflow:hidden}
+.card-head{background:var(--azul);color:#fff;padding:.65rem 1.2rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.qnum{background:var(--ouro);color:var(--azul);font-size:.72rem;font-weight:700;padding:3px 11px;border-radius:20px}
+.qtipo{font-size:.74rem;opacity:.65;font-style:italic}
+
+.txt-base{background:var(--ouro-c);border-left:4px solid var(--ouro);margin:1rem 1.1rem 0;padding:1rem 1.1rem;border-radius:0 8px 8px 0;font-family:'Lora',serif;font-size:.94rem;line-height:1.85;color:#2b1d00;position:relative}
+.txt-fonte{font-family:'Inter',sans-serif;font-size:.72rem;color:var(--txt2);margin-top:.6rem;display:block;border-top:1px solid #e6d5b0;padding-top:.4rem}
+.btn-tts{position:absolute;top:.6rem;right:.6rem;background:none;border:1px solid #c9a14a;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;color:#8a6d1b;transition:.15s}
+.btn-tts:hover{background:#f5e6c1}
+.btn-tts.playing{background:var(--azul);color:#fff;border-color:var(--azul)}
+.img-slot{margin:.8rem 1.1rem 0;border:2px dashed var(--borda);border-radius:10px;padding:.8rem;text-align:center;color:var(--txt2);font-size:.76rem}
+.enunciado{padding:1rem 1.1rem .4rem;font-size:.92rem;line-height:1.6;font-weight:500;color:var(--azul)}
+.alts{padding:.4rem 1.1rem 1.1rem;display:flex;flex-direction:column;gap:.45rem}
+.alt{display:flex;align-items:flex-start;gap:10px;padding:.65rem .9rem;border:1.5px solid var(--borda);border-radius:9px;background:var(--branco);cursor:pointer;text-align:left;font-family:'Inter',sans-serif;font-size:.86rem;color:var(--txt);line-height:1.5;transition:.15s;width:100%}
+.alt:hover:not(:disabled){border-color:var(--azul-m);background:var(--azul-c);transform:translateX(2px)}
+.alt:disabled{cursor:default}
+.letra{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;border-radius:50%;background:var(--bg);font-size:.75rem;font-weight:700;color:var(--azul);flex-shrink:0}
+.alt.ok{border-color:var(--verde);background:var(--verde-c);color:var(--verde);font-weight:500}
+.alt.ok .letra{background:var(--verde);color:#fff}
+.alt.err{border-color:var(--verm);background:var(--verm-c);color:var(--verm)}
+.alt.err .letra{background:var(--verm);color:#fff}
+.alt.dim{opacity:.5}
+.fb{display:none;margin:0 1.1rem 1.1rem;padding:.8rem 1rem;border-radius:8px;font-size:.83rem;line-height:1.6}
+.fb.show{display:block}.fb.ok{background:var(--verde-c);border-left:3px solid var(--verde)}.fb.err{background:var(--verm-c);border-left:3px solid var(--verm)}
+.fb .ft{font-weight:600;margin-bottom:.3rem}.fb.ok .ft{color:var(--verde)}.fb.err .ft{color:var(--verm)}
+.fb .pq{margin-top:.5rem;border-top:1px solid rgba(0,0,0,.08);padding-top:.4rem}
+.fb .pq b{color:var(--azul)}
+.fb .pi{display:block;font-size:.8rem;color:var(--txt2);margin-bottom:.2rem}
+.fb .pi .l{font-weight:700;color:var(--azul)}
+#resultado{display:none;background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:2.4rem 2rem;text-align:center}
+#resultado h2{font-family:'Lora',serif;font-size:1.4rem;color:var(--azul)}
+.medalha{font-size:3rem;margin:.4rem 0}.nota{font-size:3.4rem;font-weight:700;color:var(--azul-m);line-height:1;margin:.4rem 0}
+#resultado p{color:var(--txt2);font-size:.9rem;max-width:480px;margin:.4rem auto 0}
+.btn{display:inline-block;background:var(--azul);color:#fff;padding:.65rem 1.5rem;border-radius:30px;border:none;font-size:.86rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;margin:.3rem}
+.btn:hover{background:var(--azul-m)}
+.btn.ouro{background:var(--ouro);color:var(--azul)}.btn.sec{background:var(--bg);color:var(--azul);border:1px solid var(--borda)}
+.jogo-card{background:var(--branco);border-radius:14px;border:1px solid var(--borda);overflow:hidden}
+.jogo-head{padding:1rem 1.3rem;border-bottom:1px solid var(--borda);display:flex;align-items:center;gap:.7rem}
+.jogo-ico{font-size:1.5rem}
+.jogo-head h3{font-family:'Lora',serif;font-size:1.1rem;color:var(--azul);margin:0}
+.jogo-head .desc{font-size:.78rem;color:var(--txt2)}
+.jogo-body{padding:1.2rem 1.3rem}
+.chip{font-size:.76rem;font-weight:600;padding:4px 11px;border-radius:20px;background:var(--azul-c);color:var(--azul)}
+.chip.timer{background:var(--ouro-c);color:#a96e10}
+.jogo-mid{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:.8rem}
+.timerbar{flex:1;min-width:100px;height:8px;background:var(--borda);border-radius:99px;overflow:hidden}
+.timerbar>div{height:100%;width:100%;background:linear-gradient(90deg,var(--verde),var(--ouro),var(--verm));border-radius:99px;transition:width .25s linear}
+.mini-texto{background:var(--ouro-c);border-left:4px solid var(--ouro);border-radius:0 8px 8px 0;padding:.85rem 1rem;font-family:'Lora',serif;font-size:.9rem;line-height:1.7;color:#2b1d00;margin-bottom:.8rem;position:relative}
+.mini-q{font-weight:600;color:var(--azul);margin-bottom:.6rem;font-size:.9rem}
+.mini-btn{border:1.5px solid var(--borda);background:var(--branco);border-radius:8px;padding:.45rem .8rem;font-size:.8rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;color:var(--azul);transition:.15s}
+.mini-btn:hover:not(:disabled){background:var(--azul-c);border-color:var(--azul-m)}
+.mini-btn:disabled{cursor:default}
+.mini-btn.ok{background:var(--verde-c);border-color:var(--verde);color:var(--verde)}
+.mini-btn.err{background:var(--verm-c);border-color:var(--verm);color:var(--verm)}
+.mini-fb{font-size:.8rem;margin-top:.5rem;padding:.45rem .65rem;border-radius:6px;display:none}
+.mini-fb.show{display:block}.mini-fb.ok{background:var(--verde-c);color:var(--verde)}.mini-fb.err{background:var(--verm-c);color:var(--verm)}
+.vf-item,.det-item{border:1.5px solid var(--borda);border-radius:10px;padding:.7rem .9rem;margin-bottom:.6rem}
+.vf-stm{font-size:.88rem;margin-bottom:.5rem}
+.btn-row{display:flex;gap:.5rem;flex-wrap:wrap}
+.cat-btn.cat-tema.ok{border-color:var(--azul-m);background:var(--azul-c);color:var(--azul)}
+.cat-btn.cat-detalhe.ok{border-color:var(--ouro);background:var(--ouro-c);color:#a96e10}
+.cat-btn.cat-foradotexto.ok{border-color:var(--verde);background:var(--verde-c);color:var(--verde)}
+.jogo-final{text-align:center;padding:.8rem 0 .3rem}
+.jogo-final .big{font-size:2rem;font-weight:700;color:var(--azul-m)}
+.jogo-final p{font-size:.88rem;color:var(--txt2);margin:.2rem 0 .8rem}
+.ord-list{list-style:none;padding:0;counter-reset:ord}
+.ord-item{counter-increment:ord;display:flex;align-items:center;gap:10px;padding:.6rem .9rem;border:1.5px solid var(--borda);border-radius:9px;margin-bottom:.5rem;background:var(--branco);font-size:.86rem;user-select:none}
+.ord-item::before{content:counter(ord);display:flex;align-items:center;justify-content:center;min-width:24px;height:24px;border-radius:50%;background:var(--azul-c);font-size:.72rem;font-weight:700;color:var(--azul)}
+.ord-item.ok{border-color:var(--verde);background:var(--verde-c)}
+.ord-item.err{border-color:var(--verm);background:var(--verm-c)}
+.ord-arrows{display:flex;flex-direction:column;gap:2px;margin-left:auto}
+.ord-arrows button{background:var(--bg);border:1px solid var(--borda);border-radius:4px;width:24px;height:20px;cursor:pointer;font-size:.65rem;display:flex;align-items:center;justify-content:center}
+.ord-arrows button:hover{background:var(--azul-c)}
+footer{text-align:center;padding:1.5rem;font-size:.76rem;color:var(--txt2)}
+@media print{.tabs,header,.prog-wrap,.btn,.btn-tts,.img-slot,footer,#resultado,.jogo-card,.records,.resumo-box,.dica-ouro,.glossario,.aviso-prof{display:none!important}.tab-pane{display:flex!important}.card{break-inside:avoid;border:1px solid #ccc;margin-bottom:1rem}.card-head{background:#333!important;-webkit-print-color-adjust:exact}.fb{display:block!important;background:#f5f5f5!important;border-left:3px solid #999!important;color:#333!important}}
+@media(max-width:480px){.painel{padding:1.1rem}.tab-btn{font-size:.78rem;padding:.8rem .3rem}}
+
+.genre-tag{display:inline-block;padding:3px 10px;border-radius:14px;font-size:.72rem;font-weight:700;margin-bottom:.5rem}
+.func-tag{display:inline-block;padding:4px 12px;border-radius:14px;font-size:.75rem;font-weight:700;margin:2px 4px 2px 0;color:#fff}
+.func-informar{background:#3498db}.func-narrar{background:#e74c3c}.func-opinar{background:#f39c12}.func-instruir{background:#27ae60}.func-definir{background:#9b59b6}.func-expressar{background:#1abc9c}
+.disc-area{width:calc(100% - 2.2rem);min-height:130px;border:1.5px solid var(--borda);border-radius:9px;padding:.7rem .9rem;font-family:'Inter',sans-serif;font-size:.88rem;resize:vertical;margin:0 1.1rem .4rem}
+.disc-actions{padding:0 1.1rem 1rem}
+@media print{.gabarito-print{display:block!important;break-before:page;border:1px solid #999;border-radius:8px;padding:1rem 1.2rem;margin-top:1rem}.gabarito-print h2{font-size:1.1rem;margin-bottom:.6rem}.gabarito-print ol{margin-left:1.2rem}.gabarito-print li{font-size:.86rem;margin-bottom:.3rem}.fb{display:none!important}.disc-actions{display:none!important}}
+
+.tese-box{background:#e3f2fd;border-left:4px solid #1976d2;padding:.8rem;margin:.8rem 0;border-radius:0 8px 8px 0}
+.disc-area{width:calc(100% - 2.2rem);min-height:130px;border:1.5px solid var(--borda);border-radius:9px;padding:.7rem .9rem;font-family:'Inter',sans-serif;font-size:.88rem;resize:vertical;margin:0 1.1rem .4rem}
+.disc-actions{padding:0 1.1rem 1rem}
+@media print{.gabarito-print{display:block!important;break-before:page}.fb{display:none!important}.disc-actions{display:none!important}}
+/* ===== TELA DE IDENTIFICAÇÃO E MODO DE JOGO ===== */
+.quiz-gate{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.8rem 1.6rem;max-width:480px;margin:0 auto}
+.quiz-gate h2{font-family:'Lora',serif;font-size:1.25rem;color:var(--azul);margin-bottom:.4rem}
+.quiz-gate>p{font-size:.88rem;color:var(--txt2);margin-bottom:1.2rem}
+.gate-field{margin-bottom:1.1rem}
+.gate-field>label{display:block;font-size:.82rem;font-weight:600;color:var(--azul-m);margin-bottom:.4rem}
+.gate-field input[type=text]{width:100%;padding:.65rem .8rem;border:1.5px solid var(--borda);border-radius:9px;font-family:'Inter',sans-serif;font-size:.92rem;color:var(--txt)}
+.gate-field input[type=text]:focus{outline:none;border-color:var(--azul-m)}
+.modo-opcoes{display:flex;flex-direction:column;gap:.6rem}
+.modo-opcao{display:flex;align-items:flex-start;gap:.6rem;border:1.5px solid var(--borda);border-radius:10px;padding:.7rem .85rem;cursor:pointer;transition:.15s}
+.modo-opcao:hover{border-color:var(--azul-m)}
+.modo-opcao input[type=radio]{margin-top:.25rem;accent-color:var(--azul-m)}
+.modo-opcao input[type=radio]:checked~span b{color:var(--azul)}
+.modo-opcao span{font-size:.85rem}
+.modo-opcao small{color:var(--txt2);font-weight:400}
+.gate-aviso{color:var(--verm);font-size:.82rem;margin-top:.7rem;min-height:1.2em}
+.modo-opcao.bloqueado{opacity:.6;cursor:not-allowed}
+.modo-opcao.liberado{opacity:1;cursor:pointer;border-color:var(--verde)}
+.cadeado{font-size:.75rem}
+.senha-box{display:flex;gap:.5rem;margin-top:.6rem}
+.senha-box input[type=password]{flex:1;padding:.55rem .75rem;border:1.5px solid var(--borda);border-radius:9px;font-family:'Inter',sans-serif;font-size:.85rem}
+.senha-box input[type=password]:focus{outline:none;border-color:var(--azul-m)}
+.senha-btn{white-space:nowrap;font-size:.8rem;padding:.55rem 1rem}
+.senha-aviso{font-size:.78rem;margin-top:.4rem;min-height:1.1em}
+.senha-aviso.ok{color:var(--verde)}
+.senha-aviso.erro{color:var(--verm)}
+.modo-chip{font-size:.74rem;font-weight:700;padding:4px 12px;border-radius:20px;background:var(--azul-c);color:var(--azul-m);margin-left:auto}
+.envio-status{font-size:.82rem;margin-top:.8rem;padding:.6rem .9rem;border-radius:8px}
+.envio-status.enviando{background:var(--azul-c);color:var(--azul-m)}
+.envio-status.ok{background:var(--verde-c);color:var(--verde)}
+.envio-status.erro{background:var(--verm-c);color:var(--verm)}
+/* No modo prova, o feedback de cada questão fica escondido até o aluno terminar */
+.fb.prova-oculto{display:none!important}
+@media print{.quiz-gate,.modo-chip,.envio-status{display:none!important}#quizConteudo{display:block!important}}
+</style>
+</head><body><header><a href="index.html" class="voltar-link">← Painel SAEB/SIMAVE</a><div class="badge">SAEB · SIMAVE · Língua Portuguesa</div><h1>Habilidade D28</h1><p>Reconhecer o efeito de sentido decorrente da escolha de uma palavra ou expressão</p></header>
+<nav class="tabs"><div class="tabs-inner"><button class="tab-btn active" data-tab="estudar">📚 Estudar</button><button class="tab-btn" data-tab="quiz">📝 Quiz</button><button class="tab-btn" data-tab="jogos">🎮 Jogos</button></div></nav><main><section class="tab-pane active" id="pane-estudar"><div class="resumo-box"><h2>🎯 Em uma frase</h2><p>O D28 mede se você percebe que <strong style='color:#ffd98a'>cada palavra é uma escolha</strong> — e que escolher "faleceu" em vez de "morreu", ou "brilhante" em vez de "inteligente", muda o tom, a avaliação e o sentido do texto.</p><span class="fc">\"Não existe sinônimo perfeito: cada palavra carrega um peso que as outras não têm.\"</span></div>
+<section class="painel"><h2>📌 O que essa habilidade avalia</h2>
+<p>O D28 avalia se você consegue <strong>reconhecer o efeito de sentido produzido pela escolha de uma palavra ou expressão específica</strong> em detrimento de outras alternativas. Toda escolha lexical é intencional — ela reflete o ponto de vista, o registro e a avaliação do autor.</p>
+<h3>Principais fenômenos lexicais e seus efeitos:</h3>
+<ul>
+<li><strong>Eufemismo</strong> — palavra suavizada para evitar o impacto direto. Ex: "passou desta para melhor" (morreu), "funcionário dispensado" (demitido).</li>
+<li><strong>Hipérbole</strong> — exagero lexical que intensifica sentimentos. Ex: "morrer de rir", "um calor de matar".</li>
+<li><strong>Registro técnico vs. popular</strong> — "óbito" vs. "morte": o vocabulário técnico cria distanciamento; o popular, proximidade.</li>
+<li><strong>Conotação e denotação</strong> — o sentido denotativo é o literal/dicionário; o conotativo carrega julgamentos e valores implícitos.</li>
+<li><strong>Polissemia</strong> — a mesma palavra com dois sentidos num mesmo texto cria ambiguidade intencional ou humor.</li>
+<li><strong>Campo semântico</strong> — palavras de uma mesma área semântica criam coesão lexical e constroem o tema do texto.</li>
+<li><strong>Arcaísmo intencional</strong> — uso de palavra antiga em texto moderno cria solenidade, ironia ou efeito nostálgico.</li>
+<li><strong>Adjetivo avaliativo</strong> — adjetivos como "truculento", "articulado" ou "destemperado" carregam a avaliação implícita do autor.</li>
+</ul></section>
+<section class="painel"><h2>💡 Como resolver as questões</h2>
+<ol>
+<li>Localize a palavra ou expressão indicada na questão dentro do contexto do texto.</li>
+<li>Substitua mentalmente por um sinônimo mais neutro — o sentido muda? O tom muda?</li>
+<li>Identifique: é eufemismo? Hipérbole? Conotação negativa? Polissemia? Registro específico?</li>
+<li>Relacione o efeito à intenção do autor: suavizar, intensificar, ironizar, formalizar, aproximar...</li>
+</ol></section></section><section class="tab-pane" id="pane-quiz">
+
+<!-- ===== TELA DE IDENTIFICAÇÃO (aparece antes do quiz) ===== -->
+<div id="quizGate" class="quiz-gate">
+  <h2>👋 Antes de começar</h2>
+  <p>Preencha seus dados e escolha o modo de jogo.</p>
+  <div class="gate-field">
+    <label for="alunoNome">Nome do aluno</label>
+    <input type="text" id="alunoNome" placeholder="Seu nome completo" autocomplete="off">
+  </div>
+  <div class="gate-field">
+    <label for="alunoTurma">Turma / Série</label>
+    <input type="text" id="alunoTurma" placeholder="Ex: 9º Ano A" autocomplete="off">
+  </div>
+  <div class="gate-field">
+    <label>Modo de jogo</label>
+    <div class="modo-opcoes">
+      <label class="modo-opcao">
+        <input type="radio" name="modoQuiz" value="prova" checked>
+        <span><b>📝 Modo Prova</b><br><small>Sem feedback durante o quiz. As respostas certas só aparecem no final, como numa prova de verdade.</small></span>
+      </label>
+      <label class="modo-opcao" id="opcaoEstudo">
+        <input type="radio" name="modoQuiz" value="estudo" id="radioEstudo" disabled>
+        <span><b>📖 Modo Estudo</b> <span class="cadeado" id="cadeadoEstudo">🔒</span><br><small>Mostra se acertou ou errou — e a explicação — logo após cada resposta. Liberado pelo professor.</small></span>
+      </label>
+    </div>
+    <div class="senha-box" id="senhaBox">
+      <input type="password" id="senhaEstudo" placeholder="Senha do professor para liberar o Modo Estudo" autocomplete="off">
+      <button type="button" class="btn sec senha-btn" id="btnLiberarEstudo">Liberar</button>
+    </div>
+    <p class="senha-aviso" id="senhaAviso"></p>
+  </div>
+  <button class="btn" id="btnIniciarQuiz">▶ Começar o quiz</button>
+  <p class="gate-aviso" id="gateAviso"></p>
+</div>
+
+<!-- ===== QUIZ (fica oculto até o aluno preencher os dados acima) ===== -->
+<div id="quizConteudo" style="display:none">
+<div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.5rem;align-items:center">
+
+<button class="btn sec" onclick="location.reload()">🔀 Embaralhar e refazer</button>
+<span class="modo-chip" id="modoChip"></span>
+</div>
+<div class="prog-wrap"><span class="prog-label">Progresso</span><div class="prog-track"><div class="prog-fill" id="pFill"></div></div><span class="score" id="score">0 / 12</span></div>
+<div id='quiz'></div><div class='card' id='cardDisc' style='margin-top:1.5rem'><div class='card-head'><span class='qnum'>Q13</span><span class='qtipo'>Questão aberta — Escolha lexical</span></div><div class='txt-base' id='txtDisc'>Leia o trecho de um texto jornalístico sobre acidentes de trânsito:<br><br><em>\\\"O coletivo colidiu com o veículo de passeio no cruzamento, resultando no <b>falecimento</b> de dois ocupantes e em ferimentos de natureza grave nos demais.\\\"</em><br><br>Compare com uma versão mais direta: <em>\\\"O ônibus bateu no carro na esquina, matando duas pessoas e ferindo gravemente as outras.\\\"</em></div><div class='disc-box' id='discBox' style='display:none'><p class='disc-enun'><b>Questão aberta:</b> O uso de palavras como <b>\\\"coletivo\\\"</b>, <b>\\\"falecimento\\\"</b> e <b>\\\"ferimentos de natureza grave\\\"</b> na versão jornalística, em vez de <b>\\\"ônibus\\\"</b>, <b>\\\"morte\\\"</b> e <b>\\\"feridos gravemente\\\"</b>, produz que efeitos de sentido? Explique a que registro esses termos pertencem e como essa escolha lexical afeta a relação do texto com o leitor.</p><textarea class='disc-txt' id='discTexto' placeholder='Escreva sua resposta aqui...' rows='5'></textarea><div class='fb prova-oculto' id='fbDisc'><b>Gabarito orientador:</b> O vocabulário da versão jornalística (\\\"coletivo\\\", \\\"falecimento\\\", \\\"natureza grave\\\") pertence ao registro formal e técnico-burocrático. \\\"Falecimento\\\" é eufemismo de \\\"morte\\\" — suaviza o impacto emocional e cria distanciamento. \\\"Coletivo\\\" e \\\"ferimentos de natureza grave\\\" são expressões de registro jornalístico/policial que conferem objetividade e distanciamento afetivo. Em contrapartida, a versão direta é mais próxima, impactante e coloquial. A escolha lexical reflete a intenção comunicativa: o jornalismo formal opta por termos que criam distanciamento e aparente neutralidade.</div></div></div>
+<div id='resultado'><h2>Concluído!</h2><div class='medalha' id='medalha'>🏅</div><div class='nota' id='notaFinal'>—</div><p id='msgFinal'></p><div id="envioStatus" class="envio-status"></div><button class='btn' onclick='location.reload()'>↺ Refazer</button></div></div>
+</div>
+</section><section class='tab-pane' id='pane-jogos'><div class='resumo-box'><h2>🎮 Hora de jogar</h2><p>Cinco minijogos para treinar o reconhecimento dos efeitos de escolha lexical. Cada jogo tem um formato diferente — complete todos para dominar o D28!</p></div><div class='jogos-grid'><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>❓</span><h3>Qual o efeito?</h3></div><div class='jogo-body' id='g1-body'><button class='btn ouro' onclick='G1.start()'>▶ Começar</button></div></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>🏷️</span><h3>Nome o fenômeno</h3></div><div class='jogo-body' id='g2-body'><button class='btn ouro' onclick='G2.start()'>▶ Começar</button></div></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>🔍</span><h3>Identifique o recurso</h3></div><div class='jogo-body' id='g3-body'><button class='btn ouro' onclick='G3.start()'>▶ Começar</button></div></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>✍️</span><h3>Complete com o termo</h3></div><div class='jogo-body' id='g4-body'><button class='btn ouro' onclick='G4.start()'>▶ Começar</button></div></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>🃏</span><h3>Flashcard lexical</h3></div><div class='jogo-body' id='g5-body'><button class='btn ouro' onclick='G5.start()'>▶ Começar</button></div></div></div></section></section></main><footer>Portal do Professor Marcos Cruz · SAEB/SIMAVE · D28</footer><script>
+/* ===== CONFIGURAÇÃO DO ENVIO PARA GOOGLE SHEETS =====
+   Cole aqui a URL do seu Apps Script publicado como "App da Web".
+   Veja o arquivo google-apps-script.gs para instruções de instalação.
+   Enquanto estiver "SUBSTITUA_PELA_SUA_URL", o envio fica desativado
+   (o quiz funciona normalmente, só não manda nada para a planilha). */
+const SHEETS_URL = "https://script.google.com/macros/s/AKfycbwPcWRWW2IkMb8-WkyB2w1M2n9ivcYlfqWajYRgCzecLTC1T7aBetZtR2MDaOIxahc/exec";
+const DESCRITOR_PAGINA = "D28 - Reconhecer o efeito de sentido decorrente da escolha de uma ";
+const NOME_ARQUIVO = "D28.html";
+
+/* ===== ESTADO DO ALUNO E MODO DE JOGO ===== */
+let alunoNome = "";
+let alunoTurma = "";
+let modoJogo = "estudo"; // "estudo" ou "prova"
+const respostasDetalhadas = []; // uma entrada por questão respondida, na ordem em que aparecem
+
+/* ===== SENHA PARA LIBERAR O MODO ESTUDO =====
+   Troque a senha abaixo quando quiser. É a MESMA senha em todas as páginas
+   do portal (mais simples de lembrar e passar para os alunos quando for
+   hora de revisão). Lembre-se: como o quiz roda no navegador do aluno,
+   essa senha impede o uso casual do Modo Estudo, mas não é uma proteção
+   contra alguém que abra o código-fonte da página — as respostas já estão
+   no arquivo de qualquer forma, como em qualquer site estático como este. */
+const SENHA_MODO_ESTUDO = "professor123";
+
+document.getElementById("btnLiberarEstudo").onclick = () => {
+  const campo = document.getElementById("senhaEstudo");
+  const aviso = document.getElementById("senhaAviso");
+  if (campo.value === SENHA_MODO_ESTUDO) {
+    document.getElementById("radioEstudo").disabled = false;
+    document.getElementById("radioEstudo").checked = true;
+    document.getElementById("cadeadoEstudo").textContent = "🔓";
+    document.getElementById("opcaoEstudo").classList.add("liberado");
+    document.getElementById("senhaBox").style.display = "none";
+    aviso.className = "senha-aviso ok";
+    aviso.textContent = "✓ Modo Estudo liberado.";
+  } else {
+    aviso.className = "senha-aviso erro";
+    aviso.textContent = "Senha incorreta.";
+  }
+};
+// Também libera ao apertar Enter no campo de senha
+document.getElementById("senhaEstudo").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") document.getElementById("btnLiberarEstudo").click();
+});
+
+document.getElementById("btnIniciarQuiz").onclick = () => {
+  const nome = document.getElementById("alunoNome").value.trim();
+  const turma = document.getElementById("alunoTurma").value.trim();
+  const aviso = document.getElementById("gateAviso");
+  if (!nome || !turma) {
+    aviso.textContent = "Preencha nome e turma/série para continuar.";
+    return;
+  }
+  alunoNome = nome;
+  alunoTurma = turma;
+  modoJogo = document.querySelector('input[name="modoQuiz"]:checked').value;
+  document.getElementById("quizGate").style.display = "none";
+  document.getElementById("quizConteudo").style.display = "block";
+  const chip = document.getElementById("modoChip");
+  chip.textContent = modoJogo === "prova" ? "📝 Modo Prova" : "📖 Modo Estudo";
+};
+
+/* ===== ENVIO PARA O GOOGLE SHEETS ===== */
+function enviarParaSheets() {
+  const statusEl = document.getElementById("envioStatus");
+  if (!SHEETS_URL || SHEETS_URL.indexOf("SUBSTITUA") !== -1) {
+    statusEl.className = "envio-status";
+    statusEl.textContent = "";
+    return; // envio desativado até o professor configurar a URL
+  }
+  statusEl.className = "envio-status enviando";
+  statusEl.textContent = "Enviando resultado para a planilha...";
+
+  const payload = {
+    nome: alunoNome,
+    turma: alunoTurma,
+    descritor: DESCRITOR_PAGINA,
+    pagina: NOME_ARQUIVO,
+    modo: modoJogo === "prova" ? "Prova" : "Estudo",
+    respostas: respostasDetalhadas
+  };
+
+  fetch(SHEETS_URL, {
+    method: "POST",
+    mode: "no-cors", // Apps Script Web Apps não devolvem CORS; "no-cors" garante o envio mesmo sem ler a resposta
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(payload)
+  }).then(() => {
+    statusEl.className = "envio-status ok";
+    statusEl.textContent = "✓ Resultado enviado para a planilha do professor.";
+  }).catch(() => {
+    statusEl.className = "envio-status erro";
+    statusEl.textContent = "✗ Não foi possível enviar o resultado (verifique sua internet).";
+  });
+}
+
+/* ===== QUIZ ===== */
+const QRAW=[{"n": 1, "tipo": "Tirinha (Armandinho / Alexandre Beck)", "nivel": "facil", "texto": "<img src=\"https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgPehoMcqNeaiDVyGyUq9jPJd0LksjTK8uNDDduGw2JI_DaYRTEkKOHBYpcTfjhEp22Z8jVG8xbquUo9Zjw5ZvtpNkdiVbDHDZRpvNMiLenRTdT8u2Sgu62Wu4wlHeEULbKIqLbIWyfZLsn/s1600/Armandinho_tirinha_dia_meu_trabalho_sobre_drogas.png\" alt=\"Armandinho — trabalho sobre drogas, droga: o poder\" style=\"max-width:100%;border-radius:8px;margin-bottom:8px;display:block\"><b>Transcrição:</b><br>\n<em>[Quadro 1]</em> Armandinho: <em>\"Professora, vou apresentar um trabalho sobre drogas.\"</em><br>\n<em>[Quadro 2]</em> Professora: <em>\"Que droga você escolheu?\"</em><br>\n<em>[Quadro 3]</em> Armandinho: <em>\"O poder. Vicia, causa danos à sociedade e ninguém vai preso.\"</em>", "fonte": "BECK, Alexandre. Tiras do Armandinho. Disponível em: facebook.com/tirasarmandinho e tirasarmandinho.tumblr.com.", "enun": "O efeito humorístico da tirinha é criado principalmente porque:", "alts": ["Armandinho faz uma pesquisa original sobre um tema que ninguém pesquisou antes.", "a professora fica furiosa com a resposta inesperada do aluno.", "a palavra 'droga' é usada em dois sentidos ao mesmo tempo: substância ilícita e o poder político.", "Armandinho confessa que usa drogas, surpreendendo a professora."], "correta": 2, "porque": ["O humor não vem da originalidade da pesquisa — vem do jogo com os dois sentidos de 'droga'.", "A tirinha não mostra a reação da professora — o humor está no próprio argumento de Armandinho.", "Correto: quando a professora pergunta 'que droga você escolheu?', o leitor já espera uma droga ilícita. Armandinho responde 'o poder' — ativando o sentido figurado de 'droga' (algo ruim) e listando exatamente as características que aplicam: 'vicia, causa danos, ninguém vai preso'. O duplo sentido cria a ironia.", "Armandinho não confessa uso — ele apresenta um tema de pesquisa, usando 'droga' de forma metafórica."]}, {"n": 2, "tipo": "Cartum (Arionaurocartuns)", "nivel": "facil", "texto": "<img src=\"imagens/Charge%20(2).jpg\" alt=\"Cartum: 3.000 amigos nas redes, sem amigo real\" style=\"max-width:100%;border-radius:8px;margin-bottom:8px;display:block\">", "fonte": "ARIONAURUS. Arionaurocartuns.com.br", "enun": "O cartum é formado por dois quadros com o mesmo personagem em situações opostas. Qual é o <b>mecanismo específico de ironia</b> que produz o efeito crítico?", "alts": ["O personagem usa linguagem conscientemente irônica no primeiro quadro, sabendo que seus amigos virtuais não são reais.", "O humor vem do exagero do número '3.000 amigos'.", "A ironia é situacional e estrutural: o segundo quadro revela que a abundância de conexões virtuais (primeiro quadro) corresponde, na prática.", "O cartum usa antifrâse — dizer o oposto do que se quer dizer."], "correta": 2, "porque": ["O personagem no primeiro quadro parece genuinamente orgulhoso de seus 3.000 amigos. Não há sinal de que ele sabe que está sendo irônico — a ironia emerge da estrutura, não da intenção.", "3.000 amigos é plausível em redes sociais. O humor não vem da impossibilidade do número, mas da contradição entre a quantidade virtual e a ausência real.", "Correto: a ironia situacional nasce da estrutura do cartum — Q1 mostra abundância virtual; Q2 revela solidão real. O personagem não 'mente', mas a situação em que se encontra contradiz o sentido social esperado da palavra 'amigos'. Ter mais amigos virtuais não gerou mais conexão real.", "Antifrâse seria o personagem dizer 'não tenho amigos' quando tem. Aqui ele diz ter amigos e isso é verdadeiro no mundo virtual — a ironia é na realidade que o Q2 revela, não na fala."]}, {"n": 3, "tipo": "Peça teatral (fragmento)", "nivel": "facil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Peça teatral — A lebre e a tartaruga (fragmento)</b><p><b>Lebre</b> – Que dia. Mas que lindo dia! Mais um dia que se passa e eu continuo a vencer sempre. (para a plateia) Sou dessas!</p><p><b>Tartaruga</b> – Dessas o quê?</p><p><b>Lebre</b> – Dessas que sempre vencem! Afinal, sou a maior velocista de todos os tempos!</p><p><b>Tartaruga</b> – (pensando) Sabe de uma coisa, eu acho que posso te vencer numa corrida!</p><p><b>Lebre</b> – (surpresa) Como é? Você? Me vencer? Hahaha, nunca!</p><p><b>Tartaruga</b> – Por que nunca?</p><p><b>Lebre</b> – Porque eu nunca perdi, <b>queridinha!</b></p><p><b>Tartaruga</b> – <b>Então tá na hora, queridona!</b> [...]</p><span class=\"txt-fonte\">SOLLER, Regis de. A lebre e a tartaruga. Avaliação Diagnóstica P0802 — CAED/UFJF, 2025.</span></div>", "fonte": "", "enun": "Nesse texto, há uma ironia no trecho:", "alts": ["\"Mas que lindo dia! Mais um dia que se passa e eu continuo a vencer sempre.\"", "\"... sou a maior velocista de todos os tempos!\"", "\"... acho que posso te vencer numa corrida!\"", "\"Então tá na hora, queridona!\""], "correta": 3, "porque": ["A Lebre apenas expressa arrogância — é fanfarronice direta, não ironia.", "Afirmar ser a maior velocista é arrogância factual no contexto da fábula, não ironia.", "A Tartaruga faz uma afirmação direta e sincera — não há inversão irônica.", "Correto: a Lebre chamou a Tartaruga de 'queridinha' de forma patronizante. A Tartaruga responde com 'queridona' — devolve o diminutivo afetivo, mas com subversão: aceita o desafio calmamente, sugerindo que esperava por esse momento. A ironia está na confiança tranquila de quem supostamente deveria ser a 'mais fraca'."]}, {"n": 4, "tipo": "Tirinha (Armandinho / Alexandre Beck)", "nivel": "medio", "texto": "<img src=\"imagens/armandinho-heliocentrismo.png\" alt=\"Armandinho — geocentrismo, heliocentrismo, umbigocentrismo\" style=\"max-width:100%;border-radius:8px;margin-bottom:8px;display:block\">", "fonte": "BECK, Alexandre. Tiras do Armandinho. Disponível em: facebook.com/tirasarmandinho e tirasarmandinho.tumblr.com.", "enun": "A ironia em 'umbigocentrismo' está em:", "alts": ["usar um termo científico real para descrever um fenômeno ainda não estudado pela ciência.", "criar um neologismo que imita a forma de termos científicos sérios para descrever algo oposto à ciência — o egocentrismo contemporâneo.", "mostrar que a evolução científica nos levou a um retrocesso moral irremediável.", "defender que o umbigo é literalmente o centro do corpo humano, como o Sol é o do sistema solar."], "correta": 1, "porque": ["'Umbigocentrismo' não é um termo científico real — é uma invenção irônica de Armandinho, criada para criar o efeito humorístico.", "Correto: 'geocentrismo' e 'heliocentrismo' têm forma e prestígio científico. 'Umbigocentrismo' imita essa forma mas descreve algo ridículo: achar que o mundo gira em torno de si mesmo. A ironia está em usar a seriedade do formato científico para criticar o egocentrismo.", "A tirinha não diz que há 'retrocesso irremediável' — é uma crítica humorística, não um diagnóstico pessimista definitivo.", "A analogia com o umbigo é metafórica — não é uma afirmação anatômica."]}, {"n": 5, "tipo": "Tirinha (autor a identificar)", "nivel": "medio", "texto": "<img src=\"imagens/Tirinha3.jpg\" alt=\"Tirinha: dinossauro vai ser extinto e virar petróleo causador de extinções\" style=\"max-width:100%;border-radius:8px;margin-bottom:8px;display:block\">", "fonte": "Autor a identificar. Tirinha de circulação na internet.", "enun": "O dinossauro anuncia que seu corpo virará petróleo 'que vai causar a extinção de outras espécies' e celebra. Qual é a <b>ironia central</b> dessa estrutura narrativa?", "alts": ["A ironia é verbal: o dinossauro finge estar triste com sua extinção, mas na verdade está feliz porque vai se vingar.", "A ironia é de situação: uma vítima de extinção descreve, com satisfação, como se tornará agente indireto de extinções futuras.", "A ironia é dramática: o leitor sabe que os outros dinossauros serão extintos também, mas eles próprios não sabem.", "Não há ironia — o dinossauro está genuinamente feliz porque descobriu que sua morte terá uma consequência positiva para ele."], "correta": 1, "porque": ["O dinossauro não 'finge' tristeza — ele celebra de forma explícita e sincera. A ironia não está na sua performance emocional, mas na lógica circular que ele apresenta.", "Correto: a ironia central é a inversão da posição — o dinossauro passa de vítima (extinto) a agente (causador de extinções via petróleo). Essa circularidade (extinção gera petróleo gera extinção) é ao mesmo tempo a crítica ambiental e o mecanismo irônico da tirinha.", "Ironia dramática existe quando o leitor sabe algo que o personagem não sabe. Aqui, os outros dinossauros SABEM que o protagonista age por vingança — eles o chamam de 'vingativo'. A ironia não é de informação, é de situação.", "A tirinha não descreve consequência positiva — descreve extinções futuras como 'vingança'. A satisfação do dinossauro é irônica justamente porque celebra algo destrutivo."]}, {"n": 6, "tipo": "Tirinha (Armandinho / Alexandre Beck)", "nivel": "medio", "texto": "<img src=\"imagens/armandinho-filosofia.jpg\" alt=\"Armandinho, Fê e Camilo — filosofia e sociologia\" style=\"max-width:100%;border-radius:8px;margin-bottom:8px;display:block\">", "fonte": "BECK, Alexandre. Tiras do Armandinho. Disponível em: facebook.com/tirasarmandinho e tirasarmandinho.tumblr.com.", "enun": "O efeito irônico da tirinha está em:", "alts": ["as crianças não entenderem o que são filosofia, história e sociologia.", "as disciplinas citadas serem consideradas inúteis pela maioria dos estudantes.", "apresentar como 'temeroso' (assustador) exatamente o que deveria ser valorizado — o conhecimento crítico.", "criticar professores que ensinam disciplinas difíceis e assustam os alunos."], "correta": 2, "porque": ["As crianças descrevem as disciplinas com precisão — a tirinha as entende muito bem.", "A ironia não é sobre o quanto os alunos gostam dessas disciplinas — é sobre quem teme o conhecimento crítico.", "Correto: a tirinha lista benefícios óbvios (questionar, entender o passado, ver a verdade da sociedade) e conclui que 'para alguns, isso é temeroso'. A ironia está em que o 'temeroso' não são os alunos — são os que têm interesse em que o conhecimento crítico não se espalhe. Nomear isso é o ato político da tirinha.", "A tirinha não fala de professores — fala de quem teme o efeito do conhecimento sobre a população."]}, {"n": 7, "tipo": "Tirinha", "nivel": "medio", "texto": "<img src=\"imagens/tirinha-bolo-formigas.jpg\" alt=\"Tirinha: bolo zero açúcar e formigas\" style=\"max-width:100%;border-radius:8px;margin-bottom:8px;display:block\">", "fonte": "SALIMENA, Raphael. Ciência na rua, 2023. Avaliação Diagnóstica P0902 — CAED/UFJF, 2025.", "enun": "O humor dessa tirinha está em:", "alts": ["o homem descobrir que o bolo tinha açúcar, apesar da garantia de que era zero açúcar.", "a preocupação dos personagens com o açúcar enquanto ignoram o problema real.", "a expressão de satisfação do homem ao comer, revelando que ele gostava de bolos sem açúcar.", "a expressão exagerada do homem ao descobrir as formigas, criando contraste com sua calma inicial."], "correta": 1, "porque": ["O bolo era de fato zero açúcar — a informação estava correta. O problema nunca foi o açúcar.", "Correto: a ironia situacional nasce do foco deslocado. Os personagens estavam tão concentrados em 'tem açúcar?' que não perceberam as formigas — visíveis para o leitor desde o Q1. Quando o homem olha o prato vazio (Q3-Q4), a surpresa é do leitor também, pois ele via as formigas mas não esperava que o homem comesse tudo sem perceber.", "A satisfação ao comer é parte do humor, mas não é a fonte principal do efeito cômico.", "No último quadro o homem olha com expressão de nojo/surpresa — mas o humor veio antes, pela ironia situacional de ignorar o problema óbvio."]}, {"n": 8, "tipo": "Tirinha", "nivel": "dificil", "texto": "<img src=\"imagens/tirinha-monica-morto.jpg\" alt=\"Tirinha: Mônica finge de morto\" style=\"max-width:100%;border-radius:8px;margin-bottom:8px;display:block\">", "fonte": "SOUSA, Mauricio de. Avaliação Diagnóstica P0602 — CAED/UFJF, 2025.", "enun": "Nessa tirinha, qual é o mecanismo que gera o efeito de humor?", "alts": ["Mônica não conseguir fazer o truque \"faz de conta de morto\", mostrando que humanos são menos habilidosos que animais.", "A inversão dos papéis: Mônica, que normalmente domina e bate em Cascão, acaba recebendo biscoito de um cachorro — como se fosse ela o animal adestrado.", "Cascão fingir não entender o que aconteceu, criando uma cena de confusão entre os dois personagens.", "O cachorro reconhecer Mônica como sua dona e desobedecer ao comando de Cascão para agradá-la."], "correta": 1, "porque": ["O humor não está na falha técnica de Mônica; está na situação absurda de ela receber biscoito como um cachorro adestrado.", "A inversão cômica está no fato de Mônica — personagem dominante na turma — acabar sendo tratada como o animal que deveria ser adestrado, recebendo biscoito do cachorro. Essa subversão da hierarquia esperada é o núcleo do humor.", "Cascão não finge não entender; ele simplesmente é superado pela situação — o humor é da inversão de papéis, não de uma confusão.", "O cachorro não está desobedecendo; é a própria lógica do adestramento que se inverte ao incluir Mônica na equação."]}, {"n": 9, "tipo": "Tirinha (Armandinho / Alexandre Beck) — Questão discursiva", "nivel": "dificil", "texto": "<img src=\"https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgPehoMcqNeaiDVyGyUq9jPJd0LksjTK8uNDDduGw2JI_DaYRTEkKOHBYpcTfjhEp22Z8jVG8xbquUo9Zjw5ZvtpNkdiVbDHDZRpvNMiLenRTdT8u2Sgu62Wu4wlHeEULbKIqLbIWyfZLsn/s1600/Armandinho_tirinha_dia_meu_trabalho_sobre_drogas.png\" alt=\"Armandinho — trabalho sobre drogas\" style=\"max-width:100%;border-radius:8px;margin-bottom:8px;display:block\"><b>Transcrição:</b><br>\n<em>[Quadro 1]</em> Armandinho: <em>\"Professora, vou apresentar um trabalho sobre drogas.\"</em><br>\n<em>[Quadro 2]</em> Professora: <em>\"Que droga você escolheu?\"</em><br>\n<em>[Quadro 3]</em> Armandinho: <em>\"O poder. Vicia, causa danos à sociedade e ninguém vai preso.\"</em>", "fonte": "BECK, Alexandre. Tiras do Armandinho. Disponível em: facebook.com/tirasarmandinho e tirasarmandinho.tumblr.com.", "enun": "(Questão aberta) Identifique o <b>mecanismo de ironia</b> da tirinha: qual palavra cria o duplo sentido? Como o leitor é levado a esperar uma resposta e recebe outra? Por que o argumento de Armandinho funciona como crítica?", "alts": [], "correta": -1, "porque": ["Gabarito disponível no botão 'Ver gabarito'.", "", "", ""]}, {"n": 10, "tipo": "Tirinha — Garfield (1)", "nivel": "medio", "texto": "<img src=\"imagens/tirinhas-garfield%20%281%29.jpg\" alt=\"Garfield: Jon conta problemas, Garfield diz que não tá nem aí\" style=\"max-width:100%;border-radius:8px;margin-bottom:8px;display:block\">", "fonte": "DAVIS, Jim. <b>Garfield</b>. Direitos reservados. Reprodução para fins didáticos.", "enun": "O humor dessa tirinha surge do contraste entre", "alts": ["a inteligência de Jon, que sabe que Garfield não vai ouvi-lo, e a ingenuidade de Garfield.", "a aparente discordância de Garfield ('Não é isso, Jon') e sua total indiferença revelada no último quadro ('O fato é que eu não to nem aí').", "o desejo de Jon de ter um gato que o ouça e a incapacidade física de Garfield de prestar atenção.", "a fala de Jon sobre 'interagir' e a forma como Garfield interpreta essa palavra de forma literal."], "correta": 1, "porque": ["Jon não aparenta ter ingenuidade sobre Garfield; o humor é sobre a resposta surpresa do gato.", "O humor vem exatamente desse paradoxo: Garfield parece estar discordando ('Não é isso') mas na verdade revela que simplesmente não liga nenhuma — a discordância era falsa.", "Não é incapacidade física; é escolha total de indiferença — o que torna o humor mais irônico.", "Garfield não interpreta 'interagir' literalmente; ele entende e simplesmente não se importa."]}, {"n": 11, "tipo": "Tirinha — Garfield (3) — armadilhas", "nivel": "dificil", "texto": "<img src=\"imagens/tirinhas-garfield%20%283%29.jpg\" alt=\"Garfield ouve snap e ai e pensa que John achou todas as armadilhas\" style=\"max-width:100%;border-radius:8px;margin-bottom:8px;display:block\">", "fonte": "DAVIS, Jim. <b>Garfield</b>. Direitos reservados. Reprodução para fins didáticos.", "enun": "O efeito irônico dessa tirinha está em", "alts": ["Garfield se preocupar com o bem-estar de Jon ao ouvir os barulhos de 'snap' e 'ai'.", "Garfield saber que as armadilhas existem (provavelmente foi ele quem as colocou), e observar com humor neutro enquanto Jon as descobre uma por uma.", "Jon tentar pegar ratos e acidentalmente prender o próprio dedo na armadilha.", "As armadilhas de rato funcionarem de forma inesperada, pegando algo diferente de ratos."], "correta": 1, "porque": ["Garfield não demonstra preocupação; seu pensamento final ('Bem, o John achou todas as armadilhas') é de observador calmo.", "A ironia está na postura distante de Garfield: ele observa passivamente ('Mais uma'), sem agir, sugerindo que sabia das armadilhas. O contraste entre a dor de Jon (snap/ai) e a frieza de Garfield é o núcleo cômico.", "O texto não especifica que Jon prendeu o próprio dedo — o que cai nas armadilhas é implícito e irrelevante para o efeito humorístico, que é sobre a atitude de Garfield.", "A armadilha funciona normalmente; o humor não está no funcionamento do objeto, mas na reação (ou falta de reação) de Garfield."]}, {"n": 12, "tipo": "Tirinha — bolo zero açúcar (Raphael Salimena)", "nivel": "dificil", "texto": "<img src=\"imagens/tirinha-bolo-formigas.jpg\" alt=\"Tirinha: bolo zero açúcar e formigas\" style=\"max-width:100%;border-radius:8px;margin-bottom:8px;display:block\">", "fonte": "SALIMENA, Raphael. Ciência na rua, 2023. Adaptado. P0602/P0802.", "enun": "O humor dessa tirinha é construído por meio de", "alts": ["um exagero humorístico: a quantidade absurda de formigas que aparecem no prato final.", "ironia visual: o último quadro (formigas no prato) contradiz a afirmação inicial ('zero açúcar'), revelando que o bolo provavelmente tinha açúcar.", "um mal-entendido verbal: o personagem compreendeu errado o que 'zero açúcar' significa.", "um recurso de surpresa: o personagem não esperava que as formigas fossem aparecer naquele lugar."], "correta": 1, "porque": ["O número de formigas não é exagerado nem é o foco — o foco é o que elas indicam.", "A ironia visual é o mecanismo central: a promessa verbal ('zero açúcar') é desmentida pelo elemento visual (formigas atraídas por açúcar) sem nenhuma palavra explicando o absurdo.", "Não há mal-entendido verbal; o personagem entendeu bem o conceito — mas as formigas revelam que o produto enganou.", "A surpresa existe, mas é consequência da ironia — a surpresa sozinha não explica o mecanismo de humor."]}];
+;const G1R=[{"t": "passou desta para melhor", "q": "Qual fenômeno lexical é esse e seu efeito?", "o": ["hipérbole — intensifica sentimento", "eufemismo — suaviza o impacto da morte", "polissemia — cria duplo sentido", "arcaísmo — usa palavra antiga"], "c": 1}, {"t": "Política é uma droga. E o pior é que a droga vicia.", "q": "O efeito crítico-humorístico vem de qual recurso?", "o": ["campo semântico", "eufemismo", "polissemia — duplo sentido de 'droga'", "hipérbole"], "c": 2}, {"t": "O ministro reagiu de forma truculenta.", "q": "Substituir 'truculenta' por 'enérgica' mudaria o quê?", "o": ["nada — são sinônimos perfeitos", "a conotação: 'truculenta' carrega avaliação negativa que 'enérgica' não tem", "o registro: uma é formal, outra coloquial", "o sentido literal"], "c": 1}]
+;const G2I=[{"s": "passou desta para melhor (em vez de morreu)", "cat": "eufemismo", "p": "Eufemismo — suaviza o impacto de palavra forte."}, {"s": "morrendo de rir / calor de matar", "cat": "hiperbole", "p": "Hipérbole — exagero expressivo para intensificar."}, {"s": "Política é uma droga. A droga vicia.", "cat": "polissemia", "p": "Polissemia — mesma palavra, dois sentidos."}, {"s": "truculenta (em vez de enérgica)", "cat": "adjetivo_avaliativo", "p": "Adjetivo avaliativo — carrega julgamento implícito."}]
+;const G2C=[["eufemismo", "Eufemismo"], ["hiperbole", "Hipérbole"], ["polissemia", "Polissemia"], ["adjetivo_avaliativo", "Adjetivo avaliativo"]]
+;const G3R=[{"t": "O funcionário foi desligado após reestruturação.", "q": "Qual o fenômeno lexical em 'desligado'?", "o": ["hipérbole", "eufemismo para 'demitido'", "arcaísmo", "neologismo"], "c": 1}, {"t": "O governo raspou o decreto ambiental.", "q": "O verbo 'raspou' em vez de 'revogou' produz:", "o": ["neutralidade jornalística", "conotação crítica e metafórica de descaso", "linguagem técnica do direito", "eufemismo"], "c": 1}, {"t": "maletinha de couro surrada / cafezinho na mão direita", "q": "Os diminutivos 'maletinha' e 'cafezinho' expressam:", "o": ["tamanho reduzido dos objetos", "afeto e apego emocional do narrador", "ironia em relação à pobreza do avô", "pertencimento a uma criança"], "c": 1}]
+;const G4R=[{"ctx": "O ator ___ nesta madrugada, segundo a assessoria.", "f": "Use eufemismo para 'morreu': faleceu / foi eliminado / parou / sumiu", "o": ["foi eliminado", "faleceu", "parou", "sumiu"], "c": 1}, {"ctx": "O governo ___ o decreto ambiental. (versão crítica, não técnica)", "f": "Escolha o verbo com conotação negativa de descaso: revogou / rasgou / retirou / cancelou", "o": ["revogou", "rasgou", "retirou", "cancelou"], "c": 1}]
+;const G5R=[{"title": "Fenômenos lexicais — efeitos de sentido", "correct": ["Eufemismo: palavra suave no lugar de forte → ameniza impacto emocional", "Hipérbole: exagero intencional → intensifica sentimentos e sensações", "Polissemia: dois sentidos da mesma palavra → ambiguidade ou humor", "Adjetivo avaliativo: revela julgamento implícito do autor sobre o tema", "Campo semântico: palavras do mesmo campo criam coesão lexical temática"]}, {"title": "Como identificar o efeito de uma escolha lexical", "correct": ["1. Localize a palavra indicada na questão dentro do contexto.", "2. Substitua mentalmente por um sinônimo mais neutro.", "3. Compare: o sentido muda? O tom muda? A avaliação muda?", "4. Nomeie o fenômeno: eufemismo, hipérbole, polissemia, conotação...", "5. A alternativa correta descreve o EFEITO da escolha, não apenas o nome."]}]
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function stripHTML(s){const d=document.createElement("div");d.innerHTML=s;return d.textContent||"";}
+function toggleTTS(btn,id){if(window.speechSynthesis.speaking){window.speechSynthesis.cancel();document.querySelectorAll(".btn-tts").forEach(b=>b.classList.remove("playing"));return;}const el=document.getElementById(id);if(!el)return;const u=new SpeechSynthesisUtterance(stripHTML(el.innerHTML));u.lang="pt-BR";u.rate=.9;btn.classList.add("playing");u.onend=()=>btn.classList.remove("playing");window.speechSynthesis.speak(u);}
+const RK="saeb_d23ironia_records";
+function loadRec(){try{return JSON.parse(localStorage.getItem(RK))||{};}catch{return {};}}
+function saveRec(k,v){const r=loadRec();if(!(k in r)||v>r[k])r[k]=v;localStorage.setItem(RK,JSON.stringify(r));renderRec();}
+function renderRec(){const r=loadRec(),g=document.getElementById("recGrid");if(!g)return;const items=[{k:"quiz",l:"Quiz"},{k:"qual",l:"Qual função?"},{k:"classif",l:"Classifique"},{k:"pistas",l:"Pelas pistas"},{k:"compl",l:"Complete"},{k:"ordene",l:"Ordene"}];g.innerHTML=items.map(i=>`<div class="rec-item"><div class="rv">${r[i.k]!=null?r[i.k]:"—"}</div><div class="rl">${i.l}</div></div>`).join("");}
+renderRec();
+document.querySelectorAll(".tab-btn").forEach(btn=>{btn.onclick=()=>{document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));document.querySelectorAll(".tab-pane").forEach(p=>p.classList.remove("active"));btn.classList.add("active");document.getElementById("pane-"+btn.dataset.tab).classList.add("active");window.scrollTo({top:0,behavior:"smooth"});};});
+const QS=shuffle(QRAW.filter(q=>q.alts&&q.alts.length>0)).map((q,idx)=>{const smap=shuffle(Array.from({length:q.alts.length},(_,i)=>i));return{...q,dn:idx+1,alts:smap.map(i=>q.alts[i]),porque:smap.map(i=>q.porque[i]),correta:smap.indexOf(q.correta)};});
+const quizEl=document.getElementById("quiz");
+QS.forEach(q=>{const c=document.createElement("div");c.className="card";c.dataset.q=q.dn;const tid="txt"+q.dn;c.innerHTML=`<div class="card-head"><span class="qnum">Questão ${q.dn}</span><span class="qtipo">${q.tipo}</span></div><div class="txt-base" id="${tid}">${q.texto}<span class="txt-fonte">${q.fonte}</span><button class="btn-tts" onclick="toggleTTS(this,'${tid}')">🔊</button></div><p class="enunciado">${q.enun}</p><div class="alts">${q.alts.map((t,i)=>`<button class="alt" onclick="resp(${q.dn},${i})"><span class="letra">${"ABCD"[i]}</span> ${t}</button>`).join("")}</div><div class="fb" id="fb${q.dn}"></div>`;quizEl.appendChild(c);});
+let acertos=0;const feitas=new Set();
+function resp(n,k){
+  if(feitas.has(n))return;feitas.add(n);
+  const q=QS.find(x=>x.dn===n),card=quizEl.querySelector(`[data-q="${n}"]`),btns=card.querySelectorAll(".alt"),fb=document.getElementById("fb"+n);
+  const ok=k===q.correta;if(ok)acertos++;
+
+  // Registra a resposta detalhada desta questão para depois enviar ao Sheets
+  respostasDetalhadas.push({
+    questao: n,
+    tipo: q.tipo,
+    nivel: q.nivel,
+    respostaDada: k>=0 ? "ABCD"[k] : "(não respondeu)",
+    respostaCorreta: "ABCD"[q.correta],
+    acertou: ok
+  });
+
+  if(modoJogo==="estudo"){btns.forEach((b,i)=>{b.disabled=true;if(i===q.correta)b.classList.add("ok");else if(i===k)b.classList.add("err");else b.classList.add("dim");});}else{btns.forEach((b,i)=>{b.disabled=true;if(i===k)b.classList.add("sel");else b.classList.add("dim");});}
+  const pq=q.alts.map((t,i)=>`<span class="pi"><span class="l">${"ABCD"[i]})</span> ${q.porque[i]}</span>`).join("");
+  fb.className="fb show "+(ok?"ok":"err")+(modoJogo==="prova"?" prova-oculto":"");
+  fb.innerHTML=`<div class="ft">${ok?"✓ Correto!":"✗ Incorreto — a correta é "+"ABCD"[q.correta]+"."}</div><div>${q.porque[q.correta]}</div><div class="pq"><b>Cada alternativa:</b>${pq}</div>`;
+  document.getElementById("pFill").style.width=(feitas.size/QS.length*100)+"%";
+  // No modo prova, a pontuação parcial fica escondida; só aparece no resultado final
+  document.getElementById("score").textContent=modoJogo==="prova" ? (feitas.size+" / "+QS.length+" respondidas") : (acertos+" / "+QS.length);
+  if(feitas.size===QS.length)setTimeout(quizFim,500);
+}
+function quizFim(){
+  // No modo prova, revela todo o feedback que ficou oculto durante o quiz
+  if(modoJogo==="prova"){
+    // Gabaritos ocultos no modo prova
+    document.getElementById("score").textContent=acertos+" / "+QS.length;
+  }
+  const r=document.getElementById("resultado");r.style.display="block";
+  document.getElementById("notaFinal").textContent=acertos+"/"+QS.length;
+  const p=acertos/QS.length;let m,msg;
+  if(p>=.9){m="🥇";msg="Ouro! Precisão de detetive.";}
+  else if(p>=.7){m="🥈";msg="Prata! Atenção aos distratores.";}
+  else if(p>=.5){m="🥉";msg="Bronze! Volte ao texto antes de marcar.";}
+  else{m="📖";msg="Treine mais. A resposta está sempre lá.";}
+  document.getElementById("medalha").textContent=m;document.getElementById("msgFinal").textContent=msg;
+  saveRec("quiz",acertos);
+  enviarParaSheets();
+  r.scrollIntoView({behavior:"smooth",block:"center"});
+}// gabarito disc protegido por senha no HTML;
+// gabPrint removido: gabarito protegido por senha
+
+function makeTimedGame(bodyId,rounds,rk){return{i:0,pts:0,tmr:null,tempo:0,rounds:[],start(){this.i=0;this.pts=0;this.rounds=shuffle(rounds);this.render();},render(){const b=document.getElementById(bodyId);if(this.i>=this.rounds.length){saveRec(rk,this.pts);b.innerHTML=`<div class="jogo-final"><div class="big">${this.pts} pts</div><p>${this.pts>=this.rounds.length*10?"Muito bem! 🥇":"Continue praticando."}</p><button class="btn ouro" onclick="${bodyId.split('-')[0].toUpperCase()}.start()">↺ Jogar de novo</button></div>`;return;}const r=this.rounds[this.i];this.tempo=100;b.innerHTML=`<div class="jogo-mid"><span class="chip">Rodada ${this.i+1}/${this.rounds.length}</span><div class="timerbar"><div id="${bodyId}-bar"></div></div><span class="chip">${this.pts} pts</span></div><div class="mini-texto">${r.t}</div><div class="mini-q">${r.q}</div><div class="alts" id="${bodyId}-alts">${r.o.map((o,k)=>`<button class="alt" onclick="${bodyId.split('-')[0].toUpperCase()}.resp(${k})"><span class="letra">${"ABCD"[k]}</span> ${o}</button>`).join("")}</div><div class="mini-fb" id="${bodyId}-fb"></div>`;clearInterval(this.tmr);this.tmr=setInterval(()=>{this.tempo-=2;const bar=document.getElementById(bodyId+"-bar");if(bar)bar.style.width=Math.max(0,this.tempo)+"%";if(this.tempo<=0)this.resp(-1);},120);},resp(k){clearInterval(this.tmr);const r=this.rounds[this.i],btns=document.querySelectorAll("#"+bodyId+"-alts .alt"),fb=document.getElementById(bodyId+"-fb");btns.forEach((a,j)=>{a.disabled=true;if(j===r.c)a.classList.add("ok");else if(j===k)a.classList.add("err");else a.classList.add("dim");});if(k===r.c){const g=5+Math.round(this.tempo/10);this.pts+=g;fb.className="mini-fb show ok";fb.textContent="✓ +"+g+" pts!";}else{fb.className="mini-fb show err";fb.textContent=(k===-1?"⏱️ Tempo!":"✗")+" Era: "+"ABCD"[r.c]+".";}this.i++;setTimeout(()=>this.render(),1600);}};}
+const G1=makeTimedGame("g1-body",G1R,"qual");const G3=makeTimedGame("g3-body",G3R,"pistas");
+
+const G2={rs:[],cats:G2C,start(){this.rs=[];const b=document.getElementById("g2-body");b.innerHTML=`<div style="font-size:.82rem;color:var(--txt2);margin-bottom:.8rem">Classifique cada texto pela sua função principal:</div>`+G2I.map((it,i)=>`<div class="vf-item" id="g2i${i}"><div class="vf-stm"><b>${i+1}.</b> ${it.s}</div><div class="btn-row">${this.cats.map(c=>`<button class="mini-btn cat-btn" onclick="G2.j(${i},'${c[0]}')">${c[1]}</button>`).join("")}</div><div class="mini-fb" id="g2f${i}"></div></div>`).join("")+`<div id="g2fin"></div>`;},j(i,esc){if(this.rs[i]!=null)return;const it=G2I[i],ok=esc===it.cat;this.rs[i]=ok;document.querySelectorAll("#g2i"+i+" .mini-btn").forEach(btn=>{btn.disabled=true;const txt=btn.textContent;const cat=this.cats.find(c=>c[1]===txt);if(cat&&cat[0]===it.cat)btn.style.background="var(--verde-c)";else if(cat&&cat[0]===esc&&!ok)btn.style.background="var(--vermelho-c)";});const fb=document.getElementById("g2f"+i);fb.className="mini-fb show "+(ok?"ok":"err");fb.innerHTML=(ok?"✓ ":"✗ ")+it.p;if(this.rs.filter(x=>x!=null).length===G2I.length){const ac=this.rs.filter(x=>x).length;saveRec("classif",ac);document.getElementById("g2fin").innerHTML=`<div class="jogo-final"><div class="big">${ac}/${G2I.length}</div><p>${ac===G2I.length?"Perfeito! 🥇":"Releia as justificativas."}</p><button class="btn ouro" onclick="G2.start()">↺ Jogar de novo</button></div>`;}}};
+
+const G4={i:0,pts:0,rounds:[],start(){this.i=0;this.pts=0;this.rounds=shuffle(G4R);this.render();},render(){const b=document.getElementById("g4-body");if(this.i>=this.rounds.length){saveRec("compl",this.pts);b.innerHTML=`<div class="jogo-final"><div class="big">${this.pts}/${this.rounds.length}</div><p>${this.pts===this.rounds.length?"Perfeito! 🥇":"Continue praticando."}</p><button class="btn ouro" onclick="G4.start()">↺ Jogar de novo</button></div>`;return;}const it=this.rounds[this.i];b.innerHTML=`<div class="jogo-mid"><span class="chip">Frase ${this.i+1}/${this.rounds.length}</span><span class="chip">${this.pts} acertos</span></div><p style="font-size:.82rem;color:var(--txt2);margin:.4rem 0">${it.ctx}</p><div class="mini-texto">${it.f}</div><div class="alts" id="g4-alts">${it.o.map((o,k)=>`<button class="alt" onclick="G4.resp(${k})"><span class="letra">${"ABCD"[k]}</span> ${o}</button>`).join("")}</div><div class="mini-fb" id="g4-fb"></div>`;},resp(k){const it=this.rounds[this.i],btns=document.querySelectorAll("#g4-alts .alt"),fb=document.getElementById("g4-fb");btns.forEach((a,j)=>{a.disabled=true;if(j===it.c)a.classList.add("ok");else if(j===k)a.classList.add("err");else a.classList.add("dim");});if(k===it.c){this.pts++;fb.className="mini-fb show ok";fb.textContent="✓ Exato!";}else{fb.className="mini-fb show err";fb.textContent="✗ Era: "+it.o[it.c]+".";}this.i++;setTimeout(()=>this.render(),1200);}};
+
+const G5={ri:0,start(){this.ri=0;this.renderRound();},renderRound(){const b=document.getElementById("g5-body");if(this.ri>=G5R.length){saveRec("ordene","✓");b.innerHTML=`<div class="jogo-final"><div class="big">✓</div><p>Raciocínio organizado! 🥇</p><button class="btn ouro" onclick="G5.start()">↺ Jogar de novo</button></div>`;return;}const rd=G5R[this.ri];const items=shuffle(rd.correct);b.innerHTML=`<div class="jogo-mid"><span class="chip">Passo a passo ${this.ri+1}/${G5R.length}</span></div><p style="font-size:.84rem;color:var(--txt2);margin-bottom:.6rem">Use ▲ ▼ para ordenar. Depois clique em "Verificar".</p><ol class="ord-list" id="g5list">${items.map((it,i)=>`<li class="ord-item" data-txt="${encodeURIComponent(it)}">${it}<div class="ord-arrows"><button onclick="G5.move(${i},-1)">▲</button><button onclick="G5.move(${i},1)">▼</button></div></li>`).join("")}</ol><div style="text-align:center;margin-top:.6rem"><button class="btn ouro" onclick="G5.check()">✓ Verificar ordem</button></div><div class="mini-fb" id="g5fb"></div>`;},move(idx,dir){const list=document.getElementById("g5list");const items=[...list.children];const newIdx=idx+dir;if(newIdx<0||newIdx>=items.length)return;if(dir===-1)list.insertBefore(items[idx],items[newIdx]);else list.insertBefore(items[newIdx],items[idx]);[...list.children].forEach((li,i)=>{li.querySelector(".ord-arrows").innerHTML=`<button onclick="G5.move(${i},-1)">▲</button><button onclick="G5.move(${i},1)">▼</button>`;});},check(){const rd=G5R[this.ri];const list=document.getElementById("g5list");const items=[...list.children];const fb=document.getElementById("g5fb");let ok=true;items.forEach((li,i)=>{const txt=decodeURIComponent(li.dataset.txt);if(txt===rd.correct[i])li.classList.add("ok");else{li.classList.add("err");ok=false;}li.querySelectorAll("button").forEach(b=>b.disabled=true);});if(ok){fb.className="mini-fb show ok";fb.textContent="✓ Ordem perfeita!";this.ri++;setTimeout(()=>this.renderRound(),1400);}else{fb.className="mini-fb show err";fb.innerHTML='✗ Trocadas. <button class="mini-btn" style="margin-left:.5rem" onclick="G5.renderRound()">Tentar de novo</button>';}}};
+
+function liberarEstudo(el,btn){
+  var pwd=prompt('Senha do professor:');
+  if(pwd===null)return;
+  if(pwd===SENHA_MODO_ESTUDO){el.style.display='block';btn.textContent='Ocultar';}
+  else{alert('Senha incorreta.');}
+}
+</script></body></html>

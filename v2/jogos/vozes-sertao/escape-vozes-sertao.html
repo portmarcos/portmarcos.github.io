@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vozes do Sertão — Escape Room Literário</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #d97b29; --gold-dim: rgba(217,123,41,0.25);
+      --gold-lit: #f4a548;
+      --bg:   #1a1410; --bg2: #241a12; --bg3: #2e2117;
+      --cream:#f5e6cc; --cream2: rgba(245,230,204,0.75);
+      --blue: #5a8a6a; --blue-dim: rgba(90,138,106,0.25);
+      --red:  #a3471f;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; }
+    body {
+      background: linear-gradient(180deg, #1a1410 0%, #241a12 60%, #2e2014 100%);
+      color: var(--cream);
+      font-family: 'Bitter', Georgia, serif;
+      display: flex;
+      height: 100vh;
+    }
+
+    /* ═══════════════ LEFT PANEL ═══════════════ */
+    #left {
+      width: 220px; min-width: 220px;
+      background: linear-gradient(170deg, #241a12 0%, #1a1410 100%);
+      border-right: 1px solid var(--gold-dim);
+      display: flex; flex-direction: column; align-items: center;
+      padding: 18px 14px; gap: 14px;
+    }
+
+    /* CANDLE */
+    .candle { display:flex; flex-direction:column; align-items:center; }
+    .flame {
+      width: 11px; height: 18px;
+      background: radial-gradient(ellipse at 50% 85%, #ffcc00 0%, #ff8800 55%, transparent 100%);
+      border-radius: 50% 50% 30% 30%;
+      animation: flicker 2.3s ease-in-out infinite;
+      filter: blur(0.5px);
+      position: relative;
+    }
+    .flame::after {
+      content:''; position:absolute; bottom:-3px; left:50%; transform:translateX(-50%);
+      width:3px; height:5px; background:#555; border-radius:2px;
+    }
+    .candlebody {
+      width:16px; height:55px;
+      background: linear-gradient(to right, #d0b880, #efe0b0, #d0b880);
+      border-radius:2px;
+    }
+    @keyframes flicker {
+      0%,100%{ transform:scaleX(1) scaleY(1) translateX(0); opacity:1; }
+      20%    { transform:scaleX(0.88) scaleY(1.1) translateX(-1px); opacity:.9; }
+      40%    { transform:scaleX(1.08) scaleY(.93) translateX(1px); opacity:1; }
+      60%    { transform:scaleX(.94) scaleY(1.06) translateX(0); opacity:.95; }
+      80%    { transform:scaleX(1.04) scaleY(.97) translateX(-1px); opacity:.92; }
+    }
+
+    /* PORTRAIT */
+    #portrait {
+      width:136px; height:170px;
+      border:2px solid var(--gold);
+      overflow:hidden; position:relative;
+      box-shadow: 0 0 24px rgba(201,162,39,0.15), inset 0 0 30px rgba(0,0,0,0.5);
+    }
+    #portrait svg { width:100%; height:100%; }
+
+    /* PROGRESS — PHASES */
+    .section-label {
+      font-family:'Oswald',sans-serif; font-size:.58rem;
+      color:rgba(201,162,39,.5); letter-spacing:2.5px;
+      text-align:center; text-transform:uppercase;
+    }
+    .phase-dots { display:flex; gap:8px; }
+    .pdot {
+      width:15px; height:15px;
+      border:2px solid rgba(201,162,39,.3);
+      border-radius:50%;
+      transition: all .5s;
+    }
+    .pdot.active  { border-color:var(--gold); background:var(--gold); box-shadow:0 0 8px var(--gold); }
+    .pdot.done    { border-color:#4a8a4a; background:#4a8a4a; }
+
+    /* PROGRESS — QUESTIONS */
+    .qdots { display:flex; gap:6px; }
+    .qdot {
+      width:11px; height:11px;
+      border:1px solid rgba(201,162,39,.25);
+      border-radius:50%; transition:.4s;
+    }
+    .qdot.ok   { background:#4a8a4a; border-color:#4a8a4a; }
+    .qdot.err  { background:#7a2020; border-color:#7a2020; }
+    .qdot.cur  { border-color:var(--gold); box-shadow:0 0 6px var(--gold); }
+
+    /* TIMER */
+    #timer-wrap { margin-top:auto; text-align:center; }
+    #timer-lbl  { font-family:'Oswald',sans-serif; font-size:.55rem; color:rgba(201,162,39,.4); letter-spacing:2px; }
+    #timer {
+      font-family:'Oswald',sans-serif; font-size:1.55rem;
+      color:var(--gold); letter-spacing:3px;
+      transition: color .5s;
+    }
+    #timer.warn   { color:#e07820; }
+    #timer.danger { color:#cc2222; animation:blink 1s ease-in-out infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.45} }
+
+    /* ═══════════════ RIGHT PANEL ═══════════════ */
+    #right { flex:1; display:flex; flex-direction:column; overflow:hidden; }
+
+    #topbar {
+      padding:9px 20px;
+      border-bottom:1px solid var(--gold-dim);
+      background:rgba(0,0,0,.35);
+      display:flex; align-items:center; gap:14px;
+    }
+    #topbar h1 {
+      font-family:'Oswald',sans-serif; font-size:.88rem;
+      color:var(--gold); letter-spacing:2px;
+    }
+    #topbar .sub { font-size:.72rem; color:rgba(201,162,39,.4); font-style:italic; }
+
+    #phase-strip {
+      padding:5px 20px;
+      border-bottom:1px solid var(--gold-dim);
+      background:rgba(201,162,39,.04);
+      font-family:'Oswald',sans-serif; font-size:.65rem;
+      color:rgba(201,162,39,.55); letter-spacing:1px;
+    }
+
+    /* CHAT */
+    #chat {
+      flex:1; overflow-y:auto; padding:18px 20px;
+      display:flex; flex-direction:column; gap:13px;
+      scrollbar-width:thin; scrollbar-color:var(--gold-dim) transparent;
+    }
+    #chat::-webkit-scrollbar { width:3px; }
+    #chat::-webkit-scrollbar-thumb { background:var(--gold-dim); border-radius:2px; }
+
+    .msg { display:flex; gap:9px; max-width:92%; animation:slideUp .3s ease; }
+    .msg.bras   { align-self:flex-start; }
+    .msg.player { align-self:flex-end; flex-direction:row-reverse; }
+    .msg.sys    { align-self:center; max-width:75%; }
+    @keyframes slideUp {
+      from { opacity:0; transform:translateY(9px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    .avatar {
+      width:30px; min-width:30px; height:30px;
+      border:1px solid; border-radius:2px;
+      display:flex; align-items:center; justify-content:center;
+      font-family:'Oswald',sans-serif; font-size:.55rem; letter-spacing:.5px;
+    }
+    .bras   .avatar { border-color:var(--gold);  color:var(--gold); }
+    .player .avatar { border-color:var(--blue);  color:var(--blue); }
+
+    .bubble {
+      padding:10px 14px; line-height:1.65;
+      font-size:.88rem; border-radius:2px;
+    }
+    .bras   .bubble {
+      background:linear-gradient(135deg, #1c1205, #130e03);
+      border:1px solid rgba(201,162,39,.35); border-left:3px solid var(--gold);
+      color:var(--cream);
+    }
+    .player .bubble {
+      background:linear-gradient(135deg, #0a1520, #060e17);
+      border:1px solid rgba(74,106,138,.35); border-right:3px solid var(--blue);
+      color:#b8d0e8;
+    }
+    .sys .bubble {
+      background:rgba(201,162,39,.06);
+      border:1px dashed rgba(201,162,39,.22);
+      color:rgba(201,162,39,.65); font-style:italic;
+      font-size:.78rem; text-align:center; padding:7px 14px;
+    }
+
+    /* sentence block inside bubble */
+    .sentence {
+      margin-top:9px; padding:9px 13px;
+      background:rgba(201,162,39,.06);
+      border:1px solid rgba(201,162,39,.2); border-left:3px solid var(--gold);
+      font-style:italic; font-size:.92rem;
+    }
+    .blank {
+      display:inline-block; min-width:36px;
+      border-bottom:2px solid var(--gold);
+      color:var(--gold); font-style:normal; font-weight:700;
+      text-align:center; vertical-align:bottom;
+    }
+
+    /* TYPING */
+    #typing {
+      display:none; align-self:flex-start;
+      padding:10px 14px;
+      background:linear-gradient(135deg,#1c1205,#130e03);
+      border:1px solid rgba(201,162,39,.3); border-left:3px solid var(--gold);
+      border-radius:2px; animation:slideUp .3s;
+    }
+    .dots { display:flex; gap:5px; align-items:center; }
+    .dots span {
+      width:7px; height:7px; background:var(--gold);
+      border-radius:50%; animation:bounce 1.2s ease-in-out infinite;
+    }
+    .dots span:nth-child(2){animation-delay:.2s}
+    .dots span:nth-child(3){animation-delay:.4s}
+    @keyframes bounce {
+      0%,80%,100%{transform:translateY(0);opacity:.5}
+      40%{transform:translateY(-8px);opacity:1}
+    }
+
+    /* ═══════════════ INTERACTION AREA ═══════════════ */
+    #interact {
+      border-top:1px solid var(--gold-dim);
+      background:rgba(0,0,0,.2);
+      padding:13px 20px; min-height:70px;
+      display:flex; align-items:center; justify-content:center;
+    }
+
+    .btn-row  { display:flex; gap:10px; width:100%; max-width:500px; }
+    .btn-gold {
+      flex:1; padding:13px; border:2px solid var(--gold);
+      background:transparent; color:var(--gold);
+      font-family:'Oswald',sans-serif; font-size:.88rem; font-weight:700;
+      letter-spacing:2.5px; cursor:pointer; transition:.22s;
+    }
+    .btn-gold:hover { background:var(--gold); color:var(--bg); }
+    .btn-blue {
+      flex:1; padding:13px; border:2px solid var(--blue);
+      background:transparent; color:var(--blue);
+      font-family:'Oswald',sans-serif; font-size:.88rem; font-weight:700;
+      letter-spacing:2.5px; cursor:pointer; transition:.22s;
+    }
+    .btn-blue:hover { background:var(--blue); color:var(--bg); }
+    .btn-ghost {
+      width:100%; max-width:440px; padding:11px;
+      border:1px solid rgba(201,162,39,.35);
+      background:rgba(201,162,39,.05);
+      color:var(--gold); font-family:'Oswald',sans-serif;
+      font-size:.75rem; letter-spacing:2px; cursor:pointer; transition:.22s;
+    }
+    .btn-ghost:hover { background:rgba(201,162,39,.12); border-color:var(--gold); }
+
+    .book-form { display:flex; flex-direction:column; gap:9px; width:100%; max-width:500px; }
+    .book-row  { display:flex; gap:8px; }
+    .book-row input {
+      flex:1; padding:9px 13px;
+      background:rgba(0,0,0,.5); border:1px solid rgba(201,162,39,.45);
+      color:var(--cream); font-family:'Bitter',serif; font-size:.88rem;
+      outline:none; transition:border-color .2s;
+    }
+    .book-row input:focus { border-color:var(--gold); }
+    .book-row input::placeholder { color:rgba(201,162,39,.3); font-style:italic; }
+    .btn-confirm {
+      padding:9px 18px; background:var(--gold); color:var(--bg);
+      border:none; font-family:'Oswald',sans-serif; font-size:.78rem; font-weight:700;
+      letter-spacing:1px; cursor:pointer; transition:opacity .2s;
+    }
+    .btn-confirm:hover { opacity:.85; }
+
+    /* ═══════════════ VICTORY ═══════════════ */
+    #victory {
+      display:none; position:fixed; inset:0;
+      background:rgba(3,2,0,.94);
+      z-index:200; align-items:center; justify-content:center;
+      flex-direction:column; text-align:center; gap:18px; padding:40px;
+    }
+    #victory.show { display:flex; }
+    #victory h1 {
+      font-family:'Oswald',sans-serif; font-size:2rem;
+      color:var(--gold); letter-spacing:5px;
+    }
+    #victory p { font-size:1rem; color:var(--cream2); max-width:520px; line-height:1.75; }
+    .ornament { color:var(--gold); letter-spacing:10px; font-size:1.1rem; }
+
+    /* CONFETTI */
+    .confetti {
+      position:fixed; width:8px; height:8px;
+      z-index:300; pointer-events:none;
+      animation: fall linear forwards;
+    }
+    @keyframes fall {
+      from { transform:translateY(-20px) rotate(0deg); opacity:1; }
+      to   { transform:translateY(105vh)  rotate(720deg); opacity:0; }
+    }
+
+    @media(max-width:680px){ #left { display:none; } }
+
+    /* ═══════════════ PENALIDADE ═══════════════ */
+    #penalty {
+      display:none; position:fixed; inset:0; z-index:600;
+      background:rgba(4,0,0,0.93);
+      flex-direction:column; align-items:center; justify-content:center;
+      gap:18px; text-align:center; padding:40px;
+      backdrop-filter: blur(3px);
+    }
+    #penalty.show { display:flex; }
+    .pen-skull {
+      font-size:5rem; line-height:1;
+      animation: skullPulse 2s ease-in-out infinite;
+    }
+    @keyframes skullPulse {
+      0%,100%{ transform:scale(1) rotate(-3deg); opacity:.85; }
+      50%    { transform:scale(1.08) rotate(3deg); opacity:1; }
+    }
+    .pen-title {
+      font-family:'Oswald',sans-serif; font-size:1.3rem;
+      color:#c9a227; letter-spacing:4px;
+    }
+    .pen-quote {
+      font-family:'Bitter',serif; font-style:italic;
+      color:rgba(240,221,176,.75); max-width:440px; line-height:1.7; font-size:.95rem;
+    }
+    #pen-cd {
+      font-family:'Oswald',sans-serif; font-size:4rem;
+      color:#cc2222; letter-spacing:6px;
+      animation: cdPulse 1s ease-in-out infinite;
+    }
+    @keyframes cdPulse {
+      0%,100%{ text-shadow:0 0 10px #cc2222; }
+      50%    { text-shadow:0 0 30px #cc2222, 0 0 60px #880000; }
+    }
+    .pen-sub {
+      font-family:'Oswald',sans-serif; font-size:.65rem;
+      color:rgba(201,162,39,.4); letter-spacing:3px;
+    }
+
+    /* Crânio 3D */
+    #skull-3d {
+      width:190px; height:190px;
+      object-fit:cover;
+      border-radius:50%;
+      border:3px solid rgba(201,162,39,0.35);
+      animation: skullFloat 3s ease-in-out infinite;
+      filter: drop-shadow(0 0 28px rgba(200,20,10,0.6))
+              drop-shadow(0 0 8px rgba(201,162,39,0.4));
+    }
+    @keyframes skullFloat {
+      0%,100%{ transform: translateY(0)   scale(1)    rotate(-2deg); }
+      30%    { transform: translateY(-14px) scale(1.04) rotate(1deg);  }
+      60%    { transform: translateY(-8px)  scale(1.02) rotate(-1deg); }
+    }
+    .pen-skull { line-height:1; }
+    #mute-btn {
+      position:fixed; bottom:14px; right:14px; z-index:400;
+      width:36px; height:36px;
+      background:rgba(201,162,39,.1); border:1px solid rgba(201,162,39,.3);
+      color:rgba(201,162,39,.6); font-size:1rem; cursor:pointer;
+      border-radius:2px; transition:.2s;
+      display:flex; align-items:center; justify-content:center;
+    }
+    #mute-btn:hover { background:rgba(201,162,39,.2); color:var(--gold); }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════ LEFT PANEL ═══════════ -->
+<div id="left">
+  <div class="candle"><div class="flame"></div><div class="candlebody"></div></div>
+
+  <div id="portrait">
+    <svg viewBox="0 0 136 170" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="vig" cx="50%" cy="50%" r="55%">
+          <stop offset="55%" stop-color="transparent"/>
+          <stop offset="100%" stop-color="#1a1208" stop-opacity=".85"/>
+        </radialGradient>
+        <radialGradient id="facelight" cx="42%" cy="38%" r="55%">
+          <stop offset="0%" stop-color="#a06838"/>
+          <stop offset="100%" stop-color="#7a4824"/>
+        </radialGradient>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#c97a3a"/>
+          <stop offset="55%" stop-color="#8a5226"/>
+          <stop offset="100%" stop-color="#3e2814"/>
+        </linearGradient>
+      </defs>
+      <!-- céu do sertão ao entardecer -->
+      <rect width="136" height="170" fill="url(#sky)"/>
+      <!-- sol baixo -->
+      <circle cx="100" cy="40" r="16" fill="#f0b25a" opacity=".55"/>
+      <!-- chão rachado -->
+      <rect x="0" y="120" width="136" height="50" fill="#5a3a1e"/>
+      <path d="M 0,128 L 136,128" stroke="#3e2814" stroke-width="1" opacity=".5"/>
+      <!-- mandacaru (cacto) à esquerda -->
+      <rect x="14" y="92" width="6" height="36" rx="3" fill="#3a5226"/>
+      <rect x="8" y="100" width="6" height="14" rx="3" fill="#3a5226"/>
+      <rect x="20" y="96" width="6" height="16" rx="3" fill="#3a5226"/>
+      <!-- corpo / gibão de couro -->
+      <path d="M 0,170 L 30,120 L 50,110 L 68,128 L 86,110 L 106,120 L 136,170 Z" fill="#5a3a1e"/>
+      <!-- gibão detalhes (peitoral de couro) -->
+      <path d="M 50,110 L 68,128 L 60,160 L 44,150 Z" fill="#6e4a26"/>
+      <path d="M 86,110 L 68,128 L 76,160 L 92,150 Z" fill="#6e4a26"/>
+      <!-- gola de couro -->
+      <polygon points="60,112 52,104 62,106" fill="#8a6038"/>
+      <polygon points="76,112 84,104 74,106" fill="#8a6038"/>
+      <!-- pescoço -->
+      <rect x="62" y="98" width="12" height="14" rx="3" fill="#8a5828"/>
+      <!-- rosto -->
+      <ellipse cx="68" cy="74" rx="26" ry="30" fill="url(#facelight)"/>
+      <!-- chapéu de couro de vaqueiro (gibão de aba larga) -->
+      <ellipse cx="68" cy="50" rx="40" ry="10" fill="#4a3018"/>
+      <ellipse cx="68" cy="48" rx="40" ry="9" fill="#5e3e20"/>
+      <path d="M 44,49 Q 44,24 68,22 Q 92,24 92,49 Z" fill="#5e3e20"/>
+      <path d="M 44,49 Q 44,26 68,24 Q 92,26 92,49 Z" fill="#6e4a26" opacity=".6"/>
+      <!-- faixa do chapéu -->
+      <path d="M 46,46 Q 68,40 90,46 L 90,49 Q 68,43 46,49 Z" fill="#3a2410"/>
+      <!-- sombra da aba no rosto -->
+      <ellipse cx="68" cy="56" rx="26" ry="6" fill="#3a2410" opacity=".3"/>
+      <!-- sobrancelhas -->
+      <path d="M 52,66 Q 59,63 64,65" stroke="#3a2410" stroke-width="2.3" fill="none" stroke-linecap="round"/>
+      <path d="M 84,66 Q 77,63 72,65" stroke="#3a2410" stroke-width="2.3" fill="none" stroke-linecap="round"/>
+      <!-- olho esquerdo -->
+      <ellipse cx="59" cy="72" rx="5.5" ry="4.5" fill="#d8b888"/>
+      <ellipse cx="59" cy="72" rx="3" ry="3" fill="#2a1808"/>
+      <ellipse cx="57.8" cy="70.8" rx="1" ry=".8" fill="#fff" opacity=".5"/>
+      <!-- olho direito -->
+      <ellipse cx="77" cy="72" rx="5.5" ry="4.5" fill="#d8b888"/>
+      <ellipse cx="77" cy="72" rx="3" ry="3" fill="#2a1808"/>
+      <ellipse cx="75.8" cy="70.8" rx="1" ry=".8" fill="#fff" opacity=".5"/>
+      <!-- nariz -->
+      <path d="M 68,76 Q 64,84 66,88 Q 68,90 70,88 Q 72,84 68,76 Z" fill="#6e4220"/>
+      <!-- bigode espesso de sertanejo -->
+      <path d="M 54,90 Q 61,96 68,94 Q 75,96 82,90 Q 75,93 68,92 Q 61,93 54,90 Z" fill="#2a1808"/>
+      <!-- barba rala -->
+      <path d="M 52,92 Q 68,108 84,92 Q 80,104 68,106 Q 56,104 52,92 Z" fill="#2a1808" opacity=".5"/>
+      <!-- maçãs do rosto marcadas (fome/sol) -->
+      <ellipse cx="50" cy="80" rx="7" ry="6" fill="#5a3418" opacity=".22"/>
+      <ellipse cx="86" cy="80" rx="7" ry="6" fill="#5a3418" opacity=".22"/>
+      <!-- vinheta -->
+      <rect width="136" height="170" fill="url(#vig)"/>
+      <!-- placa de nome -->
+      <rect x="0" y="154" width="136" height="16" fill="#1a1208" opacity=".88"/>
+      <text x="68" y="165" text-anchor="middle" fill="#d97b29"
+            font-family="'Oswald', sans-serif" font-size="8" letter-spacing="3" font-weight="600">O SERTANEJO</text>
+      <!-- cantos -->
+      <text x="4" y="13" fill="#d97b29" font-size="9" opacity=".5">✷</text>
+      <text x="122" y="13" fill="#d97b29" font-size="9" opacity=".5">✷</text>
+    </svg>
+  </div>
+
+  <div class="section-label">DESAFIO</div>
+  <div class="phase-dots">
+    <div class="pdot" id="pd0"></div>
+    <div class="pdot" id="pd1"></div>
+    <div class="pdot" id="pd2"></div>
+    <div class="pdot" id="pd3"></div>
+  </div>
+
+  <div class="section-label">QUESTÕES</div>
+  <div class="qdots">
+    <div class="qdot" id="qd0"></div>
+    <div class="qdot" id="qd1"></div>
+    <div class="qdot" id="qd2"></div>
+    <div class="qdot" id="qd3" style="display:none"></div>
+  </div>
+
+  <div class="candle"><div class="flame"></div><div class="candlebody"></div></div>
+
+  <div id="timer-wrap">
+    <div id="timer-lbl">TEMPO</div>
+    <div id="timer">30:00</div>
+  </div>
+</div>
+
+<!-- ═══════════ RIGHT PANEL ═══════════ -->
+<div id="right">
+  <div id="topbar">
+    <h1> Meu Brasil é lindo</h1>
+    <span class="sub">— Escape Room · Literatura pré-modernista —</span>
+  </div>
+  <div id="phase-strip">🌵 &nbsp;LITERATURA PRÉ-MODERNISTA E REGIONALISMO · CRASE</div>
+
+  <div id="chat">
+    <div id="typing">
+      <div class="dots"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+
+  <div id="interact">
+    <span style="color:rgba(201,162,39,.3);font-style:italic;font-size:.82rem;">Despertando a voz do sertão…</span>
+  </div>
+</div>
+
+<!-- ═══════════ VICTORY ═══════════ -->
+<div id="victory">
+  <div class="ornament">✷ ✷ ✷</div>
+  <h1>A VOZ FOI OUVIDA!</h1>
+  <div class="ornament">✸</div>
+  <p id="vtext"></p>
+  <div class="ornament">✷ ✷ ✷</div>
+  <button class="btn-ghost" style="max-width:260px;margin-top:10px"
+    onclick="location.reload()">▸ JOGAR NOVAMENTE</button>
+</div>
+
+<!-- ═══════════ PENALIDADE ═══════════ -->
+<div id="penalty">
+  <div class="pen-skull">
+    <img id="skull-3d"
+         src="data:image/jpeg;base64,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"
+         alt="caveira"
+         style="width:180px;height:180px;object-fit:cover;border-radius:50%;
+                border:2px solid rgba(201,162,39,0.3);"/>
+  </div>
+  <div class="pen-title">PENITÊNCIA</div>
+  <p id="pen-time-lbl" style="font-family:'Oswald',sans-serif;font-size:.72rem;color:rgba(204,34,34,.75);letter-spacing:3px;margin:-8px 0 0"></p>
+  <p class="pen-quote" id="pen-quote"></p>
+  <div id="pen-cd">2:00</div>
+  <p class="pen-sub">AGUARDE PARA PROSSEGUIR</p>
+</div>
+
+<!-- botão mudo -->
+<button id="mute-btn" onclick="toggleMute()" title="Silenciar música">🔊</button>
+
+<script>
+/* ═══════════════════════════════════════════════
+   MÚSICA FÚNEBRE — Web Audio API (Marcha Fúnebre, Chopin Op.35)
+═══════════════════════════════════════════════ */
+let audioCtx = null, masterGain = null, muted = false;
+
+function startMusic() {
+  try {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    audioCtx = new AC();
+    masterGain = audioCtx.createGain();
+    masterGain.gain.value = 0.12;
+    masterGain.connect(audioCtx.destination);
+    playLoop();
+  } catch(e) {}
+}
+
+function toggleMute() {
+  if (!audioCtx) return;
+  muted = !muted;
+  masterGain.gain.setTargetAtTime(muted ? 0 : 0.12, audioCtx.currentTime, 0.3);
+  document.getElementById('mute-btn').textContent = muted ? '🔇' : '🔊';
+}
+
+// Marcha Fúnebre de Chopin (simplificada, Bb menor)
+const BPM = 50, BEAT = 60 / BPM;
+const FREQ = {
+  Bb2:116.54, F3:174.61, Bb3:233.08,
+  C4:261.63,  Db4:277.18, Eb4:311.13,
+  F4:349.23,  Gb4:369.99, Ab4:415.30, Bb4:466.16
+};
+// [nota, duração em beats]
+const MELODY = [
+  ['Bb3',.5],['Bb3',.5],['Bb3',.5],['F3',1.5],
+  ['Bb3',.5],['Bb3',.5],['Bb3',.5],['F3',1.5],
+  ['Bb3',.33],['C4',.33],['Db4',.67],['Eb4',.5],
+  ['F4',.75],['F4',.25],['Eb4',.5],
+  ['Db4',.5],['Eb4',.5],['F4',.5],['Bb3',2],
+  [null,2]
+];
+const BASS = [
+  ['Bb2',1],['Bb2',1],['Bb2',1],['Bb2',1],
+  ['Bb2',1],['Bb2',1],['Bb2',1],['Bb2',1],
+  ['Bb2',1],['Bb2',1],['Bb2',1],['Bb2',1],
+  ['F3',1],['F3',1],['Bb2',2],[null,2]
+];
+
+function playOrganNote(freq, t, dur, vol=1) {
+  if (!audioCtx || !freq) return;
+  const g = audioCtx.createGain();
+  g.gain.setValueAtTime(0, t);
+  g.gain.linearRampToValueAtTime(0.05*vol, t+0.08);
+  g.gain.setValueAtTime(0.05*vol, t+dur-0.12);
+  g.gain.linearRampToValueAtTime(0, t+dur);
+  g.connect(masterGain);
+  [1, 2, 3, 4].forEach((h, i) => {
+    const o = audioCtx.createOscillator();
+    o.type = 'sine';
+    o.frequency.value = freq * h;
+    const hg = audioCtx.createGain();
+    hg.gain.value = [1,.55,.25,.1][i];
+    o.connect(hg); hg.connect(g);
+    o.start(t); o.stop(t + dur + 0.2);
+  });
+}
+
+function playLoop() {
+  if (!audioCtx) return;
+  const t0 = audioCtx.currentTime + 0.15;
+  let mt = t0, bt = t0;
+  MELODY.forEach(([n, d]) => {
+    playOrganNote(FREQ[n], mt, d*BEAT*0.88, 1.0);
+    mt += d * BEAT;
+  });
+  BASS.forEach(([n, d]) => {
+    playOrganNote(FREQ[n], bt, d*BEAT*0.7, 0.55);
+    bt += d * BEAT;
+  });
+  const total = MELODY.reduce((s,[,d])=>s+d,0) * BEAT * 1000;
+  setTimeout(playLoop, total - 200);
+}
+
+/* ═══════════════════════════════════════════════
+   PENALIDADE (2 minutos)
+═══════════════════════════════════════════════ */
+const PEN_QUOTES = [
+  '"No sertão, quem erra o caminho paga com sede. Esperai." — A Voz do Sertão',
+  '"A crase não perdoa a ignorância, como a seca não perdoa o desavisado." — A Voz do Sertão',
+  '"Lamentável. Esperemos juntos que o tempo cure esta ferida gramatical." — A Voz do Sertão',
+  '"O erro custa caro a quem caminha sem atenção. Esperai." — A Voz do Sertão',
+  '"Errar é humano. Pagar a penitência, também." — A Voz do Sertão',
+];
+let penInterval = null;
+
+function startPenalty() {
+  G.wrongCount++;
+  // Progressivo: 1min, 2min, 3min, 3min, 3min...
+  const mins = Math.min(G.wrongCount, 3);
+  const labels = ['', '1ª VEZ — 1 MINUTO', '2ª VEZ — 2 MINUTOS', '3ª VEZ — 3 MINUTOS'];
+  const labelExtra = G.wrongCount > 3 ? `${G.wrongCount}ª VEZ — 3 MINUTOS` : labels[mins];
+
+  document.getElementById('pen-quote').textContent =
+    PEN_QUOTES[Math.floor(Math.random()*PEN_QUOTES.length)];
+  document.getElementById('pen-time-lbl').textContent = labelExtra;
+  document.getElementById('penalty').classList.add('show');
+
+  if (masterGain && !muted)
+    masterGain.gain.setTargetAtTime(0.04, audioCtx.currentTime, 0.5);
+
+  let rem = mins * 60;
+  const cd = document.getElementById('pen-cd');
+  cd.textContent = `${mins}:00`;
+
+  clearInterval(penInterval);
+  penInterval = setInterval(() => {
+    rem--;
+    const m = Math.floor(rem/60), s = rem%60;
+    cd.textContent = `${m}:${String(s).padStart(2,'0')}`;
+    if (rem <= 0) {
+      clearInterval(penInterval);
+      document.getElementById('penalty').classList.remove('show');
+      if (masterGain && !muted)
+        masterGain.gain.setTargetAtTime(0.12, audioCtx.currentTime, 0.5);
+    }
+  }, 1000);
+}
+
+
+const PHASES = [
+  {
+    book: 'Vidas Secas',
+    aliases: ['vidas secas','vida seca','vidas-secas'],
+    strip: '📜 Fase 1 · Crase · O Sertão e a Família',
+    qs: [
+      { b:'Fabiano aspirava', a:'uma vida melhor, longe da seca e da miséria.', crase:false,
+        label:'A UMA VIDA', rule:'Antes do artigo indefinido "uma" não há crase. "a uma vida" = preposição A pura. Sem crase.' },
+      { b:'Sinhá Vitória sonhava acordada', a:'noite, desejando uma cama de couro legítimo.', crase:true,
+        label:'À NOITE', rule:'"à noite" é locução adverbial de tempo feminina. Crase obrigatória.' },
+      { b:'Baleia corria', a:'cata de preás magros pelo mato ressequido.', crase:true,
+        label:'À CATA', rule:'"à cata de" é locução prepositiva feminina (= à procura de). Crase obrigatória.' }
+    ],
+    hints: [
+      'Uma família caminha pela caatinga do Nordeste — um homem, sua mulher, dois filhos sem nome e uma cachorra. Fogem da seca em busca de terra e água. Um escritor alagoano narrou esse êxodo sem piedade e sem falsa esperança.',
+      'O protagonista é um vaqueiro que mal sabe se expressar. Sonha com palavras que nunca encontra. A cachorra da família tem um nome de peixe — e é talvez o ser mais humano da história. O romance foi publicado em 1938.',
+      'O título diz tudo sobre a terra e sobre as pessoas que ela resseca. São duas palavras. A primeira é um adjetivo que descreve tanto o ambiente quanto as existências retratadas. Procurem esse livro nas prateleiras.'
+    ]
+  },
+  {
+    book: 'Triste Fim de Policarpo Quaresma',
+    aliases: ['triste fim de policarpo quaresma','policarpo quaresma','triste fim','quaresma','triste fim policarpo quaresma'],
+    strip: '📜 Fase 2 · Crase · O Patriota',
+    qs: [
+      { b:'Policarpo Quaresma dedicou-se', a:'pátria com um fervor que beirava a loucura.', crase:true,
+        label:'À PÁTRIA', rule:'"dedicar-se a" + "a pátria" (feminino) → prep. A + artigo A = À. Crase obrigatória.' },
+      { b:'O major enviou o abaixo-assinado', a:'Câmara dos Deputados, escrito em tupi.', crase:true,
+        label:'À CÂMARA', rule:'"enviar a" + "a Câmara" (feminino) → prep. A + artigo A = À. Crase obrigatória.' },
+      { b:'Quaresma começou', a:'estudar o tupi, convencido de que era a língua do Brasil.', crase:false,
+        label:'A ESTUDAR', rule:'Nunca há crase antes de verbo no infinitivo. "a estudar" = preposição A pura. Sem crase.' }
+    ],
+    hints: [
+      'Há um personagem na literatura brasileira que amava tanto a pátria que quase chegou à loucura por ela. Enviou ao Parlamento um abaixo-assinado inteiro escrito em tupi-guarani — a língua que acreditava ser a verdadeira língua dos brasileiros. Seus contemporâneos o chamavam de excêntrico.',
+      'Esse personagem era um major do Arsenal de Guerra do Rio de Janeiro. Após a aventura linguística, tentou reformar uma fazenda no interior — e também fracassou. O escritor que o criou vivia nos subúrbios cariocas e escrevia com a tinta da injustiça social.',
+      'O título do livro anuncia, sem piedade, o destino do protagonista. São três palavras: a primeira descreve como foi esse fim, a segunda é uma palavra muito curta, e a terceira é o nome completo do personagem — um prenome e um sobrenome. Procurem esse título nas prateleiras.'
+    ]
+  },
+  {
+    book: 'Urupês',
+    aliases: ['urupês','urupes','urupe','urupé'],
+    strip: '📜 Fase 3 · Crase · O Brasil Visto de Fora',
+    qs: [
+      { b:'Jeca Tatu vivia agachado', a:'beira do caminho, indiferente ao mundo.', crase:true,
+        label:'À BEIRA', rule:'"à beira de" é locução prepositiva feminina. Crase obrigatória.' },
+      { b:'Lobato voltou', a:'sua fazenda e encontrou um Brasil que não conhecia.', crase:false,
+        label:'A SUA FAZENDA', rule:'Diante de pronome possessivo a crase é facultativa; aqui, sem o artigo explícito, predomina "a sua fazenda" sem crase. Sem crase.' },
+      { b:'O caipira permanecia indiferente', a:'escola e ao progresso que lhe ofereciam.', crase:true,
+        label:'À ESCOLA', rule:'"indiferente a" + "a escola" (feminino) → prep. A + artigo A = À. Crase obrigatória.' }
+    ],
+    hints: [
+      'Um escritor paulista publicou em 1918 uma coletânea de contos que chocou e encantou o Brasil. O título vem do nome de um fungo — um cogumelo que nasce em árvores mortas, símbolo de algo que vive às custas do que está podre e esquecido.',
+      'O conto mais famoso da coletânea criou um personagem que virou símbolo do homem rural brasileiro: um caipira do interior de São Paulo, encurvado, de cócoras, que vive sem fazer nada. Uma caricatura polêmica que o próprio autor revisou mais tarde.',
+      'O nome desse personagem é composto: um prenome de origem indígena e um sobrenome de animal. Mas o título do livro não é esse nome — é o nome do cogumelo. Um título incomum, de poucas letras, que começa com U. Procurem nas prateleiras.'
+    ]
+  },
+  {
+    book: 'O Quinze',
+    aliases: ['o quinze','quinze'],
+    strip: '📜 Fase 4 · Crase · A Seca de 1915 no Ceará',
+    qs: [
+      { b:'Conceição levava alimentos', a:'família de Chico Bento, atingida pela seca.', crase:true,
+        label:'À FAMÍLIA', rule:'"levar a" + "a família" (feminino) → prep. A + artigo A = À. Crase obrigatória.' },
+      { b:'Os retirantes caminhavam', a:'pé rumo à capital, em busca de água.', crase:false,
+        label:'A PÉ', rule:'"a pé" é locução adverbial de meio com palavra masculina. Não há crase diante de palavra masculina. Sem crase.' },
+      { b:'Vicente nunca declarou seu amor', a:'prima Conceição, e esse silêncio custou caro.', crase:true,
+        label:'À PRIMA', rule:'"declarar amor a" + "a prima" (feminino) → prep. A + artigo A = À. Crase obrigatória.' }
+    ],
+    hints: [
+      'Uma jovem escritora cearense publicou, em 1930, com apenas 19 anos, um romance sobre a grande seca de 1915 no Ceará. O livro causou espanto — como alguém tão jovem poderia escrever com tamanha maturidade? Alguns chegaram a duvidar que a obra fosse realmente dela.',
+      'O romance acompanha duas histórias paralelas: a de uma intelectual que distribui mantimentos e guarda um amor não correspondido; e a de um retirante que abandona a terra com a família, perdendo tudo pelo caminho.',
+      'O título do livro é simplesmente o ano em que ocorreu a grande seca que o inspirou — escrito por extenso em português. Um número formado por duas palavras. Procurem esse título nas prateleiras.'
+    ]
+  }
+];
+
+/* ═══════════════════════════════════════════════
+   ESTADO
+═══════════════════════════════════════════════ */
+let G = {
+  phase:0, qIdx:0, hints:0, answered:[],
+  qsDone:false, bookMode:false, attempts:0,
+  busy:false, timeLeft:1800, timer:null,
+  wrongCount:0, finalEnigma:false
+};
+
+/* ═══════════════════════════════════════════════
+   TIMER
+═══════════════════════════════════════════════ */
+function startTimer() {
+  G.timer = setInterval(() => {
+    G.timeLeft--;
+    const m = Math.floor(G.timeLeft/60), s = G.timeLeft%60;
+    const el = document.getElementById('timer');
+    el.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    el.className = G.timeLeft<=300 ? 'danger' : G.timeLeft<=600 ? 'warn' : '';
+    if (G.timeLeft <= 0) { clearInterval(G.timer); timeUp(); }
+  }, 1000);
+}
+
+/* ═══════════════════════════════════════════════
+   UI HELPERS
+═══════════════════════════════════════════════ */
+const $chat    = () => document.getElementById('chat');
+const $typing  = () => document.getElementById('typing');
+const $interact= () => document.getElementById('interact');
+
+function addMsg(type, text, extra='') {
+  const chat = $chat();
+  const div  = document.createElement('div');
+  div.className = `msg ${type}`;
+  const avatarMap = { bras:'S', player:'VÓS' };
+  const avatarColor = type==='player' ? 'border-color:var(--blue);color:var(--blue)' : '';
+  const av = (type==='bras'||type==='player')
+    ? `<div class="avatar" style="${avatarColor}">${avatarMap[type]}</div>` : '';
+  div.innerHTML = `${av}<div class="bubble">${text}${extra}</div>`;
+  chat.insertBefore(div, $typing());
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function showTyping()  { $typing().style.display='block'; $chat().scrollTop=99999; }
+function hideTyping()  { $typing().style.display='none'; }
+function setInteract(html) { $interact().innerHTML = html; }
+
+function dots() {
+  const ph = G.phase;
+  for (let i=0;i<4;i++){
+    const d = document.getElementById(`pd${i}`);
+    if(d) d.className = 'pdot' + (i<ph?' done': i===ph?' active':'');
+  }
+  const totalQs = G.phase < PHASES.length ? PHASES[G.phase].qs.length : 3;
+  const d3 = document.getElementById('qd3');
+  if(d3) d3.style.display = totalQs > 3 ? 'block' : 'none';
+  for (let i=0;i<4;i++){
+    const d = document.getElementById(`qd${i}`);
+    if(!d) continue;
+    d.className = 'qdot'+(i<G.qIdx?(G.answered[i]?' ok':' err'):i===G.qIdx&&!G.qsDone?' cur':'');
+  }
+}
+
+function sentence(q) {
+  return `<div class="sentence">"${q.b} <span class="blank">___</span> ${q.a}"</div>`;
+}
+
+function normalize(s) {
+  return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();
+}
+
+/* ═══════════════════════════════════════════════
+   BRÁS CUBAS — respostas pré-escritas (sem API)
+═══════════════════════════════════════════════ */
+function bras(situation, extra={}) {
+  const pi  = Math.min(G.phase, PHASES.length-1);
+  const ph  = PHASES[pi];
+  const pick = arr => arr[Math.floor(Math.random()*arr.length)];
+
+  /* ── Intro ── */
+  const INTRO = `Sou a voz do sertão — a memória de todos que caminharam pela terra rachada em busca de água e de palavra. Falo por Fabiano, que não sabia se expressar; por Quaresma, que gritou em tupi; pelo Jeca, que foi silenciado; pelos retirantes que Rachel deu a conhecer. Ao longo deste jogo, farei perguntas sobre crase — essa pequena marca que tantos ignoram. A cada fase superada, revelarei pistas sobre um livro que devereis encontrar na biblioteca. O nome jamais direi diretamente. Quem quer aprender, merece o esforço de descobrir.`;
+
+  /* ── Intro de cada fase ── */
+  const PHASE_INTRO = [
+    `Começamos pela terra mais dura. Graciliano Ramos foi ao coração da caatinga e narrou, sem piedade nem falsa esperança, uma família que caminha sem destino — ressecada como o chão que pisa. Esta fase testa os vossos conhecimentos de crase. Respondam às questões e, depois, revelarei pistas sobre esse livro implacável.`,
+    `Há patriotas, e há Policarpo Quaresma. Ele amou o Brasil com uma intensidade que o destruiu — aprendeu tupi, escreveu abaixo-assinados ao Parlamento, sonhou com uma nação que não existia. Respondam às questões de crase desta fase. As pistas que darei depois levam a esse homem que acreditou no Brasil mais do que o Brasil merecia.`,
+    `Monteiro Lobato foi ao interior de São Paulo e encontrou um Brasil que muitos fingiam não existir — o caipira encurvado, de pé no chão, olhos no vazio. Criou desse encontro um personagem que virou símbolo de um debate que o Brasil ainda não encerrou. Respondam às questões. As pistas revelarão a coletânea que escandalizou e encantou o Brasil de 1918.`,
+    `Chegamos ao último desafio. Uma jovem de apenas 19 anos escreveu, em 1930, sobre a grande seca de 1915 no Ceará. Ela deu voz a quem não tinha — os retirantes, os famintos, os invisíveis. Esta fase encerra o nosso jogo. Prestem atenção nas pistas — elas levam a uma das maiores vozes da literatura brasileira.`,
+  ];
+
+  /* ── Intro de cada questão ── */
+  const Q_INTRO = [
+    `Atenção, mortais. Observem a frase abaixo e escolham a forma correta para a lacuna.`,
+    `Do alto desta terra seca, apresento-vos mais uma sentença. Escolham com cuidado — a crase não perdoa o descuido.`,
+    `Uma nova frase se apresenta. Lembrem-se: há crase apenas quando a preposição A encontra o artigo A feminino — ou certos pronomes demonstrativos. Escolham.`,
+    `Contemplem esta frase com atenção. A resposta errada tem consequências — como tudo na vida e na morte.`,
+    `Mais uma questão. Concentrem-se e escolham a forma correta para a lacuna.`,
+  ];
+
+  /* ── Acerto ── */
+  function correctR() { return pick([
+    `Muito bem! ${extra.label} — exatamente. ${extra.rule} Vejo que a gramática ainda não vos é completamente estranha.`,
+    `Correto! ${extra.label}. ${extra.rule} Há esperança para vocês ainda.`,
+    `Acertastes! ${extra.label} — forma correta. ${extra.rule} Que satisfação rara, a de ver a gramática respeitada.`,
+    `Exato. ${extra.label}. ${extra.rule} Não é difícil quando se para para pensar — o problema é que raramente se para.`,
+  ]); }
+
+  /* ── Erro ── */
+  function wrongR() { return pick([
+    `Incorreto. A forma correta é ${extra.label}. ${extra.rule} Não se envergonhem — errar é da condição humana. Mas o erro tem seu preço.`,
+    `Engano. ${extra.label} seria o correto. ${extra.rule} Cometestes o erro mais comum entre os vivos: a pressa.`,
+    `Lamentável. A resposta certa é ${extra.label}. ${extra.rule} A terra seca não perdoa o descuido; a crase também não.`,
+    `Não. A forma correta é ${extra.label}. ${extra.rule} A crase tem regras — e as regras existem para ser aprendidas, não ignoradas.`,
+  ]); }
+
+  /* ── Fim das questões ── */
+  const QS_DONE = [
+    `As questões desta fase estão encerradas. Erraram o que erraram, acertaram o que acertaram — a vida é assim, e a morte também. Agora a parte mais intrigante: revelarei pistas sobre um livro que devereis encontrar na biblioteca. Prestem atenção — não sou dado a repetições.`,
+    `Encerramos as questões desta fase. Agora começa a verdadeira caçada: revelarei, em pistas, a identidade de um livro escondido nas prateleiras. Sejam perspicazes — o óbvio raramente é a resposta.`,
+    `As questões terminaram. O que se segue é o exercício da dedução — competência que os vivos possuem mas raramente utilizam. Revelarei pistas sobre um livro. Prestem atenção em cada detalhe, pois serei deliberadamente vago.`,
+    `Última rodada de questões encerrada. As pistas que darei serão suficientes para quem pensa — e insuficientes para quem não pensa. Vós escolheis em qual categoria se encaixar.`,
+  ];
+
+  /* ── Pistas ── */
+  function hintR() {
+    const ini = pick([`Ouçam com atenção — esta pista não será repetida.`, `Do além, sussurro o seguinte.`, `Prestem atenção ao que revelarei agora.`]);
+    const fim = pick([`Digam-me o título do livro quando o descobrirem.`, `Já sabem o suficiente para tentar. Qual é o título?`, `Reflitam sobre isso. Qual livro estou descrevendo?`]);
+    return `${ini} ${ph.hints[G.hints]} ${fim}`;
+  }
+
+  /* ── Livro errado ── */
+  const WRONG_BOOK = [
+    `"${extra.guess||'?'}" — não é esse. ${G.hints<3?'Há mais pistas a revelar. Aguardem.':'Releiam as pistas com atenção.'}`,
+    `Não. "${extra.guess||'?'}" não é o livro que procuro. ${G.hints<3?'Revelarei mais uma pista.':'As respostas estão nas pistas. Pensem.'}`,
+    `Incorreto. Não é "${extra.guess||'?'}". ${G.hints<3?'Ainda há pistas por vir.':'Releiam com mais cuidado.'}`,
+  ];
+
+  /* ── Livro certo ── */
+  const RIGHT_BOOK = [
+    `Exatamente! Vidas Secas, de Graciliano Ramos. Fabiano, Sinhá Vitória, os meninos sem nome e a cachorra Baleia — uma família inteira ressecada pela terra e pelo sistema. O bilhete com a próxima pista está escondido dentro desse livro, na biblioteca. O próximo desafio aguarda.`,
+    `Exatamente! Triste Fim de Policarpo Quaresma, de Lima Barreto. Quaresma amou a pátria com uma intensidade que o levou ao hospício e ao pelotão de fuzilamento — um amor tão puro que o próprio Brasil não soube o que fazer com ele. O bilhete está dentro desse livro, na biblioteca. O próximo desafio aguarda.`,
+    `Exatamente! Urupês, de Monteiro Lobato. O Jeca Tatu — criado nessas páginas — tornou-se o símbolo de um debate que o Brasil ainda não encerrou: quem é o homem rural e o que ele precisa? O bilhete está dentro desse livro, na biblioteca. O próximo desafio aguarda.`,
+    `Correto! O Quinze, de Rachel de Queiroz — escrito por uma jovem de 19 anos que já escrevia como uma veterana. A seca de 1915 no Ceará, os retirantes, Conceição e Vicente — tudo narrado com contenção poética que poucos alcançam. Os quatro livros foram encontrados. Mas o jogo não terminou — o enigma final aguarda.`,
+  ];
+
+  /* ── Revelar livro ── */
+  const REVEAL_BOOK = [
+    `O livro é Vidas Secas, de Graciliano Ramos — a família que caminha pela caatinga buscando sobreviver ao que a seca e o sistema fazem com os pobres. O bilhete está dentro do livro. Busquem-no — o próximo desafio aguarda.`,
+    `O livro é Triste Fim de Policarpo Quaresma, de Lima Barreto — o major que amou o Brasil com tanta paixão que o Brasil o matou por isso. O bilhete está dentro do livro. Sigam em frente.`,
+    `O livro é Urupês, de Monteiro Lobato — a coletânea que apresentou Jeca Tatu ao Brasil e provocou um debate sobre o homem rural que dura até hoje. O bilhete está dentro do livro.`,
+    `O livro é O Quinze, de Rachel de Queiroz — a seca de 1915 narrada por uma jovem de 19 anos com talento de veterana. O bilhete está dentro do livro. E agora — o enigma final.`,
+  ];
+
+  /* ── Enigma final ── */
+  const FINAL_ENIGMA = `Quatro livros percorridos, quatro vozes arrancadas do silêncio. Mas o jogo ainda não terminou — reservei para o final o enigma que exige não apenas memória, mas inteligência. Cada livro guarda uma resposta. Nas primeiras letras dessas respostas, encontrareis o enigma de 4 letras. Descobri-lo — e passem-no por baixo da porta.`;
+
+  /* ── Enigma errado ── */
+  const FINAL_WRONG = [
+    `"\${extra.guess||'?'}" — não é essa a palavra. Releiam as quatro perguntas. Cada livro tem uma resposta simples, de uma palavra. Pensem: como se chama o pai da família em Vidas Secas? Que documento Quaresma enviou ao Parlamento em tupi? Qual é o sobrenome do autor de Urupês? E que sentimento Conceição guardava por Vicente em O Quinze?`,
+    `Não. Observem melhor: quatro perguntas, quatro respostas. A palavra final está nas primeiras letras de cada resposta. Não procurem complicar o que é simples.`,
+    `Incorreto. Quatro primeiras letras, quatro respostas. A palavra é comum, de uso cotidiano, e tem tudo a ver com o que esses quatro livros têm em comum — a busca por uma voz.`,
+  ];
+
+  /* ── Vitória ── */
+  const VICTORY = `E assim — com sabedoria que me surpreende — descobristes a palavra. FALA. A voz de Fabiano, que mal sabia falar e sonhava com palavras que nunca encontrava; o abaixo-assinado de Quaresma, que gritou em tupi para um Parlamento que não quis ouvir; o Jeca Tatu de Lobato, que foi silenciado, caricaturado e depois reinventado; a Conceição de Rachel, que falou por todos os retirantes que o Brasil preferia não escutar. FALA — a palavra que todo grande escritor brasileiro buscou dar ao seu povo. Parabéns. Podeis abrir a porta.`;
+
+  const MAP = {
+    intro: INTRO,
+    phase_intro: PHASE_INTRO[pi],
+    q_intro: pick(Q_INTRO),
+    correct: correctR(),
+    wrong: wrongR(),
+    qs_done: QS_DONE[pi],
+    hint: hintR(),
+    wrong_book: pick(WRONG_BOOK),
+    right_book: RIGHT_BOOK[pi],
+    reveal_book: REVEAL_BOOK[pi],
+    final_enigma_intro: FINAL_ENIGMA,
+    final_wrong: pick(FINAL_WRONG),
+    victory: VICTORY,
+  };
+
+  // Simula pequeno delay para manter o ritmo do jogo
+  return new Promise(resolve =>
+    setTimeout(() => resolve(MAP[situation] || 'A voz do sertão pondera em silêncio.'),
+    500 + Math.random()*700)
+  );
+}
+
+
+/* ═══════════════════════════════════════════════
+   FLUXO DO JOGO
+═══════════════════════════════════════════════ */
+async function init() {
+  dots(); startTimer();
+  // Música começa no primeiro clique do usuário (exigência dos navegadores)
+  document.addEventListener('click', () => {
+    if (!audioCtx) startMusic();
+  }, { once: true });
+  setInteract('<span style="color:rgba(201,162,39,.3);font-style:italic;font-size:.82rem;">Despertando a voz do sertão…</span>');
+  showTyping();
+  const txt = await bras('intro');
+  hideTyping(); addMsg('bras', txt);
+  await delay(1200); startPhase();
+}
+
+async function startPhase() {
+  G.qIdx=0; G.hints=0; G.qsDone=false;
+  G.bookMode=false; G.attempts=0; G.answered=[];
+  dots();
+  document.getElementById('phase-strip').textContent = PHASES[Math.min(G.phase,3)].strip;
+  showTyping();
+  const txt = await bras('phase_intro');
+  hideTyping(); addMsg('bras', txt);
+  await delay(1100); askQuestion();
+}
+
+async function askQuestion() {
+  if (G.busy) return;
+  dots();
+  showTyping();
+  const txt = await bras('q_intro');
+  hideTyping();
+  const q = PHASES[G.phase].qs[G.qIdx];
+  addMsg('bras', txt, sentence(q));
+  setInteract(`
+    <div class="btn-row">
+      <button class="btn-gold" onclick="answer(true)">À — COM CRASE</button>
+      <button class="btn-blue" onclick="answer(false)">A — SEM CRASE</button>
+    </div>`);
+}
+
+async function answer(chose) {
+  if (G.busy) return; G.busy=true;
+  const q    = PHASES[G.phase].qs[G.qIdx];
+  const ok   = (chose === q.crase);
+  addMsg('player', chose ? '— À (com crase)' : '— A (sem crase)');
+  G.answered.push(ok); dots();
+  setInteract('<span style="color:rgba(201,162,39,.3);font-style:italic;font-size:.82rem;">A voz pondera…</span>');
+  showTyping();
+  const txt = await bras(ok?'correct':'wrong',
+    {b:q.b, a:q.a, label:q.label, rule:q.rule, chose: chose?'à':'a'});
+  hideTyping(); addMsg('bras', txt);
+  G.qIdx++; G.busy=false;
+  if (!ok) setTimeout(startPenalty, 800);
+  const totalQs = PHASES[G.phase].qs.length;
+  if (G.qIdx < totalQs) {
+    setInteract(`<button class="btn-ghost" onclick="askQuestion()">▸ PRÓXIMA QUESTÃO</button>`);
+  } else {
+    G.qsDone = true; dots();
+    setInteract(`<button class="btn-ghost" onclick="transHints()">▸ RECEBER PRIMEIRA PISTA</button>`);
+  }
+}
+
+async function transHints() {
+  if (G.busy) return; G.busy=true;
+  setInteract('<span style="color:rgba(201,162,39,.3);font-style:italic;font-size:.82rem;">A voz prepara a pista…</span>');
+  showTyping();
+  const txt = await bras('qs_done');
+  hideTyping(); addMsg('bras', txt);
+  G.busy=false;
+  setInteract(`<button class="btn-ghost" onclick="giveHint()">▸ VER PISTA Nº 1</button>`);
+}
+
+async function giveHint() {
+  if (G.busy) return;
+  if (G.hints >= 3) { revealBook(); return; }
+  G.busy=true;
+  setInteract('<span style="color:rgba(201,162,39,.3);font-style:italic;font-size:.82rem;">A voz sussurra…</span>');
+  showTyping();
+  const txt = await bras('hint');
+  hideTyping(); addMsg('bras', txt);
+  G.hints++; G.bookMode=true; G.busy=false;
+  showBookInput();
+}
+
+function showBookInput() {
+  const nextLabel = G.hints < 3 ? `▸ PISTA Nº ${G.hints+1}` : '▸ REVELAR O LIVRO';
+  setInteract(`
+    <div class="book-form">
+      <div class="book-row">
+        <input id="bi" type="text" placeholder="Digite o título do livro…"
+          onkeydown="if(event.key==='Enter')guessBook()"/>
+        <button class="btn-confirm" onclick="guessBook()">CONFIRMAR</button>
+      </div>
+      <button class="btn-ghost" onclick="giveHint()">${nextLabel}</button>
+    </div>`);
+  setTimeout(()=>{ const el=document.getElementById('bi'); if(el)el.focus(); },80);
+}
+
+async function guessBook() {
+  if (G.busy) return;
+  const el = document.getElementById('bi'); if(!el) return;
+  const raw = el.value.trim(); if(!raw) return;
+  G.busy=true; el.value='';
+  const nrm  = normalize(raw);
+  const ph   = PHASES[G.phase];
+  const ok   = ph.aliases.some(a => normalize(a)===nrm || nrm.includes(normalize(a)) || normalize(a).includes(nrm));
+  addMsg('player', `— "${raw}"`);
+  setInteract('<span style="color:rgba(201,162,39,.3);font-style:italic;font-size:.82rem;">A voz considera…</span>');
+  showTyping();
+  const txt = await bras(ok?'right_book':'wrong_book', {guess:raw});
+  hideTyping(); addMsg('bras', txt);
+  G.attempts++; G.busy=false;
+  if (ok) { setTimeout(()=>advance(), 1800); }
+  else    { G.hints<3 ? showBookInput() : setInteract(`<button class="btn-ghost" onclick="giveHint()">▸ VER MAIS UMA PISTA / REVELAR</button>`); }
+}
+
+async function revealBook() {
+  G.busy=true;
+  setInteract('<span style="color:rgba(201,162,39,.3);font-style:italic;font-size:.82rem;">A voz revela o segredo…</span>');
+  showTyping();
+  const txt = await bras('reveal_book');
+  hideTyping(); addMsg('bras', txt);
+  G.busy=false;
+  setTimeout(()=>advance(), 1800);
+}
+
+async function advance() {
+  G.phase++;
+  if (G.phase >= 4) {
+    G.phase = 3;
+    addMsg('sys','✷ &nbsp; Os 4 livros foram descobertos — o enigma final aguarda &nbsp; ✷');
+    await delay(1400);
+    await startFinalEnigma();
+    return;
+  }
+  addMsg('sys',`✷ &nbsp; Desafio ${G.phase} concluído — prepare-se para o próximo &nbsp; ✷`);
+  dots();
+  await delay(1400); startPhase();
+}
+
+/* ── ENIGMA FINAL — AMOR ── */
+async function startFinalEnigma() {
+  G.finalEnigma = true;
+  document.getElementById('phase-strip').textContent = '🔐  ENIGMA FINAL — Os 4 Livros · Uma Palavra';
+  showTyping();
+  const intro = await bras('final_enigma_intro');
+  hideTyping(); addMsg('bras', intro);
+  await delay(900);
+
+  const card = `<div class="enigma-card">
+    <div class="enigma-title">⚔ &nbsp; ENIGMA FINAL &nbsp; ⚔</div>
+    <div class="enigma-subtitle">Quatro livros. Quatro vozes. Uma palavra vos libertará.</div>
+    <div class="enigma-item">
+      <span class="enigma-num">I</span>
+      <span class="enigma-text"><em>Vidas Secas</em> — O patriarca da família que caminha pela caatinga com Sinhá Vitória, os dois filhos sem nome e a cachorra Baleia. Qual é o seu nome?</span>
+    </div>
+    <div class="enigma-item">
+      <span class="enigma-num">II</span>
+      <span class="enigma-text"><em>Triste Fim de Policarpo Quaresma</em> — Quaresma escreveu em língua tupi um pedido ao Parlamento para que o tupi fosse a língua oficial do Brasil. Como se chama esse tipo de documento — uma petição coletiva encaminhada a autoridades?</span>
+    </div>
+    <div class="enigma-item">
+      <span class="enigma-num">III</span>
+      <span class="enigma-text"><em>Urupês</em> — O criador do Jeca Tatu, que também inventou o Sítio do Picapau Amarelo e a Emília. Qual é o sobrenome desse escritor paulista?</span>
+    </div>
+    <div class="enigma-item">
+      <span class="enigma-num">IV</span>
+      <span class="enigma-text"><em>O Quinze</em> — A protagonista Conceição guardava um sentimento silencioso e não correspondido por seu primo Vicente. Que sentimento era esse?</span>
+    </div>
+    <div class="enigma-footer">Nas primeiras letras das respostas encontrareis o enigma de 4 letras.<br>Descobri-lo e escrevê-lo num papel — depois, passem-no sob a porta.</div>
+  </div>`;
+  addMsg('sys', card);
+
+  await delay(600);
+  setInteract(`
+    <div class="book-form">
+      <div class="book-row">
+        <input id="amor-in" type="text" placeholder="A palavra de 4 letras…"
+          onkeydown="if(event.key==='Enter')checkAMOR()"/>
+        <button class="btn-confirm" onclick="checkAMOR()">CONFIRMAR</button>
+      </div>
+    </div>`);
+  setTimeout(()=>{ const el=document.getElementById('amor-in'); if(el)el.focus(); },100);
+}
+
+async function checkAMOR() {
+  if(G.busy) return;
+  const el = document.getElementById('amor-in'); if(!el) return;
+  const raw = el.value.trim(); if(!raw) return;
+  G.busy = true; el.value = '';
+  const norm = normalize(raw);
+  addMsg('player', `— "${raw}"`);
+
+  if(norm === 'fala') {
+    setInteract('');
+    showTyping();
+    const txt = await bras('victory');
+    hideTyping(); addMsg('bras', txt);
+    clearInterval(G.timer); G.busy=false;
+    setTimeout(()=>{ document.getElementById('vtext').textContent=txt; confetti(); document.getElementById('victory').classList.add('show'); }, 2000);
+  } else {
+    setInteract('<span style="color:rgba(201,162,39,.3);font-style:italic;font-size:.82rem;">A voz considera…</span>');
+    showTyping();
+    const txt = await bras('final_wrong', {guess:raw});
+    hideTyping(); addMsg('bras', txt);
+    G.busy = false;
+    setTimeout(startPenalty, 800);
+    await delay(800);
+    setInteract(`
+      <div class="book-form">
+        <div class="book-row">
+          <input id="amor-in" type="text" placeholder="Tente novamente…"
+            onkeydown="if(event.key==='Enter')checkAMOR()"/>
+          <button class="btn-confirm" onclick="checkAMOR()">CONFIRMAR</button>
+        </div>
+      </div>`);
+    setTimeout(()=>{ const el=document.getElementById('amor-in'); if(el)el.focus(); },100);
+  }
+}
+
+function timeUp() {
+  addMsg('sys','⧖ O tempo esgotou-se. Como a água no sertão — acabou sem aviso.');
+  setInteract(`<button class="btn-ghost" style="max-width:260px" onclick="location.reload()">▸ TENTAR NOVAMENTE</button>`);
+}
+
+/* ═══════════════════════════════════════════════
+   CONFETTI
+═══════════════════════════════════════════════ */
+function confetti() {
+  const cols = ['#c9a227','#e8c84a','#ffffff','#a02020','#4a8a4a','#d4d4d4'];
+  for (let i=0;i<70;i++){
+    const c = document.createElement('div');
+    const size = 6+Math.random()*6;
+    c.className='confetti';
+    c.style.cssText=`left:${Math.random()*100}vw;top:-20px;
+      width:${size}px;height:${size}px;
+      background:${cols[Math.floor(Math.random()*cols.length)]};
+      border-radius:${Math.random()>.5?'50%':'2px'};
+      animation-duration:${2.5+Math.random()*2}s;
+      animation-delay:${Math.random()*1.5}s;`;
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(), 5000);
+  }
+}
+
+function delay(ms) { return new Promise(r=>setTimeout(r,ms)); }
+
+/* ═══════════════════════════════════════════════
+   START
+═══════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pesquisa Orientada — Por Dentro do HTML</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#15191d;
+    --ink-soft:#2b3137;
+    --paper:#f6f1e6;
+    --paper-card:#fffdf8;
+    --ember:#e2572b;
+    --ember-dark:#b8431f;
+    --teal:#1f8a82;
+    --teal-dark:#156a64;
+    --line:#e3dac8;
+    --text-muted:#6b6358;
+    --mono:'JetBrains Mono', monospace;
+    --sans:'Public Sans', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.55;
+  }
+  ::selection{background:var(--ember);color:#fff;}
+
+  /* ---- top tab bar ---- */
+  .tabbar{
+    background:var(--ink);
+    display:flex;
+    align-items:center;
+    gap:6px;
+    padding:10px 16px;
+    overflow-x:auto;
+  }
+  .dots{display:flex;gap:6px;margin-right:14px;flex-shrink:0;}
+  .dots span{width:10px;height:10px;border-radius:50%;display:block;}
+  .dots span:nth-child(1){background:#ff5f57;}
+  .dots span:nth-child(2){background:#febc2e;}
+  .dots span:nth-child(3){background:#28c840;}
+  .tab{
+    font-family:var(--mono);
+    font-size:12.5px;
+    color:#8a9097;
+    background:#1f252b;
+    padding:6px 14px;
+    border-radius:6px 6px 0 0;
+    white-space:nowrap;
+    flex-shrink:0;
+  }
+  .tab.active{
+    color:var(--paper);
+    background:#262c33;
+    border-top:2px solid var(--ember);
+  }
+
+  .tag-label{
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--teal-dark);
+    opacity:.85;
+    display:block;
+    margin:0 0 6px 0;
+  }
+  .tag-label.close{margin:36px 0 0 0;opacity:.55;}
+
+  /* ---- hero ---- */
+  .hero{
+    max-width:880px;
+    margin:0 auto;
+    padding:56px 24px 40px;
+  }
+  .hero .eyebrow{
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--ember-dark);
+    letter-spacing:.04em;
+    text-transform:uppercase;
+  }
+  .hero h1{
+    font-family:var(--mono);
+    font-size:clamp(32px,5vw,52px);
+    line-height:1.08;
+    margin:10px 0 4px;
+    font-weight:700;
+  }
+  .hero h1 .bracket{color:var(--ember);}
+  .hero p.lead{
+    font-size:18px;
+    max-width:62ch;
+    color:var(--ink-soft);
+    margin:18px 0 0;
+  }
+  .meta-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:26px;
+  }
+  .pill{
+    font-family:var(--mono);
+    font-size:12.5px;
+    border:1px solid var(--line);
+    background:var(--paper-card);
+    padding:6px 12px;
+    border-radius:999px;
+    color:var(--ink-soft);
+  }
+
+  section{max-width:880px;margin:0 auto;padding:0 24px;}
+
+  h2.section-title{
+    font-family:var(--mono);
+    font-size:22px;
+    margin:0 0 18px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  h2.section-title .num{color:var(--ember);}
+
+  /* ---- instructions ---- */
+  .steps{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:14px;
+    margin:0 0 8px;
+  }
+  .step{
+    background:var(--paper-card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:18px;
+  }
+  .step .step-n{
+    font-family:var(--mono);
+    color:var(--teal-dark);
+    font-size:13px;
+    display:block;
+    margin-bottom:8px;
+  }
+  .step p{margin:0;font-size:14.5px;color:var(--ink-soft);}
+
+  /* ---- link cards ---- */
+  .linklist{display:flex;flex-direction:column;gap:10px;margin-bottom:8px;}
+  .linkcard{
+    background:var(--paper-card);
+    border:1px solid var(--line);
+    border-left:4px solid var(--teal);
+    border-radius:8px;
+    padding:14px 16px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .linkcard .lid{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--teal-dark);
+    font-weight:700;
+  }
+  .linkcard h3{margin:4px 0 4px;font-size:16px;}
+  .linkcard p{margin:0;font-size:13.5px;color:var(--text-muted);}
+  .linkcard a.go{
+    font-family:var(--mono);
+    font-size:13px;
+    color:#fff;
+    background:var(--ink);
+    padding:8px 14px;
+    border-radius:6px;
+    text-decoration:none;
+    white-space:nowrap;
+    flex-shrink:0;
+  }
+  .linkcard a.go:hover{background:var(--ember);}
+
+  /* ---- questions ---- */
+  .qlist{display:flex;flex-direction:column;gap:16px;margin-bottom:8px;}
+  .qcard{
+    background:var(--paper-card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:20px 20px 18px;
+    scroll-margin-top:20px;
+  }
+  .qhead{
+    display:flex;
+    align-items:baseline;
+    gap:12px;
+    margin-bottom:8px;
+    flex-wrap:wrap;
+  }
+  .qnum{
+    font-family:var(--mono);
+    font-weight:700;
+    color:var(--ember);
+    font-size:15px;
+    min-width:30px;
+  }
+  .badges{display:flex;gap:6px;flex-wrap:wrap;}
+  .badge{
+    font-family:var(--mono);
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    padding:3px 8px;
+    border-radius:5px;
+  }
+  .badge.leitura{background:#e6f2f1;color:var(--teal-dark);}
+  .badge.discursiva{background:#fdeee4;color:var(--ember-dark);}
+  .badge.pratica{background:#eee9da;color:#5a5240;}
+  .qsource{
+    font-family:var(--mono);
+    font-size:11.5px;
+    color:var(--text-muted);
+    margin-left:auto;
+  }
+  .qsource a{color:var(--teal-dark);}
+  .qtext{font-size:15.5px;color:var(--ink);margin:6px 0 12px;}
+  textarea.answer{
+    width:100%;
+    min-height:90px;
+    border:1px dashed var(--line);
+    border-radius:8px;
+    padding:12px;
+    font-family:var(--sans);
+    font-size:14px;
+    background:#fdfbf6;
+    color:var(--ink);
+    resize:vertical;
+  }
+  textarea.answer:focus{
+    outline:none;
+    border-color:var(--teal);
+    background:#fff;
+  }
+  .qfoot{
+    display:flex;
+    justify-content:space-between;
+    margin-top:6px;
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--text-muted);
+  }
+
+  /* ---- delivery ---- */
+  .delivery{
+    background:var(--ink);
+    color:var(--paper);
+    border-radius:12px;
+    padding:24px;
+    margin-bottom:8px;
+  }
+  .delivery h3{margin-top:0;font-family:var(--mono);font-size:18px;color:#fff;}
+  .delivery p{color:#cfd3d6;font-size:14.5px;}
+  .delivery .fields{
+    font-family:var(--mono);
+    font-size:13px;
+    color:#9aa1a7;
+    border-top:1px dashed #3a4047;
+    margin-top:14px;
+    padding-top:14px;
+    line-height:1.9;
+  }
+  .delivery .fields b{color:var(--paper);}
+
+  .toolbar{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin:18px 0 50px;
+  }
+  button.action{
+    font-family:var(--mono);
+    font-size:13px;
+    border:none;
+    border-radius:8px;
+    padding:12px 18px;
+    cursor:pointer;
+  }
+  button.primary{background:var(--ember);color:#fff;}
+  button.primary:hover{background:var(--ember-dark);}
+  button.ghost{background:transparent;border:1px solid var(--line);color:var(--ink);}
+  button.ghost:hover{border-color:var(--ink);}
+  #copyFeedback{
+    font-family:var(--mono);
+    font-size:12.5px;
+    color:var(--teal-dark);
+    align-self:center;
+  }
+
+  .progress-wrap{
+    max-width:880px;
+    margin:0 auto;
+    padding:0 24px 18px;
+  }
+  .progress-bar{
+    height:6px;
+    background:#e6ddc9;
+    border-radius:999px;
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    width:0%;
+    background:var(--teal);
+    transition:width .25s ease;
+  }
+  .progress-label{
+    font-family:var(--mono);
+    font-size:11.5px;
+    color:var(--text-muted);
+    margin-top:6px;
+  }
+
+  footer.endtag{
+    text-align:center;
+    padding:30px 24px 60px;
+    font-family:var(--mono);
+    font-size:14px;
+    color:var(--text-muted);
+  }
+
+  @media print{
+    .tabbar, .toolbar, #copyFeedback, textarea.answer{display:none;}
+    body{background:#fff;}
+    .qcard, .linkcard, .step{break-inside:avoid;border:1px solid #ccc;}
+  }
+</style>
+</head>
+<body>
+
+<div class="tabbar">
+  <div class="dots"><span></span><span></span><span></span></div>
+  <div class="tab">index.html</div>
+  <div class="tab">estilo.css</div>
+  <div class="tab active">pesquisa-html.html</div>
+</div>
+
+<div class="hero">
+  <span class="eyebrow">Informática Técnica · Pesquisa orientada</span>
+  <h1><span class="bracket">&lt;</span>html<span class="bracket">&gt;</span><br>Por dentro do HTML</h1>
+  <p class="lead">Antes de escrever uma única linha de código, todo desenvolvedor precisa entender o que o HTML realmente é — e não apenas decorar tags. Esta pesquisa vai te guiar por textos confiáveis sobre o assunto e pedir que você explique, com suas próprias palavras, o que aprendeu.</p>
+  <div class="meta-row">
+    <span class="pill">15 questões</span>
+    <span class="pill">8 fontes de leitura</span>
+    <span class="pill">leitura + prática + discursiva</span>
+  </div>
+</div>
+
+<span class="tag-label" style="max-width:880px;margin:0 auto;padding:0 24px;display:block;">&lt;section id="instrucoes"&gt;</span>
+<section>
+  <h2 class="section-title"><span class="num">01</span> Como funciona esta pesquisa</h2>
+  <div class="steps">
+    <div class="step">
+      <span class="step-n">passo 1</span>
+      <p>Abra os links da seção "Material de pesquisa". Cada um corresponde a uma ou mais perguntas — está indicado ao lado de cada questão.</p>
+    </div>
+    <div class="step">
+      <span class="step-n">passo 2</span>
+      <p>Leia com atenção. Você não precisa entender 100% do texto técnico — o objetivo é captar a ideia central e conseguir explicá-la.</p>
+    </div>
+    <div class="step">
+      <span class="step-n">passo 3</span>
+      <p>Responda com suas próprias palavras. Cópia direta do site não conta como resposta — o que importa é que você entendeu.</p>
+    </div>
+    <div class="step">
+      <span class="step-n">passo 4</span>
+      <p>Nas questões práticas, escreva o código HTML pedido. Pode ser à mão, no caderno, ou testado em um editor — o que importar é o código estar correto.</p>
+    </div>
+  </div>
+</section>
+<span class="tag-label close" style="max-width:880px;margin:0 auto;padding:0 24px;display:block;">&lt;/section&gt;</span>
+
+<span class="tag-label" style="max-width:880px;margin:36px auto 0;padding:0 24px;display:block;">&lt;section id="material"&gt;</span>
+<section>
+  <h2 class="section-title"><span class="num">02</span> Material de pesquisa</h2>
+  <div class="linklist">
+
+    <div class="linkcard">
+      <div>
+        <span class="lid">L1</span>
+        <h3>HTML: Linguagem de Marcação de Hipertexto</h3>
+        <p>MDN Web Docs — visão geral do que é HTML e para que ele serve.</p>
+      </div>
+      <a class="go" href="https://developer.mozilla.org/pt-BR/docs/Web/HTML" target="_blank" rel="noopener">abrir ↗</a>
+    </div>
+
+    <div class="linkcard">
+      <div>
+        <span class="lid">L2</span>
+        <h3>Iniciando com HTML</h3>
+        <p>MDN Web Docs — elementos, atributos, aninhamento, tags de bloco e em linha.</p>
+      </div>
+      <a class="go" href="https://developer.mozilla.org/pt-BR/docs/Learn_web_development/Core/Structuring_content/Basic_HTML_syntax" target="_blank" rel="noopener">abrir ↗</a>
+    </div>
+
+    <div class="linkcard">
+      <div>
+        <span class="lid">L3</span>
+        <h3>Fundamentos do texto em HTML</h3>
+        <p>MDN Web Docs — títulos, parágrafos, ênfase e listas.</p>
+      </div>
+      <a class="go" href="https://developer.mozilla.org/pt-BR/docs/Learn/HTML/Introduction_to_HTML/HTML_text_fundamentals" target="_blank" rel="noopener">abrir ↗</a>
+    </div>
+
+    <div class="linkcard">
+      <div>
+        <span class="lid">L4</span>
+        <h3>Estrutura de documento e sites</h3>
+        <p>MDN Web Docs — como o HTML organiza as áreas de uma página (cabeçalho, navegação, conteúdo).</p>
+      </div>
+      <a class="go" href="https://developer.mozilla.org/pt-BR/docs/Learn_web_development/Core/Structuring_content/Structuring_documents" target="_blank" rel="noopener">abrir ↗</a>
+    </div>
+
+    <div class="linkcard">
+      <div>
+        <span class="lid">L5</span>
+        <h3>O que são hyperlinks?</h3>
+        <p>MDN Web Docs — o conceito de link, e a diferença entre link interno e externo.</p>
+      </div>
+      <a class="go" href="https://developer.mozilla.org/pt-BR/docs/Learn_web_development/Howto/Web_mechanics/What_are_hyperlinks" target="_blank" rel="noopener">abrir ↗</a>
+    </div>
+
+    <div class="linkcard">
+      <div>
+        <span class="lid">L6</span>
+        <h3>Criando hyperlinks</h3>
+        <p>MDN Web Docs — como escrever links na prática, com o elemento &lt;a&gt;.</p>
+      </div>
+      <a class="go" href="https://developer.mozilla.org/pt-BR/docs/Learn_web_development/Core/Structuring_content/Creating_links" target="_blank" rel="noopener">abrir ↗</a>
+    </div>
+
+    <div class="linkcard">
+      <div>
+        <span class="lid">L7</span>
+        <h3>Imagens no HTML</h3>
+        <p>MDN Web Docs — o elemento &lt;img&gt; e o atributo alt.</p>
+      </div>
+      <a class="go" href="https://developer.mozilla.org/pt-BR/docs/Learn_web_development/Core/Structuring_content/HTML_images" target="_blank" rel="noopener">abrir ↗</a>
+    </div>
+
+    <div class="linkcard">
+      <div>
+        <span class="lid">L8</span>
+        <h3>Árvore de decisão do atributo alt</h3>
+        <p>W3C / WAI — guia visual sobre como escrever um bom texto alternativo.</p>
+      </div>
+      <a class="go" href="https://www.w3.org/WAI/tutorials/images/decision-tree/pt-BR" target="_blank" rel="noopener">abrir ↗</a>
+    </div>
+
+  </div>
+</section>
+<span class="tag-label close" style="max-width:880px;margin:0 auto;padding:0 24px;display:block;">&lt;/section&gt;</span>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-label" id="progressLabel">0 de 15 questões com resposta iniciada</div>
+</div>
+
+<span class="tag-label" style="max-width:880px;margin:0 auto;padding:0 24px;display:block;">&lt;section id="questoes"&gt;</span>
+<section>
+  <h2 class="section-title"><span class="num">03</span> Questões</h2>
+
+  <div class="qlist" id="qlist">
+
+    <div class="qcard">
+      <div class="qhead">
+        <span class="qnum">01</span>
+        <div class="badges"><span class="badge leitura">leitura</span><span class="badge discursiva">discursiva</span></div>
+        <span class="qsource">fonte: L1</span>
+      </div>
+      <p class="qtext">O que significa a sigla HTML e qual é a sua função na construção de uma página web?</p>
+      <textarea class="answer" data-q="1" placeholder="Escreva sua resposta aqui..."></textarea>
+    </div>
+
+    <div class="qcard">
+      <div class="qhead">
+        <span class="qnum">02</span>
+        <div class="badges"><span class="badge discursiva">discursiva</span></div>
+        <span class="qsource">fonte: L1</span>
+      </div>
+      <p class="qtext">O texto explica que HTML <strong>não</strong> é uma linguagem de programação, e sim uma linguagem de marcação. Qual é, então, a diferença entre as duas? Por que essa distinção importa?</p>
+      <textarea class="answer" data-q="2" placeholder="Escreva sua resposta aqui..."></textarea>
+    </div>
+
+    <div class="qcard">
+      <div class="qhead">
+        <span class="qnum">03</span>
+        <div class="badges"><span class="badge leitura">leitura</span></div>
+        <span class="qsource">fonte: L2</span>
+      </div>
+      <p class="qtext">O que é um "elemento" HTML? Explique as partes que normalmente o compõem (tag de abertura, conteúdo e tag de fechamento), usando um exemplo do material.</p>
+      <textarea class="answer" data-q="3" placeholder="Escreva sua resposta aqui..."></textarea>
+    </div>
+
+    <div class="qcard">
+      <div class="qhead">
+        <span class="qnum">04</span>
+        <div class="badges"><span class="badge pratica">prática</span></div>
+        <span class="qsource">fonte: L2</span>
+      </div>
+      <p class="qtext">Escreva a estrutura básica completa de um documento HTML5: doctype, &lt;html&gt;, &lt;head&gt; com &lt;title&gt;, e &lt;body&gt;. Pode escolher qualquer assunto para o título.</p>
+      <textarea class="answer" data-q="4" placeholder="Escreva seu código aqui..."></textarea>
+    </div>
+
+    <div class="qcard">
+      <div class="qhead">
+        <span class="qnum">05</span>
+        <div class="badges"><span class="badge leitura">leitura</span><span class="badge discursiva">discursiva</span></div>
+        <span class="qsource">fonte: L2</span>
+      </div>
+      <p class="qtext">O material explica o "aninhamento" de elementos: quando uma tag está dentro de outra, é preciso fechar primeiro a que foi aberta por último. Explique com suas palavras por que <code>&lt;p&gt;&lt;strong&gt;texto&lt;/p&gt;&lt;/strong&gt;</code> está incorreto.</p>
+      <textarea class="answer" data-q="5" placeholder="Escreva sua resposta aqui..."></textarea>
+    </div>
+
+    <div class="qcard">
+      <div class="qhead">
+        <span class="qnum">06</span>
+        <div class="badges"><span class="badge leitura">leitura</span><span class="badge discursiva">discursiva</span></div>
+        <span class="qsource">fonte: L2</span>
+      </div>
+      <p class="qtext">Segundo o material, qual é a diferença entre elementos de bloco e elementos em linha (inline)? Cite um exemplo de cada um mencionado no texto.</p>
+      <textarea class="answer" data-q="6" placeholder="Escreva sua resposta aqui..."></textarea>
+    </div>
+
+    <div class="qcard">
+      <div class="qhead">
+        <span class="qnum">07</span>
+        <div class="badges"><span class="badge pratica">prática</span></div>
+        <span class="qsource">fonte: L3</span>
+      </div>
+      <p class="qtext">Usando os elementos de título explicados no material, crie uma estrutura com um título principal e dois subtítulos sobre um tema de sua escolha (um hobby, um jogo, uma matéria, etc.).</p>
+      <textarea class="answer" data-q="7" placeholder="Escreva seu código aqui..."></textarea>
+    </div>
+
+    <div class="qcard">
+      <div class="qhead">
+        <span class="qnum">08</span>
+        <div class="badges"><span class="badge pratica">prática</span></div>
+        <span class="qsource">fonte: L3</span>
+      </div>
+      <p class="qtext">Crie um parágrafo com no mínimo três linhas e, dentro dele, destaque uma palavra em negrito e outra em itálico, usando as tags corretas.</p>
+      <textarea class="answer" data-q="8" placeholder="Escreva seu código aqui..."></textarea>
+    </div>
+
+    <div class="qcard">
+      <div class="qhead">
+        <span class="qnum">09</span>
+        <div class="badges"><span class="badge leitura">leitura</span><span class="badge discursiva">discursiva</span></div>
+        <span class="qsource">fonte: L4</span>
+      </div>
+      <p class="qtext">O material apresenta elementos semânticos para estruturar diferentes áreas de um site (cabeçalho, navegação, conteúdo principal, etc.). Por que usar esses elementos específicos é melhor do que usar apenas &lt;div&gt; para tudo?</p>
+      <textarea class="answer" data-q="9" placeholder="Escreva sua resposta aqui..."></textarea>
+    </div>
+
+    <div class="qcard">
+      <div class="qhead">
+        <span class="qnum">10</span>
+        <div class="badges"><span class="badge leitura">leitura</span></div>
+        <span class="qsource">fonte: L4</span>
+      </div>
+      <p class="qtext">Cite três elementos estruturais mencionados no texto que costumam aparecer em quase todo site, e diga para que serve cada um.</p>
+      <textarea class="answer" data-q="10" placeholder="Escreva sua resposta aqui..."></textarea>
+    </div>
+
+    <div class="qcard">
+      <div class="qhead">
+        <span class="qnum">11</span>
+        <div class="badges"><span class="badge leitura">leitura</span><span class="badge discursiva">discursiva</span></div>
+        <span class="qsource">fonte: L5</span>
+      </div>
+      <p class="qtext">O material explica a diferença entre link interno e link externo. O que caracteriza cada um? Por que os links internos são importantes para a navegação de um site?</p>
+      <textarea class="answer" data-q="11" placeholder="Escreva sua resposta aqui..."></textarea>
+    </div>
+
+    <div class="qcard">
+      <div class="qhead">
+        <span class="qnum">12</span>
+        <div class="badges"><span class="badge pratica">prática</span></div>
+        <span class="qsource">fonte: L6</span>
+      </div>
+      <p class="qtext">Crie um link para o site do MDN (<code>https://developer.mozilla.org</code>) que abra em uma nova aba e tenha um atributo <code>title</code> explicando para onde o link leva.</p>
+      <textarea class="answer" data-q="12" placeholder="Escreva seu código aqui..."></textarea>
+    </div>
+
+    <div class="qcard">
+      <div class="qhead">
+        <span class="qnum">13</span>
+        <div class="badges"><span class="badge pratica">prática</span></div>
+        <span class="qsource">fonte: L7</span>
+      </div>
+      <p class="qtext">Insira uma imagem (pode usar um caminho fictício, como <code>foto.jpg</code>) com um atributo <code>alt</code> que descreva corretamente o conteúdo da imagem.</p>
+      <textarea class="answer" data-q="13" placeholder="Escreva seu código aqui..."></textarea>
+    </div>
+
+    <div class="qcard">
+      <div class="qhead">
+        <span class="qnum">14</span>
+        <div class="badges"><span class="badge leitura">leitura</span><span class="badge discursiva">discursiva</span></div>
+        <span class="qsource">fontes: L7 e L8</span>
+      </div>
+      <p class="qtext">Por que é importante preencher o atributo <code>alt</code> de uma imagem? O que acontece quando ele é deixado vazio de propósito (<code>alt=""</code>)?</p>
+      <textarea class="answer" data-q="14" placeholder="Escreva sua resposta aqui..."></textarea>
+    </div>
+
+    <div class="qcard">
+      <div class="qhead">
+        <span class="qnum">15</span>
+        <div class="badges"><span class="badge discursiva">discursiva</span></div>
+        <span class="qsource">reflexão final</span>
+      </div>
+      <p class="qtext">Depois de pesquisar nos materiais indicados, explique com suas próprias palavras: por que aprender HTML é útil mesmo para quem não pretende ser programador?</p>
+      <textarea class="answer" data-q="15" placeholder="Escreva sua resposta aqui..."></textarea>
+    </div>
+
+  </div>
+
+  <div class="toolbar">
+    <button class="action primary" id="copyBtn">copiar todas as respostas</button>
+    <button class="action ghost" id="clearBtn">limpar respostas</button>
+    <span id="copyFeedback"></span>
+  </div>
+</section>
+<span class="tag-label close" style="max-width:880px;margin:0 auto;padding:0 24px;display:block;">&lt;/section&gt;</span>
+
+<div class="delivery">
+  <section style="padding:0;max-width:none;">
+    <h3>Entrega</h3>
+    <p>Suas respostas são salvas automaticamente neste navegador enquanto você trabalha. Quando terminar, use o botão "copiar todas as respostas" e cole no local indicado pelo professor.</p>
+    <div class="fields">
+      <div><b>Prazo de entrega:</b> _______________________</div>
+      <div><b>Formato de entrega:</b> _______________________</div>
+    </div>
+  </section>
+</div>
+
+<footer class="endtag">&lt;/html&gt;</footer>
+
+<script>
+  const textareas = document.querySelectorAll('textarea.answer');
+  const STORAGE_PREFIX = 'pesquisa-html-q';
+
+  function updateProgress(){
+    let filled = 0;
+    textareas.forEach(t => { if(t.value.trim().length > 0) filled++; });
+    document.getElementById('progressFill').style.width = (filled/textareas.length*100) + '%';
+    document.getElementById('progressLabel').textContent = filled + ' de ' + textareas.length + ' questões com resposta iniciada';
+  }
+
+  textareas.forEach(t => {
+    const key = STORAGE_PREFIX + t.dataset.q;
+    try {
+      const saved = localStorage.getItem(key);
+      if(saved) t.value = saved;
+    } catch(e) {}
+    t.addEventListener('input', () => {
+      try { localStorage.setItem(key, t.value); } catch(e) {}
+      updateProgress();
+    });
+  });
+  updateProgress();
+
+  document.getElementById('copyBtn').addEventListener('click', () => {
+    let out = 'PESQUISA ORIENTADA — POR DENTRO DO HTML\n\n';
+    textareas.forEach(t => {
+      out += 'Questão ' + t.dataset.q + ':\n' + (t.value.trim() || '(sem resposta)') + '\n\n';
+    });
+    navigator.clipboard.writeText(out).then(() => {
+      const fb = document.getElementById('copyFeedback');
+      fb.textContent = '✓ copiado para a área de transferência';
+      setTimeout(() => fb.textContent = '', 3000);
+    }).catch(() => {
+      const fb = document.getElementById('copyFeedback');
+      fb.textContent = 'não foi possível copiar automaticamente — selecione e copie manualmente';
+    });
+  });
+
+  document.getElementById('clearBtn').addEventListener('click', () => {
+    if(!confirm('Tem certeza que deseja apagar todas as respostas salvas neste navegador?')) return;
+    textareas.forEach(t => {
+      t.value = '';
+      try { localStorage.removeItem(STORAGE_PREFIX + t.dataset.q); } catch(e) {}
+    });
+    updateProgress();
+  });
+</script>
+
+</body>
+</html>

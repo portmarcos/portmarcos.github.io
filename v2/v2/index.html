@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Prof. Marcos Cruz — Materiais didáticos de Informática e Matemática. Recursos interativos para o Ensino Médio, EJA e Técnico em Informática.">
+  <meta name="author" content="Marcos Cruz">
+
+  <title>Prof. Marcos Cruz — Materiais Didáticos</title>
+
+  <!-- Open Graph -->
+  <meta property="og:title"       content="Prof. Marcos Cruz">
+  <meta property="og:description" content="Materiais didáticos de Informática e Matemática">
+  <meta property="og:type"        content="website">
+
+  <!-- Fontes via Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+
+  <!-- Favicon simples (SVG inline como data-uri) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%236C63FF'/><text y='22' x='6' font-size='18' fill='white'>M</text></svg>">
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════════════════════
+       NAVBAR
+       ════════════════════════════════════════════════════════ -->
+
+  <header class="navbar" role="banner">
+    <div class="container">
+      <nav class="navbar__inner" aria-label="Navegação principal">
+
+        <a href="#inicio" class="navbar__logo" aria-label="Início">
+          <div class="navbar__logo-dot" aria-hidden="true"></div>
+          <span>Prof. Marcos Cruz</span>
+        </a>
+
+        <ul class="navbar__links" role="list">
+          <li><a href="#inicio"    class="navbar__link active">Início</a></li>
+          <li><a href="#areas"     class="navbar__link">Áreas</a></li>
+          <li><a href="#materiais" class="navbar__link">Materiais</a></li>
+          <li><a href="#professor" class="navbar__link">Professor</a></li>
+        </ul>
+
+        <div class="navbar__actions">
+          <button
+            class="navbar__search-trigger"
+            data-search-open
+            aria-label="Buscar materiais (Ctrl+K)"
+            aria-keyshortcuts="Control+K Meta+K"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            </svg>
+            Buscar materiais
+            <kbd class="navbar__kbd">⌘K</kbd>
+          </button>
+
+          <button
+            class="navbar__hamburger"
+            aria-label="Menu"
+            aria-expanded="false"
+            aria-controls="mobile-nav"
+          >
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+
+      </nav>
+    </div>
+  </header>
+
+  <!-- Mobile nav -->
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Menu mobile">
+    <div class="mobile-nav__bg" aria-hidden="true"></div>
+    <div class="mobile-nav__panel">
+      <a href="#inicio"    class="mobile-nav__link active">Início</a>
+      <a href="#areas"     class="mobile-nav__link">Áreas</a>
+      <a href="#materiais" class="mobile-nav__link">Materiais</a>
+      <a href="#professor" class="mobile-nav__link">Professor</a>
+    </div>
+  </nav>
+
+  <!-- ════════════════════════════════════════════════════════
+       HERO
+       ════════════════════════════════════════════════════════ -->
+
+  <main id="inicio">
+    <section class="hero" aria-labelledby="hero-heading">
+
+      <!-- Fundo decorativo -->
+      <div class="hero__bg" aria-hidden="true">
+        <div class="hero__dots"></div>
+        <div class="hero__glow-1"></div>
+        <div class="hero__glow-2"></div>
+      </div>
+
+      <div class="container">
+        <div class="hero__inner">
+
+          <div class="hero__content">
+
+            <div class="hero__badge" aria-label="Status: recursos disponíveis">
+              <div class="hero__badge-dot" aria-hidden="true"></div>
+              Recursos disponíveis para download
+            </div>
+
+            <h1 class="hero__heading" id="hero-heading">
+              Aprender com<br>
+              <span class="text-gradient" data-typing="tecnologia|criatividade|propósito">tecnologia</span>
+            </h1>
+
+            <p class="hero__sub">
+              Materiais didáticos de <strong>Informática</strong> e <strong>Matemática</strong>
+              desenvolvidos para Ensino Médio, EJA e Técnico em Informática —
+              interativos, práticos e prontos para usar.
+            </p>
+
+            <div class="hero__actions">
+              <a href="#materiais" class="btn btn--primary btn--lg">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14,2 14,8 20,8"/>
+                </svg>
+                Ver materiais
+              </a>
+              <button class="btn btn--outline btn--lg" data-search-open aria-label="Buscar materiais">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+                  <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                </svg>
+                Buscar
+                <kbd class="navbar__kbd" style="margin-left:4px">⌘K</kbd>
+              </button>
+            </div>
+
+            <div class="hero__stats">
+              <div>
+                <div class="hero__stat-num" data-count="40" data-suffix="+">40+</div>
+                <div class="hero__stat-label">Materiais</div>
+              </div>
+              <div>
+                <div class="hero__stat-num" data-count="3">3</div>
+                <div class="hero__stat-label">Áreas</div>
+              </div>
+              <div>
+                <div class="hero__stat-num" data-count="5" data-suffix="°">5°</div>
+                <div class="hero__stat-label">Anos de docência</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Avatar -->
+          <div class="hero__visual" aria-hidden="true">
+            <div class="hero__avatar-wrap">
+              <div class="hero__avatar-ring"></div>
+              <!--
+                Coloque sua foto em assets/img/marcos.webp e
+                descomente o <img> abaixo, apagando o placeholder:
+              -->
+              <!--
+              <img
+                src="assets/img/marcos.webp"
+                alt="Prof. Marcos Cruz"
+                class="hero__avatar"
+                width="280" height="280"
+                loading="eager"
+              >
+              -->
+              <div class="hero__avatar-placeholder" role="img" aria-label="Foto do professor">
+                👨‍🏫
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         ÁREAS
+         ═══════════════════════════════════════════════════════ -->
+
+    <section class="section areas" id="areas" aria-labelledby="areas-heading">
+      <div class="container">
+
+        <header class="section-header" data-reveal>
+          <p class="section-eyebrow">O que você encontra aqui</p>
+          <h2 class="section-title" id="areas-heading">Áreas de conhecimento</h2>
+          <p class="section-desc">
+            Materiais organizados por disciplina, prontos para sala de aula
+            ou para estudo independente.
+          </p>
+        </header>
+
+        <div class="grid grid-3">
+
+          <article class="area-card" data-reveal data-reveal-delay="1">
+            <span class="area-card__icon" aria-hidden="true">💻</span>
+            <h3 class="area-card__title">Informática</h3>
+            <p class="area-card__desc">
+              Quizzes interativos, páginas didáticas em HTML5, exercícios sobre
+              redes, normas ABNT e raciocínio lógico.
+            </p>
+            <span class="area-card__count">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
+              4 materiais
+            </span>
+          </article>
+
+          <article class="area-card" data-reveal data-reveal-delay="2">
+            <span class="area-card__icon" aria-hidden="true">➗</span>
+            <h3 class="area-card__title">Matemática</h3>
+            <p class="area-card__desc">
+              Atividades de Matemática Financeira, Geometria Plana e conteúdos
+              adaptados para EJA e Ensino Médio.
+            </p>
+            <span class="area-card__count">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
+              2 materiais
+            </span>
+          </article>
+
+          <article class="area-card" data-reveal data-reveal-delay="3">
+            <span class="area-card__icon" aria-hidden="true">🎨</span>
+            <h3 class="area-card__title">Arte & Cultura</h3>
+            <p class="area-card__desc">
+              Atividades interdisciplinares com temas da cultura brasileira —
+              Festa Junina, Copa do Mundo e técnicas de pintura.
+            </p>
+            <span class="area-card__count">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
+              2 materiais
+            </span>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ═══════════════════════════════════════════════════════
+         MATERIAIS
+         ═══════════════════════════════════════════════════════ -->
+
+    <section class="section" id="materiais" aria-labelledby="materiais-heading">
+      <div class="container">
+
+        <header class="section-header" data-reveal>
+          <p class="section-eyebrow">Pronto para usar</p>
+          <h2 class="section-title" id="materiais-heading">Materiais disponíveis</h2>
+          <p class="section-desc">
+            Clique para acessar diretamente. Use <kbd class="navbar__kbd">⌘K</kbd> para buscar por nome ou tema.
+          </p>
+        </header>
+
+        <!-- Filtros -->
+        <div class="flex gap-4" style="justify-content:center;flex-wrap:wrap;margin-bottom:2.5rem;" data-reveal>
+          <button class="btn btn--primary btn--sm" data-filter="todos" aria-pressed="true">Todos</button>
+          <button class="btn btn--ghost btn--sm"   data-filter="informatica" aria-pressed="false">Informática</button>
+          <button class="btn btn--ghost btn--sm"   data-filter="matematica"  aria-pressed="false">Matemática</button>
+          <button class="btn btn--ghost btn--sm"   data-filter="arte"        aria-pressed="false">Arte</button>
+        </div>
+
+        <div class="material-grid" id="material-list" data-reveal>
+
+          <!-- Informática -->
+          <a class="material-card" href="#" data-cat="informatica">
+            <div class="material-card__icon">🌐</div>
+            <div class="material-card__body">
+              <div class="material-card__title">Quiz — Redes de Computadores</div>
+              <div class="material-card__meta">
+                Informática
+                <span class="dot-sep"></span>
+                Quiz interativo · Gabarito automático
+              </div>
+            </div>
+            <span class="material-card__badge badge--html">HTML</span>
+          </a>
+
+          <a class="material-card" href="#" data-cat="informatica">
+            <div class="material-card__icon">📄</div>
+            <div class="material-card__body">
+              <div class="material-card__title">Quiz — Normas ABNT (13 questões)</div>
+              <div class="material-card__meta">
+                Informática
+                <span class="dot-sep"></span>
+                Quiz · Integração Google Sheets
+              </div>
+            </div>
+            <span class="material-card__badge badge--html">HTML</span>
+          </a>
+
+          <a class="material-card" href="#" data-cat="informatica">
+            <div class="material-card__icon">🤔</div>
+            <div class="material-card__body">
+              <div class="material-card__title">Quiz — Fato ou Opinião?</div>
+              <div class="material-card__meta">
+                Informática
+                <span class="dot-sep"></span>
+                Raciocínio crítico · Múltipla escolha
+              </div>
+            </div>
+            <span class="material-card__badge badge--html">HTML</span>
+          </a>
+
+          <a class="material-card" href="#" data-cat="informatica">
+            <div class="material-card__icon">🏷️</div>
+            <div class="material-card__body">
+              <div class="material-card__title">Página Didática HTML5</div>
+              <div class="material-card__meta">
+                Informática
+                <span class="dot-sep"></span>
+                Referência interativa de elementos
+              </div>
+            </div>
+            <span class="material-card__badge badge--new">Novo</span>
+          </a>
+
+          <!-- Matemática -->
+          <a class="material-card" href="#" data-cat="matematica">
+            <div class="material-card__icon">💰</div>
+            <div class="material-card__body">
+              <div class="material-card__title">Matemática Financeira</div>
+              <div class="material-card__meta">
+                Matemática
+                <span class="dot-sep"></span>
+                EJA · Juros, porcentagem e aplicações
+              </div>
+            </div>
+            <span class="material-card__badge badge--math">Matemática</span>
+          </a>
+
+          <a class="material-card" href="#" data-cat="matematica">
+            <div class="material-card__icon">📐</div>
+            <div class="material-card__body">
+              <div class="material-card__title">Geometria Plana</div>
+              <div class="material-card__meta">
+                Matemática
+                <span class="dot-sep"></span>
+                Ensino Médio · Área e perímetro
+              </div>
+            </div>
+            <span class="material-card__badge badge--math">Matemática</span>
+          </a>
+
+          <!-- Arte -->
+          <a class="material-card" href="#" data-cat="arte">
+            <div class="material-card__icon">🎪</div>
+            <div class="material-card__body">
+              <div class="material-card__title">Atividade — Festa Junina</div>
+              <div class="material-card__meta">
+                Arte · Cultura brasileira
+                <span class="dot-sep"></span>
+                Quadrilha e técnicas de pintura
+              </div>
+            </div>
+            <span class="material-card__badge badge--slides">Arte</span>
+          </a>
+
+          <a class="material-card" href="#" data-cat="arte">
+            <div class="material-card__icon">⚽</div>
+            <div class="material-card__body">
+              <div class="material-card__title">Atividade — Copa do Mundo</div>
+              <div class="material-card__meta">
+                Arte · Técnicas de pintura
+                <span class="dot-sep"></span>
+                Interdisciplinar
+              </div>
+            </div>
+            <span class="material-card__badge badge--slides">Arte</span>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         STATS
+         ═══════════════════════════════════════════════════════ -->
+
+    <section class="section--tight stats" aria-label="Números">
+      <div class="container">
+        <div class="stats-grid">
+
+          <div class="stat-card" data-reveal>
+            <div class="stat-card__num" data-count="40" data-suffix="+">40+</div>
+            <div class="stat-card__label">Materiais<br>didáticos</div>
+          </div>
+
+          <div class="stat-card" data-reveal data-reveal-delay="1">
+            <div class="stat-card__num" data-count="3">3</div>
+            <div class="stat-card__label">Disciplinas<br>lecionadas</div>
+          </div>
+
+          <div class="stat-card" data-reveal data-reveal-delay="2">
+            <div class="stat-card__num" data-count="100" data-suffix="+">100+</div>
+            <div class="stat-card__label">Alunos<br>atendidos</div>
+          </div>
+
+          <div class="stat-card" data-reveal data-reveal-delay="3">
+            <div class="stat-card__num" data-count="5" data-suffix="°">5°</div>
+            <div class="stat-card__label">Anos em<br>sala de aula</div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         PROFESSOR
+         ═══════════════════════════════════════════════════════ -->
+
+    <section class="section professor" id="professor" aria-labelledby="professor-heading">
+      <div class="container">
+        <div class="professor__inner">
+
+          <!-- Foto -->
+          <div class="professor__photo-wrap" data-reveal>
+            <div class="professor__photo-card">
+              <!--
+                Substitua pelo <img> quando tiver a foto:
+
+                <img
+                  src="assets/img/marcos.webp"
+                  alt="Prof. Marcos Cruz em sala de aula"
+                  class="professor__photo"
+                  width="400" height="500"
+                  loading="lazy"
+                >
+              -->
+              <div class="professor__photo-placeholder" role="img" aria-label="Foto do professor Marcos Cruz">
+                👨‍🏫
+              </div>
+
+              <div class="professor__tag" aria-label="Escola Estadual Tancredo Neves">
+                <div class="professor__tag-dot" aria-hidden="true"></div>
+                <div class="professor__tag-text">
+                  <strong>Marcos Cruz</strong>
+                  E. E. Tancredo Neves · Porteirinha, MG
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Texto -->
+          <div class="professor__content" data-reveal data-reveal-delay="2">
+
+            <p class="section-eyebrow">Quem sou eu</p>
+
+            <h2 class="professor__title" id="professor-heading">
+              Professor e<br>
+              <span class="text-gradient">eterno aprendiz</span>
+            </h2>
+
+            <p class="professor__bio">
+              Sou professor de <strong>Informática</strong> e <strong>Matemática</strong> —
+              e também estou concluindo minha licenciatura, vivendo ao mesmo tempo
+              dentro e fora da sala de aula como estudante.
+              Acredito que ensinar bem exige curiosidade constante.
+            </p>
+
+            <p class="professor__bio">
+              Crio materiais que misturam tecnologia, criatividade e contexto real:
+              quizzes com correção automática, atividades interativas em HTML e projetos
+              que conectam cultura brasileira com conteúdo curricular.
+            </p>
+
+            <div class="professor__skills" aria-label="Habilidades">
+              <span class="professor__skill-tag">HTML / CSS / JS</span>
+              <span class="professor__skill-tag">Google Apps Script</span>
+              <span class="professor__skill-tag">Matemática Financeira</span>
+              <span class="professor__skill-tag">EJA</span>
+              <span class="professor__skill-tag">BNCC</span>
+              <span class="professor__skill-tag">Estágio Supervisionado</span>
+              <span class="professor__skill-tag">Design Instrucional</span>
+            </div>
+
+            <div class="flex gap-4" style="flex-wrap:wrap">
+              <a href="mailto:marcos@email.com.br" class="btn btn--primary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/>
+                </svg>
+                Entrar em contato
+              </a>
+              <a href="https://github.com/portmarcos" target="_blank" rel="noopener" class="btn btn--outline">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                GitHub
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ════════════════════════════════════════════════════════
+       FOOTER
+       ════════════════════════════════════════════════════════ -->
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+
+      <div class="footer__grid">
+
+        <div>
+          <div class="footer__brand-name">Prof. Marcos Cruz</div>
+          <p class="footer__brand-desc">
+            Materiais didáticos de Informática e Matemática
+            para Ensino Médio, EJA e Técnico em Informática.
+          </p>
+        </div>
+
+        <div>
+          <p class="footer__col-title">Navegação</p>
+          <ul class="footer__links">
+            <li><a href="#inicio"    class="footer__link">Início</a></li>
+            <li><a href="#areas"     class="footer__link">Áreas</a></li>
+            <li><a href="#materiais" class="footer__link">Materiais</a></li>
+            <li><a href="#professor" class="footer__link">Professor</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="footer__col-title">Disciplinas</p>
+          <ul class="footer__links">
+            <li><a href="#areas" class="footer__link">Informática</a></li>
+            <li><a href="#areas" class="footer__link">Matemática</a></li>
+            <li><a href="#areas" class="footer__link">Arte & Cultura</a></li>
+            <li><a href="#areas" class="footer__link">EJA</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer__bottom">
+        <span>© 2025 Prof. Marcos Cruz. Feito com <span class="footer__heart" aria-hidden="true">♥</span> em Porteirinha, MG.</span>
+        <span>Todos os materiais são gratuitos para fins educacionais.</span>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ════════════════════════════════════════════════════════
+       SEARCH OVERLAY (Command Palette ⌘K)
+       ════════════════════════════════════════════════════════ -->
+
+  <div class="search-overlay" id="search-overlay" role="dialog" aria-modal="true" aria-label="Buscar materiais">
+    <div class="search-modal">
+
+      <div class="search-input-wrap">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input
+          type="search"
+          class="search-input"
+          placeholder="Buscar materiais..."
+          aria-label="Buscar materiais"
+          autocomplete="off"
+          spellcheck="false"
+        >
+        <kbd class="navbar__kbd">ESC</kbd>
+      </div>
+
+      <div class="search-results" role="listbox" aria-label="Resultados da busca">
+        <!-- Populado pelo JS -->
+      </div>
+
+      <div class="search-footer" aria-hidden="true">
+        <span class="search-hint">
+          <kbd class="navbar__kbd">↑↓</kbd> navegar
+        </span>
+        <span class="search-hint">
+          <kbd class="navbar__kbd">↵</kbd> abrir
+        </span>
+        <span class="search-hint">
+          <kbd class="navbar__kbd">ESC</kbd> fechar
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       FILTER (inline script — leve demais para um .js)
+       ════════════════════════════════════════════════════════ -->
+
+  <script>
+    document.querySelectorAll('[data-filter]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const cat = btn.dataset.filter;
+        document.querySelectorAll('[data-filter]').forEach(b => {
+          b.classList.toggle('btn--primary', b.dataset.filter === cat);
+          b.classList.toggle('btn--ghost',   b.dataset.filter !== cat);
+          b.setAttribute('aria-pressed', b.dataset.filter === cat ? 'true' : 'false');
+        });
+        document.querySelectorAll('.material-card[data-cat]').forEach(card => {
+          const show = cat === 'todos' || card.dataset.cat === cat;
+          card.style.display = show ? '' : 'none';
+        });
+      });
+    });
+  </script>
+
+  <!-- Scripts principais -->
+  <script type="module" src="assets/js/app.js"></script>
+  <script type="module" src="assets/js/cursor.js"></script>
+  <script type="module" src="assets/js/search.js"></script>
+  <script type="module" src="assets/js/animations.js"></script>
+
+</body>
+</html>

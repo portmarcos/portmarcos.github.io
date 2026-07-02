@@ -1,0 +1,446 @@
+/* ============================================================
+   DESIGN SYSTEM — Portal de Aulas (Prof. Marcos)
+   Uma única fonte de verdade para cores, tipografia e componentes.
+   Cada página define a matéria via classe no <body>:
+   .materia-portugues | .materia-informatica | .materia-artes
+   ============================================================ */
+
+/* ---------- 1. VARIÁVEIS ---------- */
+:root {
+  /* Cores âncora por matéria */
+  --verde:   #2E7D32;  /* Português */
+  --azul:    #1565C0;  /* Informática Técnica */
+  --laranja: #E65100;  /* Artes */
+
+  /* Tons de apoio (gerados das âncoras) */
+  --verde-claro:   #E8F3E9;
+  --azul-claro:    #E7F0FB;
+  --laranja-claro: #FCEEE3;
+
+  /* Neutros */
+  --fundo:       #F4F6F9;
+  --superficie:  #FFFFFF;
+  --tinta:       #1B2430;
+  --tinta-suave: #5A6473;
+  --linha:       #E3E7EE;
+
+  /* Feedback */
+  --certo:      #2E7D32;
+  --certo-bg:   #E8F3E9;
+  --errado:     #C62828;
+  --errado-bg:  #FDEAEA;
+
+  /* Cor da matéria atual (padrão neutro; o body sobrescreve) */
+  --cor-materia: var(--tinta);
+  --cor-materia-claro: var(--linha);
+
+  /* Escalas */
+  --raio: 14px;
+  --raio-pill: 999px;
+  --sombra: 0 1px 3px rgba(27,36,48,.08), 0 4px 14px rgba(27,36,48,.06);
+  --sombra-alta: 0 8px 24px rgba(27,36,48,.14);
+  --esp-1: 6px; --esp-2: 12px; --esp-3: 18px; --esp-4: 26px; --esp-5: 40px;
+
+  --fonte-titulo: "Bricolage Grotesque", system-ui, sans-serif;
+  --fonte-texto:  "Atkinson Hyperlegible", system-ui, sans-serif;
+}
+
+/* O body de cada página "liga" a cor da matéria */
+.materia-portugues  { --cor-materia: var(--verde);   --cor-materia-claro: var(--verde-claro); }
+.materia-informatica{ --cor-materia: var(--azul);    --cor-materia-claro: var(--azul-claro); }
+.materia-artes      { --cor-materia: var(--laranja); --cor-materia-claro: var(--laranja-claro); }
+
+/* ---------- 2. BASE ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: var(--fonte-texto);
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--tinta);
+  background: var(--fundo);
+}
+img { max-width: 100%; display: block; }
+h1, h2, h3 { font-family: var(--fonte-titulo); line-height: 1.15; margin: 0 0 var(--esp-2); }
+h1 { font-size: clamp(1.6rem, 5vw, 2.3rem); font-weight: 800; }
+h2 { font-size: clamp(1.25rem, 4vw, 1.6rem); font-weight: 700; }
+p  { margin: 0 0 var(--esp-2); }
+a  { color: var(--cor-materia); }
+
+/* Acessibilidade: foco visível no teclado */
+:focus-visible { outline: 3px solid var(--cor-materia); outline-offset: 2px; border-radius: 6px; }
+
+/* Respeita quem prefere menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* ---------- 3. ESTRUTURA DA PÁGINA ---------- */
+.container { width: min(1100px, 100% - 32px); margin-inline: auto; }
+
+/* Barra tricolor: assinatura visual do portal (as 3 matérias) */
+.barra-tricolor {
+  height: 5px;
+  background: linear-gradient(90deg,
+    var(--verde) 0 33.33%,
+    var(--azul) 33.33% 66.66%,
+    var(--laranja) 66.66% 100%);
+}
+
+.cabecalho {
+  background: var(--superficie);
+  border-bottom: 1px solid var(--linha);
+}
+.cabecalho-conteudo {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--esp-1) var(--esp-3);
+  padding: var(--esp-3) 0;
+}
+.cabecalho .marca { font-family: var(--fonte-titulo); font-weight: 800; font-size: 1.3rem; }
+.cabecalho .marca a { color: var(--tinta); text-decoration: none; }
+.cabecalho .sub { color: var(--tinta-suave); font-size: .95rem; }
+
+main { padding-block: var(--esp-4) var(--esp-5); }
+
+.rodape {
+  border-top: 1px solid var(--linha);
+  padding: var(--esp-4) 0;
+  color: var(--tinta-suave);
+  font-size: .9rem;
+  text-align: center;
+}
+
+/* Link "voltar ao portal" nas páginas de atividade */
+.voltar {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: .95rem; text-decoration: none; font-weight: 700;
+  color: var(--cor-materia); margin-bottom: var(--esp-2);
+}
+
+/* Etiqueta da matéria (aparece no topo das atividades) */
+.etiqueta-materia {
+  display: inline-block;
+  background: var(--cor-materia); color: #fff;
+  font-size: .8rem; font-weight: 700; letter-spacing: .04em;
+  padding: 3px 12px; border-radius: var(--raio-pill);
+  text-transform: uppercase;
+}
+
+/* ---------- 4. CHIPS DE FILTRO (portal) ---------- */
+.linha-chips {
+  display: flex; gap: var(--esp-1);
+  overflow-x: auto; padding-bottom: 4px;
+  scrollbar-width: none;             /* rolagem horizontal no celular */
+}
+.linha-chips::-webkit-scrollbar { display: none; }
+
+.chip {
+  flex: 0 0 auto;
+  font: 700 .9rem var(--fonte-texto);
+  color: var(--tinta); background: var(--superficie);
+  border: 1.5px solid var(--linha); border-radius: var(--raio-pill);
+  padding: 7px 16px; cursor: pointer;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.chip[data-cor] { border-color: var(--linha); }
+.chip.ativo { background: var(--tinta); border-color: var(--tinta); color: #fff; }
+.chip.ativo[data-cor="verde"]   { background: var(--verde);   border-color: var(--verde); }
+.chip.ativo[data-cor="azul"]    { background: var(--azul);    border-color: var(--azul); }
+.chip.ativo[data-cor="laranja"] { background: var(--laranja); border-color: var(--laranja); }
+
+/* Campo de busca */
+.busca {
+  width: 100%;
+  font: 400 1rem var(--fonte-texto);
+  padding: 12px 16px;
+  border: 1.5px solid var(--linha); border-radius: var(--raio);
+  background: var(--superficie); color: var(--tinta);
+}
+.busca::placeholder { color: var(--tinta-suave); }
+.busca:focus { outline: none; border-color: var(--tinta); }
+
+/* ---------- 5. CARDS DE ATIVIDADE ("lombada de livro") ---------- */
+.grade-cards {
+  display: grid; gap: var(--esp-2);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 640px)  { .grade-cards { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 960px)  { .grade-cards { grid-template-columns: repeat(3, 1fr); } }
+
+.card-atividade {
+  position: relative;
+  display: flex; flex-direction: column; gap: var(--esp-1);
+  background: var(--superficie);
+  border: 1px solid var(--linha);
+  border-left: 6px solid var(--cor-card, var(--tinta)); /* a "lombada" colorida */
+  border-radius: var(--raio);
+  padding: var(--esp-3);
+  text-decoration: none; color: inherit;
+  box-shadow: var(--sombra);
+  transition: transform .15s, box-shadow .15s;
+}
+.card-atividade:hover { transform: translateY(-2px); box-shadow: var(--sombra-alta); }
+.card-atividade[data-materia="portugues"]  { --cor-card: var(--verde); }
+.card-atividade[data-materia="informatica"]{ --cor-card: var(--azul); }
+.card-atividade[data-materia="artes"]      { --cor-card: var(--laranja); }
+
+.card-topo { display: flex; align-items: center; gap: var(--esp-1); font-size: .85rem; color: var(--tinta-suave); }
+.card-tipo { font-weight: 700; }
+.card-titulo { font-family: var(--fonte-titulo); font-weight: 700; font-size: 1.1rem; }
+.card-meta { display: flex; flex-wrap: wrap; gap: var(--esp-1); margin-top: auto; }
+.tag {
+  font-size: .78rem; font-weight: 700;
+  background: var(--fundo); color: var(--tinta-suave);
+  border-radius: var(--raio-pill); padding: 3px 10px;
+}
+.badge-novo {
+  position: absolute; top: 12px; right: 12px;
+  background: var(--cor-card, var(--tinta)); color: #fff;
+  font-size: .72rem; font-weight: 800; letter-spacing: .06em;
+  padding: 3px 10px; border-radius: var(--raio-pill);
+}
+
+.estado-vazio {
+  text-align: center; color: var(--tinta-suave);
+  padding: var(--esp-5) var(--esp-3);
+}
+
+/* ---------- 6. BOTÕES ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  font: 700 1.05rem var(--fonte-texto);
+  border: none; border-radius: var(--raio);
+  padding: 14px 26px; cursor: pointer;
+  transition: filter .15s, transform .1s;
+  text-decoration: none;
+}
+.btn:active { transform: scale(.98); }
+.btn-primario { background: var(--cor-materia); color: #fff; }
+.btn-primario:hover { filter: brightness(1.08); }
+.btn-secundario {
+  background: var(--superficie); color: var(--tinta);
+  border: 1.5px solid var(--linha);
+}
+.btn-bloco { width: 100%; }
+
+/* ---------- 7. PAINEL (caixa branca padrão das atividades) ---------- */
+.painel {
+  background: var(--superficie);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  padding: clamp(18px, 4vw, 32px);
+}
+.painel + .painel { margin-top: var(--esp-2); }
+
+.info-chips { display: flex; flex-wrap: wrap; gap: var(--esp-1); margin: var(--esp-2) 0 var(--esp-3); }
+.info-chips .tag { background: var(--cor-materia-claro); color: var(--tinta); }
+
+/* ---------- 8. QUIZ ---------- */
+.progresso-texto { font-size: .9rem; font-weight: 700; color: var(--tinta-suave); margin-bottom: var(--esp-1); }
+
+/* Barra de tempo: largura controlada via JS */
+.timer-trilho {
+  height: 8px; border-radius: var(--raio-pill);
+  background: var(--linha); overflow: hidden; margin-bottom: var(--esp-3);
+}
+.timer-barra {
+  height: 100%; width: 100%;
+  background: var(--cor-materia);
+  border-radius: var(--raio-pill);
+  transition: width .1s linear;
+}
+.timer-barra.alerta  { background: #F9A825; }
+.timer-barra.critico { background: var(--errado); }
+
+.enunciado { font-size: 1.15rem; }
+
+.opcoes { display: grid; gap: var(--esp-1); margin-top: var(--esp-3); }
+.opcao {
+  text-align: left;
+  font: 400 1rem var(--fonte-texto);
+  background: var(--fundo); color: var(--tinta);
+  border: 2px solid var(--linha); border-radius: var(--raio);
+  padding: 14px 16px; cursor: pointer;
+  transition: border-color .15s, background .15s;
+}
+.opcao:hover:not(:disabled) { border-color: var(--cor-materia); }
+.opcao:disabled { cursor: default; }
+.opcao.correta { background: var(--certo-bg); border-color: var(--certo); font-weight: 700; }
+.opcao.errada  { background: var(--errado-bg); border-color: var(--errado); }
+
+.explicacao {
+  margin-top: var(--esp-3);
+  background: var(--cor-materia-claro);
+  border-left: 4px solid var(--cor-materia);
+  border-radius: 0 var(--raio) var(--raio) 0;
+  padding: var(--esp-2) var(--esp-3);
+  font-size: .98rem;
+}
+.explicacao strong { color: var(--cor-materia); }
+
+.placar-final { text-align: center; }
+.placar-final .nota {
+  font-family: var(--fonte-titulo); font-weight: 800;
+  font-size: clamp(2.6rem, 12vw, 4rem);
+  color: var(--cor-materia); line-height: 1;
+}
+.placar-final .melhor { color: var(--tinta-suave); font-size: .95rem; }
+
+/* ---------- 9. FLASHCARDS ---------- */
+.fc-contador { text-align: center; font-weight: 700; color: var(--tinta-suave); margin-bottom: var(--esp-2); }
+
+.fc-palco { perspective: 1200px; }
+.fc-carta {
+  position: relative; width: 100%; min-height: 280px;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform .5s;
+}
+.fc-carta.virada { transform: rotateY(180deg); }
+
+.fc-face {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: var(--esp-2); text-align: center;
+  padding: var(--esp-4);
+  border-radius: var(--raio);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.fc-frente {
+  background: var(--superficie);
+  border: 2px solid var(--cor-materia);
+  box-shadow: var(--sombra);
+  font-family: var(--fonte-titulo); font-weight: 700;
+  font-size: 1.3rem;
+}
+.fc-verso {
+  background: var(--cor-materia); color: #fff;
+  transform: rotateY(180deg);
+  font-size: 1.05rem;
+  box-shadow: var(--sombra);
+}
+.fc-dica { font-size: .8rem; font-weight: 400; color: var(--tinta-suave); }
+.fc-verso .fc-dica { color: rgba(255,255,255,.75); }
+
+.fc-controles { display: flex; gap: var(--esp-1); margin-top: var(--esp-3); }
+.fc-controles .btn { flex: 1; padding: 12px; font-size: .95rem; }
+
+/* ---------- 10. IMPRESSÃO ---------- */
+.somente-impressao { display: none; }
+@media print {
+  body { background: #fff; font-size: 12pt; }
+  .nao-imprimir, .cabecalho, .rodape, .barra-tricolor, .btn, .voltar { display: none !important; }
+  .somente-impressao { display: block; }
+  .painel, .card-atividade { box-shadow: none; border: 1px solid #999; }
+  a { color: #000; text-decoration: none; }
+}
+
+/* ============================================================
+   EXTENSÃO EDITORIAL (v2) — masthead estilo revista,
+   citação, seções por conteúdo e categoria Gramática
+   ============================================================ */
+
+/* Nova categoria: Gramática (família do Português, tom verde-petróleo) */
+:root { --teal: #00695C; --teal-claro: #E0F2F0; --roxo:#6A1B9A; }
+.materia-gramatica { --cor-materia: var(--teal); --cor-materia-claro: var(--teal-claro); }
+.card-atividade[data-materia="literatura"] { --cor-card: var(--verde); }
+.card-atividade[data-materia="gramatica"]  { --cor-card: var(--teal); }
+.card-atividade[data-materia="arte"]       { --cor-card: var(--laranja); }
+
+/* Masthead: cabeçalho centrado estilo revista */
+.masthead { background: var(--tinta); color: #fff; text-align: center; padding: 30px 16px 20px; }
+.masthead .nome {
+  font-family: var(--fonte-titulo); font-weight: 800;
+  font-size: clamp(1.6rem, 6.5vw, 2.9rem);
+  letter-spacing: .07em; text-transform: uppercase; line-height: 1.05;
+}
+.masthead .nome a { color: #fff; text-decoration: none; }
+.masthead .linha-fina { color: #9AA4B2; font-size: .85rem; margin-top: 8px; }
+
+/* Faixa de navegação por conteúdo (gruda no topo ao rolar) */
+.nav-categorias { background: #2A3442; position: sticky; top: 0; z-index: 50; }
+.nav-categorias .trilho { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; }
+.nav-categorias .trilho::-webkit-scrollbar { display: none; }
+.nav-cat {
+  flex: 0 0 auto; color: #E8EBF0; font-weight: 700; font-size: .9rem;
+  text-decoration: none; padding: 13px 15px;
+  border-bottom: 3px solid transparent; transition: border-color .15s;
+}
+.nav-cat:hover, .nav-cat:focus-visible { border-bottom-color: var(--cor-cat, #fff); color: #fff; }
+
+/* Bloco da citação com foto do professor */
+.citacao { text-align: center; padding: 36px 18px 6px; }
+.foto-prof {
+  width: 88px; height: 88px; border-radius: 50%; object-fit: cover;
+  border: 3px solid var(--superficie); box-shadow: var(--sombra-alta);
+  margin: 0 auto 14px; display: block;
+}
+.foto-prof-fallback {
+  width: 88px; height: 88px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--verde), var(--azul) 50%, var(--laranja));
+  color: #fff; align-items: center; justify-content: center;
+  font: 800 2rem var(--fonte-titulo); margin: 0 auto 14px;
+}
+.citacao blockquote {
+  font-family: var(--fonte-titulo); font-weight: 700;
+  font-size: clamp(1.1rem, 4.4vw, 1.65rem);
+  max-width: 660px; margin: 0 auto; line-height: 1.35; color: var(--tinta);
+}
+.citacao .autor { color: var(--tinta-suave); margin-top: 10px; font-size: .95rem; }
+
+/* Seções por conteúdo */
+.secao { margin-top: 44px; scroll-margin-top: 64px; }
+.secao-cabeca { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+.secao-rotulo {
+  font-family: var(--fonte-titulo); font-weight: 800;
+  letter-spacing: .1em; text-transform: uppercase;
+  font-size: 1rem; color: var(--cor-sec);
+}
+.secao-cabeca::after {
+  content: ""; flex: 1; height: 3px;
+  background: var(--cor-sec); border-radius: 99px; opacity: .25;
+}
+
+/* Card "em breve": espaço para futuras atividades */
+.card-breve {
+  display: flex; flex-direction: column; gap: 8px; justify-content: center;
+  border: 2px dashed var(--linha); border-radius: var(--raio);
+  padding: var(--esp-3); color: var(--tinta-suave);
+  background: transparent; min-height: 120px;
+}
+.card-breve .rotulo { font-weight: 800; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; }
+
+/* Seções SAEB e BNCC */
+:root { --roxo-saeb:#6A1B9A; --roxo-saeb-claro:#F1E6F7; --vinho-bncc:#AD1457; --vinho-bncc-claro:#FAE3EC; }
+.materia-saeb { --cor-materia: var(--roxo-saeb); --cor-materia-claro: var(--roxo-saeb-claro); }
+.materia-bncc { --cor-materia: var(--vinho-bncc); --cor-materia-claro: var(--vinho-bncc-claro); }
+
+/* Seção ENEM */
+:root { --enem:#C62828; --enem-claro:#FBE9E7; }
+.materia-enem { --cor-materia: var(--enem); --cor-materia-claro: var(--enem-claro); }
+
+/* Vídeo embutido (16:9 responsivo) */
+.video-wrap {
+  position: relative; padding-top: 56.25%;
+  border-radius: var(--raio); overflow: hidden;
+  box-shadow: var(--sombra-alta); margin-bottom: var(--esp-3);
+  background: #000;
+}
+.video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+/* Texto-base das questões (formato SAEB/ENEM) */
+.texto-base {
+  background: #FFFDF7;
+  border: 1px solid var(--linha);
+  border-left: 4px solid var(--cor-materia);
+  border-radius: 0 var(--raio) var(--raio) 0;
+  padding: var(--esp-3);
+  font-size: .96rem; line-height: 1.65;
+  max-height: 300px; overflow-y: auto;
+  margin-bottom: var(--esp-3);
+}
+.texto-base p { margin: 0 0 10px; }
+.texto-base p:last-child { margin: 0; }
+.texto-base .fonte { font-size: .78rem; color: var(--tinta-suave); font-style: italic; }

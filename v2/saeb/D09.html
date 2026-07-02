@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal SAEB — D09 — Linguagem formal e informal</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--azul:#1a3a5c;--azul-m:#235a8c;--azul-c:#d6e8f7;--ouro:#c9871f;--ouro-c:#fff8eb;--verde:#246b4a;--verde-c:#e6f4ed;--verm:#b02a2a;--verm-c:#fdecea;--bg:#f2f4f7;--borda:#d0d6e0;--branco:#fff;--txt:#1c2635;--txt2:#4a5568}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;line-height:1.5}
+header{background:var(--azul);color:#fff;padding:2.4rem 1.5rem 1.8rem;text-align:center;position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:rgba(201,135,31,.12)}
+.badge{display:inline-block;background:var(--ouro);color:var(--azul);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:.8rem}
+header h1{font-family:'Lora',serif;font-size:clamp(1.5rem,4vw,2.1rem);font-weight:600;line-height:1.3;margin-bottom:.4rem}
+header p{font-size:.92rem;opacity:.78;max-width:560px;margin:0 auto;line-height:1.6}
+.voltar-link{display:inline-block;margin-bottom:1rem;color:#fff;opacity:.7;text-decoration:none;font-size:.82rem}
+.voltar-link:hover{opacity:1}
+.tabs{background:var(--branco);border-bottom:1px solid var(--borda);position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.tabs-inner{max-width:840px;margin:0 auto;display:flex}
+.tab-btn{flex:1;background:none;border:none;padding:.95rem .5rem;font-family:'Inter',sans-serif;font-size:.88rem;font-weight:600;color:var(--txt2);cursor:pointer;border-bottom:3px solid transparent;transition:.15s;display:flex;align-items:center;justify-content:center;gap:.35rem}
+.tab-btn:hover{color:var(--azul-m);background:var(--bg)}
+.tab-btn.active{color:var(--azul);border-bottom-color:var(--ouro)}
+main{max-width:840px;margin:0 auto;padding:1.6rem 1.25rem 4rem}
+.tab-pane{display:none;flex-direction:column;gap:1.6rem}
+.tab-pane.active{display:flex}
+.painel{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.5rem 1.6rem}
+.painel h2{font-family:'Lora',serif;font-size:1.2rem;color:var(--azul);margin-bottom:.7rem}
+.painel h3{font-size:.95rem;color:var(--azul-m);margin:.9rem 0 .3rem}
+.painel p,.painel li{font-size:.9rem;margin-bottom:.5rem}
+.painel ul{margin:.2rem 0 .6rem 1.2rem}
+.painel strong{color:var(--azul)}
+.resumo-box{background:var(--azul);color:#fff;border-radius:14px;padding:1.4rem 1.6rem}
+.resumo-box h2{color:#fff;font-family:'Lora',serif;font-size:1.1rem;margin-bottom:.5rem}
+.resumo-box p{color:rgba(255,255,255,.9);font-size:.92rem;margin:0}
+.resumo-box .fc{display:block;margin-top:.7rem;font-style:italic;font-size:.88rem;background:rgba(255,255,255,.1);padding:.6rem .9rem;border-radius:8px;border-left:3px solid var(--ouro)}
+.dica-ouro{background:var(--ouro-c);border:1px solid #ecd9aa}
+.dica-ouro h2{color:#7a5310}.dica-ouro li{color:#4a3408}.dica-ouro strong{color:#7a5310}
+.glossario dt{font-weight:600;color:var(--azul-m);font-size:.88rem;margin-top:.5rem}
+.glossario dd{font-size:.86rem;color:var(--txt2);margin-left:0}
+.aviso-prof{background:#eef4fb;border:1px dashed var(--azul-m);border-radius:10px;padding:.9rem 1.1rem;font-size:.82rem;color:var(--azul-m)}
+.records{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.2rem 1.4rem}
+.records h2{font-family:'Lora',serif;font-size:1.1rem;color:var(--azul);margin-bottom:.6rem}
+.rec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.7rem}
+.rec-item{background:var(--bg);border-radius:10px;padding:.7rem;text-align:center}
+.rec-item .rv{font-size:1.5rem;font-weight:700;color:var(--azul-m)}
+.rec-item .rl{font-size:.72rem;color:var(--txt2)}
+.prog-wrap{background:var(--branco);border:1px solid var(--borda);border-radius:12px;padding:.85rem 1.1rem;display:flex;align-items:center;gap:14px}
+.prog-label{font-size:.78rem;font-weight:600;color:var(--azul-m);white-space:nowrap}
+.prog-track{flex:1;height:6px;background:var(--borda);border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--azul-m),var(--ouro));border-radius:99px;width:0%;transition:width .4s}
+.score{font-size:.78rem;font-weight:600;color:var(--txt2);white-space:nowrap}
+.card{background:var(--branco);border-radius:14px;border:1px solid var(--borda);overflow:hidden}
+.card-head{background:var(--azul);color:#fff;padding:.65rem 1.2rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.qnum{background:var(--ouro);color:var(--azul);font-size:.72rem;font-weight:700;padding:3px 11px;border-radius:20px}
+.qtipo{font-size:.74rem;opacity:.65;font-style:italic}
+
+
+.txt-base{background:var(--ouro-c);border-left:4px solid var(--ouro);margin:1rem 1.1rem 0;padding:1rem 1.1rem;border-radius:0 8px 8px 0;font-family:'Lora',serif;font-size:.94rem;line-height:1.85;color:#2b1d00;position:relative}
+.txt-fonte{font-family:'Inter',sans-serif;font-size:.72rem;color:var(--txt2);margin-top:.6rem;display:block;border-top:1px solid #e6d5b0;padding-top:.4rem}
+.btn-tts{position:absolute;top:.6rem;right:.6rem;background:none;border:1px solid #c9a14a;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;color:#8a6d1b;transition:.15s}
+.btn-tts:hover{background:#f5e6c1}
+.btn-tts.playing{background:var(--azul);color:#fff;border-color:var(--azul)}
+.img-slot{margin:.8rem 1.1rem 0;border:2px dashed var(--borda);border-radius:10px;padding:.8rem;text-align:center;color:var(--txt2);font-size:.76rem}
+.enunciado{padding:1rem 1.1rem .4rem;font-size:.92rem;line-height:1.6;font-weight:500;color:var(--azul)}
+.alts{padding:.4rem 1.1rem 1.1rem;display:flex;flex-direction:column;gap:.45rem}
+.alt{display:flex;align-items:flex-start;gap:10px;padding:.65rem .9rem;border:1.5px solid var(--borda);border-radius:9px;background:var(--branco);cursor:pointer;text-align:left;font-family:'Inter',sans-serif;font-size:.86rem;color:var(--txt);line-height:1.5;transition:.15s;width:100%}
+.alt:hover:not(:disabled){border-color:var(--azul-m);background:var(--azul-c);transform:translateX(2px)}
+.alt:disabled{cursor:default}
+.letra{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;border-radius:50%;background:var(--bg);font-size:.75rem;font-weight:700;color:var(--azul);flex-shrink:0}
+.alt.ok{border-color:var(--verde);background:var(--verde-c);color:var(--verde);font-weight:500}
+.alt.ok .letra{background:var(--verde);color:#fff}
+.alt.err{border-color:var(--verm);background:var(--verm-c);color:var(--verm)}
+.alt.err .letra{background:var(--verm);color:#fff}
+.alt.dim{opacity:.5}.alt.sel{border-color:var(--azul-m);background:var(--azul-c)}.alt.sel .letra{background:var(--azul-m);color:#fff}
+.fb{display:none;margin:0 1.1rem 1.1rem;padding:.8rem 1rem;border-radius:8px;font-size:.83rem;line-height:1.6}
+.fb.show{display:block}.fb.ok{background:var(--verde-c);border-left:3px solid var(--verde)}.fb.err{background:var(--verm-c);border-left:3px solid var(--verm)}
+.fb .ft{font-weight:600;margin-bottom:.3rem}.fb.ok .ft{color:var(--verde)}.fb.err .ft{color:var(--verm)}
+.fb .pq{margin-top:.5rem;border-top:1px solid rgba(0,0,0,.08);padding-top:.4rem}
+.fb .pq b{color:var(--azul)}
+.fb .pi{display:block;font-size:.8rem;color:var(--txt2);margin-bottom:.2rem}
+.fb .pi .l{font-weight:700;color:var(--azul)}
+#resultado{display:none;background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:2.4rem 2rem;text-align:center}
+#resultado h2{font-family:'Lora',serif;font-size:1.4rem;color:var(--azul)}
+.medalha{font-size:3rem;margin:.4rem 0}.nota{font-size:3.4rem;font-weight:700;color:var(--azul-m);line-height:1;margin:.4rem 0}
+#resultado p{color:var(--txt2);font-size:.9rem;max-width:480px;margin:.4rem auto 0}
+.btn{display:inline-block;background:var(--azul);color:#fff;padding:.65rem 1.5rem;border-radius:30px;border:none;font-size:.86rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;margin:.3rem}
+.btn:hover{background:var(--azul-m)}
+.btn.ouro{background:var(--ouro);color:var(--azul)}.btn.sec{background:var(--bg);color:var(--azul);border:1px solid var(--borda)}
+.jogo-card{background:var(--branco);border-radius:14px;border:1px solid var(--borda);overflow:hidden}
+.jogo-head{padding:1rem 1.3rem;border-bottom:1px solid var(--borda);display:flex;align-items:center;gap:.7rem}
+.jogo-ico{font-size:1.5rem}
+.jogo-head h3{font-family:'Lora',serif;font-size:1.1rem;color:var(--azul);margin:0}
+.jogo-head .desc{font-size:.78rem;color:var(--txt2)}
+.jogo-body{padding:1.2rem 1.3rem}
+.chip{font-size:.76rem;font-weight:600;padding:4px 11px;border-radius:20px;background:var(--azul-c);color:var(--azul)}
+.chip.timer{background:var(--ouro-c);color:#a96e10}
+.jogo-mid{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:.8rem}
+.timerbar{flex:1;min-width:100px;height:8px;background:var(--borda);border-radius:99px;overflow:hidden}
+.timerbar>div{height:100%;width:100%;background:linear-gradient(90deg,var(--verde),var(--ouro),var(--verm));border-radius:99px;transition:width .25s linear}
+.mini-texto{background:var(--ouro-c);border-left:4px solid var(--ouro);border-radius:0 8px 8px 0;padding:.85rem 1rem;font-family:'Lora',serif;font-size:.9rem;line-height:1.7;color:#2b1d00;margin-bottom:.8rem;position:relative}
+.mini-q{font-weight:600;color:var(--azul);margin-bottom:.6rem;font-size:.9rem}
+.mini-btn{border:1.5px solid var(--borda);background:var(--branco);border-radius:8px;padding:.45rem .8rem;font-size:.8rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;color:var(--azul);transition:.15s}
+.mini-btn:hover:not(:disabled){background:var(--azul-c);border-color:var(--azul-m)}
+.mini-btn:disabled{cursor:default}
+.mini-btn.ok{background:var(--verde-c);border-color:var(--verde);color:var(--verde)}
+.mini-btn.err{background:var(--verm-c);border-color:var(--verm);color:var(--verm)}
+.mini-fb{font-size:.8rem;margin-top:.5rem;padding:.45rem .65rem;border-radius:6px;display:none}
+.mini-fb.show{display:block}.mini-fb.ok{background:var(--verde-c);color:var(--verde)}.mini-fb.err{background:var(--verm-c);color:var(--verm)}
+.vf-item,.det-item{border:1.5px solid var(--borda);border-radius:10px;padding:.7rem .9rem;margin-bottom:.6rem}
+.vf-stm{font-size:.88rem;margin-bottom:.5rem}
+.btn-row{display:flex;gap:.5rem;flex-wrap:wrap}
+.cat-btn.cat-literal.ok,.cat-btn.cat-explicito.ok{border-color:var(--azul-m);background:var(--azul-c);color:var(--azul)}
+.cat-btn.cat-figurado.ok,.cat-btn.cat-inferivel.ok{border-color:var(--ouro);background:var(--ouro-c);color:#a96e10}
+.cat-btn.cat-giria.ok,.cat-btn.cat-extrapolacao.ok{border-color:var(--verde);background:var(--verde-c);color:var(--verde)}
+.jogo-final{text-align:center;padding:.8rem 0 .3rem}
+.jogo-final .big{font-size:2rem;font-weight:700;color:var(--azul-m)}
+.jogo-final p{font-size:.88rem;color:var(--txt2);margin:.2rem 0 .8rem}
+.ord-list{list-style:none;padding:0;counter-reset:ord}
+.ord-item{counter-increment:ord;display:flex;align-items:center;gap:10px;padding:.6rem .9rem;border:1.5px solid var(--borda);border-radius:9px;margin-bottom:.5rem;background:var(--branco);font-size:.86rem;user-select:none}
+.ord-item::before{content:counter(ord);display:flex;align-items:center;justify-content:center;min-width:24px;height:24px;border-radius:50%;background:var(--azul-c);font-size:.72rem;font-weight:700;color:var(--azul)}
+.ord-item.ok{border-color:var(--verde);background:var(--verde-c)}
+.ord-item.err{border-color:var(--verm);background:var(--verm-c)}
+.ord-arrows{display:flex;flex-direction:column;gap:2px;margin-left:auto}
+.ord-arrows button{background:var(--bg);border:1px solid var(--borda);border-radius:4px;width:24px;height:20px;cursor:pointer;font-size:.65rem;display:flex;align-items:center;justify-content:center}
+.ord-arrows button:hover{background:var(--azul-c)}
+footer{text-align:center;padding:1.5rem;font-size:.76rem;color:var(--txt2)}
+@media print{.tabs,header,.prog-wrap,.btn,.btn-tts,.img-slot,footer,#resultado,.jogo-card,.records,.resumo-box,.dica-ouro,.glossario,.aviso-prof{display:none!important}.tab-pane{display:flex!important}.card{break-inside:avoid;border:1px solid #ccc;margin-bottom:1rem}.card-head{background:#333!important;-webkit-print-color-adjust:exact}.fb{display:block!important;background:#f5f5f5!important;border-left:3px solid #999!important;color:#333!important}}
+@media(max-width:480px){.painel{padding:1.1rem}.tab-btn{font-size:.78rem;padding:.8rem .3rem}}
+/* ===== TELA DE IDENTIFICAÇÃO E MODO DE JOGO ===== */
+.quiz-gate{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.8rem 1.6rem;max-width:480px;margin:0 auto}
+.quiz-gate h2{font-family:'Lora',serif;font-size:1.25rem;color:var(--azul);margin-bottom:.4rem}
+.quiz-gate>p{font-size:.88rem;color:var(--txt2);margin-bottom:1.2rem}
+.gate-field{margin-bottom:1.1rem}
+.gate-field>label{display:block;font-size:.82rem;font-weight:600;color:var(--azul-m);margin-bottom:.4rem}
+.gate-field input[type=text]{width:100%;padding:.65rem .8rem;border:1.5px solid var(--borda);border-radius:9px;font-family:'Inter',sans-serif;font-size:.92rem;color:var(--txt)}
+.gate-field input[type=text]:focus{outline:none;border-color:var(--azul-m)}
+.modo-opcoes{display:flex;flex-direction:column;gap:.6rem}
+.modo-opcao{display:flex;align-items:flex-start;gap:.6rem;border:1.5px solid var(--borda);border-radius:10px;padding:.7rem .85rem;cursor:pointer;transition:.15s}
+.modo-opcao:hover{border-color:var(--azul-m)}
+.modo-opcao input[type=radio]{margin-top:.25rem;accent-color:var(--azul-m)}
+.modo-opcao input[type=radio]:checked~span b{color:var(--azul)}
+.modo-opcao span{font-size:.85rem}
+.modo-opcao small{color:var(--txt2);font-weight:400}
+.gate-aviso{color:var(--verm);font-size:.82rem;margin-top:.7rem;min-height:1.2em}
+.modo-opcao.bloqueado{opacity:.6;cursor:not-allowed}
+.modo-opcao.liberado{opacity:1;cursor:pointer;border-color:var(--verde)}
+.cadeado{font-size:.75rem}
+.senha-box{display:flex;gap:.5rem;margin-top:.6rem}
+.senha-box input[type=password]{flex:1;padding:.55rem .75rem;border:1.5px solid var(--borda);border-radius:9px;font-family:'Inter',sans-serif;font-size:.85rem}
+.senha-box input[type=password]:focus{outline:none;border-color:var(--azul-m)}
+.senha-btn{white-space:nowrap;font-size:.8rem;padding:.55rem 1rem}
+.senha-aviso{font-size:.78rem;margin-top:.4rem;min-height:1.1em}
+.senha-aviso.ok{color:var(--verde)}
+.senha-aviso.erro{color:var(--verm)}
+.modo-chip{font-size:.74rem;font-weight:700;padding:4px 12px;border-radius:20px;background:var(--azul-c);color:var(--azul-m);margin-left:auto}
+.envio-status{font-size:.82rem;margin-top:.8rem;padding:.6rem .9rem;border-radius:8px}
+.envio-status.enviando{background:var(--azul-c);color:var(--azul-m)}
+.envio-status.ok{background:var(--verde-c);color:var(--verde)}
+.envio-status.erro{background:var(--verm-c);color:var(--verm)}
+/* No modo prova, o feedback de cada questão fica escondido até o aluno terminar */
+.fb.prova-oculto{display:none!important}
+@media print{.quiz-gate,.modo-chip,.envio-status{display:none!important}#quizConteudo{display:block!important}}
+</style>
+</head>
+<body>
+<header>
+<a href="index.html" class="voltar-link">← Painel SAEB/SIMAVE</a>
+<div class="badge">SAEB · SIMAVE · Língua Portuguesa</div>
+<h1>Habilidade D09</h1>
+<p>Inferir o sentido de uma palavra ou expressão a partir do contexto</p>
+</header>
+<nav class="tabs"><div class="tabs-inner">
+<button class="tab-btn active" data-tab="estudar">📚 Estudar</button>
+<button class="tab-btn" data-tab="quiz">📝 Quiz</button>
+<button class="tab-btn" data-tab="jogos">🎮 Jogos</button>
+</div></nav>
+<main>
+<section class="tab-pane active" id="pane-estudar">
+<div class="resumo-box"><h2>🎯 Em uma frase</h2><p>O D5 mede se você consegue <strong style="color:#ffd98a">descobrir o significado de uma palavra ou expressão usando as pistas do texto ao redor</strong> — mesmo que essa palavra tenha outro sentido no dicionário, ou que você nunca tenha visto essa expressão antes.</p><span class="fc">"A palavra ganha sentido pela companhia que ela tem no texto."</span></div>
+
+<section class="painel"><h2>📌 O que essa habilidade avalia</h2><p>Toda palavra pode ter mais de um sentido. O D4 pede que você descubra <strong>qual sentido</strong> uma palavra ou expressão assume <strong>naquele texto específico</strong> — e não o sentido mais comum, nem o primeiro que aparece no dicionário.</p><p>Isso inclui: gírias, regionalismos, neologismos, expressões idiomáticas (“engolir o sapo”, “arregaçar as mangas”), termos técnicos explicados pelo contexto, e palavras usadas em sentido figurado/metáforico.</p>
+<h3>Como o enunciado costuma aparecer:</h3>
+<ul><li>"A palavra ___ , no texto, significa..."</li><li>"A expressão ___ pode ser substituída, sem mudar o sentido, por..."</li><li>"No contexto, ___ tem o sentido de..."</li></ul>
+</section>
+
+<section class="dica-ouro painel"><h2>💡 Dica de ouro</h2><ul>
+<li><strong>Releia a frase inteira</strong> — antes e depois da palavra. O contexto quase sempre "explica" ou "substitui" o sentido.</li>
+<li><strong>Teste um sinônimo.</strong> Troque a palavra por outra que você imagina e veja se a frase continua fazendo sentido.</li>
+<li><strong>Cuidado com o "sentido de dicionário".</strong> A alternativa que repete o significado mais comum da palavra costuma ser a pegadinha.</li>
+<li><strong>Expressões valem pelo conjunto.</strong> "Engolir o sapo" não tem nada a ver com sapo de verdade — pense no todo, não em cada palavra isolada.</li>
+<li><strong>Gírias e regionalismos</strong> costumam ter pistas de tom/emoção logo ao redor (riso, espanto, cansaço, elogio).</li>
+</ul></section>
+
+<section class="painel glossario"><h2>📖 Glossário</h2><dl>
+<dt>Sentido literal</dt><dd>O significado mais comum, "de dicionário", de uma palavra.</dd>
+<dt>Sentido figurado</dt><dd>Um significado novo, criado pelo contexto, diferente do literal (metáforas, comparações).</dd>
+<dt>Gíria</dt><dd>Palavra/expressão informal, usada por um grupo, com sentido próprio.</dd>
+<dt>Expressão idiomática</dt><dd>Conjunto de palavras com sentido próprio, que não se entende traduzindo palavra por palavra.</dd>
+<dt>Regionalismo</dt><dd>Palavra/expressão típica de uma região do país.</dd>
+<dt>Polissemia</dt><dd>Quando uma mesma palavra tem mais de um significado possível.</dd>
+</dl></section>
+
+<div class="aviso-prof"><b>Professor:</b> os textos abaixo são originais ou recontos de obras de domínio público, escritos especialmente para trabalhar vocabulário em contexto — podem ser publicados sem risco de direitos autorais.</div>
+
+<div class="records" id="recordsEstudar"><h2>🏆 Seus melhores resultados</h2><div class="rec-grid" id="recGrid"></div></div>
+</section>
+<section class="tab-pane" id="pane-quiz">
+
+<!-- ===== TELA DE IDENTIFICAÇÃO (aparece antes do quiz) ===== -->
+<div id="quizGate" class="quiz-gate">
+  <h2>👋 Antes de começar</h2>
+  <p>Preencha seus dados e escolha o modo de jogo.</p>
+  <div class="gate-field">
+    <label for="alunoNome">Nome do aluno</label>
+    <input type="text" id="alunoNome" placeholder="Seu nome completo" autocomplete="off">
+  </div>
+  <div class="gate-field">
+    <label for="alunoTurma">Turma / Série</label>
+    <input type="text" id="alunoTurma" placeholder="Ex: 9º Ano A" autocomplete="off">
+  </div>
+  <div class="gate-field">
+    <label>Modo de jogo</label>
+    <div class="modo-opcoes">
+      <label class="modo-opcao">
+        <input type="radio" name="modoQuiz" value="prova" checked>
+        <span><b>📝 Modo Prova</b><br><small>Sem feedback durante o quiz. As respostas certas só aparecem no final, como numa prova de verdade.</small></span>
+      </label>
+      <label class="modo-opcao" id="opcaoEstudo">
+        <input type="radio" name="modoQuiz" value="estudo" id="radioEstudo" disabled>
+        <span><b>📖 Modo Estudo</b> <span class="cadeado" id="cadeadoEstudo">🔒</span><br><small>Mostra se acertou ou errou — e a explicação — logo após cada resposta. Liberado pelo professor.</small></span>
+      </label>
+    </div>
+    <div class="senha-box" id="senhaBox">
+      <input type="password" id="senhaEstudo" placeholder="Senha do professor para liberar o Modo Estudo" autocomplete="off">
+      <button type="button" class="btn sec senha-btn" id="btnLiberarEstudo">Liberar</button>
+    </div>
+    <p class="senha-aviso" id="senhaAviso"></p>
+  </div>
+  <button class="btn" id="btnIniciarQuiz">▶ Começar o quiz</button>
+  <p class="gate-aviso" id="gateAviso"></p>
+</div>
+
+<!-- ===== QUIZ (fica oculto até o aluno preencher os dados acima) ===== -->
+<div id="quizConteudo" style="display:none">
+<div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.5rem;align-items:center">
+
+<button class="btn sec" onclick="location.reload()">🔀 Embaralhar e refazer</button>
+<span class="modo-chip" id="modoChip"></span>
+</div>
+<div class="prog-wrap"><span class="prog-label">Progresso</span><div class="prog-track"><div class="prog-fill" id="pFill"></div></div><span class="score" id="score">0 / 12</span></div>
+<div id="quiz" style="display:flex;flex-direction:column;gap:1.5rem"></div>
+
+
+
+<div id="resultado"><h2>Quiz concluído!</h2><div class="medalha" id="medalha">🏅</div><div class="nota" id="notaFinal">—</div><p id="msgFinal"></p><div id="envioStatus" class="envio-status"></div><div style="margin-top:1rem"><button class="btn" onclick="location.reload()">↺ Embaralhar e refazer</button></div></div>
+</div>
+</section>
+<section class="tab-pane" id="pane-jogos">
+<div class="resumo-box"><h2>🎮 Hora de jogar</h2><p>Cinco mini-games para treinar a leitura de palavras e expressões em contexto. Seus melhores resultados ficam salvos!</p></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">⏱️</span><div><h3>Qual o sentido?</h3><div class="desc">Leia o trecho e escolha o significado certo, antes que o tempo acabe!</div></div></div><div class="jogo-body" id="g1-body"><button class="btn ouro" onclick="G1.start()">▶ Começar</button></div></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">🏷️</span><div><h3>Literal, Figurado ou Gíria?</h3><div class="desc">Classifique cada expressão do texto.</div></div></div><div class="jogo-body" id="g2-body"><button class="btn ouro" onclick="G2.start()">▶ Começar</button></div></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">🔁</span><div><h3>Troca de Sinônimo</h3><div class="desc">Qual palavra substitui o termo sem mudar o sentido?</div></div></div><div class="jogo-body" id="g3-body"><button class="btn ouro" onclick="G3.start()">▶ Começar</button></div></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">🧩</span><div><h3>Complete com a palavra certa</h3><div class="desc">Escolha a palavra que faz sentido no contexto.</div></div></div><div class="jogo-body" id="g4-body"><button class="btn ouro" onclick="G4.start()">▶ Começar</button></div></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">🔢</span><div><h3>Ordene o raciocínio</h3><div class="desc">Coloque os passos do raciocínio na ordem certa.</div></div></div><div class="jogo-body" id="g5-body"><button class="btn ouro" onclick="G5.start()">▶ Começar</button></div></div>
+</section>
+</main>
+<footer>Portal do Professor Marcos Cruz · SAEB/SIMAVE · D5</footer>
+
+<script>
+/* ===== CONFIGURAÇÃO DO ENVIO PARA GOOGLE SHEETS =====
+   Cole aqui a URL do seu Apps Script publicado como "App da Web".
+   Veja o arquivo google-apps-script.gs para instruções de instalação.
+   Enquanto estiver "SUBSTITUA_PELA_SUA_URL", o envio fica desativado
+   (o quiz funciona normalmente, só não manda nada para a planilha). */
+const SHEETS_URL = "https://script.google.com/macros/s/AKfycbwPcWRWW2IkMb8-WkyB2w1M2n9ivcYlfqWajYRgCzecLTC1T7aBetZtR2MDaOIxahc/exec";
+const DESCRITOR_PAGINA = 'D09';
+const NOME_ARQUIVO = 'D09.html';
+
+/* ===== ESTADO DO ALUNO E MODO DE JOGO ===== */
+let alunoNome = "";
+let alunoTurma = "";
+let modoJogo = "estudo"; // "estudo" ou "prova"
+const respostasDetalhadas = [];
+const selecoes = {}; // {dn: k} para revelar botões no fim do modo prova // uma entrada por questão respondida, na ordem em que aparecem
+
+/* ===== SENHA PARA LIBERAR O MODO ESTUDO =====
+   Troque a senha abaixo quando quiser. É a MESMA senha em todas as páginas
+   do portal (mais simples de lembrar e passar para os alunos quando for
+   hora de revisão). Lembre-se: como o quiz roda no navegador do aluno,
+   essa senha impede o uso casual do Modo Estudo, mas não é uma proteção
+   contra alguém que abra o código-fonte da página — as respostas já estão
+   no arquivo de qualquer forma, como em qualquer site estático como este. */
+const SENHA_MODO_ESTUDO = "professor123";
+
+document.getElementById("btnLiberarEstudo").onclick = () => {
+  const campo = document.getElementById("senhaEstudo");
+  const aviso = document.getElementById("senhaAviso");
+  if (campo.value === SENHA_MODO_ESTUDO) {
+    document.getElementById("radioEstudo").disabled = false;
+    document.getElementById("radioEstudo").checked = true;
+    document.getElementById("cadeadoEstudo").textContent = "🔓";
+    document.getElementById("opcaoEstudo").classList.add("liberado");
+    document.getElementById("senhaBox").style.display = "none";
+    aviso.className = "senha-aviso ok";
+    aviso.textContent = "✓ Modo Estudo liberado.";
+  } else {
+    aviso.className = "senha-aviso erro";
+    aviso.textContent = "Senha incorreta.";
+  }
+};
+// Também libera ao apertar Enter no campo de senha
+document.getElementById("senhaEstudo").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") document.getElementById("btnLiberarEstudo").click();
+});
+
+document.getElementById("btnIniciarQuiz").onclick = () => {
+  const nome = document.getElementById("alunoNome").value.trim();
+  const turma = document.getElementById("alunoTurma").value.trim();
+  const aviso = document.getElementById("gateAviso");
+  if (!nome || !turma) {
+    aviso.textContent = "Preencha nome e turma/série para continuar.";
+    return;
+  }
+  alunoNome = nome;
+  alunoTurma = turma;
+  modoJogo = document.querySelector('input[name="modoQuiz"]:checked').value;
+  document.getElementById("quizGate").style.display = "none";
+  document.getElementById("quizConteudo").style.display = "block";
+  const chip = document.getElementById("modoChip");
+  chip.textContent = modoJogo === "prova" ? "📝 Modo Prova" : "📖 Modo Estudo";
+};
+
+/* ===== ENVIO PARA O GOOGLE SHEETS ===== */
+function enviarParaSheets() {
+  const statusEl = document.getElementById("envioStatus");
+  if (!SHEETS_URL || SHEETS_URL.indexOf("SUBSTITUA") !== -1) {
+    statusEl.className = "envio-status";
+    statusEl.textContent = "";
+    return; // envio desativado até o professor configurar a URL
+  }
+  statusEl.className = "envio-status enviando";
+  statusEl.textContent = "Enviando resultado para a planilha...";
+
+  const payload = {
+    nome: alunoNome,
+    turma: alunoTurma,
+    descritor: DESCRITOR_PAGINA,
+    pagina: NOME_ARQUIVO,
+    modo: modoJogo === "prova" ? "Prova" : "Estudo",
+    respostas: respostasDetalhadas
+  };
+
+  fetch(SHEETS_URL, {
+    method: "POST",
+    mode: "no-cors", // Apps Script Web Apps não devolvem CORS; "no-cors" garante o envio mesmo sem ler a resposta
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(payload)
+  }).then(() => {
+    statusEl.className = "envio-status ok";
+    statusEl.textContent = "✓ Resultado enviado para a planilha do professor.";
+  }).catch(() => {
+    statusEl.className = "envio-status erro";
+    statusEl.textContent = "✗ Não foi possível enviar o resultado (verifique sua internet).";
+  });
+}
+
+/* ===== QUIZ ===== */
+const QRAW=[{"n": 1, "tipo": "Texto legal", "nivel": "facil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Texto legal — ECA, Art. 53 (trecho)</b><p><b>Art. 53.</b> A criança e o adolescente têm direito à educação, visando ao pleno desenvolvimento de sua pessoa, preparo para o exercício da cidadania e qualificação para o trabalho, assegurando-se-lhes:</p><p>I – igualdade de condições para o acesso e permanência na escola;<br>II – direito de ser respeitado por seus educadores;<br>III – direito de contestar critérios avaliativos, podendo recorrer às instâncias escolares superiores;<br>IV – direito de organização e participação em entidades estudantis;<br>V – acesso a escola pública e gratuita próxima de sua residência.</p><span class=\"txt-fonte\">BRASIL. Lei nº 8.069/1990. Avaliação Diagnóstica P0902 — CAED/UFJF, 2025.</span></div>", "fonte": "", "enun": "Esse texto é escrito em linguagem", "alts": ["científica, com vocabulário de pesquisas laboratoriais.", "coloquial, com expressões do cotidiano informal.", "formal, com vocabulário técnico-jurídico adequado ao gênero legal.", "regional, representando uma variedade específica do português."], "correta": 2, "porque": ["Linguagem científica pertence a textos de pesquisa — o ECA é legislação, não artigo científico.", "O texto usa 'assegurando-se-lhes', 'contestar critérios avaliativos' — nada de coloquial.", "Correto: o ECA usa linguagem jurídica formal — termos técnicos ('assegurando-se-lhes', 'instâncias escolares'), estrutura em artigos e incisos, vocabulário preciso e impessoal.", "A linguagem jurídica é formal e padronizada — não regional."]}, {"n": 2, "tipo": "Notícia", "nivel": "facil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Notícia — Cachorro faz amizade com foca (trecho)</b><p><b>Alerta de fofura!</b> Um vídeo de um cachorro brincando com sua nova amiga, uma foca chamada Sammy, viralizou nas redes sociais pela fofura da interação.</p><p>O fotógrafo de surfe Dave leva quase todas as manhãs seu cachorro Mokuleia, o Moe, para caminhar na praia. Recentemente, o <b>'bichano'</b> fez um novo amigo nada comum.</p><p>Um usuário respondeu: <b>'Cachorrinho da terra conhece o cachorrinho do mar'</b>.</p><span class=\"txt-fonte\">BAHL, Ada. NDMais. Avaliação Diagnóstica P0902 — CAED/UFJF, 2025.</span></div>", "fonte": "", "enun": "No texto, a expressão 'Alerta de fofura!' é um exemplo de linguagem", "alts": ["científica, pois descreve o comportamento dos animais.", "formal, pois introduz o assunto de maneira clara.", "informal, pois usa expressão coloquial típica de redes sociais.", "técnica, pois usa terminologia jornalística específica."], "correta": 2, "porque": ["'Alerta de fofura' é expressão popular — não científica.", "A linguagem formal introduz assuntos com objetividade, sem exclamações afetivas.", "Correto: 'Alerta de fofura!' é expressão coloquial e afetiva típica de redes sociais e comunicação informal — ativa a emoção do leitor em vez de informar objetivamente.", "Terminologia técnica jornalística seria 'lide', 'pauta', 'fonte' — não 'fofura'."]}, {"n": 3, "tipo": "Crônica", "nivel": "facil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Crônica — A caneta tinteiro (trecho)</b><p>Íamos pra escola carregando na mala o mata-borrão. Era um pedaço de papel bem poroso que a gente usava pra limpar a tinta que vazava da caneta tinteiro.</p><p>Caneta que vazava? Como assim? É, vazava, soltava tinta. A gente tinha que carregar também um potinho de vidro cheio de tinta preta ou azul. <b>Era uma trabalheira danada!</b></p><p>E mesmo com todo cuidado a caneta vazava, estragava o estojo de couro, comprado a duras penas. <b>Estojo de couro, uniforme! Puxa, vó, que irado!</b> [...]</p><span class=\"txt-fonte\">Disponível em: viveragora.com.br. Avaliação Diagnóstica P0902 — CAED/UFJF, 2025.</span></div>", "fonte": "", "enun": "No texto, 'Puxa, vó, que irado!' é um exemplo de linguagem", "alts": ["científica.", "coloquial.", "formal.", "regional."], "correta": 1, "porque": ["'Puxa, vó, que irado!' não tem nenhum vocabulário científico.", "Correto: 'puxa', 'vó', 'que irado' são expressões coloquiais típicas da fala cotidiana informal — marcas de proximidade afetiva entre o narrador e o leitor.", "Linguagem formal não usa interjeições afetivas nem gírias como 'irado'.", "Embora 'vó' seja coloquial, não é específico de uma região — é uso nacional."]}, {"n": 4, "tipo": "Par de textos", "nivel": "medio", "texto": "<div style=\"display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px\"><div style=\"flex:1;min-width:200px;background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:10px 14px;font-size:.86rem;line-height:1.5\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:5px\">TEXTO 1 — Texto legal formal</b><p>Art. 53. A criança e o adolescente têm direito à educação, visando ao pleno desenvolvimento de sua pessoa, <b>assegurando-se-lhes</b> igualdade de condições para o acesso e permanência na escola e direito de ser respeitado por seus educadores.</p><span class=\"txt-fonte\">ECA, Lei nº 8.069/1990. Avaliação Diagnóstica P0902 — CAED/UFJF, 2025.</span></div><div style=\"flex:1;min-width:200px;background:#fff8e6;border-left:4px solid #c07800;border-radius:0 8px 8px 0;padding:10px 14px;font-size:.86rem;line-height:1.5\"><b style=\"display:block;font-size:.7rem;color:#c07800;margin-bottom:5px\">TEXTO 2 — Crônica informal</b><p>A gente tinha que carregar um potinho de vidro cheio de tinta preta ou azul, pra encher a carga da caneta. <b>Era uma trabalheira danada!</b> [...] <b>Puxa, vó, que irado!</b></p><span class=\"txt-fonte\">A caneta tinteiro. Avaliação Diagnóstica P0902 — CAED/UFJF, 2025.</span></div></div>", "fonte": "", "enun": "Qual dos dois textos usa linguagem MAIS FORMAL e por quê?", "alts": ["O Texto 2, pois a crônica usa palavras mais longas como 'trabalheira'.", "O Texto 1, pois o ECA é texto legal com vocabulário técnico-jurídico e estrutura impessoal.", "Os dois têm a mesma formalidade, pois tratam de temas sérios.", "O Texto 2, pois foi escrito por um adulto que viveu o passado narrado."], "correta": 1, "porque": ["'Trabalheira' é gíria/coloquial — não é marca de formalidade.", "Correto: o ECA usa 'assegurando-se-lhes', incisos numerados, linguagem impessoal e jurídica — características de texto formal. A crônica usa 'A gente', 'puxa, vó', 'irado' — linguagem coloquial e pessoal.", "O tema não define a formalidade — o ECA é formal; a crônica é informal mesmo tratando de memórias importantes.", "A autoria pessoal não define formalidade — muitos textos informais são escritos por adultos."]}, {"n": 5, "tipo": "Reportagem científica", "nivel": "medio", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Reportagem científica — Animais sentem ciúmes? (trecho)</b><p><b>'Não podemos afirmar que os animais sentem ciúmes com base nesses dados'</b>, disse Oded Ritov, candidato a Ph.D. no Departamento de Psicologia da Universidade da Califórnia. <b>'Se houver um efeito, ele é muito fraco e pode aparecer em cenários muito específicos.'</b></p><p>Esta nova pesquisa mostra que os dados anteriores podem ter sido interpretados de maneira errônea, segundo os pesquisadores da instituição.</p><span class=\"txt-fonte\">PINOTTI, Fernanda. CNN Brasil. Avaliação Diagnóstica P0902 — CAED/UFJF, 2025.</span></div>", "fonte": "", "enun": "O trecho que apresenta linguagem CIENTÍFICA no texto é", "alts": ["'Alerta de fofura!'", "'Cachorrinho da terra conhece o cachorrinho do mar'", "'aversão à desigualdade' (termo usado pelos pesquisadores)", "'Puxa, vó, que irado!'"], "correta": 2, "porque": ["'Alerta de fofura!' é linguagem coloquial típica de redes sociais.", "'Cachorrinho da terra...' é comentário bem-humorado de usuário — linguagem informal.", "Correto: 'aversão à desigualdade' é um termo técnico da psicologia comparada — usado pelos pesquisadores para descrever um conceito específico, com precisão terminológica típica da linguagem científica.", "'Puxa, vó, que irado!' é linguagem coloquial da crônica 'A caneta tinteiro'."]}, {"n": 6, "tipo": "Par de textos — Registro científico vs. coloquial", "nivel": "medio", "texto": "<div style=\"display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px\"><div style=\"flex:1;min-width:180px;background:#e6edf7;border-left:3px solid #235a8c;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.7rem;color:#1a3a5c;display:block;margin-bottom:3px\">TEXTO 1 — Reportagem científica</b><em>Pesquisadores da USP identificaram correlação positiva entre hábito de leitura diária e redução de marcadores de estresse em adultos de 25 a 45 anos. O estudo, publicado no Journal of Behavioral Science, envolveu 1.200 participantes durante 12 meses.</em></div><div style=\"flex:1;min-width:180px;background:#fef9ed;border-left:3px solid #c9871f;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.7rem;color:#7a5310;display:block;margin-bottom:3px\">TEXTO 2 — Mensagem de grupo (WhatsApp)</b><em>Gente, vi uma notícia que quem lê todo dia fica menos estressado!! Faz sentido né? Eu pelo menos quando termino um livro fico muito mais calma 😊 Alguém mais sente isso?</em></div></div>", "fonte": "Textos elaborados para fins didáticos.", "enun": "A principal marca que diferencia a linguagem do Texto 1 da do Texto 2 é", "alts": ["o Texto 1 usa linguagem informal; o Texto 2 usa linguagem técnica.", "o Texto 1 usa linguagem objetiva, com dados precisos e fontes citadas; o Texto 2 usa linguagem subjetiva, com emoção e informalidade digital.", "o Texto 1 é mais curto; o Texto 2 é mais longo e detalhado.", "o Texto 1 fala de adultos; o Texto 2 fala de crianças e adolescentes."], "correta": 1, "porque": ["É o contrário: T1 é formal/técnico, T2 é informal.", "T1 usa vocabulário técnico ('correlação positiva', 'marcadores'), fontes citadas (USP, Journal) e dados numéricos precisos — características do registro científico formal. T2 usa 'Gente', exclamações, emoji e relato pessoal — registro informal digital.", "O tamanho não define o registro; ambos têm tamanho parecido.", "Ambos tratam do mesmo fenômeno (leitura e estresse); a diferença está no registro, não no tema."]}, {"n": 7, "tipo": "Par de textos — mesmo assunto, registros opostos", "nivel": "dificil", "texto": "<div style=\"display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px\"><div style=\"flex:1;min-width:180px;background:#e6edf7;border-left:3px solid #235a8c;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.7rem;color:#1a3a5c;display:block;margin-bottom:3px\">TEXTO 1 — Comunicado oficial (escola)</b><em>Informamos que, a partir de segunda-feira, o cardápio do refeitório passará a incluir opções vegetarianas diariamente, em conformidade com as diretrizes nutricionais do Ministério da Saúde. Contamos com a compreensão de todos.</em></div><div style=\"flex:1;min-width:180px;background:#fef9ed;border-left:3px solid #c9871f;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.7rem;color:#7a5310;display:block;margin-bottom:3px\">TEXTO 2 — Mensagem de estudante para amigo</b><em>Cara, você viu que agora vai ter opção vegetariana todo dia?? Finalmente!! Tô feliz demais, porque tava cansado de comer só aquela carne seca toda semana 😅</em></div></div>", "fonte": "Textos elaborados para fins didáticos.", "enun": "Qual mudança de registro justifica os diferentes tons dos dois textos?", "alts": ["O Texto 1 é mais longo e detalhado; o Texto 2 é curto e direto.", "O Texto 1 usa registro formal institucional (comunicado oficial); o Texto 2 usa registro informal afetivo entre amigos.", "O Texto 1 é favorável à mudança; o Texto 2 é contrário ao cardápio vegetariano.", "O Texto 1 usa muitos dados numéricos; o Texto 2 usa opiniões sem embasamento."], "correta": 1, "porque": ["O tamanho não explica a diferença de tom; o que muda é o contexto e o interlocutor.", "T1 é institucional (escola → comunidade): linguagem formal, impessoal, citação de autoridade (Ministério). T2 é pessoal (amigo → amigo): linguagem emocional, gíria implícita, emoji, exclamações.", "Ambos reagem positivamente à mudança; a diferença é no tom, não na posição.", "T1 tem 'diretrizes nutricionais' como referência técnica, não dados numéricos; T2 tem opinião pessoal, não ausência de embasamento — apenas usa outro tipo de argumento (experiência vivida)."]}, {"n": 8, "tipo": "Crônica — Crônica da Escrita (P0901)", "nivel": "dificil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Crônica — Crônica da Escrita (fragmento, P0901)</b><p>Já faz tempo que eu escrevo; escrever é uma paixão que tenho desde a infância, mesmo antes de me alfabetizar. A ansiedade de escrever cresceu junto comigo. Quando entrei na escola, essa vontade só aumentou. Enquanto meus colegas reclamavam por ter de copiar todo o conteúdo do quadro, lá estava eu, toda animada, escrevendo. E como se não bastasse, com canetas de várias cores e com regras para cada uma: para o título, usava sempre a vermelha; subtítulo de preta; e o restante em azul.</p></div>", "fonte": "FLORENCIO, Gerusa. <b>Crônica da Escrita</b>. 2017. Adaptado. P0901 — CAED/UFJF, 2025.", "enun": "Esse trecho da crônica é escrito em linguagem", "alts": ["formal, com vocabulário técnico e distância emocional entre autora e leitor.", "informal e pessoal: a autora usa 1ª pessoa, tom confessional e expressões coloquiais que criam proximidade.", "científica, com dados e referências que comprovam a importância da escrita.", "formal literária, como os textos de Machado de Assis do século XIX."], "correta": 1, "porque": ["A crônica usa 1ª pessoa ('eu escrevo', 'eu estava'), emoção ('paixão', 'animada') e detalhes pessoais — o oposto da distância formal.", "O registro é informal-pessoal: 1ª pessoa do singular, tom de conversa, detalhes íntimos (as regras de cores das canetas), sem distância entre quem escreve e quem lê.", "Não há dados nem referências científicas; é um relato pessoal subjetivo.", "A linguagem é contemporânea e coloquial — nada semelhante ao português culto e rebuscado do século XIX."]}, {"n": 9, "tipo": "Par — Questão discursiva", "nivel": "dificil", "texto": "<div style=\"display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px\"><div style=\"flex:1;min-width:200px;background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:10px 14px;font-size:.86rem;line-height:1.5\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:5px\">TEXTO 1 — Texto legal formal</b><p>Art. 53. A criança e o adolescente têm direito à educação, visando ao pleno desenvolvimento de sua pessoa, <b>assegurando-se-lhes</b> igualdade de condições para o acesso e permanência na escola e direito de ser respeitado por seus educadores.</p><span class=\"txt-fonte\">ECA, Lei nº 8.069/1990. Avaliação Diagnóstica P0902 — CAED/UFJF, 2025.</span></div><div style=\"flex:1;min-width:200px;background:#fff8e6;border-left:4px solid #c07800;border-radius:0 8px 8px 0;padding:10px 14px;font-size:.86rem;line-height:1.5\"><b style=\"display:block;font-size:.7rem;color:#c07800;margin-bottom:5px\">TEXTO 2 — Crônica informal</b><p>A gente tinha que carregar um potinho de vidro cheio de tinta preta ou azul, pra encher a carga da caneta. <b>Era uma trabalheira danada!</b> [...] <b>Puxa, vó, que irado!</b></p><span class=\"txt-fonte\">A caneta tinteiro. Avaliação Diagnóstica P0902 — CAED/UFJF, 2025.</span></div></div>", "fonte": "", "enun": "(Questão aberta) Compare os dois textos. Identifique: (a) uma marca de linguagem formal no ECA e explique por que ela é adequada; (b) uma marca de linguagem informal na crônica e explique por que ela é adequada; (c) o que aconteceria se os dois textos trocassem seus registros?", "alts": [], "correta": -1, "porque": ["Gabarito disponível no botão 'Ver gabarito'.", "", "", ""]}, {"n": 10, "tipo": "Par de textos — Reclame Aqui e chat", "nivel": "medio", "texto": "<div style=\"display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px\"><div style=\"flex:1;min-width:180px;background:#e6edf7;border-left:3px solid #235a8c;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.7rem;color:#1a3a5c;display:block;margin-bottom:3px\">TEXTO 1 — Carta de reclamação formal</b><em>Prezados, solicito a devolução imediata do valor pago ou o envio do vale-presente, conforme prometido. Aguardo uma solução rápida e eficaz. Atenciosamente, Thalya Roberta Salgueiro</em></div><div style=\"flex:1;min-width:180px;background:#fef9ed;border-left:3px solid #c9871f;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.7rem;color:#7a5310;display:block;margin-bottom:3px\">TEXTO 2 — Mensagem de chat para a amiga</b><em>Oi Yasmin! Fica tranquila que eu reclamo agora hein, isso é um absurdo!!! kkkk vai dar tudo certo, promise 😅❤️</em></div></div>", "fonte": "Texto 1: SALGUEIRO, Thalya Roberta. Reclame Aqui, 2025 (adaptado). Texto 2: texto original para fins didáticos.", "enun": "Em qual dos textos o uso do registro formal é <b>indispensável</b> para que o objetivo seja alcançado?", "alts": ["No Texto 2, pois a amiga só vai levar a sério se a linguagem for cuidadosa.", "No Texto 1, pois uma reclamação formal tem mais peso jurídico e institucional junto à empresa.", "Nos dois textos, pois a situação é séria em ambos os casos.", "Em nenhum dos dois, pois o objetivo pode ser alcançado com qualquer registro."], "correta": 1, "porque": ["A amiga, no contexto informal do chat, entende a mensagem com qualquer registro; o informal é adequado para a relação entre elas.", "A reclamação formal (Texto 1) direcionada a uma empresa exige registro formal: confere credibilidade, segurança jurídica e sinaliza seriedade ao interlocutor institucional.", "O Texto 2 (chat) é eficaz justamente por ser informal — o registro formal seria estranho e inadequado ao contexto.", "No Texto 1, um registro informal enfraqueceria a reclamação; o formal é necessário para o gênero e o objetivo."]}, {"n": 11, "tipo": "Par de textos — mesmo evento, registros distintos", "nivel": "dificil", "texto": "<div style=\"display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px\"><div style=\"flex:1;min-width:180px;background:#e6edf7;border-left:3px solid #235a8c;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.7rem;color:#1a3a5c;display:block;margin-bottom:3px\">TEXTO 1 — Notícia (Agência Brasil)</b>O Governo Federal lançou, nesta quarta-feira, um pacote de medidas de combate ao desmatamento na Amazônia, com investimento previsto de R$ 3,2 bilhões para os próximos três anos, segundo anúncio do Ministério do Meio Ambiente.</div><div style=\"flex:1;min-width:180px;background:#fef9ed;border-left:3px solid #c9871f;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.7rem;color:#7a5310;display:block;margin-bottom:3px\">TEXTO 2 — Comentário em rede social</b>Gente, finalmente!!! Tava na hora de fazerem alguma coisa por essa floresta que a gente tanto ama 😭🌳 Torçam que funcione de vdd essa vez!!</div></div>", "fonte": "Texto 1: adaptado de Agência Brasil/EBC. Texto 2: texto original para fins didáticos.", "enun": "Que mudança de registro evidencia a passagem do Texto 1 para o Texto 2?", "alts": ["O Texto 1 usa vocabulário técnico-jurídico; o Texto 2 usa linguagem científica.", "O Texto 1 usa linguagem objetiva, impessoal e com dados precisos; o Texto 2 usa linguagem emotiva, coloquial e marcada por oralidade e emojis.", "O Texto 1 está no presente; o Texto 2 usa exclusivamente o passado para narrar o evento.", "O Texto 1 é opinativo; o Texto 2 apresenta apenas informação factual verificável."], "correta": 1, "porque": ["Vocabulário técnico-jurídico está no T1, mas T2 não usa linguagem científica — usa linguagem coloquial.", "T1 é jornalístico: dados precisos (R$ 3,2 bilhões, três anos), fontes citadas, sem emoção. T2 é informal: interjeições ('Gente!'), reduções ('de vdd'), emojis, exclamações.", "Ambos usam o presente/passado recente para o mesmo evento; o tempo verbal não é a diferença central.", "É o oposto: T1 relata fatos; T2 expressa emoção e opinião pessoal."]}, {"n": 12, "tipo": "Par de textos — Crônica da Escrita (P0901)", "nivel": "dificil", "texto": "<div style=\"display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px\"><div style=\"flex:1;min-width:180px;background:#e6edf7;border-left:3px solid #235a8c;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.7rem;color:#1a3a5c;display:block;margin-bottom:3px\">TEXTO 1 — Crônica (Gerusa Florencio, P0901)</b><em>Pra não deixar o tédio tomar conta, comprava cadernos. Um era para letras de música, outro para receitas (que eu nunca fiz) e mais um para poemas.</em></div><div style=\"flex:1;min-width:180px;background:#fef9ed;border-left:3px solid #c9871f;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.7rem;color:#7a5310;display:block;margin-bottom:3px\">TEXTO 2 — Relato formal (autobiografia acadêmica)</b><em>Durante o período de férias escolares, a autora dedicou-se à produção escrita voluntária, organizando os registros em cadernos temáticos distintos, incluindo letras musicais, receitas culinárias e poemas.</em></div></div>", "fonte": "Texto 1: FLORENCIO, Gerusa. Crônica da Escrita, 2017 (adaptado). Texto 2: recriação do mesmo conteúdo em registro formal, para fins didáticos.", "enun": "O Texto 2 descreve o <b>mesmo fato</b> que o Texto 1, mas em registro diferente. Qual mudança mais evidencia isso?", "alts": ["O Texto 2 apresenta mais detalhes factuais sobre o que a autora escreveu.", "O Texto 1 usa 1ª pessoa e linguagem descontraída ('tédio', 'que eu nunca fiz'); o Texto 2 usa 3ª pessoa, linguagem formal e nominalizações ('produção escrita voluntária', 'registros em cadernos temáticos').", "O Texto 2 está no passado; o Texto 1 está no presente.", "O Texto 1 omite informações que o Texto 2 explica com mais precisão técnica."], "correta": 1, "porque": ["T2 não acrescenta detalhes factuais novos; apenas reformula os mesmos fatos em linguagem formal.", "A diferença central é o registro: T1 usa 1ª pessoa, expressões coloquiais e tom pessoal; T2 usa 3ª pessoa, nominalizações e vocabulário técnico — mesmo conteúdo, totalmente diferente na forma.", "Ambos descrevem o mesmo período (férias); o tempo verbal não é a diferença central analisada.", "T2 não acrescenta informações; reescreve as mesmas com vocabulário mais formal."]}];
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function stripHTML(s){const d=document.createElement("div");d.innerHTML=s;return d.textContent||"";}
+
+function toggleTTS(btn,id){
+  if(window.speechSynthesis.speaking){window.speechSynthesis.cancel();document.querySelectorAll(".btn-tts").forEach(b=>b.classList.remove("playing"));return;}
+  const el=document.getElementById(id);if(!el)return;
+  const text=stripHTML(el.innerHTML).replace(/\s+/g," ");
+  const u=new SpeechSynthesisUtterance(text);u.lang="pt-BR";u.rate=.9;
+  btn.classList.add("playing");
+  u.onend=()=>btn.classList.remove("playing");
+  u.onerror=()=>btn.classList.remove("playing");
+  window.speechSynthesis.speak(u);
+}
+
+const REC_KEY="saeb_d4_records";
+function loadRec(){try{return JSON.parse(localStorage.getItem(REC_KEY))||{};}catch{return {};}}
+function saveRec(k,v){const r=loadRec();if(!(k in r)||v>r[k])r[k]=v;localStorage.setItem(REC_KEY,JSON.stringify(r));renderRec();}
+function renderRec(){
+  const r=loadRec(),g=document.getElementById("recGrid");if(!g)return;
+  const items=[{k:"quiz",l:"Quiz (de 12)"},{k:"sentido",l:"Qual o sentido?"},{k:"classificar",l:"Literal/Figurado/Gíria"},{k:"sinonimo",l:"Troca de Sinônimo"},{k:"complete",l:"Complete"},{k:"ordene",l:"Ordene"}];
+  g.innerHTML=items.map(i=>`<div class="rec-item"><div class="rv">${r[i.k]!=null?r[i.k]:"\u2014"}</div><div class="rl">${i.l}</div></div>`).join("");
+}
+renderRec();
+
+document.querySelectorAll(".tab-btn").forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll(".tab-pane").forEach(p=>p.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById("pane-"+btn.dataset.tab).classList.add("active");
+    window.scrollTo({top:0,behavior:"smooth"});
+  };
+});
+
+/* ---------- QUIZ ---------- */
+const QS = shuffle(QRAW.filter(q=>q.alts&&q.alts.length>0)).map((q,idx)=>{
+  const map=Array.from({length:q.alts.length},(_,i)=>i);
+  const smap=shuffle(map);
+  return{...q,dn:idx+1,alts:smap.map(i=>q.alts[i]),porque:smap.map(i=>q.porque[i]),correta:smap.indexOf(q.correta)};
+});
+const quizEl=document.getElementById("quiz");
+QS.forEach(q=>{
+  const c=document.createElement("div");c.className="card";c.dataset.q=q.dn;
+  const tid="txt"+q.dn;
+  c.innerHTML=`<div class="card-head"><span class="qnum">Questão ${q.dn}</span><span class="qtipo">${q.tipo}</span></div>
+  <div class="txt-base" id="${tid}">${q.texto}<span class="txt-fonte">${q.fonte}</span><button class="btn-tts" onclick="toggleTTS(this,'${tid}')" title="Ouvir texto">\uD83D\uDD0A</button></div>
+  
+  <p class="enunciado">${q.enun}</p>
+  <div class="alts">${q.alts.map((t,i)=>`<button class="alt" onclick="resp(${q.dn},${i})"><span class="letra">${"ABCD"[i]}</span> ${t}</button>`).join("")}</div>
+  <div class="fb" id="fb${q.dn}"></div>`;
+  quizEl.appendChild(c);
+});
+let acertos=0;const feitas=new Set();
+function resp(n,k){
+  if(feitas.has(n))return;feitas.add(n);
+  const q=QS.find(x=>x.dn===n),card=quizEl.querySelector(`[data-q="${n}"]`),btns=card.querySelectorAll(".alt"),fb=document.getElementById("fb"+n);
+  const ok=k===q.correta;if(ok)acertos++;
+
+  // Registra a resposta detalhada desta questão para depois enviar ao Sheets
+  respostasDetalhadas.push({
+    questao: n,
+    tipo: q.tipo,
+    nivel: q.nivel,
+    respostaDada: k>=0 ? "ABCD"[k] : "(não respondeu)",
+    respostaCorreta: "ABCD"[q.correta],
+    acertou: ok
+  });
+
+  selecoes[n]=k;btns.forEach((b,i)=>{b.disabled=true;if(modoJogo==="estudo"){if(i===q.correta)b.classList.add("ok");else if(i===k)b.classList.add("err");else b.classList.add("dim");}else{if(i===k)b.classList.add("sel");else b.classList.add("dim");}});
+  const pq=q.alts.map((t,i)=>`<span class="pi"><span class="l">${"ABCD"[i]})</span> ${q.porque[i]}</span>`).join("");
+  fb.className="fb show "+(ok?"ok":"err")+(modoJogo==="prova"?" prova-oculto":"");
+  fb.innerHTML=`<div class="ft">${ok?"✓ Correto!":"✗ Incorreto — a correta é "+"ABCD"[q.correta]+"."}</div><div>${q.porque[q.correta]}</div><div class="pq"><b>Cada alternativa:</b>${pq}</div>`;
+  document.getElementById("pFill").style.width=(feitas.size/QS.length*100)+"%";
+  // No modo prova, a pontuação parcial fica escondida; só aparece no resultado final
+  document.getElementById("score").textContent=modoJogo==="prova" ? (feitas.size+" / "+QS.length+" respondidas") : (acertos+" / "+QS.length);
+  if(feitas.size===QS.length)setTimeout(quizFim,500);
+}
+function quizFim(){
+  // No modo prova, revela todo o feedback que ficou oculto durante o quiz
+  if(modoJogo==="prova"){
+    // gabarito bloqueado no modo prova
+    // modo estudo mostra gabarito por senha
+    document.getElementById("score").textContent=acertos+" / "+QS.length;
+  }
+  const r=document.getElementById("resultado");r.style.display="block";
+  document.getElementById("notaFinal").textContent=acertos+"/"+QS.length;
+  const p=acertos/QS.length;let m,msg;
+  if(p>=.9){m="🥇";msg="Ouro! Precisão de detetive.";}
+  else if(p>=.7){m="🥈";msg="Prata! Atenção aos distratores.";}
+  else if(p>=.5){m="🥉";msg="Bronze! Volte ao texto antes de marcar.";}
+  else{m="📖";msg="Treine mais. A resposta está sempre lá.";}
+  document.getElementById("medalha").textContent=m;document.getElementById("msgFinal").textContent=msg;
+  saveRec("quiz",acertos);
+  enviarParaSheets();
+  r.scrollIntoView({behavior:"smooth",block:"center"});
+}
+
+/* ---------- FACTORY: JOGO CRONOMETRADO (G1 e G3) ---------- */
+function makeTimedGame(bodyId, roundsSrc, recordKey){
+  return {
+    i:0, pts:0, tmr:null, tempo:0, rounds:[],
+    start(){ this.i=0; this.pts=0; this.rounds=shuffle(roundsSrc); this.render(); },
+    render(){
+      const b=document.getElementById(bodyId);
+      if(this.i>=this.rounds.length){
+        saveRec(recordKey,this.pts);
+        const max=this.rounds.length*15;
+        const msg = this.pts>=max*0.7 ? "Muito bem! Leitura rápida e precisa. \uD83E\uDD47" : this.pts>=max*0.4 ? "Bom trabalho! Continue treinando." : "Vamos treinar mais um pouco?";
+        b.innerHTML=`<div class="jogo-final"><div class="big">${this.pts} pts</div><p>${msg}</p><button class="btn ouro" onclick="${bodyId.split('-')[0].toUpperCase()}.start()">\u21BA Jogar de novo</button></div>`;
+        return;
+      }
+      const r=this.rounds[this.i]; this.tempo=100;
+      const ttsId=bodyId+"-tts";
+      b.innerHTML=`<div class="jogo-mid"><span class="chip">Rodada ${this.i+1}/${this.rounds.length}</span><span class="chip timer">\u23F1\uFE0F</span><div class="timerbar"><div id="${bodyId}-bar"></div></div><span class="chip">${this.pts} pts</span></div>
+      <div class="mini-texto">${r.t}<button class="btn-tts" onclick="toggleTTS(this,'${ttsId}')">\uD83D\uDD0A</button><span id="${ttsId}" style="display:none">${r.t}</span></div>
+      <div class="mini-q">${r.q}</div>
+      <div class="alts" id="${bodyId}-alts">${r.o.map((o,k)=>`<button class="alt" onclick="${bodyId.split('-')[0].toUpperCase()}.resp(${k})"><span class="letra">${"ABCD"[k]}</span> ${o}</button>`).join("")}</div>
+      <div class="mini-fb" id="${bodyId}-fb"></div>`;
+      clearInterval(this.tmr);
+      this.tmr=setInterval(()=>{
+        this.tempo-=2;
+        const bar=document.getElementById(bodyId+"-bar");
+        if(bar)bar.style.width=Math.max(0,this.tempo)+"%";
+        if(this.tempo<=0)this.resp(-1);
+      },400);
+    },
+    resp(k){
+      clearInterval(this.tmr);
+      const r=this.rounds[this.i],btns=document.querySelectorAll("#"+bodyId+"-alts .alt"),fb=document.getElementById(bodyId+"-fb");
+      btns.forEach((a,j)=>{a.disabled=true;if(j===r.c)a.classList.add("ok");else if(j===k)a.classList.add("err");else a.classList.add("dim");});
+      if(k===r.c){const g=5+Math.round(this.tempo/10);this.pts+=g;fb.className="mini-fb show ok";fb.textContent="\u2713 +"+g+" pts!";}
+      else{fb.className="mini-fb show err";fb.textContent=(k===-1?"\u23F1\uFE0F Tempo!":"\u2717")+" Resposta: "+"ABCD"[r.c]+".";}
+      this.i++; setTimeout(()=>this.render(),2500);
+    }
+  };
+}
+const G1 = makeTimedGame("g1-body", G1_ROUNDS, "sentido");
+const G3 = makeTimedGame("g3-body", G3_ROUNDS, "sinonimo");
+
+/* ---------- G2: Literal, Figurado ou Gíria? ---------- */
+const G2 = {
+  rs:[],
+  cats:[["literal","Literal"],["figurado","Figurado"],["giria","Gíria"]],
+  start(){
+    this.rs=[];
+    const b=document.getElementById("g2-body");
+    b.innerHTML=`<div class="mini-texto">${G2_TEXT}<button class="btn-tts" onclick="toggleTTS(this,'g2t')">\uD83D\uDD0A</button><span id="g2t" style="display:none">${G2_TEXT}</span></div>
+    <p style="font-size:.82rem;color:var(--txt2);margin-bottom:.6rem">Para cada expressão destacada, diga se o sentido é <b>Literal</b>, <b>Figurado</b> ou <b>Gíria</b>.</p>`+
+    G2_ITEMS.map((it,i)=>`<div class="vf-item" id="g2i${i}"><div class="vf-stm"><b>${i+1}.</b> ${it.s}</div>
+      <div class="btn-row">${this.cats.map(c=>`<button class="mini-btn cat-btn cat-${c[0]}" onclick="G2.j(${i},'${c[0]}')">${c[1]}</button>`).join("")}</div>
+      <div class="mini-fb" id="g2f${i}"></div></div>`).join("")+`<div id="g2fin"></div>`;
+  },
+  j(i,escolha){
+    if(this.rs[i]!=null)return;
+    const it=G2_ITEMS[i], ok = escolha===it.cat;
+    this.rs[i]=ok;
+    document.querySelectorAll("#g2i"+i+" .mini-btn").forEach(btn=>{
+      btn.disabled=true;
+      const cls=btn.className.match(/cat-(\w+)/)[1];
+      if(cls===it.cat) btn.classList.add("ok");
+      else if(cls===escolha && !ok) btn.classList.add("err");
+    });
+    const fb=document.getElementById("g2f"+i);
+    fb.className="mini-fb show "+(ok?"ok":"err");
+    fb.innerHTML=(ok?"\u2713 ":"\u2717 ")+it.p;
+    if(this.rs.filter(x=>x!=null).length===G2_ITEMS.length){
+      const ac=this.rs.filter(x=>x).length;
+      saveRec("classificar",ac);
+      document.getElementById("g2fin").innerHTML=`<div class="jogo-final"><div class="big">${ac}/${G2_ITEMS.length}</div><p>${ac===G2_ITEMS.length?"Perfeito! Você distingue muito bem os sentidos. \uD83E\uDD47":"Bom trabalho! Releia as justificativas."}</p><button class="btn ouro" onclick="G2.start()">\u21BA Jogar de novo</button></div>`;
+    }
+  }
+};
+
+/* ---------- G4: Complete com a palavra certa (cloze) ---------- */
+const G4 = {
+  i:0, pts:0, rounds:[],
+  start(){ this.i=0; this.pts=0; this.rounds=shuffle(G4_ROUNDS); this.render(); },
+  render(){
+    const b=document.getElementById("g4-body");
+    if(this.i>=this.rounds.length){
+      saveRec("complete",this.pts);
+      b.innerHTML=`<div class="jogo-final"><div class="big">${this.pts}/${this.rounds.length}</div><p>${this.pts===this.rounds.length?"Perfeito! \uD83E\uDDE9\uD83E\uDD47":"Reler o contexto ajuda a escolher a palavra certa."}</p><button class="btn ouro" onclick="G4.start()">\u21BA Jogar de novo</button></div>`;
+      return;
+    }
+    const it=this.rounds[this.i];
+    b.innerHTML=`<div class="jogo-mid"><span class="chip">Frase ${this.i+1}/${this.rounds.length}</span><span class="chip">${this.pts} acertos</span></div>
+    <p style="font-size:.82rem;color:var(--txt2);margin-bottom:.4rem">${it.ctx}</p>
+    <div class="mini-texto">${it.f}</div>
+    <div class="alts" id="g4-alts">${it.o.map((o,k)=>`<button class="alt" onclick="G4.resp(${k})"><span class="letra">${"ABCD"[k]}</span> ${o}</button>`).join("")}</div>
+    <div class="mini-fb" id="g4-fb"></div>`;
+  },
+  resp(k){
+    const it=this.rounds[this.i],btns=document.querySelectorAll("#g4-alts .alt"),fb=document.getElementById("g4-fb");
+    btns.forEach((a,j)=>{a.disabled=true;if(j===it.c)a.classList.add("ok");else if(j===k)a.classList.add("err");else a.classList.add("dim");});
+    if(k===it.c){this.pts++;fb.className="mini-fb show ok";fb.textContent="\u2713 Exato!";}
+    else{fb.className="mini-fb show err";fb.textContent="\u2717 A palavra certa era \""+it.o[it.c]+"\".";}
+    this.i++; setTimeout(()=>this.render(),1200);
+  }
+};
+
+/* ---------- G5: Ordene o raciocínio ---------- */
+const G5 = {
+  ri:0,
+  start(){ this.ri=0; this.renderRound(); },
+  renderRound(){
+    const b=document.getElementById("g5-body");
+    if(this.ri>=G5_ROUNDS.length){
+      saveRec("ordene","\u2713");
+      b.innerHTML=`<div class="jogo-final"><div class="big">\u2713</div><p>Você organizou todo o raciocínio! \uD83D\uDD22\uD83E\uDD47</p><button class="btn ouro" onclick="G5.start()">\u21BA Jogar de novo</button></div>`;
+      return;
+    }
+    const rd=G5_ROUNDS[this.ri];
+    const items=shuffle(rd.correct);
+    b.innerHTML=`<div class="jogo-mid"><span class="chip">Passo a passo ${this.ri+1}/${G5_ROUNDS.length}</span><span class="chip">${rd.title}</span></div>
+    <p style="font-size:.84rem;color:var(--txt2);margin-bottom:.7rem">Use as setas \u25B2 \u25BC para colocar os passos do raciocínio na ordem correta. Depois, clique em "Verificar".</p>
+    <ol class="ord-list" id="g5list">${items.map((it,i)=>`<li class="ord-item" data-txt="${encodeURIComponent(it)}">${it}<div class="ord-arrows"><button onclick="G5.move(${i},-1)">\u25B2</button><button onclick="G5.move(${i},1)">\u25BC</button></div></li>`).join("")}</ol>
+    <div style="text-align:center;margin-top:.6rem"><button class="btn ouro" onclick="G5.check()">\u2713 Verificar ordem</button></div>
+    <div class="mini-fb" id="g5fb"></div>`;
+  },
+  move(idx,dir){
+    const list=document.getElementById("g5list");
+    const items=[...list.children];
+    const newIdx=idx+dir;
+    if(newIdx<0||newIdx>=items.length)return;
+    if(dir===-1) list.insertBefore(items[idx], items[newIdx]);
+    else list.insertBefore(items[newIdx], items[idx]);
+    [...list.children].forEach((li,i)=>{
+      li.querySelector(".ord-arrows").innerHTML=`<button onclick="G5.move(${i},-1)">\u25B2</button><button onclick="G5.move(${i},1)">\u25BC</button>`;
+    });
+  },
+  check(){
+    const rd=G5_ROUNDS[this.ri];
+    const list=document.getElementById("g5list");
+    const items=[...list.children];
+    const fb=document.getElementById("g5fb");
+    let allOk=true;
+    items.forEach((li,i)=>{
+      const txt=decodeURIComponent(li.dataset.txt);
+      if(txt===rd.correct[i]) li.classList.add("ok");
+      else { li.classList.add("err"); allOk=false; }
+      li.querySelectorAll("button").forEach(b=>b.disabled=true);
+    });
+    if(allOk){
+      fb.className="mini-fb show ok"; fb.textContent="\u2713 Ordem perfeita!";
+      this.ri++; setTimeout(()=>this.renderRound(),1400);
+    } else {
+      fb.className="mini-fb show err";
+      fb.innerHTML="\u2717 Algumas posições estão trocadas. <button class=\"mini-btn\" style=\"margin-left:.5rem\" onclick=\"G5.renderRound()\">Tentar de novo</button>";
+    }
+  }
+};
+
+function liberarEstudo(el,btn){
+  var pwd=prompt('Senha do professor:');
+  if(pwd===null)return;
+  if(pwd===SENHA_MODO_ESTUDO){el.style.display='block';btn.textContent='Ocultar';}
+  else{alert('Senha incorreta.');}
+}
+</script>
+</body>
+</html>

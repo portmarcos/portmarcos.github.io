@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Biblioteca de Obras — Prof. Marcos Cruz</title>
+  <meta property="og:title" content="Biblioteca de Obras Literárias 📚">
+  <meta property="og:description" content="30 obras brasileiras cobradas no ENEM e vestibulares, com resumo em vídeo e quiz.">
+  <meta property="og:image" content="https://portmarcos.github.io/assets/img/og-capa.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/design-system.css">
+  <style>
+    .obra-card { display:flex;flex-direction:column;gap:7px;background:var(--superficie);
+      border:1px solid var(--linha);border-left:6px solid var(--cor-mov);
+      border-radius:var(--raio);padding:16px;box-shadow:var(--sombra); }
+    .obra-titulo { font-family:var(--fonte-titulo);font-weight:700;font-size:1.02rem;line-height:1.2; }
+    .obra-autor { font-size:.85rem;color:var(--tinta-suave); }
+    .obra-hook { font-size:.88rem;line-height:1.45; }
+    .obra-acoes { display:flex;gap:8px;margin-top:6px;flex-wrap:wrap; }
+    .obra-btn { font-size:.78rem;font-weight:700;text-decoration:none;
+      padding:6px 12px;border-radius:999px;border:1.5px solid var(--linha);color:var(--tinta); }
+    .obra-btn.video { background:var(--cor-mov);border-color:var(--cor-mov);color:#fff; }
+    .tag-mov { align-self:flex-start;font-size:.68rem;font-weight:800;letter-spacing:.05em;
+      text-transform:uppercase;color:var(--cor-mov); }
+    .obra-detalhe { background:var(--fundo);border-radius:10px;padding:12px 14px;
+      font-size:.86rem;line-height:1.55; }
+    .obra-detalhe p { margin:0 0 8px; } .obra-detalhe p:last-child { margin:0; }
+    .obra-btn.destaque { background:var(--fundo);border-color:var(--cor-mov);
+      color:var(--cor-mov);cursor:pointer;font-family:inherit; }
+    .tag-quiz { font-size:.68rem;font-weight:800;color:var(--certo); }
+  </style>
+</head>
+<body class="materia-portugues">
+  <div class="barra-tricolor"></div>
+  <header class="cabecalho">
+    <div class="container cabecalho-conteudo">
+      <span class="marca"><a href="index.html">Prof. Marcos Cruz</a></span>
+      <span class="sub">Biblioteca de Obras Literárias</span>
+    </div>
+  </header>
+
+  <main class="container">
+    <a class="voltar" href="index.html">← Voltar ao portal</a>
+    <h1>📚 30 Obras que caem no ENEM</h1>
+    <p style="color:var(--tinta-suave);max-width:640px">
+      As obras brasileiras mais cobradas no ENEM e nos vestibulares.
+      Cada card traz o resumo em vídeo no YouTube. As marcadas com
+      <strong style="color:var(--certo)">✓ no quiz</strong> têm questões no
+      <a href="atividades/quiz-obras.html">Quiz de Obras</a>.
+    </p>
+
+    <input id="campo-busca" class="busca" type="search" placeholder="Buscar obra ou autor…" style="margin-top:14px">
+    <div class="linha-chips" id="chips-mov" style="margin-top:10px"></div>
+    <div class="grade-cards" id="grade" style="margin-top:18px"></div>
+  </main>
+
+  <footer class="rodape"><div class="container">Portal do Professor Marcos Cruz</div></footer>
+
+<script>
+const MOVS = {
+  "Romantismo":          "#8E24AA",
+  "Realismo/Naturalismo":"#2E7D32",
+  "Pré-Modernismo":      "#5D4037",
+  "Modernismo":          "#1565C0",
+  "Pós-45":              "#E65100",
+  "Contemporânea":       "#C62828"
+};
+/* t=título a=autor m=movimento h=gancho r=resumo c=resenha crítica q=quiz(0/1/2) */
+const OBRAS = [
+ {t:"O Guarani",a:"José de Alencar",ano:1857,m:"Romantismo",h:"Peri e Ceci: o indianismo que fundou o mito do herói nacional.",q:2,
+  r:"O índio goitacá Peri dedica devoção absoluta a Cecília, filha do fidalgo D. Antônio de Mariz. Entre traições, o ataque dos aimorés e a destruição da casa, Peri salva Ceci e ambos partem rumo a um futuro incerto, levados pela enchente.",
+  c:"Alencar funde cavalaria medieval e natureza tropical: Peri é um cavaleiro sem armadura. A idealização exagera, mas o projeto de criar uma mitologia nacional fez do romance um marco fundador."},
+ {t:"Iracema",a:"José de Alencar",ano:1865,m:"Romantismo",h:"A 'virgem dos lábios de mel': alegoria da América entregue ao colonizador.",q:1,atv:"obra-iracema.html",
+  r:"No Ceará do início da colonização, Iracema, a 'virgem dos lábios de mel', filha do pajé Araquém e guardiã do segredo da jurema, encontra na mata o guerreiro branco Martim, aliado dos pitiguaras, inimigos de seu povo tabajara. Ferido por ela ao surgir entre as árvores, Martim é acolhido na taba — e os dois se apaixonam. Por amor, Iracema viola o voto sagrado que a prendia ao deus Tupã, foge com Martim e com o amigo Poti, e passa a viver nas praias pitiguaras. A felicidade dura pouco: a guerra entre os povos se acende, e Martim, cada vez mais tomado pela saudade da pátria distante, ausenta-se em combates. Sozinha, Iracema definha de tristeza enquanto gera o filho de ambos, a quem chama Moacir — 'o nascido do meu sofrimento'. Quando Martim retorna, encontra a esposa moribunda; ela ainda lhe entrega a criança antes de morrer. Sepultada ao pé de um coqueiro, dá nome à terra: ali nasceria o Ceará. Martim parte com Moacir, o primeiro filho da união entre os dois mundos — levando consigo a semente e a culpa.",
+  c:"Subintitulada 'lenda do Ceará', a obra é um poema em prosa: Alencar queria provar que a língua portuguesa do Brasil podia soar tupi — e o resultado são as comparações tiradas da fauna e flora ('mais rápida que a ema selvagem'), o ritmo de canto e um dos textos mais musicais do nosso Romantismo. A chave de leitura clássica está no nome: Iracema é anagrama de América. A índia que abandona seu povo, se entrega ao europeu, sofre e morre gerando Moacir — filho da dor — alegoriza a colonização como história de amor e sacrifício, fundando o mito de origem do Brasil mestiço. A crítica moderna lê na contramão: a doçura do estilo embala uma violência real (a mulher e a terra consumidas pelo colonizador, que parte), e o silêncio sobre essa violência é o que a escola deve pôr em discussão. Cobrada com frequência em vestibulares pelo indianismo e pela linguagem, Iracema rende excelente trabalho interdisciplinar com História: quem narra a fundação do Brasil — e quem morre para que a lenda fique bonita?"},
+ {t:"Lucíola",a:"José de Alencar",ano:1862,m:"Romantismo",h:"Perfil de mulher entre o amor e o julgamento da sociedade carioca.",q:0,
+  r:"Paulo conhece Lúcia, cortesã célebre da corte, e descobre nela pureza que a sociedade nega. O amor dos dois esbarra no passado dela e no moralismo alheio. Lúcia renuncia ao luxo, regenera-se e morre purificada.",
+  c:"Dos 'perfis de mulher', o mais ousado: discute prostituição e hipocrisia social sob o verniz romântico. O sacrifício final reafirma a moral da época — eis o limite do autor."},
+ {t:"Senhora",a:"José de Alencar",ano:1875,m:"Romantismo",h:"Aurélia compra o marido: o casamento como contrato comercial.",q:1,
+  r:"Abandonada por Fernando Seixas, que preferiu um dote maior, Aurélia enriquece e compra-o em casamento secreto, vingando-se com desprezo. Seixas trabalha, paga a própria 'dívida' e se redime; só então o amor renasce.",
+  c:"O melhor romance urbano de Alencar: a metáfora mercantil (títulos das partes: Preço, Quitação...) expõe o casamento burguês como transação. Aurélia é das personagens mais fortes do Romantismo."},
+ {t:"A Moreninha",a:"Joaquim M. de Macedo",ano:1844,m:"Romantismo",h:"O primeiro best-seller nacional: juras de amor na ilha.",q:2,
+  r:"O estudante Augusto, que jura nunca amar a mesma mulher por mais de quinze dias, apaixona-se por Carolina na ilha de sua avó. Descobre-se que ambos haviam trocado juras na infância — e o amor antigo vence a inconstância.",
+  c:"Leve, bem-humorado, retrato fiel da vida fluminense estudantil. A trama é previsível, mas inaugurou o romance brasileiro de costumes e conquistou o primeiro grande público leitor do país."},
+ {t:"Memórias de um Sargento de Milícias",a:"Manuel A. de Almeida",ano:1854,m:"Romantismo",h:"Leonardo, o anti-herói malandro no Rio de D. João VI.",q:2,
+  r:"Filho 'de uma pisadela e um beliscão', Leonardo cresce entre travessuras, perseguido pelo major Vidigal. Sem heroísmo algum, escapa de enrascadas pela esperteza e pela sorte, até terminar — ironicamente — sargento e bem casado.",
+  c:"Uma exceção no Romantismo: zero idealização, humor popular e o primeiro malandro da nossa literatura. Antonio Candido o leu como 'dialética da malandragem' — ordem e desordem em dança permanente."},
+ {t:"Memórias Póstumas de Brás Cubas",a:"Machado de Assis",ano:1881,m:"Realismo/Naturalismo",h:"O defunto autor que inaugurou o Realismo com ironia genial.",q:1,atv:"obra-bras-cubas.html",
+  r:"Morto aos 64 anos por uma pneumonia contraída enquanto criava o 'emplasto Brás Cubas' — remédio que curaria a melancolia humana e daria fama ao inventor —, Brás Cubas decide narrar a própria vida do outro lado da cova. Sem nada a perder, conta tudo: a infância de menino mimado que atormentava o escravo Prudêncio; o caso juvenil com a cortesã Marcela, que o 'amou durante quinze meses e onze contos de réis'; os estudos burocráticos em Coimbra; a morte da mãe e o tédio na chácara; o longo adultério com Virgília, esposa do político Lobo Neves, vivido em encontros na casinha da Gamboa mantida pela agregada Dona Plácida; a carreira política frustrada; a amizade com o filósofo louco Quincas Borba e seu 'Humanitismo'; e a velhice vazia. No famoso capítulo do delírio, à beira da morte, viaja montado num hipopótamo até a origem dos tempos e ouve da Natureza a sentença que resume o livro: 'sou tua mãe e tua inimiga'. No capítulo final, 'Das negativas', soma os fracassos e encontra um único saldo positivo: 'Não tive filhos, não transmiti a nenhuma criatura o legado da nossa miséria.'",
+  c:"Publicado em 1881, o romance é o divisor de águas da literatura brasileira: aqui termina o Romantismo e começa, de uma só vez, o Realismo e a modernidade. A revolução é primeiro formal — capítulos curtíssimos, alguns de uma linha, um de pontinhos ('De como não fui ministro d'Estado'); conversas diretas com o leitor ('Deus te livre, leitor, de uma ideia fixa'); digressões que interrompem a história no momento exato em que o leitor mais a deseja. Machado aprendeu com Sterne e Xavier de Maistre a 'forma livre', mas pôs dentro dela um veneno só seu: a ironia que destrói por dentro a elite escravagista do Segundo Reinado, sem um único discurso militante. Brás Cubas é o retrato dessa classe: ocioso, vaidoso, parasita — e simpático, o que torna a crítica ainda mais devastadora. O pessimismo do delírio e das 'negativas' dialoga com Schopenhauer, mas o tom nunca é solene: é a gargalhada do morto que finalmente pode dizer tudo. Cobrado constantemente pela FUVEST, UNICAMP e ENEM, é talvez o livro brasileiro mais estudado — e segue moderno: cada releitura encontra uma ironia nova. Para o 3º ano, rende debates sobre narrador não confiável, escravidão narrada de relance (Prudêncio) e a hipocrisia das aparências, tema que nenhuma rede social deixou envelhecer."},
+ {t:"Dom Casmurro",a:"Machado de Assis",ano:1899,m:"Realismo/Naturalismo",h:"Capitu traiu? O narrador ciumento nunca deixará você saber.",q:1,atv:"obra-dom-casmurro.html",
+  r:"Bento Santiago, já velho e apelidado de Dom Casmurro pelo isolamento rabugento, constrói uma casa idêntica à da infância e decide 'atar as duas pontas da vida' escrevendo suas memórias. Relembra o quintal de Matacavalos, a promessa que sua mãe, D. Glória, fizera de torná-lo padre, e o amor de menino por Capitu, a vizinha de 'olhos de ressaca, de cigana oblíqua e dissimulada'. Com a ajuda do agregado José Dias, escapa do seminário — onde conhece Escobar, que se torna seu melhor amigo —, forma-se advogado e casa com Capitu, enquanto Escobar casa com Sancha. As duas famílias vivem em harmonia até a morte de Escobar, afogado no mar. No velório, Bentinho flagra o olhar de Capitu sobre o cadáver 'como a vaga do mar lá fora' — e a suspeita vira certeza quando nota, no filho Ezequiel, a semelhança crescente com o amigo morto. Sem provas, apenas convicção, separa-se de Capitu, exila mulher e filho na Suíça e termina sozinho, escrevendo o livro para se convencer — e nos convencer — de que foi traído.",
+  c:"A genialidade do romance está no que ele esconde: tudo o que sabemos de Capitu chega filtrado pela memória de um homem ciumento, advogado de formação, que escreve décadas depois para vencer a causa contra a própria mulher. Não há cena de traição; há a retórica de quem precisa dela. Por isso a pergunta 'Capitu traiu?' não tem resposta — e essa impossibilidade, percebida com força pela crítica do século XX (Helen Caldwell, nos anos 1960, foi decisiva ao 'julgar o júri' em vez da ré), transformou o livro no maior estudo sobre narrador não confiável da língua. O ciúme de Bentinho dialoga com Otelo, citado na própria obra; a semelhança de Ezequiel pode ser obsessão — o romance lembra que achamos parecenças onde queremos. Em sala, é uma aula pronta de leitura crítica: quem conta a história tem interesse nela? Que provas apresenta? Os 'olhos de ressaca' viraram patrimônio da língua, e a obra segue no centro de FUVEST, UNICAMP e ENEM. Ler Dom Casmurro é aprender a duvidar — habilidade que nenhum descritor de prova mede por inteiro, mas todos pressupõem."},
+ {t:"Quincas Borba",a:"Machado de Assis",ano:1891,m:"Realismo/Naturalismo",h:"'Ao vencedor, as batatas': o Humanitismo e a loucura de Rubião.",q:0,
+  r:"Rubião herda a fortuna do filósofo Quincas Borba (e seu cão homônimo) e muda-se para a corte, onde o casal Palha o explora enquanto ele se apaixona pela inalcançável Sofia. Arruinado e louco, morre acreditando ser Napoleão III.",
+  c:"A filosofia paródica do Humanitismo ('ao vencedor, as batatas') antecipa o darwinismo social e segue assustadoramente atual. O olhar de Machado sobre a exploração é cirúrgico e sem piedade."},
+ {t:"O Cortiço",a:"Aluísio Azevedo",ano:1890,m:"Realismo/Naturalismo",h:"O cortiço como personagem vivo: determinismo naturalista puro.",q:1,atv:"obra-o-cortico.html",
+  r:"O português João Romão, vendeiro ambicioso, explora a escrava fugida Bertoleza — que trabalha para ele dia e noite acreditando-se sua companheira, enganada até com uma falsa carta de alforria — e ergue, palmo a palmo, a estalagem São Romão, que cresce como um organismo vivo à sombra do sobrado do rival Miranda, comerciante que comprou um título de barão. No pátio fervilhante vivem lavadeiras, trabalhadores e malandros: a sensual Rita Baiana e seu capoeira Firmo; o português Jerônimo, modelo de disciplina que o trópico aos poucos dissolve — seduzido por Rita, abandona a esposa Piedade, mata Firmo a golpes e 'abrasileira-se' por completo; a jovem Pombinha, flor do cortiço que o meio também corrompe. Após um incêndio, João Romão reconstrói a estalagem mais elegante, aproxima-se da família do barão e arranja casamento com sua filha Zulmira. Para apagar o passado, denuncia Bertoleza aos antigos donos: cercada na cozinha, ela se mata com a faca de limpar peixe — no exato instante em que uma comissão abolicionista chega para homenagear o futuro genro do barão como benemérito.",
+  c:"Publicado em 1890, O Cortiço é a realização máxima do Naturalismo brasileiro — e seu melhor objeto de debate. Aluísio Azevedo aplica com rigor a tese determinista de Zola: meio, raça e momento moldam os destinos, e a estalagem funciona como laboratório onde o experimento corre diante do leitor (Jerônimo é a 'prova': o europeu são que o trópico corrompe). A força do livro está na construção do espaço-personagem — as cenas em que o cortiço 'acorda' estão entre as melhores páginas descritivas da língua — e na crueza com que expõe a engrenagem econômica: a riqueza 'respeitável' nasce da usura, do furto e do corpo escravizado de Bertoleza, e a sociedade premia o explorador com comendas. Os limites também precisam ir para a aula: o determinismo racial e a visão do trópico como força degeneradora são ideologia do século XIX travestida de ciência, e personagens beiram a zoologia. Cobrado constantemente (FUVEST o adota com frequência), o romance rende comparações poderosas: com Memórias Póstumas (duas críticas à mesma elite, métodos opostos) e com o noticiário de hoje sobre trabalho análogo à escravidão — porque a pergunta do livro, quem paga a conta do enriquecimento, segue sem resposta."},
+ {t:"O Ateneu",a:"Raul Pompeia",ano:1888,m:"Realismo/Naturalismo",h:"O internato cruel visto pela memória ácida de Sérgio.",q:2,
+  r:"Sérgio relembra os anos no Ateneu, internato de elite dirigido pelo vaidoso Aristarco. Entre humilhações, hierarquias violentas e amizades dúbias, o menino perde a inocência. Um incêndio final consome o colégio — e a memória o julga.",
+  c:"'Crônica de saudades' às avessas: memorialismo impressionista de prosa densa e rancorosa. A escola como microcosmo da sociedade — leitura que dialoga com qualquer debate atual sobre bullying e poder."},
+ {t:"Os Sertões",a:"Euclides da Cunha",ano:1902,m:"Pré-Modernismo",h:"Canudos: a terra, o homem, a luta — jornalismo que virou monumento.",q:0,
+  r:"Dividido em 'A Terra', 'O Homem' e 'A Luta', narra a Guerra de Canudos: a comunidade de Antônio Conselheiro resiste a três expedições do Exército até ser exterminada na quarta. Euclides denuncia: aquilo foi, 'na significação integral da palavra, um crime'.",
+  c:"Híbrido de ciência, jornalismo e literatura barroca. As teorias raciais da época envelheceram mal, mas a coragem de chamar a República de criminosa e revelar o Brasil ignorado permanece monumental."},
+ {t:"Triste Fim de Policarpo Quaresma",a:"Lima Barreto",ano:1915,m:"Pré-Modernismo",h:"O patriota ingênuo esmagado pela República que ele amava.",q:0,
+  r:"O major Quaresma ama o Brasil com fervor enciclopédico: propõe o tupi como língua oficial, tenta provar que a terra é fértil, alista-se na revolta para servir a Floriano. Cada sonho fracassa; ao questionar execuções, é preso e fuzilado pelo país que idolatrava.",
+  c:"Tragédia de um Dom Quixote tropical. Lima Barreto, mulato e marginalizado pelos círculos literários, escreveu a mais lúcida crítica ao ufanismo — riso e dor na mesma página."},
+ {t:"Urupês",a:"Monteiro Lobato",ano:1918,m:"Pré-Modernismo",h:"Nasce o Jeca Tatu: o caboclo esquecido pelo Estado.",q:1,
+  r:"Coletânea de contos do interior paulista, coroada pelo perfil do Jeca Tatu: o caboclo de cócoras, apático diante do progresso. Lobato o pinta primeiro como culpado pelo atraso — e anos depois se retrata: o Jeca 'não é assim; está assim', doente e abandonado.",
+  c:"Poucos personagens renderam tanto debate. A retratação do próprio autor transforma o livro em documento vivo: o problema nunca foi o caboclo, e sim o país que o esqueceu."},
+ {t:"Eu",a:"Augusto dos Anjos",ano:1912,m:"Pré-Modernismo",h:"Poesia de vermes e protoplasmas: o poeta mais estranho do Brasil.",q:0,
+  r:"Único livro do paraibano: sonetos que misturam vocabulário científico (mônadas, protoplasma) e angústia existencial. A morte, a decomposição e o fracasso humano atravessam poemas como 'Psicologia de um Vencido' e 'Versos Íntimos'.",
+  c:"Inclassificável: parnasiano na forma, expressionista no espírito. O 'poeta do hediondo' chocou os salões e virou fenômeno popular — prova de que beleza e desconforto podem rimar."},
+ {t:"Macunaíma",a:"Mário de Andrade",ano:1928,m:"Modernismo",h:"O herói sem nenhum caráter: rapsódia da identidade brasileira.",q:2,
+  r:"Nascido na selva, 'preto retinto', Macunaíma vira príncipe branco e parte para São Paulo a fim de recuperar a muiraquitã roubada pelo gigante Piaimã. Vence pela astúcia e pela preguiça, perde tudo de novo e, desencantado, vira a constelação da Ursa Maior.",
+  c:"Rapsódia que mistura lendas indígenas, falares regionais e crítica à máquina urbana. O 'herói sem nenhum caráter' é a pergunta de 22 em forma de narrativa: afinal, o que é ser brasileiro?"},
+ {t:"Libertinagem",a:"Manuel Bandeira",ano:1930,m:"Modernismo",h:"'Vou-me embora pra Pasárgada': o verso livre da vida inteira.",q:0,
+  r:"Reúne a produção madura de Bandeira: 'Pneumotórax', 'Poema tirado de uma notícia de jornal', 'Evocação do Recife' e 'Vou-me embora pra Pasárgada'. O cotidiano humilde, a doença e a infância viram matéria de poesia coloquial.",
+  c:"O livro em que o verso livre brasileiro atinge naturalidade plena. Bandeira transforma a morte anunciada (a tuberculose) em ironia terna — 'a vida inteira que podia ter sido e que não foi'."},
+ {t:"O Quinze",a:"Rachel de Queiroz",ano:1930,m:"Modernismo",h:"A seca de 1915 no Ceará pela primeira grande romancista do país.",q:2,
+  r:"Na seca de 1915, o vaqueiro Chico Bento perde tudo e arrasta a família na retirada para Fortaleza, perdendo filhos pelo caminho. Em paralelo, a professora Conceição, leitora e independente, recusa o amor do primo Vicente por sentir o abismo entre seus mundos.",
+  c:"Escrito aos 19 anos, abriu o romance de 30 e o protagonismo feminino: Conceição escolhe não casar — gesto radical em 1930. A seca aparece sem pitoresco: é fome, poeira e travessia."},
+ {t:"Capitães da Areia",a:"Jorge Amado",ano:1937,m:"Modernismo",h:"Meninos de rua em Salvador: crime, ternura e denúncia.",q:1,
+  r:"No trapiche abandonado vivem os Capitães da Areia: Pedro Bala, o líder; o Professor, que desenha; Gato, Pirulito, Sem-Pernas. Entre furtos e afetos, surge Dora, mãe-irmã-noiva de todos. O destino dispersa o grupo; Pedro Bala vira líder operário.",
+      c:"Queimado em praça pública pelo Estado Novo, o romance segue atual: infância abandonada continua manchete. O sentimentalismo de Amado existe, mas é ele que faz o leitor amar os meninos — e se indignar."},
+ {t:"Vidas Secas",a:"Graciliano Ramos",ano:1938,m:"Modernismo",h:"Fabiano, Baleia e a prosa seca como o sertão.",q:1,atv:"obra-vidas-secas.html",
+  r:"Fugindo da seca, Fabiano, Sinha Vitória, os dois filhos — que não têm nome, são 'o menino mais velho' e 'o menino mais novo' — e a cachorra Baleia atravessam a caatinga até encontrar uma fazenda abandonada. A chuva chega, o patrão volta, e Fabiano vira vaqueiro nas terras do outro: trabalha, é roubado nas contas, não sabe protestar porque as palavras lhe faltam. Na cidade, o soldado amarelo o provoca, prende-o e o espanca — e Fabiano, que poderia esmagá-lo, obedece, porque 'governo é governo'. Sinha Vitória sonha com uma cama de couro, símbolo de dignidade; o menino mais velho quer entender a palavra 'inferno'; Baleia, na cena mais célebre do livro, é sacrificada quando adoece e morre sonhando com um campo cheio de preás. Quando a seca retorna, a família parte de novo rumo ao sul, embalando sonhos vagos de uma vida menos bruta. O romance termina como começou: retirantes na estrada — o ciclo da seca e da exploração girando sem promessa de saída.",
+  c:"Obra-prima do romance de 30, Vidas Secas é única na forma: treze capítulos quase independentes (o livro nasceu do conto 'Baleia'), que podem ser lidos em ordens diversas — estrutura circular que espelha a vida sem progresso das personagens. O estilo é o tema: prosa enxuta, de orações curtas e vocabulário racionado, seca como a paisagem; Graciliano corta cada adjetivo supérfluo como quem economiza água. A inovação maior está no ponto de vista: personagens quase sem fala têm vida interior riquíssima, revelada pelo discurso indireto livre — inclusive a cachorra Baleia, cuja morte, narrada de dentro da sua consciência, é das páginas mais comoventes da língua. O livro pergunta o que emudece Fabiano: não é falta de inteligência, é a exclusão da linguagem — quem não domina as palavras 'não sabe se defender', e o menino que pergunta por 'inferno' encena a fome de sentido que a escola deveria saciar. Cobradíssimo no ENEM e nos vestibulares (regionalismo crítico, zoomorfização do homem e humanização do animal), conversa diretamente com Os Sertões e com O Quinze — e com qualquer notícia atual sobre seca e migração."},
+ {t:"Sentimento do Mundo",a:"C. Drummond de Andrade",ano:1940,m:"Modernismo",h:"O poeta de Itabira diante da guerra e do mundo.",q:0,
+  r:"Drummond abandona o poema-piada e abre os braços para o mundo em guerra: 'Tenho apenas duas mãos e o sentimento do mundo'. Poemas como 'Confidência do Itabirano' e 'Os Ombros Suportam o Mundo' equilibram memória mineira e angústia coletiva.",
+  c:"A transição que prepara 'A Rosa do Povo': o eu lírico deixa de olhar o umbigo e encara a história. Poesia social sem panfleto — o gauche encontra sua função."},
+ {t:"Fogo Morto",a:"José Lins do Rego",ano:1943,m:"Modernismo",h:"A decadência dos engenhos de açúcar na Paraíba.",q:0,
+  r:"Três homens, três tempos do engenho: o seleiro José Amaro, amargo e orgulhoso; o coronel Lula de Holanda, dono do Santa Fé em ruína; e o capitão Vitorino Carneiro da Cunha, quixotesco defensor da justiça. O 'fogo morto' é o engenho que parou — e um mundo que acaba.",
+  c:"O ápice do ciclo da cana: Vitorino Papa-Rabo é dos grandes personagens do romance brasileiro, ridículo e heroico ao mesmo tempo. Decadência contada de dentro, com memória e compaixão."},
+ {t:"Sagarana",a:"Guimarães Rosa",ano:1946,m:"Pós-45",h:"Nove novelas do sertão: a estreia da língua roseana.",q:0,
+  r:"Nove narrativas mineiras: o burrinho pedrês que salva a boiada da enchente, a vingança adiada de 'A Hora e Vez de Augusto Matraga' — homem que cai, se regenera e encontra seu destino num duelo final 'com fé em Deus e pau roxo'.",
+  c:"Aqui nasce a revolução: provérbios inventados, sintaxe oral, o sertão como palco metafísico. 'Matraga' sozinho justifica o livro — épico, religioso e violentamente belo."},
+ {t:"Romanceiro da Inconfidência",a:"Cecília Meireles",ano:1953,m:"Pós-45",h:"A Inconfidência Mineira em romances líricos — Minas em versos.",q:0,
+  r:"Em dezenas de 'romances' (poemas narrativos), Cecília reconta a Inconfidência: o ouro, os sonhos de liberdade, a delação, Tiradentes esquartejado. 'Liberdade — essa palavra que o sonho humano alimenta' atravessa a obra como refrão.",
+  c:"História ensinada pela música do verso: rigor documental e lirismo na medida exata. Para alunos de Minas, é leitura com gosto de pertencimento — nossa terra, nossa ferida."},
+ {t:"Morte e Vida Severina",a:"João Cabral de Melo Neto",ano:1955,m:"Pós-45",h:"O auto do retirante Severino: poesia enxuta e social.",q:2,
+  r:"Severino desce do sertão ao Recife seguindo o rio Capibaribe, encontrando morte em cada parada: enterro, velório, trabalho que falta. Quando pensa em desistir da vida, o nascimento de um menino pobre reafirma, 'severina', a teimosia de viver.",
+  c:"Auto de Natal pernambucano em versos secos como faca: nada de gordura sentimental. A engenharia do poema — repetições, rimas toantes — fez dele o texto social mais musicado e encenado do país."},
+ {t:"Grande Sertão: Veredas",a:"Guimarães Rosa",ano:1956,m:"Pós-45",h:"Riobaldo, Diadorim e o pacto: 'viver é muito perigoso'.",q:1,
+  r:"O ex-jagunço Riobaldo conta, num monólogo-rio, sua vida na guerra dos gerais: a chefia, o suposto pacto com o demo nas Veredas-Mortas, e o amor proibido por Diadorim — cujo segredo só se revela na morte, tarde demais.",
+  c:"O Everest da prosa brasileira: língua reinventada, sertão como metafísica ('o sertão é o mundo'). Exige fôlego do leitor e devolve em dobro — nenhum livro nosso é maior."},
+ {t:"Quarto de Despejo",a:"Carolina Maria de Jesus",ano:1960,m:"Contemporânea",h:"O diário da favela que abalou a literatura brasileira.",q:1,
+  r:"Diário real de Carolina, catadora de papel e mãe de três filhos na favela do Canindé (SP): a fome de cada dia, os vizinhos, a luta por dignidade e o sonho de escrever. 'A favela é o quarto de despejo' da cidade — e ela, sua cronista.",
+  c:"Fenômeno editorial e marco da literatura negra e periférica. A escrita 'fora da norma' é potência, não defeito: cada página é testemunho que a literatura consagrada não soube dar."},
+ {t:"A Hora da Estrela",a:"Clarice Lispector",ano:1977,m:"Contemporânea",h:"Macabéa, a nordestina invisível, e o narrador que se desfaz.",q:2,
+  r:"O escritor Rodrigo S.M. tenta narrar a vida mínima de Macabéa, datilógrafa alagoana no Rio: feia, mal-amada pelo namorado Olímpico, feliz com quase nada. Uma cartomante promete futuro brilhante — e na saída, um Mercedes a atropela. Sua hora de estrela.",
+  c:"Último livro de Clarice: metalinguagem (o narrador sofre para narrar) e crítica social num só golpe. A pergunta fica ecoando: quantas Macabéas passam por nós sem que a gente veja?"},
+ {t:"Auto da Compadecida",a:"Ariano Suassuna",ano:1955,m:"Pós-45",h:"João Grilo e Chicó: o riso nordestino que julga até o céu.",q:2,
+  r:"Os pobres João Grilo e Chicó enganam padeiro, padre e cangaceiro para sobreviver no sertão. Mortos, são julgados no tribunal celeste, onde João Grilo aciona Nossa Senhora, a Compadecida, e ganha — pela esperteza e pela misericórdia — uma segunda chance.",
+  c:"Teatro popular perfeito: commedia dell'arte + cordel + fé nordestina. O riso de Suassuna não é deboche, é teologia da compaixão — os últimos rindo por último."},
+ {t:"Torto Arado",a:"Itamar Vieira Junior",ano:2019,m:"Contemporânea",h:"Bibiana e Belonísia: terra, herança e silêncio no sertão baiano.",q:2,
+  r:"Na fazenda Água Negra, as irmãs Bibiana e Belonísia encontram uma faca misteriosa — e uma perde a língua, passando a falar pela outra. Crescem entre o trabalho sem posse da terra, o jarê do avô Zeca Chapéu Grande e a luta que custará sangue.",
+  c:"O grande romance brasileiro recente: herança da escravidão contada com força de clássico. Prêmios, leitores aos milhões e presença crescente nos vestibulares — leitura essencial agora."}
+];
+
+const grade = document.getElementById("grade");
+const chips = document.getElementById("chips-mov");
+const norm = t => t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+let filtroMov = "todas", termo = "";
+
+chips.innerHTML = `<button class="chip ativo" data-mov="todas">Todas</button>` +
+  Object.keys(MOVS).map(m => `<button class="chip" data-mov="${m}">${m}</button>`).join("");
+chips.querySelectorAll(".chip").forEach(c => c.addEventListener("click", () => {
+  chips.querySelectorAll(".chip").forEach(x => x.classList.remove("ativo"));
+  c.classList.add("ativo");
+  filtroMov = c.dataset.mov;
+  desenhar();
+}));
+document.getElementById("campo-busca").addEventListener("input", e => { termo = e.target.value; desenhar(); });
+
+function desenhar() {
+  const t = norm(termo);
+  grade.innerHTML = OBRAS.filter(o =>
+    (filtroMov === "todas" || o.m === filtroMov) &&
+    (t === "" || norm(o.t + " " + o.a).includes(t))
+  ).map((o, i) => `
+    <div class="obra-card" style="--cor-mov:${MOVS[o.m]}">
+      <span class="tag-mov">${o.m}</span>
+      <div class="obra-titulo">${o.t}</div>
+      <div class="obra-autor">${o.a} · ${o.ano} ${o.q ? '<span class="tag-quiz">· ✓ no quiz</span>' : ""}</div>
+      <div class="obra-hook">${o.h}</div>
+      <div class="obra-detalhe" id="det-${i}" hidden>
+        <p><strong>📖 Resumo.</strong> ${o.r}</p>
+        <p><strong>✍️ Resenha crítica.</strong> ${o.c}</p>
+      </div>
+      <div class="obra-acoes">
+        <button class="obra-btn destaque" onclick="alternar(${i})">📖 Resumo & Resenha</button>
+        <a class="obra-btn video" target="_blank" rel="noopener"
+           href="https://www.youtube.com/results?search_query=${encodeURIComponent("resumo " + o.t + " " + o.a)}">▶ Vídeo</a>
+        ${o.atv ? `<a class="obra-btn destaque" style="background:var(--cor-mov);color:#fff" href="atividades/${o.atv}">🎯 Atividade da obra</a>` : ""}
+        ${o.q ? `<a class="obra-btn" href="atividades/${o.q === 1 ? "quiz-obras" : "quiz-obras2"}.html">🎮 Quiz geral</a>` : ""}
+      </div>
+    </div>`).join("");
+}
+function alternar(i) {
+  const d = document.getElementById("det-" + i);
+  d.hidden = !d.hidden;
+}
+desenhar();
+</script>
+<script src="assets/js/animacoes.js"></script>
+</body>
+</html>

@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAEB/SIMAVE – D1 | Tema e sentido global</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--azul:#1a3a5c;--azul-m:#235a8c;--azul-c:#d6e8f7;--ouro:#c9871f;--ouro-c:#fff8eb;--verde:#246b4a;--verde-c:#e6f4ed;--verm:#b02a2a;--verm-c:#fdecea;--bg:#f2f4f7;--borda:#d0d6e0;--branco:#fff;--txt:#1c2635;--txt2:#4a5568}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;line-height:1.5}
+header{background:var(--azul);color:#fff;padding:2.4rem 1.5rem 1.8rem;text-align:center;position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:rgba(201,135,31,.12)}
+.badge{display:inline-block;background:var(--ouro);color:var(--azul);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:.8rem}
+header h1{font-family:'Lora',serif;font-size:clamp(1.5rem,4vw,2.1rem);font-weight:600;line-height:1.3;margin-bottom:.4rem}
+header p{font-size:.92rem;opacity:.78;max-width:560px;margin:0 auto;line-height:1.6}
+.voltar-link{display:inline-block;margin-bottom:1rem;color:#fff;opacity:.7;text-decoration:none;font-size:.82rem}
+.voltar-link:hover{opacity:1}
+.tabs{background:var(--branco);border-bottom:1px solid var(--borda);position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.tabs-inner{max-width:840px;margin:0 auto;display:flex}
+.tab-btn{flex:1;background:none;border:none;padding:.95rem .5rem;font-family:'Inter',sans-serif;font-size:.88rem;font-weight:600;color:var(--txt2);cursor:pointer;border-bottom:3px solid transparent;transition:.15s;display:flex;align-items:center;justify-content:center;gap:.35rem}
+.tab-btn:hover{color:var(--azul-m);background:var(--bg)}
+.tab-btn.active{color:var(--azul);border-bottom-color:var(--ouro)}
+main{max-width:840px;margin:0 auto;padding:1.6rem 1.25rem 4rem}
+.tab-pane{display:none;flex-direction:column;gap:1.6rem}
+.tab-pane.active{display:flex}
+.painel{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.5rem 1.6rem}
+.painel h2{font-family:'Lora',serif;font-size:1.2rem;color:var(--azul);margin-bottom:.7rem}
+.painel h3{font-size:.95rem;color:var(--azul-m);margin:.9rem 0 .3rem}
+.painel p,.painel li{font-size:.9rem;margin-bottom:.5rem}
+.painel ul{margin:.2rem 0 .6rem 1.2rem}
+.painel strong{color:var(--azul)}
+.resumo-box{background:var(--azul);color:#fff;border-radius:14px;padding:1.4rem 1.6rem}
+.resumo-box h2{color:#fff;font-family:'Lora',serif;font-size:1.1rem;margin-bottom:.5rem}
+.resumo-box p{color:rgba(255,255,255,.9);font-size:.92rem;margin:0}
+.resumo-box .fc{display:block;margin-top:.7rem;font-style:italic;font-size:.88rem;background:rgba(255,255,255,.1);padding:.6rem .9rem;border-radius:8px;border-left:3px solid var(--ouro)}
+.dica-ouro{background:var(--ouro-c);border:1px solid #ecd9aa}
+.dica-ouro h2{color:#7a5310}.dica-ouro li{color:#4a3408}.dica-ouro strong{color:#7a5310}
+.glossario dt{font-weight:600;color:var(--azul-m);font-size:.88rem;margin-top:.5rem}
+.glossario dd{font-size:.86rem;color:var(--txt2);margin-left:0}
+.aviso-prof{background:#eef4fb;border:1px dashed var(--azul-m);border-radius:10px;padding:.9rem 1.1rem;font-size:.82rem;color:var(--azul-m)}
+.records{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.2rem 1.4rem}
+.records h2{font-family:'Lora',serif;font-size:1.1rem;color:var(--azul);margin-bottom:.6rem}
+.rec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.7rem}
+.rec-item{background:var(--bg);border-radius:10px;padding:.7rem;text-align:center}
+.rec-item .rv{font-size:1.5rem;font-weight:700;color:var(--azul-m)}
+.rec-item .rl{font-size:.72rem;color:var(--txt2)}
+.prog-wrap{background:var(--branco);border:1px solid var(--borda);border-radius:12px;padding:.85rem 1.1rem;display:flex;align-items:center;gap:14px}
+.prog-label{font-size:.78rem;font-weight:600;color:var(--azul-m);white-space:nowrap}
+.prog-track{flex:1;height:6px;background:var(--borda);border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--azul-m),var(--ouro));border-radius:99px;width:0%;transition:width .4s}
+.score{font-size:.78rem;font-weight:600;color:var(--txt2);white-space:nowrap}
+.card{background:var(--branco);border-radius:14px;border:1px solid var(--borda);overflow:hidden}
+.card-head{background:var(--azul);color:#fff;padding:.65rem 1.2rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.qnum{background:var(--ouro);color:var(--azul);font-size:.72rem;font-weight:700;padding:3px 11px;border-radius:20px}
+.qtipo{font-size:.74rem;opacity:.65;font-style:italic}
+
+
+.txt-base{background:var(--ouro-c);border-left:4px solid var(--ouro);margin:1rem 1.1rem 0;padding:1rem 1.1rem;border-radius:0 8px 8px 0;font-family:'Lora',serif;font-size:.94rem;line-height:1.85;color:#2b1d00;position:relative}
+.txt-fonte{font-family:'Inter',sans-serif;font-size:.72rem;color:var(--txt2);margin-top:.6rem;display:block;border-top:1px solid #e6d5b0;padding-top:.4rem}
+.btn-tts{position:absolute;top:.6rem;right:.6rem;background:none;border:1px solid #c9a14a;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;color:#8a6d1b;transition:.15s}
+.btn-tts:hover{background:#f5e6c1}
+.btn-tts.playing{background:var(--azul);color:#fff;border-color:var(--azul)}
+.img-slot{margin:.8rem 1.1rem 0;border:2px dashed var(--borda);border-radius:10px;padding:.8rem;text-align:center;color:var(--txt2);font-size:.76rem}
+.enunciado{padding:1rem 1.1rem .4rem;font-size:.92rem;line-height:1.6;font-weight:500;color:var(--azul)}
+.alts{padding:.4rem 1.1rem 1.1rem;display:flex;flex-direction:column;gap:.45rem}
+.alt{display:flex;align-items:flex-start;gap:10px;padding:.65rem .9rem;border:1.5px solid var(--borda);border-radius:9px;background:var(--branco);cursor:pointer;text-align:left;font-family:'Inter',sans-serif;font-size:.86rem;color:var(--txt);line-height:1.5;transition:.15s;width:100%}
+.alt:hover:not(:disabled){border-color:var(--azul-m);background:var(--azul-c);transform:translateX(2px)}
+.alt:disabled{cursor:default}
+.letra{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;border-radius:50%;background:var(--bg);font-size:.75rem;font-weight:700;color:var(--azul);flex-shrink:0}
+.alt.ok{border-color:var(--verde);background:var(--verde-c);color:var(--verde);font-weight:500}
+.alt.ok .letra{background:var(--verde);color:#fff}
+.alt.err{border-color:var(--verm);background:var(--verm-c);color:var(--verm)}
+.alt.err .letra{background:var(--verm);color:#fff}
+.alt.dim{opacity:.5}.alt.sel{border-color:var(--azul-m);background:var(--azul-c)}.alt.sel .letra{background:var(--azul-m);color:#fff}
+.fb{display:none;margin:0 1.1rem 1.1rem;padding:.8rem 1rem;border-radius:8px;font-size:.83rem;line-height:1.6}
+.fb.show{display:block}.fb.ok{background:var(--verde-c);border-left:3px solid var(--verde)}.fb.err{background:var(--verm-c);border-left:3px solid var(--verm)}
+.fb .ft{font-weight:600;margin-bottom:.3rem}.fb.ok .ft{color:var(--verde)}.fb.err .ft{color:var(--verm)}
+.fb .pq{margin-top:.5rem;border-top:1px solid rgba(0,0,0,.08);padding-top:.4rem}
+.fb .pq b{color:var(--azul)}
+.fb .pi{display:block;font-size:.8rem;color:var(--txt2);margin-bottom:.2rem}
+.fb .pi .l{font-weight:700;color:var(--azul)}
+#resultado{display:none;background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:2.4rem 2rem;text-align:center}
+#resultado h2{font-family:'Lora',serif;font-size:1.4rem;color:var(--azul)}
+.medalha{font-size:3rem;margin:.4rem 0}.nota{font-size:3.4rem;font-weight:700;color:var(--azul-m);line-height:1;margin:.4rem 0}
+#resultado p{color:var(--txt2);font-size:.9rem;max-width:480px;margin:.4rem auto 0}
+.btn{display:inline-block;background:var(--azul);color:#fff;padding:.65rem 1.5rem;border-radius:30px;border:none;font-size:.86rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;margin:.3rem}
+.btn:hover{background:var(--azul-m)}
+.btn.ouro{background:var(--ouro);color:var(--azul)}.btn.sec{background:var(--bg);color:var(--azul);border:1px solid var(--borda)}
+.jogo-card{background:var(--branco);border-radius:14px;border:1px solid var(--borda);overflow:hidden}
+.jogo-head{padding:1rem 1.3rem;border-bottom:1px solid var(--borda);display:flex;align-items:center;gap:.7rem}
+.jogo-ico{font-size:1.5rem}
+.jogo-head h3{font-family:'Lora',serif;font-size:1.1rem;color:var(--azul);margin:0}
+.jogo-head .desc{font-size:.78rem;color:var(--txt2)}
+.jogo-body{padding:1.2rem 1.3rem}
+.chip{font-size:.76rem;font-weight:600;padding:4px 11px;border-radius:20px;background:var(--azul-c);color:var(--azul)}
+.chip.timer{background:var(--ouro-c);color:#a96e10}
+.jogo-mid{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:.8rem}
+.timerbar{flex:1;min-width:100px;height:8px;background:var(--borda);border-radius:99px;overflow:hidden}
+.timerbar>div{height:100%;width:100%;background:linear-gradient(90deg,var(--verde),var(--ouro),var(--verm));border-radius:99px;transition:width .25s linear}
+.mini-texto{background:var(--ouro-c);border-left:4px solid var(--ouro);border-radius:0 8px 8px 0;padding:.85rem 1rem;font-family:'Lora',serif;font-size:.9rem;line-height:1.7;color:#2b1d00;margin-bottom:.8rem;position:relative}
+.mini-q{font-weight:600;color:var(--azul);margin-bottom:.6rem;font-size:.9rem}
+.mini-btn{border:1.5px solid var(--borda);background:var(--branco);border-radius:8px;padding:.45rem .8rem;font-size:.8rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;color:var(--azul);transition:.15s}
+.mini-btn:hover:not(:disabled){background:var(--azul-c);border-color:var(--azul-m)}
+.mini-btn:disabled{cursor:default}
+.mini-btn.ok{background:var(--verde-c);border-color:var(--verde);color:var(--verde)}
+.mini-btn.err{background:var(--verm-c);border-color:var(--verm);color:var(--verm)}
+.mini-fb{font-size:.8rem;margin-top:.5rem;padding:.45rem .65rem;border-radius:6px;display:none}
+.mini-fb.show{display:block}.mini-fb.ok{background:var(--verde-c);color:var(--verde)}.mini-fb.err{background:var(--verm-c);color:var(--verm)}
+.vf-item,.det-item{border:1.5px solid var(--borda);border-radius:10px;padding:.7rem .9rem;margin-bottom:.6rem}
+.vf-stm{font-size:.88rem;margin-bottom:.5rem}
+.btn-row{display:flex;gap:.5rem;flex-wrap:wrap}
+.cat-btn.cat-tema.ok{border-color:var(--azul-m);background:var(--azul-c);color:var(--azul)}
+.cat-btn.cat-detalhe.ok{border-color:var(--ouro);background:var(--ouro-c);color:#a96e10}
+.cat-btn.cat-foradotexto.ok{border-color:var(--verde);background:var(--verde-c);color:var(--verde)}
+.jogo-final{text-align:center;padding:.8rem 0 .3rem}
+.jogo-final .big{font-size:2rem;font-weight:700;color:var(--azul-m)}
+.jogo-final p{font-size:.88rem;color:var(--txt2);margin:.2rem 0 .8rem}
+.ord-list{list-style:none;padding:0;counter-reset:ord}
+.ord-item{counter-increment:ord;display:flex;align-items:center;gap:10px;padding:.6rem .9rem;border:1.5px solid var(--borda);border-radius:9px;margin-bottom:.5rem;background:var(--branco);font-size:.86rem;user-select:none}
+.ord-item::before{content:counter(ord);display:flex;align-items:center;justify-content:center;min-width:24px;height:24px;border-radius:50%;background:var(--azul-c);font-size:.72rem;font-weight:700;color:var(--azul)}
+.ord-item.ok{border-color:var(--verde);background:var(--verde-c)}
+.ord-item.err{border-color:var(--verm);background:var(--verm-c)}
+.ord-arrows{display:flex;flex-direction:column;gap:2px;margin-left:auto}
+.ord-arrows button{background:var(--bg);border:1px solid var(--borda);border-radius:4px;width:24px;height:20px;cursor:pointer;font-size:.65rem;display:flex;align-items:center;justify-content:center}
+.ord-arrows button:hover{background:var(--azul-c)}
+footer{text-align:center;padding:1.5rem;font-size:.76rem;color:var(--txt2)}
+@media print{.tabs,header,.prog-wrap,.btn,.btn-tts,.img-slot,footer,#resultado,.jogo-card,.records,.resumo-box,.dica-ouro,.glossario,.aviso-prof{display:none!important}.tab-pane{display:flex!important}.card{break-inside:avoid;border:1px solid #ccc;margin-bottom:1rem}.card-head{background:#333!important;-webkit-print-color-adjust:exact}.fb{display:block!important;background:#f5f5f5!important;border-left:3px solid #999!important;color:#333!important}}
+@media(max-width:480px){.painel{padding:1.1rem}.tab-btn{font-size:.78rem;padding:.8rem .3rem}}
+/* ===== TELA DE IDENTIFICAÇÃO E MODO DE JOGO ===== */
+.quiz-gate{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.8rem 1.6rem;max-width:480px;margin:0 auto}
+.quiz-gate h2{font-family:'Lora',serif;font-size:1.25rem;color:var(--azul);margin-bottom:.4rem}
+.quiz-gate>p{font-size:.88rem;color:var(--txt2);margin-bottom:1.2rem}
+.gate-field{margin-bottom:1.1rem}
+.gate-field>label{display:block;font-size:.82rem;font-weight:600;color:var(--azul-m);margin-bottom:.4rem}
+.gate-field input[type=text]{width:100%;padding:.65rem .8rem;border:1.5px solid var(--borda);border-radius:9px;font-family:'Inter',sans-serif;font-size:.92rem;color:var(--txt)}
+.gate-field input[type=text]:focus{outline:none;border-color:var(--azul-m)}
+.modo-opcoes{display:flex;flex-direction:column;gap:.6rem}
+.modo-opcao{display:flex;align-items:flex-start;gap:.6rem;border:1.5px solid var(--borda);border-radius:10px;padding:.7rem .85rem;cursor:pointer;transition:.15s}
+.modo-opcao:hover{border-color:var(--azul-m)}
+.modo-opcao input[type=radio]{margin-top:.25rem;accent-color:var(--azul-m)}
+.modo-opcao input[type=radio]:checked~span b{color:var(--azul)}
+.modo-opcao span{font-size:.85rem}
+.modo-opcao small{color:var(--txt2);font-weight:400}
+.gate-aviso{color:var(--verm);font-size:.82rem;margin-top:.7rem;min-height:1.2em}
+.modo-opcao.bloqueado{opacity:.6;cursor:not-allowed}
+.modo-opcao.liberado{opacity:1;cursor:pointer;border-color:var(--verde)}
+.cadeado{font-size:.75rem}
+.senha-box{display:flex;gap:.5rem;margin-top:.6rem}
+.senha-box input[type=password]{flex:1;padding:.55rem .75rem;border:1.5px solid var(--borda);border-radius:9px;font-family:'Inter',sans-serif;font-size:.85rem}
+.senha-box input[type=password]:focus{outline:none;border-color:var(--azul-m)}
+.senha-btn{white-space:nowrap;font-size:.8rem;padding:.55rem 1rem}
+.senha-aviso{font-size:.78rem;margin-top:.4rem;min-height:1.1em}
+.senha-aviso.ok{color:var(--verde)}
+.senha-aviso.erro{color:var(--verm)}
+.modo-chip{font-size:.74rem;font-weight:700;padding:4px 12px;border-radius:20px;background:var(--azul-c);color:var(--azul-m);margin-left:auto}
+.envio-status{font-size:.82rem;margin-top:.8rem;padding:.6rem .9rem;border-radius:8px}
+.envio-status.enviando{background:var(--azul-c);color:var(--azul-m)}
+.envio-status.ok{background:var(--verde-c);color:var(--verde)}
+.envio-status.erro{background:var(--verm-c);color:var(--verm)}
+/* No modo prova, o feedback de cada questão fica escondido até o aluno terminar */
+.fb.prova-oculto{display:none!important}
+@media print{.quiz-gate,.modo-chip,.envio-status{display:none!important}#quizConteudo{display:block!important}}
+</style>
+</head>
+<body>
+<header>
+<a href="index.html" class="voltar-link">← Painel SAEB/SIMAVE</a>
+<div class="badge">SAEB · SIMAVE · Língua Portuguesa</div>
+<h1>Habilidade D01</h1>
+<p>Identificar o tema ou o sentido global de um texto</p>
+</header>
+<nav class="tabs"><div class="tabs-inner">
+<button class="tab-btn active" data-tab="estudar">📚 Estudar</button>
+<button class="tab-btn" data-tab="quiz">📝 Quiz</button>
+<button class="tab-btn" data-tab="jogos">🎮 Jogos</button>
+</div></nav>
+<main>
+<section class="tab-pane active" id="pane-estudar">
+<div class="resumo-box"><h2>🎯 Em uma frase</h2><p>O D1 mede se você consegue identificar <strong style="color:#ffd98a">de que o texto trata como um todo</strong> — sem confundir o assunto central com um detalhe, um exemplo ou uma informação que não está nem mesmo no texto.</p><span class="fc">"O tema é o fio que liga todas as partes do texto."</span></div>
+
+<section class="painel"><h2>📌 O que essa habilidade avalia</h2><p>O tema (ou sentido global) é a ideia que resume o texto inteiro — não apenas uma parte dele. A maior armadilha dessas questões é confundir o tema com um <strong>detalhe</strong> (uma informação real, mas secundária) ou com algo que <strong>nem aparece no texto</strong>.</p>
+<h3>Como o enunciado costuma aparecer:</h3>
+<ul><li>"Qual é o tema central do texto?"</li><li>"O texto trata principalmente de..."</li><li>"Qual frase resume melhor o texto?"</li></ul>
+</section>
+
+<section class="dica-ouro painel"><h2>💡 Dica de ouro</h2><ul>
+<li><strong>O tema cobre o texto inteiro.</strong> Se a alternativa só explica uma frase ou um parágrafo, ela é detalhe, não tema.</li>
+<li><strong>Cuidado com exemplos.</strong> Datas, números e nomes específicos costumam ser apoio para o tema, não o tema em si.</li>
+<li><strong>Desconfie do que "parece familiar".</strong> Algumas alternativas trazem informações verdadeiras sobre o assunto, mas que não estão escritas NESSE texto.</li>
+<li><strong>Cuidado com a leitura ao contrário.</strong> Algumas alternativas dizem o oposto do que o texto defende.</li>
+<li><strong>Teste a alternativa:</strong> ela explica por que cada parte do texto está ali? Se sim, é o tema.</li>
+</ul></section>
+
+<section class="painel glossario"><h2>📖 Glossário</h2><dl>
+<dt>Tema / sentido global</dt><dd>A ideia central que resume o texto como um todo.</dd>
+<dt>Detalhe</dt><dd>Informação real do texto, mas secundária — serve de apoio ao tema, não o substitui.</dd>
+<dt>Extrapolação</dt><dd>Ir além do que o texto diz, trazendo informação que não consta nele.</dd>
+<dt>Resumo</dt><dd>Versão curta do texto que preserva sua ideia central.</dd>
+</dl></section>
+
+<div class="aviso-prof"><b>Professor:</b> os textos abaixo são originais, recontos de obras de domínio público ou baseados em dados reais com licença aberta (CC-BY) — podem ser publicados sem risco de direitos autorais.</div>
+
+<div class="records" id="recordsEstudar"><h2>🏆 Seus melhores resultados</h2><div class="rec-grid" id="recGrid"></div></div>
+</section>
+<section class="tab-pane" id="pane-quiz">
+
+<!-- ===== TELA DE IDENTIFICAÇÃO (aparece antes do quiz) ===== -->
+<div id="quizGate" class="quiz-gate">
+  <h2>👋 Antes de começar</h2>
+  <p>Preencha seus dados e escolha o modo de jogo.</p>
+  <div class="gate-field">
+    <label for="alunoNome">Nome do aluno</label>
+    <input type="text" id="alunoNome" placeholder="Seu nome completo" autocomplete="off">
+  </div>
+  <div class="gate-field">
+    <label for="alunoTurma">Turma / Série</label>
+    <input type="text" id="alunoTurma" placeholder="Ex: 9º Ano A" autocomplete="off">
+  </div>
+  <div class="gate-field">
+    <label>Modo de jogo</label>
+    <div class="modo-opcoes">
+      <label class="modo-opcao">
+        <input type="radio" name="modoQuiz" value="prova" checked>
+        <span><b>📝 Modo Prova</b><br><small>Sem feedback durante o quiz. As respostas certas só aparecem no final, como numa prova de verdade.</small></span>
+      </label>
+      <label class="modo-opcao" id="opcaoEstudo">
+        <input type="radio" name="modoQuiz" value="estudo" id="radioEstudo" disabled>
+        <span><b>📖 Modo Estudo</b> <span class="cadeado" id="cadeadoEstudo">🔒</span><br><small>Mostra se acertou ou errou — e a explicação — logo após cada resposta. Liberado pelo professor.</small></span>
+      </label>
+    </div>
+    <div class="senha-box" id="senhaBox">
+      <input type="password" id="senhaEstudo" placeholder="Senha do professor para liberar o Modo Estudo" autocomplete="off">
+      <button type="button" class="btn sec senha-btn" id="btnLiberarEstudo">Liberar</button>
+    </div>
+    <p class="senha-aviso" id="senhaAviso"></p>
+  </div>
+  <button class="btn" id="btnIniciarQuiz">▶ Começar o quiz</button>
+  <p class="gate-aviso" id="gateAviso"></p>
+</div>
+
+<!-- ===== QUIZ (fica oculto até o aluno preencher os dados acima) ===== -->
+<div id="quizConteudo" style="display:none">
+<div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.5rem;align-items:center">
+
+<button class="btn sec" onclick="location.reload()">🔀 Embaralhar e refazer</button>
+<span class="modo-chip" id="modoChip"></span>
+</div>
+<div class="prog-wrap"><span class="prog-label">Progresso</span><div class="prog-track"><div class="prog-fill" id="pFill"></div></div><span class="score" id="score">0 / 12</span></div>
+<div id="quiz" style="display:flex;flex-direction:column;gap:1.5rem"></div>
+<div id="resultado"><h2>Quiz concluído!</h2><div class="medalha" id="medalha">🏅</div><div class="nota" id="notaFinal">—</div><p id="msgFinal"></p><div id="envioStatus" class="envio-status"></div><div style="margin-top:1rem"><button class="btn" onclick="location.reload()">↺ Embaralhar e refazer</button></div></div>
+</div>
+</section>
+<section class="tab-pane" id="pane-jogos">
+<div class="resumo-box"><h2>🎮 Hora de jogar</h2><p>Cinco mini-games para treinar a identificação do tema central. Seus melhores resultados ficam salvos!</p></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">⏱️</span><div><h3>Qual é o tema?</h3><div class="desc">Leia o trecho e identifique o tema central, antes que o tempo acabe!</div></div></div><div class="jogo-body" id="g1-body"><button class="btn ouro" onclick="G1.start()">▶ Começar</button></div></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">🏷️</span><div><h3>Tema, Detalhe ou Fora do Texto?</h3><div class="desc">Classifique cada afirmação sobre o texto.</div></div></div><div class="jogo-body" id="g2-body"><button class="btn ouro" onclick="G2.start()">▶ Começar</button></div></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">🔍</span><div><h3>Ache o Resumo</h3><div class="desc">Qual frase resume melhor o texto, antes que o tempo acabe?</div></div></div><div class="jogo-body" id="g3-body"><button class="btn ouro" onclick="G3.start()">▶ Começar</button></div></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">🧩</span><div><h3>Complete o Tema</h3><div class="desc">Escolha a palavra que completa corretamente o tema central.</div></div></div><div class="jogo-body" id="g4-body"><button class="btn ouro" onclick="G4.start()">▶ Começar</button></div></div>
+<div class="jogo-card"><div class="jogo-head"><span class="jogo-ico">🔢</span><div><h3>Ordene os Indícios</h3><div class="desc">Coloque os passos do raciocínio na ordem certa.</div></div></div><div class="jogo-body" id="g5-body"><button class="btn ouro" onclick="G5.start()">▶ Começar</button></div></div>
+</section>
+</main>
+<footer>Portal do Professor Marcos Cruz · SAEB/SIMAVE · D1</footer>
+
+<script>
+
+function liberarEstudo(el,btn){
+  var pwd=prompt('Senha do professor:');
+  if(pwd===null)return;
+  if(pwd===SENHA_MODO_ESTUDO){el.style.display='block';btn.textContent='Ocultar';}
+  else{alert('Senha incorreta.');}
+}
+
+/* ===== CONFIGURAÇÃO DO ENVIO PARA GOOGLE SHEETS =====
+   Cole aqui a URL do seu Apps Script publicado como "App da Web".
+   Veja o arquivo google-apps-script.gs para instruções de instalação.
+   Enquanto estiver "SUBSTITUA_PELA_SUA_URL", o envio fica desativado
+   (o quiz funciona normalmente, só não manda nada para a planilha). */
+const SHEETS_URL = "https://script.google.com/macros/s/AKfycbwPcWRWW2IkMb8-WkyB2w1M2n9ivcYlfqWajYRgCzecLTC1T7aBetZtR2MDaOIxahc/exec";
+const DESCRITOR_PAGINA = "D1 - Identificar o tema/sentido global do texto";
+const NOME_ARQUIVO = "D01.html";
+
+/* ===== ESTADO DO ALUNO E MODO DE JOGO ===== */
+let alunoNome = "";
+let alunoTurma = "";
+let modoJogo = "estudo"; // "estudo" ou "prova"
+const respostasDetalhadas = [];
+const selecoes = {}; // {dn: k} para revelar botões no fim do modo prova // uma entrada por questão respondida, na ordem em que aparecem
+
+/* ===== SENHA PARA LIBERAR O MODO ESTUDO =====
+   Troque a senha abaixo quando quiser. É a MESMA senha em todas as páginas
+   do portal (mais simples de lembrar e passar para os alunos quando for
+   hora de revisão). Lembre-se: como o quiz roda no navegador do aluno,
+   essa senha impede o uso casual do Modo Estudo, mas não é uma proteção
+   contra alguém que abra o código-fonte da página — as respostas já estão
+   no arquivo de qualquer forma, como em qualquer site estático como este. */
+const SENHA_MODO_ESTUDO = "professor123";
+
+document.getElementById("btnLiberarEstudo").onclick = () => {
+  const campo = document.getElementById("senhaEstudo");
+  const aviso = document.getElementById("senhaAviso");
+  if (campo.value === SENHA_MODO_ESTUDO) {
+    document.getElementById("radioEstudo").disabled = false;
+    document.getElementById("radioEstudo").checked = true;
+    document.getElementById("cadeadoEstudo").textContent = "🔓";
+    document.getElementById("opcaoEstudo").classList.add("liberado");
+    document.getElementById("senhaBox").style.display = "none";
+    aviso.className = "senha-aviso ok";
+    aviso.textContent = "✓ Modo Estudo liberado.";
+  } else {
+    aviso.className = "senha-aviso erro";
+    aviso.textContent = "Senha incorreta.";
+  }
+};
+// Também libera ao apertar Enter no campo de senha
+document.getElementById("senhaEstudo").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") document.getElementById("btnLiberarEstudo").click();
+});
+
+document.getElementById("btnIniciarQuiz").onclick = () => {
+  const nome = document.getElementById("alunoNome").value.trim();
+  const turma = document.getElementById("alunoTurma").value.trim();
+  const aviso = document.getElementById("gateAviso");
+  if (!nome || !turma) {
+    aviso.textContent = "Preencha nome e turma/série para continuar.";
+    return;
+  }
+  alunoNome = nome;
+  alunoTurma = turma;
+  modoJogo = document.querySelector('input[name="modoQuiz"]:checked').value;
+  document.getElementById("quizGate").style.display = "none";
+  document.getElementById("quizConteudo").style.display = "block";
+  const chip = document.getElementById("modoChip");
+  chip.textContent = modoJogo === "prova" ? "📝 Modo Prova" : "📖 Modo Estudo";
+};
+
+/* ===== ENVIO PARA O GOOGLE SHEETS ===== */
+function enviarParaSheets() {
+  const statusEl = document.getElementById("envioStatus");
+  if (!SHEETS_URL || SHEETS_URL.indexOf("SUBSTITUA") !== -1) {
+    statusEl.className = "envio-status";
+    statusEl.textContent = "";
+    return; // envio desativado até o professor configurar a URL
+  }
+  statusEl.className = "envio-status enviando";
+  statusEl.textContent = "Enviando resultado para a planilha...";
+
+  const payload = {
+    nome: alunoNome,
+    turma: alunoTurma,
+    descritor: DESCRITOR_PAGINA,
+    pagina: NOME_ARQUIVO,
+    modo: modoJogo === "prova" ? "Prova" : "Estudo",
+    respostas: respostasDetalhadas
+  };
+
+  fetch(SHEETS_URL, {
+    method: "POST",
+    mode: "no-cors", // Apps Script Web Apps não devolvem CORS; "no-cors" garante o envio mesmo sem ler a resposta
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(payload)
+  }).then(() => {
+    statusEl.className = "envio-status ok";
+    statusEl.textContent = "✓ Resultado enviado para a planilha do professor.";
+  }).catch(() => {
+    statusEl.className = "envio-status erro";
+    statusEl.textContent = "✗ Não foi possível enviar o resultado (verifique sua internet).";
+  });
+}
+
+/* ===== QUIZ ===== */
+const QRAW=[{"n": 1, "tipo": "Notícia (CNN Brasil / P0901)", "nivel": "facil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Notícia — Bienal do Livro no Rio terá novo formato em 2025</b><p>A Bienal do Livro do Rio em 2025 oferecerá novas experiências literárias ao público do evento. A programação contará, por exemplo, com uma roda-gigante literária chamada 'Leitura nas alturas', que convida o visitante para uma volta dentro da história. Além disso, haverá o Palco Apoteose, voltado aos pré-adolescentes, e o tradicional Café Literário, que reunirá performances, leituras e monólogos de grandes personalidades do teatro. Segundo a diretora do evento, a ideia é trazer uma nova perspectiva aos eventos literários no Brasil.</p></div>", "fonte": "VALBÃO, Mariana. <b>Bienal do Livro no Rio terá novo formato em 2025</b>. CNN Brasil, 22 nov. 2024. Adaptado. Avaliação Contínua P0901 — CAED/UFJF, 2025.", "enun": "O assunto central dessa notícia é", "alts": ["o título de 'Capital Mundial do Livro' conquistado pelo Rio de Janeiro.", "as novas atrações e o formato renovado da Bienal do Livro no Rio em 2025.", "a trajetória da diretora responsável pela organização da Bienal do Livro.", "a programação voltada exclusivamente ao público infantil no evento literário."], "correta": 1, "porque": ["O título de Capital Mundial do Livro é mencionado ao final como dado histórico, não como assunto central.", "A notícia apresenta as novas atrações (roda-gigante, Palco Apoteose, Café Literário) e o novo formato do evento — esse é o assunto central.", "A diretora é citada para contextualizar a proposta, não é o foco da notícia.", "O evento tem programação diversa; a notícia não restringe o assunto ao público infantil."]}, {"n": 2, "tipo": "Artigo de divulgação (P0901)", "nivel": "facil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Artigo — Por que ler histórias em quadrinhos com as crianças?</b><p>Já faz algum tempo que a história em quadrinhos deixou de ser vista como inimigo do livro. Ao contrário: os quadrinhos são considerados grandes aliados para incentivar a leitura, principalmente para quem ainda está engatinhando no universo das letras. Afinal, os quadrinhos acabam sendo uma introdução ao mundo da literatura, usando não apenas escrita, mas também ilustrações. Algo muito interessante das HQs é a possibilidade de a criança entender o que está acontecendo, sem nem mesmo saber ler — ela bate o olho na página e, a partir da imagem, pode interpretar a história.</p></div>", "fonte": "VIOLA, Lindsay. <b>Por que ler histórias em quadrinhos com as crianças?</b> Leiturinha, 2025. Adaptado. Avaliação Contínua P0901 — CAED/UFJF, 2025.", "enun": "Esse texto foi escrito principalmente para", "alts": ["descrever a evolução histórica das histórias em quadrinhos no Brasil.", "defender a importância das histórias em quadrinhos como aliadas da leitura infantil.", "instruir professores sobre como usar quadrinhos nas aulas de alfabetização.", "comparar as histórias em quadrinhos com os livros literários tradicionais."], "correta": 1, "porque": ["Não há linha histórica sobre a evolução das HQs no Brasil; o texto argumenta sobre seu valor.", "O texto defende que as HQs são 'grandes aliadas para incentivar a leitura' — é uma defesa de ponto de vista, não uma descrição ou instrução.", "Embora mencione o uso em sala, o texto não instrui metodologicamente; ele argumenta em favor das HQs.", "O texto não faz comparação direta livro × HQ; o foco é no potencial das HQs como ferramenta."]}, {"n": 3, "tipo": "Fábula (P0802)", "nivel": "facil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Fábula — Duplo Silêncio (fragmento)</b><p>Era uma vez duas capivaras, muito amigas, que trabalhavam juntas cultivando feijão. Roçavam a terra, aravam, semeavam, numa rotina diária. Até que, finalmente, chegou a grande colheita! Quando terminaram, dividiram por igual.<br><br>À noite, uma das capivaras pensou: 'Tenho uma família grande. Minha amiga vive sozinha — com certeza vai precisar mais dessa colheita.' Levantou-se em silêncio e foi depositar metade de sua parte na casa da amiga. Ao mesmo tempo, a outra capivara saiu pensando exatamente o mesmo. Na estrada escura, as duas se encontraram frente a frente — e, sem dizer nada, compreenderam tudo e se abraçaram.</p></div>", "fonte": "AYMONE, Sandra. <b>Duplo Silêncio</b>. In: A Aventura das Aranhas e Outras Fábulas. Campinas: Fundação Educar DPaschoal, 2019. Adaptado. Avaliação Diagnóstica P0802 — CAED/UFJF, 2025.", "enun": "O tema central desse texto é", "alts": ["a rotina diária de trabalho no campo e os desafios da agricultura.", "a preocupação mútua e a solidariedade entre as amigas, que pensaram uma na outra sem saber.", "a importância de dividir a colheita de forma justa entre os trabalhadores rurais.", "a surpresa das capivaras ao se encontrarem na estrada escura durante a madrugada."], "correta": 1, "porque": ["O trabalho rural é o pano de fundo; o tema central é o gesto de solidariedade que emerge dessa rotina.", "O texto gira em torno da mesma ideia que as duas capivaras tiveram espontaneamente — cuidar da outra — e do encontro que revela esse sentimento mútuo.", "A divisão já havia sido feita igualmente; o gesto vai além da justiça — é solidariedade.", "O encontro é o ponto de chegada da história, não o tema central; é a consequência da solidariedade."]}, {"n": 4, "tipo": "Divulgação científica (P0802)", "nivel": "facil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Texto de divulgação científica — Raios! (fragmento)</b><p>Durante o verão a cena é comum. Nuvens escuras surgem de repente e a chuva começa. Em seguida, um relâmpago risca o céu. Que bonito! Logo depois vem o barulho do trovão. Que medo!<br><br>Os relâmpagos são descargas elétricas, semelhantes às correntes elétricas que passam pelos fios de nossas casas, mas milhares de vezes mais fortes. Tão fortes que ao passarem pela atmosfera deslocam o ar e produzem um barulho intenso — o trovão. Repare que vemos o relâmpago antes de ouvir o trovão: isso acontece porque a luz é mais rápida que o som, por isso ela chega primeiro.<br><br>Os relâmpagos que ocorrem entre as nuvens e o solo são chamados raios. Como podem prejudicar as pessoas, os raios são bastante estudados.</p></div>", "fonte": "CIÊNCIA HOJE DAS CRIANÇAS. <b>Raios!</b> 2000. Adaptado. Avaliação Diagnóstica P0802 — CAED/UFJF, 2025.", "enun": "O assunto principal tratado nesse texto é", "alts": ["o perigo dos raios para as pessoas durante as tempestades de verão.", "o que são relâmpagos, trovões e raios e como esses fenômenos se relacionam.", "a diferença entre a velocidade da luz e do som na atmosfera terrestre.", "as pesquisas científicas desenvolvidas para proteger as pessoas dos raios."], "correta": 1, "porque": ["O perigo dos raios é mencionado ao final como motivação para estudá-los, mas não é o tema central.", "O texto explica o que são esses fenômenos elétricos, como se formam e como estão relacionados — esse é seu assunto central.", "A diferença luz/som é apresentada como explicação pontual de um detalhe, não como o assunto principal.", "O texto apenas menciona que os raios 'são bastante estudados', sem detalhar as pesquisas."]}, {"n": 5, "tipo": "Conto (Maria Elaine Mana Altoe / P0802)", "nivel": "medio", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Conto — Conversa de cozinha (fragmento)</b><p>A panela, a caçarola e a frigideira eram muito amigas. Adoravam cozinhar juntas ou ficar fofocando no escorredor. Passavam o tempo inteiro falando de comida.<br><br>Um dia, a dona delas comprou um apartamento novo e encaixotou tudo para mudar. Os carregadores foram descuidados e esqueceram a caixa das panelas ao lado da lixeira. A criançada da rua estava voltando da escola e, quando viram as panelas, tiveram a ideia de reaproveita-las para formar uma banda. A troca de função provocou mudanças radicais nas três.<br><br>Panela puxou de dentro de si um som profundo e agradável. Frigideira agora dá a partida. E a caçarola, às vezes, faz de conta que é um banjo e brinca de música country. Essa encontrou sua missão de vida.</p></div>", "fonte": "ALTOE, Maria Elaine Mana. <b>Conversa de cozinha</b>. In: Vera Pereira. Adaptado para fins didáticos. Avaliação Diagnóstica P0802 — CAED/UFJF, 2025.", "enun": "O tema central desse conto é", "alts": ["a negligência dos carregadores que esqueceram as panelas na calçada.", "a descoberta de um propósito inesperado: panelas esquecidas viram instrumentos musicais nas mãos de crianças.", "a amizade entre a panela, a caçarola e a frigideira e suas preferências culinárias.", "a importância de reaproveitar objetos para reduzir o desperdício doméstico."], "correta": 1, "porque": ["A negligência dos carregadores é apenas o elemento que desencadeia a história, não o tema central.", "O texto gira em torno da transformação inesperada: panelas que cozinhavam se tornam instrumentos musicais — especialmente a caçarola que 'encontrou sua missão de vida'.", "A amizade e as preferências culinárias são o ponto de partida, mas o tema central emerge da virada da narrativa.", "A reutilização surge na história, mas como elemento da trama — o tema é a transformação e a descoberta de propósito, não a consciência ecológica."]}, {"n": 6, "tipo": "Cordel (texto original)", "nivel": "medio", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Cordel — É Munto Trabaiado (fragmento)</b><p>É munto trabaiadô<br>Quem tem o ingenho de pau,<br>Chega em nosso coração<br>Dos nossos canaviais.<br><br>O feitor bate no negro<br>Sem dó e sem piedade,<br>O senhor faz a riqueza<br>Com a nossa sofridade.<br><br>A cana que nos maltrata<br>É a mesma que adoça o café,<br>O mesmo açúcar que mata<br>É o que sustenta a fé.<br><br>Mas o povo nordestino<br>Tem força e tem valor,<br>Quem sobrevive ao engenho<br>Resiste a qualquer dor.</p></div>", "fonte": "Cordel de tradição oral nordestina, domínio público. Adaptado para fins didáticos.", "enun": "Qual é o tema central desses versos?", "alts": ["A descrição técnica de um engenho de açúcar.", "O reconhecimento do trabalho árduo e a ligação com a terra.", "Uma crítica direta aos donos de engenho e seus métodos.", "Um relato sobre a história da cana-de-açúcar no Brasil."], "correta": 1, "porque": ["Não é descrição técnica; é expressão poética sobre o sentimento ligado ao trabalho.", "Correto: os versos celebram o trabalhador ('munto trabaiadô') e expressam a ligação afetiva e identitária com a terra e a labuta no canavial — tema central da poesia popular nordestina.", "Não há crítica explícita a donos de engenho; o foco é o trabalhador e sua relação com o trabalho.", "Não é um relato histórico; é expressão poética e afetiva."]}, {"n": 7, "tipo": "Artigo de opinião (P0802)", "nivel": "medio", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Artigo — A tecnologia a abrir caminho para o futuro (mais humano) — fragmento</b><p>A tecnologia tem o poder de fazer muitas coisas, e mudar o mundo tem sido uma delas. Se em 1820 podíamos esperar viver em média menos de 35 anos, e menos de 20% da população sabia ler e escrever, atualmente a esperança de vida duplicou e mais de 80% das pessoas no mundo são alfabetizadas. Para qualquer observador, é fácil verificar que estes avanços se devem primariamente à tecnologia e ao início da revolução industrial.<br><br>Atualmente, é estimado que 65% das crianças a entrar na escola primária hoje desempenharão funções que ainda não existem. Mas, apesar dos ajustes necessários, é certo que somos privilegiados por viver numa altura em que a ciência e tecnologia nos podem assistir, tornando as nossas vidas mais fáceis. Mas será que toda a tecnologia beneficiará o futuro da humanidade?</p></div>", "fonte": "RODRIGUEZ, Fabio. <b>A tecnologia a abrir caminho para o futuro (mais humano)</b>. TEK SAPO, 2020. Adaptado. Avaliação Diagnóstica P0802 — CAED/UFJF, 2025.", "enun": "O texto desenvolve principalmente a ideia de que", "alts": ["a tecnologia é responsável por graves problemas sociais no mundo contemporâneo.", "a tecnologia transformou positivamente a vida humana, embora seu impacto futuro ainda seja uma questão aberta.", "os avanços tecnológicos tornaram desnecessárias as profissões tradicionais.", "a tecnologia do futuro substituirá completamente o trabalho humano nas próximas décadas."], "correta": 1, "porque": ["O texto não aponta problemas causados pela tecnologia; a posição é positiva.", "O texto celebra avanços históricos da tecnologia (esperança de vida, alfabetização) mas encerra com a pergunta 'Mas será que toda a tecnologia beneficiará o futuro?', mantendo a questão aberta.", "O texto menciona funções que ainda não existem, não a substituição ou inutilização das profissões atuais.", "A substituição completa do trabalho não é afirmada; o texto menciona adaptação necessária, não substituição."]}, {"n": 8, "tipo": "Tirinha (Jim Davis / Garfield)", "nivel": "medio", "texto": "<img src=\"imagens/tirinhas-garfield%20%281%29.jpg\" alt=\"Tirinha do Garfield: Jon conta seus problemas ao Garfield que não liga\" style=\"max-width:100%;border-radius:8px;margin-bottom:8px;display:block\">", "fonte": "DAVIS, Jim. <b>Garfield</b>. Disponível em: garfield.com. Direitos reservados — reprodução para fins didáticos.", "enun": "O tema central dessa tirinha é", "alts": ["a preocupação de Jon com a saúde mental e a dificuldade de encontrar apoio emocional.", "o humor gerado pela aparente concordância de Garfield (\"Não é isso, Jon\") que esconde total indiferença.", "a amizade profunda entre Jon e Garfield, revelada pela disposição do gato em ouvir os problemas do dono.", "a crítica ao hábito humano de desabafar problemas com animais de estimação."], "correta": 1, "porque": ["Jon não menciona saúde mental; ele reclama da falta de interação do Garfield — e a tirinha usa isso para fazer humor.", "O humor surge exatamente do contraste: Garfield parece discordar (\"Não é isso, Jon\") mas no último quadro revela que simplesmente não liga (\"O fato é que eu não to nem aí\") — a discordância escondia total indiferença.", "A tirinha mostra o oposto de amizade profunda; Garfield está ali de corpo, mas a mente não está presente.", "A tirinha não critica o hábito humano de forma geral; o foco cômico está na indiferença específica do Garfield."]}, {"n": 9, "tipo": "Poema (Joaquim Cesário / P0802)", "nivel": "dificil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Poema — De Que Somos Feitos (fragmento)</b><p><em>Sou feito dos livros que não li<br>dos lugares que não frequentei<br><br>Sou feito das pessoas que não conheci<br>das línguas que não aprendi<br><br>Sou feito dos brinquedos que não tive<br>das músicas que nunca escutei<br>dos sabores e cheiros que não senti<br><br>A minha história é o contrário<br>das histórias que não vivi<br>não tive, não sofri, nem fiz<br><br>A minha história é a história<br>que a História fez de mim</em></p></div>", "fonte": "CESÁRIO, Joaquim. <b>De Que Somos Feitos</b>. Autores.com.br, 2023. Adaptado. Avaliação Diagnóstica P0802 — CAED/UFJF, 2025.", "enun": "O tema central desse poema pode ser assim resumido:", "alts": ["a lamentação do eu lírico por tudo o que lhe faltou na infância e na juventude.", "a identidade humana como resultado tanto das experiências vividas quanto — paradoxalmente — das que nunca foram vividas.", "a crítica à sociedade que priva as pessoas de acesso a livros, músicas e viagens.", "a memória como instrumento para recuperar experiências passadas e reconstruir a identidade."], "correta": 1, "porque": ["O poema não tem tom de lamentação; a reflexão é filosófica, sem amargura.", "O paradoxo central do poema é exatamente esse: a identidade do eu lírico é formada pelo que NÃO viveu tanto quanto pelo que viveu — as ausências também o constituem.", "O poema não critica a sociedade nem aponta responsáveis pelas ausências.", "O poema não trata de memória de experiências passadas; trata de como o que nunca aconteceu também nos define."]}, {"n": 10, "tipo": "Poema (Antonio Costta / P0802)", "nivel": "dificil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Poema — Se não posso mudar o mundo (fragmento)</b><p><em>Se não posso mudar o mundo,<br>ao menos plantarei uma árvore.<br>E a cuidarei com carinho<br>para que ela faça sombra<br>e abrigue os passarinhos.<br><br>Se não posso mudar o mundo,<br>ao menos plantarei uma árvore,<br>para alimentar a meninada;<br>e que ainda sobre muitos frutos<br>pro banquete da passarada!<br><br>Se não posso mudar o mundo, [...]<br>ao menos plantarei uma árvore,<br>com sentimento profundo.</em></p></div>", "fonte": "COSTTA, Antonio. <b>Se não posso mudar o mundo</b>. In: Recanto das Letras, 2019. Adaptado. Avaliação Diagnóstica P0802 — CAED/UFJF, 2025.", "enun": "O tema central desse poema é", "alts": ["a admiração pela beleza e fragilidade da natureza, simbolizada pela árvore e pelos pássaros.", "a crença de que gestos individuais e modestos — como plantar uma árvore — podem fazer do mundo um lugar melhor.", "a impotência do ser humano diante dos grandes problemas do mundo contemporâneo.", "a importância do reflorestamento e da preservação ambiental nas cidades brasileiras."], "correta": 1, "porque": ["A natureza está presente como símbolo e cenário, mas o tema é a ação humana diante da impotência — não a beleza natural.", "O poema repete 'Se não posso mudar o mundo, ao menos...' para afirmar que cada gesto pequeno tem valor — plantar uma árvore é metáfora do que cada pessoa pode fazer com o que tem.", "O poema não expressa impotência; encontra na ação modesta uma resposta positiva e esperançosa.", "O reflorestamento literal não é o tema; a árvore é metáfora de uma contribuição pessoal ao mundo."]}, {"n": 11, "tipo": "Carta formal de reclamação (Reclame Aqui / P0901)", "nivel": "dificil", "texto": "<div style=\"background:#f7f9fc;border-left:4px solid #235a8c;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:.88rem;line-height:1.6\"><b style=\"display:block;font-size:.7rem;color:#235a8c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px\">Carta de reclamação — Não recebimento de vale-presente</b><p><em>Prezados,</em><br><br>No dia 05/03, realizei a compra de um vale-presente através do site da livraria com o intuito de presentear uma amiga, Yasmin, no seu aniversário. Contudo, até o momento, o vale-presente não foi recebido por ela no e-mail informado, mesmo tendo os dados sido preenchidos corretamente no momento da compra. O status da compra informa que o vale ainda está 'em preparo', mas não houve a entrega do e-mail, o que gerou grande frustração, uma vez que o aniversário dela já passou.<br><br>Diante disso, solicito a devolução imediata do valor pago ou o envio do vale-presente, conforme prometido. Aguardo uma solução rápida e eficaz.<br><br><em>Atenciosamente, Thalya Roberta Salgueiro</em></p></div>", "fonte": "SALGUEIRO, Thalya Roberta. Reclame Aqui, 6 mar. 2025. Adaptado. Avaliação Contínua P0901 — CAED/UFJF, 2025.", "enun": "O tema central dessa carta é", "alts": ["a crítica ao sistema de pagamento por aplicativo usado pelas livrarias.", "o problema da entrega não realizada de um vale-presente e a solicitação de solução à livraria.", "a comemoração do aniversário da amiga Yasmin e os preparativos para a celebração.", "a comparação entre os serviços de diferentes livrarias virtuais no Brasil."], "correta": 1, "porque": ["A carta não critica o sistema de pagamento; o problema relatado é a entrega não realizada.", "O texto gira em torno de um vale-presente que não chegou ao destino — esse é o assunto central, apresentado e encerrado com o pedido de solução.", "Yasmin e o aniversário são mencionados como contexto; o tema central é o problema com o produto comprado.", "Não há comparação de livrarias; a carta trata de uma situação específica com uma livraria específica."]}, {"n": 12, "tipo": "Artigo de opinião (Jornal do Comércio)", "nivel": "dificil", "texto": "<img src=\"imagens/opini%C3%A3o2.png\" alt=\"Artigo de opinião: Mais educação, menos violência — Mônica Leal, Jornal do Comércio\" style=\"max-width:100%;border-radius:8px;margin-bottom:8px;display:block\">", "fonte": "LEAL, Mônica (Vereadora de Porto Alegre, PP). <b>Mais educação, menos violência</b>. Jornal do Comércio, Porto Alegre, 28 mar. 2018.", "enun": "O tema central desse artigo de opinião é", "alts": ["a violência urbana nas grandes cidades brasileiras e suas causas socioeconômicas.", "a defesa da educação de qualidade e da valorização dos professores como caminhos para o desenvolvimento e a redução da violência.", "a comparação entre o Brasil e países desenvolvidos como Finlândia, Japão e Coreia do Sul.", "a situação salarial dos professores no Brasil e as desigualdades regionais no sistema educacional."], "correta": 1, "porque": ["A violência é mencionada como consequência da falta de educação, mas não é o tema central — é a educação que ocupa o centro do argumento.", "A autora defende que a educação é 'a maior preocupação de um governo' e que professores precisam ser valorizados — esse é o tema que o artigo desenvolve do início ao fim.", "A comparação com outros países é um argumento dentro do texto, não o assunto central.", "Os salários são parte do argumento, mas o tema central é mais amplo: a educação como base do desenvolvimento nacional."]}];
+const G1_ROUNDS = [{"t": "Toda manhã, o porteiro Seu Lima regava as plantas do prédio antes de qualquer morador sair de casa. Ninguém pedia, ele nem comentava — só fazia.", "q": "Qual é o tema central?", "o": ["A rotina de trabalho dos porteiros.", "Um gesto discreto de cuidado com o espaço comum.", "Os tipos de plantas mais resistentes.", "O horário de saída dos moradores."], "c": 1}, {"t": "A loja de roupas, antes badalada, perdeu quase todos os clientes depois que um shopping abriu há dois quarteirões.", "q": "Qual é o tema central?", "o": ["A localização exata do novo shopping.", "O impacto da concorrência sobre um pequeno comércio.", "Os tipos de roupas vendidos na loja.", "A distância entre a loja e o shopping."], "c": 1}, {"t": "Um gato e um rato firmaram trégua para escapar juntos de uma armadilha. Livres, o gato voltou a perseguir o rato no dia seguinte.", "q": "Qual é o tema central?", "o": ["Alianças feitas por necessidade nem sempre duram.", "A amizade verdadeira entre gatos e ratos.", "As armadilhas usadas para capturar roedores.", "A velocidade dos gatos comparada à dos ratos."], "c": 0}, {"t": "Depois de meses sem chover, a plantação de Seu Edmar secou quase toda — menos um pedaço, justamente onde ele tinha plantado árvores ao redor, criando sombra.", "q": "Qual é o tema central?", "o": ["A falta de chuva naquele ano.", "O benefício de práticas simples de manejo para enfrentar a seca.", "Os tipos de árvores plantadas por Seu Edmar.", "A quantidade de meses sem chuva."], "c": 1}, {"t": "A criança gritou ao ver a bola boiando para o meio do rio. Sem pensar duas vezes, o cão pulou n'água, mesmo sem nunca ter aprendido a nadar bem, e voltou com a bola na boca.", "q": "Qual é o tema central?", "o": ["Os riscos de brincar perto de rios.", "A lealdade de um animal disposto a arriscar-se por quem ama.", "As técnicas de natação canina.", "O tipo de bola usada na brincadeira."], "c": 1}];
+const G2_TEXT = "Depois de perder o emprego, Sandra passou a vender bolos pela vizinhança. No início, vendia só para amigos. Em poucos meses, já recebia encomendas de bairros vizinhos e contratou duas pessoas para ajudar. — Não foi fácil — diz ela —, mas descobri que dava para recomeçar de outro jeito.";
+const G2_ITEMS = [{"s": "Sandra recomeçou a vida profissional depois de perder o emprego.", "cat": "tema", "p": "Essa frase resume o assunto central que percorre todo o texto."}, {"s": "A capacidade de se reinventar diante das dificuldades.", "cat": "tema", "p": "É uma forma mais abstrata de descrever a mesma ideia central do texto."}, {"s": "No início, Sandra vendia bolos só para amigos.", "cat": "detalhe", "p": "É uma informação real do texto, mas é um detalhe que ilustra o processo, não o tema em si."}, {"s": "Sandra contratou duas pessoas para ajudar.", "cat": "detalhe", "p": "É um detalhe que mostra o crescimento do negócio, não o tema central."}, {"s": "Sandra trabalhava em uma padaria antes de perder o emprego.", "cat": "foradotexto", "p": "O texto não diz onde Sandra trabalhava antes; essa informação não consta nele."}, {"s": "Sandra vende bolos há mais de dez anos.", "cat": "foradotexto", "p": "O texto não menciona há quanto tempo Sandra vende bolos."}];
+const G3_ROUNDS = [{"t": "O professor pediu silêncio três vezes. Na quarta, simplesmente parou de falar e ficou olhando para a turma, em silêncio total, por quase um minuto. A sala, então, se calou.", "q": "Qual frase resume melhor esse texto?", "o": ["O professor gosta de silêncio nas aulas.", "Um professor usa o silêncio, em vez de gritar, para conseguir atenção da turma.", "A turma estava conversando muito naquele dia.", "O professor contou até quatro antes de continuar a aula."], "c": 1}, {"t": "A padaria do bairro, sempre vazia de manhã, passou a vender pão na calçada, ainda quentinho, recém-saído do forno. Em poucas semanas, formava fila antes mesmo de abrir.", "q": "Qual frase resume melhor esse texto?", "o": ["O horário de funcionamento da padaria mudou.", "Uma pequena mudança na forma de vender atraiu mais clientes para a padaria.", "O pão da padaria é vendido na calçada.", "A padaria sempre teve fila de clientes."], "c": 1}, {"t": "Júlia treinou a apresentação sozinha, no quarto, repetindo cada frase pelo menos vinte vezes. No dia da prova oral, surpreendeu até a si mesma com a tranquilidade que sentiu.", "q": "Qual frase resume melhor esse texto?", "o": ["A preparação cuidadosa ajudou Júlia a se sentir mais segura.", "Júlia decorou a apresentação palavra por palavra.", "A prova oral de Júlia aconteceu em seu quarto.", "Júlia repetiu a apresentação vinte vezes."], "c": 0}, {"t": "Antes de aceitar o convite para a viagem, Rafael perguntou três vezes se realmente não haveria custo nenhum. Só topou depois de ouvir a confirmação da terceira vez.", "q": "Qual frase resume melhor esse texto?", "o": ["Rafael fez uma viagem com os amigos.", "Rafael é uma pessoa cautelosa antes de tomar decisões.", "A viagem de Rafael não teve custo nenhum.", "Rafael perguntou sobre o preço da viagem três vezes."], "c": 1}, {"t": "O time perdia por dois gols faltando dez minutos. Em vez de se entregar, os jogadores passaram a se cobrar mais entre si — e empataram a partida nos minutos finais.", "q": "Qual frase resume melhor esse texto?", "o": ["O time perdia por dois gols no jogo.", "A reação de um time que não desiste, mesmo perdendo o jogo.", "O time empatou a partida nos minutos finais.", "Os jogadores se cobraram mais entre si."], "c": 1}];
+const G4_ROUNDS = [{"ctx": "Texto: um cordel descreve, com orgulho, o trabalho diário de um pescador que conhece cada parte do rio onde pesca.", "f": "O tema central desse cordel é o ___ do pescador com seu trabalho e com o lugar onde vive.", "o": ["desinteresse", "vínculo/orgulho", "arrependimento", "desconhecimento"], "c": 1}, {"ctx": "Texto: uma notícia apresenta dados reais sobre o crescimento da energia solar residencial no Brasil.", "f": "O tema central dessa notícia é o ___ da energia solar residencial no país.", "o": ["declínio", "crescimento", "custo exato", "histórico completo desde 1900"], "c": 1}, {"ctx": "Texto: uma fábula conta que a cigarra, que só cantou no verão, pede ajuda à formiga no inverno e é recusada.", "f": "O tema central dessa fábula é a importância de se ___ para os momentos difíceis.", "o": ["ignorar", "se preparar com antecedência", "cantar bastante", "pedir ajuda sempre"], "c": 1}, {"ctx": "Texto: uma crônica narra como um vizinho desconhecido ajudou a empurrar o carro de alguém que ficou na chuva.", "f": "O tema central dessa crônica é um gesto de ___ entre pessoas que não se conheciam.", "o": ["indiferença", "solidariedade", "competição", "desconfiança"], "c": 1}, {"ctx": "Texto: um cartaz de campanha escolar incentiva os alunos a economizar papel, reaproveitando folhas usadas.", "f": "O tema central desse cartaz é o incentivo ao ___ de recursos no dia a dia escolar.", "o": ["desperdício", "uso consciente", "aumento do consumo", "descarte imediato"], "c": 1}];
+const G5_ROUNDS = [{"title": "Descobrindo o tema de ‘O Cão e o Osso’", "correct": ["Releia a história: o cão tinha um osso e via seu reflexo na água.", "Observe a atitude do cão: ele quis abocanhar o reflexo, achando que era outro osso maior.", "Note a consequência: o osso real caiu na água e se perdeu.", "Pergunte-se: o que essa sequência de atitude e consequência ensina?", "Conclusão: a cobiça pode fazer alguém perder até o que já possui."]}, {"title": "Descobrindo o tema de ‘O Guarda-Chuva’", "correct": ["Releia a cena: chovia forte e Dona Marta estava com as mãos ocupadas.", "Observe a atitude do menino: ele protegeu Dona Marta sem dizer nada e sem pedir nada em troca.", "Note que ele nem se apresentou, apenas ajudou e voltou ao seu lugar.", "Pergunte-se: o que esse gesto, sem motivo aparente, revela sobre o menino?", "Conclusão: o tema central é um gesto simples de bondade entre estranhos."]}, {"title": "Descobrindo o tema de ‘Silêncio, por favor’", "correct": ["Releia o início: o autor esqueceu o celular e sentiu desespero.", "Observe o que aconteceu depois: ele passou a notar coisas ao redor (chuva, conversa, o gato).", "Note o resultado: chegou em casa com mais ideias do que em semanas.", "Pergunte-se: o episódio do celular é o assunto principal, ou serve para defender uma ideia maior?", "Conclusão: o tema central são os benefícios da desconexão digital para a atenção e a criatividade."]}];
+
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function stripHTML(s){const d=document.createElement("div");d.innerHTML=s;return d.textContent||"";}
+
+function toggleTTS(btn,id){
+  if(window.speechSynthesis.speaking){window.speechSynthesis.cancel();document.querySelectorAll(".btn-tts").forEach(b=>b.classList.remove("playing"));return;}
+  const el=document.getElementById(id);if(!el)return;
+  const text=stripHTML(el.innerHTML).replace(/\s+/g," ");
+  const u=new SpeechSynthesisUtterance(text);u.lang="pt-BR";u.rate=.9;
+  btn.classList.add("playing");
+  u.onend=()=>btn.classList.remove("playing");
+  u.onerror=()=>btn.classList.remove("playing");
+  window.speechSynthesis.speak(u);
+}
+
+const REC_KEY="saeb_d6_records";
+function loadRec(){try{return JSON.parse(localStorage.getItem(REC_KEY))||{};}catch{return {};}}
+function saveRec(k,v){const r=loadRec();if(!(k in r)||v>r[k])r[k]=v;localStorage.setItem(REC_KEY,JSON.stringify(r));renderRec();}
+function renderRec(){
+  const r=loadRec(),g=document.getElementById("recGrid");if(!g)return;
+  const items=[{k:"quiz",l:"Quiz (de 12)"},{k:"tema",l:"Qual é o tema?"},{k:"classificar",l:"Tema/Detalhe"},{k:"resumo",l:"Ache o Resumo"},{k:"complete",l:"Complete"},{k:"ordene",l:"Ordene"}];
+  g.innerHTML=items.map(i=>`<div class="rec-item"><div class="rv">${r[i.k]!=null?r[i.k]:"\u2014"}</div><div class="rl">${i.l}</div></div>`).join("");
+}
+renderRec();
+
+document.querySelectorAll(".tab-btn").forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll(".tab-pane").forEach(p=>p.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById("pane-"+btn.dataset.tab).classList.add("active");
+    window.scrollTo({top:0,behavior:"smooth"});
+  };
+});
+
+/* ---------- QUIZ ---------- */
+const QS = shuffle(QRAW.filter(q=>q.alts&&q.alts.length>0)).map((q,idx)=>{
+  const map=Array.from({length:q.alts.length},(_,i)=>i);
+  const smap=shuffle(map);
+  return{...q,dn:idx+1,alts:smap.map(i=>q.alts[i]),porque:smap.map(i=>q.porque[i]),correta:smap.indexOf(q.correta)};
+});
+const quizEl=document.getElementById("quiz");
+QS.forEach(q=>{
+  const c=document.createElement("div");c.className="card";c.dataset.q=q.dn;
+  const tid="txt"+q.dn;
+  c.innerHTML=`<div class="card-head"><span class="qnum">Questão ${q.dn}</span><span class="qtipo">${q.tipo}</span></div>
+  <div class="txt-base" id="${tid}">${q.texto}<span class="txt-fonte">${q.fonte}</span><button class="btn-tts" onclick="toggleTTS(this,'${tid}')" title="Ouvir texto">\uD83D\uDD0A</button></div>
+  
+  <p class="enunciado">${q.enun}</p>
+  <div class="alts">${q.alts.map((t,i)=>`<button class="alt" onclick="resp(${q.dn},${i})"><span class="letra">${"ABCD"[i]}</span> ${t}</button>`).join("")}</div>
+  <div class="fb" id="fb${q.dn}"></div>`;
+  quizEl.appendChild(c);
+});
+let acertos=0;const feitas=new Set();
+function resp(n,k){
+  if(feitas.has(n))return;feitas.add(n);
+  const q=QS.find(x=>x.dn===n),card=quizEl.querySelector(`[data-q="${n}"]`),btns=card.querySelectorAll(".alt"),fb=document.getElementById("fb"+n);
+  const ok=k===q.correta;if(ok)acertos++;
+
+  // Registra a resposta detalhada desta questão para depois enviar ao Sheets
+  respostasDetalhadas.push({
+    questao: n,
+    tipo: q.tipo,
+    nivel: q.nivel,
+    respostaDada: k>=0 ? "ABCD"[k] : "(não respondeu)",
+    respostaCorreta: "ABCD"[q.correta],
+    acertou: ok
+  });
+
+  selecoes[n]=k;btns.forEach((b,i)=>{b.disabled=true;if(modoJogo==="estudo"){if(i===q.correta)b.classList.add("ok");else if(i===k)b.classList.add("err");else b.classList.add("dim");}else{if(i===k)b.classList.add("sel");else b.classList.add("dim");}});
+  const pq=q.alts.map((t,i)=>`<span class="pi"><span class="l">${"ABCD"[i]})</span> ${q.porque[i]}</span>`).join("");
+  fb.className="fb show "+(ok?"ok":"err")+(modoJogo==="prova"?" prova-oculto":"");
+  fb.innerHTML=`<div class="ft">${ok?"✓ Correto!":"✗ Incorreto — a correta é "+"ABCD"[q.correta]+"."}</div><div>${q.porque[q.correta]}</div><div class="pq"><b>Cada alternativa:</b>${pq}</div>`;
+  document.getElementById("pFill").style.width=(feitas.size/QS.length*100)+"%";
+  // No modo prova, a pontuação parcial fica escondida; só aparece no resultado final
+  document.getElementById("score").textContent=modoJogo==="prova" ? (feitas.size+" / "+QS.length+" respondidas") : (acertos+" / "+QS.length);
+  if(feitas.size===QS.length)setTimeout(quizFim,500);
+}
+function quizFim(){
+  // No modo prova, revela todo o feedback que ficou oculto durante o quiz
+  if(modoJogo==="prova"){
+    // gabarito bloqueado no modo prova
+    // modo estudo mostra gabarito por senha
+    document.getElementById("score").textContent=acertos+" / "+QS.length;
+  }
+  const r=document.getElementById("resultado");r.style.display="block";
+  document.getElementById("notaFinal").textContent=acertos+"/"+QS.length;
+  const p=acertos/QS.length;let m,msg;
+  if(p>=.9){m="🥇";msg="Ouro! Precisão de detetive.";}
+  else if(p>=.7){m="🥈";msg="Prata! Atenção aos distratores.";}
+  else if(p>=.5){m="🥉";msg="Bronze! Volte ao texto antes de marcar.";}
+  else{m="📖";msg="Treine mais. A resposta está sempre lá.";}
+  document.getElementById("medalha").textContent=m;document.getElementById("msgFinal").textContent=msg;
+  saveRec("quiz",acertos);
+  enviarParaSheets();
+  r.scrollIntoView({behavior:"smooth",block:"center"});
+}
+
+/* ---------- FACTORY: JOGO CRONOMETRADO (G1 e G3) ---------- */
+function makeTimedGame(bodyId, roundsSrc, recordKey){
+  return {
+    i:0, pts:0, tmr:null, tempo:0, rounds:[],
+    start(){ this.i=0; this.pts=0; this.rounds=shuffle(roundsSrc); this.render(); },
+    render(){
+      const b=document.getElementById(bodyId);
+      if(this.i>=this.rounds.length){
+        saveRec(recordKey,this.pts);
+        const max=this.rounds.length*15;
+        const msg = this.pts>=max*0.7 ? "Muito bem! Leitura rápida e precisa. \uD83E\uDD47" : this.pts>=max*0.4 ? "Bom trabalho! Continue treinando." : "Vamos treinar mais um pouco?";
+        b.innerHTML=`<div class="jogo-final"><div class="big">${this.pts} pts</div><p>${msg}</p><button class="btn ouro" onclick="${bodyId.split('-')[0].toUpperCase()}.start()">\u21BA Jogar de novo</button></div>`;
+        return;
+      }
+      const r=this.rounds[this.i]; this.tempo=100;
+      const ttsId=bodyId+"-tts";
+      b.innerHTML=`<div class="jogo-mid"><span class="chip">Rodada ${this.i+1}/${this.rounds.length}</span><span class="chip timer">\u23F1\uFE0F</span><div class="timerbar"><div id="${bodyId}-bar"></div></div><span class="chip">${this.pts} pts</span></div>
+      <div class="mini-texto">${r.t}<button class="btn-tts" onclick="toggleTTS(this,'${ttsId}')">\uD83D\uDD0A</button><span id="${ttsId}" style="display:none">${r.t}</span></div>
+      <div class="mini-q">${r.q}</div>
+      <div class="alts" id="${bodyId}-alts">${r.o.map((o,k)=>`<button class="alt" onclick="${bodyId.split('-')[0].toUpperCase()}.resp(${k})"><span class="letra">${"ABCD"[k]}</span> ${o}</button>`).join("")}</div>
+      <div class="mini-fb" id="${bodyId}-fb"></div>`;
+      clearInterval(this.tmr);
+      this.tmr=setInterval(()=>{
+        this.tempo-=2;
+        const bar=document.getElementById(bodyId+"-bar");
+        if(bar)bar.style.width=Math.max(0,this.tempo)+"%";
+        if(this.tempo<=0)this.resp(-1);
+      },400);
+    },
+    resp(k){
+      clearInterval(this.tmr);
+      const r=this.rounds[this.i],btns=document.querySelectorAll("#"+bodyId+"-alts .alt"),fb=document.getElementById(bodyId+"-fb");
+      btns.forEach((a,j)=>{a.disabled=true;if(j===r.c)a.classList.add("ok");else if(j===k)a.classList.add("err");else a.classList.add("dim");});
+      if(k===r.c){const g=5+Math.round(this.tempo/10);this.pts+=g;fb.className="mini-fb show ok";fb.textContent="\u2713 +"+g+" pts!";}
+      else{fb.className="mini-fb show err";fb.textContent=(k===-1?"\u23F1\uFE0F Tempo!":"\u2717")+" Resposta: "+"ABCD"[r.c]+".";}
+      this.i++; setTimeout(()=>this.render(),2500);
+    }
+  };
+}
+const G1 = makeTimedGame("g1-body", G1_ROUNDS, "tema");
+const G3 = makeTimedGame("g3-body", G3_ROUNDS, "resumo");
+
+/* ---------- G2: Que tipo de recurso é esse? ---------- */
+const G2 = {
+  rs:[],
+  cats:[["tema","Tema"],["detalhe","Detalhe"],["foradotexto","Fora do texto"]],
+  start(){
+    this.rs=[];
+    const b=document.getElementById("g2-body");
+    b.innerHTML=`<div class="mini-texto">${G2_TEXT}<button class="btn-tts" onclick="toggleTTS(this,'g2t')">\uD83D\uDD0A</button><span id="g2t" style="display:none">${G2_TEXT}</span></div>
+    <p style="font-size:.82rem;color:var(--txt2);margin-bottom:.6rem">Para cada afirmação sobre o texto, diga se ela representa o <b>Tema</b> central, um <b>Detalhe</b> secundário, ou se está <b>Fora do texto</b> (não consta nele).</p>`+
+    G2_ITEMS.map((it,i)=>`<div class="vf-item" id="g2i${i}"><div class="vf-stm"><b>${i+1}.</b> ${it.s}</div>
+      <div class="btn-row">${this.cats.map(c=>`<button class="mini-btn cat-btn cat-${c[0]}" onclick="G2.j(${i},'${c[0]}')">${c[1]}</button>`).join("")}</div>
+      <div class="mini-fb" id="g2f${i}"></div></div>`).join("")+`<div id="g2fin"></div>`;
+  },
+  j(i,escolha){
+    if(this.rs[i]!=null)return;
+    const it=G2_ITEMS[i], ok = escolha===it.cat;
+    this.rs[i]=ok;
+    document.querySelectorAll("#g2i"+i+" .mini-btn").forEach(btn=>{
+      btn.disabled=true;
+      const cls=btn.className.match(/cat-(\w+)/)[1];
+      if(cls===it.cat) btn.classList.add("ok");
+      else if(cls===escolha && !ok) btn.classList.add("err");
+    });
+    const fb=document.getElementById("g2f"+i);
+    fb.className="mini-fb show "+(ok?"ok":"err");
+    fb.innerHTML=(ok?"\u2713 ":"\u2717 ")+it.p;
+    if(this.rs.filter(x=>x!=null).length===G2_ITEMS.length){
+      const ac=this.rs.filter(x=>x).length;
+      saveRec("classificar",ac);
+      document.getElementById("g2fin").innerHTML=`<div class="jogo-final"><div class="big">${ac}/${G2_ITEMS.length}</div><p>${ac===G2_ITEMS.length?"Perfeito! Você distingue muito bem o tema dos detalhes. \uD83E\uDD47":"Bom trabalho! Releia as justificativas."}</p><button class="btn ouro" onclick="G2.start()">\u21BA Jogar de novo</button></div>`;
+    }
+  }
+};
+
+/* ---------- G4: Complete com o recurso certo (cloze) ---------- */
+const G4 = {
+  i:0, pts:0, rounds:[],
+  start(){ this.i=0; this.pts=0; this.rounds=shuffle(G4_ROUNDS); this.render(); },
+  render(){
+    const b=document.getElementById("g4-body");
+    if(this.i>=this.rounds.length){
+      saveRec("complete",this.pts);
+      b.innerHTML=`<div class="jogo-final"><div class="big">${this.pts}/${this.rounds.length}</div><p>${this.pts===this.rounds.length?"Perfeito! \uD83E\uDDE9\uD83E\uDD47":"Pense no efeito pedido e escolha o recurso certo."}</p><button class="btn ouro" onclick="G4.start()">\u21BA Jogar de novo</button></div>`;
+      return;
+    }
+    const it=this.rounds[this.i];
+    b.innerHTML=`<div class="jogo-mid"><span class="chip">Frase ${this.i+1}/${this.rounds.length}</span><span class="chip">${this.pts} acertos</span></div>
+    <p style="font-size:.82rem;color:var(--txt2);margin-bottom:.4rem">${it.ctx}</p>
+    <div class="mini-texto">${it.f}</div>
+    <div class="alts" id="g4-alts">${it.o.map((o,k)=>`<button class="alt" onclick="G4.resp(${k})"><span class="letra">${"ABCD"[k]}</span> ${o}</button>`).join("")}</div>
+    <div class="mini-fb" id="g4-fb"></div>`;
+  },
+  resp(k){
+    const it=this.rounds[this.i],btns=document.querySelectorAll("#g4-alts .alt"),fb=document.getElementById("g4-fb");
+    btns.forEach((a,j)=>{a.disabled=true;if(j===it.c)a.classList.add("ok");else if(j===k)a.classList.add("err");else a.classList.add("dim");});
+    if(k===it.c){this.pts++;fb.className="mini-fb show ok";fb.textContent="\u2713 Exato!";}
+    else{fb.className="mini-fb show err";fb.textContent="\u2717 A opção certa era \""+it.o[it.c]+"\".";}
+    this.i++; setTimeout(()=>this.render(),1200);
+  }
+};
+
+/* ---------- G5: Ordene o raciocínio ---------- */
+const G5 = {
+  ri:0,
+  start(){ this.ri=0; this.renderRound(); },
+  renderRound(){
+    const b=document.getElementById("g5-body");
+    if(this.ri>=G5_ROUNDS.length){
+      saveRec("ordene","\u2713");
+      b.innerHTML=`<div class="jogo-final"><div class="big">\u2713</div><p>Você organizou todo o raciocínio! \uD83D\uDD22\uD83E\uDD47</p><button class="btn ouro" onclick="G5.start()">\u21BA Jogar de novo</button></div>`;
+      return;
+    }
+    const rd=G5_ROUNDS[this.ri];
+    const items=shuffle(rd.correct);
+    b.innerHTML=`<div class="jogo-mid"><span class="chip">Passo a passo ${this.ri+1}/${G5_ROUNDS.length}</span><span class="chip">${rd.title}</span></div>
+    <p style="font-size:.84rem;color:var(--txt2);margin-bottom:.7rem">Use as setas \u25B2 \u25BC para colocar os passos do raciocínio na ordem correta. Depois, clique em "Verificar".</p>
+    <ol class="ord-list" id="g5list">${items.map((it,i)=>`<li class="ord-item" data-txt="${encodeURIComponent(it)}">${it}<div class="ord-arrows"><button onclick="G5.move(${i},-1)">\u25B2</button><button onclick="G5.move(${i},1)">\u25BC</button></div></li>`).join("")}</ol>
+    <div style="text-align:center;margin-top:.6rem"><button class="btn ouro" onclick="G5.check()">\u2713 Verificar ordem</button></div>
+    <div class="mini-fb" id="g5fb"></div>`;
+  },
+  move(idx,dir){
+    const list=document.getElementById("g5list");
+    const items=[...list.children];
+    const newIdx=idx+dir;
+    if(newIdx<0||newIdx>=items.length)return;
+    if(dir===-1) list.insertBefore(items[idx], items[newIdx]);
+    else list.insertBefore(items[newIdx], items[idx]);
+    [...list.children].forEach((li,i)=>{
+      li.querySelector(".ord-arrows").innerHTML=`<button onclick="G5.move(${i},-1)">\u25B2</button><button onclick="G5.move(${i},1)">\u25BC</button>`;
+    });
+  },
+  check(){
+    const rd=G5_ROUNDS[this.ri];
+    const list=document.getElementById("g5list");
+    const items=[...list.children];
+    const fb=document.getElementById("g5fb");
+    let allOk=true;
+    items.forEach((li,i)=>{
+      const txt=decodeURIComponent(li.dataset.txt);
+      if(txt===rd.correct[i]) li.classList.add("ok");
+      else { li.classList.add("err"); allOk=false; }
+      li.querySelectorAll("button").forEach(b=>b.disabled=true);
+    });
+    if(allOk){
+      fb.className="mini-fb show ok"; fb.textContent="\u2713 Ordem perfeita!";
+      this.ri++; setTimeout(()=>this.renderRound(),1400);
+    } else {
+      fb.className="mini-fb show err";
+      fb.innerHTML="\u2717 Algumas posições estão trocadas. <button class=\"mini-btn\" style=\"margin-left:.5rem\" onclick=\"G5.renderRound()\">Tentar de novo</button>";
+    }
+  }
+};
+
+// Initialize open question gabaritos as hidden
+['gabAberta1','gabAberta2','gabAberta3'].forEach(id=>{
+  const el=document.getElementById(id);
+  if(el)el.style.display='none';
+});
+
+</script>
+</body>
+</html>

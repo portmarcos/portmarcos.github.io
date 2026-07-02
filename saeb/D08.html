@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAEB/SIMAVE – D08 | Linguagem verbal e não verbal — Tirinhas do Armandinho</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--azul:#1a3a5c;--azul-m:#235a8c;--azul-c:#d6e8f7;--ouro:#c9871f;--ouro-c:#fff8eb;--verde:#246b4a;--verde-c:#e6f4ed;--verm:#b02a2a;--verm-c:#fdecea;--bg:#f2f4f7;--borda:#d0d6e0;--branco:#fff;--txt:#1c2635;--txt2:#4a5568}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;line-height:1.5}
+header{background:var(--azul);color:#fff;padding:2.4rem 1.5rem 1.8rem;text-align:center;position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:rgba(201,135,31,.12)}
+.badge{display:inline-block;background:var(--ouro);color:var(--azul);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:.8rem}
+header h1{font-family:'Lora',serif;font-size:clamp(1.5rem,4vw,2.1rem);font-weight:600;line-height:1.3;margin-bottom:.4rem}
+header p{font-size:.92rem;opacity:.78;max-width:560px;margin:0 auto;line-height:1.6}
+.voltar-link{display:inline-block;margin-bottom:1rem;color:#fff;opacity:.7;text-decoration:none;font-size:.82rem}
+.voltar-link:hover{opacity:1}
+.tabs{background:var(--branco);border-bottom:1px solid var(--borda);position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.tabs-inner{max-width:840px;margin:0 auto;display:flex}
+.tab-btn{flex:1;background:none;border:none;padding:.95rem .5rem;font-family:'Inter',sans-serif;font-size:.88rem;font-weight:600;color:var(--txt2);cursor:pointer;border-bottom:3px solid transparent;transition:.15s;display:flex;align-items:center;justify-content:center;gap:.35rem}
+.tab-btn:hover{color:var(--azul-m);background:var(--bg)}
+.tab-btn.active{color:var(--azul);border-bottom-color:var(--ouro)}
+main{max-width:840px;margin:0 auto;padding:1.6rem 1.25rem 4rem}
+.tab-pane{display:none;flex-direction:column;gap:1.6rem}
+.tab-pane.active{display:flex}
+.painel{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.5rem 1.6rem}
+.painel h2{font-family:'Lora',serif;font-size:1.2rem;color:var(--azul);margin-bottom:.7rem}
+.painel h3{font-size:.95rem;color:var(--azul-m);margin:.9rem 0 .3rem}
+.painel p,.painel li{font-size:.9rem;margin-bottom:.5rem}
+.painel ul{margin:.2rem 0 .6rem 1.2rem}
+.painel strong{color:var(--azul)}
+.resumo-box{background:var(--azul);color:#fff;border-radius:14px;padding:1.4rem 1.6rem}
+.resumo-box h2{color:#fff;font-family:'Lora',serif;font-size:1.1rem;margin-bottom:.5rem}
+.resumo-box p{color:rgba(255,255,255,.9);font-size:.92rem;margin:0}
+.resumo-box .fc{display:block;margin-top:.7rem;font-style:italic;font-size:.88rem;background:rgba(255,255,255,.1);padding:.6rem .9rem;border-radius:8px;border-left:3px solid var(--ouro)}
+.dica-ouro{background:var(--ouro-c);border:1px solid #ecd9aa}
+.dica-ouro h2{color:#7a5310}.dica-ouro li{color:#4a3408}.dica-ouro strong{color:#7a5310}
+.glossario dt{font-weight:600;color:var(--azul-m);font-size:.88rem;margin-top:.5rem}
+.glossario dd{font-size:.86rem;color:var(--txt2);margin-left:0}
+.aviso-prof{background:#eef4fb;border:1px dashed var(--azul-m);border-radius:10px;padding:.9rem 1.1rem;font-size:.82rem;color:var(--azul-m)}
+.records{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.2rem 1.4rem}
+.records h2{font-family:'Lora',serif;font-size:1.1rem;color:var(--azul);margin-bottom:.6rem}
+.rec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.7rem}
+.rec-item{background:var(--bg);border-radius:10px;padding:.7rem;text-align:center}
+.rec-item .rv{font-size:1.5rem;font-weight:700;color:var(--azul-m)}
+.rec-item .rl{font-size:.72rem;color:var(--txt2)}
+.prog-wrap{background:var(--branco);border:1px solid var(--borda);border-radius:12px;padding:.85rem 1.1rem;display:flex;align-items:center;gap:14px}
+.prog-label{font-size:.78rem;font-weight:600;color:var(--azul-m);white-space:nowrap}
+.prog-track{flex:1;height:6px;background:var(--borda);border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--azul-m),var(--ouro));border-radius:99px;width:0%;transition:width .4s}
+.score{font-size:.78rem;font-weight:600;color:var(--txt2);white-space:nowrap}
+.card{background:var(--branco);border-radius:14px;border:1px solid var(--borda);overflow:hidden}
+.card-head{background:var(--azul);color:#fff;padding:.65rem 1.2rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.qnum{background:var(--ouro);color:var(--azul);font-size:.72rem;font-weight:700;padding:3px 11px;border-radius:20px}
+.qtipo{font-size:.74rem;opacity:.65;font-style:italic}
+
+
+.txt-base{background:var(--ouro-c);border-left:4px solid var(--ouro);margin:1rem 1.1rem 0;padding:1rem 1.1rem;border-radius:0 8px 8px 0;font-family:'Lora',serif;font-size:.94rem;line-height:1.85;color:#2b1d00;position:relative}
+.txt-fonte{font-family:'Inter',sans-serif;font-size:.72rem;color:var(--txt2);margin-top:.6rem;display:block;border-top:1px solid #e6d5b0;padding-top:.4rem}
+.btn-tts{position:absolute;top:.6rem;right:.6rem;background:none;border:1px solid #c9a14a;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;color:#8a6d1b;transition:.15s}
+.btn-tts:hover{background:#f5e6c1}
+.btn-tts.playing{background:var(--azul);color:#fff;border-color:var(--azul)}
+.img-slot{margin:.8rem 1.1rem 0;border:2px dashed var(--borda);border-radius:10px;padding:.8rem;text-align:center;color:var(--txt2);font-size:.76rem}
+.enunciado{padding:1rem 1.1rem .4rem;font-size:.92rem;line-height:1.6;font-weight:500;color:var(--azul)}
+.alts{padding:.4rem 1.1rem 1.1rem;display:flex;flex-direction:column;gap:.45rem}
+.alt{display:flex;align-items:flex-start;gap:10px;padding:.65rem .9rem;border:1.5px solid var(--borda);border-radius:9px;background:var(--branco);cursor:pointer;text-align:left;font-family:'Inter',sans-serif;font-size:.86rem;color:var(--txt);line-height:1.5;transition:.15s;width:100%}
+.alt:hover:not(:disabled){border-color:var(--azul-m);background:var(--azul-c);transform:translateX(2px)}
+.alt:disabled{cursor:default}
+.letra{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;border-radius:50%;background:var(--bg);font-size:.75rem;font-weight:700;color:var(--azul);flex-shrink:0}
+.alt.ok{border-color:var(--verde);background:var(--verde-c);color:var(--verde);font-weight:500}
+.alt.ok .letra{background:var(--verde);color:#fff}
+.alt.err{border-color:var(--verm);background:var(--verm-c);color:var(--verm)}
+.alt.err .letra{background:var(--verm);color:#fff}
+.alt.dim{opacity:.5}
+.fb{display:none;margin:0 1.1rem 1.1rem;padding:.8rem 1rem;border-radius:8px;font-size:.83rem;line-height:1.6}
+.fb.show{display:block}.fb.ok{background:var(--verde-c);border-left:3px solid var(--verde)}.fb.err{background:var(--verm-c);border-left:3px solid var(--verm)}
+.fb .ft{font-weight:600;margin-bottom:.3rem}.fb.ok .ft{color:var(--verde)}.fb.err .ft{color:var(--verm)}
+.fb .pq{margin-top:.5rem;border-top:1px solid rgba(0,0,0,.08);padding-top:.4rem}
+.fb .pq b{color:var(--azul)}
+.fb .pi{display:block;font-size:.8rem;color:var(--txt2);margin-bottom:.2rem}
+.fb .pi .l{font-weight:700;color:var(--azul)}
+#resultado{display:none;background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:2.4rem 2rem;text-align:center}
+#resultado h2{font-family:'Lora',serif;font-size:1.4rem;color:var(--azul)}
+.medalha{font-size:3rem;margin:.4rem 0}.nota{font-size:3.4rem;font-weight:700;color:var(--azul-m);line-height:1;margin:.4rem 0}
+#resultado p{color:var(--txt2);font-size:.9rem;max-width:480px;margin:.4rem auto 0}
+.btn{display:inline-block;background:var(--azul);color:#fff;padding:.65rem 1.5rem;border-radius:30px;border:none;font-size:.86rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;margin:.3rem}
+.btn:hover{background:var(--azul-m)}
+.btn.ouro{background:var(--ouro);color:var(--azul)}.btn.sec{background:var(--bg);color:var(--azul);border:1px solid var(--borda)}
+.jogo-card{background:var(--branco);border-radius:14px;border:1px solid var(--borda);overflow:hidden}
+.jogo-head{padding:1rem 1.3rem;border-bottom:1px solid var(--borda);display:flex;align-items:center;gap:.7rem}
+.jogo-ico{font-size:1.5rem}
+.jogo-head h3{font-family:'Lora',serif;font-size:1.1rem;color:var(--azul);margin:0}
+.jogo-head .desc{font-size:.78rem;color:var(--txt2)}
+.jogo-body{padding:1.2rem 1.3rem}
+.chip{font-size:.76rem;font-weight:600;padding:4px 11px;border-radius:20px;background:var(--azul-c);color:var(--azul)}
+.chip.timer{background:var(--ouro-c);color:#a96e10}
+.jogo-mid{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:.8rem}
+.timerbar{flex:1;min-width:100px;height:8px;background:var(--borda);border-radius:99px;overflow:hidden}
+.timerbar>div{height:100%;width:100%;background:linear-gradient(90deg,var(--verde),var(--ouro),var(--verm));border-radius:99px;transition:width .25s linear}
+.mini-texto{background:var(--ouro-c);border-left:4px solid var(--ouro);border-radius:0 8px 8px 0;padding:.85rem 1rem;font-family:'Lora',serif;font-size:.9rem;line-height:1.7;color:#2b1d00;margin-bottom:.8rem;position:relative}
+.mini-q{font-weight:600;color:var(--azul);margin-bottom:.6rem;font-size:.9rem}
+.mini-btn{border:1.5px solid var(--borda);background:var(--branco);border-radius:8px;padding:.45rem .8rem;font-size:.8rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;color:var(--azul);transition:.15s}
+.mini-btn:hover:not(:disabled){background:var(--azul-c);border-color:var(--azul-m)}
+.mini-btn:disabled{cursor:default}
+.mini-btn.ok{background:var(--verde-c);border-color:var(--verde);color:var(--verde)}
+.mini-btn.err{background:var(--verm-c);border-color:var(--verm);color:var(--verm)}
+.mini-fb{font-size:.8rem;margin-top:.5rem;padding:.45rem .65rem;border-radius:6px;display:none}
+.mini-fb.show{display:block}.mini-fb.ok{background:var(--verde-c);color:var(--verde)}.mini-fb.err{background:var(--verm-c);color:var(--verm)}
+.vf-item,.det-item{border:1.5px solid var(--borda);border-radius:10px;padding:.7rem .9rem;margin-bottom:.6rem}
+.vf-stm{font-size:.88rem;margin-bottom:.5rem}
+.btn-row{display:flex;gap:.5rem;flex-wrap:wrap}
+.cat-btn.cat-tema.ok{border-color:var(--azul-m);background:var(--azul-c);color:var(--azul)}
+.cat-btn.cat-detalhe.ok{border-color:var(--ouro);background:var(--ouro-c);color:#a96e10}
+.cat-btn.cat-foradotexto.ok{border-color:var(--verde);background:var(--verde-c);color:var(--verde)}
+.jogo-final{text-align:center;padding:.8rem 0 .3rem}
+.jogo-final .big{font-size:2rem;font-weight:700;color:var(--azul-m)}
+.jogo-final p{font-size:.88rem;color:var(--txt2);margin:.2rem 0 .8rem}
+.ord-list{list-style:none;padding:0;counter-reset:ord}
+.ord-item{counter-increment:ord;display:flex;align-items:center;gap:10px;padding:.6rem .9rem;border:1.5px solid var(--borda);border-radius:9px;margin-bottom:.5rem;background:var(--branco);font-size:.86rem;user-select:none}
+.ord-item::before{content:counter(ord);display:flex;align-items:center;justify-content:center;min-width:24px;height:24px;border-radius:50%;background:var(--azul-c);font-size:.72rem;font-weight:700;color:var(--azul)}
+.ord-item.ok{border-color:var(--verde);background:var(--verde-c)}
+.ord-item.err{border-color:var(--verm);background:var(--verm-c)}
+.ord-arrows{display:flex;flex-direction:column;gap:2px;margin-left:auto}
+.ord-arrows button{background:var(--bg);border:1px solid var(--borda);border-radius:4px;width:24px;height:20px;cursor:pointer;font-size:.65rem;display:flex;align-items:center;justify-content:center}
+.ord-arrows button:hover{background:var(--azul-c)}
+footer{text-align:center;padding:1.5rem;font-size:.76rem;color:var(--txt2)}
+@media print{.tabs,header,.prog-wrap,.btn,.btn-tts,.img-slot,footer,#resultado,.jogo-card,.records,.resumo-box,.dica-ouro,.glossario,.aviso-prof{display:none!important}.tab-pane{display:flex!important}.card{break-inside:avoid;border:1px solid #ccc;margin-bottom:1rem}.card-head{background:#333!important;-webkit-print-color-adjust:exact}.fb{display:block!important;background:#f5f5f5!important;border-left:3px solid #999!important;color:#333!important}}
+@media(max-width:480px){.painel{padding:1.1rem}.tab-btn{font-size:.78rem;padding:.8rem .3rem}}
+
+.genre-tag{display:inline-block;padding:3px 10px;border-radius:14px;font-size:.72rem;font-weight:700;margin-bottom:.5rem}
+.func-tag{display:inline-block;padding:4px 12px;border-radius:14px;font-size:.75rem;font-weight:700;margin:2px 4px 2px 0;color:#fff}
+.func-informar{background:#3498db}.func-narrar{background:#e74c3c}.func-opinar{background:#f39c12}.func-instruir{background:#27ae60}.func-definir{background:#9b59b6}.func-expressar{background:#1abc9c}
+.disc-area{width:calc(100% - 2.2rem);min-height:130px;border:1.5px solid var(--borda);border-radius:9px;padding:.7rem .9rem;font-family:'Inter',sans-serif;font-size:.88rem;resize:vertical;margin:0 1.1rem .4rem}
+.disc-actions{padding:0 1.1rem 1rem}
+@media print{.gabarito-print{display:block!important;break-before:page;border:1px solid #999;border-radius:8px;padding:1rem 1.2rem;margin-top:1rem}.gabarito-print h2{font-size:1.1rem;margin-bottom:.6rem}.gabarito-print ol{margin-left:1.2rem}.gabarito-print li{font-size:.86rem;margin-bottom:.3rem}.fb{display:none!important}.disc-actions{display:none!important}}
+
+.tese-box{background:#e3f2fd;border-left:4px solid #1976d2;padding:.8rem;margin:.8rem 0;border-radius:0 8px 8px 0}
+.disc-area{width:calc(100% - 2.2rem);min-height:130px;border:1.5px solid var(--borda);border-radius:9px;padding:.7rem .9rem;font-family:'Inter',sans-serif;font-size:.88rem;resize:vertical;margin:0 1.1rem .4rem}
+.disc-actions{padding:0 1.1rem 1rem}
+@media print{.gabarito-print{display:block!important;break-before:page}.fb{display:none!important}.disc-actions{display:none!important}}
+/* ===== TELA DE IDENTIFICAÇÃO E MODO DE JOGO ===== */
+.quiz-gate{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.8rem 1.6rem;max-width:480px;margin:0 auto}
+.quiz-gate h2{font-family:'Lora',serif;font-size:1.25rem;color:var(--azul);margin-bottom:.4rem}
+.quiz-gate>p{font-size:.88rem;color:var(--txt2);margin-bottom:1.2rem}
+.gate-field{margin-bottom:1.1rem}
+.gate-field>label{display:block;font-size:.82rem;font-weight:600;color:var(--azul-m);margin-bottom:.4rem}
+.gate-field input[type=text]{width:100%;padding:.65rem .8rem;border:1.5px solid var(--borda);border-radius:9px;font-family:'Inter',sans-serif;font-size:.92rem;color:var(--txt)}
+.gate-field input[type=text]:focus{outline:none;border-color:var(--azul-m)}
+.modo-opcoes{display:flex;flex-direction:column;gap:.6rem}
+.modo-opcao{display:flex;align-items:flex-start;gap:.6rem;border:1.5px solid var(--borda);border-radius:10px;padding:.7rem .85rem;cursor:pointer;transition:.15s}
+.modo-opcao:hover{border-color:var(--azul-m)}
+.modo-opcao input[type=radio]{margin-top:.25rem;accent-color:var(--azul-m)}
+.modo-opcao input[type=radio]:checked~span b{color:var(--azul)}
+.modo-opcao span{font-size:.85rem}
+.modo-opcao small{color:var(--txt2);font-weight:400}
+.gate-aviso{color:var(--verm);font-size:.82rem;margin-top:.7rem;min-height:1.2em}
+.modo-opcao.bloqueado{opacity:.6;cursor:not-allowed}
+.modo-opcao.liberado{opacity:1;cursor:pointer;border-color:var(--verde)}
+.cadeado{font-size:.75rem}
+.senha-box{display:flex;gap:.5rem;margin-top:.6rem}
+.senha-box input[type=password]{flex:1;padding:.55rem .75rem;border:1.5px solid var(--borda);border-radius:9px;font-family:'Inter',sans-serif;font-size:.85rem}
+.senha-box input[type=password]:focus{outline:none;border-color:var(--azul-m)}
+.senha-btn{white-space:nowrap;font-size:.8rem;padding:.55rem 1rem}
+.senha-aviso{font-size:.78rem;margin-top:.4rem;min-height:1.1em}
+.senha-aviso.ok{color:var(--verde)}
+.senha-aviso.erro{color:var(--verm)}
+.modo-chip{font-size:.74rem;font-weight:700;padding:4px 12px;border-radius:20px;background:var(--azul-c);color:var(--azul-m);margin-left:auto}
+.envio-status{font-size:.82rem;margin-top:.8rem;padding:.6rem .9rem;border-radius:8px}
+.envio-status.enviando{background:var(--azul-c);color:var(--azul-m)}
+.envio-status.ok{background:var(--verde-c);color:var(--verde)}
+.envio-status.erro{background:var(--verm-c);color:var(--verm)}
+/* No modo prova, o feedback de cada questão fica escondido até o aluno terminar */
+.fb.prova-oculto{display:none!important}
+@media print{.quiz-gate,.modo-chip,.envio-status{display:none!important}#quizConteudo{display:block!important}}
+</style>
+</head><body><header><a href="index.html" class="voltar-link">← Painel SAEB/SIMAVE</a><div class="badge">SAEB · SIMAVE · Língua Portuguesa</div><h1>Habilidade D08</h1><p>Interpretar texto que conjuga linguagem verbal e não verbal</p></header>
+<nav class="tabs"><div class="tabs-inner"><button class="tab-btn active" data-tab="estudar">📚 Estudar</button><button class="tab-btn" data-tab="quiz">📝 Quiz</button><button class="tab-btn" data-tab="jogos">🎮 Jogos</button></div></nav><main><section class="tab-pane active" id="pane-estudar"><div class="resumo-box"><h2>🎯 Em uma frase</h2><p>O D8 mede se você consegue <strong style='color:#ffd98a'>integrar o que os personagens falam com o que a imagem mostra</strong> — porque nas tirinhas, os dois juntos criam um sentido que nenhum teria sozinho.</p><span class="fc">"Nas tirinhas, o que não é dito às vezes grita mais alto do que o que está escrito."</span></div>
+<section class="painel"><h2>📌 O que essa habilidade avalia</h2>
+<p>O D8 avalia se você consegue <strong>integrar as informações da linguagem verbal (texto, fala dos personagens) com as da linguagem não verbal (imagens, expressões, gestos, quadros sem fala)</strong> para construir o sentido completo de um texto. Nas tirinhas, os dois códigos funcionam juntos — um sem o outro deixa a mensagem incompleta.</p>
+<h3>Recursos não verbais mais comuns nas tirinhas:</h3>
+<ul>
+<li><strong>Expressões faciais</strong> — espanto, ironia, tristeza, sem nenhuma palavra</li>
+<li><strong>Gestual e postura corporal</strong> — amplificam ou contradizem o que é dito</li>
+<li><strong>Quadro mudo (sem fala)</strong> — o silêncio visual carrega o ponto da tirinha</li>
+<li><strong>Balão vazio</strong> — personagem de boca aberta sem resposta</li>
+<li><strong>Objetos e cenário</strong> — plaquinhas, jornais, settings que adicionam sentido</li>
+<li><strong>Olhar fora do quadro</strong> — sugere presença implícita, mais forte por não ser vista</li>
+</ul>
+<h3>Perguntas-chave para analisar o não verbal:</h3>
+<ul>
+<li>O que a imagem mostra que o texto NÃO diz?</li>
+<li>O visual <em>confirma</em>, <em>amplifica</em> ou <em>contradiz</em> o verbal?</li>
+<li>O que mudaria se eu não pudesse ver a imagem?</li>
+<li>Por que este quadro não tem fala? O que o silêncio comunica?</li>
+</ul>
+</section>
+
+<section class="dica-ouro painel"><h2>💡 Dica de ouro</h2><ul>
+<li><strong>Nas tirinhas do Armandinho, a expressão de inocência é sempre intencional.</strong> O visual de criança contrasta com falas politicamente afiadas — o efeito só existe porque os dois elementos se combinam.</li>
+<li><strong>Quadros sem fala não são "vazios".</strong> São os momentos mais importantes — onde a imagem precisa falar sozinha.</li>
+<li><strong>Balão vazio ≠ espaço em branco.</strong> Boca aberta + balão vazio = personagem sem argumento.</li>
+<li><strong>O olhar para fora do quadro cria o que não é mostrado.</strong> O leitor imagina — e o imaginado é sempre mais poderoso.</li>
+</ul></section>
+
+<section class="painel glossario"><h2>📖 Glossário</h2><dl>
+<dt>Linguagem verbal</dt><dd>Comunicação por palavras — falas nos balões, legendas, plaquinhas.</dd>
+<dt>Linguagem não verbal</dt><dd>Comunicação por imagens, expressões, gestos, layout visual — tudo que não é texto.</dd>
+<dt>Quadro mudo</dt><dd>Quadrinho sem fala — o silêncio visual é a mensagem.</dd>
+<dt>Balão vazio</dt><dd>Balão de fala sem texto — personagem tenta falar mas não consegue.</dd>
+<dt>Integração verbal/não verbal</dt><dd>Quando as duas linguagens juntas criam um sentido que nenhuma teria sozinha.</dd>
+<dt>Tirinha</dt><dd>Gênero textual formado por sequência de quadros com linguagem verbal e não verbal integradas.</dd>
+</dl></section>
+
+<div class="aviso-prof">📌 <strong>Professor(a):</strong> nas questões desta atividade, quando a imagem não estiver carregando, a transcrição abaixo dela descreve os elementos visuais essenciais. Isso garante que o aluno possa responder mesmo sem ver a imagem. Para ativar as imagens, baixe as tirinhas do Facebook (@tirasarmandinho) e adicione em <code>saeb/imagens/</code>.</div>
+</section><section class="tab-pane" id="pane-quiz">
+
+<!-- ===== TELA DE IDENTIFICAÇÃO (aparece antes do quiz) ===== -->
+<div id="quizGate" class="quiz-gate">
+  <h2>👋 Antes de começar</h2>
+  <p>Preencha seus dados e escolha o modo de jogo.</p>
+  <div class="gate-field">
+    <label for="alunoNome">Nome do aluno</label>
+    <input type="text" id="alunoNome" placeholder="Seu nome completo" autocomplete="off">
+  </div>
+  <div class="gate-field">
+    <label for="alunoTurma">Turma / Série</label>
+    <input type="text" id="alunoTurma" placeholder="Ex: 9º Ano A" autocomplete="off">
+  </div>
+  <div class="gate-field">
+    <label>Modo de jogo</label>
+    <div class="modo-opcoes">
+      <label class="modo-opcao">
+        <input type="radio" name="modoQuiz" value="prova" checked>
+        <span><b>📝 Modo Prova</b><br><small>Sem feedback durante o quiz. As respostas certas só aparecem no final, como numa prova de verdade.</small></span>
+      </label>
+      <label class="modo-opcao" id="opcaoEstudo">
+        <input type="radio" name="modoQuiz" value="estudo" id="radioEstudo" disabled>
+        <span><b>📖 Modo Estudo</b> <span class="cadeado" id="cadeadoEstudo">🔒</span><br><small>Mostra se acertou ou errou — e a explicação — logo após cada resposta. Liberado pelo professor.</small></span>
+      </label>
+    </div>
+    <div class="senha-box" id="senhaBox">
+      <input type="password" id="senhaEstudo" placeholder="Senha do professor para liberar o Modo Estudo" autocomplete="off">
+      <button type="button" class="btn sec senha-btn" id="btnLiberarEstudo">Liberar</button>
+    </div>
+    <p class="senha-aviso" id="senhaAviso"></p>
+  </div>
+  <button class="btn" id="btnIniciarQuiz">▶ Começar o quiz</button>
+  <p class="gate-aviso" id="gateAviso"></p>
+</div>
+
+<!-- ===== QUIZ (fica oculto até o aluno preencher os dados acima) ===== -->
+<div id="quizConteudo" style="display:none">
+<div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.5rem;align-items:center">
+
+<button class="btn sec" onclick="location.reload()">🔀 Embaralhar e refazer</button>
+<span class="modo-chip" id="modoChip"></span>
+</div>
+<div class="prog-wrap"><span class="prog-label">Progresso</span><div class="prog-track"><div class="prog-fill" id="pFill"></div></div><span class="score" id="score">0 / 12</span></div>
+<div id='quiz'></div><div class='card' id='cardDisc' style='margin-top:1.5rem'><div class='card-head'><span class='qnum'>Q13</span><span class='qtipo'>Notícia real</span><span class='qnivel dificil'>Aberta</span></div><div class='txt-base' id='txtDisc'>Leia o trecho:<br><br><b>Observatório do Clima entrega recomendações para transição energética</b><br>O documento foi elaborado por 161 organizações sociais e enviado ao governo federal. O prazo para a equipe ministerial entregar o planejamento termina em 6 de fevereiro. As recomendações incluem medidas técnicas, de regulamentação e econômicas.<span class='txt-fonte'>Agência Brasil/EBC, 28 jan. 2026. Adaptado.</span></div><p class='enunciado'><b>a)</b> Qual é a informação principal desse trecho?<br><b>b)</b> Identifique uma informação secundária (de contexto/circunstância).<br><b>c)</b> Por que é importante, ao resumir um texto, separar partes principais de secundárias?</p><textarea class='disc-area'></textarea><div class='disc-actions'><button class="btn sec" id="btnDisc" onclick="(function(){var p=prompt('Senha do professor:');if(p===SENHA_MODO_ESTUDO){var fb=document.getElementById('fbDisc');if(fb){fb.style.display='block';}}else if(p!==null){alert('Senha incorreta.');}})()">👁️ Ver gabarito</button></div><div class='fb' id='fbDisc'><div class='ft' style='color:var(--azul)'>Gabarito</div><div><b>a)</b> A informação principal é o documento de recomendações para a transição energética, elaborado por 161 organizações sociais.<br><b>b)</b> A data exata do prazo (6 de fevereiro) é informação secundária, de circunstância administrativa.<br><b>c)</b> Resposta livre, mas deve mencionar que separar partes principais de secundárias permite resumir o texto de forma fiel e objetiva, sem perder o sentido central nem se prender a detalhes que não mudam a compreensão geral.</div></div>
+<div id='resultado'><h2>Concluído!</h2><div class='medalha' id='medalha'>🏅</div><div class='nota' id='notaFinal'>—</div><p id='msgFinal'></p><div id="envioStatus" class="envio-status"></div><button class='btn' onclick='location.reload()'>↺ Refazer</button></div></div>
+</div>
+</section><section class='tab-pane' id='pane-jogos'><div class='resumo-box'><h2>🎮 Hora de jogar</h2><p>Cinco minijogos para treinar a distinção entre partes principais e secundárias.</p></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>⏱️</span><h3>Verbal ou não verbal?</h3></div><div class='jogo-body' id='g1-body'><button class='btn ouro' onclick='G1.start()'>▶ Começar</button></div></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>🏷️</span><h3>Classifique</h3></div><div class='jogo-body' id='g2-body'><button class='btn ouro' onclick='G2.start()'>▶ Começar</button></div></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>🔎</span><h3>Pelas pistas</h3></div><div class='jogo-body' id='g3-body'><button class='btn ouro' onclick='G3.start()'>▶ Começar</button></div></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>🧩</span><h3>Complete</h3></div><div class='jogo-body' id='g4-body'><button class='btn ouro' onclick='G4.start()'>▶ Começar</button></div></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>🔢</span><h3>Ordene</h3></div><div class='jogo-body' id='g5-body'><button class='btn ouro' onclick='G5.start()'>▶ Começar</button></div></div>
+
+
+
+</section></main><footer>Portal do Professor Marcos Cruz · SAEB/SIMAVE · D08</footer><script>
+/* ===== CONFIGURAÇÃO DO ENVIO PARA GOOGLE SHEETS =====
+   Cole aqui a URL do seu Apps Script publicado como "App da Web".
+   Veja o arquivo google-apps-script.gs para instruções de instalação.
+   Enquanto estiver "SUBSTITUA_PELA_SUA_URL", o envio fica desativado
+   (o quiz funciona normalmente, só não manda nada para a planilha). */
+const SHEETS_URL = "https://script.google.com/macros/s/AKfycbwPcWRWW2IkMb8-WkyB2w1M2n9ivcYlfqWajYRgCzecLTC1T7aBetZtR2MDaOIxahc/exec";
+const DESCRITOR_PAGINA = "D8 - Interpretar texto que conjuga linguagem verbal e não verbal";
+const NOME_ARQUIVO = "D08.html";
+
+/* ===== ESTADO DO ALUNO E MODO DE JOGO ===== */
+let alunoNome = "";
+let alunoTurma = "";
+let modoJogo = "estudo"; // "estudo" ou "prova"
+const respostasDetalhadas = []; // uma entrada por questão respondida, na ordem em que aparecem
+
+/* ===== SENHA PARA LIBERAR O MODO ESTUDO =====
+   Troque a senha abaixo quando quiser. É a MESMA senha em todas as páginas
+   do portal (mais simples de lembrar e passar para os alunos quando for
+   hora de revisão). Lembre-se: como o quiz roda no navegador do aluno,
+   essa senha impede o uso casual do Modo Estudo, mas não é uma proteção
+   contra alguém que abra o código-fonte da página — as respostas já estão
+   no arquivo de qualquer forma, como em qualquer site estático como este. */
+const SENHA_MODO_ESTUDO = "professor123";
+
+document.getElementById("btnLiberarEstudo").onclick = () => {
+  const campo = document.getElementById("senhaEstudo");
+  const aviso = document.getElementById("senhaAviso");
+  if (campo.value === SENHA_MODO_ESTUDO) {
+    document.getElementById("radioEstudo").disabled = false;
+    document.getElementById("radioEstudo").checked = true;
+    document.getElementById("cadeadoEstudo").textContent = "🔓";
+    document.getElementById("opcaoEstudo").classList.add("liberado");
+    document.getElementById("senhaBox").style.display = "none";
+    aviso.className = "senha-aviso ok";
+    aviso.textContent = "✓ Modo Estudo liberado.";
+  } else {
+    aviso.className = "senha-aviso erro";
+    aviso.textContent = "Senha incorreta.";
+  }
+};
+// Também libera ao apertar Enter no campo de senha
+document.getElementById("senhaEstudo").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") document.getElementById("btnLiberarEstudo").click();
+});
+
+document.getElementById("btnIniciarQuiz").onclick = () => {
+  const nome = document.getElementById("alunoNome").value.trim();
+  const turma = document.getElementById("alunoTurma").value.trim();
+  const aviso = document.getElementById("gateAviso");
+  if (!nome || !turma) {
+    aviso.textContent = "Preencha nome e turma/série para continuar.";
+    return;
+  }
+  alunoNome = nome;
+  alunoTurma = turma;
+  modoJogo = document.querySelector('input[name="modoQuiz"]:checked').value;
+  document.getElementById("quizGate").style.display = "none";
+  document.getElementById("quizConteudo").style.display = "block";
+  const chip = document.getElementById("modoChip");
+  chip.textContent = modoJogo === "prova" ? "📝 Modo Prova" : "📖 Modo Estudo";
+};
+
+/* ===== ENVIO PARA O GOOGLE SHEETS ===== */
+function enviarParaSheets() {
+  const statusEl = document.getElementById("envioStatus");
+  if (!SHEETS_URL || SHEETS_URL.indexOf("SUBSTITUA") !== -1) {
+    statusEl.className = "envio-status";
+    statusEl.textContent = "";
+    return; // envio desativado até o professor configurar a URL
+  }
+  statusEl.className = "envio-status enviando";
+  statusEl.textContent = "Enviando resultado para a planilha...";
+
+  const payload = {
+    nome: alunoNome,
+    turma: alunoTurma,
+    descritor: DESCRITOR_PAGINA,
+    pagina: NOME_ARQUIVO,
+    modo: modoJogo === "prova" ? "Prova" : "Estudo",
+    respostas: respostasDetalhadas
+  };
+
+  fetch(SHEETS_URL, {
+    method: "POST",
+    mode: "no-cors", // Apps Script Web Apps não devolvem CORS; "no-cors" garante o envio mesmo sem ler a resposta
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(payload)
+  }).then(() => {
+    statusEl.className = "envio-status ok";
+    statusEl.textContent = "✓ Resultado enviado para a planilha do professor.";
+  }).catch(() => {
+    statusEl.className = "envio-status erro";
+    statusEl.textContent = "✗ Não foi possível enviar o resultado (verifique sua internet).";
+  });
+}
+
+/* ===== QUIZ ===== */
+const QRAW=[{"n": 1, "tipo": "Tirinha", "nivel": "facil", "texto": "<img src=\"imagens/armandinho-sol.jpg\" alt=\"Tirinha: VENDO PÔR DO SOL\" style=\"max-width:100%;border-radius:8px;margin-bottom:8px;display:block\">", "fonte": "BECK, Alexandre. Tiras do Armandinho. facebook.com/tirasarmandinho", "enun": "O elemento não verbal que esclarece o sentido de 'vendo' como 'estou observando' — e não 'estou vendendo' — é:", "alts": ["a expressão de Fê ao responder ao passante, que indica irritação com a tentativa de compra.", "o pôr do sol visível ao fundo da cena, que confirma que Fê está contemplando a paisagem, não realizando uma transação.", "a plaquinha de madeira artesanal, que não tem aparência de anúncio comercial formal.", "a ausência de preço escrito na plaquinha, o que tornaria qualquer venda inviável."], "correta": 1, "porque": ["A expressão de Fê mostra esclarecimento, não irritação — e mesmo que fosse irritação, isso não resolveria a ambiguidade do verbo 'vendo'.", "Correto: com o pôr do sol visível ao fundo, o leitor vê que Fê está diante do fenômeno que anuncia estar 'vendo'. A imagem da paisagem é o único elemento que resolve a ambiguidade verbal — sem ela, a plaquinha continuaria ambígua.", "O formato da plaquinha não é o que resolve o equívoco — é o contexto visual do pôr do sol real ao fundo.", "Vendas informais sem preço são comuns. A ausência de valor não esclarece o sentido do verbo."]}, {"n": 2, "tipo": "Cartum", "nivel": "facil", "texto": "<img src=\"imagens/Charge%20(2).jpg\" alt=\"Cartum: 3.000 amigos nas redes, sozinho na vida real\" style=\"max-width:100%;border-radius:8px;margin-bottom:8px;display:block\">", "fonte": "ARIONAURUS. arionaurocartuns.com.br", "enun": "O efeito crítico do cartum sobre as redes sociais é produzido pelo:", "alts": ["exagero do número '3.000 amigos', que representa uma quantidade impossível de ter na prática.", "contraste visual entre a abundância de conexões virtuais no primeiro quadro e a solidão real no segundo.", "tamanho do celular no primeiro quadro, que sinaliza o quanto a tecnologia domina a vida do personagem.", "fato de o personagem falar em voz alta para si mesmo sobre seus amigos nas redes sociais."], "correta": 1, "porque": ["3.000 amigos em redes sociais é uma quantidade plausível, não impossível. O humor não vem da impossibilidade do número, mas do contraste com a solidão.", "Correto: o cartum funciona pela oposição entre os dois quadros — muitos amigos virtuais (Q1) e nenhum amigo real para conversar (Q2). Esse contraste visual entre abundância e vazio é o mecanismo central da crítica.", "O tamanho do celular é um detalhe do cenário, não o elemento que produz o efeito crítico. O contraste entre os dois quadros é que carrega o sentido.", "O personagem fala em balão de fala, não para si mesmo. E o que importa é o contraste entre os dois quadros, não a forma de comunicar."]}, {"n": 3, "tipo": "Anúncio publicitário", "nivel": "facil", "texto": "<img src=\"imagens/An%C3%BAncio%20(1).jpg\" alt=\"Anúncio Hortifruti: lima com símbolo do Lanterna Verde\" style=\"max-width:100%;border-radius:8px;margin-bottom:8px;display:block\">", "fonte": "Campanha Hortifruti. hortifruti.com.br", "enun": "O símbolo do Lanterna Verde projetado sobre a fruta tem a função de:", "alts": ["identificar parceria oficial entre a Hortifruti e os criadores do personagem.", "destacar que a fruta tem a mesma cor do uniforme do herói, justificando visualmente o nome 'Laranja Verde'.", "transferir para o produto os atributos simbólicos do herói — força, poder, proteção —, tornando concreto o benefício abstrato 'energia'.", "indicar que o anúncio é voltado especificamente para crianças fãs de histórias em quadrinhos."], "correta": 2, "porque": ["Não há indicação de parceria oficial — o símbolo é uma referência cultural para fins de comunicação persuasiva.", "A analogia de cor é o pretexto visual, mas o objetivo é transferir o significado de poder que o herói representa, não explicar o nome da fruta.", "Correto: ao sobrepor o símbolo do Lanterna Verde na fruta, o anúncio ativa o campo semântico de superpoderes, força e proteção associados ao herói. O slogan 'Aqui a natureza tem superpoderes' confirma essa transferência simbólica.", "A referência ao herói é um recurso retórico para adultos e jovens, não uma segmentação exclusiva para crianças."]}, {"n": 4, "tipo": "Charge", "nivel": "medio", "texto": "<img src=\"imagens/Charge%20(1).jpg\" alt=\"Charge: João empurra pedra quadrada; garota empurra roda\" style=\"max-width:100%;border-radius:8px;margin-bottom:8px;display:block\">", "fonte": "JUNIÃO. Escolastransformadoras.org.br", "enun": "O contraste visual entre João (pedra quadrada com esforço) e a garota (roda com facilidade) é essencial porque:", "alts": ["revela que a garota é fisicamente mais forte, o que explica a diferença de esforço entre os dois.", "estabelece o efeito de ironia visual: ao lado da garota que usa a roda com facilidade, o esforço de João se torna absurdo e ridículo — núcleo do humor da charge.", "indica que a garota é a personagem principal e João cumpre papel secundário como obstáculo.", "sugere que os dois personagens pertencem a épocas históricas distintas, o que explica a diferença tecnológica."], "correta": 1, "porque": ["A distinção não é de força física; João e a garota têm acesso à mesma situação histórica — o efeito é visual e simbólico.", "O contraste é o núcleo cômico e crítico da charge: ver João se esforçando com uma pedra quadrada ao lado de quem já inventou a roda torna o esforço dele absurdo e destaca a resistência humana a soluções mais práticas.", "Charges não definem protagonismo da mesma forma que narrativas; ambos os personagens têm papel igualmente importante no contraste visual.", "Os dois são pré-históricos e contemporâneos na cena; a diferença é de escolha tecnológica, não de época."]}, {"n": 5, "tipo": "Tirinha", "nivel": "medio", "texto": "<img src=\"imagens/armandinho-chuva.jpg\" alt=\"Tirinha: pai proíbe chuva — Vai, filho... Vai viver!\" style=\"max-width:100%;border-radius:8px;margin-bottom:8px;display:block\">", "fonte": "BECK, Alexandre. Tiras do Armandinho. facebook.com/tirasarmandinho", "enun": "O autor mostra apenas as pernas do pai em todos os quadros. Esse recurso não verbal produz o efeito de:", "alts": ["indicar que o pai está envergonhado de ceder ao pedido do filho e por isso esconde o rosto.", "reproduzir o ponto de vista de Armandinho.", "economizar espaço no quadro para dar destaque à chuva no cenário.", "mostrar que o pai é personagem secundário, sem relevância para a narrativa."], "correta": 1, "porque": ["O pai não cede — ele próprio conclui com 'Vai viver!', uma iniciativa sua, não uma capitulação. E vergonha não é sugerida em nenhum elemento visual ou verbal.", "Correto: ao mostrar apenas as pernas, a tirinha adota a perspectiva literal de uma criança olhando para cima. Quando essa figura de autoridade imponente — da qual só vemos pernas — diz 'Vai viver!', a surpresa é amplificada pelo contraste com a postura autoritária estabelecida visualmente.", "A chuva é apenas cenário. A ausência do rosto do pai é uma escolha narrativa sobre perspectiva, não uma questão de composição.", "O pai é o personagem central: inicia a proibição e protagoniza a virada. Chamá-lo de secundário contraria a estrutura da tirinha."]}, {"n": 6, "tipo": "Anúncio publicitário", "nivel": "medio", "texto": "<img src=\"imagens/An%C3%BAncio%20(2).jpg\" alt=\"Anúncio Hortifruti: mamão e microfone — Cai Cai Mamão\" style=\"max-width:100%;border-radius:8px;margin-bottom:8px;display:block\">", "fonte": "Campanha Hortifruti. hortifruti.com.br", "enun": "Sem o microfone e o sol sorridente, a frase 'CAI CAI, MAMÃO' seria lida como:", "alts": ["paródia de cantiga infantil, pois a repetição 'Cai Cai' já é suficiente para ativar o reconhecimento musical.", "crítica ao desperdício de frutas, dada a conotação negativa de algo que cai e se perde.", "instrução literal de manuseio do produto — não como referência à cantiga 'Cai Cai Balão'.", "referência à música erudita, por conter estrutura rítmica semelhante à de composições clássicas."], "correta": 2, "porque": ["A cantiga 'Cai Cai Balão' não é tão universal que qualquer menção a 'cai cai' a evoque automaticamente. Sem o microfone e o contexto musical, a leitura seria literal.", "A conotação de desperdício não é o que o anúncio ativa — o contexto é positivo (a fruta 'cai' para a mão do consumidor). Mesmo assim, sem o universo musical, essa leitura literal de queda seria mais provável.", "Correto: sem o microfone (contexto musical) e o sol sorridente (atmosfera festiva), o texto 'Cai Cai, Mamão / Aqui na Minha Mão' soaria como instrução de como pegar o produto — não como paródia de cantiga. Os elementos visuais são os que enquadram o texto no campo musical.", "A referência é à música popular/infantil, não à erudita. E mesmo assim, sem os elementos visuais, o texto não ativaria nenhum desses contextos."]}, {"n": 7, "tipo": "Tirinha", "nivel": "dificil", "texto": "<img src=\"imagens/Tirinha3.jpg\" alt=\"Tirinha: dinossauro vai ser extinto e virar petróleo\" style=\"max-width:100%;border-radius:8px;margin-bottom:8px;display:block\">", "fonte": "Autor a identificar. Tirinha de circulação na internet.", "enun": "A comemoração do dinossauro no último quadro intensifica a crítica ambiental porque:", "alts": ["transforma a tragédia em humor leve, aliviando a tensão e tornando o tema acessível.", "cria desconforto ao apresentar como celebração algo que o leitor reconhece como destruição futura.", "estabelece o dinossauro como vilão claro da história, separando agressor e vítima.", "indica que o autor considera o humor a única linguagem eficaz para tratar temas ambientais."], "correta": 1, "porque": ["'Alívio de tensão' é efeito do humor inofensivo. Aqui o humor é perturbador — o leitor sabe que a extinção futura por petróleo é real, o que impede qualquer alívio.", "Correto: celebrar a própria extinção como 'vingança' que causará novas extinções é absurdo e sombrio ao mesmo tempo. A euforia visual do gesto festivo conflita com o que está sendo celebrado, criando desconforto que é a própria crítica.", "A tirinha não separa claramente vilão e vítima: o dinossauro é vítima da extinção E agente involuntário das extinções futuras. A ambiguidade é o ponto.", "Inferir um 'manifesto do autor sobre linguagem' a partir do estilo da tirinha é extrapolar o que o texto efetivamente apresenta."]}, {"n": 8, "tipo": "Tirinha", "nivel": "dificil", "texto": "<img src=\"imagens/armandinho-trabalho.png\" alt=\"Tirinha: trabalho infantil — e nas tirinhas?\" style=\"max-width:100%;border-radius:8px;margin-bottom:8px;display:block\">", "fonte": "BECK, Alexandre. Tiras do Armandinho. facebook.com/tirasarmandinho", "enun": "Ao olhar para o leitor e mencionar 'E nas tirinhas?' no último quadro, o personagem produz:", "alts": ["encerra o texto com uma piada descontraída para aliviar a discussão sobre trabalho infantil.", "cria uma ruptura metalinguística: ao se reconhecer como personagem que trabalha em tirinhas, o personagem estende a contradição do trabalho infantil ao próprio texto em que existe.", "dirige-se diretamente ao autor Alexandre Beck, cobrando uma resposta sobre o tema discutido.", "sugere ao leitor que pesquise mais sobre trabalho infantil em outras tirinhas e publicações."], "correta": 1, "porque": ["A última fala não desfaz a discussão; pelo contrário, a expande ao incluir o próprio texto — o efeito não é de alívio, mas de ampliação da crítica.", "Ao mencionar \"E nas tirinhas?\", o personagem quebra a quarta parede e se reconhece dentro de uma tirinha — tornando o problema (trabalho infantil) parte do próprio texto em que ele existe, criando o efeito metalinguístico.", "O personagem se dirige ao leitor, não ao autor; a ruptura é entre ficção e realidade, não entre personagem e criador.", "O convite implícito ao leitor é sobre reflexão, não sobre pesquisa bibliográfica; o efeito é de engajamento crítico imediato."]}, {"n": 9, "tipo": "Tirinha — Questão discursiva", "nivel": "dificil", "texto": "<img src=\"imagens/armandinho-selfie.webp\" alt=\"Tirinha: pau de selfie usado para colher frutas\" style=\"max-width:100%;border-radius:8px;margin-bottom:8px;display:block\">", "fonte": "BECK, Alexandre. Tiras do Armandinho. facebook.com/tirasarmandinho", "enun": "(Questão aberta) No segundo quadro, não há fala — apenas a imagem da garota usando o pau de selfie para colher frutas. Explique: <b>(a)</b> o que o primeiro quadro leva o leitor a esperar; <b>(b)</b> o que o segundo quadro mostra; <b>(c)</b> por que o silêncio verbal no segundo quadro é mais eficiente do que qualquer fala seria.", "alts": [], "correta": -1, "porque": ["Questão discursiva. Gabarito disponível em 'Ver gabarito'.", "", "", ""]}, {"n": 10, "tipo": "Infográfico (IBGE)", "nivel": "medio", "texto": "<img src=\"imagens/Leitura.png\" alt=\"Gráfico percentual de leitores 2019x2024\" style=\"max-width:100%;border-radius:8px;margin-bottom:8px;display:block\">", "fonte": "Instituto Pró-Livro. <b>Retratos da Leitura no Brasil</b>, 2024.", "enun": "Qual elemento NÃO verbal desse gráfico reforça a diferença entre os dados de 2019 e 2024?", "alts": ["O título do gráfico, que nomeia os anos comparados.", "O uso de cores diferentes (bege para 2019, vermelho para 2024) para distinguir visualmente os dois anos.", "Os números percentuais apresentados abaixo de cada barra.", "A legenda escrita que identifica o gênero (feminino/masculino)."], "correta": 1, "porque": ["O título é elemento verbal (escrito), não não-verbal.", "As duas cores distintas (bege/vermelho) são o elemento visual (não-verbal) que permite ao leitor distinguir imediatamente os dois conjuntos de dados, sem ler os números.", "Os números são elementos verbais-numéricos, não puramente não-verbais.", "A legenda usa palavras escritas — é elemento verbal, não não-verbal."]}, {"n": 11, "tipo": "Campanha — Gota por Gota", "nivel": "medio", "texto": "<img src=\"imagens/gota.jpg\" alt=\"Campanha Cada Gota Conta - São José do Rio Pardo\" style=\"max-width:100%;border-radius:8px;margin-bottom:8px;display:block\">", "fonte": "Campanha <b>Cada Gota Conta</b>. Prefeitura de São José do Rio Pardo / SAERP.", "enun": "Nessa campanha, a imagem da gota d'água dentro de um círculo tem função", "alts": ["decorativa, para tornar o cartaz mais atraente visualmente, sem relação com o texto.", "simbólica e reforçadora da mensagem verbal: a gota representa o recurso hídrico que deve ser preservado, dando forma visual à ideia de economia de água.", "informativa, pois explica ao leitor como o ciclo da água funciona na natureza.", "narrativa, contando a história de um município que passou por problemas com abastecimento."], "correta": 1, "porque": ["A gota não é decorativa: é o símbolo central que representa o tema da campanha.", "A gota d'água dentro do slogan 'Cada Gota Conta' é uma metáfora visual: cada unidade importa, e a imagem da gota materializa esse conceito, integrando o verbal e o não-verbal.", "A imagem não explica o ciclo da água; ela simboliza o recurso hídrico de forma concisa e imediata.", "Não há narrativa; a campanha usa elementos persuasivos, não narrativos."]}, {"n": 12, "tipo": "Campanha — Doe um Livro", "nivel": "dificil", "texto": "<img src=\"imagens/Doe-livros.jpg\" alt=\"Campanha Incentive a Leitura - Doe um Livro\" style=\"max-width:100%;border-radius:8px;margin-bottom:8px;display:block\">", "fonte": "Campanha <b>Incentive a Leitura. Doe um Livro!</b>.", "enun": "Como os elementos verbais e não verbais dessa campanha se complementam para construir a mensagem?", "alts": ["Os elementos verbais são mais importantes; a imagem é redundante e poderia ser retirada sem perda de sentido.", "A imagem das crianças lendo um livro iluminado cria o apelo emocional, enquanto o texto verbal especifica o que o leitor deve fazer (doe livros paradidáticos para escolas de Caucaia).", "O texto verbal e a imagem transmitem mensagens opostas: o texto é sério, a imagem é lúdica.", "A imagem substitui completamente o texto; a campanha funcionaria igualmente sem palavras."], "correta": 1, "porque": ["A imagem não é redundante; ela cria o vínculo emocional que predispõe o leitor a aceitar o apelo do texto.", "A divisão de trabalho é clara: a imagem (crianças felizes com livro mágico) cria o apelo emocional e a associação positiva com a leitura; o texto especifica a ação concreta pedida (doar livros paradidáticos para Caucaia).", "Não há oposição: a imagem lúdica e o texto direto se complementam, cada um atuando em uma dimensão diferente (emoção × informação).", "Sem o texto, o leitor não saberia o que fazer nem onde levar os livros — o verbal é necessário para a função apelativa concreta."]}];const G1R=[{"t": "Quadro sem fala — Armandinho brinca na chuva, sorrindo.", "q": "Esse quadro não verbal transmite:", "o": ["que Armandinho ficou com frio", "que Armandinho escolheu 'viver' em vez de obedecer", "que a chuva parou", "que a mãe estava certa"], "c": 1}, {"t": "Plaquinha: 'VENDO pôr do sol — Preço: sua companhia'.", "q": "O elemento não verbal que cria ambiguidade é:", "o": ["o pôr do sol ao fundo", "o formato visual de anúncio comercial com 'VENDO'", "a roupa de Armandinho", "o tamanho da plaquinha"], "c": 1}, {"t": "Balão de fala vazio — pai abre a boca mas nada sai.", "q": "O balão vazio comunica:", "o": ["que o pai está dormindo", "que o autor esqueceu de escrever", "que o pai ficou sem argumento", "que a cena terminou"], "c": 2}, {"t": "Armandinho e amigos olham para algo fora do quadro.", "q": "Esse recurso não verbal sugere:", "o": ["que há um animal perigoso", "uma presença implícita não nomeada que teme o conhecimento", "que eles estão com tédio", "que vão sair de cena"], "c": 1}, {"t": "Quadro de pausa — Fê olha para a construção de tijolos sem falar.", "q": "A pausa visual serve para:", "o": ["mostrar que Fê errou a construção", "criar suspense antes da revelação 'Ou pontes'", "indicar que a história parou", "mostrar cansaço de Fê"], "c": 1}];const G2I=[{"s": "Armandinho com mochila escolar, expressão tranquila, dizendo que o poder vicia.", "cat": "nv_amplifica", "p": "O visual inocente amplifica o comentário crítico verbal."}, {"s": "Plaquinha 'VENDO pôr do sol — Preço: sua companhia'.", "cat": "nv_cria", "p": "O não verbal (formato de anúncio) cria a ambiguidade central."}, {"s": "Quadro final sem fala — Armandinho sorrindo na chuva.", "cat": "nv_confirma", "p": "O visual confirma a frase 'vai viver' sem precisar de palavras."}, {"s": "Balão vazio com pai de boca aberta.", "cat": "nv_substitui", "p": "O visual (balão vazio) substitui a resposta que o pai não tem."}, {"s": "Personagens olhando para fora do quadro.", "cat": "nv_sugere", "p": "O visual sugere presença não nomeada — mais poderoso que nomear."}, {"s": "Armandinho com pau de selfie diante de uma árvore enorme.", "cat": "nv_cria", "p": "O contraste de escala (tela pequena × árvore enorme) é a crítica."}];const G2C=[["nv_amplifica", "Visual amplifica o verbal"], ["nv_cria", "Visual cria o sentido"], ["nv_confirma", "Visual confirma o verbal"], ["nv_substitui", "Visual substitui o verbal"], ["nv_sugere", "Visual sugere o implícito"]];const G3R=[{"t": "Quadro sem palavras onde o personagem sorri na chuva.", "q": "Esse recurso não verbal é chamado de:", "o": ["elipse visual", "quadro mudo ou silencioso", "falha narrativa", "flashback"], "c": 1}, {"t": "Formato de plaquinha com letras em destaque e layout de anúncio.", "q": "Esse elemento não verbal funciona como:", "o": ["decoração", "ativador de ambiguidade semântica", "fundo de cena", "título da tirinha"], "c": 1}, {"t": "Personagens com expressões faciais de espanto ou confusão.", "q": "As expressões faciais são elementos de linguagem:", "o": ["verbal", "não verbal — comunicam emoção sem palavras", "mista", "paralinguística apenas em texto escrito"], "c": 1}, {"t": "Balão de fala completamente vazio.", "q": "O balão vazio na tirinha indica:", "o": ["erro do artista", "ausência de resposta — o personagem não tem o que dizer", "pausa para respirar", "próxima fala virá no quadro seguinte"], "c": 1}, {"t": "Olhar direcionado para fora do enquadramento.", "q": "Esse recurso cria:", "o": ["confusão no leitor", "presença implícita não mostrada — o que está fora é mais forte por não ser visto", "movimento de câmera", "erro de continuidade"], "c": 1}];const G4R=[{"ctx": "Armandinho com mochila escolar falando algo crítico sobre política.", "f": "O contraste entre visual inocente e fala crítica é um exemplo de integração de linguagem ___.", "o": ["apenas verbal", "apenas não verbal", "verbal e não verbal — onde os dois se completam e amplificam", "visual sem texto"], "c": 2}, {"ctx": "Quadro final sem nenhuma fala escrita.", "f": "Nas tirinhas, um quadro sem fala é chamado de quadro ___.", "o": ["vazio", "mudo ou silencioso — e é um recurso narrativo intencional", "com erro", "de transição obrigatória"], "c": 1}, {"ctx": "Plaquinha com layout de anúncio comercial.", "f": "O formato visual de anúncio é um exemplo de linguagem não verbal que ___ o sentido do texto verbal.", "o": ["apaga", "amplifica ou cria", "substitui completamente", "contradiz"], "c": 1}, {"ctx": "Balão de fala completamente vazio no último quadro.", "f": "O balão vazio comunica que o personagem ___.", "o": ["não existe", "ficou sem argumento ou sem palavras — o silêncio é a mensagem", "vai falar no próximo quadro", "está dormindo"], "c": 1}, {"ctx": "Personagem olhando para fora do quadro sem que o leitor veja o quê.", "f": "Esse recurso cria uma presença ___ — mais impactante por não ser mostrada.", "o": ["ausente", "implícita ou sugerida", "invisível por erro", "aleatória"], "c": 1}];const G5R=[{"title": "Como analisar a integração verbal/não verbal em uma tirinha", "correct": ["1. Leia as falas (verbal): o que os personagens dizem explicitamente?", "2. Observe a imagem (não verbal): expressões, gestos, objetos, cenário, quadros sem fala.", "3. Pergunte: o visual CONFIRMA, AMPLIFICA ou CONTRADIZ o verbal?", "4. Identifique se há elementos que só existem na imagem (sem texto equivalente).", "5. Conclua: o que o leitor entenderia diferente se não pudesse ver a imagem?"]}, {"title": "Recursos não verbais mais comuns nas tirinhas", "correct": ["Expressões faciais: comunicam emoção sem palavras (alegria, espanto, ironia)", "Gestos e postura corporal: reforçam ou contradizem o que é dito", "Quadro mudo (sem fala): o silêncio visual carrega mais que palavras", "Balão vazio: personagem de boca aberta sem conseguir falar", "Olhar fora do quadro: sugere presença implícita não nomeada"]}];
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function stripHTML(s){const d=document.createElement("div");d.innerHTML=s;return d.textContent||"";}
+function toggleTTS(btn,id){if(window.speechSynthesis.speaking){window.speechSynthesis.cancel();document.querySelectorAll(".btn-tts").forEach(b=>b.classList.remove("playing"));return;}const el=document.getElementById(id);if(!el)return;const u=new SpeechSynthesisUtterance(stripHTML(el.innerHTML));u.lang="pt-BR";u.rate=.9;btn.classList.add("playing");u.onend=()=>btn.classList.remove("playing");window.speechSynthesis.speak(u);}
+const RK="saeb_d08verbal_records";
+function loadRec(){try{return JSON.parse(localStorage.getItem(RK))||{};}catch{return {};}}
+function saveRec(k,v){const r=loadRec();if(!(k in r)||v>r[k])r[k]=v;localStorage.setItem(RK,JSON.stringify(r));renderRec();}
+function renderRec(){const r=loadRec(),g=document.getElementById("recGrid");if(!g)return;const items=[{k:"quiz",l:"Quiz"},{k:"qual",l:"Qual função?"},{k:"classif",l:"Classifique"},{k:"pistas",l:"Pelas pistas"},{k:"compl",l:"Complete"},{k:"ordene",l:"Ordene"}];g.innerHTML=items.map(i=>`<div class="rec-item"><div class="rv">${r[i.k]!=null?r[i.k]:"—"}</div><div class="rl">${i.l}</div></div>`).join("");}
+renderRec();
+document.querySelectorAll(".tab-btn").forEach(btn=>{btn.onclick=()=>{document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));document.querySelectorAll(".tab-pane").forEach(p=>p.classList.remove("active"));btn.classList.add("active");document.getElementById("pane-"+btn.dataset.tab).classList.add("active");window.scrollTo({top:0,behavior:"smooth"});};});
+const QS=shuffle(QRAW.filter(q=>q.alts&&q.alts.length>0)).map((q,idx)=>{const smap=shuffle(Array.from({length:q.alts.length},(_,i)=>i));return{...q,dn:idx+1,alts:smap.map(i=>q.alts[i]),porque:smap.map(i=>q.porque[i]),correta:smap.indexOf(q.correta)};});
+const quizEl=document.getElementById("quiz");
+QS.forEach(q=>{const c=document.createElement("div");c.className="card";c.dataset.q=q.dn;const tid="txt"+q.dn;c.innerHTML=`<div class="card-head"><span class="qnum">Questão ${q.dn}</span><span class="qtipo">${q.tipo}</span></div><div class="txt-base" id="${tid}">${q.texto}<span class="txt-fonte">${q.fonte}</span><button class="btn-tts" onclick="toggleTTS(this,'${tid}')">🔊</button></div><p class="enunciado">${q.enun}</p><div class="alts">${q.alts.map((t,i)=>`<button class="alt" onclick="resp(${q.dn},${i})"><span class="letra">${"ABCD"[i]}</span> ${t}</button>`).join("")}</div><div class="fb" id="fb${q.dn}"></div>`;quizEl.appendChild(c);});
+let acertos=0;const feitas=new Set();
+function resp(n,k){
+  if(feitas.has(n))return;feitas.add(n);
+  const q=QS.find(x=>x.dn===n),card=quizEl.querySelector(`[data-q="${n}"]`),btns=card.querySelectorAll(".alt"),fb=document.getElementById("fb"+n);
+  const ok=k===q.correta;if(ok)acertos++;
+
+  // Registra a resposta detalhada desta questão para depois enviar ao Sheets
+  respostasDetalhadas.push({
+    questao: n,
+    tipo: q.tipo,
+    nivel: q.nivel,
+    respostaDada: k>=0 ? "ABCD"[k] : "(não respondeu)",
+    respostaCorreta: "ABCD"[q.correta],
+    acertou: ok
+  });
+
+  if(modoJogo==="estudo"){btns.forEach((b,i)=>{b.disabled=true;if(i===q.correta)b.classList.add("ok");else if(i===k)b.classList.add("err");else b.classList.add("dim");});}else{btns.forEach((b,i)=>{b.disabled=true;if(i===k)b.classList.add("sel");else b.classList.add("dim");});}
+  const pq=q.alts.map((t,i)=>`<span class="pi"><span class="l">${"ABCD"[i]})</span> ${q.porque[i]}</span>`).join("");
+  fb.className="fb show "+(ok?"ok":"err")+(modoJogo==="prova"?" prova-oculto":"");
+  fb.innerHTML=`<div class="ft">${ok?"✓ Correto!":"✗ Incorreto — a correta é "+"ABCD"[q.correta]+"."}</div><div>${q.porque[q.correta]}</div><div class="pq"><b>Cada alternativa:</b>${pq}</div>`;
+  document.getElementById("pFill").style.width=(feitas.size/QS.length*100)+"%";
+  // No modo prova, a pontuação parcial fica escondida; só aparece no resultado final
+  document.getElementById("score").textContent=modoJogo==="prova" ? (feitas.size+" / "+QS.length+" respondidas") : (acertos+" / "+QS.length);
+  if(feitas.size===QS.length)setTimeout(quizFim,500);
+}
+function quizFim(){
+  // No modo prova, revela todo o feedback que ficou oculto durante o quiz
+  if(modoJogo==="prova"){
+    // Gabaritos ocultos no modo prova
+    document.getElementById("score").textContent=acertos+" / "+QS.length;
+  }
+  const r=document.getElementById("resultado");r.style.display="block";
+  document.getElementById("notaFinal").textContent=acertos+"/"+QS.length;
+  const p=acertos/QS.length;let m,msg;
+  if(p>=.9){m="🥇";msg="Ouro! Precisão de detetive.";}
+  else if(p>=.7){m="🥈";msg="Prata! Atenção aos distratores.";}
+  else if(p>=.5){m="🥉";msg="Bronze! Volte ao texto antes de marcar.";}
+  else{m="📖";msg="Treine mais. A resposta está sempre lá.";}
+  document.getElementById("medalha").textContent=m;document.getElementById("msgFinal").textContent=msg;
+  saveRec("quiz",acertos);
+  enviarParaSheets();
+  r.scrollIntoView({behavior:"smooth",block:"center"});
+}// gabarito disc protegido por senha no HTML;
+// gabPrint removido: gabarito protegido por senha
+
+function makeTimedGame(bodyId,rounds,rk){return{i:0,pts:0,tmr:null,tempo:0,rounds:[],start(){this.i=0;this.pts=0;this.rounds=shuffle(rounds);this.render();},render(){const b=document.getElementById(bodyId);if(this.i>=this.rounds.length){saveRec(rk,this.pts);b.innerHTML=`<div class="jogo-final"><div class="big">${this.pts} pts</div><p>${this.pts>=this.rounds.length*10?"Muito bem! 🥇":"Continue praticando."}</p><button class="btn ouro" onclick="${bodyId.split('-')[0].toUpperCase()}.start()">↺ Jogar de novo</button></div>`;return;}const r=this.rounds[this.i];this.tempo=100;b.innerHTML=`<div class="jogo-mid"><span class="chip">Rodada ${this.i+1}/${this.rounds.length}</span><div class="timerbar"><div id="${bodyId}-bar"></div></div><span class="chip">${this.pts} pts</span></div><div class="mini-texto">${r.t}</div><div class="mini-q">${r.q}</div><div class="alts" id="${bodyId}-alts">${r.o.map((o,k)=>`<button class="alt" onclick="${bodyId.split('-')[0].toUpperCase()}.resp(${k})"><span class="letra">${"ABCD"[k]}</span> ${o}</button>`).join("")}</div><div class="mini-fb" id="${bodyId}-fb"></div>`;clearInterval(this.tmr);this.tmr=setInterval(()=>{this.tempo-=2;const bar=document.getElementById(bodyId+"-bar");if(bar)bar.style.width=Math.max(0,this.tempo)+"%";if(this.tempo<=0)this.resp(-1);},120);},resp(k){clearInterval(this.tmr);const r=this.rounds[this.i],btns=document.querySelectorAll("#"+bodyId+"-alts .alt"),fb=document.getElementById(bodyId+"-fb");btns.forEach((a,j)=>{a.disabled=true;if(j===r.c)a.classList.add("ok");else if(j===k)a.classList.add("err");else a.classList.add("dim");});if(k===r.c){const g=5+Math.round(this.tempo/10);this.pts+=g;fb.className="mini-fb show ok";fb.textContent="✓ +"+g+" pts!";}else{fb.className="mini-fb show err";fb.textContent=(k===-1?"⏱️ Tempo!":"✗")+" Era: "+"ABCD"[r.c]+".";}this.i++;setTimeout(()=>this.render(),1600);}};}
+const G1=makeTimedGame("g1-body",G1R,"qual");const G3=makeTimedGame("g3-body",G3R,"pistas");
+
+const G2={rs:[],cats:G2C,start(){this.rs=[];const b=document.getElementById("g2-body");b.innerHTML=`<div style="font-size:.82rem;color:var(--txt2);margin-bottom:.8rem">Classifique cada texto pela sua função principal:</div>`+G2I.map((it,i)=>`<div class="vf-item" id="g2i${i}"><div class="vf-stm"><b>${i+1}.</b> ${it.s}</div><div class="btn-row">${this.cats.map(c=>`<button class="mini-btn cat-btn" onclick="G2.j(${i},'${c[0]}')">${c[1]}</button>`).join("")}</div><div class="mini-fb" id="g2f${i}"></div></div>`).join("")+`<div id="g2fin"></div>`;},j(i,esc){if(this.rs[i]!=null)return;const it=G2I[i],ok=esc===it.cat;this.rs[i]=ok;document.querySelectorAll("#g2i"+i+" .mini-btn").forEach(btn=>{btn.disabled=true;const txt=btn.textContent;const cat=this.cats.find(c=>c[1]===txt);if(cat&&cat[0]===it.cat)btn.style.background="var(--verde-c)";else if(cat&&cat[0]===esc&&!ok)btn.style.background="var(--vermelho-c)";});const fb=document.getElementById("g2f"+i);fb.className="mini-fb show "+(ok?"ok":"err");fb.innerHTML=(ok?"✓ ":"✗ ")+it.p;if(this.rs.filter(x=>x!=null).length===G2I.length){const ac=this.rs.filter(x=>x).length;saveRec("classif",ac);document.getElementById("g2fin").innerHTML=`<div class="jogo-final"><div class="big">${ac}/${G2I.length}</div><p>${ac===G2I.length?"Perfeito! 🥇":"Releia as justificativas."}</p><button class="btn ouro" onclick="G2.start()">↺ Jogar de novo</button></div>`;}}};
+
+const G4={i:0,pts:0,rounds:[],start(){this.i=0;this.pts=0;this.rounds=shuffle(G4R);this.render();},render(){const b=document.getElementById("g4-body");if(this.i>=this.rounds.length){saveRec("compl",this.pts);b.innerHTML=`<div class="jogo-final"><div class="big">${this.pts}/${this.rounds.length}</div><p>${this.pts===this.rounds.length?"Perfeito! 🥇":"Continue praticando."}</p><button class="btn ouro" onclick="G4.start()">↺ Jogar de novo</button></div>`;return;}const it=this.rounds[this.i];b.innerHTML=`<div class="jogo-mid"><span class="chip">Frase ${this.i+1}/${this.rounds.length}</span><span class="chip">${this.pts} acertos</span></div><p style="font-size:.82rem;color:var(--txt2);margin:.4rem 0">${it.ctx}</p><div class="mini-texto">${it.f}</div><div class="alts" id="g4-alts">${it.o.map((o,k)=>`<button class="alt" onclick="G4.resp(${k})"><span class="letra">${"ABCD"[k]}</span> ${o}</button>`).join("")}</div><div class="mini-fb" id="g4-fb"></div>`;},resp(k){const it=this.rounds[this.i],btns=document.querySelectorAll("#g4-alts .alt"),fb=document.getElementById("g4-fb");btns.forEach((a,j)=>{a.disabled=true;if(j===it.c)a.classList.add("ok");else if(j===k)a.classList.add("err");else a.classList.add("dim");});if(k===it.c){this.pts++;fb.className="mini-fb show ok";fb.textContent="✓ Exato!";}else{fb.className="mini-fb show err";fb.textContent="✗ Era: "+it.o[it.c]+".";}this.i++;setTimeout(()=>this.render(),1200);}};
+
+const G5={ri:0,start(){this.ri=0;this.renderRound();},renderRound(){const b=document.getElementById("g5-body");if(this.ri>=G5R.length){saveRec("ordene","✓");b.innerHTML=`<div class="jogo-final"><div class="big">✓</div><p>Raciocínio organizado! 🥇</p><button class="btn ouro" onclick="G5.start()">↺ Jogar de novo</button></div>`;return;}const rd=G5R[this.ri];const items=shuffle(rd.correct);b.innerHTML=`<div class="jogo-mid"><span class="chip">Passo a passo ${this.ri+1}/${G5R.length}</span></div><p style="font-size:.84rem;color:var(--txt2);margin-bottom:.6rem">Use ▲ ▼ para ordenar. Depois clique em "Verificar".</p><ol class="ord-list" id="g5list">${items.map((it,i)=>`<li class="ord-item" data-txt="${encodeURIComponent(it)}">${it}<div class="ord-arrows"><button onclick="G5.move(${i},-1)">▲</button><button onclick="G5.move(${i},1)">▼</button></div></li>`).join("")}</ol><div style="text-align:center;margin-top:.6rem"><button class="btn ouro" onclick="G5.check()">✓ Verificar ordem</button></div><div class="mini-fb" id="g5fb"></div>`;},move(idx,dir){const list=document.getElementById("g5list");const items=[...list.children];const newIdx=idx+dir;if(newIdx<0||newIdx>=items.length)return;if(dir===-1)list.insertBefore(items[idx],items[newIdx]);else list.insertBefore(items[newIdx],items[idx]);[...list.children].forEach((li,i)=>{li.querySelector(".ord-arrows").innerHTML=`<button onclick="G5.move(${i},-1)">▲</button><button onclick="G5.move(${i},1)">▼</button>`;});},check(){const rd=G5R[this.ri];const list=document.getElementById("g5list");const items=[...list.children];const fb=document.getElementById("g5fb");let ok=true;items.forEach((li,i)=>{const txt=decodeURIComponent(li.dataset.txt);if(txt===rd.correct[i])li.classList.add("ok");else{li.classList.add("err");ok=false;}li.querySelectorAll("button").forEach(b=>b.disabled=true);});if(ok){fb.className="mini-fb show ok";fb.textContent="✓ Ordem perfeita!";this.ri++;setTimeout(()=>this.renderRound(),1400);}else{fb.className="mini-fb show err";fb.innerHTML='✗ Trocadas. <button class="mini-btn" style="margin-left:.5rem" onclick="G5.renderRound()">Tentar de novo</button>';}}};
+
+function liberarEstudo(el,btn){
+  var pwd=prompt('Senha do professor:');
+  if(pwd===null)return;
+  if(pwd===SENHA_MODO_ESTUDO){el.style.display='block';btn.textContent='Ocultar';}
+  else{alert('Senha incorreta.');}
+}
+</script></body></html>

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quiz Obras II — Prof. Marcos Cruz</title>
+
+  <!-- Preview no WhatsApp -->
+  <meta property="og:title" content="Quiz — Obras Literárias II 📚">
+  <meta property="og:description" content="Mais 10 obras essenciais no estilo das questões de vestibular.">
+  <meta property="og:image" content="https://portmarcos.github.io/assets/img/og-capa.png">
+
+  <link rel="icon" href="../favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/design-system.css">
+</head>
+<!-- A classe abaixo define a cor da página: Português = verde -->
+<body class="materia-enem">
+
+  <div class="barra-tricolor"></div>
+  <header class="cabecalho">
+    <div class="container cabecalho-conteudo">
+      <span class="marca"><a href="../index.html">Portal de Aulas</a></span>
+    </div>
+  </header>
+
+  <main class="container" style="max-width:760px">
+    <a class="voltar nao-imprimir" href="../index.html">← Voltar ao portal</a>
+    <span class="etiqueta-materia">ENEM · Literatura II</span>
+    <h1 id="quiz-titulo" style="margin-top:10px">…</h1>
+
+    <!-- TELA 1: início -->
+    <section id="tela-inicio" class="painel">
+      <p id="quiz-descricao"></p>
+      <div class="info-chips">
+        <span class="tag" id="info-questoes"></span>
+        <span class="tag" id="info-tempo"></span>
+        <span class="tag" id="info-melhor" hidden>🏆</span>
+      </div>
+      <button id="btn-comecar" class="btn btn-primario btn-bloco">Começar ▶</button>
+    </section>
+
+    <!-- TELA 2: questão -->
+    <section id="tela-questao" class="painel" hidden>
+      <p class="progresso-texto" id="progresso"></p>
+      <div class="timer-trilho" aria-hidden="true"><div class="timer-barra" id="timer-barra"></div></div>
+      <h2 class="enunciado" id="enunciado"></h2>
+      <div class="opcoes" id="opcoes"></div>
+      <div class="explicacao" id="explicacao" role="status" hidden></div>
+      <button id="btn-proxima" class="btn btn-primario btn-bloco" style="margin-top:18px" hidden></button>
+    </section>
+
+    <!-- TELA 3: resultado -->
+    <section id="tela-final" class="painel placar-final" hidden>
+      <h2>Resultado</h2>
+      <div class="nota" id="nota-final"></div>
+      <p id="nota-pct" style="font-weight:700"></p>
+      <p class="melhor" id="nota-melhor"></p>
+      <button id="btn-refazer" class="btn btn-primario btn-bloco">Refazer quiz 🔁</button>
+      <a class="btn btn-secundario btn-bloco" style="margin-top:8px" href="../index.html">Voltar ao portal</a>
+    </section>
+  </main>
+
+  <footer class="rodape"><div class="container">Portal de Aulas · Prof. Marcos</div></footer>
+
+  <!-- 1º: os dados · 2º: o confete (CDN) · 3º: o motor -->
+  <script src="../dados/quiz-obras2.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.3/confetti.browser.min.js" defer></script>
+  <script src="../assets/js/config-sheets.js"></script>
+  <script src="../assets/js/quiz-engine.js"></script>
+</body>
+</html>

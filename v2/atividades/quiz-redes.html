@@ -1,0 +1,910 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quiz: Redes de Computadores — Prof. Marcos</title>
+<meta property="og:title" content="Quiz: Redes de Computadores 🌐">
+<meta property="og:description" content="20 questões cronometradas sobre equipamentos, protocolos, endereçamento e segurança em redes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ── RESET & BASE ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #0e1117;
+  --surface:   #161b27;
+  --surface2:  #1e2535;
+  --border:    #2a3349;
+  --accent:    #3b82f6;
+  --accent-dim:#1d4ed8;
+  --green:     #22c55e;
+  --red:       #ef4444;
+  --yellow:    #eab308;
+  --text:      #e2e8f0;
+  --muted:     #64748b;
+  --mono:      'JetBrains Mono', monospace;
+  --sans:      'Space Grotesk', system-ui, sans-serif;
+  --radius:    10px;
+  --radius-lg: 16px;
+}
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── LAYOUT ────────────────────────────────────────────────── */
+.wrap {
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+header {
+  border-bottom: 1px solid var(--border);
+  padding: 14px 0;
+}
+
+header .inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: 0.03em;
+}
+
+.brand strong { color: var(--accent); }
+
+.tag-materia {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: rgba(59,130,246,.12);
+  border: 1px solid rgba(59,130,246,.25);
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+main {
+  flex: 1;
+  padding: 40px 0 60px;
+}
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: 16px 0;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ── TELAS ─────────────────────────────────────────────────── */
+.tela { display: none; }
+.tela.ativa { display: block; }
+
+/* ── TELA INÍCIO ────────────────────────────────────────────── */
+.inicio-titulo {
+  font-size: clamp(26px, 5vw, 38px);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+
+.inicio-titulo span {
+  font-family: var(--mono);
+  color: var(--accent);
+}
+
+.inicio-desc {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 28px;
+  max-width: 520px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 36px;
+}
+
+.chip {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 6px 14px;
+  border-radius: 20px;
+}
+
+/* ── BOTÕES ────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 15px;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: opacity .15s, transform .1s;
+  text-decoration: none;
+}
+.btn:active { transform: scale(.98); }
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  padding: 14px 28px;
+  width: 100%;
+}
+.btn-primary:hover { background: var(--accent-dim); }
+
+.btn-secondary {
+  background: var(--surface2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 13px 28px;
+  width: 100%;
+  margin-top: 10px;
+}
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── TELA QUESTÃO ───────────────────────────────────────────── */
+.quiz-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.progresso-txt {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.cronometro {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 4px 12px;
+  border-radius: 20px;
+  min-width: 56px;
+  text-align: center;
+  transition: color .3s;
+}
+.cronometro.urgente { color: var(--red); border-color: var(--red); }
+
+/* barra de progresso */
+.barra-wrap {
+  height: 3px;
+  background: var(--surface2);
+  border-radius: 2px;
+  margin-bottom: 28px;
+  overflow: hidden;
+}
+.barra-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width .4s ease, background .3s;
+}
+
+/* timer trilho */
+.timer-wrap {
+  height: 3px;
+  background: var(--surface2);
+  border-radius: 2px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+.timer-fill {
+  height: 100%;
+  background: var(--green);
+  border-radius: 2px;
+  transition: width 1s linear, background .5s;
+}
+
+.enunciado {
+  font-size: clamp(16px, 3vw, 20px);
+  font-weight: 600;
+  line-height: 1.5;
+  margin-bottom: 22px;
+  color: var(--text);
+}
+
+/* ── OPÇÕES ─────────────────────────────────────────────────── */
+.opcoes { display: flex; flex-direction: column; gap: 10px; }
+
+.opcao {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text);
+  text-align: left;
+  width: 100%;
+  transition: border-color .15s, background .15s;
+  font-family: var(--sans);
+  font-weight: 400;
+}
+
+.opcao:hover:not(:disabled) {
+  border-color: var(--accent);
+  background: rgba(59,130,246,.06);
+}
+
+.opcao .letra {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  min-width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+  transition: background .15s, color .15s, border-color .15s;
+}
+
+.opcao:hover:not(:disabled) .letra {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.opcao.correta {
+  background: rgba(34,197,94,.1);
+  border-color: var(--green);
+}
+.opcao.correta .letra {
+  background: var(--green);
+  color: #fff;
+  border-color: var(--green);
+}
+
+.opcao.errada {
+  background: rgba(239,68,68,.08);
+  border-color: var(--red);
+}
+.opcao.errada .letra {
+  background: var(--red);
+  color: #fff;
+  border-color: var(--red);
+}
+
+.opcao:disabled { cursor: default; }
+
+/* ── EXPLICAÇÃO ─────────────────────────────────────────────── */
+.explicacao {
+  margin-top: 18px;
+  padding: 14px 16px;
+  background: var(--surface2);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+  display: none;
+}
+.explicacao.visivel { display: block; }
+.explicacao strong { color: var(--text); }
+
+/* ── TELA RESULTADO ─────────────────────────────────────────── */
+.resultado-topo {
+  text-align: center;
+  padding: 40px 0 32px;
+}
+
+.emoji-grande { font-size: 56px; margin-bottom: 16px; line-height: 1; }
+
+.nota-display {
+  font-family: var(--mono);
+  font-size: clamp(48px, 12vw, 80px);
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.nota-label {
+  font-size: 15px;
+  color: var(--muted);
+  margin-bottom: 28px;
+}
+
+.barra-resultado-wrap {
+  height: 8px;
+  background: var(--surface2);
+  border-radius: 4px;
+  margin-bottom: 36px;
+  overflow: hidden;
+}
+.barra-resultado-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1s cubic-bezier(.4,0,.2,1);
+}
+
+.grid-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 12px;
+  text-align: center;
+}
+
+.stat-val {
+  font-family: var(--mono);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-lbl {
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 28px 0;
+}
+
+/* ── RESPONSIVO ─────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .grid-stats { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .stat-val { font-size: 20px; }
+  .opcao { padding: 12px 14px; font-size: 13px; }
+}
+
+/* ── CONFETE placeholder ───────────────────────────────────── */
+canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 999; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap inner">
+    <span class="brand"><strong>//</strong> Portal de Aulas · Prof. Marcos</span>
+    <span class="tag-materia">Informática Técnica</span>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <!-- TELA 1: INÍCIO -->
+    <div id="tela-inicio" class="tela ativa">
+      <p style="font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:18px;letter-spacing:.05em">
+        REDES DE COMPUTADORES
+      </p>
+      <h1 class="inicio-titulo">Quiz <span>./redes</span><br>20 questões</h1>
+      <p class="inicio-desc">
+        Equipamentos, endereçamento, protocolos e segurança. Cada questão tem 25 segundos. Responda com atenção — os distratores são tecnicamente plausíveis.
+      </p>
+      <div class="chips">
+        <span class="chip">📋 20 questões</span>
+        <span class="chip">⏱ 25 s por questão</span>
+        <span class="chip">🔀 Ordem aleatória</span>
+      </div>
+      <button id="btn-comecar" class="btn btn-primary">Começar quiz ▶</button>
+    </div>
+
+    <!-- TELA 2: QUESTÃO -->
+    <div id="tela-questao" class="tela">
+      <div class="barra-wrap">
+        <div class="barra-fill" id="barra-progresso"></div>
+      </div>
+      <div class="quiz-header">
+        <span class="progresso-txt" id="progresso-txt">Questão 1 de 20</span>
+        <span class="cronometro" id="cronometro">25</span>
+      </div>
+      <div class="timer-wrap">
+        <div class="timer-fill" id="timer-fill"></div>
+      </div>
+      <h2 class="enunciado" id="enunciado"></h2>
+      <div class="opcoes" id="opcoes"></div>
+      <div class="explicacao" id="explicacao"></div>
+      <button id="btn-proxima" class="btn btn-primary" style="margin-top:20px;display:none"></button>
+    </div>
+
+    <!-- TELA 3: RESULTADO -->
+    <div id="tela-final" class="tela">
+      <div class="resultado-topo">
+        <div class="emoji-grande" id="emoji-final">🎉</div>
+        <div class="nota-display" id="nota-display" style="color:var(--accent)">0/20</div>
+        <div class="nota-label" id="nota-label">Calculando…</div>
+        <div class="barra-resultado-wrap">
+          <div class="barra-resultado-fill" id="barra-resultado" style="width:0%;background:var(--green)"></div>
+        </div>
+      </div>
+
+      <div class="grid-stats">
+        <div class="stat-card">
+          <div class="stat-val" id="stat-certas" style="color:var(--green)">0</div>
+          <div class="stat-lbl">Certas</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val" id="stat-erradas" style="color:var(--red)">0</div>
+          <div class="stat-lbl">Erradas</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val" id="stat-tempo" style="color:var(--yellow)">—</div>
+          <div class="stat-lbl">Tempo médio</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <button id="btn-refazer" class="btn btn-primary">Refazer quiz 🔁</button>
+      <a href="index.html" class="btn btn-secondary">← Voltar ao portal</a>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">Portal de Aulas · Prof. Marcos · Redes de Computadores</div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.3/confetti.browser.min.js"></script>
+<script>
+/* ═══════════════════════════════════════════════════════════
+   BANCO DE QUESTÕES
+═══════════════════════════════════════════════════════════ */
+const QUESTOES = [
+  {
+    e: "Qual é a porta TCP padrão utilizada pelo protocolo HTTPS para comunicações seguras na web?",
+    o: [
+      { t: "443",  c: true  },
+      { t: "8443", c: false },
+      { t: "80",   c: false },
+      { t: "22",   c: false },
+    ],
+    x: "<strong>Porta 443</strong> é o padrão HTTPS. A 80 é HTTP não cifrado; a 22 é SSH; e a 8443 é porta alternativa comum em ambientes de desenvolvimento, mas não o padrão oficial.",
+  },
+  {
+    e: "Qual dos endereços abaixo pertence ao bloco de endereços IP privados definido pela RFC 1918?",
+    o: [
+      { t: "172.16.5.200",  c: true  },
+      { t: "11.0.0.1",      c: false },
+      { t: "100.64.0.1",    c: false },
+      { t: "169.254.1.10",  c: false },
+    ],
+    x: "A RFC 1918 define três blocos privados: <strong>10.0.0.0/8, 172.16.0.0/12 e 192.168.0.0/16</strong>. O 172.16.5.200 está no segundo bloco. Os demais são público (11.x), CGNAT (100.64/10) e link-local (169.254/16).",
+  },
+  {
+    e: "Por qual razão o Hub (concentrador) é considerado obsoleto em redes modernas?",
+    o: [
+      { t: "Retransmite todos os pacotes para todas as portas, gerando colisões e congestionamento no domínio de colisão compartilhado.", c: true  },
+      { t: "Não suporta Ethernet de 100 Mbps ou superior, limitando a rede a velocidades de 10 Mbps.",                                   c: false },
+      { t: "Opera exclusivamente na camada 3 do modelo OSI, tornando-o incompatível com LANs modernas.",                                 c: false },
+      { t: "Exige endereço IP fixo em cada porta para encaminhar corretamente os quadros Ethernet.",                                     c: false },
+    ],
+    x: "O hub é um dispositivo de <strong>camada 1 (física)</strong> que não distingue destinatários: copia o sinal em todas as portas, criando um único domínio de colisão e degradando o desempenho à medida que mais dispositivos são adicionados.",
+  },
+  {
+    e: "Qual mecanismo o Switch utiliza para encaminhar quadros Ethernet apenas para a porta correta?",
+    o: [
+      { t: "Tabela CAM (Content Addressable Memory) com mapeamento de endereços MAC por porta.",    c: true  },
+      { t: "Tabela de roteamento IP com máscara de sub-rede para segmentação de domínios.",         c: false },
+      { t: "Protocolo ARP de broadcast para descoberta dinâmica de endereços físicos na LAN.",      c: false },
+      { t: "Inspeção de pacotes na camada 4 para identificar o socket de destino de cada quadro.", c: false },
+    ],
+    x: "O switch aprende os endereços <strong>MAC de cada porta</strong> e os armazena na tabela CAM. Ao receber um quadro, consulta essa tabela e encaminha somente para a porta do destinatário, isolando o tráfego e eliminando colisões.",
+  },
+  {
+    e: "O Router opera principalmente em qual camada do modelo OSI e qual informação analisa para encaminhar pacotes?",
+    o: [
+      { t: "Camada 3 (Rede), analisando o endereço IP de destino do pacote.",          c: true  },
+      { t: "Camada 2 (Enlace), analisando o endereço MAC de destino do quadro.",        c: false },
+      { t: "Camada 4 (Transporte), analisando a porta TCP/UDP de destino do segmento.", c: false },
+      { t: "Camada 1 (Física), regenerando o sinal elétrico entre os segmentos.",       c: false },
+    ],
+    x: "Roteadores trabalham na <strong>camada 3 (Rede)</strong> do modelo OSI. Inspecionam o cabeçalho IP de cada pacote e consultam a tabela de roteamento para determinar o próximo salto (next hop) até o destino.",
+  },
+  {
+    e: "Qual é a função principal de um Access Point (AP) em uma infraestrutura de rede corporativa?",
+    o: [
+      { t: "Converter o meio cabeado em sinal de radiofrequência para conectar clientes Wi-Fi à LAN existente.",             c: true  },
+      { t: "Atribuir endereços IP dinâmicos aos clientes sem fio por meio do protocolo DHCP integrado.",                     c: false },
+      { t: "Substituir o roteador ao rotear pacotes entre a rede interna e a internet via protocolo NAT.",                   c: false },
+      { t: "Filtrar pacotes maliciosos entre VLANs por meio de ACLs (Access Control Lists) na camada 3.",                   c: false },
+    ],
+    x: "O AP recebe conectividade via cabo (Ethernet) e a transmite em <strong>radiofrequência (IEEE 802.11)</strong>, permitindo que dispositivos sem fio ingressem na rede local sem alterar a arquitetura existente.",
+  },
+  {
+    e: "Em uma rede doméstica com endereçamento 192.168.0.0/24, qual seria o endereço do gateway padrão?",
+    o: [
+      { t: "192.168.0.1",   c: true  },
+      { t: "255.255.255.0", c: false },
+      { t: "192.168.0.255", c: false },
+      { t: "0.0.0.0",       c: false },
+    ],
+    x: "O gateway padrão é o endereço do roteador local. Convencionalmente usa-se o <strong>primeiro host da sub-rede (.1)</strong>. O .255 é o endereço de broadcast; 255.255.255.0 é a máscara; e 0.0.0.0 representa a rota padrão, não um host.",
+  },
+  {
+    e: "Qual característica diferencia um endereço IP público de um endereço IP privado?",
+    o: [
+      { t: "O IP público é roteável na internet global e único; o IP privado é reservado para uso interno e não roteável externamente sem NAT.", c: true  },
+      { t: "O IP público usa IPv6 e o IP privado usa IPv4 por padrão nas redes domésticas.",                                                      c: false },
+      { t: "O IP público é sempre estático e o IP privado é sempre atribuído dinamicamente pelo DHCP.",                                           c: false },
+      { t: "O IP público pertence à camada 2 do modelo OSI, enquanto o IP privado pertence à camada 3.",                                          c: false },
+    ],
+    x: "IPs públicos são <strong>globalmente únicos e roteáveis</strong> na internet. IPs privados (RFC 1918) existem apenas dentro de redes locais e precisam de NAT para se comunicar com o mundo externo.",
+  },
+  {
+    e: "Um host com IP 10.0.3.45 e máscara 255.255.255.0 pertence a qual sub-rede?",
+    o: [
+      { t: "10.0.3.0/24",   c: true  },
+      { t: "10.0.0.0/8",    c: false },
+      { t: "10.0.3.45/24",  c: false },
+      { t: "10.0.255.0/24", c: false },
+    ],
+    x: "A máscara 255.255.255.0 (/24) preserva os três primeiros octetos como identificador de rede. Aplicando <strong>AND bit a bit</strong> entre 10.0.3.45 e a máscara, obtemos <strong>10.0.3.0</strong> como endereço de rede.",
+  },
+  {
+    e: "Qual é a sequência correta de mensagens no processo de negociação DHCP (acrônimo DORA)?",
+    o: [
+      { t: "Discover → Offer → Request → Acknowledge", c: true  },
+      { t: "Request → Offer → Discover → Acknowledge", c: false },
+      { t: "Discover → Request → Offer → Acknowledge", c: false },
+      { t: "Offer → Discover → Acknowledge → Request", c: false },
+    ],
+    x: "<strong>DORA</strong>: o cliente envia Discover em broadcast; o servidor responde com Offer; o cliente confirma com Request; e o servidor finaliza com Acknowledge, entregando IP, máscara, gateway e DNS.",
+  },
+  {
+    e: "Qual tipo de registro DNS é responsável por mapear um nome de domínio a um endereço IPv4?",
+    o: [
+      { t: "Registro A",     c: true  },
+      { t: "Registro AAAA",  c: false },
+      { t: "Registro CNAME", c: false },
+      { t: "Registro MX",    c: false },
+    ],
+    x: "O <strong>registro A</strong> associa um domínio a um IPv4. O AAAA faz o mesmo para IPv6; o CNAME cria um alias para outro domínio; e o MX define os servidores de e-mail responsáveis pelo domínio.",
+  },
+  {
+    e: "Ao digitar 'www.exemplo.com.br' no navegador, qual é o papel do servidor DNS recursivo?",
+    o: [
+      { t: "Consultar servidores raiz, TLD e autoritativos em nome do cliente, retornando o IP correspondente ao domínio.", c: true  },
+      { t: "Armazenar permanentemente todos os registros DNS da internet para acelerar consultas globais.",                  c: false },
+      { t: "Traduzir o endereço IP numérico de volta para o nome de domínio legível (DNS reverso).",                        c: false },
+      { t: "Verificar a validade do certificado SSL do domínio antes de retornar o IP ao cliente.",                         c: false },
+    ],
+    x: "O servidor DNS recursivo <strong>percorre a hierarquia DNS</strong> (raiz → TLD → autoritativo) em nome do cliente, encontra a resposta e a armazena em cache para otimizar consultas futuras.",
+  },
+  {
+    e: "Qual é a principal vulnerabilidade do protocolo HTTP que o HTTPS corrige?",
+    o: [
+      { t: "O HTTP transmite dados em texto puro, permitindo ataques de interceptação (man-in-the-middle) e leitura do tráfego.", c: true  },
+      { t: "O HTTP não suporta cookies de sessão, tornando impossível manter autenticação entre requisições.",                    c: false },
+      { t: "O HTTP opera sobre UDP em vez de TCP, causando perda de pacotes sem retransmissão.",                                  c: false },
+      { t: "O HTTP não permite compressão de conteúdo, tornando o carregamento de páginas muito mais lento.",                    c: false },
+    ],
+    x: "O HTTP não cifra o tráfego: qualquer dispositivo no mesmo segmento pode capturar senhas, tokens e dados bancários. O <strong>HTTPS envelopa o HTTP com TLS</strong>, tornando o conteúdo ininteligível para interceptadores.",
+  },
+  {
+    e: "Qual afirmação descreve corretamente a relação entre SSL e TLS?",
+    o: [
+      { t: "TLS é a evolução do SSL: mais seguro, com algoritmos modernos; o SSL está obsoleto e não deve ser utilizado.",   c: true  },
+      { t: "SSL e TLS são protocolos independentes que operam em camadas diferentes do modelo OSI.",                          c: false },
+      { t: "SSL é o protocolo atual e o TLS é sua versão legada, mantida apenas para compatibilidade retroativa.",            c: false },
+      { t: "TLS é usado exclusivamente para e-mail seguro, enquanto o SSL é aplicado para conexões HTTPS na web.",            c: false },
+    ],
+    x: "O <strong>TLS (Transport Layer Security)</strong> substituiu o SSL, que apresentava vulnerabilidades conhecidas (POODLE, BEAST). Hoje, TLS 1.2 e 1.3 são os padrões; versões SSL são desativadas em servidores modernos.",
+  },
+  {
+    e: "Uma VPN site-to-site é configurada entre a filial e a matriz. Qual é o principal benefício técnico dessa arquitetura?",
+    o: [
+      { t: "Criar um túnel cifrado sobre a internet pública, permitindo que a filial acesse recursos internos da matriz com segurança.", c: true  },
+      { t: "Eliminar a necessidade de autenticação dos usuários ao acessar sistemas internos da matriz.",                                 c: false },
+      { t: "Aumentar a largura de banda ao agregar múltiplos links de internet entre filial e matriz simultaneamente.",                  c: false },
+      { t: "Substituir o firewall corporativo, pois o tunelamento VPN já filtra todo o tráfego malicioso.",                             c: false },
+    ],
+    x: "A VPN site-to-site cria um <strong>túnel IPSec ou TLS</strong> entre os gateways das duas redes. O tráfego é cifrado de ponta a ponta, garantindo confidencialidade e integridade mesmo ao trafegar pela internet pública.",
+  },
+  {
+    e: "O comando 'ping 8.8.8.8' retornou tempo médio de 280 ms. O que esse valor indica sobre a conexão?",
+    o: [
+      { t: "Alta latência: o RTT de 280 ms pode causar lentidão perceptível em aplicações sensíveis ao tempo, como VoIP e jogos online.", c: true  },
+      { t: "Velocidade de download inadequada: o link possui apenas 280 Kbps de capacidade de transmissão.",                               c: false },
+      { t: "Perda de pacotes de 280%: o servidor está descartando a maioria das requisições ICMP enviadas.",                              c: false },
+      { t: "O TTL atingiu 280 saltos até o destino, indicando roteamento circular (loop).",                                               c: false },
+    ],
+    x: "O <strong>RTT (Round-Trip Time)</strong> de 280 ms representa o tempo de ida e volta do pacote. Valores abaixo de 50 ms são bons; 280 ms indica latência elevada, impactando qualidade de voz e jogos em tempo real.",
+  },
+  {
+    e: "Ao executar 'ping servidor.empresa.com', você recebe 'Request timed out' (100% de perda). Qual conclusão é tecnicamente mais correta?",
+    o: [
+      { t: "O servidor pode estar online, mas um firewall pode estar bloqueando requisições ICMP, ou o host está realmente inacessível.", c: true  },
+      { t: "O domínio não existe no DNS, pois se existisse o ping sempre retornaria resposta.",                                           c: false },
+      { t: "O servidor está definitivamente desligado, pois sistemas online sempre respondem a pings.",                                   c: false },
+      { t: "O endereço IP do servidor é privado e não pode ser alcançado por ferramentas de diagnóstico externas.",                      c: false },
+    ],
+    x: "Timeout no ping <strong>não garante que o host esteja offline</strong>. Firewalls modernos frequentemente bloqueiam ICMP como medida de segurança. É necessário usar traceroute, telnet na porta do serviço ou curl para diagnóstico completo.",
+  },
+  {
+    e: "Qual é a função do NAT (Network Address Translation) no roteador de uma rede doméstica?",
+    o: [
+      { t: "Traduzir os endereços IP privados dos dispositivos internos para o IP público do roteador ao acessar a internet, e vice-versa.", c: true  },
+      { t: "Criptografar o tráfego entre os dispositivos da rede local e o provedor de internet.",                                           c: false },
+      { t: "Atribuir endereços IP dinâmicos aos dispositivos da rede, substituindo o protocolo DHCP.",                                      c: false },
+      { t: "Filtrar e bloquear sites maliciosos por meio de inspeção profunda de pacotes (DPI) em tempo real.",                             c: false },
+    ],
+    x: "O NAT permite que múltiplos dispositivos com <strong>IPs privados compartilhem um único IP público</strong>. O roteador mantém uma tabela de tradução que associa conexões internas às externas, direcionando as respostas ao dispositivo correto.",
+  },
+  {
+    e: "Para que serve uma VLAN (Virtual LAN) em uma rede corporativa com switch gerenciável?",
+    o: [
+      { t: "Segmentar logicamente a rede em domínios de broadcast isolados, sem necessidade de separação física de cabos.",        c: true  },
+      { t: "Aumentar a velocidade das portas do switch de 100 Mbps para 1 Gbps por meio de agregação de links.",                    c: false },
+      { t: "Substituir o endereçamento IP por endereçamento MAC em redes que não possuem servidor DHCP.",                           c: false },
+      { t: "Criar redundância de link entre switches para garantir alta disponibilidade usando o protocolo STP.",                    c: false },
+    ],
+    x: "VLANs dividem um switch físico em <strong>múltiplas redes lógicas independentes</strong>. Departamentos diferentes (RH, TI, Financeiro) ficam no mesmo switch mas em domínios de broadcast separados, melhorando segurança e desempenho.",
+  },
+  {
+    e: "Qual é a diferença entre um firewall stateless (filtragem de pacotes) e um firewall stateful (inspeção de estado)?",
+    o: [
+      { t: "O stateless analisa cada pacote de forma isolada; o stateful rastreia o estado das conexões e decide com base no contexto da sessão.", c: true  },
+      { t: "O stateless é mais seguro pois analisa o conteúdo completo da camada de aplicação; o stateful só verifica cabeçalhos IP.",             c: false },
+      { t: "O stateful opera exclusivamente em hardware dedicado; o stateless pode ser implementado somente em software.",                          c: false },
+      { t: "O stateless usa listas de ACL dinâmicas atualizadas em tempo real; o stateful usa regras estáticas pré-configuradas.",                 c: false },
+    ],
+    x: "<strong>Stateless</strong>: aplica regras a cada pacote individualmente, sem contexto. <strong>Stateful</strong>: mantém tabela de sessões ativas e verifica se o pacote pertence a uma conexão legítima já estabelecida, oferecendo proteção mais inteligente.",
+  },
+];
+
+/* ═══════════════════════════════════════════════════════════
+   ENGINE
+═══════════════════════════════════════════════════════════ */
+const TEMPO_POR_QUESTAO = 25;
+const LETRAS = ['A','B','C','D'];
+
+let fila = [], idx = 0, acertos = 0, erros = 0;
+let timerInterval = null, tempoRestante = 0;
+let temposTotais = [], inicioQuestao = 0;
+let respondida = false;
+
+function embaralhar(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function mostrarTela(id) {
+  document.querySelectorAll('.tela').forEach(t => t.classList.remove('ativa'));
+  document.getElementById(id).classList.add('ativa');
+}
+
+function iniciarQuiz() {
+  fila = embaralhar(QUESTOES);
+  idx = 0; acertos = 0; erros = 0; temposTotais = [];
+  mostrarTela('tela-questao');
+  carregarQuestao();
+}
+
+function carregarQuestao() {
+  respondida = false;
+  const q = fila[idx];
+  const total = fila.length;
+
+  // progresso
+  document.getElementById('progresso-txt').textContent = `Questão ${idx + 1} de ${total}`;
+  document.getElementById('barra-progresso').style.width = `${(idx / total) * 100}%`;
+
+  // enunciado
+  document.getElementById('enunciado').textContent = q.e;
+
+  // explicação
+  const expl = document.getElementById('explicacao');
+  expl.classList.remove('visivel');
+  expl.innerHTML = '';
+
+  // botão próxima
+  const btn = document.getElementById('btn-proxima');
+  btn.style.display = 'none';
+
+  // opções
+  const ops = embaralhar(q.o);
+  const container = document.getElementById('opcoes');
+  container.innerHTML = '';
+  ops.forEach((op, i) => {
+    const b = document.createElement('button');
+    b.className = 'opcao';
+    b.innerHTML = `<span class="letra">${LETRAS[i]}</span><span>${op.t}</span>`;
+    b.addEventListener('click', () => responder(op.c, ops, b, q.x));
+    container.appendChild(b);
+  });
+
+  // timer
+  inicioQuestao = Date.now();
+  iniciarTimer();
+}
+
+function iniciarTimer() {
+  clearInterval(timerInterval);
+  tempoRestante = TEMPO_POR_QUESTAO;
+  atualizarTimer();
+  timerInterval = setInterval(() => {
+    tempoRestante--;
+    atualizarTimer();
+    if (tempoRestante <= 0) {
+      clearInterval(timerInterval);
+      if (!respondida) timeOut();
+    }
+  }, 1000);
+}
+
+function atualizarTimer() {
+  const el = document.getElementById('cronometro');
+  const fill = document.getElementById('timer-fill');
+  el.textContent = tempoRestante;
+  el.classList.toggle('urgente', tempoRestante <= 7);
+  fill.style.width = `${(tempoRestante / TEMPO_POR_QUESTAO) * 100}%`;
+  if (tempoRestante <= 7) fill.style.background = 'var(--red)';
+  else if (tempoRestante <= 12) fill.style.background = 'var(--yellow)';
+  else fill.style.background = 'var(--green)';
+}
+
+function timeOut() {
+  respondida = true;
+  erros++;
+  temposTotais.push(TEMPO_POR_QUESTAO * 1000);
+  // marca corretas
+  document.querySelectorAll('.opcao').forEach((b, i) => {
+    b.disabled = true;
+    const ops = embaralhar(fila[idx].o); // apenas para visual; já embaralhado
+  });
+  // destaca corretas
+  document.querySelectorAll('.opcao').forEach(b => {
+    b.disabled = true;
+    // span[1] é o texto
+    const texto = b.querySelectorAll('span')[1].textContent;
+    const op = fila[idx].o.find(o => o.t === texto);
+    if (op && op.c) b.classList.add('correta');
+  });
+  mostrarExplicacao(fila[idx].x, false, true);
+  prepararProxima();
+}
+
+function responder(correta, ops, botaoClicado, explicacao) {
+  if (respondida) return;
+  respondida = true;
+  clearInterval(timerInterval);
+
+  const gasto = Date.now() - inicioQuestao;
+  temposTotais.push(gasto);
+
+  if (correta) acertos++;
+  else erros++;
+
+  // desabilita tudo e marca
+  document.querySelectorAll('.opcao').forEach(b => {
+    b.disabled = true;
+    const texto = b.querySelectorAll('span')[1].textContent;
+    const op = ops.find(o => o.t === texto);
+    if (op) {
+      if (op.c) b.classList.add('correta');
+      else if (b === botaoClicado && !correta) b.classList.add('errada');
+    }
+  });
+
+  mostrarExplicacao(explicacao, correta, false);
+  prepararProxima();
+}
+
+function mostrarExplicacao(texto, correta, timeout) {
+  const el = document.getElementById('explicacao');
+  const icone = timeout ? '⏱ Tempo esgotado! ' : (correta ? '✅ ' : '❌ ');
+  el.innerHTML = icone + texto;
+  el.classList.add('visivel');
+}
+
+function prepararProxima() {
+  const btn = document.getElementById('btn-proxima');
+  btn.style.display = 'flex';
+  const ultimo = idx >= fila.length - 1;
+  btn.textContent = ultimo ? 'Ver resultado 🏁' : 'Próxima →';
+  btn.onclick = () => {
+    if (ultimo) mostrarResultado();
+    else { idx++; carregarQuestao(); }
+  };
+}
+
+function mostrarResultado() {
+  clearInterval(timerInterval);
+  mostrarTela('tela-final');
+
+  const total = fila.length;
+  const pct = Math.round((acertos / total) * 100);
+  const mediaMs = temposTotais.reduce((a, b) => a + b, 0) / temposTotais.length;
+  const mediaSeg = (mediaMs / 1000).toFixed(1);
+
+  // emoji e cor
+  let emoji, cor, label;
+  if (pct >= 90) { emoji = '🏆'; cor = 'var(--green)'; label = `Excelente! ${pct}% de aproveitamento.`; }
+  else if (pct >= 70) { emoji = '✅'; cor = 'var(--accent)'; label = `Bom trabalho! ${pct}% de aproveitamento.`; }
+  else if (pct >= 50) { emoji = '📚'; cor = 'var(--yellow)'; label = `Pode melhorar. ${pct}% de aproveitamento.`; }
+  else { emoji = '🔁'; cor = 'var(--red)'; label = `Revise o conteúdo. ${pct}% de aproveitamento.`; }
+
+  document.getElementById('emoji-final').textContent = emoji;
+  document.getElementById('nota-display').textContent = `${acertos}/${total}`;
+  document.getElementById('nota-display').style.color = cor;
+  document.getElementById('nota-label').textContent = label;
+
+  document.getElementById('stat-certas').textContent = acertos;
+  document.getElementById('stat-erradas').textContent = erros;
+  document.getElementById('stat-tempo').textContent = `${mediaSeg}s`;
+
+  // barra animada
+  setTimeout(() => {
+    const b = document.getElementById('barra-resultado');
+    b.style.width = `${pct}%`;
+    b.style.background = cor;
+  }, 100);
+
+  // confete se >= 70%
+  if (pct >= 70 && typeof confetti !== 'undefined') {
+    confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 } });
+  }
+}
+
+/* ── EVENTOS ────────────────────────────────────────────────── */
+document.getElementById('btn-comecar').addEventListener('click', iniciarQuiz);
+document.getElementById('btn-refazer').addEventListener('click', () => {
+  mostrarTela('tela-inicio');
+});
+</script>
+</body>
+</html>

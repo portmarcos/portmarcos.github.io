@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAEB/SIMAVE – D20 | Comparar formas de abordar um tema</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--azul:#1a3a5c;--azul-m:#235a8c;--azul-c:#d6e8f7;--ouro:#c9871f;--ouro-c:#fff8eb;--verde:#246b4a;--verde-c:#e6f4ed;--verm:#b02a2a;--verm-c:#fdecea;--bg:#f2f4f7;--borda:#d0d6e0;--branco:#fff;--txt:#1c2635;--txt2:#4a5568}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;line-height:1.5}
+header{background:var(--azul);color:#fff;padding:2.4rem 1.5rem 1.8rem;text-align:center;position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:rgba(201,135,31,.12)}
+.badge{display:inline-block;background:var(--ouro);color:var(--azul);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:.8rem}
+header h1{font-family:'Lora',serif;font-size:clamp(1.5rem,4vw,2.1rem);font-weight:600;line-height:1.3;margin-bottom:.4rem}
+header p{font-size:.92rem;opacity:.78;max-width:560px;margin:0 auto;line-height:1.6}
+.voltar-link{display:inline-block;margin-bottom:1rem;color:#fff;opacity:.7;text-decoration:none;font-size:.82rem}
+.voltar-link:hover{opacity:1}
+.tabs{background:var(--branco);border-bottom:1px solid var(--borda);position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.tabs-inner{max-width:840px;margin:0 auto;display:flex}
+.tab-btn{flex:1;background:none;border:none;padding:.95rem .5rem;font-family:'Inter',sans-serif;font-size:.88rem;font-weight:600;color:var(--txt2);cursor:pointer;border-bottom:3px solid transparent;transition:.15s;display:flex;align-items:center;justify-content:center;gap:.35rem}
+.tab-btn:hover{color:var(--azul-m);background:var(--bg)}
+.tab-btn.active{color:var(--azul);border-bottom-color:var(--ouro)}
+main{max-width:840px;margin:0 auto;padding:1.6rem 1.25rem 4rem}
+.tab-pane{display:none;flex-direction:column;gap:1.6rem}
+.tab-pane.active{display:flex}
+.painel{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.5rem 1.6rem}
+.painel h2{font-family:'Lora',serif;font-size:1.2rem;color:var(--azul);margin-bottom:.7rem}
+.painel h3{font-size:.95rem;color:var(--azul-m);margin:.9rem 0 .3rem}
+.painel p,.painel li{font-size:.9rem;margin-bottom:.5rem}
+.painel ul{margin:.2rem 0 .6rem 1.2rem}
+.painel strong{color:var(--azul)}
+.resumo-box{background:var(--azul);color:#fff;border-radius:14px;padding:1.4rem 1.6rem}
+.resumo-box h2{color:#fff;font-family:'Lora',serif;font-size:1.1rem;margin-bottom:.5rem}
+.resumo-box p{color:rgba(255,255,255,.9);font-size:.92rem;margin:0}
+.resumo-box .fc{display:block;margin-top:.7rem;font-style:italic;font-size:.88rem;background:rgba(255,255,255,.1);padding:.6rem .9rem;border-radius:8px;border-left:3px solid var(--ouro)}
+.dica-ouro{background:var(--ouro-c);border:1px solid #ecd9aa}
+.dica-ouro h2{color:#7a5310}.dica-ouro li{color:#4a3408}.dica-ouro strong{color:#7a5310}
+.glossario dt{font-weight:600;color:var(--azul-m);font-size:.88rem;margin-top:.5rem}
+.glossario dd{font-size:.86rem;color:var(--txt2);margin-left:0}
+.aviso-prof{background:#eef4fb;border:1px dashed var(--azul-m);border-radius:10px;padding:.9rem 1.1rem;font-size:.82rem;color:var(--azul-m)}
+.records{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.2rem 1.4rem}
+.records h2{font-family:'Lora',serif;font-size:1.1rem;color:var(--azul);margin-bottom:.6rem}
+.rec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.7rem}
+.rec-item{background:var(--bg);border-radius:10px;padding:.7rem;text-align:center}
+.rec-item .rv{font-size:1.5rem;font-weight:700;color:var(--azul-m)}
+.rec-item .rl{font-size:.72rem;color:var(--txt2)}
+.prog-wrap{background:var(--branco);border:1px solid var(--borda);border-radius:12px;padding:.85rem 1.1rem;display:flex;align-items:center;gap:14px}
+.prog-label{font-size:.78rem;font-weight:600;color:var(--azul-m);white-space:nowrap}
+.prog-track{flex:1;height:6px;background:var(--borda);border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--azul-m),var(--ouro));border-radius:99px;width:0%;transition:width .4s}
+.score{font-size:.78rem;font-weight:600;color:var(--txt2);white-space:nowrap}
+.card{background:var(--branco);border-radius:14px;border:1px solid var(--borda);overflow:hidden}
+.card-head{background:var(--azul);color:#fff;padding:.65rem 1.2rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.qnum{background:var(--ouro);color:var(--azul);font-size:.72rem;font-weight:700;padding:3px 11px;border-radius:20px}
+.qtipo{font-size:.74rem;opacity:.65;font-style:italic}
+
+
+.txt-base{background:var(--ouro-c);border-left:4px solid var(--ouro);margin:1rem 1.1rem 0;padding:1rem 1.1rem;border-radius:0 8px 8px 0;font-family:'Lora',serif;font-size:.94rem;line-height:1.85;color:#2b1d00;position:relative}
+.txt-fonte{font-family:'Inter',sans-serif;font-size:.72rem;color:var(--txt2);margin-top:.6rem;display:block;border-top:1px solid #e6d5b0;padding-top:.4rem}
+.btn-tts{position:absolute;top:.6rem;right:.6rem;background:none;border:1px solid #c9a14a;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;color:#8a6d1b;transition:.15s}
+.btn-tts:hover{background:#f5e6c1}
+.btn-tts.playing{background:var(--azul);color:#fff;border-color:var(--azul)}
+.img-slot{margin:.8rem 1.1rem 0;border:2px dashed var(--borda);border-radius:10px;padding:.8rem;text-align:center;color:var(--txt2);font-size:.76rem}
+.enunciado{padding:1rem 1.1rem .4rem;font-size:.92rem;line-height:1.6;font-weight:500;color:var(--azul)}
+.alts{padding:.4rem 1.1rem 1.1rem;display:flex;flex-direction:column;gap:.45rem}
+.alt{display:flex;align-items:flex-start;gap:10px;padding:.65rem .9rem;border:1.5px solid var(--borda);border-radius:9px;background:var(--branco);cursor:pointer;text-align:left;font-family:'Inter',sans-serif;font-size:.86rem;color:var(--txt);line-height:1.5;transition:.15s;width:100%}
+.alt:hover:not(:disabled){border-color:var(--azul-m);background:var(--azul-c);transform:translateX(2px)}
+.alt:disabled{cursor:default}
+.letra{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;border-radius:50%;background:var(--bg);font-size:.75rem;font-weight:700;color:var(--azul);flex-shrink:0}
+.alt.ok{border-color:var(--verde);background:var(--verde-c);color:var(--verde);font-weight:500}
+.alt.ok .letra{background:var(--verde);color:#fff}
+.alt.err{border-color:var(--verm);background:var(--verm-c);color:var(--verm)}
+.alt.err .letra{background:var(--verm);color:#fff}
+.alt.dim{opacity:.5}.alt.sel{border-color:var(--azul-m);background:var(--azul-c)}.alt.sel .letra{background:var(--azul-m);color:#fff}
+.fb{display:none;margin:0 1.1rem 1.1rem;padding:.8rem 1rem;border-radius:8px;font-size:.83rem;line-height:1.6}
+.fb.show{display:block}.fb.ok{background:var(--verde-c);border-left:3px solid var(--verde)}.fb.err{background:var(--verm-c);border-left:3px solid var(--verm)}
+.fb .ft{font-weight:600;margin-bottom:.3rem}.fb.ok .ft{color:var(--verde)}.fb.err .ft{color:var(--verm)}
+.fb .pq{margin-top:.5rem;border-top:1px solid rgba(0,0,0,.08);padding-top:.4rem}
+.fb .pq b{color:var(--azul)}
+.fb .pi{display:block;font-size:.8rem;color:var(--txt2);margin-bottom:.2rem}
+.fb .pi .l{font-weight:700;color:var(--azul)}
+#resultado{display:none;background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:2.4rem 2rem;text-align:center}
+#resultado h2{font-family:'Lora',serif;font-size:1.4rem;color:var(--azul)}
+.medalha{font-size:3rem;margin:.4rem 0}.nota{font-size:3.4rem;font-weight:700;color:var(--azul-m);line-height:1;margin:.4rem 0}
+#resultado p{color:var(--txt2);font-size:.9rem;max-width:480px;margin:.4rem auto 0}
+.btn{display:inline-block;background:var(--azul);color:#fff;padding:.65rem 1.5rem;border-radius:30px;border:none;font-size:.86rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s;margin:.3rem}
+.btn:hover{background:var(--azul-m)}
+.btn.ouro{background:var(--ouro);color:var(--azul)}.btn.sec{background:var(--bg);color:var(--azul);border:1px solid var(--borda)}
+.jogo-card{background:var(--branco);border-radius:14px;border:1px solid var(--borda);overflow:hidden}
+.jogo-head{padding:1rem 1.3rem;border-bottom:1px solid var(--borda);display:flex;align-items:center;gap:.7rem}
+.jogo-ico{font-size:1.5rem}
+.jogo-head h3{font-family:'Lora',serif;font-size:1.1rem;color:var(--azul);margin:0}
+.jogo-head .desc{font-size:.78rem;color:var(--txt2)}
+.jogo-body{padding:1.2rem 1.3rem}
+.chip{font-size:.76rem;font-weight:600;padding:4px 11px;border-radius:20px;background:var(--azul-c);color:var(--azul)}
+.chip.timer{background:var(--ouro-c);color:#a96e10}
+.jogo-mid{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:.8rem}
+.timerbar{flex:1;min-width:100px;height:8px;background:var(--borda);border-radius:99px;overflow:hidden}
+.timerbar>div{height:100%;width:100%;background:linear-gradient(90deg,var(--verde),var(--ouro),var(--verm));border-radius:99px;transition:width .25s linear}
+.mini-texto{background:var(--ouro-c);border-left:4px solid var(--ouro);border-radius:0 8px 8px 0;padding:.85rem 1rem;font-family:'Lora',serif;font-size:.9rem;line-height:1.7;color:#2b1d00;margin-bottom:.8rem;position:relative}
+.mini-q{font-weight:600;color:var(--azul);margin-bottom:.6rem;font-size:.9rem}
+.mini-btn{border:1.5px solid var(--borda);background:var(--branco);border-radius:8px;padding:.45rem .8rem;font-size:.8rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;color:var(--azul);transition:.15s}
+.mini-btn:hover:not(:disabled){background:var(--azul-c);border-color:var(--azul-m)}
+.mini-btn:disabled{cursor:default}
+.mini-btn.ok{background:var(--verde-c);border-color:var(--verde);color:var(--verde)}
+.mini-btn.err{background:var(--verm-c);border-color:var(--verm);color:var(--verm)}
+.mini-fb{font-size:.8rem;margin-top:.5rem;padding:.45rem .65rem;border-radius:6px;display:none}
+.mini-fb.show{display:block}.mini-fb.ok{background:var(--verde-c);color:var(--verde)}.mini-fb.err{background:var(--verm-c);color:var(--verm)}
+.vf-item,.det-item{border:1.5px solid var(--borda);border-radius:10px;padding:.7rem .9rem;margin-bottom:.6rem}
+.vf-stm{font-size:.88rem;margin-bottom:.5rem}
+.btn-row{display:flex;gap:.5rem;flex-wrap:wrap}
+.cat-btn.cat-tema.ok{border-color:var(--azul-m);background:var(--azul-c);color:var(--azul)}
+.cat-btn.cat-detalhe.ok{border-color:var(--ouro);background:var(--ouro-c);color:#a96e10}
+.cat-btn.cat-foradotexto.ok{border-color:var(--verde);background:var(--verde-c);color:var(--verde)}
+.jogo-final{text-align:center;padding:.8rem 0 .3rem}
+.jogo-final .big{font-size:2rem;font-weight:700;color:var(--azul-m)}
+.jogo-final p{font-size:.88rem;color:var(--txt2);margin:.2rem 0 .8rem}
+.ord-list{list-style:none;padding:0;counter-reset:ord}
+.ord-item{counter-increment:ord;display:flex;align-items:center;gap:10px;padding:.6rem .9rem;border:1.5px solid var(--borda);border-radius:9px;margin-bottom:.5rem;background:var(--branco);font-size:.86rem;user-select:none}
+.ord-item::before{content:counter(ord);display:flex;align-items:center;justify-content:center;min-width:24px;height:24px;border-radius:50%;background:var(--azul-c);font-size:.72rem;font-weight:700;color:var(--azul)}
+.ord-item.ok{border-color:var(--verde);background:var(--verde-c)}
+.ord-item.err{border-color:var(--verm);background:var(--verm-c)}
+.ord-arrows{display:flex;flex-direction:column;gap:2px;margin-left:auto}
+.ord-arrows button{background:var(--bg);border:1px solid var(--borda);border-radius:4px;width:24px;height:20px;cursor:pointer;font-size:.65rem;display:flex;align-items:center;justify-content:center}
+.ord-arrows button:hover{background:var(--azul-c)}
+footer{text-align:center;padding:1.5rem;font-size:.76rem;color:var(--txt2)}
+@media print{.tabs,header,.prog-wrap,.btn,.btn-tts,.img-slot,footer,#resultado,.jogo-card,.records,.resumo-box,.dica-ouro,.glossario,.aviso-prof{display:none!important}.tab-pane{display:flex!important}.card{break-inside:avoid;border:1px solid #ccc;margin-bottom:1rem}.card-head{background:#333!important;-webkit-print-color-adjust:exact}.fb{display:block!important;background:#f5f5f5!important;border-left:3px solid #999!important;color:#333!important}}
+@media(max-width:480px){.painel{padding:1.1rem}.tab-btn{font-size:.78rem;padding:.8rem .3rem}}
+
+.genre-tag{display:inline-block;padding:3px 10px;border-radius:14px;font-size:.72rem;font-weight:700;margin-bottom:.5rem}
+.func-tag{display:inline-block;padding:4px 12px;border-radius:14px;font-size:.75rem;font-weight:700;margin:2px 4px 2px 0;color:#fff}
+.func-informar{background:#3498db}.func-narrar{background:#e74c3c}.func-opinar{background:#f39c12}.func-instruir{background:#27ae60}.func-definir{background:#9b59b6}.func-expressar{background:#1abc9c}
+.disc-area{width:calc(100% - 2.2rem);min-height:130px;border:1.5px solid var(--borda);border-radius:9px;padding:.7rem .9rem;font-family:'Inter',sans-serif;font-size:.88rem;resize:vertical;margin:0 1.1rem .4rem}
+.disc-actions{padding:0 1.1rem 1rem}
+@media print{.gabarito-print{display:block!important;break-before:page;border:1px solid #999;border-radius:8px;padding:1rem 1.2rem;margin-top:1rem}.gabarito-print h2{font-size:1.1rem;margin-bottom:.6rem}.gabarito-print ol{margin-left:1.2rem}.gabarito-print li{font-size:.86rem;margin-bottom:.3rem}.fb{display:none!important}.disc-actions{display:none!important}}
+
+.tese-box{background:#e3f2fd;border-left:4px solid #1976d2;padding:.8rem;margin:.8rem 0;border-radius:0 8px 8px 0}
+.disc-area{width:calc(100% - 2.2rem);min-height:130px;border:1.5px solid var(--borda);border-radius:9px;padding:.7rem .9rem;font-family:'Inter',sans-serif;font-size:.88rem;resize:vertical;margin:0 1.1rem .4rem}
+.disc-actions{padding:0 1.1rem 1rem}
+@media print{.gabarito-print{display:block!important;break-before:page}.fb{display:none!important}.disc-actions{display:none!important}}
+/* ===== TELA DE IDENTIFICAÇÃO E MODO DE JOGO ===== */
+.quiz-gate{background:var(--branco);border-radius:14px;border:1px solid var(--borda);padding:1.8rem 1.6rem;max-width:480px;margin:0 auto}
+.quiz-gate h2{font-family:'Lora',serif;font-size:1.25rem;color:var(--azul);margin-bottom:.4rem}
+.quiz-gate>p{font-size:.88rem;color:var(--txt2);margin-bottom:1.2rem}
+.gate-field{margin-bottom:1.1rem}
+.gate-field>label{display:block;font-size:.82rem;font-weight:600;color:var(--azul-m);margin-bottom:.4rem}
+.gate-field input[type=text]{width:100%;padding:.65rem .8rem;border:1.5px solid var(--borda);border-radius:9px;font-family:'Inter',sans-serif;font-size:.92rem;color:var(--txt)}
+.gate-field input[type=text]:focus{outline:none;border-color:var(--azul-m)}
+.modo-opcoes{display:flex;flex-direction:column;gap:.6rem}
+.modo-opcao{display:flex;align-items:flex-start;gap:.6rem;border:1.5px solid var(--borda);border-radius:10px;padding:.7rem .85rem;cursor:pointer;transition:.15s}
+.modo-opcao:hover{border-color:var(--azul-m)}
+.modo-opcao input[type=radio]{margin-top:.25rem;accent-color:var(--azul-m)}
+.modo-opcao input[type=radio]:checked~span b{color:var(--azul)}
+.modo-opcao span{font-size:.85rem}
+.modo-opcao small{color:var(--txt2);font-weight:400}
+.gate-aviso{color:var(--verm);font-size:.82rem;margin-top:.7rem;min-height:1.2em}
+.modo-opcao.bloqueado{opacity:.6;cursor:not-allowed}
+.modo-opcao.liberado{opacity:1;cursor:pointer;border-color:var(--verde)}
+.cadeado{font-size:.75rem}
+.senha-box{display:flex;gap:.5rem;margin-top:.6rem}
+.senha-box input[type=password]{flex:1;padding:.55rem .75rem;border:1.5px solid var(--borda);border-radius:9px;font-family:'Inter',sans-serif;font-size:.85rem}
+.senha-box input[type=password]:focus{outline:none;border-color:var(--azul-m)}
+.senha-btn{white-space:nowrap;font-size:.8rem;padding:.55rem 1rem}
+.senha-aviso{font-size:.78rem;margin-top:.4rem;min-height:1.1em}
+.senha-aviso.ok{color:var(--verde)}
+.senha-aviso.erro{color:var(--verm)}
+.modo-chip{font-size:.74rem;font-weight:700;padding:4px 12px;border-radius:20px;background:var(--azul-c);color:var(--azul-m);margin-left:auto}
+.envio-status{font-size:.82rem;margin-top:.8rem;padding:.6rem .9rem;border-radius:8px}
+.envio-status.enviando{background:var(--azul-c);color:var(--azul-m)}
+.envio-status.ok{background:var(--verde-c);color:var(--verde)}
+.envio-status.erro{background:var(--verm-c);color:var(--verm)}
+/* No modo prova, o feedback de cada questão fica escondido até o aluno terminar */
+.fb.prova-oculto{display:none!important}
+@media print{.quiz-gate,.modo-chip,.envio-status{display:none!important}#quizConteudo{display:block!important}}
+</style>
+</head><body><header><a href="index.html" class="voltar-link">← Painel SAEB/SIMAVE</a><div class="badge">SAEB · SIMAVE · Língua Portuguesa</div><h1>Habilidade D20</h1><p>Reconhecer diferentes formas de abordar uma informação ao comparar textos que tratam do mesmo tema</p></header>
+<nav class="tabs"><div class="tabs-inner"><button class="tab-btn active" data-tab="estudar">📚 Estudar</button><button class="tab-btn" data-tab="quiz">📝 Quiz</button><button class="tab-btn" data-tab="jogos">🎮 Jogos</button></div></nav><main><section class="tab-pane active" id="pane-estudar"><div class="resumo-box"><h2>🎯 Em uma frase</h2><p>O D20 mede se você consegue <strong style="color:#ffd98a">identificar como dois textos sobre o mesmo tema se diferem</strong> na forma de abordar, apresentar ou focar a informação.</p><span class="fc">"Dois textos sobre o mesmo assunto podem ser completamente diferentes — o que muda é o como, não o quê."</span></div>
+<section class="painel"><h2>📌 O que essa habilidade avalia</h2>
+<p>Quando dois textos tratam do mesmo assunto, nem sempre o fazem da mesma forma. Cada autor escolhe: uma <strong>perspectiva</strong> (global ou local), uma <strong>linguagem</strong> (técnica ou popular), um <strong>objetivo</strong> (informar, persuadir, emocionar), um tipo de <strong>evidência</strong> (dados ou narrativas). Reconhecer essas diferenças é o que o D20 avalia.</p>
+<h3>Perguntas-chave para comparar dois textos:</h3>
+<ul>
+<li>Qual é o <strong>propósito</strong> de cada texto? (informar, persuadir, narrar, denunciar)</li>
+<li>Que tipo de <strong>linguagem</strong> cada um usa? (formal/técnica vs. informal/popular)</li>
+<li>Que tipo de <strong>evidência</strong> é usada? (dados, estatísticas vs. histórias, depoimentos)</li>
+<li>Que <strong>perspectiva</strong> cada texto adota? (global/macro vs. local/micro)</li>
+<li>Que <strong>aspecto</strong> do tema cada um enfatiza? (problema vs. solução, dado vs. impacto humano)</li>
+</ul>
+<h3>Como o enunciado costuma aparecer:</h3>
+<ul>
+<li>"Qual é a principal diferença <em>na forma</em> como os dois textos abordam..."</li>
+<li>"Como os textos diferem no uso da linguagem / na perspectiva / no propósito..."</li>
+<li>"Comparando os dois textos, que diferença pode ser identificada..."</li>
+</ul>
+</section>
+
+<section class="dica-ouro painel"><h2>💡 Dica de ouro</h2><ul>
+<li><strong>O tema é o mesmo — o COMO é diferente.</strong> O D20 não pergunta o quê os textos dizem, mas como abordam o assunto.</li>
+<li><strong>Identifique o gênero.</strong> Notícia, crônica, relatório, campanha, editorial — o gênero já sinaliza a forma de abordar.</li>
+<li><strong>Observe a linguagem.</strong> Termos técnicos, linguagem imperativa, relato pessoal — cada um revela uma abordagem diferente.</li>
+<li><strong>Teste do propósito.</strong> Pergunte: esse texto quer informar, persuadir, narrar ou mobilizar? Textos sobre o mesmo tema podem ter propósitos completamente diferentes.</li>
+<li><strong>Diferença de abordagem ≠ diferença de opinião.</strong> Dois textos podem ter a mesma conclusão mas formas totalmente diferentes de chegar a ela.</li>
+</ul></section>
+
+<section class="painel glossario"><h2>📖 Glossário</h2><dl>
+<dt>Abordagem</dt><dd>A forma como o autor trata o tema — a perspectiva, os recursos e o propósito escolhidos.</dd>
+<dt>Perspectiva</dt><dd>O ângulo de visão — global (macro) ou local (micro), subjetivo ou objetivo.</dd>
+<dt>Evidência</dt><dd>Os recursos usados para sustentar o que é dito: dados, exemplos, depoimentos, imagens.</dd>
+<dt>Gênero textual</dt><dd>A categoria do texto (notícia, crônica, relatório, campanha...) que já define como o assunto será tratado.</dd>
+<dt>Registro linguístico</dt><dd>O grau de formalidade da linguagem — técnico, coloquial, literário, popular.</dd>
+<dt>Propósito</dt><dd>A intenção comunicativa do texto — informar, persuadir, narrar, emocionar.</dd>
+</dl></section>
+
+<div class="aviso-prof">📌 <strong>Professor(a):</strong> questões do D20 sempre apresentam dois textos lado a lado. Oriente os alunos a ler <em>os dois</em> antes de responder e a se perguntar: "Como cada texto trata o assunto?" — não apenas "O que ele diz?"</div>
+</section><section class="tab-pane" id="pane-quiz">
+
+<!-- ===== TELA DE IDENTIFICAÇÃO (aparece antes do quiz) ===== -->
+<div id="quizGate" class="quiz-gate">
+  <h2>👋 Antes de começar</h2>
+  <p>Preencha seus dados e escolha o modo de jogo.</p>
+  <div class="gate-field">
+    <label for="alunoNome">Nome do aluno</label>
+    <input type="text" id="alunoNome" placeholder="Seu nome completo" autocomplete="off">
+  </div>
+  <div class="gate-field">
+    <label for="alunoTurma">Turma / Série</label>
+    <input type="text" id="alunoTurma" placeholder="Ex: 9º Ano A" autocomplete="off">
+  </div>
+  <div class="gate-field">
+    <label>Modo de jogo</label>
+    <div class="modo-opcoes">
+      <label class="modo-opcao">
+        <input type="radio" name="modoQuiz" value="prova" checked>
+        <span><b>📝 Modo Prova</b><br><small>Sem feedback durante o quiz. As respostas certas só aparecem no final, como numa prova de verdade.</small></span>
+      </label>
+      <label class="modo-opcao" id="opcaoEstudo">
+        <input type="radio" name="modoQuiz" value="estudo" id="radioEstudo" disabled>
+        <span><b>📖 Modo Estudo</b> <span class="cadeado" id="cadeadoEstudo">🔒</span><br><small>Mostra se acertou ou errou — e a explicação — logo após cada resposta. Liberado pelo professor.</small></span>
+      </label>
+    </div>
+    <div class="senha-box" id="senhaBox">
+      <input type="password" id="senhaEstudo" placeholder="Senha do professor para liberar o Modo Estudo" autocomplete="off">
+      <button type="button" class="btn sec senha-btn" id="btnLiberarEstudo">Liberar</button>
+    </div>
+    <p class="senha-aviso" id="senhaAviso"></p>
+  </div>
+  <button class="btn" id="btnIniciarQuiz">▶ Começar o quiz</button>
+  <p class="gate-aviso" id="gateAviso"></p>
+</div>
+
+<!-- ===== QUIZ (fica oculto até o aluno preencher os dados acima) ===== -->
+<div id="quizConteudo" style="display:none">
+<div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.5rem;align-items:center">
+
+<button class="btn sec" onclick="location.reload()">🔀 Embaralhar e refazer</button>
+<span class="modo-chip" id="modoChip"></span>
+</div>
+<div class="prog-wrap"><span class="prog-label">Progresso</span><div class="prog-track"><div class="prog-fill" id="pFill"></div></div><span class="score" id="score">0 / 12</span></div>
+<div id='quiz'></div><div class='card' id='cardDisc' style='margin-top:1.5rem'><div class='card-head'><span class='qnum'>Q13</span><span class='qtipo'>Notícia real</span><span class='qnivel dificil'>Aberta</span></div><div class='txt-base' id='txtDisc'>Leia o trecho:<br><br><b>Observatório do Clima entrega recomendações para transição energética</b><br>O documento foi elaborado por 161 organizações sociais e enviado ao governo federal. O prazo para a equipe ministerial entregar o planejamento termina em 6 de fevereiro. As recomendações incluem medidas técnicas, de regulamentação e econômicas.<span class='txt-fonte'>Agência Brasil/EBC, 28 jan. 2026. Adaptado.</span></div><p class='enunciado'><b>a)</b> Qual é a informação principal desse trecho?<br><b>b)</b> Identifique uma informação secundária (de contexto/circunstância).<br><b>c)</b> Por que é importante, ao resumir um texto, separar partes principais de secundárias?</p><textarea class='disc-area'></textarea><div class='disc-actions'><button class="btn sec" id="btnDisc" onclick="(function(){var p=prompt('Senha do professor:');if(p===SENHA_MODO_ESTUDO){var fb=document.getElementById('fbDisc');if(fb){fb.style.display='block';}}else if(p!==null){alert('Senha incorreta.');}})()">👁️ Ver gabarito</button></div><div class='fb' id='fbDisc'><div class='ft' style='color:var(--azul)'>Gabarito</div><div><b>a)</b> A informação principal é o documento de recomendações para a transição energética, elaborado por 161 organizações sociais.<br><b>b)</b> A data exata do prazo (6 de fevereiro) é informação secundária, de circunstância administrativa.<br><b>c)</b> Resposta livre, mas deve mencionar que separar partes principais de secundárias permite resumir o texto de forma fiel e objetiva, sem perder o sentido central nem se prender a detalhes que não mudam a compreensão geral.</div></div>
+<div id='resultado'><h2>Concluído!</h2><div class='medalha' id='medalha'>🏅</div><div class='nota' id='notaFinal'>—</div><p id='msgFinal'></p><div id="envioStatus" class="envio-status"></div><button class='btn' onclick='location.reload()'>↺ Refazer</button></div></div>
+</div>
+</section><section class='tab-pane' id='pane-jogos'><div class='resumo-box'><h2>🎮 Hora de jogar</h2><p>Cinco minijogos para treinar reconhecer diferentes formas de abordar um tema.</p></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>⏱️</span><h3>Qual a diferença?</h3></div><div class='jogo-body' id='g1-body'><button class='btn ouro' onclick='G1.start()'>▶ Começar</button></div></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>🏷️</span><h3>Classifique a abordagem</h3></div><div class='jogo-body' id='g2-body'><button class='btn ouro' onclick='G2.start()'>▶ Começar</button></div></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>🔎</span><h3>Identifique pela pista</h3></div><div class='jogo-body' id='g3-body'><button class='btn ouro' onclick='G3.start()'>▶ Começar</button></div></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>🧩</span><h3>Complete</h3></div><div class='jogo-body' id='g4-body'><button class='btn ouro' onclick='G4.start()'>▶ Começar</button></div></div><div class='jogo-card'><div class='jogo-head'><span class='jogo-ico'>🔢</span><h3>Ordene os passos</h3></div><div class='jogo-body' id='g5-body'><button class='btn ouro' onclick='G5.start()'>▶ Começar</button></div></div>
+
+
+
+</section></main><footer>Portal do Professor Marcos Cruz · SAEB/SIMAVE · D20</footer><script>
+/* ===== CONFIGURAÇÃO DO ENVIO PARA GOOGLE SHEETS =====
+   Cole aqui a URL do seu Apps Script publicado como "App da Web".
+   Veja o arquivo google-apps-script.gs para instruções de instalação.
+   Enquanto estiver "SUBSTITUA_PELA_SUA_URL", o envio fica desativado
+   (o quiz funciona normalmente, só não manda nada para a planilha). */
+const SHEETS_URL = "https://script.google.com/macros/s/AKfycbwPcWRWW2IkMb8-WkyB2w1M2n9ivcYlfqWajYRgCzecLTC1T7aBetZtR2MDaOIxahc/exec";
+const DESCRITOR_PAGINA = "D20 - Reconhecer diferentes formas de abordar uma informação";
+const NOME_ARQUIVO = "D20.html";
+
+/* ===== ESTADO DO ALUNO E MODO DE JOGO ===== */
+let alunoNome = "";
+let alunoTurma = "";
+let modoJogo = "estudo"; // "estudo" ou "prova"
+const respostasDetalhadas = [];
+const selecoes = {}; // {dn: k} para revelar botões no fim do modo prova // uma entrada por questão respondida, na ordem em que aparecem
+
+/* ===== SENHA PARA LIBERAR O MODO ESTUDO =====
+   Troque a senha abaixo quando quiser. É a MESMA senha em todas as páginas
+   do portal (mais simples de lembrar e passar para os alunos quando for
+   hora de revisão). Lembre-se: como o quiz roda no navegador do aluno,
+   essa senha impede o uso casual do Modo Estudo, mas não é uma proteção
+   contra alguém que abra o código-fonte da página — as respostas já estão
+   no arquivo de qualquer forma, como em qualquer site estático como este. */
+const SENHA_MODO_ESTUDO = "professor123";
+
+document.getElementById("btnLiberarEstudo").onclick = () => {
+  const campo = document.getElementById("senhaEstudo");
+  const aviso = document.getElementById("senhaAviso");
+  if (campo.value === SENHA_MODO_ESTUDO) {
+    document.getElementById("radioEstudo").disabled = false;
+    document.getElementById("radioEstudo").checked = true;
+    document.getElementById("cadeadoEstudo").textContent = "🔓";
+    document.getElementById("opcaoEstudo").classList.add("liberado");
+    document.getElementById("senhaBox").style.display = "none";
+    aviso.className = "senha-aviso ok";
+    aviso.textContent = "✓ Modo Estudo liberado.";
+  } else {
+    aviso.className = "senha-aviso erro";
+    aviso.textContent = "Senha incorreta.";
+  }
+};
+// Também libera ao apertar Enter no campo de senha
+document.getElementById("senhaEstudo").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") document.getElementById("btnLiberarEstudo").click();
+});
+
+document.getElementById("btnIniciarQuiz").onclick = () => {
+  const nome = document.getElementById("alunoNome").value.trim();
+  const turma = document.getElementById("alunoTurma").value.trim();
+  const aviso = document.getElementById("gateAviso");
+  if (!nome || !turma) {
+    aviso.textContent = "Preencha nome e turma/série para continuar.";
+    return;
+  }
+  alunoNome = nome;
+  alunoTurma = turma;
+  modoJogo = document.querySelector('input[name="modoQuiz"]:checked').value;
+  document.getElementById("quizGate").style.display = "none";
+  document.getElementById("quizConteudo").style.display = "block";
+  const chip = document.getElementById("modoChip");
+  chip.textContent = modoJogo === "prova" ? "📝 Modo Prova" : "📖 Modo Estudo";
+};
+
+/* ===== ENVIO PARA O GOOGLE SHEETS ===== */
+function enviarParaSheets() {
+  const statusEl = document.getElementById("envioStatus");
+  if (!SHEETS_URL || SHEETS_URL.indexOf("SUBSTITUA") !== -1) {
+    statusEl.className = "envio-status";
+    statusEl.textContent = "";
+    return; // envio desativado até o professor configurar a URL
+  }
+  statusEl.className = "envio-status enviando";
+  statusEl.textContent = "Enviando resultado para a planilha...";
+
+  const payload = {
+    nome: alunoNome,
+    turma: alunoTurma,
+    descritor: DESCRITOR_PAGINA,
+    pagina: NOME_ARQUIVO,
+    modo: modoJogo === "prova" ? "Prova" : "Estudo",
+    respostas: respostasDetalhadas
+  };
+
+  fetch(SHEETS_URL, {
+    method: "POST",
+    mode: "no-cors", // Apps Script Web Apps não devolvem CORS; "no-cors" garante o envio mesmo sem ler a resposta
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(payload)
+  }).then(() => {
+    statusEl.className = "envio-status ok";
+    statusEl.textContent = "✓ Resultado enviado para a planilha do professor.";
+  }).catch(() => {
+    statusEl.className = "envio-status erro";
+    statusEl.textContent = "✗ Não foi possível enviar o resultado (verifique sua internet).";
+  });
+}
+
+/* ===== QUIZ ===== */
+const QRAW=[{"n": 1, "tipo": "Par de textos (originais)", "nivel": "facil", "texto": "<div style=\"display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2px\"><div style=\"flex:1;min-width:190px;background:#e6edf7;border-left:3px solid #235a8c;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#1a3a5c;display:block;margin-bottom:3px\">📰 TEXTO 1 — Reportagem com dados</b>Segundo a Pesquisa Retratos da Leitura no Brasil (Instituto Pró-Livro, 2024), 52% dos brasileiros se declaram não leitores — número que subiu dois pontos percentuais em relação à edição anterior. O levantamento ouviu 5 mil pessoas e aponta que o tempo dedicado às redes sociais é o principal concorrente do livro.</div><div style=\"flex:1;min-width:190px;background:#fff8eb;border-left:3px solid #c9871f;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#a96e10;display:block;margin-bottom:3px\">✍️ TEXTO 2 — Depoimento de professora</b>Todo ano pergunto aos meus alunos quem leu um livro inteiro no mês anterior. No começo, dois ou três levantavam a mão. Hoje, depois de três anos com a aula de leitura livre, a maioria levanta. Nenhuma pesquisa me convenceu tanto quanto esses braços erguidos.</div></div>", "fonte": "Texto 1: Pesquisa Retratos da Leitura no Brasil, Instituto Pró-Livro, 2024. Texto 2: depoimento original criado para esta atividade.", "enun": "Qual é a principal diferença entre os dois textos na <b>forma</b> de abordar o tema do hábito de leitura?", "alts": ["Os dois textos defendem posições opostas: o Texto 1 diz que o brasileiro não lê; o Texto 2 afirma que lê bastante.", "O Texto 1 usa dados de pesquisa para apresentar o problema; o Texto 2 usa experiência pessoal para ilustrar uma solução.", "O Texto 1 é mais recente que o Texto 2 e, por isso, tem informações mais atualizadas.", "Os dois textos abordam o tema da mesma forma, mas com exemplos diferentes."], "correta": 1, "porque": ["Ambos tratam do desafio da leitura — T1 com dado nacional, T2 mostrando recuperação em sala. A diferença não é de posição sobre quem lê mais, mas de forma de abordar o problema.", "Correto: T1 usa estatística de pesquisa (abordagem quantitativa e impessoal); T2 usa relato vivido pela professora (abordagem narrativa e pessoal). Mesmo tema, formas radicalmente diferentes de tratá-lo.", "A data do texto não define a forma de abordar. O D20 pede reconhecer diferenças de perspectiva, linguagem e propósito — não de atualidade.", "A forma é exatamente o que difere: dados estatísticos (T1) vs. experiência pessoal (T2). Dizer 'a mesma forma com exemplos diferentes' ignora essa diferença estrutural."]}, {"n": 2, "tipo": "Par de textos (originais)", "nivel": "facil", "texto": "<div style=\"display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2px\"><div style=\"flex:1;min-width:190px;background:#e6edf7;border-left:3px solid #235a8c;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#1a3a5c;display:block;margin-bottom:3px\">📣 TEXTO 1 — Campanha institucional</b>O Brasil produz 80 milhões de toneladas de resíduos por ano. Apenas 3% é reciclado. <b>Separe o seu lixo. Recicle. O planeta agradece — e as próximas gerações também.</b></div><div style=\"flex:1;min-width:190px;background:#fff8eb;border-left:3px solid #c9871f;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#a96e10;display:block;margin-bottom:3px\">📋 TEXTO 2 — Boletim informativo</b>Segundo a ABRELPE, o índice de reciclagem no Brasil é de 3%, um dos mais baixos da América Latina. Especialistas indicam que a ampliação da coleta seletiva municipal poderia dobrar esse índice em cinco anos.</div></div>", "fonte": "Textos originais criados para esta atividade com base em dados da ABRELPE.", "enun": "Comparando os dois textos, qual diferença de <b>propósito</b> pode ser identificada?", "alts": ["O Texto 1 apresenta dados para informar o leitor; o Texto 2 convida o leitor a mudar de comportamento.", "O Texto 1 quer persuadir o leitor a reciclar; o Texto 2 quer apenas informar sobre os índices.", "Os dois textos têm o mesmo propósito: informar sobre a baixa taxa de reciclagem.", "O Texto 1 é voltado para especialistas; o Texto 2 é voltado para o público geral."], "correta": 1, "porque": ["Na verdade é o contrário: T1 tem o imperativo 'Separe', 'Recicle' — é a campanha que quer persuadir à ação. T2 apresenta dados e projeções de especialistas — informa. A questão inverteu os papéis.", "Correto: T1 usa linguagem imperativa e emocional para convencer o leitor a reciclar (persuadir). T2 usa dados, fontes e projeções para apresentar a situação (informar). Mesmo tema, propósitos diferentes.", "Os propósitos são distintos: imperativo mais apelo emocional no T1 vs. dados e especialistas no T2. Dizer 'mesmo propósito' ignora essa diferença fundamental.", "T1 (campanha com apelo emocional) é comunicação para o público geral. A diferença entre os textos não é de público-alvo, mas de propósito."]}, {"n": 3, "tipo": "Par de textos (originais)", "nivel": "facil", "texto": "<div style=\"display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2px\"><div style=\"flex:1;min-width:190px;background:#e6edf7;border-left:3px solid #235a8c;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#1a3a5c;display:block;margin-bottom:3px\">🔬 TEXTO 1 — Artigo técnico</b>A capacidade instalada de geração fotovoltaica no Brasil atingiu 46 GW em 2025, tornando o país o quarto maior gerador solar do mundo. A eficiência dos painéis monocristalinos atuais supera 22%, ante 15% há uma década.</div><div style=\"flex:1;min-width:190px;background:#fff8eb;border-left:3px solid #c9871f;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#a96e10;display:block;margin-bottom:3px\">📰 TEXTO 2 — Notícia para o público geral</b>O sol do Brasil está gerando energia como nunca. Em 2025, o país entrou para o top 5 mundial em energia solar. Para famílias de baixa renda, o programa federal tem reduzido as contas de luz em até 95%.</div></div>", "fonte": "Textos originais criados para esta atividade com base em dados do setor energético brasileiro.", "enun": "Como os dois textos diferem no <b>uso da linguagem</b> ao tratar do mesmo tema (energia solar)?", "alts": ["O Texto 1 usa linguagem técnica e específica (GW, monocristalino, eficiência); o Texto 2 usa linguagem acessível ao leitor comum.", "O Texto 1 defende a energia solar; o Texto 2 é crítico em relação aos custos do programa.", "O Texto 2 usa linguagem mais técnica, porque traz porcentagens e dados de impacto.", "Os dois textos usam a mesma linguagem, apenas com ênfases diferentes."], "correta": 0, "porque": ["Correto: T1 tem termos técnicos ('GW instalado', 'painéis monocristalinos', '22% de eficiência') voltados a quem conhece o setor. T2 usa linguagem popular ('sol do Brasil', 'top 5', 'contas de luz') acessível a qualquer leitor.", "Ambos são positivos sobre energia solar — T2 menciona benefícios para famílias de baixa renda. A diferença está na linguagem, não na posição.", "Porcentagens aparecem nos dois textos, mas o que define nível técnico são os termos especializados — que existem em T1 ('monocristalino', 'GW') e não em T2.", "A linguagem é claramente diferente: 'GW', 'monocristalino', 'eficiência fotovoltaica' (T1) vs. 'sol do Brasil', 'top 5', 'contas de luz' (T2)."]}, {"n": 4, "tipo": "Par de textos (originais)", "nivel": "medio", "texto": "<div style=\"display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2px\"><div style=\"flex:1;min-width:190px;background:#e6edf7;border-left:3px solid #235a8c;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#1a3a5c;display:block;margin-bottom:3px\">📊 TEXTO 1 — Boletim com dados</b>Segundo o MapBiomas, o desmatamento da Amazônia em 2024 foi de 984.794 hectares — redução de 20,6% em relação ao ano anterior. Ainda assim, a área equivale a mais de seis vezes o município de São Paulo.</div><div style=\"flex:1;min-width:190px;background:#fff8eb;border-left:3px solid #c9871f;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#a96e10;display:block;margin-bottom:3px\">✍️ TEXTO 2 — Crônica jornalística</b>Números não choram. Mas cada hectare destruído era floresta viva: jaguar, bromélia, rio, comunidade ribeirinha. Comemorar a queda no desmatamento é necessário; esquecer o que ainda perdemos seria um erro político e moral.</div></div>", "fonte": "Texto 1: dados MapBiomas/Agência Brasil, 2025. Texto 2: crônica original criada para esta atividade.", "enun": "Ambos os textos usam o mesmo dado (queda de 20,6% no desmatamento). Como cada um o aborda de forma diferente?", "alts": ["T1 apresenta o dado como prova de que o problema está resolvido; T2 discorda e diz que o problema piorou.", "T1 apresenta o dado de forma objetiva, contextualizando sua dimensão.", "T2 é mais confiável porque usa argumentos emocionais, que atingem o leitor mais facilmente que dados frios.", "Os dois textos abordam o dado da mesma forma: ambos reconhecem a queda como positiva."], "correta": 1, "porque": ["T1 contextualiza a queda com escala ('seis vezes São Paulo') — não diz que está resolvido. T2 reconhece a queda como 'necessária'. Não há contradição de fatos, mas diferença de ênfase.", "Correto: T1 apresenta o número e contextualiza sua dimensão (perspectiva quantitativa). T2 parte do mesmo dado para questionar a celebração e humanizar a perda (perspectiva reflexiva e crítica). Mesmo dado, funções opostas.", "Confiabilidade não é o critério do D20. Além disso, argumento emocional não é automaticamente mais ou menos confiável que dado estatístico.", "T2 explicitamente questiona comemorar sem reflexão ('esquecer o que perdemos seria um erro') — abordagem crítica claramente diferente da objetividade descritiva de T1."]}, {"n": 5, "tipo": "Par de textos (originais)", "nivel": "medio", "texto": "<div style=\"display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2px\"><div style=\"flex:1;min-width:190px;background:#e6edf7;border-left:3px solid #235a8c;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#1a3a5c;display:block;margin-bottom:3px\">📋 TEXTO 1 — Relatório</b>Segundo o IBGE, crianças entre 5 e 12 anos passam, em média, 5h30 por dia diante de telas. O tempo aumentou 40% desde 2019. O relatório aponta correlação com indicadores de sedentarismo e dificuldades de concentração.</div><div style=\"flex:1;min-width:190px;background:#fff8eb;border-left:3px solid #c9871f;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#a96e10;display:block;margin-bottom:3px\">📰 TEXTO 2 — Reportagem narrativa</b>Lucas tem 8 anos e não sabe o nome dos pássaros que passam pela janela do quarto. Mas conhece todos os personagens do universo que habita no tablet. Sua mãe, pedagoga, diz que tenta equilibrar: 'O desafio é que o digital é tão atraente.'</div></div>", "fonte": "Texto 1: baseado em dados do IBGE sobre tempo de tela. Texto 2: texto original criado para esta atividade.", "enun": "Qual é a diferença de <b>perspectiva</b> adotada por cada texto ao tratar do tempo de tela de crianças?", "alts": ["O Texto 1 defende o uso de telas; o Texto 2 é contra.", "O Texto 1 adota perspectiva global, com dados nacionais.", "O Texto 2 é mais científico, porque apresenta a fala de uma especialista — a mãe pedagoga.", "Os dois textos adotam a mesma perspectiva: preocupação com o excesso de tempo de tela."], "correta": 1, "porque": ["Nenhum dos textos defende ou combate explicitamente o uso de telas. A diferença não é de posição, mas de escala e perspectiva.", "Correto: T1 usa dados agregados de uma pesquisa nacional (perspectiva macro e estatística). T2 centra-se em um único menino e sua mãe (perspectiva micro e humana). Mesmo tema, escala de análise completamente diferente.", "Uma mãe pedagoga é personagem narrativo do texto, não fonte científica no sentido acadêmico. T1 é o que tem abordagem mais próxima do científico, com correlações estatísticas de pesquisa.", "A preocupação pode ser parecida, mas a perspectiva — macro vs. micro, dado vs. relato — é estruturalmente diferente."]}, {"n": 6, "tipo": "Par de textos (originais)", "nivel": "medio", "texto": "<div style=\"display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2px\"><div style=\"flex:1;min-width:190px;background:#e6edf7;border-left:3px solid #235a8c;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#1a3a5c;display:block;margin-bottom:3px\">🌍 TEXTO 1 — Notícia global</b>A COP30, em Belém, reuniu 196 países para negociar metas de redução de emissões. O documento final previu cortes de 43% nas emissões globais até 2030, mas especialistas apontam lacunas nos mecanismos de fiscalização.</div><div style=\"flex:1;min-width:190px;background:#fff8eb;border-left:3px solid #c9871f;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#a96e10;display:block;margin-bottom:3px\">📍 TEXTO 2 — Reportagem local</b>Na Vila do Muratu, às margens do Rio Xingu, Dona Raimunda não sabe o que é COP. Sabe que as cheias agora vêm em meses errados, que os peixes estão sumindo e que o roçado secou antes da hora. 'O tempo mudou', ela diz.</div></div>", "fonte": "Texto 1: baseado em reportagens da Agência Brasil/EBC sobre a COP30. Texto 2: texto original criado para esta atividade.", "enun": "Os dois textos tratam de mudanças climáticas, mas se diferenciam em perspectiva. Qual alternativa descreve corretamente essa diferença?", "alts": ["O Texto 1 foca nas consequências imediatas para o campo e a agricultura; o Texto 2 trata das metas de redução de emissões em fóruns internacionais.", "O Texto 1 aborda o tema pela perspectiva global, com dados e acordos internacionais; o Texto 2 apresenta uma perspectiva local, com o impacto sentido por uma comunidade específica.", "O Texto 2 é mais confiável por apresentar um testemunho direto, enquanto o Texto 1 traz apenas opiniões de especialistas sem embasamento.", "Os dois textos são complementares e apresentam a mesma perspectiva sobre as mudanças climáticas, apenas com ênfases diferentes."], "correta": 1, "porque": ["Essa inversão de conteúdo não corresponde ao que está nos textos: é o Texto 2 que traz perspectiva local/comunitária.", "Correto: o contraste entre escala global (acordos, dados, COP) no Texto 1 e escala local (comunidade, vivência concreta) no Texto 2 é a diferença central de perspectiva entre os textos.", "O critério de confiabilidade não é o que o descritor pede; além disso, afirmar que Texto 1 traz \"apenas opiniões\" é incorreto.", "Os textos não apresentam a mesma perspectiva: um é global, o outro é local — a diferença de perspectiva é exatamente o ponto de contraste entre eles."]}, {"n": 7, "tipo": "Par de textos (originais)", "nivel": "dificil", "texto": "<div style=\"display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2px\"><div style=\"flex:1;min-width:190px;background:#e6edf7;border-left:3px solid #235a8c;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#1a3a5c;display:block;margin-bottom:3px\">🤖 TEXTO 1 — Artigo especializado</b>Estudos indicam que ferramentas de IA personalizadas podem aumentar o desempenho de estudantes em até 20%, ao adaptar ritmo e dificuldade. Instituições nos EUA e na Coreia do Sul já integram esses sistemas ao currículo oficial.</div><div style=\"flex:1;min-width:190px;background:#fff8eb;border-left:3px solid #c9871f;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#a96e10;display:block;margin-bottom:3px\">✍️ TEXTO 2 — Editorial</b>A IA na sala de aula é a novidade que veio para ficar — mas precisamos perguntar: aprender com uma máquina que acerta 95% das respostas nos prepara para o quê? Para a vida, que erra o tempo todo e exige resiliência, não precisão algorítmica.</div></div>", "fonte": "Textos originais criados para esta atividade.", "enun": "Ambos tratam de IA na educação. Qual é a diferença fundamental na <b>forma como cada texto apresenta a informação</b>?", "alts": ["O Texto 1 é contra a IA na educação; o Texto 2 é a favor.", "O Texto 1 apresenta a IA como solução comprovada por evidências.", "O Texto 2 é mais confiável que o Texto 1 por usar argumentos filosóficos mais profundos.", "Os dois textos apresentam os mesmos argumentos com enfoques apenas levemente diferentes."], "correta": 1, "porque": ["T2 não é explicitamente favorável — questiona, mas não defende. T1 também não é contra — apresenta resultados positivos. A diferença não é de posição simples, mas de forma de tratar o tema.", "Correto: T1 usa evidências (estudos, porcentagens, exemplos internacionais) para mostrar eficácia mensurável. T2 usa questionamento retórico e argumento filosófico para discutir se 'desempenho' é o critério correto de avaliação. Formas completamente diferentes.", "Confiabilidade não é o critério do D20. Argumento filosófico não é automaticamente mais confiável ou profundo que evidência empírica.", "Os argumentos são claramente diferentes: dados de estudos quantitativos (T1) vs. pergunta retórica sobre o sentido da educação (T2)."]}, {"n": 8, "tipo": "Par de textos (originais)", "nivel": "dificil", "texto": "<div style=\"display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2px\"><div style=\"flex:1;min-width:190px;background:#e6edf7;border-left:3px solid #235a8c;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#1a3a5c;display:block;margin-bottom:3px\">📊 TEXTO 1 — Boletim descritivo</b>O Censo de 2022 revelou que 52,9% dos brasileiros se autodeclaram pretos ou pardos. Esse grupo representa 75% da população em situação de pobreza extrema e tem, em média, 2 anos a menos de escolaridade que brancos.</div><div style=\"flex:1;min-width:190px;background:#fff8eb;border-left:3px solid #c9871f;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#a96e10;display:block;margin-bottom:3px\">📣 TEXTO 2 — Artigo de opinião</b>Os mesmos dados revelam uma herança, não um destino. Cada ponto de diferença na escolaridade é uma política pública que falhou, uma escola sem professor, uma família que precisou que o filho trabalhasse antes de aprender. Esses números exigem resposta — não contemplação.</div></div>", "fonte": "Textos originais criados para esta atividade com base em dados do Censo IBGE 2022.", "enun": "Como os dois textos diferem no que <b>fazem com os mesmos dados</b> sobre desigualdade racial?", "alts": ["O Texto 1 ignora os dados; o Texto 2 os inventa para justificar a opinião.", "O Texto 1 apresenta os dados de forma objetiva.", "O Texto 2 é mais objetivo porque usa argumentos em vez de números.", "Os dois textos fazem a mesma coisa: apresentam e interpretam os dados de forma neutra."], "correta": 1, "porque": ["Ambos usam os mesmos dados reais do Censo 2022 — não há invenção nem omissão de dados.", "Correto: T1 descreve os dados com objetividade (52,9%, 75%, 2 anos). T2 parte dos mesmos dados para interpretá-los como resultado de falhas políticas e exigir ação. Mesmo conjunto de dados, funções radicalmente diferentes: descrever vs. mobilizar.", "Objetividade não vem de argumentos em vez de números. T1 é mais objetivo justamente por apresentar dados sem julgamento; T2 é deliberadamente engajado.", "T2 explicitamente julga ('herança, não destino'), diagnostica causas e convoca à ação — abordagem oposta à neutralidade descritiva de T1."]}, {"n": 9, "tipo": "Par de textos (originais) — Questão discursiva", "nivel": "dificil", "texto": "<div style=\"display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2px\"><div style=\"flex:1;min-width:190px;background:#e6edf7;border-left:3px solid #235a8c;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#1a3a5c;display:block;margin-bottom:3px\">🏃 TEXTO 1 — Dados do IBGE</b>Segundo o IBGE, apenas 38% dos brasileiros praticam atividade física regularmente. A inatividade está associada a doenças cardiovasculares, diabetes tipo 2 e quadros depressivos. O dado é estável há três edições da pesquisa.</div><div style=\"flex:1;min-width:190px;background:#fff8eb;border-left:3px solid #c9871f;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.72rem;color:#a96e10;display:block;margin-bottom:3px\">✍️ TEXTO 2 — Crônica pessoal</b>Comecei a correr para perder peso. Depois, para pensar melhor. Hoje, corro porque me tornei uma pessoa diferente com os tênis nos pés. O IBGE deve ter dados sobre isso — mas dados não correm.</div></div>", "fonte": "Texto 1: baseado em pesquisas do IBGE sobre atividade física. Texto 2: crônica original criada para esta atividade.", "enun": "(Questão aberta) Ambos os textos tratam de atividade física. Compare-os: quais são as diferenças na <b>forma</b> como cada texto aborda esse tema? Identifique pelo menos <b>duas</b> diferenças e justifique.", "alts": [], "correta": -1, "porque": ["Gabarito disponível no botão 'Ver gabarito'.", "", "", ""]}, {"n": 10, "tipo": "Par de textos — Dois ângulos sobre leitura digital", "nivel": "medio", "texto": "<div style=\"display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px\"><div style=\"flex:1;min-width:180px;background:#e6edf7;border-left:3px solid #235a8c;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.7rem;color:#1a3a5c;display:block;margin-bottom:3px\">TEXTO 1 — Pesquisadora (P0901)</b><em>'Passar os olhos superficialmente em múltiplos textos on-line pode estar dilapidando nossa capacidade de entender argumentos complexos e de criar empatia por pontos de vista diferentes.'</em> (Maryanne Wolf, UCLA)</div><div style=\"flex:1;min-width:180px;background:#fef9ed;border-left:3px solid #c9871f;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.7rem;color:#7a5310;display:block;margin-bottom:3px\">TEXTO 2 — Estudante universitária (P0901)</b><em>'As versões digitais facilitam o acesso dos leitores. Não são todas as pessoas que possuem condições de comprar livros físicos seja para leitura de lazer ou estudos.'</em> (Emmily Cavalcante)</div></div>", "fonte": "LEAL, Tamyris; DIAS, Alexia. Portal Luneta, 2024. Adaptado. P0901.", "enun": "Os dois textos abordam a leitura digital, mas com ênfases diferentes. Qual alternativa identifica corretamente a diferença de perspectiva?", "alts": ["T1 defende a leitura digital; T2 critica seus efeitos cognitivos.", "T1 aborda a leitura digital pela perspectiva dos efeitos cognitivos negativos; T2 pela perspectiva da democratização do acesso.", "T1 e T2 concordam que a leitura digital é prejudicial à educação.", "T1 trata de adultos; T2 trata exclusivamente de estudantes universitários."], "correta": 1, "porque": ["É o inverso: T1 critica (efeitos cognitivos) e T2 defende (acesso democrático).", "Correto: Wolf foca nos efeitos negativos para a cognição; Cavalcante foca no benefício de acesso para quem não pode comprar livros físicos — perspectivas complementares mas com ênfases diferentes.", "Wolf critica aspectos do digital; Cavalcante o defende — elas não concordam.", "Wolf não restringe seu argumento a adultos; Cavalcante menciona estudantes mas o argumento é sobre acesso em geral."]}, {"n": 11, "tipo": "Par de textos — Dois ângulos sobre cães", "nivel": "dificil", "texto": "<div style=\"display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px\"><div style=\"flex:1;min-width:180px;background:#e6edf7;border-left:3px solid #235a8c;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.7rem;color:#1a3a5c;display:block;margin-bottom:3px\">TEXTO 1 — Notícia (P0901)</b>Há mais ou menos 12 mil anos, os cães perceberam que podiam ficar perto dos homens e comer a comida que sobrava. Aos poucos, os homens descobriram que podiam ter a ajuda dos cães para caçar. Um colaborava com o outro e a parceria deu certo.</div><div style=\"flex:1;min-width:180px;background:#fef9ed;border-left:3px solid #c9871f;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.7rem;color:#7a5310;display:block;margin-bottom:3px\">TEXTO 2 — Notícia viral (P0802)</b>Um vídeo de um cachorro brincando com uma foca chamada Sammy viralizou nas redes sociais pela fofura da interação. 'Acabaram se cheirando e ficaram nariz a nariz por um segundo', relata o fotógrafo. 'Era óbvio que eles gostavam um do outro.'</div></div>", "fonte": "Texto 1: Recreio, P0901. Texto 2: BAHL, Ada. NDMais, 2023. Ambos adaptados.", "enun": "Como os dois textos diferem na forma de abordar a relação entre animais e humanos?", "alts": ["T1 trata da relação entre cães e outros animais; T2 trata da relação entre cães e humanos.", "T1 aborda a relação cão-humano sob uma perspectiva histórico-evolutiva; T2 aborda um episódio atual e afetivo entre espécies diferentes.", "T1 é mais emocional; T2 é mais científico e baseado em dados históricos.", "Os dois textos abordam o mesmo tema com os mesmos recursos — apenas os personagens são diferentes."], "correta": 1, "porque": ["T2 trata da relação cachorro-foca (diferentes espécies), não de cão-humano especificamente.", "T1 reconstrói a parceria histórica (12 mil anos de evolução conjunta); T2 registra um momento afetivo contemporâneo e viral entre um cão e uma foca — perspectivas e escalas temporais muito distintas.", "É o oposto: T1 tem tom mais objetivo e histórico; T2 tem tom mais afetivo ('fofura', 'gostavam um do outro').", "Os recursos são diferentes: T1 usa perspectiva histórica e causa-efeito; T2 usa narrativa de episódio e depoimento emocional."]}, {"n": 12, "tipo": "Par de textos — Dois ângulos sobre tecnologia", "nivel": "dificil", "texto": "<div style=\"display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px\"><div style=\"flex:1;min-width:180px;background:#e6edf7;border-left:3px solid #235a8c;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.7rem;color:#1a3a5c;display:block;margin-bottom:3px\">TEXTO 1 — Artigo opinião (P0802)</b>A tecnologia tem o poder de fazer muitas coisas, e mudar o mundo tem sido uma delas. Se em 1820 podíamos esperar viver em média menos de 35 anos, atualmente a esperança de vida duplicou. Para qualquer observador, estes avanços se devem primariamente à tecnologia.</div><div style=\"flex:1;min-width:180px;background:#fef9ed;border-left:3px solid #c9871f;border-radius:0 6px 6px 0;padding:8px 10px\"><b style=\"font-size:.7rem;color:#7a5310;display:block;margin-bottom:3px\">TEXTO 2 — Reportagem científica (adaptado)</b>Pesquisas recentes alertam que o uso excessivo de redes sociais por adolescentes está correlacionado com aumento de casos de ansiedade e depressão. O tempo médio diário de uso de smartphones por jovens de 12 a 17 anos chegou a 7 horas em 2024, segundo estudo da Universidade de Oxford.</div></div>", "fonte": "Texto 1: RODRIGUEZ, Fabio. TEK SAPO, 2020 (adaptado). Texto 2: baseado em pesquisas acadêmicas recentes, para fins didáticos.", "enun": "Qual é a principal diferença na forma como os dois textos abordam o tema tecnologia?", "alts": ["T1 e T2 têm a mesma perspectiva; apenas citam dados históricos diferentes.", "T1 apresenta a tecnologia como motor de progresso e bem-estar humano; T2 apresenta um impacto negativo específico da tecnologia nos adolescentes.", "T1 critica a tecnologia; T2 a defende como necessária para a saúde mental dos jovens.", "T1 usa dados científicos; T2 usa apenas opiniões pessoais de especialistas."], "correta": 1, "porque": ["As perspectivas são opostas: T1 vê a tecnologia como aliada do progresso; T2 alerta para um impacto negativo.", "T1 usa dados históricos (expectativa de vida) para celebrar a tecnologia; T2 apresenta correlação negativa (uso excessivo de redes × ansiedade) — perspectivas complementares mas com conclusões diferentes.", "É o oposto: T1 celebra a tecnologia; T2 alerta sobre riscos — não há defesa da tecnologia em T2.", "T2 usa dados de pesquisa (Universidade de Oxford, percentuais) — não apenas opiniões pessoais."]}];
+;const G1R=[{"t": "T1 usa porcentagens de pesquisa. T2 usa relato pessoal da professora.", "q": "Como abordam o tema de forma diferente?", "o": ["Propósito diferente: um informa, o outro persuade", "Linguagem diferente: um é técnico, o outro é popular", "Tipo de evidência diferente: um usa dados, o outro usa narrativa", "Perspectiva diferente: um é global, o outro é local"], "c": 2}, {"t": "T1: 'Separe o lixo. Recicle. O planeta agradece.' T2: 'Especialistas indicam que a ampliação poderia dobrar o índice.'", "q": "Qual diferença de propósito existe?", "o": ["T1 informa; T2 persuade", "T1 persuade; T2 informa", "Ambos persuadem com estilos diferentes", "Ambos informam com exemplos diferentes"], "c": 1}, {"t": "T1 usa 'GW instalado', 'painéis monocristalinos', 'eficiência fotovoltaica'. T2 usa 'sol do Brasil', 'top 5', 'contas de luz'.", "q": "Qual diferença existe?", "o": ["Perspectiva global vs. local", "Linguagem técnica vs. linguagem popular", "Propósito informativo vs. persuasivo", "Dado quantitativo vs. narrativa pessoal"], "c": 1}, {"t": "T1 fala em '196 países', 'metas globais de 43%'. T2 fala em 'Dona Raimunda', 'Rio Xingu', 'peixes sumindo'.", "q": "Qual diferença de perspectiva existe?", "o": ["T1 é mais confiável; T2 é subjetivo", "T1 tem perspectiva global (macro); T2 tem perspectiva local (micro)", "T1 informa; T2 persuade o leitor", "T1 usa narrativa; T2 usa dados"], "c": 1}, {"t": "T1 descreve dados do censo. T2 usa os mesmos dados para pedir resposta e ação.", "q": "Como os textos diferem no uso das informações?", "o": ["T1 descreve; T2 interpreta e mobiliza", "T1 persuade; T2 informa", "Ambos descrevem de forma neutra", "Ambos mobilizam, mas com argumentos diferentes"], "c": 0}];const G2I=[{"s": "'52% dos brasileiros são não leitores, segundo pesquisa de 5 mil entrevistados.'", "cat": "dados", "p": "Abordagem com dados estatísticos."}, {"s": "'Comecei a correr para emagrecer e fiquei pela paz que sinto com os tênis nos pés.'", "cat": "narrativa", "p": "Abordagem com narrativa/experiência pessoal."}, {"s": "'Separe o seu lixo. Recicle. O planeta agradece.'", "cat": "persuasao", "p": "Abordagem persuasiva (convite à ação)."}, {"s": "'A taxa de desmatamento caiu 20,6% em 2024, segundo o MapBiomas.'", "cat": "dados", "p": "Abordagem com dados/fontes verificáveis."}, {"s": "'Aprendi a gostar de cenoura tarde demais. Hoje corto uma por dia.'", "cat": "narrativa", "p": "Abordagem com experiência pessoal/narrativa."}, {"s": "'Vote a favor da energia limpa. Juntos fazemos a diferença.'", "cat": "persuasao", "p": "Abordagem persuasiva (chamada à ação)."}];const G2C=[["dados", "Com dados/estatísticas"], ["narrativa", "Com narrativa/experiência"], ["persuasao", "Para persuadir à ação"]];const G3R=[{"t": "Texto que começa com uma história pessoal do autor e usa 'eu', 'minha', 'aprendi'.", "q": "Esse texto adota abordagem:", "o": ["Objetiva, com dados", "Narrativa/subjetiva, com experiência pessoal", "Técnica, com linguagem especializada", "Global, com perspectiva macro"], "c": 1}, {"t": "Texto que termina com 'Faça sua parte. O planeta agradece.'", "q": "Esse texto tem como propósito principal:", "o": ["Informar com dados verificáveis", "Narrar uma experiência", "Persuadir o leitor à ação", "Comparar duas perspectivas"], "c": 2}, {"t": "Texto que usa 'GW', 'eficiência fotovoltaica', 'painéis monocristalinos'.", "q": "Esse texto tem:", "o": ["Perspectiva local/micro", "Linguagem técnica/especializada", "Abordagem narrativa/pessoal", "Propósito persuasivo"], "c": 1}, {"t": "Texto que fala de uma família específica em uma cidade do interior.", "q": "Esse texto tem perspectiva:", "o": ["Global/macro", "Técnica/científica", "Local/micro — caso específico", "Persuasiva/apelativa"], "c": 2}, {"t": "Texto que usa dados de pesquisa e cita especialistas, sem emitir opinião própria.", "q": "Esse texto tem abordagem:", "o": ["Narrativa/pessoal", "Persuasiva", "Objetiva/informativa", "Local/micro"], "c": 2}];const G4R=[{"ctx": "T1 usa pesquisa com 5 mil entrevistados e porcentagens. T2 usa relato da própria professora.", "f": "A diferença entre os textos está no tipo de ___.", "o": ["posição: um é a favor, o outro é contra", "evidência: um usa dados, o outro usa narrativa", "linguagem: um é técnico, o outro é popular", "público: um é para professores, o outro é para alunos"], "c": 1}, {"ctx": "T1: 'Separe o lixo. Recicle.' T2: 'Especialistas indicam que a coleta seletiva poderia dobrar o índice.'", "f": "A diferença entre os textos está no ___.", "o": ["propósito: um persuade, o outro informa", "tipo de evidência: um usa narrativa, o outro usa dados", "registro: um é técnico, o outro é popular", "tema: são assuntos completamente diferentes"], "c": 0}, {"ctx": "T1 fala de '196 países' e 'metas globais'. T2 fala de 'Dona Raimunda' e 'Rio Xingu'.", "f": "A diferença está na ___ adotada por cada texto.", "o": ["posição política", "perspectiva: macro (global) vs. micro (local)", "linguagem: técnica vs. popular", "evidência: dados vs. narrativa"], "c": 1}, {"ctx": "T1 descreve dados do censo sem julgamento. T2 usa os mesmos dados para pedir ação.", "f": "Os textos diferem no que ___ com as informações.", "o": ["encontram", "fazem — T1 descreve; T2 mobiliza", "ignoram", "contestam"], "c": 1}, {"ctx": "T1 usa 'GW instalado' e 'monocristalino'. T2 usa 'sol do Brasil' e 'top 5'.", "f": "A diferença está no ___ de cada texto.", "o": ["tema central", "propósito — um informa, o outro persuade", "registro linguístico — técnico vs. popular", "perspectiva — global vs. local"], "c": 2}];const G5R=[{"title": "Como comparar a forma de dois textos sobre o mesmo tema", "correct": ["1. Leia os dois textos e identifique o tema que têm em comum.", "2. Pergunte: qual é o propósito de cada texto? (informar, persuadir, narrar)", "3. Verifique que tipo de linguagem cada texto usa (técnica, popular, literária).", "4. Identifique que tipo de evidência cada texto usa (dados, narrativas, depoimentos).", "5. Conclua: em que aspecto cada texto aborda o tema de forma diferente?"]}, {"title": "Tipos de diferença entre textos sobre o mesmo tema", "correct": ["Diferença de propósito: um informa; o outro persuade ou mobiliza.", "Diferença de linguagem: um usa termos técnicos; o outro, linguagem cotidiana.", "Diferença de evidência: um usa dados e pesquisas; o outro usa histórias e depoimentos.", "Diferença de perspectiva: um tem visão global (macro); o outro tem visão local (micro).", "Diferença de ênfase: um foca no problema em si; o outro foca nas soluções ou nas pessoas afetadas."]}];
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function stripHTML(s){const d=document.createElement("div");d.innerHTML=s;return d.textContent||"";}
+function toggleTTS(btn,id){if(window.speechSynthesis.speaking){window.speechSynthesis.cancel();document.querySelectorAll(".btn-tts").forEach(b=>b.classList.remove("playing"));return;}const el=document.getElementById(id);if(!el)return;const u=new SpeechSynthesisUtterance(stripHTML(el.innerHTML));u.lang="pt-BR";u.rate=.9;btn.classList.add("playing");u.onend=()=>btn.classList.remove("playing");window.speechSynthesis.speak(u);}
+const RK="saeb_d20abordagem_records";
+function loadRec(){try{return JSON.parse(localStorage.getItem(RK))||{};}catch{return {};}}
+function saveRec(k,v){const r=loadRec();if(!(k in r)||v>r[k])r[k]=v;localStorage.setItem(RK,JSON.stringify(r));renderRec();}
+function renderRec(){const r=loadRec(),g=document.getElementById("recGrid");if(!g)return;const items=[{k:"quiz",l:"Quiz"},{k:"qual",l:"Qual função?"},{k:"classif",l:"Classifique"},{k:"pistas",l:"Pelas pistas"},{k:"compl",l:"Complete"},{k:"ordene",l:"Ordene"}];g.innerHTML=items.map(i=>`<div class="rec-item"><div class="rv">${r[i.k]!=null?r[i.k]:"—"}</div><div class="rl">${i.l}</div></div>`).join("");}
+renderRec();
+document.querySelectorAll(".tab-btn").forEach(btn=>{btn.onclick=()=>{document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));document.querySelectorAll(".tab-pane").forEach(p=>p.classList.remove("active"));btn.classList.add("active");document.getElementById("pane-"+btn.dataset.tab).classList.add("active");window.scrollTo({top:0,behavior:"smooth"});};});
+const QS=shuffle(QRAW.filter(q=>q.alts&&q.alts.length>0)).map((q,idx)=>{const smap=shuffle(Array.from({length:q.alts.length},(_,i)=>i));return{...q,dn:idx+1,alts:smap.map(i=>q.alts[i]),porque:smap.map(i=>q.porque[i]),correta:smap.indexOf(q.correta)};});
+const quizEl=document.getElementById("quiz");
+QS.forEach(q=>{const c=document.createElement("div");c.className="card";c.dataset.q=q.dn;const tid="txt"+q.dn;c.innerHTML=`<div class="card-head"><span class="qnum">Questão ${q.dn}</span><span class="qtipo">${q.tipo}</span></div><div class="txt-base" id="${tid}">${q.texto}<span class="txt-fonte">${q.fonte}</span><button class="btn-tts" onclick="toggleTTS(this,'${tid}')">🔊</button></div><p class="enunciado">${q.enun}</p><div class="alts">${q.alts.map((t,i)=>`<button class="alt" onclick="resp(${q.dn},${i})"><span class="letra">${"ABCD"[i]}</span> ${t}</button>`).join("")}</div><div class="fb" id="fb${q.dn}"></div>`;quizEl.appendChild(c);});
+let acertos=0;const feitas=new Set();
+function resp(n,k){
+  if(feitas.has(n))return;feitas.add(n);
+  const q=QS.find(x=>x.dn===n),card=quizEl.querySelector(`[data-q="${n}"]`),btns=card.querySelectorAll(".alt"),fb=document.getElementById("fb"+n);
+  const ok=k===q.correta;if(ok)acertos++;
+
+  // Registra a resposta detalhada desta questão para depois enviar ao Sheets
+  respostasDetalhadas.push({
+    questao: n,
+    tipo: q.tipo,
+    nivel: q.nivel,
+    respostaDada: k>=0 ? "ABCD"[k] : "(não respondeu)",
+    respostaCorreta: "ABCD"[q.correta],
+    acertou: ok
+  });
+
+  selecoes[n]=k;btns.forEach((b,i)=>{b.disabled=true;if(modoJogo==="estudo"){if(i===q.correta)b.classList.add("ok");else if(i===k)b.classList.add("err");else b.classList.add("dim");}else{if(i===k)b.classList.add("sel");else b.classList.add("dim");}});
+  const pq=q.alts.map((t,i)=>`<span class="pi"><span class="l">${"ABCD"[i]})</span> ${q.porque[i]}</span>`).join("");
+  fb.className="fb show "+(ok?"ok":"err")+(modoJogo==="prova"?" prova-oculto":"");
+  fb.innerHTML=`<div class="ft">${ok?"✓ Correto!":"✗ Incorreto — a correta é "+"ABCD"[q.correta]+"."}</div><div>${q.porque[q.correta]}</div><div class="pq"><b>Cada alternativa:</b>${pq}</div>`;
+  document.getElementById("pFill").style.width=(feitas.size/QS.length*100)+"%";
+  // No modo prova, a pontuação parcial fica escondida; só aparece no resultado final
+  document.getElementById("score").textContent=modoJogo==="prova" ? (feitas.size+" / "+QS.length+" respondidas") : (acertos+" / "+QS.length);
+  if(feitas.size===QS.length)setTimeout(quizFim,500);
+}
+function quizFim(){
+  // No modo prova, revela todo o feedback que ficou oculto durante o quiz
+  if(modoJogo==="prova"){
+    // gabarito bloqueado no modo prova
+    // modo estudo mostra gabarito por senha
+    document.getElementById("score").textContent=acertos+" / "+QS.length;
+  }
+  const r=document.getElementById("resultado");r.style.display="block";
+  document.getElementById("notaFinal").textContent=acertos+"/"+QS.length;
+  const p=acertos/QS.length;let m,msg;
+  if(p>=.9){m="🥇";msg="Ouro! Precisão de detetive.";}
+  else if(p>=.7){m="🥈";msg="Prata! Atenção aos distratores.";}
+  else if(p>=.5){m="🥉";msg="Bronze! Volte ao texto antes de marcar.";}
+  else{m="📖";msg="Treine mais. A resposta está sempre lá.";}
+  document.getElementById("medalha").textContent=m;document.getElementById("msgFinal").textContent=msg;
+  saveRec("quiz",acertos);
+  enviarParaSheets();
+  r.scrollIntoView({behavior:"smooth",block:"center"});
+}// gabarito disc protegido por senha no HTML;
+// gabPrint removido: gabarito protegido por senha
+
+function makeTimedGame(bodyId,rounds,rk){return{i:0,pts:0,tmr:null,tempo:0,rounds:[],start(){this.i=0;this.pts=0;this.rounds=shuffle(rounds);this.render();},render(){const b=document.getElementById(bodyId);if(this.i>=this.rounds.length){saveRec(rk,this.pts);b.innerHTML=`<div class="jogo-final"><div class="big">${this.pts} pts</div><p>${this.pts>=this.rounds.length*10?"Muito bem! 🥇":"Continue praticando."}</p><button class="btn ouro" onclick="${bodyId.split('-')[0].toUpperCase()}.start()">↺ Jogar de novo</button></div>`;return;}const r=this.rounds[this.i];this.tempo=100;b.innerHTML=`<div class="jogo-mid"><span class="chip">Rodada ${this.i+1}/${this.rounds.length}</span><div class="timerbar"><div id="${bodyId}-bar"></div></div><span class="chip">${this.pts} pts</span></div><div class="mini-texto">${r.t}</div><div class="mini-q">${r.q}</div><div class="alts" id="${bodyId}-alts">${r.o.map((o,k)=>`<button class="alt" onclick="${bodyId.split('-')[0].toUpperCase()}.resp(${k})"><span class="letra">${"ABCD"[k]}</span> ${o}</button>`).join("")}</div><div class="mini-fb" id="${bodyId}-fb"></div>`;clearInterval(this.tmr);this.tmr=setInterval(()=>{this.tempo-=2;const bar=document.getElementById(bodyId+"-bar");if(bar)bar.style.width=Math.max(0,this.tempo)+"%";if(this.tempo<=0)this.resp(-1);},400);},resp(k){clearInterval(this.tmr);const r=this.rounds[this.i],btns=document.querySelectorAll("#"+bodyId+"-alts .alt"),fb=document.getElementById(bodyId+"-fb");btns.forEach((a,j)=>{a.disabled=true;if(j===r.c)a.classList.add("ok");else if(j===k)a.classList.add("err");else a.classList.add("dim");});if(k===r.c){const g=5+Math.round(this.tempo/10);this.pts+=g;fb.className="mini-fb show ok";fb.textContent="✓ +"+g+" pts!";}else{fb.className="mini-fb show err";fb.textContent=(k===-1?"⏱️ Tempo!":"✗")+" Era: "+"ABCD"[r.c]+".";}this.i++;setTimeout(()=>this.render(),2500);}};}
+const G1=makeTimedGame("g1-body",G1R,"qual");const G3=makeTimedGame("g3-body",G3R,"pistas");
+
+const G2={rs:[],cats:G2C,start(){this.rs=[];const b=document.getElementById("g2-body");b.innerHTML=`<div style="font-size:.82rem;color:var(--txt2);margin-bottom:.8rem">Classifique cada texto pela sua função principal:</div>`+G2I.map((it,i)=>`<div class="vf-item" id="g2i${i}"><div class="vf-stm"><b>${i+1}.</b> ${it.s}</div><div class="btn-row">${this.cats.map(c=>`<button class="mini-btn cat-btn" onclick="G2.j(${i},'${c[0]}')">${c[1]}</button>`).join("")}</div><div class="mini-fb" id="g2f${i}"></div></div>`).join("")+`<div id="g2fin"></div>`;},j(i,esc){if(this.rs[i]!=null)return;const it=G2I[i],ok=esc===it.cat;this.rs[i]=ok;document.querySelectorAll("#g2i"+i+" .mini-btn").forEach(btn=>{btn.disabled=true;const txt=btn.textContent;const cat=this.cats.find(c=>c[1]===txt);if(cat&&cat[0]===it.cat)btn.style.background="var(--verde-c)";else if(cat&&cat[0]===esc&&!ok)btn.style.background="var(--vermelho-c)";});const fb=document.getElementById("g2f"+i);fb.className="mini-fb show "+(ok?"ok":"err");fb.innerHTML=(ok?"✓ ":"✗ ")+it.p;if(this.rs.filter(x=>x!=null).length===G2I.length){const ac=this.rs.filter(x=>x).length;saveRec("classif",ac);document.getElementById("g2fin").innerHTML=`<div class="jogo-final"><div class="big">${ac}/${G2I.length}</div><p>${ac===G2I.length?"Perfeito! 🥇":"Releia as justificativas."}</p><button class="btn ouro" onclick="G2.start()">↺ Jogar de novo</button></div>`;}}};
+
+const G4={i:0,pts:0,rounds:[],start(){this.i=0;this.pts=0;this.rounds=shuffle(G4R);this.render();},render(){const b=document.getElementById("g4-body");if(this.i>=this.rounds.length){saveRec("compl",this.pts);b.innerHTML=`<div class="jogo-final"><div class="big">${this.pts}/${this.rounds.length}</div><p>${this.pts===this.rounds.length?"Perfeito! 🥇":"Continue praticando."}</p><button class="btn ouro" onclick="G4.start()">↺ Jogar de novo</button></div>`;return;}const it=this.rounds[this.i];b.innerHTML=`<div class="jogo-mid"><span class="chip">Frase ${this.i+1}/${this.rounds.length}</span><span class="chip">${this.pts} acertos</span></div><p style="font-size:.82rem;color:var(--txt2);margin:.4rem 0">${it.ctx}</p><div class="mini-texto">${it.f}</div><div class="alts" id="g4-alts">${it.o.map((o,k)=>`<button class="alt" onclick="G4.resp(${k})"><span class="letra">${"ABCD"[k]}</span> ${o}</button>`).join("")}</div><div class="mini-fb" id="g4-fb"></div>`;},resp(k){const it=this.rounds[this.i],btns=document.querySelectorAll("#g4-alts .alt"),fb=document.getElementById("g4-fb");btns.forEach((a,j)=>{a.disabled=true;if(j===it.c)a.classList.add("ok");else if(j===k)a.classList.add("err");else a.classList.add("dim");});if(k===it.c){this.pts++;fb.className="mini-fb show ok";fb.textContent="✓ Exato!";}else{fb.className="mini-fb show err";fb.textContent="✗ Era: "+it.o[it.c]+".";}this.i++;setTimeout(()=>this.render(),1200);}};
+
+const G5={ri:0,start(){this.ri=0;this.renderRound();},renderRound(){const b=document.getElementById("g5-body");if(this.ri>=G5R.length){saveRec("ordene","✓");b.innerHTML=`<div class="jogo-final"><div class="big">✓</div><p>Raciocínio organizado! 🥇</p><button class="btn ouro" onclick="G5.start()">↺ Jogar de novo</button></div>`;return;}const rd=G5R[this.ri];const items=shuffle(rd.correct);b.innerHTML=`<div class="jogo-mid"><span class="chip">Passo a passo ${this.ri+1}/${G5R.length}</span></div><p style="font-size:.84rem;color:var(--txt2);margin-bottom:.6rem">Use ▲ ▼ para ordenar. Depois clique em "Verificar".</p><ol class="ord-list" id="g5list">${items.map((it,i)=>`<li class="ord-item" data-txt="${encodeURIComponent(it)}">${it}<div class="ord-arrows"><button onclick="G5.move(${i},-1)">▲</button><button onclick="G5.move(${i},1)">▼</button></div></li>`).join("")}</ol><div style="text-align:center;margin-top:.6rem"><button class="btn ouro" onclick="G5.check()">✓ Verificar ordem</button></div><div class="mini-fb" id="g5fb"></div>`;},move(idx,dir){const list=document.getElementById("g5list");const items=[...list.children];const newIdx=idx+dir;if(newIdx<0||newIdx>=items.length)return;if(dir===-1)list.insertBefore(items[idx],items[newIdx]);else list.insertBefore(items[newIdx],items[idx]);[...list.children].forEach((li,i)=>{li.querySelector(".ord-arrows").innerHTML=`<button onclick="G5.move(${i},-1)">▲</button><button onclick="G5.move(${i},1)">▼</button>`;});},check(){const rd=G5R[this.ri];const list=document.getElementById("g5list");const items=[...list.children];const fb=document.getElementById("g5fb");let ok=true;items.forEach((li,i)=>{const txt=decodeURIComponent(li.dataset.txt);if(txt===rd.correct[i])li.classList.add("ok");else{li.classList.add("err");ok=false;}li.querySelectorAll("button").forEach(b=>b.disabled=true);});if(ok){fb.className="mini-fb show ok";fb.textContent="✓ Ordem perfeita!";this.ri++;setTimeout(()=>this.renderRound(),1400);}else{fb.className="mini-fb show err";fb.innerHTML='✗ Trocadas. <button class="mini-btn" style="margin-left:.5rem" onclick="G5.renderRound()">Tentar de novo</button>';}}};
+
+function liberarEstudo(el,btn){
+  var pwd=prompt('Senha do professor:');
+  if(pwd===null)return;
+  if(pwd===SENHA_MODO_ESTUDO){el.style.display='block';btn.textContent='Ocultar';}
+  else{alert('Senha incorreta.');}
+}
+</script></body></html>
