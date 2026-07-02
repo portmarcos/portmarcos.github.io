@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html { scroll-behavior: smooth; }
+body { background: #020617; }
+
+.font-display { font-family: 'Space Grotesk', 'Inter', sans-serif; }
+.font-mono2 { font-family: 'JetBrains Mono', monospace; }
+
+@keyframes float { 0%,100% { transform: translateY(0px) rotate(-2deg);} 50% { transform: translateY(-14px) rotate(-1deg);} }
+@keyframes float2 { 0%,100% { transform: translateY(0px) rotate(2deg);} 50% { transform: translateY(-10px) rotate(3deg);} }
+@keyframes pulseGlow { 0%,100% { opacity: 0.5;} 50% { opacity: 1;} }
+.float-card { animation: float 7s ease-in-out infinite; }
+.float-card-2 { animation: float2 8s ease-in-out infinite; }
+.glow-dot { animation: pulseGlow 2.4s ease-in-out infinite; }
