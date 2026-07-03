@@ -1,65 +1,71 @@
-name: 🚀 Deploy Site + Prévia v2
+name: 🚀 Deploy Pages (oficial)
 
-# Dispara quando você faz push no main OU no v2
 on:
   push:
     branches:
       - main
       - v2
-  workflow_dispatch:   # permite rodar manualmente pelo GitHub
+  workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      # ── 1. Baixa o branch MAIN (site atual, vai para a raiz) ──────────────
       - name: 📦 Checkout main
         uses: actions/checkout@v4
         with:
           ref: main
           path: site-main
 
-      # ── 2. Baixa o branch V2 (prévia, vai para /v2/) ─────────────────────
       - name: 📦 Checkout v2
         uses: actions/checkout@v4
         with:
           ref: v2
           path: site-v2
-        continue-on-error: true   # não quebra se v2 não existir
+        continue-on-error: true
 
-      # ── 3. Monta a pasta de deploy ────────────────────────────────────────
       - name: 🔧 Montar estrutura de deploy
         run: |
           mkdir -p deploy
-
-          # Copia tudo do main para a raiz do deploy
           cp -r site-main/. deploy/
-          rm -rf deploy/.git
+          rm -rf deploy/.git deploy/website/node_modules
 
-          # Copia tudo do v2 para a subpasta /v2/ do deploy
           if [ -d "site-v2" ]; then
             echo "✅ Branch v2 encontrado — copiando para /v2/"
             mkdir -p deploy/v2
             cp -r site-v2/. deploy/v2/
-            rm -rf deploy/v2/.git
+            rm -rf deploy/v2/.git deploy/v2/website/node_modules
           else
             echo "⚠️  Branch v2 não encontrado — pulando"
           fi
 
           echo "📁 Estrutura final:"
           ls -la deploy/
-          echo "---"
-          ls -la deploy/v2/ 2>/dev/null || echo "(sem subpasta /v2/)"
 
-      # ── 4. Publica tudo no branch gh-pages ───────────────────────────────
-      - name: 🚀 Deploy para gh-pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: ⚙️ Configurar Pages
+        uses: actions/configure-pages@v5
+
+      - name: 📤 Upload do artefato
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./deploy
-          publish_branch: gh-pages
-          force_orphan: true   # gh-pages fica limpo a cada deploy
+          path: ./deploy
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: 🚀 Deploy para GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
