@@ -4,10 +4,10 @@ import Layout, { ContentCard } from "../../components/Layout";
 const ACCENT = "#F43F5E";
 
 const ITENS = [
-  { emoji: "📜", title: "O Defunto Mestre", desc: "Escape room literário em quatro fases, cada uma com uma obra da literatura brasileira. Fuja usando o que aprendeu.", meta: "2EM · 30 min", href: "/jogos/bras-cubas/escape-bras-cubas.html", color: ACCENT, badge: "escape room" },
-  { emoji: "📚", title: "Frase, Período e Orações Coordenadas", desc: "Escape room de sintaxe com quatro obras da literatura regionalista. Resolva enigmas gramaticais para avançar.", meta: "2EM · 30 min", href: "/jogos/bras-cubas-2ano/escape-oracoes-coordenadas.html", color: ACCENT, badge: "escape room" },
-  { emoji: "🌵", title: "Vozes do Sertão", desc: "Quatro obras do Pré-Modernismo e do Regionalismo em um escape room que atravessa o sertão brasileiro.", meta: "3EM · 30 min", href: "/jogos/vozes-sertao/escape-vozes-sertao.html", color: ACCENT, badge: "escape room" },
-  { emoji: "🔐", title: "Diagnóstico de Rede", desc: "A rede da empresa caiu — investigue DNS, DHCP e IP para descobrir o que aconteceu. (na área de Informática)", meta: "2EM–3EM · 30 min", href: "/informatica/redes/escape-redes.html", color: "#10B981", badge: "escape room" },
+  { icon: "pergaminho", title: "O Defunto Mestre", desc: "Escape room literário em quatro fases, cada uma com uma obra da literatura brasileira. Fuja usando o que aprendeu.", meta: "2EM · 30 min", href: "/jogos/bras-cubas/escape-bras-cubas.html", color: ACCENT, badge: "escape room" },
+  { icon: "biblioteca", title: "Frase, Período e Orações Coordenadas", desc: "Escape room de sintaxe com quatro obras da literatura regionalista. Resolva enigmas gramaticais para avançar.", meta: "2EM · 30 min", href: "/jogos/bras-cubas-2ano/escape-oracoes-coordenadas.html", color: ACCENT, badge: "escape room" },
+  { icon: "cacto", title: "Vozes do Sertão", desc: "Quatro obras do Pré-Modernismo e do Regionalismo em um escape room que atravessa o sertão brasileiro.", meta: "3EM · 30 min", href: "/jogos/vozes-sertao/escape-vozes-sertao.html", color: ACCENT, badge: "escape room" },
+  { icon: "cadeado", title: "Diagnóstico de Rede", desc: "A rede da empresa caiu — investigue DNS, DHCP e IP para descobrir o que aconteceu. (na área de Informática)", meta: "2EM–3EM · 30 min", href: "/informatica/redes/escape-redes.html", color: "#10B981", badge: "escape room" },
 ];
 
 export default function Jogos() {

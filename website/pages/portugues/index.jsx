@@ -7,19 +7,19 @@ const MODULOS = [
   {
     grupo: "Literatura",
     itens: [
-      { emoji: "📖", title: "Pré-Modernismo", desc: "Euclides da Cunha, Lima Barreto, Augusto dos Anjos e Monteiro Lobato.", meta: "3EM · ENEM · 40 min", href: "/portugues/pre-modernismo/avaliacao.html", color: ACCENT },
-      { emoji: "🌹", title: "Romantismo e Realismo", desc: "De Alencar a Machado de Assis: idealização e crítica social.", meta: "1EM–2EM · 40 min", href: "/portugues/romantismo-realismo/avaliacao.html", color: ACCENT },
-      { emoji: "📚", title: "30 Obras que caem no ENEM", desc: "Acervo completo com resumo, contexto e atividades por obra.", meta: "Consulta livre", href: "/obras.html", color: ACCENT },
-      { emoji: "🎮", title: "Quiz — Pré-Modernismo", desc: "Quiz cronometrado para fixar autores e características do período.", meta: "10 min", href: "/atividades/quiz-premodernismo.html", color: ACCENT },
+      { icon: "livro", title: "Pré-Modernismo", desc: "Euclides da Cunha, Lima Barreto, Augusto dos Anjos e Monteiro Lobato.", meta: "3EM · ENEM · 40 min", href: "/portugues/pre-modernismo/avaliacao.html", color: ACCENT },
+      { icon: "rosa", title: "Romantismo e Realismo", desc: "De Alencar a Machado de Assis: idealização e crítica social.", meta: "1EM–2EM · 40 min", href: "/portugues/romantismo-realismo/avaliacao.html", color: ACCENT },
+      { icon: "biblioteca", title: "30 Obras que caem no ENEM", desc: "Acervo completo com resumo, contexto e atividades por obra.", meta: "Consulta livre", href: "/obras.html", color: ACCENT },
+      { icon: "jogo", title: "Quiz — Pré-Modernismo", desc: "Quiz cronometrado para fixar autores e características do período.", meta: "10 min", href: "/atividades/quiz-premodernismo.html", color: ACCENT },
     ],
   },
   {
     grupo: "Gramática & Redação",
     itens: [
-      { emoji: "✍️", title: "Crase e Regência Verbal", desc: "Regras do acento grave, casos obrigatórios, proibidos e facultativos.", meta: "6º–3EM · 40 min", href: "/portugues/crase-gramatica/avaliacao.html", color: "#06B6D4" },
-      { emoji: "🎯", title: "Quiz — Crase e Regência", desc: "Treino rápido e cronometrado com correção comentada.", meta: "10 min", href: "/atividades/quiz-crase.html", color: "#06B6D4" },
-      { emoji: "📝", title: "Redação ENEM", desc: "Estrutura dissertativo-argumentativa, 5 competências e proposta de intervenção.", meta: "3EM · 60 min", href: "/portugues/redacao-enem/avaliacao.html", color: "#06B6D4" },
-      { emoji: "🔍", title: "Interpretação de Texto (BNCC)", desc: "Quiz de leitura e compreensão alinhado à BNCC.", meta: "8º–9º · 12 min", href: "/atividades/quiz-bncc.html", color: "#06B6D4" },
+      { icon: "redacao", title: "Crase e Regência Verbal", desc: "Regras do acento grave, casos obrigatórios, proibidos e facultativos.", meta: "6º–3EM · 40 min", href: "/portugues/crase-gramatica/avaliacao.html", color: "#06B6D4" },
+      { icon: "alvo", title: "Quiz — Crase e Regência", desc: "Treino rápido e cronometrado com correção comentada.", meta: "10 min", href: "/atividades/quiz-crase.html", color: "#06B6D4" },
+      { icon: "doc", title: "Redação ENEM", desc: "Estrutura dissertativo-argumentativa, 5 competências e proposta de intervenção.", meta: "3EM · 60 min", href: "/portugues/redacao-enem/avaliacao.html", color: "#06B6D4" },
+      { icon: "lupa", title: "Interpretação de Texto (BNCC)", desc: "Quiz de leitura e compreensão alinhado à BNCC.", meta: "8º–9º · 12 min", href: "/atividades/quiz-bncc.html", color: "#06B6D4" },
     ],
   },
 ];

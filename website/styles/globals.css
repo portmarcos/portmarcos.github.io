@@ -16,3 +16,6 @@ body { background: #020617; }
 .float-card { animation: float 7s ease-in-out infinite; }
 .float-card-2 { animation: float2 8s ease-in-out infinite; }
 .glow-dot { animation: pulseGlow 2.4s ease-in-out infinite; }
+
+/* Efeito de luz que segue o cursor (spotlight) */
+.spotlight { --mx: 50%; --my: 50%; }

@@ -4,12 +4,12 @@ import Layout, { ContentCard } from "../../components/Layout";
 const ACCENT = "#10B981";
 
 const ITENS = [
-  { emoji: "🐧", title: "Avaliação — Linux Mint", desc: "Sistema operacional, terminal e comandos essenciais na prática.", meta: "1EM–2EM · 40 min", href: "/informatica/linux/avaliacao.html", color: ACCENT, badge: "avaliação" },
-  { emoji: "🌐", title: "Apostila — Redes de Computadores", desc: "IP, DNS, DHCP, gateway e protocolos explicados passo a passo.", meta: "Curso Técnico · leitura", href: "/informatica/redes/apostila.html", color: ACCENT, badge: "apostila" },
-  { emoji: "🔐", title: "Escape Room — Diagnóstico de Rede", desc: "A rede da empresa caiu. Use DNS, DHCP e IP para descobrir o culpado.", meta: "2EM–3EM · 30 min", href: "/informatica/redes/escape-redes.html", color: ACCENT, badge: "jogo" },
-  { emoji: "📋", title: "Projeto de Pesquisa — Guia Completo", desc: "Guia para montar seu projeto científico do zero, módulo por módulo.", meta: "Curso Técnico · contínuo", href: "/informatica/projeto-pesquisa.html", color: ACCENT, badge: "projeto" },
-  { emoji: "🖧", title: "Endereçamento IP", desc: "Detetive de IP, Batalha de Ping e Escape: dominando o endereçamento.", meta: "Em produção", color: "#64748B", badge: "em breve", soon: true },
-  { emoji: "🛡️", title: "Segurança e Malware", desc: "Tipos de malware, ataques digitais e boas práticas de proteção.", meta: "Em produção", color: "#64748B", badge: "em breve", soon: true },
+  { icon: "terminal", title: "Avaliação — Linux Mint", desc: "Sistema operacional, terminal e comandos essenciais na prática.", meta: "1EM–2EM · 40 min", href: "/informatica/linux/avaliacao.html", color: ACCENT, badge: "avaliação" },
+  { icon: "redes", title: "Apostila — Redes de Computadores", desc: "IP, DNS, DHCP, gateway e protocolos explicados passo a passo.", meta: "Curso Técnico · leitura", href: "/informatica/redes/apostila.html", color: ACCENT, badge: "apostila" },
+  { icon: "cadeado", title: "Escape Room — Diagnóstico de Rede", desc: "A rede da empresa caiu. Use DNS, DHCP e IP para descobrir o culpado.", meta: "2EM–3EM · 30 min", href: "/informatica/redes/escape-redes.html", color: ACCENT, badge: "jogo" },
+  { icon: "clipboard", title: "Projeto de Pesquisa — Guia Completo", desc: "Guia para montar seu projeto científico do zero, módulo por módulo.", meta: "Curso Técnico · contínuo", href: "/informatica/projeto-pesquisa.html", color: ACCENT, badge: "projeto" },
+  { icon: "rede", title: "Endereçamento IP", desc: "Detetive de IP, Batalha de Ping e Escape: dominando o endereçamento.", meta: "Em produção", color: "#64748B", badge: "em breve", soon: true },
+  { icon: "escudo", title: "Segurança e Malware", desc: "Tipos de malware, ataques digitais e boas práticas de proteção.", meta: "Em produção", color: "#64748B", badge: "em breve", soon: true },
 ];
 
 export default function Informatica() {

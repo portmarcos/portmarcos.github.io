@@ -6,6 +6,7 @@ import {
   ShieldCheck, BookOpenCheck, Clock3, ClipboardList, ExternalLink, X
 } from "lucide-react";
 import { ATIVIDADES, SECAO_LABEL, SECAO_COR } from "../data/atividades";
+import { Logo } from "../components/Layout";
 
 const AREAS = [
   {
@@ -113,9 +114,7 @@ export default function Home() {
         {/* NAV */}
         <nav className="relative z-20 max-w-6xl mx-auto flex items-center justify-between px-6 py-5">
           <a href="/" className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg flex items-center justify-center font-display font-bold text-sm text-slate-950" style={{ background: "linear-gradient(135deg, #22D3EE, #0EA5E9)" }}>
-              MC
-            </div>
+            <Logo size={36} />
             <span className="font-display font-semibold text-sm tracking-tight">Prof. Marcos Cruz</span>
           </a>
           <div className="hidden md:flex items-center gap-7 font-mono2 text-xs tracking-wide uppercase">
@@ -208,9 +207,9 @@ export default function Home() {
                 <div className="font-display leading-none text-cyan-400" style={{ fontSize: 26, opacity: 0.5 }}>"</div>
               </div>
               <p className="text-sm text-slate-200 leading-relaxed mb-3">
-                Ensinar não é transferir conhecimento, mas criar as possibilidades para a sua própria produção.
+                Educar é semear com sabedoria e colher com paciência.
               </p>
-              <p className="text-xs text-slate-400 font-mono2">— Paulo Freire</p>
+              <p className="text-xs text-slate-400 font-mono2">— Augusto Cury</p>
             </div>
           </div>
         </section>
@@ -430,9 +429,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-6 py-14 grid sm:grid-cols-2 lg:grid-cols-5 gap-10">
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-9 h-9 rounded-lg flex items-center justify-center font-display font-bold text-sm text-slate-950" style={{ background: "linear-gradient(135deg, #22D3EE, #0EA5E9)" }}>
-                MC
-              </div>
+              <Logo size={36} />
               <span className="font-display font-semibold text-sm">Prof. Marcos Cruz</span>
             </div>
             <p className="text-slate-500 text-sm leading-relaxed max-w-xs">

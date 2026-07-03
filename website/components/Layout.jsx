@@ -1,4 +1,22 @@
 import Head from "next/head";
+import { useRef } from "react";
+import {
+  ArrowRight, BookOpen, BookMarked, Flower2, Gamepad2, Target,
+  BookText, PenLine, Search, ScrollText, Sparkles, Trees, Church,
+  Palette, Film, Video, Hand, Waypoints, Terminal, Network, ShieldAlert,
+  ClipboardList, Lock, Library, GraduationCap, FileText
+} from "lucide-react";
+
+// Mapa central de ícones (linha fina) usados nos cards
+export const ICONS = {
+  livro: BookOpen, obras: BookMarked, rosa: Flower2, jogo: Gamepad2,
+  alvo: Target, texto: BookText, redacao: PenLine, lupa: Search,
+  pergaminho: ScrollText, brilho: Sparkles, cacto: Trees, igreja: Church,
+  paleta: Palette, cinema: Film, video: Video, mao: Hand,
+  rede: Waypoints, terminal: Terminal, redes: Network, escudo: ShieldAlert,
+  clipboard: ClipboardList, cadeado: Lock, biblioteca: Library,
+  enem: GraduationCap, doc: FileText,
+};
 
 export const AREAS_NAV = [
   { label: "Início", href: "/" },
@@ -9,6 +27,32 @@ export const AREAS_NAV = [
   { label: "Jogos", href: "/jogos/index.html" },
   { label: "Obras", href: "/obras.html" },
 ];
+
+export function Logo({ size = 36 }) {
+  const gid = "mcg";
+  return (
+    <span
+      className="relative inline-flex items-center justify-center rounded-xl"
+      style={{
+        width: size, height: size,
+        background: "linear-gradient(140deg, #22D3EE 0%, #0EA5E9 55%, #6366F1 100%)",
+        boxShadow: "0 4px 14px -4px rgba(34,211,238,0.6), inset 0 1px 0 rgba(255,255,255,0.35)",
+      }}
+    >
+      <svg width={size} height={size} viewBox="0 0 36 36" fill="none" aria-hidden="true">
+        <defs>
+          <linearGradient id={gid} x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#0B1120" />
+            <stop offset="1" stopColor="#1E293B" />
+          </linearGradient>
+        </defs>
+        <path d="M8 25V12.5c0-.6.7-.9 1.2-.5L14 16l4.8-4c.5-.4 1.2-.1 1.2.5V25" stroke="url(#mcg)" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M28 14.5c-1.3-1.6-3.9-1.7-5.4-.2-1.7 1.7-1.7 4.7 0 6.4 1.5 1.5 4.1 1.4 5.4-.2" stroke="url(#mcg)" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+      <span className="absolute inset-0 rounded-xl" style={{ boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.15)" }} />
+    </span>
+  );
+}
 
 export function Sparkles3({ color }) {
   return (
@@ -40,9 +84,7 @@ export default function Layout({ children, title, active, accent = "#22D3EE", he
         {/* NAV */}
         <nav className="relative z-20 max-w-6xl mx-auto flex items-center justify-between px-6 py-5">
           <a href="/" className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg flex items-center justify-center font-display font-bold text-sm text-slate-950" style={{ background: "linear-gradient(135deg, #22D3EE, #0EA5E9)" }}>
-              MC
-            </div>
+            <Logo size={36} />
             <span className="font-display font-semibold text-sm tracking-tight">Prof. Marcos Cruz</span>
           </a>
           <div className="hidden md:flex items-center gap-6 font-mono2 text-xs tracking-wide uppercase">
@@ -78,9 +120,7 @@ export default function Layout({ children, title, active, accent = "#22D3EE", he
       <footer className="relative z-10 border-t border-slate-900 mt-8">
         <div className="max-w-6xl mx-auto px-6 py-12 flex flex-col sm:flex-row items-center justify-between gap-6">
           <a href="/" className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg flex items-center justify-center font-display font-bold text-sm text-slate-950" style={{ background: "linear-gradient(135deg, #22D3EE, #0EA5E9)" }}>
-              MC
-            </div>
+            <Logo size={36} />
             <div>
               <div className="font-display font-semibold text-sm">Prof. Marcos Cruz</div>
               <div className="text-xs text-slate-600">Educação · Tecnologia · Conhecimento</div>
@@ -100,45 +140,67 @@ export default function Layout({ children, title, active, accent = "#22D3EE", he
   );
 }
 
-// Reusable content card
+// Reusable content card com ícone de linha fina + efeito de luz no cursor
 export function ContentCard({ item, hovered, onEnter, onLeave }) {
+  const ref = useRef(null);
   const isHover = hovered;
   const disabled = item.soon;
   const Wrapper = disabled ? "div" : "a";
+  const Icon = ICONS[item.icon] || BookOpen;
+
+  function onMove(e) {
+    const el = ref.current;
+    if (!el || disabled) return;
+    const r = el.getBoundingClientRect();
+    el.style.setProperty("--mx", `${e.clientX - r.left}px`);
+    el.style.setProperty("--my", `${e.clientY - r.top}px`);
+  }
+
   return (
     <Wrapper
+      ref={ref}
       {...(disabled ? {} : { href: item.href, ...(item.ext ? { target: "_blank", rel: "noopener" } : {}) })}
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
-      className={`group relative rounded-2xl border p-6 transition-all duration-300 block ${disabled ? "cursor-default" : "cursor-pointer"}`}
+      onMouseMove={onMove}
+      className={`spotlight group relative rounded-2xl border p-6 transition-all duration-300 block overflow-hidden ${disabled ? "cursor-default" : "cursor-pointer"}`}
       style={{
         borderColor: isHover && !disabled ? `${item.color}55` : "rgba(51,65,85,0.6)",
-        background: isHover && !disabled ? `linear-gradient(160deg, ${item.color}14, rgba(15,23,42,0.4))` : "rgba(15,23,42,0.4)",
+        background: "rgba(15,23,42,0.4)",
         transform: isHover && !disabled ? "translateY(-4px)" : "translateY(0)",
         boxShadow: isHover && !disabled ? `0 12px 32px -12px ${item.color}40` : "none",
         opacity: disabled ? 0.55 : 1,
+        "--spot": `${item.color}22`,
       }}
     >
-      <Sparkles3 color={item.color} />
-      <div className="flex items-start justify-between mb-4">
-        <div className="w-11 h-11 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110" style={{ backgroundColor: `${item.color}1f`, color: item.color }}>
-          <span style={{ fontSize: 20 }}>{item.emoji}</span>
-        </div>
-        {item.badge && (
-          <span className="text-xs font-mono2 px-2 py-0.5 rounded-full" style={disabled ? { color: "#94A3B8", border: "1px solid rgba(148,163,184,0.3)" } : { color: item.color, backgroundColor: `${item.color}1f` }}>
-            {item.badge}
-          </span>
-        )}
-      </div>
-      <h3 className="font-display font-semibold text-base mb-1.5 text-slate-100">{item.title}</h3>
-      <p className="text-sm text-slate-500 leading-snug mb-4">{item.desc}</p>
-      <div className="flex items-center justify-between">
-        <span className="font-mono2 text-xs text-slate-500">{item.meta}</span>
-        {!disabled && (
-          <div className="w-7 h-7 rounded-full flex items-center justify-center border transition-all duration-300" style={{ borderColor: isHover ? item.color : "rgba(51,65,85,0.8)", color: isHover ? item.color : "#64748B", transform: isHover ? "translateX(2px)" : "translateX(0)" }}>
-            <span style={{ fontSize: 13 }}>→</span>
+      {/* camada de luz que segue o cursor */}
+      {!disabled && (
+        <span
+          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+          style={{ background: "radial-gradient(320px circle at var(--mx) var(--my), var(--spot), transparent 60%)" }}
+        />
+      )}
+      <div className="relative">
+        <div className="flex items-start justify-between mb-4">
+          <div className="w-11 h-11 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110" style={{ backgroundColor: `${item.color}1f`, color: item.color }}>
+            <Icon size={21} strokeWidth={1.75} />
           </div>
-        )}
+          {item.badge && (
+            <span className="text-xs font-mono2 px-2 py-0.5 rounded-full" style={disabled ? { color: "#94A3B8", border: "1px solid rgba(148,163,184,0.3)" } : { color: item.color, backgroundColor: `${item.color}1f` }}>
+              {item.badge}
+            </span>
+          )}
+        </div>
+        <h3 className="font-display font-semibold text-base mb-1.5 text-slate-100">{item.title}</h3>
+        <p className="text-sm text-slate-500 leading-snug mb-4">{item.desc}</p>
+        <div className="flex items-center justify-between">
+          <span className="font-mono2 text-xs text-slate-500">{item.meta}</span>
+          {!disabled && (
+            <div className="w-7 h-7 rounded-full flex items-center justify-center border transition-all duration-300" style={{ borderColor: isHover ? item.color : "rgba(51,65,85,0.8)", color: isHover ? item.color : "#64748B", transform: isHover ? "translateX(2px)" : "translateX(0)" }}>
+              <ArrowRight size={13} strokeWidth={2} />
+            </div>
+          )}
+        </div>
       </div>
     </Wrapper>
   );

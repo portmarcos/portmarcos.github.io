@@ -6,7 +6,7 @@
      • CSS/JS/imagens   → cache primeiro (rápido), atualiza por trás
    Para forçar atualização de tudo, troque o número da versão.
    ============================================================ */
-const VERSAO = "portal-v18";
+const VERSAO = "portal-v19";
 const ESSENCIAIS = [
   "./",
   "./index.html",

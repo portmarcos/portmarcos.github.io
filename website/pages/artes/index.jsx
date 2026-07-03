@@ -4,13 +4,13 @@ import Layout, { ContentCard } from "../../components/Layout";
 const ACCENT = "#F59E0B";
 
 const ITENS = [
-  { emoji: "🎬", title: "Linguagem Cinematográfica", desc: "Planos, ângulos, montagem e como o cinema conta histórias com imagens.", meta: "9º–1EM · 30 min", href: "/artes/cinema/atividade.html", color: ACCENT, badge: "atividade" },
-  { emoji: "🎥", title: "Quiz — Linguagem do Cinema", desc: "Quiz cronometrado sobre os elementos da narrativa audiovisual.", meta: "9º–1EM · 10 min", href: "/atividades/quiz-cinema.html", color: ACCENT, badge: "quiz" },
-  { emoji: "🖐️", title: "Arte Rupestre", desc: "Bingo e ficha de atividade sobre as primeiras manifestações artísticas.", meta: "Em produção", color: "#64748B", badge: "em breve", soon: true },
-  { emoji: "🌀", title: "Op Art", desc: "Ilusão de ótica e movimento: criando arte que engana os olhos.", meta: "Em produção", color: "#64748B", badge: "em breve", soon: true },
-  { emoji: "🌱", title: "Land Art", desc: "Arte feita com e na natureza, usando a paisagem como tela.", meta: "Em produção", color: "#64748B", badge: "em breve", soon: true },
-  { emoji: "⛪", title: "Barroco Mineiro", desc: "Aleijadinho e o esplendor do barroco nas Minas Gerais.", meta: "Em produção", color: "#64748B", badge: "em breve", soon: true },
-  { emoji: "🎨", title: "Stencil e Arte Urbana", desc: "Do grafite ao stencil: a arte que ocupa as ruas da cidade.", meta: "Em produção", color: "#64748B", badge: "em breve", soon: true },
+  { icon: "cinema", title: "Linguagem Cinematográfica", desc: "Planos, ângulos, montagem e como o cinema conta histórias com imagens.", meta: "9º–1EM · 30 min", href: "/artes/cinema/atividade.html", color: ACCENT, badge: "atividade" },
+  { icon: "video", title: "Quiz — Linguagem do Cinema", desc: "Quiz cronometrado sobre os elementos da narrativa audiovisual.", meta: "9º–1EM · 10 min", href: "/atividades/quiz-cinema.html", color: ACCENT, badge: "quiz" },
+  { icon: "mao", title: "Arte Rupestre", desc: "Bingo e ficha de atividade sobre as primeiras manifestações artísticas.", meta: "Em produção", color: "#64748B", badge: "em breve", soon: true },
+  { icon: "brilho", title: "Op Art", desc: "Ilusão de ótica e movimento: criando arte que engana os olhos.", meta: "Em produção", color: "#64748B", badge: "em breve", soon: true },
+  { icon: "cacto", title: "Land Art", desc: "Arte feita com e na natureza, usando a paisagem como tela.", meta: "Em produção", color: "#64748B", badge: "em breve", soon: true },
+  { icon: "igreja", title: "Barroco Mineiro", desc: "Aleijadinho e o esplendor do barroco nas Minas Gerais.", meta: "Em produção", color: "#64748B", badge: "em breve", soon: true },
+  { icon: "paleta", title: "Stencil e Arte Urbana", desc: "Do grafite ao stencil: a arte que ocupa as ruas da cidade.", meta: "Em produção", color: "#64748B", badge: "em breve", soon: true },
 ];
 
 export default function Artes() {
