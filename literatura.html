@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Literatura para o ENEM — Portal Marcos Cruz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0A0F; --panel:#13131D; --panel2:#191925; --line:rgba(237,231,217,.12);
+    --ink:#EDE7D9; --tx:#D8D4E0; --tx2:#9A94A8; --tx3:#6E6880;
+    --roxo:#A855F7; --roxo2:#7C3AED; --dourado:#D8B36A;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--tx);font-family:'Inter',system-ui,sans-serif;
+    line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .serif{font-family:'Cormorant Garamond',Georgia,serif}
+  .mono{font-family:'JetBrains Mono',monospace}
+  /* top bar */
+  .topo{position:sticky;top:0;z-index:40;background:rgba(10,10,15,.82);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);padding:12px 18px}
+  .topo-in{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .marca{display:inline-flex;align-items:center;gap:11px;font-weight:600;color:var(--ink);text-decoration:none}
+  .voltar{font-size:.82rem;color:var(--tx2);text-decoration:none;border:1px solid var(--line);
+    padding:7px 13px;border-radius:20px;transition:.2s}
+  .voltar:hover{color:var(--ink);border-color:var(--roxo)}
+  /* hero */
+  .hero{max-width:960px;margin:0 auto;padding:54px 18px 26px;text-align:center}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--roxo);margin:0 0 14px}
+  .hero h1{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(2.1rem,7vw,3.6rem);
+    line-height:1.04;color:var(--ink);margin:0 0 16px;letter-spacing:-.01em}
+  .hero h1 em{font-style:italic;color:var(--dourado)}
+  .hero p{color:var(--tx2);max-width:60ch;margin:0 auto;font-size:1rem}
+  .switch{display:inline-flex;gap:4px;margin:30px auto 0;background:var(--panel);border:1px solid var(--line);
+    border-radius:30px;padding:4px}
+  .switch button{border:0;background:transparent;color:var(--tx2);font-family:inherit;font-weight:600;
+    font-size:.86rem;padding:9px 20px;border-radius:24px;cursor:pointer;transition:.2s}
+  .switch button.on{background:linear-gradient(135deg,var(--roxo),var(--roxo2));color:#fff}
+  /* timeline */
+  .tl{max-width:820px;margin:20px auto 0;padding:14px 18px 60px;position:relative}
+  .tl::before{content:'';position:absolute;left:37px;top:20px;bottom:80px;width:2px;
+    background:linear-gradient(var(--roxo),rgba(168,85,247,.15))}
+  .node{position:relative;padding:14px 0 14px 66px;cursor:pointer}
+  .node .dot{position:absolute;left:29px;top:24px;width:18px;height:18px;border-radius:50%;
+    background:var(--bg);border:2px solid var(--roxo);transition:.2s;z-index:2}
+  .node:hover .dot,.node:focus-visible .dot{background:var(--roxo);box-shadow:0 0 0 6px rgba(168,85,247,.16)}
+  .node:focus-visible{outline:none}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px 18px;
+    transition:.2s}
+  .node:hover .card,.node:focus-visible .card{border-color:rgba(168,85,247,.5);transform:translateX(3px)}
+  .card .anos{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.06em;color:var(--roxo)}
+  .card h3{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.5rem;color:var(--ink);
+    margin:2px 0 6px;line-height:1.1}
+  .card .teaser{font-size:.9rem;color:var(--tx2);margin:0 0 10px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{font-size:.72rem;color:var(--tx);background:var(--panel2);border:1px solid var(--line);
+    padding:3px 10px;border-radius:20px}
+  .go{margin-top:12px;font-size:.8rem;font-weight:600;color:var(--roxo);display:inline-flex;align-items:center;gap:6px}
+  /* detail panel (overlay) */
+  .over{position:fixed;inset:0;z-index:60;background:rgba(5,5,9,.72);backdrop-filter:blur(6px);
+    display:none;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto}
+  .over.on{display:flex}
+  .sheet{background:var(--panel);border:1px solid var(--line);border-radius:22px;max-width:760px;width:100%;
+    margin:20px 0;overflow:hidden;animation:up .25s ease}
+  @keyframes up{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+  .sheet-top{padding:24px 26px 18px;border-bottom:1px solid var(--line);position:relative;
+    background:radial-gradient(120% 120% at 0% 0%,rgba(168,85,247,.14),transparent 60%)}
+  .sheet-top .anos{font-family:'JetBrains Mono',monospace;font-size:.74rem;color:var(--roxo);letter-spacing:.08em}
+  .sheet-top h2{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:2rem;color:var(--ink);margin:4px 0 6px}
+  .sheet-top p{color:var(--tx2);font-size:.92rem;margin:0;max-width:60ch}
+  .fechar{position:absolute;top:18px;right:18px;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);
+    background:var(--panel2);color:var(--tx);font-size:18px;cursor:pointer;line-height:1}
+  .tabs{display:flex;gap:4px;padding:12px 20px 0;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+  .tab{border:0;background:transparent;color:var(--tx2);font-family:inherit;font-size:.82rem;font-weight:600;
+    padding:9px 13px;border-radius:10px 10px 0 0;cursor:pointer;border-bottom:2px solid transparent}
+  .tab.on{color:var(--ink);border-bottom-color:var(--roxo)}
+  .pane{padding:22px 26px 30px;display:none}
+  .pane.on{display:block}
+  .pane h4{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--dourado);margin:0 0 8px}
+  .pane ul{margin:0 0 14px;padding-left:18px}
+  .pane li{margin-bottom:6px;font-size:.92rem}
+  .obra{color:var(--ink);font-weight:600}
+  .em-breve{border:1px dashed var(--line);border-radius:14px;padding:20px;text-align:center;color:var(--tx3);
+    font-size:.88rem;background:var(--panel2)}
+  .em-breve b{color:var(--roxo);font-weight:600}
+  .rodape{max-width:960px;margin:0 auto;padding:30px 18px 46px;border-top:1px solid var(--line);
+    color:var(--tx3);font-size:.82rem;text-align:center}
+  .pm-logo{display:inline-flex;line-height:0;filter:drop-shadow(0 3px 10px rgba(168,85,247,.5))}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+  @media(max-width:560px){.node{padding-left:58px}.tl::before{left:31px}.node .dot{left:23px}}
+</style>
+</head>
+<body>
+<div class="topo"><div class="topo-in">
+  <a class="marca" href="index.html"><span class="pm-logo"><svg width="34" height="34" viewBox="0 0 40 40" fill="none"><defs><linearGradient id="pmr" x1="3" y1="3" x2="37" y2="37" gradientUnits="userSpaceOnUse"><stop stop-color="#22D3EE"/><stop offset=".55" stop-color="#6366F1"/><stop offset="1" stop-color="#A855F7"/></linearGradient><linearGradient id="pmb" x1="20" y1="3" x2="20" y2="37" gradientUnits="userSpaceOnUse"><stop stop-color="#0B1220"/><stop offset="1" stop-color="#020617"/></linearGradient></defs><rect x="3" y="3" width="34" height="34" rx="10.5" fill="url(#pmb)"/><rect x="3" y="3" width="34" height="34" rx="10.5" fill="none" stroke="url(#pmr)" stroke-width="2"/><text x="20" y="26" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-weight="700" font-size="15" fill="#F8FAFC">MC</text></svg></span>Portal Marcos Cruz</a>
+  <a class="voltar" href="index.html">← Portal</a>
+</div></div>
+
+<section class="hero">
+  <p class="eyebrow">Banco de Literatura · ENEM</p>
+  <h1 class="serif">Do Quinhentismo à <em>contemporaneidade</em></h1>
+  <p>Todas as escolas literárias em uma linha do tempo: contexto, características, autores e obras-chave, análise aprofundada e atividades. O material que todo estudante de ENEM deveria percorrer.</p>
+  <div class="switch">
+    <button class="on" data-pais="BR">Literatura Brasileira</button>
+    <button data-pais="PT">Portugal (essencial)</button>
+  </div>
+</section>
+
+<div class="tl" id="tl"></div>
+
+<div class="over" id="over" role="dialog" aria-modal="true"><div class="sheet" id="sheet"></div></div>
+
+<footer class="rodape">
+  Portal Marcos Cruz · Banco de Literatura — estrutura em construção. Teoria aprofundada e atividades entram escola por escola.
+</footer>
+
+<script>
+// ── DADOS (fatos: períodos, autores, obras). Teoria/análise/quiz entram depois. ──
+const ESCOLAS = [
+ // ---------- BRASIL ----------
+ {p:'BR',anos:'1500–1601',nome:'Quinhentismo',teaser:'Literatura de informação e de catequese no Brasil colônia.',
+  autores:[['Pero Vaz de Caminha',['Carta ao Rei D. Manuel']],['José de Anchieta',['Poemas e autos de catequese']],['Pero de Magalhães Gândavo',['Tratado da Terra do Brasil']]],
+  contexto:'Primeiros registros escritos no território, entre o relato dos cronistas-viajantes e a literatura jesuítica de catequese dos indígenas.'},
+ {p:'BR',anos:'1601–1768',nome:'Barroco',teaser:'Conflito entre fé e razão; cultismo e conceptismo.',
+  autores:[['Gregório de Matos',['Poesia satírica, lírica e religiosa']],['Padre Antônio Vieira',['Sermão da Sexagésima','Sermão de Santo Antônio aos Peixes']]],
+  contexto:'Estética do contraste e da dualidade (fé × razão, corpo × alma), marcada pelo rebuscamento do cultismo e pelo jogo de ideias do conceptismo.'},
+ {p:'BR',anos:'1768–1836',nome:'Arcadismo',teaser:'Retorno ao equilíbrio clássico e à simplicidade bucólica.',
+  autores:[['Cláudio Manuel da Costa',['Obras poéticas']],['Tomás Antônio Gonzaga',['Marília de Dirceu']],['Basílio da Gama',['O Uraguai']],['Santa Rita Durão',['Caramuru']]],
+  contexto:'Valorização da natureza e da vida pastoril, com lemas como o fugere urbem, o carpe diem e o inutilia truncat.'},
+ {p:'BR',anos:'1836–1881',nome:'Romantismo',teaser:'Nacionalismo, subjetivismo e idealização — em três gerações poéticas.',
+  autores:[['Gonçalves Dias',['Canção do Exílio','I-Juca-Pirama']],['Álvares de Azevedo',['Lira dos Vinte Anos']],['Castro Alves',['Espumas Flutuantes','O Navio Negreiro']],['José de Alencar',['Iracema','O Guarani','Senhora']],['Manuel Antônio de Almeida',['Memórias de um Sargento de Milícias']]],
+  contexto:'Poesia em três gerações (nacionalista/indianista, ultrarromântica e condoreira) e a prosa de fundação do romance brasileiro (indianista, urbano, regionalista).'},
+ {p:'BR',anos:'1881–1893',nome:'Realismo / Naturalismo',teaser:'Crítica objetiva à sociedade; o determinismo naturalista.',
+  autores:[['Machado de Assis',['Memórias Póstumas de Brás Cubas','Dom Casmurro','Quincas Borba']],['Aluísio Azevedo',['O Cortiço','O Mulato']],['Raul Pompeia',['O Ateneu']]],
+  contexto:'Reação ao idealismo romântico: análise objetiva e crítica das instituições (Realismo) e visão determinista do ser humano condicionado por meio, raça e momento (Naturalismo).'},
+ {p:'BR',anos:'1882–1902',nome:'Parnasianismo',teaser:'“Arte pela arte”: rigor formal e culto ao soneto.',
+  autores:[['Olavo Bilac',['Poesias','Profissão de fé']],['Alberto de Oliveira',['Meridionais']],['Raimundo Correia',['As Pombas']]],
+  contexto:'Poesia do rigor formal, da objetividade e da perfeição técnica, avessa ao sentimentalismo — o culto ao soneto e à métrica impecável.'},
+ {p:'BR',anos:'1893–1902',nome:'Simbolismo',teaser:'Musicalidade, subjetivismo e o mundo do inconsciente.',
+  autores:[['Cruz e Sousa',['Broquéis','Missal']],['Alphonsus de Guimaraens',['Ismália','Câmara Ardente']]],
+  contexto:'Reação ao materialismo realista-parnasiano: sugestão, musicalidade, sinestesia e uma espiritualidade voltada ao transcendente e ao inconsciente.'},
+ {p:'BR',anos:'1902–1922',nome:'Pré-Modernismo',teaser:'Ruptura e denúncia social às vésperas da Semana de 22.',
+  autores:[['Euclides da Cunha',['Os Sertões']],['Lima Barreto',['Triste Fim de Policarpo Quaresma']],['Monteiro Lobato',['Urupês']],['Augusto dos Anjos',['Eu']]],
+  contexto:'Período de transição e de denúncia da realidade brasileira (o sertão, o subúrbio, o caipira), preparando a ruptura moderna.'},
+ {p:'BR',anos:'1922–1930',nome:'Modernismo — 1ª fase',teaser:'A Semana de 22: ruptura, nacionalismo crítico e liberdade formal.',
+  autores:[['Mário de Andrade',['Macunaíma','Pauliceia Desvairada']],['Oswald de Andrade',['Manifesto Antropófago','Memórias Sentimentais de João Miramar']],['Manuel Bandeira',['Libertinagem']]],
+  contexto:'Fase heroica e destruidora: verso livre, linguagem coloquial, valorização do primitivo e do nacional, manifestos (Pau-Brasil, Antropófago).'},
+ {p:'BR',anos:'1930–1945',nome:'Modernismo — 2ª fase',teaser:'Amadurecimento: poesia reflexiva e o romance regionalista de 30.',
+  autores:[['Carlos Drummond de Andrade',['Alguma Poesia','A Rosa do Povo']],['Cecília Meireles',['Romanceiro da Inconfidência']],['Graciliano Ramos',['Vidas Secas','São Bernardo']],['Jorge Amado',['Capitães da Areia']],['Rachel de Queiroz',['O Quinze']]],
+  contexto:'Consolidação: poesia madura e universal e o romance regionalista/social do Nordeste (o “romance de 30”), de forte crítica social.'},
+ {p:'BR',anos:'1945–1960',nome:'Modernismo — 3ª fase (Geração de 45)',teaser:'Rigor formal renovado e a revolução da linguagem na prosa.',
+  autores:[['João Cabral de Melo Neto',['Morte e Vida Severina','A Educação pela Pedra']],['Guimarães Rosa',['Grande Sertão: Veredas','Sagarana']],['Clarice Lispector',['A Hora da Estrela','Laços de Família']]],
+  contexto:'Retorno ao rigor construtivo na poesia e experimentação radical da linguagem na prosa (o sertão mítico de Rosa, a introspecção de Clarice).'},
+ {p:'BR',anos:'1960–hoje',nome:'Literatura Contemporânea',teaser:'Pluralidade: concretismo, poesia marginal e novas vozes na prosa.',
+  autores:[['Ferreira Gullar',['Poema Sujo']],['Adélia Prado',['Bagagem']],['Rubem Fonseca',['Feliz Ano Novo']],['Lygia Fagundes Telles',['As Meninas']],['Conceição Evaristo',['Olhos d’água']],['Milton Hatoum',['Dois Irmãos']]],
+  contexto:'Multiplicidade de tendências: concretismo, poesia marginal, conto urbano, literatura afro-brasileira e de autoria feminina, memória e identidade.'},
+ // ---------- PORTUGAL ----------
+ {p:'PT',anos:'1189–1418',nome:'Trovadorismo',teaser:'As cantigas medievais galego-portuguesas.',
+  autores:[['Cancioneiros',['Cantigas de amor','Cantigas de amigo','Cantigas de escárnio e maldizer']]],
+  contexto:'Primeira manifestação literária em língua portuguesa: a poesia palaciana e popular das cantigas, reunidas nos Cancioneiros.'},
+ {p:'PT',anos:'1434–1580',nome:'Humanismo & Classicismo',teaser:'Do teatro de Gil Vicente à epopeia de Camões.',
+  autores:[['Gil Vicente',['Auto da Barca do Inferno']],['Luís de Camões',['Os Lusíadas','Lírica (redondilhas e sonetos)']]],
+  contexto:'Transição medieval-renascentista: o teatro moralizante de Gil Vicente e o auge classicista com a epopeia e a lírica de Camões.'},
+ {p:'PT',anos:'1865–1890',nome:'Realismo português',teaser:'A crítica social e de costumes de Eça de Queirós.',
+  autores:[['Eça de Queirós',['O Primo Basílio','O Crime do Padre Amaro','Os Maias']]],
+  contexto:'Análise crítica da sociedade portuguesa — o clero, a burguesia, o adultério — com ironia e forte observação de costumes.'},
+ {p:'PT',anos:'1915–1930',nome:'Modernismo português',teaser:'Fernando Pessoa e a revista Orpheu.',
+  autores:[['Fernando Pessoa',['Mensagem','Ortônimo e heterônimos: Caeiro, Reis, Campos']],['Mário de Sá-Carneiro',['Dispersão']]],
+  contexto:'A revolução da revista Orpheu e a obra de Pessoa: o pensamento-sentido do ortônimo e a multiplicidade dos heterônimos (Caeiro, Reis, Campos).'},
+ {p:'PT',anos:'1947–hoje',nome:'Contemporânea portuguesa',teaser:'A prosa alegórica de Saramago.',
+  autores:[['José Saramago',['Ensaio sobre a Cegueira','Memorial do Convento']],['António Lobo Antunes',['Os Cus de Judas']]],
+  contexto:'Narrativa contemporânea de forte carga alegórica e histórica, com destaque para o Nobel José Saramago.'},
+];
+
+const TABS=[
+ ['contexto','Contexto & características'],
+ ['autores','Autores & obras'],
+ ['analise','Análise de obras'],
+ ['ativ','Atividades'],
+ ['videos','Vídeos'],
+];
+const tl=document.getElementById('tl');
+let pais='BR';
+function render(){
+  tl.innerHTML='';
+  ESCOLAS.filter(e=>e.p===pais).forEach((e,i)=>{
+    const idx=ESCOLAS.indexOf(e);
+    const node=document.createElement('div');
+    node.className='node'; node.tabIndex=0; node.setAttribute('role','button');
+    node.setAttribute('aria-label',e.nome+', '+e.anos);
+    node.innerHTML=`<span class="dot"></span>
+      <div class="card">
+        <div class="anos mono">${e.anos}</div>
+        <h3 class="serif">${e.nome}</h3>
+        <p class="teaser">${e.teaser}</p>
+        <div class="chips">${e.autores.slice(0,4).map(a=>`<span class="chip">${a[0]}</span>`).join('')}</div>
+        <div class="go">Estudar <span aria-hidden="true">→</span></div>
+      </div>`;
+    const open=()=>abrir(idx);
+    node.addEventListener('click',open);
+    node.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();open();}});
+    tl.appendChild(node);
+  });
+}
+const over=document.getElementById('over'), sheet=document.getElementById('sheet');
+function abrir(i){
+  const e=ESCOLAS[i];
+  const autoresHTML=e.autores.map(a=>`<li><span class="obra">${a[0]}</span> — ${a[1].join('; ')}</li>`).join('');
+  sheet.innerHTML=`
+    <div class="sheet-top">
+      <button class="fechar" aria-label="Fechar" onclick="fechar()">×</button>
+      <div class="anos mono">${e.anos} · ${e.p==='BR'?'Brasil':'Portugal'}</div>
+      <h2 class="serif">${e.nome}</h2>
+      <p>${e.contexto}</p>
+    </div>
+    <div class="tabs">${TABS.map((t,k)=>`<button class="tab${k===0?' on':''}" data-t="${t[0]}">${t[1]}</button>`).join('')}</div>
+    <div class="pane on" data-p="contexto">
+      <h4>Características centrais</h4>
+      <p>${e.contexto}</p>
+      <div class="em-breve">Teoria <b>aprofundada</b> (contexto histórico completo + traços de estilo) entra nesta seção na próxima etapa.</div>
+    </div>
+    <div class="pane" data-p="autores">
+      <h4>Principais autores e obras</h4>
+      <ul>${autoresHTML}</ul>
+    </div>
+    <div class="pane" data-p="analise">
+      <div class="em-breve"><b>Análise de obras</b> — leitura comentada das obras-chave desta escola. Em produção.</div>
+    </div>
+    <div class="pane" data-p="ativ">
+      <div class="em-breve"><b>Atividades</b> — questões reais do ENEM (textos de domínio público) e questões no estilo ENEM. Em produção.</div>
+    </div>
+    <div class="pane" data-p="videos">
+      <div class="em-breve">Ligação com os <b>resumos em vídeo</b> das obras (Biblioteca de Obras). Em produção.</div>
+    </div>`;
+  sheet.querySelectorAll('.tab').forEach(tb=>tb.addEventListener('click',()=>{
+    sheet.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+    sheet.querySelectorAll('.pane').forEach(x=>x.classList.remove('on'));
+    tb.classList.add('on');
+    sheet.querySelector(`.pane[data-p="${tb.dataset.t}"]`).classList.add('on');
+  }));
+  over.classList.add('on'); document.body.style.overflow='hidden';
+}
+function fechar(){over.classList.remove('on');document.body.style.overflow='';}
+over.addEventListener('click',e=>{if(e.target===over)fechar();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')fechar();});
+document.querySelectorAll('.switch button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.switch button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on'); pais=b.dataset.pais; render();
+}));
+render();
+</script>
+</body>
+</html>
