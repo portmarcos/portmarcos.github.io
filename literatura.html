@@ -88,6 +88,24 @@
   .em-breve{border:1px dashed var(--line);border-radius:14px;padding:20px;text-align:center;color:var(--tx3);
     font-size:.88rem;background:var(--panel2)}
   .em-breve b{color:var(--roxo);font-weight:600}
+  .q-block{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+  .q-enun{font-size:.92rem;color:var(--tx);margin:0 0 12px;font-weight:500;line-height:1.55}
+  .q-opts{display:flex;flex-direction:column;gap:8px}
+  .q-opt{display:flex;align-items:flex-start;gap:10px;text-align:left;width:100%;background:var(--panel);
+    border:1px solid var(--line);color:var(--tx);font-family:inherit;font-size:.88rem;padding:11px 13px;
+    border-radius:10px;cursor:pointer;transition:.15s;line-height:1.4}
+  .q-opt:hover:not(:disabled){border-color:var(--roxo);background:rgba(168,85,247,.08)}
+  .q-opt:disabled{cursor:default}
+  .q-letra{flex:none;width:22px;height:22px;border-radius:50%;background:var(--panel2);border:1px solid var(--line);
+    display:inline-flex;align-items:center;justify-content:center;font-size:.74rem;font-weight:700;color:var(--tx2)}
+  .q-opt.correct{border-color:#22c55e;background:rgba(34,197,94,.12);color:#dcfce7}
+  .q-opt.correct .q-letra{background:#22c55e;color:#04120a;border-color:#22c55e}
+  .q-opt.wrong{border-color:#ef4444;background:rgba(239,68,68,.1);color:#fee2e2}
+  .q-opt.wrong .q-letra{background:#ef4444;color:#fff;border-color:#ef4444}
+  .q-expl{display:none;margin-top:12px;padding:12px 14px;border-left:3px solid var(--roxo);
+    background:rgba(168,85,247,.06);border-radius:0 8px 8px 0;font-size:.86rem;color:var(--tx2);line-height:1.55}
+  .q-expl.show{display:block}
+  .q-expl b{color:var(--dourado);font-weight:600}
   .rodape{max-width:960px;margin:0 auto;padding:30px 18px 46px;border-top:1px solid var(--line);
     color:var(--tx3);font-size:.82rem;text-align:center}
   .pm-logo{display:inline-flex;line-height:0;filter:drop-shadow(0 3px 10px rgba(168,85,247,.5))}
@@ -125,7 +143,39 @@ const ESCOLAS = [
  // ---------- BRASIL ----------
  {p:'BR',anos:'1500–1601',nome:'Quinhentismo',teaser:'Literatura de informação e de catequese no Brasil colônia.',
   autores:[['Pero Vaz de Caminha',['Carta ao Rei D. Manuel']],['José de Anchieta',['Poemas e autos de catequese']],['Pero de Magalhães Gândavo',['Tratado da Terra do Brasil']]],
-  contexto:'Primeiros registros escritos no território, entre o relato dos cronistas-viajantes e a literatura jesuítica de catequese dos indígenas.'},
+  contexto:'Primeiros registros escritos no território, entre o relato dos cronistas-viajantes e a literatura jesuítica de catequese dos indígenas.',
+  conteudo:{
+   ctx:[
+    `O Quinhentismo abrange a produção literária ligada ao Brasil ao longo do século XVI, a partir da chegada da esquadra de Pedro Álvares Cabral, em abril de 1500. Não se trata ainda de uma literatura brasileira — não havia, à época, nem imprensa nem público leitor na colônia —, mas de textos escritos por europeus sobre a nova terra, sob a ótica do colonizador.`,
+    `O período coincide, na Europa, com o auge das Grandes Navegações e com a Contrarreforma católica. É nesse cenário que a Companhia de Jesus (fundada por Inácio de Loyola em 1534) chega ao Brasil, em 1549, com a missão de catequizar os indígenas. Por isso, a produção quinhentista costuma ser dividida em duas grandes vertentes.`,
+    `A literatura de informação (ou dos viajantes) reúne cartas, relatos e crônicas que descrevem a terra, a fauna, a flora e os povos, muitas vezes idealizando o "paraíso" recém-descoberto e avaliando seu potencial econômico. Já a literatura de catequese, produzida sobretudo pelos jesuítas, tinha finalidade pedagógica e religiosa: converter o gentio à fé cristã por meio de poemas, sermões e do teatro (os autos).`
+   ],
+   carac:[
+    `Visão eurocêntrica: o Novo Mundo é descrito a partir dos valores e do olhar do colonizador europeu.`,
+    `Literatura de informação: caráter documental e descritivo, com tom de deslumbramento e inventário dos recursos da terra.`,
+    `Literatura de catequese: finalidade pedagógica e religiosa; teatro e poesia usados como instrumento de conversão.`,
+    `Influência do Classicismo renascentista e da tradição medieval (os autos, à maneira de Gil Vicente).`,
+    `Ausência de imprensa e de público leitor na colônia — os textos circulavam na Europa.`
+   ],
+   analise:[
+    {t:'Carta de Pero Vaz de Caminha (1500)',d:`Marco da literatura de informação. Escrivão da armada de Cabral, Caminha redige ao rei D. Manuel I o primeiro documento escrito sobre o Brasil. O texto combina o olhar administrativo (o que serve à Coroa) com o deslumbramento diante da terra e de seus habitantes: a fertilidade — "em se plantando, tudo dá" — desperta entusiasmo econômico, enquanto a descrição idealizada dos indígenas, em sua "inocência" e nudez sem "vergonha", projeta sobre eles o mito edênico europeu. É, ao mesmo tempo, certidão de nascimento do Brasil e peça de propaganda colonial.`},
+    {t:'Poesia e teatro de José de Anchieta',d:`Maior nome da literatura de catequese, o jesuíta Anchieta escreveu em português, espanhol, latim e tupi. Sua poesia religiosa louva a Virgem e os santos; seu teatro — os autos, herdeiros de Gil Vicente — encenava a luta entre o bem e o mal para ensinar a doutrina cristã a índios e colonos, muitas vezes incorporando personagens e a língua tupi. A tradição conta que compôs na areia da praia o poema "De Beata Virgine Dei Matre Maria", símbolo de sua devoção.`}
+   ],
+   quiz:[
+    {enun:`(Estilo ENEM) Leia um trecho da Carta de Pero Vaz de Caminha: "Esta terra, Senhor, me parece que, da ponta que mais contra o sul vimos, até à outra ponta que contra o norte vem [...] será tamanha que haverá nela bem vinte ou vinte e cinco léguas por costa. [...] Águas são muitas; infindas. E em tal maneira é graciosa que, querendo-a aproveitar, dar-se-á nela tudo, por bem das águas que tem." O modo como o narrador caracteriza a terra evidencia uma intenção de`,
+     alts:[`documentar cientificamente a geografia da nova colônia.`,`ressaltar o potencial econômico da terra para a Coroa portuguesa.`,`denunciar as dificuldades enfrentadas pelos colonizadores.`,`valorizar a cultura dos povos indígenas encontrados.`,`registrar de forma imparcial os limites do território.`],
+     correta:1,
+     expl:`Ao destacar a abundância de águas e afirmar que "querendo-a aproveitar, dar-se-á nela tudo", Caminha enfatiza a fertilidade e o potencial de exploração da terra — típico da literatura de informação, escrita sob a ótica dos interesses econômicos da Coroa.`},
+    {enun:`(Estilo ENEM) A literatura de catequese produzida pelos jesuítas no século XVI, especialmente por José de Anchieta, tinha como principal característica`,
+     alts:[`o rigor formal e a "arte pela arte", sem finalidade prática.`,`a exaltação nacionalista da pátria brasileira já formada.`,`a finalidade pedagógica e religiosa de converter os indígenas à fé cristã.`,`a crítica social às injustiças do sistema colonial.`,`a introspecção e a análise psicológica das personagens.`],
+     correta:2,
+     expl:`A literatura de catequese tinha função pedagógica e religiosa: por meio de autos, poemas e sermões — muitos deles em tupi —, os jesuítas buscavam ensinar a doutrina cristã e converter os indígenas.`},
+    {enun:`(Estilo ENEM) "Quinhentismo" e "literatura brasileira" não são sinônimos. A afirmação se justifica porque, no século XVI,`,
+     alts:[`os textos eram escritos em tupi, e não em português.`,`a produção era feita por europeus, sob a ótica do colonizador, e não havia ainda público nem imprensa na colônia.`,`só existia literatura oral, sem qualquer registro escrito.`,`a Coroa portuguesa proibia a circulação de qualquer texto sobre o Brasil.`,`toda a produção tinha caráter exclusivamente religioso.`],
+     correta:1,
+     expl:`O Quinhentismo é uma literatura sobre o Brasil, produzida por europeus segundo valores e interesses do colonizador. Sem imprensa nem público leitor na colônia, ainda não se pode falar em uma literatura propriamente brasileira.`}
+   ]
+  }},
  {p:'BR',anos:'1601–1768',nome:'Barroco',teaser:'Conflito entre fé e razão; cultismo e conceptismo.',
   autores:[['Gregório de Matos',['Poesia satírica, lírica e religiosa']],['Padre Antônio Vieira',['Sermão da Sexagésima','Sermão de Santo Antônio aos Peixes']]],
   contexto:'Estética do contraste e da dualidade (fé × razão, corpo × alma), marcada pelo rebuscamento do cultismo e pelo jogo de ideias do conceptismo.'},
@@ -209,8 +259,22 @@ function render(){
 }
 const over=document.getElementById('over'), sheet=document.getElementById('sheet');
 function abrir(i){
-  const e=ESCOLAS[i];
+  const e=ESCOLAS[i]; const c=e.conteudo;
   const autoresHTML=e.autores.map(a=>`<li><span class="obra">${a[0]}</span> — ${a[1].join('; ')}</li>`).join('');
+  const ctxHTML = c
+    ? `<h4>Contexto histórico</h4>${c.ctx.map(p=>`<p>${p}</p>`).join('')}<h4>Características</h4><ul>${c.carac.map(x=>`<li>${x}</li>`).join('')}</ul>`
+    : `<h4>Características centrais</h4><p>${e.contexto}</p><div class="em-breve">Teoria <b>aprofundada</b> (contexto histórico completo + traços de estilo) entra nesta seção em breve.</div>`;
+  const analiseHTML = (c&&c.analise)
+    ? c.analise.map(a=>`<h4>${a.t}</h4><p>${a.d}</p>`).join('')
+    : `<div class="em-breve"><b>Análise de obras</b> — leitura comentada das obras-chave desta escola. Em produção.</div>`;
+  const ativHTML = (c&&c.quiz)
+    ? `<h4>Pratique</h4>`+c.quiz.map((q,qi)=>`
+        <div class="q-block" data-correta="${q.correta}">
+          <p class="q-enun">${qi+1}. ${q.enun}</p>
+          <div class="q-opts">${q.alts.map((a,ai)=>`<button class="q-opt" data-ai="${ai}"><span class="q-letra">${'ABCDE'[ai]}</span>${a}</button>`).join('')}</div>
+          <div class="q-expl"><b>Resposta: ${'ABCDE'[q.correta]}.</b> ${q.expl}</div>
+        </div>`).join('')
+    : `<div class="em-breve"><b>Atividades</b> — questões (estilo ENEM e reais, com textos de domínio público). Em produção.</div>`;
   sheet.innerHTML=`
     <div class="sheet-top">
       <button class="fechar" aria-label="Fechar" onclick="fechar()">×</button>
@@ -219,31 +283,35 @@ function abrir(i){
       <p>${e.contexto}</p>
     </div>
     <div class="tabs">${TABS.map((t,k)=>`<button class="tab${k===0?' on':''}" data-t="${t[0]}">${t[1]}</button>`).join('')}</div>
-    <div class="pane on" data-p="contexto">
-      <h4>Características centrais</h4>
-      <p>${e.contexto}</p>
-      <div class="em-breve">Teoria <b>aprofundada</b> (contexto histórico completo + traços de estilo) entra nesta seção na próxima etapa.</div>
-    </div>
-    <div class="pane" data-p="autores">
-      <h4>Principais autores e obras</h4>
-      <ul>${autoresHTML}</ul>
-    </div>
-    <div class="pane" data-p="analise">
-      <div class="em-breve"><b>Análise de obras</b> — leitura comentada das obras-chave desta escola. Em produção.</div>
-    </div>
-    <div class="pane" data-p="ativ">
-      <div class="em-breve"><b>Atividades</b> — questões reais do ENEM (textos de domínio público) e questões no estilo ENEM. Em produção.</div>
-    </div>
-    <div class="pane" data-p="videos">
-      <div class="em-breve">Ligação com os <b>resumos em vídeo</b> das obras (Biblioteca de Obras). Em produção.</div>
-    </div>`;
+    <div class="pane on" data-p="contexto">${ctxHTML}</div>
+    <div class="pane" data-p="autores"><h4>Principais autores e obras</h4><ul>${autoresHTML}</ul></div>
+    <div class="pane" data-p="analise">${analiseHTML}</div>
+    <div class="pane" data-p="ativ">${ativHTML}</div>
+    <div class="pane" data-p="videos"><div class="em-breve">Ligação com os <b>resumos em vídeo</b> das obras (Biblioteca de Obras). Em produção.</div></div>`;
   sheet.querySelectorAll('.tab').forEach(tb=>tb.addEventListener('click',()=>{
     sheet.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
     sheet.querySelectorAll('.pane').forEach(x=>x.classList.remove('on'));
     tb.classList.add('on');
     sheet.querySelector(`.pane[data-p="${tb.dataset.t}"]`).classList.add('on');
+    sheet.querySelector('.sheet-top').scrollIntoView({block:'nearest'});
   }));
+  sheet.querySelectorAll('.q-block').forEach(qb=>{
+    const cor=+qb.dataset.correta;
+    qb.querySelectorAll('.q-opt').forEach(op=>op.addEventListener('click',()=>{
+      if(qb.classList.contains('answered'))return;
+      qb.classList.add('answered');
+      const chosen=+op.dataset.ai;
+      qb.querySelectorAll('.q-opt').forEach(o=>{
+        const ai=+o.dataset.ai;
+        if(ai===cor)o.classList.add('correct');
+        else if(ai===chosen)o.classList.add('wrong');
+        o.disabled=true;
+      });
+      qb.querySelector('.q-expl').classList.add('show');
+    }));
+  });
   over.classList.add('on'); document.body.style.overflow='hidden';
+  over.scrollTop=0;
 }
 function fechar(){over.classList.remove('on');document.body.style.overflow='';}
 over.addEventListener('click',e=>{if(e.target===over)fechar();});
