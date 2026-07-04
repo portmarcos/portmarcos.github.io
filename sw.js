@@ -6,11 +6,15 @@
      • CSS/JS/imagens   → cache primeiro (rápido), atualiza por trás
    Para forçar atualização de tudo, troque o número da versão.
    ============================================================ */
-const VERSAO = "portal-v19";
+const VERSAO = "portal-v20";
 const ESSENCIAIS = [
   "./",
   "./index.html",
+  "./literatura.html",
   "./manifest.json",
+  "./assets/lantern.js",
+  "./assets/icons/icon-180.png",
+  "./assets/icons/icon-192.png",
   "./assets/css/design-system.css",
   "./assets/js/quiz-engine.js",
   "./assets/js/flashcards-engine.js",
@@ -19,7 +23,7 @@ const ESSENCIAIS = [
 
 self.addEventListener("install", (e) => {
   e.waitUntil(
-    caches.open(VERSAO).then((c) => c.addAll(ESSENCIAIS)).then(() => self.skipWaiting())
+    caches.open(VERSAO).then((c) => Promise.allSettled(ESSENCIAIS.map((u) => c.add(u)))).then(() => self.skipWaiting())
   );
 });
 
