@@ -32,12 +32,67 @@
       color:var(--cor-mov);cursor:pointer;font-family:inherit; }
     .tag-quiz { font-size:.68rem;font-weight:800;color:var(--certo); }
   </style>
+
+<style>
+/* ── Tema escuro no padrão do portal (escopo: obras) ── */
+body.materia-portugues{
+  --fundo:#020617;
+  --superficie:rgba(15,23,42,.82);
+  --tinta:#E2E8F0;
+  --tinta-suave:#94A3B8;
+  --linha:rgba(148,163,184,.16);
+  --certo:#22D3EE;
+  --cor-materia:#A855F7;
+  --cor-materia-claro:rgba(168,85,247,.16);
+  --sombra:0 12px 34px -16px rgba(0,0,0,.75);
+  --sombra-alta:0 18px 44px -14px rgba(0,0,0,.75);
+  --raio:16px;
+  color:#E2E8F0;
+  background:
+    radial-gradient(1100px 560px at 50% -12%, rgba(168,85,247,.16), transparent 60%),
+    radial-gradient(900px 500px at 100% 0%, rgba(34,211,238,.08), transparent 55%),
+    #020617;
+  background-attachment:fixed;
+}
+.barra-tricolor{height:3px;background:linear-gradient(90deg,#A855F7,#0EA5E9,#22D3EE)!important}
+.cabecalho{position:sticky;top:0;z-index:50;background:rgba(2,6,23,.72);
+  backdrop-filter:blur(14px);border-bottom:1px solid rgba(148,163,184,.14)}
+.cabecalho .marca a{color:#F1F5F9;display:inline-flex;align-items:center;gap:11px}
+.cabecalho .sub{color:#94A3B8}
+.pm-logo{position:relative;display:inline-flex;align-items:center;justify-content:center;
+  width:34px;height:34px;border-radius:10px;
+  background:linear-gradient(135deg,#A855F7 0%,#6366F1 52%,#22D3EE 100%);
+  box-shadow:0 8px 20px -8px rgba(168,85,247,.7),inset 0 1px 0 rgba(255,255,255,.45)}
+h1{background:linear-gradient(120deg,#F1F5F9,#C4B5FD 60%,#67E8F9);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.voltar{color:#94A3B8}
+.busca{background:rgba(15,23,42,.7);border:1px solid rgba(148,163,184,.2);color:#E2E8F0;
+  border-radius:12px}
+.busca:focus{border-color:#A855F7;box-shadow:0 0 0 3px rgba(168,85,247,.2)}
+.chip{background:rgba(15,23,42,.7)!important;border:1px solid rgba(148,163,184,.2)!important;color:#CBD5E1!important}
+.chip.ativo{background:rgba(168,85,247,.18)!important;border-color:#A855F7!important;color:#E9D5FF!important}
+.obra-card{position:relative;isolation:isolate;backdrop-filter:blur(12px);
+  background:rgba(15,23,42,.82);border:1px solid rgba(148,163,184,.14);
+  border-left:5px solid var(--cor-mov,#A855F7);transition:transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s}
+.obra-card::before{content:"";position:absolute;inset:0;border-radius:inherit;
+  background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%),
+  color-mix(in srgb,var(--cor-mov,#A855F7) 20%,transparent),transparent 60%);
+  opacity:0;transition:opacity .35s;pointer-events:none;z-index:0}
+.obra-card:hover::before{opacity:1}
+.obra-card:hover{transform:translateY(-4px);box-shadow:0 20px 44px -18px rgba(0,0,0,.75)}
+.obra-card>*{position:relative;z-index:1}
+.obra-detalhe{background:rgba(2,6,23,.6);border:1px solid rgba(148,163,184,.12)}
+.obra-btn{background:rgba(2,6,23,.5);border:1px solid rgba(148,163,184,.22);color:#E2E8F0}
+.obra-btn.video{background:var(--cor-mov);border-color:var(--cor-mov);color:#fff}
+.rodape{border-top:1px solid rgba(148,163,184,.14);color:#64748B}
+.tag-mov{color:var(--cor-mov)}
+</style>
 </head>
 <body class="materia-portugues">
   <div class="barra-tricolor"></div>
   <header class="cabecalho">
     <div class="container cabecalho-conteudo">
-      <span class="marca"><a href="index.html">Prof. Marcos Cruz</a></span>
+      <span class="marca"><a href="index.html"><span class="pm-logo" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 34 34" fill="none"><text x="17" y="23" text-anchor="middle" font-family="'Bricolage Grotesque','Space Grotesk',sans-serif" font-weight="800" font-size="14" letter-spacing="-.5" fill="#fff">MC</text></svg></span>Prof. Marcos Cruz</a></span>
       <span class="sub">Biblioteca de Obras Literárias</span>
     </div>
   </header>
@@ -208,5 +263,12 @@ function alternar(i) {
 desenhar();
 </script>
 <script src="assets/js/animacoes.js"></script>
-</body>
+<script>
+(function(){document.addEventListener('pointermove',function(e){
+  var el=e.target.closest&&e.target.closest('.obra-card');if(!el)return;
+  var r=el.getBoundingClientRect();
+  el.style.setProperty('--mx',(e.clientX-r.left)+'px');
+  el.style.setProperty('--my',(e.clientY-r.top)+'px');
+},{passive:true});})();
+</script></body>
 </html>

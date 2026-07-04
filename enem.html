@@ -383,6 +383,19 @@ h1,h2,h3,h4,.num{font-family:'Space Grotesk','Inter',sans-serif}
 /* Melhorias gerais */
 .q-texto b{font-weight:700;color:var(--az)}
 .q-texto img{max-width:100%;border-radius:8px;margin:10px auto;display:block;box-shadow:var(--shadow)}
+
+/* brilho que segue o cursor (topic-cards e dash-cards) */
+.topic-card,.dash-card{isolation:isolate}
+.topic-card::before,.dash-card::before{content:"";position:absolute;inset:0;border-radius:inherit;
+  background:radial-gradient(240px circle at var(--mx,50%) var(--my,50%),
+  color-mix(in srgb, var(--cor,#22D3EE) 22%, transparent), transparent 60%);
+  opacity:0;transition:opacity .35s ease;pointer-events:none;z-index:0}
+.topic-card:hover::before,.dash-card:hover::before{opacity:1}
+.topic-card>*,.dash-card>*{position:relative;z-index:1}
+.wave-ico{vertical-align:-4px;margin-left:4px;transform-origin:70% 85%;
+  animation:wavehand 2.6s ease-in-out infinite}
+@keyframes wavehand{0%,55%,100%{transform:rotate(0)}62%{transform:rotate(14deg)}
+  72%{transform:rotate(-8deg)}82%{transform:rotate(11deg)}92%{transform:rotate(-4deg)}}
 </style>
 </head>
 <body>
@@ -408,7 +421,7 @@ h1,h2,h3,h4,.num{font-family:'Space Grotesk','Inter',sans-serif}
 <!-- SCREEN: HOME LOGADO -->
 <div id="sc-home" class="screen ativo">
   <div class="dash-greeting">
-    <h2>Olá, <span id="dashNome">—</span>! 👋</h2>
+    <h2>Olá, <span id="dashNome">—</span>! <svg class="wave-ico" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 11V6.5a1.5 1.5 0 0 1 3 0V10"/><path d="M10 10V5a1.5 1.5 0 0 1 3 0v5"/><path d="M13 10V6a1.5 1.5 0 0 1 3 0v7"/><path d="M16 9a1.5 1.5 0 0 1 3 0v4a7 7 0 0 1-7 7h-1a6 6 0 0 1-4.243-1.757L4 14.5a1.5 1.5 0 0 1 2.12-2.12L7.5 14"/></svg></h2>
     <p id="dashTurma">—</p>
   </div>
   <div class="dash-cards" id="dashCards"></div>
@@ -511,6 +524,12 @@ h1,h2,h3,h4,.num{font-family:'Space Grotesk','Inter',sans-serif}
       <h3>Interpretação de Texto</h3>
       <p>Como ler, inferir e responder ao estilo ENEM: estratégias de leitura em textos variados</p>
       <span class="tc-count">19 questões reais ENEM 2017-25</span>
+    </div>
+    <div class="topic-card" style="--cor:#6D28D9" onclick="iniciarQuiz('literatura')">
+      <span class="tc-num">10 — Competência 5</span>
+      <h3>Literatura</h3>
+      <p>Movimentos, obras e autores canônicos: Machado, Clarice, Graciliano, Lima Barreto, Saramago e mais</p>
+      <span class="tc-count">15 questões reais ENEM 2017-24</span>
     </div>
   </div>
 
@@ -2261,6 +2280,132 @@ Pensando bem, não é tão difícil. Frases feitas são aquelas que entram por u
   }
   ]
 },
+literatura:{
+  titulo:'Literatura',
+  emoji:'📚',
+  questoes:[
+  {
+    texto:"Policarpo Quaresma, cidadão brasileiro, funcionário público, certo de que a língua portuguesa é emprestada ao Brasil; certo também de que, por esse fato, o falar e o escrever em geral, sobretudo no campo das letras, se veem na humilhante contingência de sofrer continuamente censuras ásperas dos proprietários da língua; sabendo, além, que, dentro do nosso país, os autores e os escritores, com especialidade os gramáticos, não se entendem no tocante à correção gramatical, vendo-se, diariamente, surgir azedas polêmicas entre os mais profundos estudiosos do nosso idioma — usando do direito que lhe confere a Constituição, vem pedir que o Congresso Nacional decrete o tupi-guarani como língua oficial e nacional do povo brasileiro.",
+    fonte:"BARRETO, L. Triste fim de Policarpo Quaresma. dominiopublico.gov.br. | ENEM 2020 — Questão 41 (Pré-Modernismo)",
+    enun:"Nessa petição da pitoresca personagem do romance de Lima Barreto, o uso da norma-padrão justifica-se pela",
+    alts:["situação social de enunciação representada.","divergência teórica entre gramáticos e literatos.","pouca representatividade das línguas indígenas.","atitude irônica diante da língua dos colonizadores.","tentativa de solicitação do documento demandado."],
+    correta:0,
+    expl:"O trecho é uma petição — gênero formal, dirigido ao Congresso Nacional. É a própria situação social de enunciação (um requerimento oficial, com valor jurídico) que exige o registro culto e a norma-padrão. Não é a ironia nem o tema que determinam o registro, mas o contexto formal em que Policarpo enuncia seu pedido."
+  },
+  {
+    texto:"A escrava\n\n— Admira-me —, disse uma senhora de sentimentos sinceramente abolicionistas —; faz-me até pasmar como se possa sentir, e expressar sentimentos escravocratas, no presente século, no século dezenove! A moral religiosa e a moral cívica aí se erguem, e falam bem alto esmagando a hidra que envenena a família no mais sagrado santuário seu, e desmoraliza, e avilta a nação inteira!\n\nPor qualquer modo que encaremos a escravidão, ela é, e será sempre um grande mal. Dela a decadência do comércio; porque o comércio e a lavoura caminham de mãos dadas, e o escravo não pode fazer florescer a lavoura; porque o seu trabalho é forçado.",
+    fonte:"REIS, M. F. Úrsula e outras obras. Brasília: Câmara dos Deputados, 2018. | ENEM 2022 — Questão 21 (Romantismo)",
+    enun:"Inscrito na estética romântica da literatura brasileira, o conto descortina aspectos da realidade nacional no século XIX ao",
+    alts:["revelar a imposição de crenças religiosas a pessoas escravizadas.","apontar a hipocrisia do discurso conservador na defesa da escravidão.","sugerir práticas de violência física e moral em nome do progresso material.","relacionar o declínio da produção agrícola e comercial a questões raciais.","ironizar o comportamento dos proprietários de terra na exploração do trabalho."],
+    correta:1,
+    expl:"O conto de Maria Firmina dos Reis — pioneira da literatura abolicionista brasileira — põe na fala da senhora abolicionista a denúncia da contradição de quem professa a moral cristã e cívica e, ao mesmo tempo, defende a escravidão. É essa hipocrisia do discurso conservador que o texto expõe."
+  },
+  {
+    texto:"A senhora manifestava-se por atos, por gestos, e sobretudo por um certo silêncio, que amargava, que esfolava. Porém desmoralizar escancaradamente o marido, não era com ela. [...]\n\nAs negras receberam ordem para meter no serviço a gente do tal compadre Silveira: as cunhadas, ao fuso; os cunhados, ao campo, tratar do gado com os vaqueiros; a mulher e as irmãs, que se ocupassem da ninhada. Margarida não tivera filhos, e como os desejasse com a força de suas vontades, tratava sempre bem aos pequenitos e às mães que os estavam criando. Não era isso uma sentimentalidade cristã, uma ternura, era o egoísta e cru instinto da maternidade, obrando por mera simpatia carnal.",
+    fonte:"PAIVA, M. O. Dona Guidinha do Poço. Rio de Janeiro: Tecnoprint, s/d. | ENEM 2022 — Questão 30 (Naturalismo)",
+    enun:"No trecho do romance naturalista, a forma como o narrador julga comportamentos e emoções das personagens femininas revela influência do pensamento",
+    alts:["capitalista, marcado pela distribuição funcional do trabalho.","liberal, buscando a igualdade entre pessoas escravizadas e livres.","científico, considerando o ser humano como um fenômeno biológico.","religioso, fundamentado na fé e na aceitação dos dogmas do cristianismo.","afetivo, manifesto na determinação de acolher familiares e no respeito mútuo."],
+    correta:2,
+    expl:"O Naturalismo aplica à literatura o determinismo científico: o ser humano é visto como organismo governado por instintos. O narrador rejeita a leitura afetiva ou cristã (\"não era uma sentimentalidade cristã\") e explica a conduta de Margarida como \"cru instinto da maternidade\", \"simpatia carnal\" — ou seja, um fenômeno biológico."
+  },
+  {
+    texto:"Era o êxodo da seca de 1898. Uma ressurreição de cemitérios antigos — esqueletos redivivos, com o aspecto terroso e o fedor das covas podres.\n\nOs fantasmas estropiados como que iam dançando, de tão trôpegos e trêmulos, num passo arrastado de quem leva as pernas, em vez de ser levado por elas. Andavam devagar, olhando para trás, como quem quer voltar. Não tinham pressa em chegar, porque não sabiam aonde iam.\n\nNão tinham sexo, nem idade, nem condição nenhuma. Eram os retirantes. Nada mais.",
+    fonte:"ALMEIDA, J. A. A bagaceira. Rio de Janeiro: J. Olympio, 1978. | ENEM 2022 — Questão 31 (Romance de 30)",
+    enun:"Os recursos composicionais que inserem a obra no chamado \"Romance de 30\" da literatura brasileira manifestam-se aqui no(a)",
+    alts:["desenho cru da realidade dramática dos retirantes.","indefinição dos espaços para efeito de generalização.","análise psicológica da reação dos personagens à seca.","engajamento político do narrador ante as desigualdades.","contemplação lírica da paisagem transformada em alegoria."],
+    correta:0,
+    expl:"A Bagaceira inaugura o Romance de 30 (regionalista/social do Nordeste). A marca do movimento presente no trecho é o retrato cru e sem idealização da miséria: os retirantes são \"esqueletos redivivos\", \"fantasmas estropiados\" — um desenho dramático e realista da seca, não uma contemplação lírica nem análise psicológica."
+  },
+  {
+    texto:"Notas\n\nSoluços, lágrimas, casa armada, veludo preto nos portais, um homem que veio vestir o cadáver, outro que tomou a medida do caixão, caixão, essa, tocheiros, convites, convidados que entravam, lentamente, a passo surdo, e apertavam a mão à família, alguns tristes, todos sérios e calados, padre e sacristão, rezas, aspersões d'água benta, o fechar do caixão, a prego e martelo, seis pessoas que o tomam da essa, e o levantam, e o descem a custo pela escada, não obstante os gritos, soluços e novas lágrimas da família, e vão até o coche fúnebre, e o colocam em cima e traspassam e apertam as correias, o rodar do coche, o rodar dos carros, um a um... Isto que parece um simples inventário eram notas que eu havia tomado para um capítulo triste e vulgar que não escrevo.",
+    fonte:"ASSIS, M. Memórias póstumas de Brás Cubas. dominiopublico.gov.br. | ENEM 2022 — Questão 33 (Realismo)",
+    enun:"O recurso linguístico que permite a Machado de Assis considerar um capítulo de Memórias póstumas de Brás Cubas como inventário é a",
+    alts:["enumeração de objetos e fatos.","predominância de linguagem objetiva.","ocorrência de período longo no trecho.","combinação de verbos no presente e no pretérito.","presença de léxico do campo semântico de funerais."],
+    correta:0,
+    expl:"Um \"inventário\" é uma lista, um arrolamento item a item. O que dá ao capítulo esse caráter é justamente a enumeração encadeada de objetos e fatos do velório (\"soluços, lágrimas, casa armada... caixão, essa, tocheiros, convites...\"), acumulados como num rol."
+  },
+  {
+    texto:"Ser cronista\n\nSei que não sou, mas tenho meditado ligeiramente no assunto. Crônica é um relato? É uma conversa? É um resumo de um estado de espírito? Não sei, pois antes de começar a escrever para o Jornal do Brasil, eu só tinha escrito romances e contos.\n\nMas mudar só porque isso é uma coluna ou uma crônica? Ser mais leve só porque o leitor assim o quer? Divertir? Fazer passar uns minutos de leitura? E outra coisa: nos meus livros quero profundamente a comunicação profunda comigo e com o leitor. Aqui no jornal apenas falo com o leitor e agrada-me que ele fique agradado. Vou dizer a verdade: não estou contente.",
+    fonte:"LISPECTOR, C. A descoberta do mundo. Rio de Janeiro: Rocco, 1999. | ENEM 2022 — Questão 35 (Crônica)",
+    enun:"No texto, ao refletir sobre a atividade de cronista, a autora questiona características do gênero crônica, como",
+    alts:["relação distanciada entre os interlocutores.","articulação de vários núcleos narrativos.","brevidade no tratamento da temática.","descrição minuciosa dos personagens.","público leitor exclusivo."],
+    correta:2,
+    expl:"Clarice contrasta a densidade dos seus romances com a leveza que se espera da crônica: \"Ser mais leve... Divertir? Fazer passar uns minutos de leitura?\". O que ela questiona é exatamente a brevidade e a superficialidade impostas ao tratamento do tema no gênero."
+  },
+  {
+    texto:"Firmo, o vaqueiro\n\nNo dia seguinte, à hora em que saía o gado, estava eu debruçado à varanda quando vi o cafuzo que preparava o animal viajeiro:\n\n— Raimundinho, como vai ele?...\n\nDe longe apontou a palhoça.\n\n— Sim.\n\nO braço caiu-lhe, olhou-me algum tempo comovido; depois, saltando para o animal, levou o polegar à boca fazendo estalar a unha nos dentes: \"Às quatro horas da manhã... Atirei um verso e disse, para bulir com ele: Pega, velho! Não respondeu. Tio Firmo, mesmo velho e doente, não era homem para deixar um verso no chão... Fui ver, coitado!... estava morto\". E deu de esporas para que eu não lhe visse as lágrimas.",
+    fonte:"NETTO, C. In: MARCHEZAN, L. G. (Org.). O conto regionalista. São Paulo: Martins Fontes, 2009. | ENEM 2022 — Questão 40 (Regionalismo)",
+    enun:"A passagem registra um momento em que a expressividade lírica é reforçada pela",
+    alts:["plasticidade da imagem do rebanho reunido.","sugestão da firmeza do sertanejo ao arrear o cavalo.","situação de pobreza encontrada nos sertões brasileiros.","afetividade demonstrada ao noticiar a morte do cantador.","preocupação do vaqueiro em demonstrar sua virilidade."],
+    correta:3,
+    expl:"O lirismo do trecho nasce da emoção contida do cafuzo ao contar a morte do velho Firmo: o braço que cai, o olhar comovido e, sobretudo, o gesto de esporear o animal \"para que eu não lhe visse as lágrimas\". É a afetividade no ato de noticiar a morte que carrega a passagem de expressividade lírica."
+  },
+  {
+    texto:"Mestre e companheiro, disse eu que nos íamos despedir. Mas disse mal. A morte não extingue: transforma; não aniquila: renova; não divorcia: aproxima. [...] Esses catorze versos inimitáveis, em que o enlevo dos teus discípulos resume o valor de toda uma literatura, eram a aliança de ouro do teu segundo noivado, um anel de outras núpcias, para a vida nova do teu renascimento e da tua glorificação, com a sócia sem nódoa dos teus anos de mocidade e madureza, da florescência e frutificação de tua alma.\n\nPara os eleitos do mundo das ideias a miséria está na decadência, e não na morte. A nobreza de uma nos preserva das ruínas da outra.",
+    fonte:"BARBOSA, R. O adeus da Academia a Machado de Assis. Rio de Janeiro: Agir, 1962. | ENEM 2023 — Questão 43",
+    enun:"Esse é um trecho do discurso de Rui Barbosa em homenagem a Machado de Assis por ocasião de sua morte. Uma das características desse discurso de homenagem é a presença de",
+    alts:["metáforas relacionadas à trajetória pessoal e criadora do homenageado.","recursos fonológicos empregados para a valorização do ritmo do texto.","frases curtas e diretas no relato da vida do homenageado.","termos técnicos próprios da crítica literária acadêmica.","citações diretas de obras escritas pelo homenageado."],
+    correta:0,
+    expl:"Rui Barbosa constrói o elogio fúnebre com metáforas que aludem à vida e à obra de Machado: os \"catorze versos inimitáveis\" (o soneto a Carolina, sua esposa), a \"aliança de ouro\", o \"anel de outras núpcias\", o \"renascimento\" — imagens que entrelaçam a trajetória pessoal e a criação literária do homenageado."
+  },
+  {
+    texto:"Até ali que sabia das misérias do mundo? Nada. Aquela noite do Castelo, tão simples, tão monótona, fora uma revelação! Ela, criada entre beijos, no aroma dos seus jardins, com as vontades satisfeitas, o leito fofo, a mesa delicada, sentira sempre no coração um desejo sem nome, um desejo ou uma saudade absurda...\n\nE aquela mesma mágoa parecia-lhe agora doce e embaladora, comparando-se à outra, a Sancha, da sua idade, negra, feia, suja, levada a pontapés, dormindo sem lençóis em uma esteira, comendo em pé, apressada, os restos parcos e frios de duas velhas, vestida de algodões rotos, curvada para um trabalho sem descanso nem paga!\n\nPor quê? Que direito teriam uns a todas as primícias e regalos da vida, se havia outros que nem por uma nesga viam a felicidade?",
+    fonte:"ALMEIDA, J. L. A falência. dominiopublico.gov.br. | ENEM 2024 — Questão 19",
+    enun:"Nesse fragmento do romance de Júlia Lopes de Almeida, escrito no cenário brasileiro pós-abolição, a narradora exprime um olhar crítico sobre a",
+    alts:["desvalorização da arte produzida por mulheres.","mudança das condições de moradia do povo negro.","ruptura do projeto político de emancipação feminina.","exploração da força de trabalho da população negra.","disputa de poder entre brancos e negros no século XIX."],
+    correta:3,
+    expl:"O contraste entre a jovem branca, criada em regalos, e Sancha — negra, maltratada, \"curvada para um trabalho sem descanso nem paga\" — expõe, já no Brasil pós-abolição, a continuidade da exploração do trabalho da população negra. É sobre essa desigualdade que recai o olhar crítico da narradora."
+  },
+  {
+    texto:"Conheci Bentinho e Capitu nos meus curiosos e antigos quinze anos. E os olhos de água da jovem de Matacavalos atraíram-me, seduziram-me ao primeiro contato. Mas tomou-me também a indignação diante do narrador e seu texto, feito de acusação e vilipêndio. Sem qualquer direito de defesa. Sem acesso ao discurso, usurpado, sutilmente, pela palavra autoritária do marido...\n\nEis que, diante de mais um retorno ao romance, veio a iluminação: por que não dar voz plena àquela mulher, brasileira do século XIX, que se converte numa das mais fascinantes criaturas do gênio que foi Machado de Assis?\n\nO resultado: este livro em que, além-túmulo, como Brás Cubas, a dona dos olhos de ressaca assume, à luz do mistério da arte literária e do próprio texto do Dr. Bento Santiago, seu discurso e sua verdade.",
+    fonte:"PROENÇA FILHO, D. Capitu: memórias póstumas. Rio de Janeiro: Atrium, 1998. | ENEM 2024 — Questão 28",
+    enun:"Para apresentar a apropriação literária que faz da obra de Machado de Assis, o autor desse texto",
+    alts:["relaciona aspectos centrais da obra original e, então, reafirma o ponto de vista adotado.","explica os pontos de vista de críticos da literatura e, por fim, os redimensiona na discussão.","introduz elementos relevantes da história e, na sequência, apresenta motivos para refutá-los.","justifica as razões pelas quais adotou certa abordagem e, em seguida, reconsidera tal escolha.","contextualiza o enredo de forma subjetiva e, na conclusão, explicita o foco narrativo a ser assumido."],
+    correta:4,
+    expl:"O autor começa contextualizando subjetivamente sua relação com Dom Casmurro (a sedução por Capitu, a indignação com o narrador Bento). Na conclusão, explicita o foco narrativo que vai assumir em seu livro: dar voz plena a Capitu, que \"além-túmulo, como Brás Cubas\", passa a narrar \"seu discurso e sua verdade\"."
+  },
+  {
+    texto:"<b>TEXTO I</b>\n\nNuma carta a Cândido Portinari, Graciliano Ramos comenta as telas da série Retirantes: \"Dos quadros que você me mostrou, o que mais me comoveu foi aquela mãe com a criança morta. Saí de sua casa com um pensamento horrível: numa sociedade sem classes e sem miséria, seria possível fazer-se aquilo? Numa vida tranquila e feliz, que espécie de arte surgiria? Chego a pensar que teríamos cromos, anjinhos cor-de-rosa, e isto me horroriza.\"\n\n<b>TEXTO II</b>\n\nHouve um tempo em que a arte era um holofote na unha encravada, não um campeonato de melhores esmaltes. A literatura, o cinema e o teatro vêm se transformando num exercício de lacração: o mal está sempre no outro. A pessoa sai da leitura não com a guarda abaixada e as certezas abaladas, mais próxima da verdade — sai com suas certezas reforçadas. A arte é onde tentamos nos mostrar nus, com todos os nossos defeitos.",
+    fonte:"I: graciliano.com.br; II: PRATA, A. folha.uol.com.br. | ENEM 2024 — Questão 30",
+    enun:"No que diz respeito à arte, o posicionamento de Antônio Prata (Texto II) aproxima-se da tese de Graciliano Ramos (Texto I), uma vez que ambos",
+    alts:["defendem a dignidade do ofício dos artistas.","concluem que a arte reforça crenças pessoais.","apresentam a pobreza como inspiração para a arte.","afirmam o necessário caráter desestabilizador da arte.","atestam que há mudanças significativas na produção artística."],
+    correta:3,
+    expl:"Para Graciliano, uma vida sem miséria só geraria \"cromos, anjinhos cor-de-rosa\" — arte acomodada, que o horroriza. Para Prata, a arte verdadeira nos mostra \"nus, com todos os nossos defeitos\", em vez de reforçar certezas. Ambos, portanto, defendem que a arte deve incomodar e desestabilizar — não confortar."
+  },
+  {
+    texto:"O trabalho não era penoso: colar rótulos, meter vidros em caixas, etiquetá-las, selá-las, envolvê-las em papel celofane, branco, verde, azul, conforme o produto, separá-las em dúzias... Era fastidioso. Para passar mais rapidamente as oito horas havia o remédio: conversar. Era proibido, mas quem ia atrás de proibições?\n\nNessas conversas intermináveis, de linguagem solta e assuntos crus, Leniza se completou. Isabela, Afonsina, Idália, Jurete, Deolinda — foram mestras. O mundo acabou de se desvendar. Leniza perdeu o tom ingênuo que ainda podia ter. Ganhou um jogar de corpo que convida, um quebrar de olhos que promete tudo. Modificou-se o timbre de sua voz. Ficou mais quente. A própria inteligência se transformou.",
+    fonte:"REBELO, M. A estrela sobe. Rio de Janeiro: José Olympio, 2009. | ENEM 2018 — Questão 23 (Romance de 30)",
+    enun:"O romance, de 1939, traz à cena tipos e situações que espelham o Rio de Janeiro daquela década. No fragmento, o narrador delineia esse contexto centrado no",
+    alts:["julgamento da mulher fora do espaço doméstico.","relato sobre as condições de trabalho no Estado Novo.","destaque a grupos populares na condição de protagonistas.","processo de inclusão do palavrão nos hábitos de linguagem.","vínculo entre as transformações urbanas e os papéis femininos."],
+    correta:4,
+    expl:"Marques Rebelo retrata a modernização do Rio dos anos 1930: Leniza, operária de fábrica, transforma-se no ambiente urbano do trabalho e das colegas. O fragmento associa essas mudanças urbanas à redefinição dos papéis femininos — a mulher que sai de casa, trabalha e se reinventa fora do espaço doméstico."
+  },
+  {
+    texto:"A Casa de Vidro\n\nHouve protestos.\nDeram uma bola a cada criança e tempo para brincar. (O problema é que muitos não tinham jeito. Seria melhor prender essa gente — havia quem dissesse.)\nHouve protestos.\nAumentaram o preço da carne, liberaram os preços dos cereais...\nHouve protestos.\nDiminuíram os salários porque precisamos combater a inflação...\nHouve protestos.\nProibiram os protestos.\n\nE no lugar dos protestos nasceu o ódio. Então surgiu a Casa de Vidro, para acabar com aquele ódio.",
+    fonte:"ÂNGELO, I. A casa de vidro. São Paulo: Círculo do Livro, 1985. | ENEM 2018 — Questão 42",
+    enun:"Publicado em 1979, o texto compartilha com outras obras da literatura brasileira escritas no período as marcas do contexto em que foi produzido, como a",
+    alts:["referência à censura e à opressão para alegorizar a falta de liberdade de expressão característica da época.","valorização de situações do cotidiano para atenuar os sentimentos de revolta em relação ao governo instituído.","utilização de metáforas e ironias para expressar um olhar crítico em relação à situação social e política do país.","tendência realista para documentar com verossimilhança o drama da população brasileira durante o Regime Militar.","sobreposição das manifestações populares pelo discurso oficial para destacar o autoritarismo do momento histórico."],
+    correta:2,
+    expl:"Escrito nos anos finais da ditadura, o texto de Ivan Ângelo usa a ironia da repetição (\"Houve protestos... Proibiram os protestos\") e a metáfora da \"Casa de Vidro\" para criticar a repressão e o controle. É essa construção por metáforas e ironias — típica da literatura do período — a marca do contexto presente no fragmento."
+  },
+  {
+    texto:"Declaração de amor\n\nEsta é uma confissão de amor: amo a língua portuguesa. Ela não é fácil. Não é maleável. A língua portuguesa é um verdadeiro desafio para quem escreve. Um Camões e outros iguais não bastaram para nos dar para sempre uma herança de língua já feita. Todos nós que escrevemos estamos fazendo do túmulo do pensamento alguma coisa que lhe dê vida.\n\nSe eu fosse muda e também não pudesse escrever, e me perguntassem a que língua eu queria pertencer, eu diria: inglês, que é preciso e belo. Mas, como não nasci muda e pude escrever, tornou-se absolutamente claro para mim que eu queria mesmo era escrever em português.",
+    fonte:"LISPECTOR, C. A descoberta do mundo. Rio de Janeiro: Rocco, 1999. | ENEM 2017 — Questão 20",
+    enun:"O trecho em que Clarice Lispector declara seu amor pela língua portuguesa, acentuando seu caráter patrimonial e sua capacidade de renovação, é:",
+    alts:["\"A língua portuguesa é um verdadeiro desafio para quem escreve.\"","\"Um Camões e outros iguais não bastaram para nos dar para sempre uma herança de língua já feita.\"","\"Todos nós que escrevemos estamos fazendo do túmulo do pensamento alguma coisa que lhe dê vida.\"","\"Mas não falei do encantamento de lidar com uma língua que não foi aprofundada.\"","\"Eu até queria não ter aprendido outras línguas: só para que a minha abordagem do português fosse virgem e límpida.\""],
+    correta:1,
+    expl:"O enunciado pede o trecho que reúne os dois traços: o patrimonial (herança) e a renovação. A alternativa B faz exatamente isso — evoca Camões como patrimônio (\"herança\"), mas afirma que essa herança não está \"já feita\", ou seja, cabe a cada escritor renová-la."
+  },
+  {
+    texto:"O homem disse, Está a chover, e depois, Quem é você, Não sou daqui, Anda à procura de comida, Sim, há quatro dias que não comemos, E como sabe que são quatro dias, É um cálculo, Está sozinha, Estou com o meu marido e uns companheiros, Quantos são, Ao todo, sete, Se estão a pensar em ficar conosco, tirem daí o sentido, já somos muitos, Só estamos de passagem, Donde vêm, Estivemos internados desde que a cegueira começou, Ah, sim, a quarentena, não serviu de nada, Por que diz isso, Deixaram-nos sair, Houve um incêndio e nesse momento percebemos que os soldados que nos vigiavam tinham desaparecido...",
+    fonte:"SARAMAGO, J. Ensaio sobre a cegueira. São Paulo: Cia. das Letras, 1995. | ENEM 2017 — Questão 44",
+    enun:"A cena retrata as experiências das personagens em um país atingido por uma epidemia. No diálogo, a violação de determinadas regras de pontuação",
+    alts:["revela uma incompatibilidade entre o sistema de pontuação convencional e a produção do gênero romance.","provoca uma leitura equivocada das frases interrogativas e prejudica a verossimilhança.","singulariza o estilo do autor e auxilia na representação do ambiente caótico.","representa uma exceção às regras do sistema de pontuação canônica.","colabora para a construção da identidade do narrador pouco escolarizado."],
+    correta:2,
+    expl:"Saramago funde as falas num fluxo contínuo, sem travessões nem pontos de interrogação convencionais. Longe de ser erro, essa transgressão é uma marca estilística do autor e reproduz, na forma, o próprio ambiente caótico e desorientado do mundo atingido pela cegueira."
+  }
+  ]
+},
 };
 // ─── TEMAS DE REDAÇÃO ─────────────────────────────────────────────────────────
 
@@ -2495,7 +2640,8 @@ const TEMAS_INFO = {
   argumentacao:     {titulo:'Argumentação',            num:'06', cor:'#0891B2'},
   verbal:           {titulo:'Verbal e Não Verbal',     num:'07', cor:'#C2410C'},
   figuras:          {titulo:'Figuras de Linguagem',    num:'08', cor:'#9333EA'},
-  interpretacao:    {titulo:'Interpretação de Texto',  num:'09', cor:'#0D9488'}
+  interpretacao:    {titulo:'Interpretação de Texto',  num:'09', cor:'#0D9488'},
+  literatura:       {titulo:'Literatura',             num:'10', cor:'#6D28D9'}
 };
 
 const AUTH = {
@@ -2554,7 +2700,7 @@ function renderDashboard(){
 
   const cont=document.getElementById('dashCards');
   cont.innerHTML='';
-  const temas=['variacao','intertextualidade','generos','coesao','funcoes','argumentacao','verbal','figuras','interpretacao'];
+  const temas=['variacao','intertextualidade','generos','coesao','funcoes','argumentacao','verbal','figuras','interpretacao','literatura'];
 
   temas.forEach(t=>{
     const info=TEMAS_INFO[t];
@@ -2604,7 +2750,7 @@ function renderProgresso(){
   const wrap=document.getElementById('progWrap');
   wrap.innerHTML='';
 
-  const temas=['variacao','intertextualidade','generos','coesao','funcoes','argumentacao','verbal','figuras','interpretacao'];
+  const temas=['variacao','intertextualidade','generos','coesao','funcoes','argumentacao','verbal','figuras','interpretacao','literatura'];
   const feitos=temas.filter(t=>u.tentativas[t]);
 
   if(feitos.length===0){
@@ -3111,5 +3257,14 @@ AUTH.init();
 renderDashboard();
 
 </script>
-</body>
+<script>
+(function(){
+  document.addEventListener('pointermove',function(e){
+    var el=e.target.closest&&e.target.closest('.topic-card,.dash-card');
+    if(!el)return;var r=el.getBoundingClientRect();
+    el.style.setProperty('--mx',(e.clientX-r.left)+'px');
+    el.style.setProperty('--my',(e.clientY-r.top)+'px');
+  },{passive:true});
+})();
+</script></body>
 </html>
