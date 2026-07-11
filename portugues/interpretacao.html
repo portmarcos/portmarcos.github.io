@@ -171,7 +171,28 @@
     .niv-head{padding-left:56px;flex-direction:column;gap:2px}
     .sheet-top{padding:20px 18px 14px}
     .pane{padding:18px 16px 26px}
+    .aluno-pill{max-width:120px;overflow:hidden;text-overflow:ellipsis;font-size:.72rem;padding:6px 10px}
+    .voltar{padding:6px 10px;font-size:.76rem}
   }
+  /* identificação do aluno (opcional) + envio ao professor */
+  .aluno-pill{border:1px solid var(--line);background:var(--panel);color:var(--tx2);font-family:inherit;font-size:.78rem;font-weight:600;padding:7px 13px;border-radius:20px;cursor:pointer;transition:.2s;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+  .aluno-pill:hover{color:var(--ink);border-color:var(--azul)}
+  .aluno-pill.on{color:var(--ink);border-color:color-mix(in srgb,var(--nc,var(--azul)) 55%,transparent);background:color-mix(in srgb,var(--nc,var(--azul)) 10%,transparent)}
+  .mini-over{position:fixed;inset:0;z-index:70;background:rgba(6,8,12,.7);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:20px}
+  .mini-over.on{display:flex}
+  .mini-card{background:var(--panel);border:1px solid var(--line);border-radius:18px;max-width:380px;width:100%;padding:24px}
+  .mini-card h4{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--ink);margin:0 0 6px}
+  .mini-card p{font-size:.84rem;color:var(--tx2);margin:0 0 16px;line-height:1.5}
+  .mini-card input{width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--ink);font-family:inherit;font-size:.9rem;padding:10px 12px;border-radius:10px;margin-bottom:10px}
+  .mini-card input:focus{outline:none;border-color:var(--azul)}
+  .mini-btns{display:flex;gap:8px;margin-top:6px}
+  .mini-btns button{flex:1;border:0;cursor:pointer;font-family:inherit;font-weight:600;font-size:.85rem;padding:10px;border-radius:10px;transition:.2s}
+  .mini-salvar{background:linear-gradient(135deg,var(--azul),var(--azul2));color:#fff}
+  .mini-salvar:hover{opacity:.9}
+  .mini-cancelar{background:var(--panel2);color:var(--tx2);border:1px solid var(--line)!important}
+  .mini-limpar{margin-top:10px;font-size:.76rem;color:var(--tx3);text-align:center;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+  .envio-nota{font-size:.78rem;color:var(--tx3);margin-top:10px;min-height:16px}
+  .envio-nota.ok{color:#4ade80}
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -180,7 +201,24 @@
 <div class="topo">
   <div class="topo-in">
     <a class="marca" href="/portugues/index.html"><span class="serif" style="color:#8B5CF6;font-size:1.35rem;line-height:1">❝</span> Interpretação de Textos</a>
-    <a class="voltar" href="/portugues/index.html">← Português</a>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button class="aluno-pill" id="aluno-pill">👤 Identificar-me</button>
+      <a class="voltar" href="/portugues/index.html">← Português</a>
+    </div>
+  </div>
+</div>
+
+<div class="mini-over" id="aluno-over">
+  <div class="mini-card">
+    <h4>Identificação (opcional)</h4>
+    <p>Informe seu nome e turma para que seus resultados por tópico cheguem também à planilha do professor. Sem isso, seu progresso continua salvo normalmente neste aparelho.</p>
+    <input type="text" id="aluno-nome-in" placeholder="Seu nome">
+    <input type="text" id="aluno-turma-in" placeholder="Turma (ex: 9ºA)">
+    <div class="mini-btns">
+      <button class="mini-cancelar" id="aluno-cancelar">Agora não</button>
+      <button class="mini-salvar" id="aluno-salvar">Salvar</button>
+    </div>
+    <div class="mini-limpar" id="aluno-limpar" style="display:none">Remover identificação deste aparelho</div>
   </div>
 </div>
 
@@ -224,6 +262,47 @@ const TOPICOS = [{"id": "tema", "niv": 1, "nome": "Tema e ideia central", "texto
 const TEXTOS = {"biblioteca": {"titulo": "Iniciativas públicas e comunitárias aproximam brasileiros dos livros", "fonte": "Anna Karina de Carvalho — Agência Brasil (EBC), 24/08/2025. Conteúdo de reprodução livre, mediante citação da fonte.", "genero": "Notícia (reportagem)", "paragrafos": ["“As pessoas falam que criança e adolescente não leem, mas eu discordo. É só ter novidade que eles correm para pegar livros emprestados.” A opinião é de Kely Louzada, idealizadora da biblioteca comunitária Atelier das Palavras, no morro da Mangueira, no Rio de Janeiro.", "“Acredito que cresci bastante intelectualmente por conta da leitura”, confirma Jorge Henrique de Souza, que desde criança frequentava o Atelier das Palavras e hoje é estudante universitário e trabalha na biblioteca.", "“Comecei a ajudar aqui desde criança, onde passava muito tempo do meu dia. Hoje, posso retribuir tudo que aprendi na infância, mostrando com carinho para as crianças que estão sempre aqui que a leitura faz diferença”, testemunha Jorge Henrique.", "O Atelier das Palavras foi uma das 300 bibliotecas comunitárias vencedoras do prêmio Pontos de Cultura em 2024, criado pelo Ministério da Cultura (MinC). Contemplada com R$ 30 mil, a biblioteca fundada por Kely Louzada atualizou seu acervo e manteve o interesse dos pequenos e jovens leitores.", "A biblioteca, que fica na entrada do morro da Mangueira, também se moderniza com doações de livros e participa de editais públicos para manter as estantes atualizadas. “A gente trabalha muito com doação, mas temos também uma parceria com as secretarias de Cultura do estado e do município, que nos ajudam a estar sempre renovando a nossa estante”, diz Kely.", "“Desde 2024, as bibliotecas comunitárias passaram a receber livros literários para atualizar e ampliar seus acervos”, afirma Fabiano dos Santos Piúba, secretário de Formação Cultural, Livro e Leitura do Ministério da Cultura. Naquele ano, o Decreto nº 12.021 expandiu o Programa Nacional do Livro e do Material Didático (PNLD) para incluir bibliotecas públicas e comunitárias. O Brasil tem 6.021 bibliotecas públicas e comunitárias aptas a receber os acervos do programa.", "A pesquisa Retratos da Leitura no Brasil, de 2024, revela que 85% das pessoas entrevistadas gostariam de ler mais livros. O Panorama do Consumo de Livros da Câmara Brasileira do Livro acrescenta que, mesmo entre quem não compra livros, o valor da leitura é amplamente reconhecido: 84% a consideram “importante” ou “muito importante” para a carreira, o lazer e o aprendizado. “Esses números comprovam que o interesse existe, mas ainda enfrentamos barreiras como acesso e desigualdade”, pondera a presidente da Câmara Brasileira do Livro, Sevani Matos."]}, "fabula": {"titulo": "A cigarra e a formiga", "fonte": "Fábula atribuída a Esopo — adaptação para esta atividade.", "genero": "Fábula (narrativa)", "paragrafos": ["Durante todo o verão, a cigarra cantava sem parar, saltando de galho em galho, aproveitando o sol e a fartura de folhas verdes. Não muito longe dali, a formiga trabalhava sem descanso, carregando grãos para o formigueiro, gota de suor após gota de suor.", "— Por que trabalha tanto, se há comida de sobra? — perguntou a cigarra, rindo. — Venha cantar comigo!", "A formiga apenas sacudiu a cabeça e seguiu carregando seus grãos.", "Quando o inverno chegou, frio e sem folhas, a cigarra já não tinha o que comer nem onde se abrigar. Bateu, então, à porta do formigueiro.", "— Poderia me dar um pouco de grão? — pediu, tremendo de frio.", "— E o que você fez durante o verão, enquanto eu trabalhava? — quis saber a formiga.", "— Eu cantava — respondeu a cigarra, baixando os olhos.", "A formiga observou-a em silêncio por um instante e, sem dizer mais nada, abriu a porta e repartiu com ela o que tinha guardado."]}, "charge": {"titulo": "Charge: “Qual dos dois está te lendo?”", "fonte": "Descrição de charge original, elaborada para esta atividade.", "genero": "Charge (texto multissemiótico)", "paragrafos": ["Uma charge de jornal mostra dois balões de pensamento saindo da cabeça do mesmo menino, sentado à mesa.", "Do lado esquerdo, dentro de um retângulo cinza e apagado, aparece um livro fechado, com teia de aranha no canto.", "Do lado direito, dentro de um retângulo colorido e brilhante, muitos ícones piscam ao mesmo tempo: uma tela de celular, notificações, corações vermelhos e um contador de “curtidas” girando sem parar.", "Abaixo da cena, uma legenda pergunta: “Qual dos dois está te lendo?”"]}};
 const NIVEIS = [{"n": 1, "nome": "Fundamentos da leitura", "desc": "Tema, inferência e o sentido das palavras no contexto.", "cor": "#8B5CF6"}, {"n": 2, "nome": "Como o texto se organiza", "desc": "Conectivos, referência e a estrutura que faz o texto progredir.", "cor": "#6366F1"}, {"n": 3, "nome": "Leitura crítica", "desc": "Fato e opinião, efeitos de sentido e textos com imagem.", "cor": "#EC4899"}];
 const LSKEY = 'interpretacao-progresso-v1';
+
+/* ===== IDENTIFICAÇÃO DO ALUNO (opcional) + ENVIO PARA A PLANILHA DO PROFESSOR =====
+   Reaproveita o mesmo Apps Script já usado no Portal SAEB. Enquanto o aluno não se
+   identificar, tudo funciona normalmente e o progresso continua salvo só no aparelho. */
+const SHEETS_URL = "https://script.google.com/macros/s/AKfycbwPcWRWW2IkMb8-WkyB2w1M2n9ivcYlfqWajYRgCzecLTC1T7aBetZtR2MDaOIxahc/exec";
+const NOME_ARQUIVO = "interpretacao.html";
+const ALUNO_KEY = 'interpretacao-aluno-v1';
+
+function lerAluno(){ try{ return JSON.parse(localStorage.getItem(ALUNO_KEY)||'null'); }catch(e){ return null; } }
+function salvarAluno(obj){ try{ localStorage.setItem(ALUNO_KEY, JSON.stringify(obj)); }catch(e){} }
+function limparAluno(){ try{ localStorage.removeItem(ALUNO_KEY); }catch(e){} }
+
+function pintarAlunoPill(){
+  const pill=document.getElementById('aluno-pill'); const al=lerAluno();
+  if(al && al.nome){ pill.textContent='👤 '+al.nome+' ('+al.turma+')'; pill.classList.add('on'); }
+  else { pill.textContent='👤 Identificar-me'; pill.classList.remove('on'); }
+}
+function abrirAlunoOver(){
+  const al=lerAluno(); const over=document.getElementById('aluno-over');
+  document.getElementById('aluno-nome-in').value = al?al.nome:'';
+  document.getElementById('aluno-turma-in').value = al?al.turma:'';
+  document.getElementById('aluno-limpar').style.display = al?'block':'none';
+  over.classList.add('on');
+}
+function fecharAlunoOver(){ document.getElementById('aluno-over').classList.remove('on'); }
+document.getElementById('aluno-pill').onclick = abrirAlunoOver;
+document.getElementById('aluno-cancelar').onclick = fecharAlunoOver;
+document.getElementById('aluno-over').addEventListener('click', e=>{ if(e.target.id==='aluno-over') fecharAlunoOver(); });
+document.getElementById('aluno-salvar').onclick = ()=>{
+  const nome=document.getElementById('aluno-nome-in').value.trim();
+  const turma=document.getElementById('aluno-turma-in').value.trim();
+  if(!nome || !turma){ alert('Preencha nome e turma.'); return; }
+  salvarAluno({nome,turma}); pintarAlunoPill(); fecharAlunoOver();
+};
+document.getElementById('aluno-limpar').onclick = ()=>{ limparAluno(); pintarAlunoPill(); fecharAlunoOver(); };
+
+function enviarParaSheets(descritor, respostas){
+  const al=lerAluno(); if(!al || !al.nome) return; // envio é opcional: só ocorre se o aluno se identificou
+  const payload={ nome:al.nome, turma:al.turma, descritor:descritor, pagina:NOME_ARQUIVO, modo:"Autoestudo", respostas:respostas };
+  fetch(SHEETS_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)}).catch(()=>{});
+}
 
 /* ---------- progresso ---------- */
 function lerProg(){ try{ return JSON.parse(localStorage.getItem(LSKEY)||'{}'); }catch(e){ return {}; } }
@@ -362,7 +441,8 @@ function abrir(i){
     + t.quiz.map((q,qi)=>'<div class="q-block" data-correta="'+q.correta+'">'
       +'<p class="q-enun">'+(qi+1)+'. '+q.enun+'</p>'
       +'<div class="q-opts">'+q.alts.map((a,ai)=>'<button class="q-opt" data-ai="'+ai+'"><span class="q-letra">'+'ABCDE'[ai]+'</span><span>'+a+'</span></button>').join('')+'</div>'
-      +'<div class="q-expl"><b>Resposta: '+'ABCDE'[q.correta]+'.</b> '+q.expl+'</div></div>').join('');
+      +'<div class="q-expl"><b>Resposta: '+'ABCDE'[q.correta]+'.</b> '+q.expl+'</div></div>').join('')
+    + '<div class="envio-nota" id="envio-nota-'+t.id+'"></div>';
 
   const memHTML = '<div class="mnem-box">🧠 '+t.mnem+'</div>'
     + '<h4>Você sabia?</h4>'
@@ -399,8 +479,10 @@ function abrir(i){
 }
 
 /* ---------- quiz (por tópico e relâmpago) ---------- */
-function ligarQuiz(raiz, topicoId, total){
-  let acertos=0, respondidas=0;
+function ligarQuiz(raiz, topicoId, total, labelExtra){
+  let acertos=0, respondidas=0; const respostasDetalhadas=[];
+  const topico = topicoId ? TOPICOS.find(x=>x.id===topicoId) : null;
+  const descritor = topico ? topico.nome : (labelExtra || 'Simulado-relâmpago');
   raiz.querySelectorAll('.q-block').forEach(bloco=>{
     const correta=+bloco.dataset.correta;
     bloco.querySelectorAll('.q-opt').forEach(btn=>{
@@ -408,14 +490,25 @@ function ligarQuiz(raiz, topicoId, total){
         if(bloco.dataset.feito) return;
         bloco.dataset.feito='1'; respondidas++;
         const ai=+btn.dataset.ai;
-        if(ai===correta){ btn.classList.add('correct'); acertos++; }
+        const acertou = ai===correta;
+        if(acertou){ btn.classList.add('correct'); acertos++; }
         else{ btn.classList.add('wrong'); bloco.querySelector('.q-opt[data-ai="'+correta+'"]').classList.add('correct'); }
         bloco.querySelectorAll('.q-opt').forEach(b=>b.disabled=true);
         bloco.querySelector('.q-expl').classList.add('show');
-        if(topicoId && respondidas===total) marcarQuiz(topicoId, acertos, total);
+        respostasDetalhadas.push({questao:respondidas, escolhida:'ABCDE'[ai], correta:'ABCDE'[correta], acertou:acertou});
+        if(topicoId && respondidas===total){
+          marcarQuiz(topicoId, acertos, total);
+          const nota=document.getElementById('envio-nota-'+topicoId);
+          const al=lerAluno();
+          if(al && al.nome){ enviarParaSheets(descritor, respostasDetalhadas); if(nota) { nota.textContent='✓ Enviado para a planilha do professor ('+al.nome+', '+al.turma+').'; nota.classList.add('ok'); } }
+          else if(nota){ nota.textContent='Resultado salvo neste aparelho. Toque em "Identificar-me" no topo para também enviar ao professor.'; }
+        }
         if(!topicoId && respondidas===total){
           const res=raiz.querySelector('#rl-res');
-          if(res) res.innerHTML='Resultado: <b style="color:var(--ambar)">'+acertos+'/'+total+'</b>'+(acertos>=8?' — excelente! 🏆':acertos>=6?' — bom ritmo, revise os comentados.':' — volte à trilha e reforce os níveis com erro.');
+          const al=lerAluno();
+          let envio='';
+          if(al && al.nome){ enviarParaSheets(descritor, respostasDetalhadas); envio=' <span style="color:#4ade80">· ✓ enviado ao professor</span>'; }
+          if(res) res.innerHTML='Resultado: <b style="color:var(--ambar)">'+acertos+'/'+total+'</b>'+(acertos>=8?' — excelente! 🏆':acertos>=6?' — bom ritmo, revise os comentados.':' — volte à trilha e reforce os níveis com erro.')+envio;
         }
       };
     });
@@ -528,7 +621,7 @@ document.getElementById('btn-rl').onclick=()=>{
       +'<div class="q-expl"><b>Resposta: '+'ABCDE'[par.q.correta]+'.</b> '+par.q.expl+'</div></div>').join('')
     +'</div>';
   sheet.querySelector('.fechar').onclick=fecharSheet;
-  ligarQuiz(sheet, null, 10);
+  ligarQuiz(sheet, null, 10, 'Simulado-relâmpago');
   over.classList.add('on'); document.body.style.overflow='hidden';
   sheet.parentElement.scrollTop=0;
 };
@@ -540,7 +633,7 @@ document.getElementById('btn-reset').onclick=()=>{
 /* ---------- init ---------- */
 document.getElementById('st-top').textContent=TOPICOS.length;
 document.getElementById('st-quiz').textContent=TOPICOS.reduce((s,t)=>s+t.quiz.length,0);
-renderFiltros(); renderTrilha();
+renderFiltros(); renderTrilha(); pintarAlunoPill();
 
 /* abre tópico direto via âncora (#id) vinda da página de Português */
 function irParaAncora(){
