@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Interpretação e Compreensão de Textos · Prof. Marcos Cruz</title>
+<meta name="description" content="Leitura e compreensão de textos em tópicos: tema e ideia central, inferência, conectivos, fato e opinião, efeitos de sentido e textos com imagem. Explicação, quiz comentado e jogos.">
+<meta property="og:title" content="Interpretação de Textos — Prof. Marcos Cruz">
+<meta property="og:description" content="Leitura crítica em tópicos: ideia central, inferência, coesão, fato × opinião, ironia e multissemiose.">
+<meta property="og:url" content="https://portmarcos.github.io/portugues/interpretacao.html">
+<meta property="og:type" content="website">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B0D12; --panel:#131722; --panel2:#1A1F2E; --line:rgba(226,232,240,.11);
+    --ink:#EDEFF5; --tx:#D3D8E4; --tx2:#97A0B5; --tx3:#6B7488;
+    --azul:#8B5CF6; --azul2:#7C3AED; --ambar:#EC4899;
+    --ok:#22c55e; --err:#ef4444;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:
+      linear-gradient(180deg,rgba(11,13,18,.72) 0%,rgba(11,13,18,.9) 46%,rgba(11,13,18,.985) 86%,#0B0D12 100%),
+      url('https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=1920&q=72') center top/cover fixed no-repeat,var(--bg);
+    color:var(--tx);font-family:'Inter',system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .serif{font-family:'Cormorant Garamond',Georgia,serif}
+  .mono{font-family:'JetBrains Mono',monospace}
+  /* topo */
+  .topo{position:sticky;top:0;z-index:40;background:rgba(11,13,18,.84);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:12px 18px}
+  .topo-in{max-width:980px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .marca{display:inline-flex;align-items:center;gap:10px;font-weight:600;color:var(--ink);text-decoration:none;font-size:.95rem}
+  .voltar{font-size:.82rem;color:var(--tx2);text-decoration:none;border:1px solid var(--line);padding:7px 13px;border-radius:20px;transition:.2s;white-space:nowrap}
+  .voltar:hover{color:var(--ink);border-color:var(--azul)}
+  /* hero */
+  .hero{max-width:980px;margin:0 auto;padding:52px 18px 10px;text-align:center}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--azul);margin:0 0 14px}
+  .hero h1{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(2.1rem,7vw,3.6rem);line-height:1.04;color:var(--ink);margin:0 0 16px;letter-spacing:-.01em}
+  .hero h1 em{font-style:italic;color:var(--ambar)}
+  .hero p{color:var(--tx2);max-width:62ch;margin:0 auto;font-size:1rem}
+  .stats{display:flex;justify-content:center;gap:26px;margin:26px auto 0;flex-wrap:wrap}
+  .stat{text-align:center}
+  .stat b{display:block;font-family:'Cormorant Garamond',serif;font-size:1.9rem;color:var(--ink);line-height:1}
+  .stat span{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--tx3)}
+  /* ações rápidas */
+  .acoes{display:flex;justify-content:center;gap:10px;margin:26px auto 0;flex-wrap:wrap}
+  .btn-relampago{border:0;cursor:pointer;font-family:inherit;font-weight:600;font-size:.9rem;color:#0B0D12;background:linear-gradient(135deg,var(--ambar),#FBBF24);padding:11px 22px;border-radius:26px;transition:.2s}
+  .btn-relampago:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(245,158,11,.3)}
+  .btn-limpar{border:1px solid var(--line);cursor:pointer;font-family:inherit;font-size:.82rem;color:var(--tx2);background:transparent;padding:11px 18px;border-radius:26px;transition:.2s}
+  .btn-limpar:hover{color:var(--ink);border-color:var(--tx3)}
+  /* filtro de níveis */
+  .filtros{max-width:980px;margin:34px auto 0;padding:0 18px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .filtro{border:1px solid var(--line);background:var(--panel);color:var(--tx2);font-family:inherit;font-weight:600;font-size:.82rem;padding:9px 16px;border-radius:24px;cursor:pointer;transition:.2s;display:inline-flex;align-items:center;gap:8px}
+  .filtro .pontinho{width:9px;height:9px;border-radius:50%;background:var(--nc,var(--tx3))}
+  .filtro.on{color:var(--ink);border-color:var(--nc,var(--azul));background:color-mix(in srgb,var(--nc,var(--azul)) 12%,transparent)}
+  /* trilha */
+  .trilha{max-width:840px;margin:16px auto 0;padding:14px 18px 60px;position:relative}
+  .niv-head{display:flex;align-items:baseline;gap:12px;margin:34px 0 6px;padding-left:66px}
+  .niv-head .nivic{display:inline-flex;align-items:center}
+  .filtroic{display:inline-flex;align-items:center}
+  .niv-head .num{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.16em;color:var(--nc)}
+  .niv-head h2{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.6rem;color:var(--ink);margin:0}
+  .niv-head p{margin:0;font-size:.85rem;color:var(--tx3)}
+  .grupo{position:relative}
+  .grupo::before{content:'';position:absolute;left:37px;top:8px;bottom:8px;width:2px;background:linear-gradient(var(--nc),color-mix(in srgb,var(--nc) 18%,transparent))}
+  .node{position:relative;padding:12px 0 12px 66px;cursor:pointer}
+  .node .dot{position:absolute;left:29px;top:26px;width:18px;height:18px;border-radius:50%;background:var(--bg);border:2px solid var(--nc);transition:.2s;z-index:2;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff}
+  .node.done .dot{background:var(--nc)}
+  .node:hover .dot,.node:focus-visible .dot{box-shadow:0 0 0 6px color-mix(in srgb,var(--nc) 18%,transparent)}
+  .node:focus-visible{outline:none}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px 18px;transition:.2s}
+  .node:hover .card,.node:focus-visible .card{border-color:color-mix(in srgb,var(--nc) 55%,transparent);transform:translateX(3px)}
+  .card h3{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.42rem;color:var(--ink);margin:0 0 4px;line-height:1.12}
+  .card .teaser{font-size:.89rem;color:var(--tx2);margin:0 0 10px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{font-size:.71rem;color:var(--tx);background:var(--panel2);border:1px solid var(--line);padding:3px 10px;border-radius:20px}
+  .go{margin-top:12px;font-size:.8rem;font-weight:600;color:var(--nc);display:inline-flex;align-items:center;gap:6px}
+  .selo{float:right;font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--nc);border:1px solid color-mix(in srgb,var(--nc) 45%,transparent);border-radius:14px;padding:2px 9px;margin-left:8px}
+  /* overlay / sheet */
+  .over{position:fixed;inset:0;z-index:60;background:rgba(6,8,12,.74);backdrop-filter:blur(6px);display:none;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto}
+  .over.on{display:flex}
+  .sheet{background:var(--panel);border:1px solid var(--line);border-radius:22px;max-width:780px;width:100%;margin:20px 0;overflow:hidden;animation:up .25s ease}
+  @keyframes up{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+  .sheet-top{padding:24px 26px 18px;border-bottom:1px solid var(--line);position:relative;background:radial-gradient(120% 120% at 0% 0%,color-mix(in srgb,var(--nc,#3B82F6) 16%,transparent),transparent 60%)}
+  .sheet-top .nivtag{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--nc);letter-spacing:.1em;text-transform:uppercase}
+  .sheet-top h2{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.95rem;color:var(--ink);margin:4px 0 6px}
+  .sheet-top p{color:var(--tx2);font-size:.92rem;margin:0;max-width:62ch}
+  .fechar{position:absolute;top:18px;right:18px;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--panel2);color:var(--tx);font-size:18px;cursor:pointer;line-height:1}
+  .tabs{display:flex;gap:4px;padding:12px 20px 0;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+  .tab{border:0;background:transparent;color:var(--tx2);font-family:inherit;font-size:.83rem;font-weight:600;padding:9px 13px;border-radius:10px 10px 0 0;cursor:pointer;border-bottom:2px solid transparent}
+  .tab .tabic{display:inline-flex;align-items:center;margin-right:6px;vertical-align:-2px}
+  .tab.on{color:var(--ink);border-bottom-color:var(--nc,#3B82F6)}
+  .pane{padding:22px 26px 30px;display:none}
+  .pane.on{display:block}
+  .pane h4{font-family:'Cormorant Garamond',serif;font-size:1.22rem;color:var(--ambar);margin:20px 0 8px}
+  .pane h4:first-child{margin-top:0}
+  .pane p{font-size:.93rem;margin:0 0 10px}
+  .pane ul{margin:0 0 14px;padding-left:18px}
+  .pane li{margin-bottom:7px;font-size:.91rem}
+  .pane b{color:var(--ink)} .pane u{text-decoration-color:var(--azul)}
+  /* exemplos */
+  .ex{background:var(--panel2);border:1px solid var(--line);border-left:3px solid var(--nc,#3B82F6);border-radius:0 12px 12px 0;padding:12px 15px;margin-bottom:10px}
+  .ex .fr{font-size:.94rem;color:var(--ink);margin:0 0 4px}
+  .ex .cm{font-size:.83rem;color:var(--tx2);margin:0}
+  /* quiz */
+  .q-block{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+  .q-enun{font-size:.93rem;color:var(--tx);margin:0 0 12px;font-weight:500;line-height:1.55}
+  .q-opts{display:flex;flex-direction:column;gap:8px}
+  .q-opt{display:flex;align-items:flex-start;gap:10px;text-align:left;width:100%;background:var(--panel);border:1px solid var(--line);color:var(--tx);font-family:inherit;font-size:.88rem;padding:11px 13px;border-radius:10px;cursor:pointer;transition:.15s;line-height:1.45}
+  .q-opt:hover:not(:disabled){border-color:var(--azul);background:rgba(59,130,246,.08)}
+  .q-opt:disabled{cursor:default}
+  .q-letra{flex:none;width:22px;height:22px;border-radius:50%;background:var(--panel2);border:1px solid var(--line);display:inline-flex;align-items:center;justify-content:center;font-size:.74rem;font-weight:700;color:var(--tx2)}
+  .q-opt.correct{border-color:var(--ok);background:rgba(34,197,94,.12);color:#dcfce7}
+  .q-opt.correct .q-letra{background:var(--ok);color:#04120a;border-color:var(--ok)}
+  .q-opt.wrong{border-color:var(--err);background:rgba(239,68,68,.1);color:#fee2e2}
+  .q-opt.wrong .q-letra{background:var(--err);color:#fff;border-color:var(--err)}
+  .q-expl{display:none;margin-top:12px;padding:12px 14px;border-left:3px solid var(--azul);background:rgba(59,130,246,.06);border-radius:0 8px 8px 0;font-size:.86rem;color:var(--tx2);line-height:1.55}
+  .q-expl.show{display:block}
+  .q-expl b{color:var(--ambar);font-weight:600}
+  /* memorize */
+  .mnem-box{background:linear-gradient(135deg,rgba(245,158,11,.1),transparent 70%);border:1px solid rgba(245,158,11,.35);border-radius:14px;padding:16px 18px;margin-bottom:16px;font-size:.94rem}
+  .fato{display:flex;gap:10px;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px 15px;margin-bottom:10px;font-size:.89rem}
+  .fato .ic{color:var(--ambar)}
+  /* jogos */
+  .jogo-wrap{background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:18px}
+  .jogo-hud{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+  .jogo-hud .info{font-family:'JetBrains Mono',monospace;font-size:.76rem;color:var(--tx2)}
+  .jogo-hud .info b{color:var(--ambar);font-size:1rem}
+  .jogo-item{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--ink);text-align:center;min-height:64px;display:flex;align-items:center;justify-content:center;padding:8px 10px;line-height:1.3}
+  .jogo-item .frase{font-family:'Inter',sans-serif;font-size:1.02rem}
+  .jogo-cats{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:8px}
+  .jogo-cat{border:1px solid var(--line);background:var(--panel);color:var(--tx);font-family:inherit;font-weight:600;font-size:.88rem;padding:11px 18px;border-radius:12px;cursor:pointer;transition:.15s;flex:1 1 130px;max-width:230px}
+  .jogo-cat:hover:not(:disabled){border-color:var(--azul);background:rgba(59,130,246,.1)}
+  .jogo-cat.hit{border-color:var(--ok);background:rgba(34,197,94,.14)}
+  .jogo-cat.miss{border-color:var(--err);background:rgba(239,68,68,.12)}
+  .jogo-fb{text-align:center;font-size:.84rem;color:var(--tx2);min-height:38px;margin-top:10px;line-height:1.45}
+  .jogo-start,.jogo-again{display:block;margin:8px auto 0;border:0;cursor:pointer;font-family:inherit;font-weight:600;font-size:.9rem;color:#fff;background:linear-gradient(135deg,var(--azul),var(--azul2));padding:11px 26px;border-radius:24px;transition:.2s}
+  .jogo-start:hover,.jogo-again:hover{transform:translateY(-1px)}
+  .jogo-fim{text-align:center;padding:12px 0}
+  .jogo-fim .nota{font-family:'Cormorant Garamond',serif;font-size:2.2rem;color:var(--ink)}
+  .barra-t{height:5px;border-radius:4px;background:var(--panel);overflow:hidden;margin-bottom:12px}
+  .barra-t i{display:block;height:100%;background:linear-gradient(90deg,var(--ambar),var(--err));width:100%;transition:width .2s linear}
+  /* relâmpago sheet reaproveita quiz */
+  .rl-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+  .rl-head .mono{font-size:.76rem;color:var(--tx2)}
+
+  /* arte temática */
+  .hero{position:relative;overflow:hidden}
+  .hero-glifos{position:absolute;inset:0;pointer-events:none;z-index:-1}
+  .hero-glifos span{position:absolute;font-family:'Cormorant Garamond',serif;font-weight:700;color:var(--ink);opacity:.05;user-select:none;line-height:1}
+  .grupo .marca-niv{position:absolute;right:-6px;top:-14px;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:7rem;color:var(--nc);opacity:.055;pointer-events:none;user-select:none;line-height:1;z-index:0}
+  .sheet-top{overflow:hidden}
+  .sheet-arte{position:absolute;right:-8px;top:-8px;bottom:-8px;width:200px;pointer-events:none;background-repeat:no-repeat;background-position:right center;background-size:contain;opacity:.6}
+  @media(max-width:560px){.sheet-arte{width:120px;opacity:.35}}
+  footer{border-top:1px solid var(--line);text-align:center;padding:26px 18px;color:var(--tx3);font-size:.8rem}
+  footer a{color:var(--tx2)}
+  @media(max-width:560px){
+    .trilha{padding-left:10px;padding-right:12px}
+    .grupo::before{left:29px}
+    .node{padding-left:56px}
+    .node .dot{left:21px}
+    .niv-head{padding-left:56px;flex-direction:column;gap:2px}
+    .sheet-top{padding:20px 18px 14px}
+    .pane{padding:18px 16px 26px}
+  }
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="topo">
+  <div class="topo-in">
+    <a class="marca" href="/portugues/index.html"><span class="serif" style="color:#8B5CF6;font-size:1.35rem;line-height:1">❝</span> Interpretação de Textos</a>
+    <a class="voltar" href="/portugues/index.html">← Português</a>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-glifos" aria-hidden="true">
+    <span style="left:4%;top:8%;font-size:7rem;transform:rotate(-10deg)">Ç</span>
+    <span style="right:6%;top:4%;font-size:6rem;transform:rotate(8deg)">à</span>
+    <span style="left:14%;bottom:6%;font-size:5rem;transform:rotate(6deg)">;</span>
+    <span style="right:16%;bottom:12%;font-size:6.5rem;transform:rotate(-7deg)">?</span>
+    <span style="left:44%;top:2%;font-size:4.5rem">~</span>
+    <span style="right:38%;bottom:2%;font-size:5rem;transform:rotate(12deg)">§</span>
+  </div>
+  <p class="eyebrow">Língua Portuguesa · Prof. Marcos Cruz</p>
+  <h1>Interpretação e <em>compreensão de textos</em></h1>
+  <p>Nove tópicos em três blocos — dos fundamentos da leitura à leitura crítica. Cada um traz explicação em tópicos, exemplos comentados, quiz com correção explicada e um jogo para fixar. Seu progresso fica salvo neste dispositivo.</p>
+  <div class="stats">
+    <div class="stat"><b id="st-top">9</b><span>tópicos</span></div>
+    <div class="stat"><b id="st-quiz">27</b><span>questões</span></div>
+    <div class="stat"><b>9</b><span>jogos</span></div>
+    <div class="stat"><b id="st-prog">0%</b><span>concluído</span></div>
+  </div>
+  <div class="acoes">
+    <button class="btn-relampago" id="btn-rl"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="vertical-align:-2px;margin-right:6px"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>Simulado-relâmpago (10 questões)</button>
+    <button class="btn-limpar" id="btn-reset">Zerar progresso</button>
+  </div>
+</section>
+
+<div class="filtros" id="filtros"></div>
+<div class="trilha" id="trilha"></div>
+
+<div class="over" id="over" role="dialog" aria-modal="true">
+  <div class="sheet" id="sheet"></div>
+</div>
+
+<footer>
+  Interpretação de Textos · Portal do Prof. Marcos Cruz — <a href="/portugues/index.html">Língua Portuguesa</a> · <a href="/saeb/index.html">Portal SAEB</a> · <a href="/enem.html">Portal ENEM</a>
+</footer>
+
+<script>
+const TOPICOS = [{"id": "tema", "niv": 1, "nome": "Tema e ideia central", "sub": "Separar o assunto geral, a ideia que o texto defende e os detalhes que só a apoiam.", "chips": ["assunto × tema × tese", "título", "detalhe × essencial"], "secoes": [{"t": "Três camadas diferentes", "itens": ["<b>Assunto</b>: o campo geral de que o texto trata — <i>redes sociais</i>.", "<b>Tema/ideia central</b>: o recorte específico — <i>o efeito das redes sociais no sono dos adolescentes</i>.", "<b>Tese</b> (em textos opinativos): o que o autor defende sobre o tema — <i>as redes prejudicam o sono e a escola deve discutir isso</i>."]}, {"t": "Como encontrar a ideia central", "ps": ["A ideia central é a única frase que <b>cobre o texto inteiro</b>: se um parágrafo ficar de fora dela, ela é estreita demais; se ela falar do que o texto não diz, é larga demais.", "Pontos quentes: título, primeiro e último parágrafos, frases que se repetem com outras palavras. Mas cuidado — título pode ser irônico ou incompleto: ele é pista, não prova."]}, {"t": "O erro clássico: promover o detalhe", "ps": ["A alternativa errada favorita das provas pega um <b>dado verdadeiro, porém secundário</b> (um exemplo, um número, uma fala isolada) e o apresenta como ideia central. O dado está no texto — só não é o centro dele. Pergunte sempre: <i>este ponto sustenta o texto ou é sustentado por ele?</i>"]}], "exemplos": [["Um texto sobre desperdício de água cita que 'uma torneira pingando gasta 46 L/dia'.", "O número é exemplo-apoio. A ideia central é o desperdício doméstico — não a torneira."], ["Título: 'Um gigante com pés de barro'", "Título figurado: anuncia o tema (fragilidade oculta de algo grande) sem nomeá-lo — só o texto confirma."], ["Crônica que narra um engarrafamento e termina refletindo sobre a pressa", "Em crônicas, a ideia central costuma estar na reflexão final, não no episódio narrado."], ["Reportagem com 5 parágrafos: 4 sobre a seca, 1 sobre turismo", "A frase-síntese precisa cobrir a seca; uma alternativa centrada no turismo promove o detalhe."]], "quiz": [{"enun": "Uma reportagem descreve o dia de três agricultores do Norte de Minas durante a estiagem, traz dados da chuva na região e termina com um deles dizendo: “A gente planta esperança.” A ideia central do texto é", "alts": ["os efeitos da estiagem na vida e no trabalho dos agricultores da região.", "a frase otimista do agricultor, que resume o texto ao afirmar que se planta esperança.", "a quantidade de chuva registrada no Norte de Minas nos últimos meses.", "a rotina de trabalho de três pessoas, independentemente do clima da região."], "correta": 0, "expl": "Só a alternativa A cobre as três partes (rotinas + dados + fala). <b>B</b> promove uma fala expressiva (detalhe de fechamento) a centro; <b>C</b> promove o dado numérico; <b>D</b> mantém as pessoas mas apaga a estiagem — o fio que costura tudo."}, {"enun": "Em um artigo intitulado “Menos telas, mais sono”, o autor apresenta pesquisas, depoimentos de médicos e propõe que escolas orientem famílias. A TESE do autor é:", "alts": ["o uso de telas à noite prejudica o sono e merece orientação das escolas às famílias.", "existem pesquisas científicas e depoimentos de médicos sobre sono e telas.", "o sono dos adolescentes, tema que interessa a médicos e professores.", "os adolescentes devem ser proibidos de usar qualquer tela após as 18 horas."], "correta": 0, "expl": "Tese = o que se defende. <b>B</b> confunde tese com os argumentos que a sustentam; <b>C</b> confunde tese com tema (recorte sem posição); <b>D</b> exagera a proposta — o texto orienta, não proíbe: generalização indevida."}, {"enun": "O título “O silêncio que grita”, em um texto sobre a evasão escolar, funciona principalmente para", "alts": ["anunciar o tema por meio de um paradoxo que provoca a curiosidade do leitor.", "informar objetivamente o assunto do texto, dispensando a leitura completa.", "indicar que o texto tratará de poluição sonora nas escolas.", "provar que a evasão escolar é um problema sem solução."], "correta": 0, "expl": "Silêncio que grita = paradoxo: chama atenção e sugere que a ausência (dos alunos) 'fala alto'. <b>B</b> superestima o título — ele sugere, não informa tudo; <b>C</b> faz leitura literal de 'grita'; <b>D</b> extrai do título uma conclusão que ele não afirma."}], "jogo": {"tipo": "classifique", "titulo": "Centro ou detalhe?", "instr": "Num texto sobre 'os benefícios da leitura diária para crianças', classifique cada informação.", "cats": ["Ideia central", "Detalhe de apoio"], "itens": [["Ler todos os dias amplia vocabulário e imaginação infantil.", 0], ["Uma escola de Salinas criou o projeto 'Sacola Literária'.", 1], ["Crianças leitoras desenvolvem mais empatia e repertório.", 0], ["O estudo ouviu 1.200 famílias em 2024.", 1], ["A leitura diária é decisiva na formação da criança.", 0], ["A mãe de um aluno relatou melhora nas notas.", 1], ["Um pediatra citado recomenda 20 minutos por dia.", 1], ["Hábito de leitura na infância traz ganhos duradouros.", 0]]}, "mnem": "<b>Teste do guarda-chuva:</b> a ideia central precisa cobrir TODOS os parágrafos sem molhar nenhum e sem sobrar pano. Detalhe verdadeiro ≠ ideia central.", "sabia": ["Provas oficiais quase nunca pedem 'o assunto': pedem a ideia que organiza o texto — por isso alternativas com dados reais do texto são as mais perigosas.", "Em notícias, a ideia central mora quase sempre no primeiro parágrafo (o <i>lide</i>); em crônicas e artigos, ela costuma se revelar no fim."]}, {"id": "inferencia", "niv": 1, "nome": "Explícito × implícito: a arte de inferir", "sub": "Distinguir o que está escrito, o que se conclui com base no texto e o que é invenção do leitor.", "chips": ["informação explícita", "inferência", "extrapolação", "pressuposto"], "secoes": [{"t": "Três zonas de leitura", "itens": ["<b>Explícito</b>: está na superfície, dá para apontar com o dedo — <i>'A loja abre às 8h.'</i>", "<b>Implícito (inferência)</b>: não está escrito, mas o texto <u>obriga</u> a concluir — <i>'Voltou da rua encharcado'</i> → chovia (ou algo o molhou).", "<b>Extrapolação</b>: conclusão que o texto <u>não sustenta</u> — o leitor traz de fora. É o erro que as provas mais exploram."]}, {"t": "Inferência tem lastro", "ps": ["Toda inferência válida aponta para <b>pistas concretas</b>: palavras escolhidas, situação descrita, o que as personagens fazem. Se você não consegue citar a pista, não é inferência — é achismo.", "Pressupostos são implícitos embutidos nas palavras: <i>'Pedro <b>parou</b> de fumar'</i> pressupõe que fumava; <i>'<b>até</b> o diretor riu'</i> pressupõe que dele não se esperava riso."]}, {"t": "O distrator típico", "ps": ["A alternativa errada de inferência costuma ser <b>plausível no mundo real, mas sem apoio no texto</b> — ou o contrário: repete algo explícito quando a pergunta pede conclusão. Releia o comando: 'infere-se', 'depreende-se', 'pode-se concluir' pedem a zona do implícito com lastro."]}], "exemplos": [["<i>'Maria olhou o relógio pela terceira vez e suspirou.'</i>", "Inferência: ela está impaciente/ansiosa. Pistas: repetição do gesto + suspiro."], ["<i>'O restaurante estava vazio de novo.'</i>", "'De novo' pressupõe que já estivera vazio antes — implícito na palavrinha."], ["<i>'Ele vendeu o carro e passou a andar de ônibus.'</i>", "Inferir dificuldade financeira é POSSÍVEL, mas não obrigatório (pode ser escolha ambiental): em prova, só com mais pistas."], ["Placa: <i>'Proibido nadar'</i> na beira do rio", "Pressupõe que há quem nade ali — e infere-se algum risco no local."]], "quiz": [{"enun": "“Quando o professor entrou, os cadernos se fecharam depressa e um silêncio repentino tomou a sala.” Do trecho, pode-se INFERIR que", "alts": ["os alunos faziam algo que preferiam esconder do professor.", "os alunos fecharam os cadernos e a sala ficou em silêncio.", "os alunos colavam as respostas da prova de matemática.", "o professor era autoritário e maltratava a turma."], "correta": 0, "expl": "A pressa + o silêncio 'repentino' são pistas de ocultação — inferência com lastro. <b>B</b> apenas repete o explícito (não responde ao comando); <b>C</b> especifica demais: 'cola' e 'matemática' não têm base; <b>D</b> extrapola para um julgamento sobre o professor que o texto não sustenta."}, {"enun": "“Ana finalmente conseguiu visitar a avó.” A palavra <b>finalmente</b> permite concluir que", "alts": ["a visita era desejada ou tentada havia algum tempo e algo a adiava.", "Ana não gostava da avó e fez a visita por pura obrigação.", "a avó de Ana morava em outra cidade, distante da neta.", "Ana visita a avó com frequência, como sempre fez."], "correta": 0, "expl": "'Finalmente' pressupõe espera/obstáculo anterior. <b>B</b> inverte o valor afetivo do advérbio (que indica alívio, não contrariedade); <b>C</b> inventa causa específica (distância) sem pista; <b>D</b> contradiz o pressuposto: quem visita sempre não usa 'finalmente'."}, {"enun": "Uma charge mostra um aluno diante de dois caminhos: um limpo e vazio rumo a “LEITURA”, outro lotado e barulhento rumo a “CELULAR”. Ele caminha para o segundo. A crítica implícita da charge é que", "alts": ["a maioria escolhe a distração do celular, deixando a leitura em segundo plano.", "os caminhos das escolas precisam de melhor sinalização para os alunos.", "os jovens não sabem ler e por isso escolhem o celular.", "o celular deveria ser proibido dentro das escolas."], "correta": 0, "expl": "Vazio × lotado + a escolha do personagem constroem a crítica por imagem. <b>B</b> lê literalmente os 'caminhos'; <b>C</b> generaliza para incapacidade ('não sabem ler') que a charge não afirma; <b>D</b> transforma crítica em proposta de proibição — extrapolação prescritiva."}], "jogo": {"tipo": "classifique", "titulo": "Explícito, inferível ou invenção?", "instr": "Texto-base: “Depois do apito final, os jogadores deixaram o gramado de cabeça baixa, sem atender a torcida que ainda cantava.” Classifique cada afirmação.", "cats": ["Explícito", "Inferível", "Extrapolação"], "itens": [["Os jogadores saíram de cabeça baixa.", 0], ["O time provavelmente perdeu a partida.", 1], ["A torcida continuou cantando após o jogo.", 0], ["Os jogadores estavam abatidos com o resultado.", 1], ["O técnico será demitido na segunda-feira.", 2], ["Houve briga entre os jogadores no vestiário.", 2], ["Os jogadores não atenderam a torcida.", 0], ["O clima entre time e resultado não era de comemoração.", 1]]}, "mnem": "<b>Inferência é ponte com pilares:</b> cada conclusão precisa apoiar-se numa pista do texto. Sem pilar, a ponte é extrapolação — e cai.", "sabia": ["Palavrinhas como <i>ainda, já, de novo, até, só</i> carregam pressupostos inteiros — provas adoram perguntar o que elas 'dizem sem dizer'.", "O descritor D03 do SAEB (inferir informação implícita) é historicamente um dos que mais derrubam alunos no 9º ano — justamente pela confusão com extrapolação."]}, {"id": "vocabulario", "niv": 1, "nome": "Palavras e expressões no contexto", "sub": "Descobrir o sentido pelo contexto — inclusive quando a palavra é nova ou tem vários sentidos.", "chips": ["sentido contextual", "polissemia", "substituição", "'no texto, X significa...'"], "secoes": [{"t": "O contexto decide", "ps": ["A pergunta “no texto, a palavra X significa...” nunca quer a definição de dicionário: quer o sentido <b>naquele uso</b>. Palavras polissêmicas mudam de valor conforme a vizinhança: <i>vencer</i> a partida, <i>vencer</i> o prazo, <i>vencer</i> o medo.", "Estratégia: cubra a palavra e leia a frase; teste cada alternativa <b>dentro da frase</b> — a certa preserva o sentido do período inteiro, não só da palavra."]}, {"t": "Pistas para palavra desconhecida", "itens": ["<b>Definição embutida</b>: 'a pauta, <u>isto é</u>, a lista de assuntos...'", "<b>Exemplos</b>: 'répteis, <u>como</u> cobras e lagartos'.", "<b>Oposição</b>: 'não foi um elogio, <u>mas</u> uma censura' → censura ≈ crítica.", "<b>Situação</b>: o que as pessoas fazem em volta da palavra revela seu campo."]}, {"t": "O teste da substituição", "ps": ["Ao trocar a palavra pela alternativa, verifique: o sentido se mantém? o tom se mantém? Sinônimos raramente são perfeitos — <i>morrer, falecer, bater as botas</i> 'significam o mesmo' com registros opostos. A prova cobra o par sentido + adequação."]}], "exemplos": [["<i>'A medida gerou um clima <b>pesado</b> na reunião.'</i>", "Pesado = tenso (figurado). Distrator típico: 'com muito peso' — leitura literal."], ["<i>'O projeto ainda está <b>embrionário</b>.'</i>", "Contexto de projeto: em fase inicial — a metáfora do embrião migra de biologia para planejamento."], ["<i>'Ele <b>lançou mão de</b> velhos truques.'</i>", "Expressão idiomática: usou/recorreu a. Literalizar ('soltou a mão') destrói o sentido."], ["<i>'A inflação <b>corroeu</b> o salário.'</i>", "Corroer = desgastar aos poucos: o verbo químico vira imagem econômica."]], "quiz": [{"enun": "“A prefeitura vai <b>tombar</b> o casarão centenário da praça.” No contexto, o verbo destacado significa", "alts": ["declarar o casarão patrimônio protegido, impedindo sua descaracterização.", "derrubar o casarão, que corre o risco de cair pela idade.", "inclinar a estrutura do casarão para restaurá-la com segurança.", "vender o casarão em leilão público organizado pela prefeitura."], "correta": 0, "expl": "Tombar (patrimônio) = inscrever no Livro do Tombo, proteger. <b>B</b> é a leitura pelo sentido mais comum do verbo (cair/derrubar) — o distrator literal clássico; <b>C</b> literaliza 'inclinar'; <b>D</b> inventa um terceiro sentido sem apoio."}, {"enun": "“O deputado fez um discurso <b>inflamado</b>, e a plateia respondeu no mesmo tom.” A palavra destacada indica que o discurso era", "alts": ["exaltado e cheio de emoção, capaz de acender os ânimos da plateia.", "proferido em local que pegava fogo, o que agitou os presentes.", "relacionado a uma inflamação, tema de saúde tratado pelo deputado.", "longo e cansativo, provocando irritação em quem o ouvia."], "correta": 0, "expl": "Inflamado (discurso) = ardoroso — a metáfora do fogo aplicada à fala, confirmada por 'a plateia respondeu no mesmo tom'. <b>B</b> e <b>C</b> são literalizações (incêndio, doença); <b>D</b> troca exaltação por tédio, contrariando a resposta empolgada da plateia."}, {"enun": "“Aquele resultado foi um <b>balde de água fria</b> nos planos do time.” Substituindo a expressão destacada SEM alterar o sentido, tem-se:", "alts": ["uma grande decepção", "um alívio refrescante", "um banho merecido", "uma surpresa agradável"], "correta": 0, "expl": "Balde de água fria = frustração súbita de uma expectativa. <b>B</b> e <b>D</b> invertem o valor (positivo); <b>C</b> literaliza a água. Teste da substituição: só 'decepção' mantém a frase coerente com 'nos planos do time'."}], "jogo": {"tipo": "complete", "titulo": "Sentido na medida", "instr": "Escolha o sentido que a palavra tem NAQUELA frase.", "itens": [{"f": "A notícia caiu como uma bomba: 'bomba' = ___", "opts": ["impacto forte", "explosivo real", "doce recheado"], "c": 0}, {"f": "Ele é o braço direito da diretora: '___'", "opts": ["ajudante de confiança", "membro do corpo", "lado da sala"], "c": 0}, {"f": "O banco negou o empréstimo: 'banco' = ___", "opts": ["instituição financeira", "assento de praça", "banco de dados"], "c": 0}, {"f": "Sentou no banco da praça: 'banco' = ___", "opts": ["assento", "instituição financeira", "reserva do time"], "c": 0}, {"f": "A empresa abraçou a causa ambiental: 'abraçou' = ___", "opts": ["adotou/apoiou", "envolveu com os braços", "apertou"], "c": 0}, {"f": "O atleta pendurou as chuteiras: ___", "opts": ["aposentou-se", "guardou o material no vestiário", "lavou o uniforme"], "c": 0}, {"f": "Havia um clima de festa na cidade: 'clima' = ___", "opts": ["atmosfera/ambiente", "condição meteorológica", "temperatura"], "c": 0}, {"f": "Ela devorou o livro em uma noite: 'devorou' = ___", "opts": ["leu avidamente", "comeu de fato", "rasgou"], "c": 0}]}, "mnem": "<b>Cubra e teste:</b> tape a palavra, leia a frase, encaixe cada alternativa. A resposta certa é a que mantém a FRASE de pé — não a que 'parece sinônimo' isolado.", "sabia": ["Nas provas oficiais, o comando 'no texto' aparece grifado exatamente para desarmar a resposta de dicionário — quem ignora o grifo cai no sentido mais comum.", "Expressões idiomáticas não somam sentidos das partes: 'bater as botas', 'encher linguiça' e 'dar bolo' só existem inteiras — traduzi-las palavra a palavra é o erro que as questões medem."]}, {"id": "conectivos-sentido", "niv": 2, "nome": "Conectivos e relações de sentido", "sub": "Ler a lógica entre as partes: causa, oposição, conclusão, condição — e o que muda quando o conectivo muda.", "chips": ["causa × consequência", "oposição", "conclusão", "substituir o conectivo"], "secoes": [{"t": "Conectivo é uma placa de trânsito", "ps": ["Cada conjunção ou expressão de ligação autoriza um movimento lógico. Ler bem é reconhecer esse movimento: <b>mas</b> avisa 'vem contraste'; <b>porque</b>, 'vem a causa'; <b>portanto</b>, 'vem a conclusão'; <b>se</b>, 'vem a condição'; <b>embora</b>, 'admito algo, mas não muda o resultado'."]}, {"t": "Os grupos que mais caem", "itens": ["<b>Causa</b>: porque, visto que, já que, uma vez que.", "<b>Consequência/conclusão</b>: portanto, logo, por isso, assim, de modo que.", "<b>Oposição</b>: mas, porém, contudo, todavia, entretanto, no entanto, por outro lado.", "<b>Condição</b>: se, caso, desde que, a menos que.", "<b>Concessão</b>: embora, ainda que, mesmo que, apesar de.", "<b>Adição/finalidade</b>: além disso, e; para que, a fim de que."]}, {"t": "Trocar o conectivo troca a leitura", "ps": ["A questão clássica pede para substituir o conectivo ou dizer que relação ele exprime. Teste pela paráfrase: <i>Estudou, <b>mas</b> não passou</i> (contraste) ≠ <i>Estudou, <b>por isso</b> passou</i> (consequência) ≠ <i>Estudou, <b>embora</b> não gostasse</i> (concessão). Confundir causa com consequência é o erro que inverte o texto inteiro."]}], "exemplos": [["<i>'Choveu muito; <b>por isso</b>, o rio subiu.'</i>", "Causa → consequência. Trocar por 'mas' criaria contradição (chuva não se opõe à cheia)."], ["<i>'<b>Embora</b> tenha estudado, foi mal.'</i>", "Concessão: o esforço não impediu o mau resultado — quebra de expectativa."], ["<i>'Traga o casaco, <b>pois</b> vai esfriar.'</i>", "Explicação/causa do conselho — típica após pedido."], ["<i>'A meta foi batida; <b>no entanto</b>, os problemas continuam.'</i>", "Oposição: sucesso × persistência do problema."]], "quiz": [{"enun": "“A campanha de reciclagem foi bem divulgada; ___, a adesão da população ficou abaixo do esperado.” O conectivo que mantém a lógica da frase é", "alts": ["no entanto", "portanto", "porque", "desde que"], "correta": 0, "expl": "Divulgação boa × adesão baixa = quebra de expectativa: pede oposição. <b>B</b> ('portanto') faria a boa divulgação CAUSAR a baixa adesão; <b>C</b> ('porque') transformaria a baixa adesão em causa da divulgação — inversão; <b>D</b> ('desde que') introduz condição inexistente."}, {"enun": "“Muitos alunos não leem por prazer <b>porque</b> associam a leitura a obrigação escolar.” A oração introduzida por <i>porque</i> exprime", "alts": ["a causa de os alunos não lerem por prazer.", "a consequência de os alunos não lerem por prazer.", "uma condição para que os alunos leiam por prazer.", "uma oposição à ideia de que a leitura é obrigação."], "correta": 0, "expl": "'Porque' introduz a causa (associam leitura a obrigação → não leem por prazer). <b>B</b> inverte causa e efeito; <b>C</b> confunde causa com condição (não há 'se'); <b>D</b> lê oposição onde há explicação."}, {"enun": "Leia: “Estudou o ano todo. ___, encara a prova com tranquilidade.” Se preenchermos a lacuna com <b>Ainda assim</b> em vez de <b>Por isso</b>, o sentido", "alts": ["muda: 'ainda assim' sugeriria que a tranquilidade contraria o esforço, o que soa ilógico aqui.", "permanece igual, pois as duas expressões indicam conclusão lógica.", "muda: passaria a indicar a causa do estudo durante o ano.", "torna-se mais enfático, reforçando que o esforço garantiu a tranquilidade."], "correta": 0, "expl": "'Por isso' conclui (esforço → tranquilidade); 'ainda assim' concede/opõe (esforço, MAS mesmo assim tranquilo — como se o esperado fosse o contrário). <b>B</b> iguala conectivos opostos; <b>C</b> inventa relação de causa; <b>D</b> chama de ênfase o que é inversão lógica."}], "jogo": {"tipo": "classifique", "titulo": "Que relação é essa?", "instr": "Identifique a relação de sentido que o conectivo destacado estabelece.", "cats": ["Causa", "Oposição", "Conclusão", "Condição"], "itens": [["Faltou luz, <b>por isso</b> a aula parou.", 2], ["<b>Se</b> chover, ficamos em casa.", 3], ["Correu muito, <b>mas</b> perdeu a hora.", 1], ["Não saiu <b>porque</b> estava doente.", 0], ["Treinou bastante; <b>logo</b>, venceu.", 2], ["<b>Caso</b> precise, me avise.", 3], ["Estudou pouco, <b>contudo</b> passou.", 1], ["<b>Como</b> estava tarde, voltamos.", 0]]}, "mnem": "<b>Teste da paráfrase:</b> troque o conectivo por 'porque', 'mas' ou 'portanto' e veja qual mantém a frase lógica. Causa ≠ consequência — inverter as duas vira o texto do avesso.", "sabia": ["O descritor D15 do SAEB cobra exatamente relações lógico-discursivas por conectivos — um dos que mais aparecem no 9º ano.", "Na redação nota 1000, avaliadores destacam a variedade de conectivos: repetir 'daí', 'aí' e 'então' derruba a coesão; 'ademais', 'por conseguinte', 'em contrapartida' elevam."]}, {"id": "referencia", "niv": 2, "nome": "Referência e coesão: a quem se refere?", "sub": "Seguir os fios que amarram o texto: pronomes, sinônimos e retomadas que evitam a repetição.", "chips": ["a que 'isso' se refere", "pronomes", "sinônimos e hiperônimos", "cadeia coesiva"], "secoes": [{"t": "Retomar sem repetir", "ps": ["Textos bem escritos evitam repetir a mesma palavra: usam pronomes (<i>ele, ela, isso, este</i>), sinônimos e termos mais gerais (hiperônimos) para retomar o que já foi dito. Interpretar é seguir esse fio — a <b>cadeia coesiva</b> — sem se perder."]}, {"t": "Os elos mais cobrados", "itens": ["<b>Pronomes pessoais e demonstrativos</b>: <i>A diretora chegou. <b>Ela</b> abriu a reunião.</i>", "<b>Isso/isto/aquilo</b> podem retomar uma oração inteira: <i>Faltou à prova. <b>Isso</b> o reprovou.</i>", "<b>Sinônimos e hiperônimos</b>: <i>Comprou um sabiá. <b>A ave</b> cantava ao amanhecer.</i>", "<b>Este × esse</b> na retomada de dois termos: <i>este</i> = o mais próximo/último citado; <i>aquele</i> = o mais distante/primeiro."]}, {"t": "A pergunta típica", "ps": ["“O termo <u>lhe</u> (linha 8) refere-se a...” exige voltar ao texto e achar o antecedente que faz a frase ter sentido. Distrator comum: um substantivo que está <b>por perto</b>, mas não é o referente real. Teste: substitua o pronome pelo candidato e veja se a frase continua coerente."]}], "exemplos": [["<i>'O juiz ouviu o réu e o advogado; depois <b>o</b> liberou.'</i>", "'O' retoma o réu (quem é liberado) — não o advogado. Contexto resolve a ambiguidade."], ["<i>'A cidade investiu em creches. <b>A medida</b> agradou às mães.'</i>", "'A medida' retoma toda a ação (investir em creches) — retomada por nome-síntese."], ["<i>'Comprei manga e caju; <b>esta</b> é azeda, <b>aquela</b>, doce.'</i>", "Esta = caju (último citado); aquela = manga (primeiro)."], ["<i>'Pedro avisou que chegaria tarde. <b>Isso</b> irritou todos.'</i>", "'Isso' retoma a oração inteira (o aviso), não uma palavra só."]], "quiz": [{"enun": "“Os moradores procuraram o vereador e o secretário de obras. Somente <b>este</b> se comprometeu a resolver o problema.” O pronome <i>este</i> refere-se a", "alts": ["o secretário de obras, o termo mais próximo na frase.", "o vereador, por ser a autoridade mais importante citada.", "os moradores, que buscavam resolver o problema.", "tanto o vereador quanto o secretário, em conjunto."], "correta": 0, "expl": "Na retomada de dois termos, 'este' aponta o mais próximo/último citado: o secretário. <b>B</b> troca o critério gramatical por juízo de importância; <b>C</b> escolhe o sujeito da ação anterior, não o referente do pronome; <b>D</b> ignora que 'este' singulariza um dos dois."}, {"enun": "“A escola reformou a quadra e ampliou a biblioteca. <b>Essas ações</b> foram elogiadas pelos pais.” A expressão destacada retoma", "alts": ["as duas medidas mencionadas: reformar a quadra e ampliar a biblioteca.", "apenas a ampliação da biblioteca, ação mais recente do texto.", "a escola, responsável por realizar as melhorias.", "os pais, que participaram das reformas na escola."], "correta": 0, "expl": "'Essas ações' (plural) resume o conjunto das duas medidas — retomada por nome-síntese. <b>B</b> encolhe a referência a uma só ação; <b>C</b> confunde o agente (escola) com as ações retomadas; <b>D</b> escolhe um termo que nem foi mencionado antes do pronome."}, {"enun": "“O técnico substituiu o goleiro no fim do jogo. <b>A decisão</b> foi criticada pela torcida.” Se trocássemos “A decisão” por “Ele”, a frase", "alts": ["ficaria ambígua, pois 'Ele' poderia remeter tanto ao técnico quanto ao goleiro.", "manteria exatamente a mesma clareza, pois 'Ele' só pode ser o técnico.", "perderia o sentido, já que 'Ele' não pode retomar nada no texto.", "passaria a se referir obrigatoriamente ao goleiro substituído."], "correta": 0, "expl": "Há dois candidatos masculinos (técnico e goleiro): 'Ele' geraria ambiguidade, enquanto 'A decisão' retoma a ação sem dúvida. <b>B</b> ignora o segundo candidato; <b>C</b> nega que 'Ele' possa retomar algo; <b>D</b> fixa arbitrariamente um dos dois."}], "jogo": {"tipo": "complete", "titulo": "Quem é o referente?", "instr": "Em cada trecho, indique a quem o termo destacado se refere.", "itens": [{"f": "“Ana viu Bia e <b>a</b> abraçou.” — 'a' = ", "opts": ["Bia", "Ana", "as duas"], "c": 0}, {"f": "“O gato perseguiu o rato até <b>ele</b> fugir pelo buraco.” — 'ele' = ", "opts": ["o rato", "o gato", "o buraco"], "c": 0}, {"f": "“Faltou à reunião. <b>Isso</b> gerou reclamações.” — 'isso' = ", "opts": ["o fato de faltar", "a reunião", "as reclamações"], "c": 0}, {"f": "“Comprei um violão. <b>O instrumento</b> estava afinado.” — retoma ", "opts": ["o violão", "a compra", "a loja"], "c": 0}, {"f": "“Os alunos e a professora saíram; <b>ela</b> apagou a luz.” — 'ela' = ", "opts": ["a professora", "os alunos", "a luz"], "c": 0}, {"f": "“Ganhou o prêmio e doou <b>o</b> à escola.” — 'o' = ", "opts": ["o prêmio", "a escola", "ele mesmo"], "c": 0}, {"f": "“Drummond e Bandeira: <b>este</b> é pernambucano.” — 'este' = ", "opts": ["Bandeira", "Drummond", "os dois"], "c": 0}, {"f": "“A ponte caiu. <b>O acidente</b> assustou a cidade.” — retoma ", "opts": ["a queda da ponte", "a cidade", "a ponte nova"], "c": 0}]}, "mnem": "<b>Substitua e cheque:</b> troque o pronome pelo candidato a referente e releia. Se a frase continuar fazendo sentido, achou o elo; se travar, o referente é outro.", "sabia": ["O descritor D02 do SAEB — estabelecer relações entre partes por elementos coesivos — vive em textos com muitos 'ele', 'isso', 'o mesmo': mapear a cadeia é meio caminho da resposta.", "'O referido', 'o supracitado', 'tal medida' são retomadas típicas de textos formais e jurídicos: reconhecê-las evita se perder em documentos oficiais."]}, {"id": "progressao", "niv": 2, "nome": "Progressão e estrutura textual", "sub": "Perceber como o texto avança: ordem das ideias, papel de cada parágrafo e os gêneros mais comuns.", "chips": ["ordem das partes", "função do parágrafo", "gêneros", "paráfrase × resumo"], "secoes": [{"t": "O texto caminha", "ps": ["Um bom texto <b>progride</b>: cada parte acrescenta algo às anteriores. Interpretar é enxergar esse caminho — o que vem primeiro, o que se desenvolve, como se fecha. Um texto que só repete a mesma ideia 'roda em falso' (falha de progressão)."]}, {"t": "O papel de cada parte", "itens": ["<b>Introdução</b>: apresenta o tema, situa o leitor, às vezes anuncia a tese.", "<b>Desenvolvimento</b>: argumenta, exemplifica, compara, detalha.", "<b>Conclusão</b>: fecha, retoma a tese com nova luz, propõe ou reflete.", "Em cada parágrafo, costuma haver uma <b>ideia-núcleo</b> (tópico frasal) e frases que a sustentam."]}, {"t": "Reconhecer o gênero orienta a leitura", "ps": ["Cada gênero tem estrutura e finalidade próprias: <b>notícia</b> (informar, pirâmide invertida), <b>crônica</b> (refletir sobre o cotidiano), <b>artigo de opinião</b> (defender uma tese), <b>charge/tirinha</b> (criticar com humor), <b>propaganda</b> (convencer). Saber o gênero antecipa o que procurar.", "<b>Resumo</b> encurta mantendo a ordem e as ideias principais; <b>paráfrase</b> reescreve com outras palavras sem mudar o sentido. Distrator típico: a paráfrase que <u>acrescenta</u> ou <u>inverte</u> algo do original."]}], "exemplos": [["Notícia começa com quem/o quê/quando/onde", "Pirâmide invertida: o mais importante vem primeiro — o fim pode ser cortado sem perda."], ["Crônica: episódio banal → reflexão", "A estrutura leva do concreto (uma cena) ao abstrato (uma ideia sobre a vida)."], ["Artigo: tese → argumentos → retomada", "Se um parágrafo não sustenta a tese, ele destoa da progressão."], ["Original: 'Só passou porque estudou muito.' Paráfrase fiel: 'Foi o muito estudo que garantiu sua aprovação.'", "Mesma relação causa-efeito, outras palavras — paráfrase correta."]], "quiz": [{"enun": "Em um artigo de opinião, o autor abre com uma pergunta polêmica, dedica três parágrafos a dados e exemplos e encerra propondo uma mudança. O parágrafo final tem a função de", "alts": ["concluir o texto, retomando a discussão para apresentar uma proposta.", "introduzir um assunto novo, sem relação com os parágrafos anteriores.", "apenas repetir, com as mesmas palavras, a pergunta feita no início.", "listar os dados estatísticos que sustentam os exemplos citados."], "correta": 0, "expl": "Fechar com proposta é papel típico da conclusão de um artigo. <b>B</b> contraria a progressão (conclusão não abre tema novo); <b>C</b> confunde retomar com repetir literalmente; <b>D</b> descreve o desenvolvimento, não o fecho."}, {"enun": "Original: “A falta de saneamento provoca doenças e afasta turistas da região.” Assinale a paráfrase que MANTÉM o sentido.", "alts": ["Doenças e a fuga de turistas resultam da ausência de saneamento na região.", "As doenças da região afastam os turistas, que exigem mais saneamento.", "A região tem saneamento, mas ainda assim sofre com doenças e turismo.", "Turistas e doenças provocam a falta de saneamento na região."], "correta": 0, "expl": "A mantém a relação causa (falta de saneamento) → efeitos (doenças e fuga de turistas). <b>B</b> reorganiza criando nova causalidade (doenças afastam turistas); <b>C</b> inverte o fato (afirma que HÁ saneamento); <b>D</b> inverte causa e efeito."}, {"enun": "Um texto que narra uma cena cotidiana — um encontro no ponto de ônibus — e termina refletindo sobre a solidão nas grandes cidades caracteriza-se, muito provavelmente, como", "alts": ["crônica, que parte de um fato simples do dia a dia para uma reflexão maior.", "notícia, que relata objetivamente um acontecimento recente e verificável.", "artigo de opinião, que defende uma tese com dados e argumentos técnicos.", "verbete de dicionário, que define de modo neutro um conceito abstrato."], "correta": 0, "expl": "Cena banal + reflexão final = estrutura típica da crônica. <b>B</b> ignora a reflexão subjetiva (notícia é objetiva); <b>C</b> exige tese e dados, ausentes aqui; <b>D</b> não combina com narração de cena."}], "jogo": {"tipo": "classifique", "titulo": "Que gênero é este?", "instr": "Pela finalidade e estrutura descritas, identifique o gênero textual.", "cats": ["Notícia", "Crônica", "Artigo de opinião", "Charge/tirinha"], "itens": [["Informa um fato recente, com data e local, de modo objetivo.", 0], ["Critica um político com humor e desenho em poucos quadros.", 3], ["Defende que a escola deve ter mais aulas de arte, com argumentos.", 2], ["Reflete, com leveza, sobre um pequeno acontecimento do dia.", 1], ["Traz manchete, lide e responde quem/o quê/quando/onde.", 0], ["Usa balões de fala e imagem para provocar riso e crítica.", 3], ["Apresenta uma tese e a sustenta com dados e exemplos.", 2], ["Narra uma cena cotidiana e termina com uma reflexão pessoal.", 1]]}, "mnem": "<b>Introdução apresenta, desenvolvimento sustenta, conclusão fecha.</b> Paráfrase fiel = mesmas ideias, outras palavras — se acrescentou ou inverteu, não é paráfrase.", "sabia": ["A 'pirâmide invertida' do jornalismo põe o essencial no topo justamente para que o texto possa ser cortado de baixo para cima sem perder o principal.", "Reconhecer o gênero antes de ler as questões é estratégia de quem faz prova rápido: você já sabe se deve procurar um fato, uma tese ou uma crítica."]}, {"id": "fato-opiniao", "niv": 3, "nome": "Fato × opinião · ponto de vista", "sub": "Separar o que se apresenta como verdade verificável do que é avaliação — e de quem é a voz.", "chips": ["fato × opinião", "juízo de valor", "voz do narrador", "posicionamento"], "secoes": [{"t": "A diferença que muda tudo", "ps": ["<b>Fato</b>: pode ser verificado, medido, confirmado — <i>'A escola tem 400 alunos.'</i> <b>Opinião</b>: expressa avaliação, gosto, julgamento — <i>'A escola é acolhedora.'</i> Marcas de opinião: adjetivos valorativos (<i>ótimo, absurdo, injusto</i>), advérbios (<i>felizmente, lamentavelmente</i>), verbos de julgamento (<i>acho, considero, deveria</i>)."]}, {"t": "De quem é a voz?", "ps": ["Uma opinião pode ser <b>do autor</b>, de um <b>personagem</b> ou de uma <b>fonte citada</b>. Confundir a fala de um personagem com a posição do autor é um erro clássico — o autor pode até discordar de quem ele cita. Em textos jornalísticos, atenção às aspas: o que está entre elas é de quem falou, não do jornal."]}, {"t": "Como a prova cobra", "ps": ["Comandos frequentes: 'trata-se de um fato ou de uma opinião?', 'a afirmação expressa juízo de valor?', 'a opinião é do narrador ou da personagem?'. Distrator típico: apresentar como fato uma frase carregada de adjetivos avaliativos — ou atribuir ao autor a opinião de alguém que ele apenas mencionou."]}], "exemplos": [["<i>'O filme dura 120 minutos.'</i> (fato) × <i>'O filme é longo demais.'</i> (opinião)", "Duração se verifica; 'demais' é avaliação."], ["<i>'Segundo o morador, a obra “é um desperdício”.'</i>", "A opinião é do morador (entre aspas), não do jornalista."], ["<i>'Infelizmente, o projeto foi cancelado.'</i>", "O fato (cancelamento) vem com uma opinião embutida no advérbio 'infelizmente'."], ["Personagem racista numa crônica crítica", "A fala é do personagem; o autor pode estar justamente criticando essa fala."]], "quiz": [{"enun": "Assinale a alternativa que contém exclusivamente um FATO, sem juízo de valor.", "alts": ["A ponte foi inaugurada em março de 2025.", "A ponte, felizmente, ficou linda depois da reforma.", "A ponte é a obra mais importante já feita na cidade.", "A reforma da ponte foi um desperdício de dinheiro público."], "correta": 0, "expl": "A traz dado verificável (data). <b>B</b> carrega 'felizmente' e 'linda' (avaliação); <b>C</b> traz superlativo valorativo ('mais importante'); <b>D</b> é julgamento explícito ('desperdício')."}, {"enun": "“O deputado afirmou que o novo imposto ‘vai sufocar os pequenos comerciantes’.” Sobre a expressão entre aspas, é correto dizer que", "alts": ["expressa a opinião do deputado, e não uma posição assumida pelo texto.", "é um fato comprovado sobre os efeitos do novo imposto.", "revela a opinião do autor do texto contra o imposto.", "descreve objetivamente o funcionamento do imposto."], "correta": 0, "expl": "As aspas isolam a fala do deputado — opinião dele. <b>B</b> confunde previsão avaliativa ('sufocar') com fato; <b>C</b> atribui ao autor uma opinião que ele só reporta; <b>D</b> chama de descrição objetiva uma metáfora de julgamento."}, {"enun": "Numa crônica, o narrador-personagem diz: “Trabalhar é para os fracos; o esperto vive de esquema.” A presença dessa fala indica que", "alts": ["o autor apresenta o ponto de vista do personagem, que pode inclusive ser alvo de crítica no texto.", "o autor concorda que trabalhar é coisa de pessoas fracas.", "trata-se de um fato social comprovado pela crônica.", "o texto perde a coerência, pois defende a malandragem."], "correta": 0, "expl": "A voz é do personagem; autor e personagem não se confundem — e a crônica pode estar ironizando essa fala. <b>B</b> cola a opinião do personagem no autor; <b>C</b> transforma opinião em fato; <b>D</b> julga o texto a partir da fala de um personagem."}], "jogo": {"tipo": "classifique", "titulo": "Fato ou opinião?", "instr": "Classifique cada afirmação.", "cats": ["Fato", "Opinião"], "itens": [["O Brasil tem 26 estados e um Distrito Federal.", 0], ["O verão brasileiro é insuportável.", 1], ["A água ferve a 100 °C ao nível do mar.", 0], ["Aquele foi o melhor show da década.", 1], ["A escola matriculou 380 alunos em 2025.", 0], ["É um absurdo o preço dos livros didáticos.", 1], ["O rio São Francisco corta cinco estados.", 0], ["Ler poesia é a coisa mais chata do mundo.", 1]]}, "mnem": "<b>Fato se checa; opinião se discute.</b> Adjetivos valorativos e advérbios como 'felizmente' são a impressão digital da opinião. E cuidado: a voz do personagem NÃO é a voz do autor.", "sabia": ["O descritor D14 do SAEB pede distinguir um fato da opinião a ele relativa — e as questões costumam esconder a opinião dentro de um advérbio discreto.", "No jornalismo, a separação entre fato e opinião é regra de ouro: por isso artigos assinados ficam em página própria, longe das notícias."]}, {"id": "efeitos-recursos", "niv": 3, "nome": "Efeitos de sentido e recursos expressivos", "sub": "Perceber por que o autor escolheu cada palavra, imagem, pontuação — e que efeito isso gera no leitor.", "chips": ["ironia", "figuras", "pontuação expressiva", "escolha de palavras"], "secoes": [{"t": "Nada ali é por acaso", "ps": ["Cada escolha do autor produz um efeito: uma palavra mais dura, uma comparação inesperada, umas reticências, um ponto de exclamação. Ler criticamente é perguntar <b>por que assim e não de outro jeito</b> — e que reação isso provoca (humor, indignação, suspense, ternura)."]}, {"t": "Recursos que mais caem", "itens": ["<b>Ironia</b>: dizer o contrário do que se pensa, com pista no contexto — gera crítica ou humor.", "<b>Metáfora/comparação</b>: aproximam mundos e criam imagem — <i>'a cidade é um formigueiro'</i>.", "<b>Hipérbole</b>: exagero que intensifica — <i>'esperei um século'</i>.", "<b>Repetição</b>: reforça, cria ritmo, enfatiza.", "<b>Pontuação expressiva</b>: reticências (suspense, hesitação), exclamação (emoção), interrogação retórica (provocação)."]}, {"t": "A pergunta certa", "ps": ["A prova raramente pede só o nome da figura: pede o <b>efeito</b>. 'Qual o efeito da repetição da palavra X?', 'as reticências sugerem o quê?', 'a ironia serve para criticar o quê?'. Responder é ligar o recurso à intenção — identificar a figura é só o primeiro passo."]}], "exemplos": [["<i>'Que belíssima ideia furar a fila!'</i> (diante de alguém furando)", "Ironia: elogio que critica. O contexto desmente o 'belíssima'."], ["<i>'A notícia caiu como uma bomba.'</i>", "Comparação que dá o efeito de impacto súbito e devastador."], ["<i>'Esperei... e esperei... e nada.'</i>", "Reticências + repetição: efeito de tempo que se arrasta e frustração."], ["Manchete: <i>'Mais um recorde de calor. Parabéns a nós.'</i>", "Ironia critica a inação diante das mudanças climáticas."]], "quiz": [{"enun": "Diante de um colega que chegou atrasado pela terceira vez, alguém comenta: “Pontualidade britânica, hein?” O efeito de sentido do comentário é", "alts": ["irônico: elogia a pontualidade justamente para criticar o atraso repetido.", "literal: informa que o colega tem hábitos britânicos de pontualidade.", "elogioso: reconhece sinceramente o esforço do colega em chegar cedo.", "neutro: apenas constata o horário de chegada, sem julgamento."], "correta": 0, "expl": "O contexto (terceiro atraso) inverte o elogio: ironia crítica. <b>B</b> lê literalmente 'britânica'; <b>C</b> ignora o atraso e toma o elogio como sincero; <b>D</b> nega o evidente julgamento embutido."}, {"enun": "Em um poema, o verso “E a chuva chovia, chovia, chovia sobre o telhado” repete o verbo três vezes. Esse recurso produz o efeito de", "alts": ["sugerir a continuidade e a insistência da chuva, quase imitando seu ritmo.", "indicar que o poeta não conhecia sinônimos para o verbo chover.", "informar objetivamente a quantidade exata de chuva caída.", "criar humor, tornando o verso propositalmente engraçado."], "correta": 0, "expl": "A repetição imita a duração/insistência da chuva — efeito rítmico e expressivo. <b>B</b> trata recurso proposital como limitação; <b>C</b> confunde expressividade com dado objetivo; <b>D</b> inventa intenção humorística sem pista."}, {"enun": "Uma campanha contra o desperdício exibe a frase: “Água? Ah, temos de sobra…” ao lado de uma torneira pingando sobre solo rachado. O uso das reticências e da imagem serve para", "alts": ["marcar ironia: sugere, pelo contraste com a imagem, que NÃO temos água de sobra.", "reforçar literalmente que o país possui grande abundância de água.", "indicar que a frase ficou incompleta por falta de espaço no cartaz.", "expressar dúvida sincera sobre a real quantidade de água disponível."], "correta": 0, "expl": "Texto e imagem se contradizem: as reticências entregam a ironia (dizemos 'de sobra' vendo a seca). <b>B</b> lê a frase sem a imagem; <b>C</b> reduz reticências a falta de espaço; <b>D</b> troca ironia por dúvida genuína."}], "jogo": {"tipo": "classifique", "titulo": "Qual o efeito?", "instr": "Identifique o recurso/efeito predominante em cada trecho.", "cats": ["Ironia", "Exagero (hipérbole)", "Comparação/metáfora", "Suspense (reticências)"], "itens": [["“Adorei esperar duas horas na fila…”", 0], ["“Chorei rios de lágrimas naquele dia.”", 1], ["“Seus olhos são faróis na escuridão.”", 2], ["“Abri a porta e… não havia ninguém.”", 3], ["“Que ótimo, quebrou de novo!”", 0], ["“Estou morto de cansaço.”", 1], ["“A sala virou um forno naquela tarde.”", 2], ["“Ele hesitou, olhou para trás e…”", 3]]}, "mnem": "<b>Do recurso ao efeito:</b> identificar a figura é meio caminho — a prova quer o PORQUÊ. Ironia critica, hipérbole intensifica, metáfora aproxima, reticências suspendem. Sempre ligue à intenção do autor.", "sabia": ["O descritor D16 do SAEB trata dos efeitos de ironia e humor — charges e tirinhas são o terreno favorito dessas questões.", "A ironia depende inteiramente do contexto: sem a situação que a sustenta, 'que maravilha' é elogio; com ela, vira crítica. Por isso é a figura que mais gera mal-entendido nas redes."]}, {"id": "multissemiotico", "niv": 3, "nome": "Textos multissemióticos: imagem e palavra", "sub": "Ler charges, tirinhas, cartazes e infográficos — onde o sentido nasce do encontro entre texto e imagem.", "chips": ["charge e tirinha", "texto + imagem", "infográfico", "linguagem verbal × não verbal"], "secoes": [{"t": "Dois códigos, um sentido", "ps": ["Textos multissemióticos combinam <b>linguagem verbal</b> (palavras) e <b>não verbal</b> (imagens, cores, gestos, layout). Em charges, tirinhas e propagandas, o sentido muitas vezes só se completa no <b>encontro</b> dos dois — ler só a legenda ou só o desenho leva ao erro."]}, {"t": "O que observar na imagem", "itens": ["<b>Expressões e gestos</b> das figuras (raiva, surpresa, deboche).", "<b>Tamanho e posição</b>: o que é grande/central costuma ser o foco.", "<b>Contraste</b>: cheio × vazio, claro × escuro, grande × pequeno carregam sentido.", "<b>Símbolos</b>: um cifrão, uma coroa, cores de bandeira remetem a ideias.", "<b>Relação texto-imagem</b>: eles se reforçam ou se contradizem (a contradição costuma gerar ironia)."]}, {"t": "Charge, tirinha, cartum, infográfico", "itens": ["<b>Charge</b>: crítica a um fato específico e atual (política, notícia).", "<b>Cartum</b>: humor sobre situações mais gerais e atemporais.", "<b>Tirinha</b>: sequência curta de quadros, com desfecho (muitas vezes humorístico).", "<b>Infográfico</b>: informação organizada visualmente (dados + ícones + texto) — leitura orientada, não linear."]}], "exemplos": [["Charge: político 'de mãos limpas' lavando as mãos numa pia com dinheiro", "A imagem literaliza a expressão para criticar corrupção — verbal + não verbal juntos."], ["Tirinha: 3 quadros de silêncio e um último com a piada", "O humor depende da sequência: ler um quadro isolado perde o efeito."], ["Infográfico da dengue: ciclo do mosquito em ícones e setas", "A leitura segue as setas, não linhas — a estrutura visual guia."], ["Cartaz: criança pequena diante de uma montanha de lixo", "O contraste de tamanho produz o efeito de impotência diante do problema."]], "quiz": [{"enun": "Uma charge mostra um governante minúsculo diante de uma população gigante e furiosa, com a legenda: “O povo acordou.” O sentido da charge nasce", "alts": ["do contraste de tamanho somado à legenda, que juntos sugerem a força popular sobre o governante.", "apenas da legenda, que informa objetivamente que o povo deixou de dormir.", "apenas do desenho, sendo a legenda um detalhe sem importância para o sentido.", "da ausência de crítica, já que charges servem só para fazer rir."], "correta": 0, "expl": "Verbal (legenda) + não verbal (tamanhos invertidos) constroem juntos a crítica. <b>B</b> lê a legenda ao pé da letra e ignora a imagem; <b>C</b> descarta a legenda que orienta o sentido; <b>D</b> nega a função crítica da charge."}, {"enun": "Num cartaz de campanha, lê-se “Cada gota conta” sobre a imagem de uma única gota d’água prestes a cair de uma torneira, com o fundo de terra seca. A relação entre texto e imagem é de", "alts": ["reforço: imagem e frase se somam para valorizar a economia de cada porção de água.", "contradição irônica: a frase diz o oposto do que a imagem mostra.", "independência: a frase e a imagem tratam de assuntos diferentes.", "humor: a combinação foi feita apenas para divertir o leitor."], "correta": 0, "expl": "Frase e imagem apontam para a mesma ideia (valor de cada gota diante da seca): reforço. <b>B</b> vê contradição onde há convergência; <b>C</b> nega o vínculo evidente; <b>D</b> atribui humor a uma campanha séria."}, {"enun": "Um infográfico sobre alimentação apresenta ícones de frutas, números de calorias e setas ligando etapas. Para lê-lo corretamente, o leitor deve", "alts": ["seguir a organização visual (ícones, números e setas), e não apenas ler de cima a baixo em linha.", "ignorar as imagens e ler somente os números, que contêm toda a informação.", "ler apenas o título, pois o restante é decorativo.", "considerar cada ícone isoladamente, sem relacioná-lo aos números e setas."], "correta": 0, "expl": "Infográfico se lê pela estrutura visual que integra ícones, dados e setas. <b>B</b> descarta metade da linguagem (a não verbal); <b>C</b> trata o conteúdo como enfeite; <b>D</b> quebra as relações que as setas estabelecem."}], "jogo": {"tipo": "classifique", "titulo": "Que gênero visual?", "instr": "Pela descrição, identifique o tipo de texto multissemiótico.", "cats": ["Charge", "Tirinha", "Infográfico"], "itens": [["Critica, em um só quadro, uma decisão política da semana.", 0], ["Mostra dados de vacinação com ícones, setas e porcentagens.", 2], ["Tem 3 ou 4 quadros em sequência e termina com uma piada.", 1], ["Satiriza uma autoridade a partir de uma notícia atual.", 0], ["Organiza visualmente o ciclo da água com desenhos e legendas.", 2], ["Personagens fixos vivem uma pequena cena com desfecho cômico.", 1], ["Usa caricatura para comentar um escândalo recente.", 0], ["Apresenta números de um estudo em forma visual e resumida.", 2]]}, "mnem": "<b>Leia os dois códigos:</b> em charge, tirinha e cartaz, o sentido mora no ENCONTRO entre palavra e imagem. Contradição entre eles quase sempre é ironia; convergência é reforço.", "sabia": ["O descritor D05 do SAEB — interpretar texto com auxílio de material gráfico — é dos mais presentes: charges e tirinhas aparecem quase toda edição.", "Uma charge envelhece rápido porque critica um fato específico; um cartum, não — por isso os cartuns de Quino (Mafalda) continuam atuais décadas depois."]}];
+const NIVEIS = [{"n": 1, "nome": "Fundamentos da leitura", "desc": "Tema, inferência e o sentido das palavras no contexto.", "cor": "#8B5CF6"}, {"n": 2, "nome": "Como o texto se organiza", "desc": "Conectivos, referência e a estrutura que faz o texto progredir.", "cor": "#6366F1"}, {"n": 3, "nome": "Leitura crítica", "desc": "Fato e opinião, efeitos de sentido e textos com imagem.", "cor": "#EC4899"}];
+const LSKEY = 'interpretacao-progresso-v1';
+
+/* ---------- progresso ---------- */
+function lerProg(){ try{ return JSON.parse(localStorage.getItem(LSKEY)||'{}'); }catch(e){ return {}; } }
+function salvarProg(p){ try{ localStorage.setItem(LSKEY, JSON.stringify(p)); }catch(e){} }
+function marcarQuiz(id, acertos, total){
+  const p = lerProg(); const atual = p[id]||{};
+  atual.q = Math.max(atual.q||0, acertos); atual.t = total;
+  p[id]=atual; salvarProg(p); pintarProgresso();
+}
+function marcarJogo(id, pct){
+  const p = lerProg(); const atual = p[id]||{};
+  atual.j = Math.max(atual.j||0, pct);
+  p[id]=atual; salvarProg(p); pintarProgresso();
+}
+function topicoConcluido(id){
+  const p = lerProg()[id]; if(!p) return false;
+  return (p.q||0) >= (p.t||3) && (p.j||0) >= 70;
+}
+function pintarProgresso(){
+  let done=0;
+  TOPICOS.forEach(t=>{
+    const node=document.querySelector('.node[data-id="'+t.id+'"]');
+    const ok=topicoConcluido(t.id);
+    if(ok) done++;
+    if(node){ node.classList.toggle('done',ok); node.querySelector('.dot').textContent = ok?'✓':''; }
+  });
+  document.getElementById('st-prog').textContent = Math.round(100*done/TOPICOS.length)+'%';
+}
+
+/* ---------- trilha ---------- */
+const trilha = document.getElementById('trilha');
+const filtros = document.getElementById('filtros');
+let filtroNiv = 0; // 0 = todos
+
+function renderFiltros(){
+  filtros.innerHTML='';
+  const todos=document.createElement('button');
+  todos.className='filtro'+(filtroNiv===0?' on':''); todos.textContent='Todos os níveis';
+  todos.onclick=()=>{filtroNiv=0;renderFiltros();renderTrilha();};
+  filtros.appendChild(todos);
+  NIVEIS.forEach(n=>{
+    const b=document.createElement('button');
+    b.className='filtro'+(filtroNiv===n.n?' on':'');
+    b.style.setProperty('--nc',n.cor);
+    b.innerHTML='<span class="filtroic" style="color:var(--nc)">'+n.icone+'</span>'+n.nome;
+    b.onclick=()=>{filtroNiv=n.n;renderFiltros();renderTrilha();};
+    filtros.appendChild(b);
+  });
+}
+
+function renderTrilha(){
+  trilha.innerHTML='';
+  NIVEIS.forEach(nv=>{
+    if(filtroNiv!==0 && filtroNiv!==nv.n) return;
+    const head=document.createElement('div');
+    head.className='niv-head'; head.style.setProperty('--nc',nv.cor);
+    head.innerHTML='<span class="nivic" style="color:var(--nc)">'+nv.icone+'</span><span class="num mono">NÍVEL '+nv.n+'</span><h2 class="serif">'+nv.nome+'</h2><p>'+nv.desc+'</p>';
+    trilha.appendChild(head);
+    const grupo=document.createElement('div');
+    grupo.className='grupo'; grupo.style.setProperty('--nc',nv.cor);
+    const NG={1:'\u201c\u201d',2:'\u21ba',3:'?!'};
+    grupo.innerHTML='<span class="marca-niv" aria-hidden="true">'+NG[nv.n]+'</span>';
+    TOPICOS.filter(t=>t.niv===nv.n).forEach(t=>{
+      const idx=TOPICOS.indexOf(t);
+      const node=document.createElement('div');
+      node.className='node'; node.dataset.id=t.id; node.tabIndex=0;
+      node.setAttribute('role','button'); node.setAttribute('aria-label',t.nome);
+      node.style.setProperty('--nc',nv.cor);
+      node.innerHTML='<span class="dot"></span>'
+        +'<div class="card"><span class="selo mono">'+t.quiz.length+' questões · 1 jogo</span>'
+        +'<h3 class="serif">'+t.nome+'</h3>'
+        +'<p class="teaser">'+t.sub+'</p>'
+        +'<div class="chips">'+t.chips.map(c=>'<span class="chip">'+c+'</span>').join('')+'</div>'
+        +'<div class="go">Estudar <span aria-hidden="true">→</span></div></div>';
+      const open=()=>abrir(idx);
+      node.addEventListener('click',open);
+      node.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();open();}});
+      grupo.appendChild(node);
+    });
+    trilha.appendChild(grupo);
+  });
+  pintarProgresso();
+}
+
+
+/* arte temática por nível (SVG data-URI, cor via replace) */
+function arteNivel(n,cor){
+  const c=encodeURIComponent(cor);
+  const A={
+   1:`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><g fill='none' stroke='${cor}' stroke-width='2.4' opacity='.5'><path d='M20 100q15-34 30 0t30 0 30 0 30 0 30 0'/><path d='M20 130q15-24 30 0t30 0 30 0 30 0 30 0' opacity='.6'/></g><text x='120' y='70' font-family='Georgia' font-size='58' font-style='italic' fill='${cor}' opacity='.5'>fá</text><text x='40' y='60' font-family='Georgia' font-size='34' fill='${cor}' opacity='.4'>´ ^ ~</text></svg>`,
+   2:`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><g fill='${cor}' opacity='.4' font-family='Georgia' font-weight='bold'><text x='18' y='66' font-size='30'>re·</text><text x='96' y='66' font-size='30'>fazer</text><text x='60' y='120' font-size='30'>·mente</text><text x='30' y='170' font-size='30'>des· ·ção</text></g><g fill='none' stroke='${cor}' stroke-width='2' opacity='.35'><rect x='14' y='42' width='58' height='32' rx='7'/><rect x='92' y='42' width='88' height='32' rx='7'/><rect x='56' y='96' width='104' height='32' rx='7'/></g></svg>`,
+   3:`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><g stroke='${cor}' stroke-width='2.4' fill='none' opacity='.5'><path d='M100 34v26M100 60L48 104M100 60l52 44M48 118v22M152 118v22'/></g><g fill='${cor}' opacity='.55'><circle cx='100' cy='30' r='9'/><circle cx='48' cy='111' r='8'/><circle cx='152' cy='111' r='8'/><circle cx='48' cy='148' r='6'/><circle cx='152' cy='148' r='6'/></g><text x='84' y='188' font-family='Georgia' font-size='26' font-style='italic' fill='${cor}' opacity='.5'>S→P</text></svg>`,
+   4:`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><g stroke='${cor}' stroke-width='2.6' fill='none' opacity='.55'><path d='M100 30v120M60 150h80'/><path d='M100 44l-44 12M100 44l44 12'/><path d='M38 92q18 14 36 0l-18-40zM126 92q18 14 36 0l-18-40z'/></g><text x='140' y='186' font-family='Georgia' font-size='52' fill='${cor}' opacity='.5'>,</text><text x='22' y='186' font-family='Georgia' font-size='34' fill='${cor}' opacity='.45'>§</text></svg>`,
+   5:`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><text x='14' y='96' font-family='Georgia' font-size='96' fill='${cor}' opacity='.45'>“</text><text x='120' y='170' font-family='Georgia' font-size='96' fill='${cor}' opacity='.45'>”</text><g fill='${cor}' opacity='.5'><path d='M104 44l5 14 14 5-14 5-5 14-5-14-14-5 14-5z'/><path d='M150 84l3.4 9.6 9.6 3.4-9.6 3.4-3.4 9.6-3.4-9.6-9.6-3.4 9.6-3.4z'/></g></svg>`
+  };
+  return "url(\"data:image/svg+xml,"+encodeURIComponent(A[n])+"\")";
+}
+
+/* ---------- sheet ---------- */
+const over=document.getElementById('over'), sheet=document.getElementById('sheet');
+const TICO={
+ exp:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>',
+ ex:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/></svg>',
+ quiz:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.801 10A10 10 0 1 1 17 3.335"/><path d="m9 11 3 3L22 4"/></svg>',
+ jogo:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="10" y1="11" y2="11"/><line x1="8" x2="8" y1="9" y2="13"/><line x1="15" x2="15.01" y1="12" y2="12"/><line x1="18" x2="18.01" y1="10" y2="10"/><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"/></svg>',
+ mem:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>'};
+const TABS=[['exp','Explicação'],['ex','Exemplos'],['quiz','Quiz'],['jogo','Jogo'],['mem','Memorize']];
+let jogoTimer=null;
+
+function fecharSheet(){ over.classList.remove('on'); document.body.style.overflow=''; if(jogoTimer){clearInterval(jogoTimer);jogoTimer=null;} }
+over.addEventListener('click',e=>{ if(e.target===over) fecharSheet(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&over.classList.contains('on')) fecharSheet(); });
+
+function abrir(i){
+  const t=TOPICOS[i]; const nv=NIVEIS.find(n=>n.n===t.niv);
+  sheet.style.setProperty('--nc',nv.cor);
+
+  const expHTML = t.secoes.map(s=>{
+    let h='<h4>'+s.t+'</h4>';
+    if(s.ps) h+=s.ps.map(p=>'<p>'+p+'</p>').join('');
+    if(s.itens) h+='<ul>'+s.itens.map(x=>'<li>'+x+'</li>').join('')+'</ul>';
+    return h;
+  }).join('');
+
+  const exHTML = t.exemplos.map(e=>'<div class="ex"><p class="fr">'+e[0]+'</p><p class="cm">'+e[1]+'</p></div>').join('');
+
+  const quizHTML = '<p style="font-size:.85rem;color:var(--tx2);margin:0 0 14px">Responda e leia a correção comentada — cada distrator simula um erro de raciocínio real.</p>'
+    + t.quiz.map((q,qi)=>'<div class="q-block" data-correta="'+q.correta+'">'
+      +'<p class="q-enun">'+(qi+1)+'. '+q.enun+'</p>'
+      +'<div class="q-opts">'+q.alts.map((a,ai)=>'<button class="q-opt" data-ai="'+ai+'"><span class="q-letra">'+'ABCDE'[ai]+'</span><span>'+a+'</span></button>').join('')+'</div>'
+      +'<div class="q-expl"><b>Resposta: '+'ABCDE'[q.correta]+'.</b> '+q.expl+'</div></div>').join('');
+
+  const memHTML = '<div class="mnem-box">🧠 '+t.mnem+'</div>'
+    + '<h4>Você sabia?</h4>'
+    + t.sabia.map(s=>'<div class="fato"><span class="ic">✦</span><div>'+s+'</div></div>').join('');
+
+  sheet.innerHTML =
+    '<div class="sheet-top"><span class="nivtag mono" style="display:inline-flex;align-items:center;gap:7px"><span style="color:var(--nc);display:inline-flex">'+nv.icone+'</span>Nível '+t.niv+' · '+nv.nome+'</span>'
+    +'<h2 class="serif">'+t.nome+'</h2><p>'+t.sub+'</p>'
+    +'<span class="sheet-arte" aria-hidden="true"></span>'
+    +'<button class="fechar" aria-label="Fechar">×</button></div>'
+    +'<div class="tabs">'+TABS.map((tb,ti)=>'<button class="tab'+(ti===0?' on':'')+'" data-tab="'+tb[0]+'"><span class="tabic">'+TICO[tb[0]]+'</span>'+tb[1]+'</button>').join('')+'</div>'
+    +'<div class="pane on" data-pane="exp">'+expHTML+'</div>'
+    +'<div class="pane" data-pane="ex">'+exHTML+'</div>'
+    +'<div class="pane" data-pane="quiz">'+quizHTML+'</div>'
+    +'<div class="pane" data-pane="jogo"><div class="jogo-wrap" id="jogo-wrap"></div></div>'
+    +'<div class="pane" data-pane="mem">'+memHTML+'</div>';
+
+  const sa=sheet.querySelector('.sheet-arte'); if(sa) sa.style.backgroundImage=arteNivel(t.niv,nv.cor);
+  sheet.querySelector('.fechar').onclick=fecharSheet;
+  sheet.querySelectorAll('.tab').forEach(tb=>{
+    tb.onclick=()=>{
+      sheet.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+      sheet.querySelectorAll('.pane').forEach(x=>x.classList.remove('on'));
+      tb.classList.add('on');
+      sheet.querySelector('.pane[data-pane="'+tb.dataset.tab+'"]').classList.add('on');
+      if(tb.dataset.tab==='jogo') montarJogo(t);
+    };
+  });
+
+  ligarQuiz(sheet, t.id, t.quiz.length);
+  over.classList.add('on'); document.body.style.overflow='hidden';
+  sheet.parentElement.scrollTop=0;
+}
+
+/* ---------- quiz (por tópico e relâmpago) ---------- */
+function ligarQuiz(raiz, topicoId, total){
+  let acertos=0, respondidas=0;
+  raiz.querySelectorAll('.q-block').forEach(bloco=>{
+    const correta=+bloco.dataset.correta;
+    bloco.querySelectorAll('.q-opt').forEach(btn=>{
+      btn.onclick=()=>{
+        if(bloco.dataset.feito) return;
+        bloco.dataset.feito='1'; respondidas++;
+        const ai=+btn.dataset.ai;
+        if(ai===correta){ btn.classList.add('correct'); acertos++; }
+        else{ btn.classList.add('wrong'); bloco.querySelector('.q-opt[data-ai="'+correta+'"]').classList.add('correct'); }
+        bloco.querySelectorAll('.q-opt').forEach(b=>b.disabled=true);
+        bloco.querySelector('.q-expl').classList.add('show');
+        if(topicoId && respondidas===total) marcarQuiz(topicoId, acertos, total);
+        if(!topicoId && respondidas===total){
+          const res=raiz.querySelector('#rl-res');
+          if(res) res.innerHTML='Resultado: <b style="color:var(--ambar)">'+acertos+'/'+total+'</b>'+(acertos>=8?' — excelente! 🏆':acertos>=6?' — bom ritmo, revise os comentados.':' — volte à trilha e reforce os níveis com erro.');
+        }
+      };
+    });
+  });
+}
+
+/* ---------- jogos ---------- */
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+function montarJogo(t){
+  if(jogoTimer){clearInterval(jogoTimer);jogoTimer=null;}
+  const w=document.getElementById('jogo-wrap'); if(!w) return;
+  const j=t.jogo;
+  w.innerHTML='<h4 style="margin-top:0">'+j.titulo+'</h4><p style="font-size:.87rem;color:var(--tx2)">'+j.instr+' <b>60 segundos</b> no relógio — acertos valem +10, erros −5.</p>'
+    +'<button class="jogo-start">▶ Começar</button>';
+  w.querySelector('.jogo-start').onclick=()=>rodarJogo(t);
+}
+
+function rodarJogo(t){
+  const w=document.getElementById('jogo-wrap'); const j=t.jogo;
+  let fila, render;
+  let pontos=0, feitos=0, acertos=0, tempo=60;
+
+  const base='<div class="barra-t"><i id="jg-barra"></i></div>'
+    +'<div class="jogo-hud"><span class="info">⏱ <b id="jg-tempo">60</b>s</span><span class="info">PONTOS <b id="jg-pts">0</b></span><span class="info">ITEM <b id="jg-n">1</b></span></div>'
+    +'<div class="jogo-item" id="jg-item"></div><div class="jogo-cats" id="jg-cats"></div><div class="jogo-fb" id="jg-fb"></div>';
+  w.innerHTML=base;
+  const $=id=>document.getElementById(id);
+
+  function fim(){
+    if(jogoTimer){clearInterval(jogoTimer);jogoTimer=null;}
+    const pct = feitos? Math.round(100*acertos/feitos) : 0;
+    marcarJogo(t.id, pct);
+    w.innerHTML='<div class="jogo-fim"><div class="nota serif">'+pontos+' pts</div>'
+      +'<p style="color:var(--tx2);font-size:.9rem">'+acertos+' acertos em '+feitos+' jogadas ('+pct+'%)'
+      +(pct>=70?' — jogo concluído para o progresso! ✓':' — alcance 70% de acerto para concluir o tópico.')+'</p>'
+      +'<button class="jogo-again">↻ Jogar de novo</button></div>';
+    w.querySelector('.jogo-again').onclick=()=>rodarJogo(t);
+  }
+
+  jogoTimer=setInterval(()=>{
+    tempo--; $('jg-tempo').textContent=tempo;
+    $('jg-barra').style.width=(100*tempo/60)+'%';
+    if(tempo<=0) fim();
+  },1000);
+
+  function proximo(){
+    if(!fila.length){ fim(); return; }
+    $('jg-n').textContent=feitos+1;
+    render(fila.shift());
+  }
+  function marcar(ok, btn, extra){
+    feitos++; if(ok){acertos++; pontos+=10;} else pontos-=5;
+    $('jg-pts').textContent=pontos;
+    btn.classList.add(ok?'hit':'miss');
+    $('jg-fb').innerHTML=(ok?'✔ Certo!':'✘ Ops.')+(extra?' '+extra:'');
+    document.querySelectorAll('#jg-cats button').forEach(b=>b.disabled=true);
+    setTimeout(()=>{ $('jg-fb').textContent=''; proximo(); }, ok?450:1400);
+  }
+
+  if(j.tipo==='classifique'){
+    fila=shuffle(j.itens);
+    render=(item)=>{
+      $('jg-item').innerHTML='<span class="frase">'+item[0]+'</span>';
+      const cats=$('jg-cats'); cats.innerHTML='';
+      j.cats.forEach((c,ci)=>{
+        const b=document.createElement('button'); b.className='jogo-cat'; b.innerHTML=c;
+        b.onclick=()=>marcar(ci===item[1], b, ci===item[1]?'':'Era <b>'+j.cats[item[1]]+'</b>.');
+        cats.appendChild(b);
+      });
+    };
+  } else if(j.tipo==='julgue'){
+    fila=shuffle(j.itens);
+    render=(item)=>{
+      $('jg-item').innerHTML='<span class="frase">“'+item[0]+'”</span>';
+      const cats=$('jg-cats'); cats.innerHTML='';
+      [['✔ Está correta',0],['✘ Está errada',1]].forEach(par=>{
+        const b=document.createElement('button'); b.className='jogo-cat'; b.textContent=par[0];
+        b.onclick=()=>marcar(par[1]===item[1], b, item[2]);
+        cats.appendChild(b);
+      });
+    };
+  } else { // complete
+    fila=shuffle(j.itens);
+    render=(item)=>{
+      $('jg-item').innerHTML='<span class="frase">'+item.f.replace('___','<b style="color:var(--ambar)">___</b>')+'</span>';
+      const cats=$('jg-cats'); cats.innerHTML='';
+      shuffle(item.opts.map((o,oi)=>[o,oi])).forEach(par=>{
+        const b=document.createElement('button'); b.className='jogo-cat'; b.innerHTML=par[0];
+        b.onclick=()=>marcar(par[1]===item.c, b, par[1]===item.c?'':'Correto: <b>'+item.opts[item.c]+'</b>.');
+        cats.appendChild(b);
+      });
+    };
+  }
+  proximo();
+}
+
+/* ---------- simulado-relâmpago ---------- */
+document.getElementById('btn-rl').onclick=()=>{
+  const pool=[]; TOPICOS.forEach(t=>t.quiz.forEach(q=>pool.push({q,top:t})));
+  const dez=shuffle(pool).slice(0,10);
+  sheet.style.setProperty('--nc','#F59E0B');
+  sheet.innerHTML='<div class="sheet-top"><span class="nivtag mono">⚡ Simulado-relâmpago</span>'
+    +'<h2 class="serif">10 questões, todos os níveis</h2><p>Sorteadas agora do banco completo. Correção comentada a cada resposta.</p>'
+    +'<button class="fechar" aria-label="Fechar">×</button></div>'
+    +'<div class="pane on" style="display:block"><div class="rl-head"><span class="mono" id="rl-res">Boa prova!</span></div>'
+    +dez.map((par,qi)=>'<div class="q-block" data-correta="'+par.q.correta+'">'
+      +'<p class="q-enun"><span class="mono" style="font-size:.7rem;color:var(--tx3)">['+par.top.nome+']</span><br>'+(qi+1)+'. '+par.q.enun+'</p>'
+      +'<div class="q-opts">'+par.q.alts.map((a,ai)=>'<button class="q-opt" data-ai="'+ai+'"><span class="q-letra">'+'ABCDE'[ai]+'</span><span>'+a+'</span></button>').join('')+'</div>'
+      +'<div class="q-expl"><b>Resposta: '+'ABCDE'[par.q.correta]+'.</b> '+par.q.expl+'</div></div>').join('')
+    +'</div>';
+  sheet.querySelector('.fechar').onclick=fecharSheet;
+  ligarQuiz(sheet, null, 10);
+  over.classList.add('on'); document.body.style.overflow='hidden';
+  sheet.parentElement.scrollTop=0;
+};
+
+document.getElementById('btn-reset').onclick=()=>{
+  if(confirm('Zerar todo o progresso salvo neste dispositivo?')){ localStorage.removeItem(LSKEY); pintarProgresso(); }
+};
+
+/* ---------- init ---------- */
+document.getElementById('st-top').textContent=TOPICOS.length;
+document.getElementById('st-quiz').textContent=TOPICOS.reduce((s,t)=>s+t.quiz.length,0);
+renderFiltros(); renderTrilha();
+
+/* abre tópico direto via âncora (#id) vinda da página de Português */
+function irParaAncora(){
+  const id=(location.hash||'').replace('#','');
+  if(!id) return;
+  const i=TOPICOS.findIndex(t=>t.id===id);
+  if(i<0) return;
+  const node=document.querySelector('.node[data-id="'+id+'"]');
+  if(node) node.scrollIntoView({behavior:'smooth',block:'center'});
+  setTimeout(()=>abrir(i), 300);
+}
+window.addEventListener('hashchange',irParaAncora);
+irParaAncora();
+</script>
+</body>
+</html>
