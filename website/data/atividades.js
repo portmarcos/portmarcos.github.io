@@ -23,9 +23,6 @@ export const ATIVIDADES = [
   { secao: "informatica", titulo: "Escape Room — Diagnóstico de Rede", tipo: "🔐 Escape room", anos: ["2EM", "3EM"], tempo: "30 min", url: "/informatica/redes/escape-redes.html", novo: true },
   { secao: "informatica", titulo: "Projeto de Pesquisa — Guia Completo", tipo: "✍️ Projeto guiado", anos: ["2EM", "3EM"], tempo: "uso contínuo", url: "/informatica/projeto-pesquisa.html", novo: true },
 
-  /* Arte */
-  { secao: "arte", titulo: "Quiz — Linguagem do Cinema", tipo: "🎮 Quiz cronometrado", anos: ["9º", "1EM"], tempo: "10 min", url: "/atividades/quiz-cinema.html", novo: true },
-  { secao: "arte", titulo: "Atividade — Cinema e Audiovisual", tipo: "📋 Atividade", anos: ["9º", "1EM"], tempo: "30 min", url: "/artes/cinema/atividade.html", novo: false },
 
   /* SAEB · SIMAVE */
   { secao: "saeb", titulo: "Portal de Treino — Por Descritor (D01 a D28)", tipo: "📚 Portal completo", anos: ["9º"], tempo: "uso contínuo", url: "/saeb/index.html", novo: true },
@@ -61,7 +58,6 @@ export const SECAO_LABEL = {
   literatura: "Literatura",
   gramatica: "Gramática",
   informatica: "Informática",
-  arte: "Arte",
   saeb: "SAEB · SIMAVE",
   bncc: "BNCC · CRMG",
   enem: "ENEM",
@@ -71,7 +67,6 @@ export const SECAO_COR = {
   literatura: "#A855F7",
   gramatica: "#3B82F6",
   informatica: "#10B981",
-  arte: "#F59E0B",
   saeb: "#D946EF",
   bncc: "#F43F5E",
   enem: "#22D3EE",

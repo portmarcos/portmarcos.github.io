@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import Head from "next/head";
 import {
-  PenTool, Terminal, Palette, GraduationCap, Library, Gamepad2,
+  PenTool, Terminal, GraduationCap, Library, Gamepad2,
   ArrowRight, ArrowUpRight, Search, ChevronRight, Check, Mail,
   ShieldCheck, BookOpenCheck, Clock3, ClipboardList, ExternalLink, X
 } from "lucide-react";
@@ -23,11 +23,6 @@ const AREAS = [
     icon: Terminal, title: "Informática", color: "#10B981", href: "/informatica/index.html",
     items: ["Linux Mint", "Redes: DNS, DHCP e IP", "Escape room de diagnóstico", "Projeto de pesquisa guiado"],
     img: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=800&q=70",
-  },
-  {
-    icon: Palette, title: "Artes", color: "#F59E0B", href: "/artes/index.html",
-    items: ["Linguagem do cinema", "Cinema e audiovisual", "Quiz cronometrado", "Atividades práticas"],
-    img: "https://images.unsplash.com/photo-1522410818928-5522dacd5066?auto=format&fit=crop&w=800&q=70",
   },
   {
     icon: Gamepad2, title: "Jogos Educativos", color: "#F43F5E", href: "/jogos/index.html",
@@ -121,7 +116,6 @@ export default function Home() {
             <NavLink href="/" active>Início</NavLink>
             <NavLink href="/portugues/index.html">Português</NavLink>
             <NavLink href="/informatica/index.html">Informática</NavLink>
-            <NavLink href="/artes/index.html">Artes</NavLink>
             <NavLink href="/enem.html">ENEM</NavLink>
             <NavLink href="/jogos/index.html">Jogos</NavLink>
             <NavLink href="/obras.html">Obras</NavLink>
@@ -442,7 +436,6 @@ export default function Home() {
             <ul className="space-y-2.5 text-sm text-slate-400">
               <li><a href="/portugues/index.html" className="hover:text-slate-100 transition-colors">Português</a></li>
               <li><a href="/informatica/index.html" className="hover:text-slate-100 transition-colors">Informática</a></li>
-              <li><a href="/artes/index.html" className="hover:text-slate-100 transition-colors">Artes</a></li>
               <li><a href="/jogos/index.html" className="hover:text-slate-100 transition-colors">Jogos Educativos</a></li>
               <li><a href="/obras.html" className="hover:text-slate-100 transition-colors">Obras Literárias</a></li>
             </ul>

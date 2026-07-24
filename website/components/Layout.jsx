@@ -22,7 +22,6 @@ export const AREAS_NAV = [
   { label: "Início", href: "/" },
   { label: "Português", href: "/portugues/index.html" },
   { label: "Informática", href: "/informatica/index.html" },
-  { label: "Artes", href: "/artes/index.html" },
   { label: "ENEM", href: "/enem.html" },
   { label: "Jogos", href: "/jogos/index.html" },
   { label: "Obras", href: "/obras.html" },

@@ -1,7 +1,7 @@
 {
   "name": "Portal Marcos Cruz",
   "short_name": "Portal Marcos Cruz",
-  "description": "Portal de estudos do Prof. Marcos Cruz — Português, Literatura, ENEM, Informática e Artes.",
+  "description": "Portal de estudos do Prof. Marcos Cruz — Português, Literatura, ENEM e Informática.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

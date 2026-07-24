@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html lang="pt-BR">
       <Head>
-        <meta name="description" content="Portal do Professor Marcos Cruz — Português, ENEM, Informática, Artes, Jogos Educativos e Obras Literárias. Atividades interativas e questões reais." />
+        <meta name="description" content="Portal do Professor Marcos Cruz — Português, ENEM, Informática, Jogos Educativos e Obras Literárias. Atividades interativas e questões reais." />
         <meta property="og:title" content="Portal do Professor Marcos Cruz" />
         <meta property="og:description" content="Quizzes, escape rooms, simulados com questões reais do ENEM e muito mais." />
         <meta property="og:image" content="https://portmarcos.github.io/assets/img/og-capa.png" />
