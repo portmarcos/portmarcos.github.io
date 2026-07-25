@@ -365,7 +365,7 @@ h1,h2,h3,h4,.num{font-family:'Space Grotesk','Inter',sans-serif}
 
 
 /* ── DESIGN V4 ── */
-/* Dashboard com 12 temas + redação: grid flui automaticamente em linhas de 3 */
+/* Dashboard com 13 temas + redação: grid flui automaticamente em linhas de 3 */
 .dash-cards{grid-template-columns:repeat(3,1fr);max-width:900px}
 @media(max-width:720px){.dash-cards{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:460px){.dash-cards{grid-template-columns:1fr}}
@@ -541,6 +541,12 @@ h1,h2,h3,h4,.num{font-family:'Space Grotesk','Inter',sans-serif}
       <h3>Semântica: Polissemia e Ambiguidade</h3>
       <p>Duplo sentido em charges, anúncios e cartazes: quando uma palavra carrega dois significados</p>
       <span class="tc-count">5 questões reais ENEM 2012-20, com imagem original</span>
+    </div>
+    <div class="topic-card" style="--cor:#7C2D12" onclick="iniciarQuiz('movimentos')">
+      <span class="tc-num">13 — Competência 8</span>
+      <h3>Literatura II: Escolas e Movimentos</h3>
+      <p>Barroco, Arcadismo, Parnasianismo, Simbolismo e as 3 fases do Modernismo</p>
+      <span class="tc-count">7 questões reais ENEM 2012-21</span>
     </div>
   </div>
 
@@ -2531,6 +2537,132 @@ TEXTO II — Uma campanha publicitária de Dia das Mães estampa a frase: "Ningu
   }
   ]
 },
+movimentos:{
+  titulo:'Literatura II: Escolas e Movimentos',
+  emoji:'🏛️',
+  questoes:[
+  {
+    texto:`O trovador
+
+Sentimentos em mim do asperamente
+dos homens das primeiras eras…
+As primaveras do sarcasmo
+intermitentemente no meu coração arlequinal…
+Intermitentemente…
+Outras vezes é um doente, um frio
+na minha alma doente como um longo som redondo…
+Cantabona! Cantabona!
+Dlorom…
+Sou um tupi tangendo um alaúde!`,
+    fonte:`ANDRADE, M. In: MANFIO, D. Z. (Org.) Poesias completas de Mário de Andrade. Belo Horizonte: Itatiaia, 2005. | ENEM 2012 — Questão 135`,
+    enun:`Cara ao Modernismo, a questão da identidade nacional é recorrente na prosa e na poesia de Mário de Andrade. Em "O trovador", esse aspecto é`,
+    alts:['abordado subliminarmente, por meio de expressões como "coração arlequinal" que, evocando o carnaval, remete à brasilidade.','verificado já no título, que remete aos repentistas nordestinos, estudados por Mário de Andrade em suas viagens e pesquisas folclóricas.','lamentado pelo eu lírico, tanto no uso de expressões como "Sentimentos em mim do asperamente" (v. 1), "frio" (v. 6), "alma doente" (v. 7), como pelo som triste do alaúde "Dlorom" (v. 9).','problematizado na oposição tupi (selvagem) x alaúde (civilizado), apontando a síntese nacional que seria proposta no Manifesto Antropófago, de Oswald de Andrade.','exaltado pelo eu lírico, que evoca os "sentimentos dos homens das primeiras eras" para mostrar o orgulho brasileiro por suas raízes indígenas.'],
+    correta:3,
+    expl:`O verso final "Sou um tupi tangendo um alaúde!" resume o projeto modernista: a identidade brasileira não é pura, é uma síntese tensa entre o elemento primitivo/nacional (tupi) e o erudito/europeu (alaúde). Não é exaltação ingênua do índio (E) nem simples lamento (C) — é a "digestão" antropofágica da cultura estrangeira que Oswald de Andrade formalizaria no Manifesto Antropófago.`
+  },
+  {
+    texto:`Através do Barroco, a Igreja compeliu Deus a vestir as mais suntuosas roupagens humanas, reproduzindo o Céu em toda a sua magnificência, grandeza e esplendor, extasiando e arrebatando os fiéis que frequentavam os templos. O Barroco foi o estilo das formas dramáticas, grandiosas e opulentas, voltado ao intenso decorativismo e caracterizado pela exuberância dos dourados nas voltas e espirais. O Barroco exprimiu as incertezas de uma época — a Idade Moderna — que oscilava entre velhos e novos valores. Foi largamente utilizado pela Igreja da Contrarreforma como elemento de propaganda, destinado a atrair as criaturas pela pompa e magnificência.`,
+    fonte:`LOPEZ, L. R. História do Brasil colonial. Porto Alegre: Novo Século, 2001. | ENEM 2021 PPL — Questão 66`,
+    enun:`O movimento estético-cultural no texto constitui-se historicamente em uma resposta às`,
+    alts:['contestações aos domínios espiritual e terreno exercidos pelo papado.','oposições ao absolutismo monárquico como base do poder político.','divisões da nobreza fortalecida pelas expansões marítima e comercial.','críticas ao heliocentrismo como modelo de funcionamento do cosmos.','revoltas do campesinato oprimido pela multiplicidade de seitas religiosas.'],
+    correta:0,
+    expl:`O texto entrega a chave ao citar a "Igreja da Contrarreforma": o Barroco foi a resposta católica às contestações da Reforma Protestante (Lutero) contra a autoridade e a riqueza do papado. A arte suntuosa e emocional servia para reafirmar, pelos sentidos, um poder que estava sendo questionado pela razão protestante — não tem relação direta com heliocentrismo, absolutismo ou revoltas camponesas.`
+  },
+  {
+    texto:`Não serei o poeta de um mundo caduco.
+Também não cantarei o mundo futuro.
+Estou preso à vida e olho meus companheiros.
+Estão taciturnos mas nutrem grandes esperanças.
+Entre eles, considero a enorme realidade.
+O presente é tão grande, não nos afastemos.
+Não nos afastemos muito, vamos de mãos dadas.
+Não serei o cantor de uma mulher, de uma história.
+Não direi suspiros ao anoitecer, a paisagem vista na janela.
+Não distribuirei entorpecentes ou cartas de suicida.
+Não fugirei para ilhas nem serei raptado por serafins.
+O tempo é a minha matéria, o tempo presente, os
+homens presentes,
+a vida presente.`,
+    fonte:`ANDRADE, C. D. Sentimento do mundo. São Paulo: Cia. das Letras, 2012. | ENEM PPL 2014 — Questão 122`,
+    enun:`Escrito em 1940, o poema "Mãos dadas" revela um eu lírico marcado pelo contexto de opressão política no Brasil e da Segunda Guerra Mundial. Em face dessa realidade, o eu lírico`,
+    alts:['considera que em sua época o mais importante é a independência dos indivíduos.','desvaloriza a importância dos planos pessoais na vida em sociedade.','reconhece a tendência à autodestruição em uma sociedade oprimida.','escolhe a realidade social e seu alcance individual como matéria poética.','critica o individualismo comum aos românticos e aos excêntricos.'],
+    correta:3,
+    expl:`Drummond, poeta da 2ª fase do Modernismo (fase de engajamento), recusa a evasão lírica ("não fugirei para ilhas") e assume o presente coletivo como matéria de sua poesia ("o tempo é a minha matéria... a vida presente"). Não é sobre desvalorizar planos pessoais nem sobre autodestruição — é a escolha consciente do social e do presente como tema poético, em solidariedade ("vamos de mãos dadas").`
+  },
+  {
+    texto:`Mal secreto
+
+Se a cólera que espuma, a dor que mora
+N'alma, e destrói cada ilusão que nasce,
+Tudo o que punge, tudo o que devora
+O coração, no rosto se estampasse;
+
+Se se pudesse, o espírito que chora,
+Ver através da máscara da face,
+Quanta gente, talvez, que inveja agora
+Nos causa, então piedade nos causasse!
+
+Quanta gente que ri, talvez, consigo
+Guarda um atroz, recôndito inimigo,
+Como invisível chaga cancerosa!
+
+Quanta gente que ri, talvez existe,
+Cuja ventura única consiste
+Em parecer aos outros venturosa!`,
+    fonte:`CORREIA, R. In: PATRIOTA, M. Para compreender Raimundo Correia. Brasília: Alhambra, 1995. | ENEM 2013 — Questão 116`,
+    enun:`Coerente com a proposta parnasiana de cuidado formal e racionalidade na condução temática, o soneto de Raimundo Correia reflete sobre a forma como as emoções do indivíduo são julgadas em sociedade. Na concepção do eu lírico, esse julgamento revela que`,
+    alts:['a necessidade de ser socialmente aceito leva o indivíduo a agir de forma dissimulada.','o sofrimento íntimo torna-se mais ameno quando compartilhado por um grupo social.','a capacidade de perdoar e aceitar as diferenças neutraliza o sentimento de inveja.','o instinto de solidariedade conduz o indivíduo a apiedar-se do próximo.','a transfiguração da angústia em alegria é um artifício nocivo ao convívio social.'],
+    correta:0,
+    expl:`O soneto usa a metáfora da "máscara da face" para mostrar como as pessoas escondem a dor real por trás de uma aparência de felicidade, para serem socialmente aceitas. O poema não fala de sofrimento compartilhado (B) nem de perdão (C) — fala da dissimulação: quem ri pode esconder "um atroz, recôndito inimigo".`
+  },
+  {
+    texto:`Ninguém sentiu o teu espasmo obscuro
+ó ser humilde entre os humildes seres,
+embriagado, tonto de prazeres,
+o mundo para ti foi negro e duro.
+
+Atravessaste no silêncio escuro
+a vida presa a trágicos deveres
+e chegaste ao saber de altos saberes
+tornando-te mais simples e mais puro.
+
+Ninguém te viu o sofrimento inquieto,
+magoado, oculto e aterrador, secreto,
+que o coração te apunhalou no mundo,
+
+Mas eu que sempre te segui os passos
+sei que a cruz infernal prendeu-te os braços
+e o teu suspiro como foi profundo!`,
+    fonte:`SOUSA, C. Obra completa. Rio de Janeiro: Nova Aguilar, 1961. | ENEM 2014 — Questão 4 (1ª aplicação)`,
+    enun:`Com uma obra densa e expressiva no Simbolismo brasileiro, Cruz e Sousa transpôs para seu lirismo uma sensibilidade em conflito com a realidade vivenciada. No soneto, essa percepção traduz-se em`,
+    alts:['sofrimento tácito diante dos limites impostos pela discriminação.','tendência latente ao vício como resposta ao isolamento social.','extenuação condicionada a uma rotina de tarefas degradantes.','frustração amorosa canalizada para as atividades intelectuais.','vocação religiosa manifesta na aproximação com a fé cristã.'],
+    correta:0,
+    expl:`Cruz e Sousa, primeiro grande poeta negro da literatura brasileira, constrói a imagem de um sofrimento "oculto, secreto", vivido "no silêncio escuro" por alguém "humilde entre os humildes". A "cruz infernal" que prende os braços do eu lírico simboliza os limites impostos pela discriminação racial — não é sobre vício, rotina de trabalho, amor ou fé religiosa, mas sobre uma dor silenciada pela exclusão social.`
+  },
+  {
+    texto:`Pecados, vagância de pecados. Mas, a gente estava com Deus? Jagunço podia? Jagunço – criatura paga para crimes, impondo o sofrer no quieto arruado dos outros, matando e roupilhando. Que podia? Esmo disso, disso, queri, por pura toleima; que sensata resposta podia me assentar o Jõe, broreiro peludo do Riachão do Jequitinhonha? Que podia? A gente, nós, assim jagunços, se estava em permissão de fé para esperar de Deus perdão de proteção? Perguntei, quente. — "Uai? Nós vive…" — foi o respondido que ele me deu.`,
+    fonte:`ROSA, G. Grande sertão: veredas. Rio de Janeiro: Nova Fronteira, 2001 (fragmento). | ENEM 2014 (3ª aplicação) — Questão 122`,
+    enun:`Guimarães Rosa destaca-se pela inovação da linguagem com marcas dos falares populares e regionais. Em Grande sertão: veredas, seu livro mais marcante, faz o enredo girar em torno de Riobaldo, que tece a história de sua vida e sua interlocução com o mundo-sertão. No fragmento em referência, o narrador faz uso da linguagem para revelar`,
+    alts:['inquietação por desconhecer se os jagunços podem ou não ser protegidos por Deus.','uma insatisfação profunda com relação à sua condição de jagunço e homem pecador.','confiança na resposta de seu amigo Jõe, que parecia ser homem estudado e entendido.','muitas dúvidas sobre a vida após a morte, a vida espiritual e sobre a fé que pode ter o jagunço.','arrependimento pelos pecados cometidos na vida errante de jagunço e medo da perdição eterna.'],
+    correta:0,
+    expl:`A sucessão febril de perguntas de Riobaldo ("Jagunço podia? Que podia?") não busca resposta factual — é a materialização de uma inquietação teológica: será que um jagunço, homem de crimes, pode esperar proteção de Deus? A resposta simples e terrena de Jõe ("Nós vive...") contrasta com essa angústia e a isola ainda mais. Não é arrependimento (isso seria olhar para o passado) nem confiança em Jõe — é dúvida aberta sobre seu lugar diante do divino.`
+  },
+  {
+    texto:`TEXTO I
+
+Correu à sala dos retratos, abriu o piano, sentou-se e espalmou as mãos no teclado. Começou a tocar alguma coisa própria, uma inspiração real e pronta, uma polca, uma polca buliçosa, como dizem os anúncios. Nenhuma repulsa da parte do compositor; os dedos iam arrancando as notas, ligando-as, meneando-as; dir-se-ia que a musa compunha e bailava a um tempo. [...] Compunha só, teclando ou escrevendo, sem os vãos esforços da véspera, sem exasperação, sem nada pedir ao céu, sem interrogar os olhos de Mozart. Nenhum tédio. Vida, graça, novidade, escorriam-lhe da alma como de uma fonte perene.
+
+TEXTO II
+
+"Um homem célebre" expõe o suplício do músico popular que busca atingir a sublimidade da obra-prima clássica, e com ela a galeria dos imortais, mas que é traído por uma disposição interior incontrolável que o empurra implacavelmente na direção oposta. Pestana, célebre nos saraus, salões, bailes e ruas do Rio de Janeiro por suas composições irresistivelmente dançantes, esconde-se dos rumores à sua volta num quarto povoado de ícones da grande música europeia, mergulha nas sonatas do classicismo vienense, prepara-se para o supremo salto criativo e, quando dá por si, é o autor de mais uma inelutável e saltitante polca.`,
+    fonte:`ASSIS, M. Um homem célebre. Disponível em: www.biblio.com.br. Acesso em: 2 jun. 2019 (Texto I) | WISNIK, J. M. Machado maxixe: o caso Pestana. Teresa: revista de literatura brasileira, 2004, adaptado (Texto II) | ENEM 2021 — Questão 15`,
+    enun:`O conto de Machado de Assis faz uma referência velada ao maxixe, gênero musical inicialmente associado à escravidão e à mestiçagem. No Texto II, o conflito do personagem em compor obras do gênero é representativo da`,
+    alts:['pouca complexidade musical das composições ajustadas ao gosto do grande público.','prevalência de referências musicais africanas no imaginário da população brasileira.','incipiente atribuição de prestígio social a músicas instrumentais feitas para a dança.','tensa relação entre o erudito e o popular na constituição da música brasileira.','importância atribuída à música clássica na sociedade brasileira do século XIX.'],
+    correta:3,
+    expl:`Pestana deseja pertencer ao universo erudito europeu ("os olhos de Mozart"), mas sua genialidade espontânea só produz polcas populares e dançantes — e ele vive isso como um "suplício". Esse conflito pessoal representa, em miniatura, a tensão cultural brasileira entre valorizar a música erudita europeia e reconhecer a força da música popular mestiça que nascia no país. Não é sobre a complexidade técnica da polca, nem apenas sobre a importância da música clássica isoladamente — é sobre o choque entre os dois mundos.`
+  }
+  ]
+},
 };
 // ─── TEMAS DE REDAÇÃO ─────────────────────────────────────────────────────────
 
@@ -2828,7 +2960,8 @@ const TEMAS_INFO = {
   interpretacao:    {titulo:'Interpretação de Texto',  num:'09', cor:'#0D9488'},
   literatura:       {titulo:'Literatura',             num:'10', cor:'#6D28D9'},
   multiletramentos: {titulo:'Multiletramentos e Gêneros Digitais', num:'11', cor:'#DB2777'},
-  semantica:       {titulo:'Semântica: Polissemia e Ambiguidade', num:'12', cor:'#65A30D'}
+  semantica:       {titulo:'Semântica: Polissemia e Ambiguidade', num:'12', cor:'#65A30D'},
+  movimentos:      {titulo:'Literatura II: Escolas e Movimentos', num:'13', cor:'#7C2D12'}
 };
 
 const AUTH = {
@@ -2887,7 +3020,7 @@ function renderDashboard(){
 
   const cont=document.getElementById('dashCards');
   cont.innerHTML='';
-  const temas=['variacao','intertextualidade','generos','coesao','funcoes','argumentacao','verbal','figuras','interpretacao','literatura','multiletramentos','semantica'];
+  const temas=['variacao','intertextualidade','generos','coesao','funcoes','argumentacao','verbal','figuras','interpretacao','literatura','multiletramentos','semantica','movimentos'];
 
   temas.forEach(t=>{
     const info=TEMAS_INFO[t];
@@ -2937,7 +3070,7 @@ function renderProgresso(){
   const wrap=document.getElementById('progWrap');
   wrap.innerHTML='';
 
-  const temas=['variacao','intertextualidade','generos','coesao','funcoes','argumentacao','verbal','figuras','interpretacao','literatura','multiletramentos','semantica'];
+  const temas=['variacao','intertextualidade','generos','coesao','funcoes','argumentacao','verbal','figuras','interpretacao','literatura','multiletramentos','semantica','movimentos'];
   const feitos=temas.filter(t=>u.tentativas[t]);
 
   if(feitos.length===0){
