@@ -365,7 +365,7 @@ h1,h2,h3,h4,.num{font-family:'Space Grotesk','Inter',sans-serif}
 
 
 /* ── DESIGN V4 ── */
-/* Dashboard com 9 temas + redação: grid flui automaticamente em linhas de 3 */
+/* Dashboard com 11 temas + redação: grid flui automaticamente em linhas de 3 */
 .dash-cards{grid-template-columns:repeat(3,1fr);max-width:900px}
 @media(max-width:720px){.dash-cards{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:460px){.dash-cards{grid-template-columns:1fr}}
@@ -529,6 +529,12 @@ h1,h2,h3,h4,.num{font-family:'Space Grotesk','Inter',sans-serif}
       <h3>Literatura</h3>
       <p>Movimentos, obras e autores canônicos: Machado, Clarice, Graciliano, Lima Barreto, Saramago e mais</p>
       <span class="tc-count">15 questões reais ENEM 2017-24</span>
+    </div>
+    <div class="topic-card" style="--cor:#DB2777" onclick="iniciarQuiz('multiletramentos')">
+      <span class="tc-num">11 — Competência 1</span>
+      <h3>Multiletramentos e Gêneros Digitais</h3>
+      <p>Memes, hashtags, internetês, blogs e IA: como a internet transforma a língua</p>
+      <span class="tc-count">7 questões reais ENEM 2014-24</span>
     </div>
   </div>
 
@@ -2350,6 +2356,115 @@ literatura:{
   }
   ]
 },
+multiletramentos:{
+  titulo:'Multiletramentos e Gêneros Digitais',
+  emoji:'📱',
+  questoes:[
+  {
+    texto:`Memes e fake news: o impacto na educação das crianças
+
+Há quem diga que o Brasil nunca mais foi o mesmo depois dos memes. Na economia da velocidade, alguns apostam no humor, outros no engajamento político, e tem gente investindo alto na mentira também. Diante desse cenário, uma pergunta se torna essencial: será que todo mundo está conseguindo traduzir as mensagens postadas, curtidas e compartilhadas?
+
+Essa dúvida incentivou uma professora de língua portuguesa a desenvolver uma proposta de leitura e análise crítica de memes com estudantes do ensino fundamental, na rede pública do Distrito Federal, na cidade de Samambaia. "Percebi que muitos alunos e pais estavam divulgando conteúdos sem saber o que havia por trás das palavras", relata a professora.
+
+"O que antes era engraçado para os alunos passou a ser visto com outros olhos", afirma a professora. Para ela, que utilizou a representação da criança em memes de WhatsApp como material gerador das discussões em sala de aula, aguçar o olhar sobre essas mensagens impacta diretamente a atitude de postar, curtir e compartilhar conteúdos ao estimular o uso consciente da informação que circula nas plataformas de mídia social.
+
+Letramento político e midiático é um desafio intergeracional. Em tempos de notícias falsas, de imagens manipuladas e de memes sendo usados como triunfo da verdade de cada um, checagem de informação e interpretação de texto acabam se tornando moedas valiosas.`,
+    fonte:`Disponível em: http://funetas.com.br. Acesso em: 15 jan. 2024 (adaptado). | ENEM 2024 — Questão 45`,
+    enun:`Ao abordar a relação dos memes com a educação, a reportagem sustenta uma crítica à`,
+    alts:['falta de fiscalização no uso de aplicativos de mensagens por crianças.','divulgação de informação manipulada em postagens virtuais.','utilização de ferramentas digitais no trabalho educacional.','exploração de conteúdos humorísticos nas mídias sociais.','propagação de mensagens com objetivos políticos.'],
+    correta:1,
+    expl:`A reportagem apresenta um projeto de uma professora para analisar memes criticamente com os alunos, justamente porque é comum, na internet, a divulgação de postagens sem certeza da veracidade do conteúdo. A análise cuidadosa proposta por ela é uma forma de uso mais consciente das redes — a crítica central é à divulgação de informação manipulada (fake news), não ao humor ou à tecnologia em si.`
+  },
+  {
+    texto:`10 anos de "hashtag": a ferramenta que mobiliza a internet
+
+A "hashtag", ícone das redes sociais, celebrou em 2017 seus primeiros 10 anos de uso no acompanhamento dos grandes eventos mundiais com um efeito de mobilização e expressão de emoção e humor.
+
+A palavra-chave precedida pelo símbolo do jogo da velha foi popularizada pelo Twitter antes de ser incorporada por outras redes sociais. A invenção foi de Chris Messina, designer americano especialista em redes sociais. Em 23 de agosto de 2007, o usuário intensivo do Twitter propôs em um tuíte usar o jogo da velha para reagrupar mensagens sobre um mesmo assunto. Ele lançou, então, a primeira "hashtag" #barcamp sobre oficinas participativas dedicadas à inovação na web.
+
+O compartilhamento das palavras-chaves — que já são citadas 125 milhões de vezes por dia no mundo — já serviu de trampolim para mobilizações em massa.
+
+Alguns slogans que tiveram grande efeito mobilizador foram o #BlackLivesMatter (Vidas negras importam), após a morte de vários cidadãos americanos negros pela polícia, e #OccupyWallStreet (Ocupem Wall Street), referente ao movimento que acampou no coração de Manhattan para denunciar os abusos do capitalismo.`,
+    fonte:`AFP. Disponível em: http://exame.abril.com.br. Acesso em: 24 ago. 2017 (adaptado). | ENEM PPL 2019 — Questão 16`,
+    enun:`Ao descrever a história e os exemplos de utilização da hashtag, o texto evidencia que`,
+    alts:['a incorporação desse recurso expressivo pela sociedade impossibilita a manutenção de seu uso original.','a incorporação desse recurso expressivo pela sociedade o flexibilizou e o potencializou.','a incorporação pela sociedade caracterizou esse recurso expressivo de forma definitiva.','esse recurso expressivo se tornou o principal meio de mobilização social pela internet.','esse recurso expressivo precisou de uma década para ganhar notabilidade social.'],
+    correta:1,
+    expl:`O texto narra o surgimento da hashtag no Twitter, sua popularização em outras redes e seu uso em mobilizações de massa como #BlackLivesMatter. Isso mostra dois movimentos: a hashtag ganhou novos usos (flexibilização) e cresceu em alcance e impacto (potencialização) — ela não ficou presa a um uso "definitivo" nem parou de evoluir.`
+  },
+  {
+    texto:`Gírias das redes sociais caem na boca do povo
+
+Nem adianta fazer a egípcia! Entendeu? Veja o glossário com as principais expressões da internet
+
+Lacrou, biscoiteiro, crush. Quem nunca se deparou com ao menos uma dessas palavras no trânsito diário das redes sociais. Do dia para a noite, palavras e frases começaram a definir sentimentos e acontecimentos, e o sucesso desse tour foi parar no vocabulário de muita gente. O dialeto já não se restringe só à web. O contato constante com palavras do ambiente on-line acaba rompendo a barreira entre o mundo virtual e o mundo real. Quando menos se espera, começamos a repetir, em conversas do dia a dia, o que aprendemos na internet. A partir daí, juntamos palavras já conhecidas do nosso idioma às novas expressões.
+
+Glossário de expressões:
+Biscoiteiro: alguém que faz de tudo para ter atenção o tempo inteiro, para ter curtidas.
+Crush: alguém que desperta interesse.
+Fazer a egípcia: ignorar algo.
+Lacrou/sambou: ganhar uma discussão com bons argumentos a ponto de não haver possibilidade de resposta.
+Stalker: investigar sobre a vida de alguém nas redes sociais.`,
+    fonte:`Disponível em: https://oglobo.globo.com. Acesso em: 19 jun. 2019 (adaptado). | ENEM PPL 2021 — Questão 08`,
+    enun:`Embora migrando do ambiente on-line para o vocabulário das pessoas fora da rede, essas expressões não são consideradas como características do uso padrão da língua porque`,
+    alts:['definem sentimentos e acontecimentos corriqueiros na web.','constituem marcas específicas de uma determinada variedade.','passaram a integrar a fala das pessoas em conversas cotidianas.','são empregadas por quem passa muito tempo nas redes sociais.','complementam palavras e expressões já conhecidas do português.'],
+    correta:1,
+    expl:`O fato de uma gíria ser usada por milhões de pessoas a torna popular e coloquial, mas não a torna norma padrão. "Lacrou" e "crush" continuam sendo marcas de uma variedade específica — o "internetês" — mesmo depois de "caírem na boca do povo"; popularidade não é a mesma coisa que normatividade gramatical.`
+  },
+  {
+    texto:`Essa tirinha tem como tema a nova ortografia da língua portuguesa e os diversos tipos de linguagem hoje existentes.
+
+Quadro 1 — O tio, em norma padrão, pergunta ao sobrinho pelo WhatsApp: "Olá, sobrinho. Beleza? Por acaso você está por dentro das regras do novo Acordo Ortográfico?"
+
+Quadro 2 — O sobrinho responde animado: "Falaaaaaa Tiunnnnmm!! Blz??!!!! :-)"
+
+Quadro 3 — O sobrinho continua: "Axo q naumm eh dificium naumm!!!! Passa aki em ksa... Q nois aprendihh juntuuuuu!!!! :P"
+
+Quadro 4 — O tio, sem entender nada, encara a tela confuso e desiste: "Melhor pensar em outra coisa."`,
+    fonte:`ENEM 2014 (3ª aplicação, PPL) — Questão 124`,
+    enun:`A situação apresentada no último quadrinho indica que`,
+    alts:['o sobrinho não compreendeu a linguagem mais conservadora utilizada pelo seu tio.','o tio não está familiarizado com a linguagem de chats e de mensagens instantâneas.','a informalidade presente na linguagem do sobrinho impede a comunicação com o tio.','o tio deve evitar utilizar a norma padrão da língua no contexto da internet.','o sobrinho desconhece a norma padrão da língua portuguesa.'],
+    correta:1,
+    expl:`Traduzindo a resposta do sobrinho ("Acho que não é difícil, não! Passe aqui em casa que nós aprendemos juntos!"), ela faz sentido perfeito — ele entendeu a pergunta e ofereceu ajuda. O problema não é informalidade genérica nem desconhecimento da norma padrão por parte de ninguém: é que o tio simplesmente não conhece o código específico do "internetês" de chats e mensagens instantâneas.`
+  },
+  {
+    texto:`Com a internet, a linguagem segue o caminho dos fenômenos da mudança, como o que ocorreu com "você", que se tornou o pronome átono "cê". Agora, o interneteiro pode ajudar a reduzir os excessos da ortografia, e bem sabemos que são muitos. Por que o acento gráfico é tão importante assim para a escrita? Já tivemos no Brasil momentos até mais exacerbados por acentos e dispensamos muitos deles. Como toda palavra é contextualizada pelo falante, podemos dispensar ainda muitos outros. O interneteiro mostra um caminho, pois faz um casamento curioso entre oralidade e escrituralidade. O internetês pode, no futuro, até tornar a comunicação mais eficiente. Ou evoluir para um jargão complexo, que, em vez de aproximar as pessoas em menor tempo, estimule o isolamento dos iniciados e a exclusão dos leigos.
+
+Para Castilho, no entanto, não será uma reforma ortográfica que fará a mudança de que precisamos na língua. Será a internet.
+
+O jeito eh tc e esperar pra ver?`,
+    fonte:`Ataliba de Castilho, professor de língua portuguesa da USP, em entrevista. Disponível em: http://revistalingua.com.br. Acesso em: 3 jun. 2015 (adaptado). | ENEM 2015 (2ª aplicação)`,
+    enun:`Na entrevista, o fragmento "O jeito eh tc e esperar pra ver?" tem por objetivo`,
+    alts:['ilustrar a linguagem de usuários da internet que poderá promover alterações de grafias.','mostrar os perigos da linguagem da internet como potencializadora de dificuldades da escrita.','evidenciar uma forma de exclusão social para as pessoas com baixa proficiência escrita.','explicar que se trata de um erro linguístico por destoar do padrão formal apresentado ao longo do texto.','exemplificar dificuldades de escrita dos interneteiros que desconhecem as estruturas da norma padrão.'],
+    correta:0,
+    expl:`Ao encerrar a entrevista escrevendo nesse estilo, Castilho pratica exatamente o que defende: usa o próprio "internetês" ("eh", "tc") como demonstração viva de como a internet já está mudando a grafia da língua. Não é um erro nem uma crítica — é uma ilustração deliberada e coerente com a tese que ele vem defendendo ao longo de todo o texto.`
+  },
+  {
+    texto:`Blog é concebido como um espaço onde o blogueiro é livre para expressar e discutir o que quiser na atividade da sua escrita, com a escolha de imagens e sons que compõem o todo do texto veiculado pela internet, por meio dos posts. Assim, essa ferramenta deixa de ter como única função a exposição de vida e/ou rotina de alguém — como em um diário pessoal —, função para qual serviu inicialmente e que o popularizou, permitindo também que seja um espaço para discussão de ideias, trocas e divulgação de informações.
+
+A produção dos blogs requer uma relação de troca, que acaba unindo pessoas em torno de um ponto de interesse comum. A força dos blogs está em possibilitar que qualquer pessoa, sem nenhum conhecimento técnico, publique suas ideias e opiniões na web e que milhões de outras pessoas publiquem comentários sobre o que foi escrito, criando um grande debate aberto a todos.`,
+    fonte:`LOPES, B. O. A linguagem dos blogs e as redes sociais. Disponível em: www.fateczl.edu.br. Acesso em: 29 abr. 2013 (adaptado). | ENEM 2014 — Questão 109`,
+    enun:`De acordo com o texto, o blog ultrapassou sua função inicial e vem se destacando como`,
+    alts:['estratégia para estimular relações de amizade.','espaço para exposição de opiniões e circulação de ideias.','gênero discursivo substituto dos tradicionais diários pessoais.','ferramenta para aperfeiçoamento da comunicação virtual escrita.','recurso para incentivar a ajuda mútua e a divulgação da rotina diária.'],
+    correta:1,
+    expl:`O texto diz que o blog passou a "permitir também que seja um espaço para discussão de ideias, trocas e divulgação de informações" — foi isso que ele passou a ser, além do diário pessoal inicial. Dizer que ele "substituiu" os diários (C) é reducionista, e as outras opções (amizade, comunicação escrita, rotina diária) não são o ponto central defendido pelo texto.`
+  },
+  {
+    texto:`Um ano depois de ter sido criado, o ChatGPT, ferramenta capaz de produzir textos em qualquer área, generalizou-se, gerando dúvidas sobre autoria de teses e trabalhos.
+
+Um professor da Faculdade de Letras de uma universidade em Portugal pediu um trabalho acadêmico a uma turma de 50 alunos do 1º ano. Quando começou a corrigi-los, notou algo estranho: nenhum dos trabalhos continha um único erro ortográfico ou gramatical, coisa nunca antes vista. E as frases eram curtas e diretas, sem orações intercalares, um estilo típico do inglês, mas pouco frequente na escrita portuguesa. Independentemente do conteúdo e do tema, que variava, a estrutura era praticamente igual em todos. Especialista em linguística forense, o docente rapidamente concluiu: "esses textos não foram escritos por humanos".
+
+O professor tinha conversado com os alunos sobre o ChatGPT e tinha deixado claro que a ferramenta poderia ser utilizada, mas não para a execução integral dos textos.
+
+A utilização do ChatGPT abriu um debate em todo o mundo por apresentar riscos e possibilidades de uso indevido. Foram várias as escolas e outros estabelecimentos de ensino que adotaram ferramentas que permitem detectar as tendências do programa.`,
+    fonte:`ENEM 2024 PPL — Questão 38`,
+    enun:`De acordo com esse texto, o uso de uma ferramenta da inteligência artificial em contexto acadêmico revela um impacto de natureza`,
+    alts:['colaborativa, por fomentar o intercâmbio entre instituições de ensino de vários países.','teórica, por se basear na tradução de textos da língua inglesa para outras línguas.','mercadológica, por requerer recursos para o aperfeiçoamento profissional.','normativa, por estabelecer parâmetros para a checagem de fontes.','pedagógica, por potencializar desafios para a educação.'],
+    correta:4,
+    expl:`O texto narra um problema de autoria e avaliação: o professor não consegue aferir o real conhecimento dos alunos através de um trabalho que não foi escrito por eles, e isso "abriu um debate" mundial nas instituições de ensino. É um desafio direto às práticas de ensino e avaliação — ou seja, um impacto de natureza pedagógica, não teórico, mercadológico ou normativo.`
+  }
+  ]
+},
 };
 // ─── TEMAS DE REDAÇÃO ─────────────────────────────────────────────────────────
 
@@ -2645,7 +2760,8 @@ const TEMAS_INFO = {
   verbal:           {titulo:'Verbal e Não Verbal',     num:'07', cor:'#C2410C'},
   figuras:          {titulo:'Figuras de Linguagem',    num:'08', cor:'#9333EA'},
   interpretacao:    {titulo:'Interpretação de Texto',  num:'09', cor:'#0D9488'},
-  literatura:       {titulo:'Literatura',             num:'10', cor:'#6D28D9'}
+  literatura:       {titulo:'Literatura',             num:'10', cor:'#6D28D9'},
+  multiletramentos: {titulo:'Multiletramentos e Gêneros Digitais', num:'11', cor:'#DB2777'}
 };
 
 const AUTH = {
@@ -2704,7 +2820,7 @@ function renderDashboard(){
 
   const cont=document.getElementById('dashCards');
   cont.innerHTML='';
-  const temas=['variacao','intertextualidade','generos','coesao','funcoes','argumentacao','verbal','figuras','interpretacao','literatura'];
+  const temas=['variacao','intertextualidade','generos','coesao','funcoes','argumentacao','verbal','figuras','interpretacao','literatura','multiletramentos'];
 
   temas.forEach(t=>{
     const info=TEMAS_INFO[t];
@@ -2754,7 +2870,7 @@ function renderProgresso(){
   const wrap=document.getElementById('progWrap');
   wrap.innerHTML='';
 
-  const temas=['variacao','intertextualidade','generos','coesao','funcoes','argumentacao','verbal','figuras','interpretacao','literatura'];
+  const temas=['variacao','intertextualidade','generos','coesao','funcoes','argumentacao','verbal','figuras','interpretacao','literatura','multiletramentos'];
   const feitos=temas.filter(t=>u.tentativas[t]);
 
   if(feitos.length===0){
