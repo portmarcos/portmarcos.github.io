@@ -16,7 +16,7 @@ const AREAS = [
   },
   {
     icon: GraduationCap, title: "ENEM", color: "#22D3EE", href: "/enem.html", destaque: true,
-    items: ["13 temas · 179 questões reais", "Simulados de 50 minutos", "Provas reais 2019–2025", "Gabarito comentado"],
+    items: ["13 temas · 184 questões reais", "Simulados de 50 minutos", "Provas reais 2019–2025", "Gabarito comentado"],
     img: "https://images.unsplash.com/photo-1518133835878-5a93cc3f89e5?auto=format&fit=crop&w=800&q=70",
   },
   {
@@ -46,7 +46,7 @@ const PILLS = [
 ];
 
 const RECENTES = [
-  { tag: "ENEM", tagColor: "#22D3EE", titulo: "Portal ENEM · Língua Portuguesa", desc: "13 temas, 179 questões reais com gabarito comentado e simulados de 50 min.", href: "/enem.html", img: "https://images.unsplash.com/photo-1518133835878-5a93cc3f89e5?auto=format&fit=crop&w=700&q=70", quando: "atualizado esta semana" },
+  { tag: "ENEM", tagColor: "#22D3EE", titulo: "Portal ENEM · Língua Portuguesa", desc: "13 temas, 184 questões reais com gabarito comentado e simulados de 50 min.", href: "/enem.html", img: "https://images.unsplash.com/photo-1518133835878-5a93cc3f89e5?auto=format&fit=crop&w=700&q=70", quando: "atualizado esta semana" },
   { tag: "PROVA REAL", tagColor: "#F43F5E", titulo: "ENEM 2025 — Linguagens", desc: "Questões da prova mais recente, direto do caderno azul do INEP.", href: "/atividades/simulado-enem-2025.html", img: "https://images.unsplash.com/photo-1647846241789-8e5076893b20?auto=format&fit=crop&w=700&q=70", quando: "25 min" },
   { tag: "LITERATURA", tagColor: "#A855F7", titulo: "Biblioteca — 30 Obras do ENEM", desc: "Acervo com atividades completas: Dom Casmurro, Brás Cubas, Vidas Secas…", href: "/obras.html", img: "https://images.unsplash.com/photo-1600181982553-ce7d36051c01?auto=format&fit=crop&w=700&q=70", quando: "consulta livre" },
   { tag: "JOGO", tagColor: "#10B981", titulo: "Escape Room — Diagnóstico de Rede", desc: "Resolva o mistério da rede fora do ar usando DNS, DHCP e IP.", href: "/informatica/redes/escape-redes.html", img: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=700&q=70", quando: "30 min" },
@@ -329,7 +329,7 @@ export default function Home() {
       <section className="relative z-10 max-w-6xl mx-auto px-6 pb-20">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {[
-            { icon: BookOpenCheck, val: "179", label: "Questões reais no Portal ENEM", color: "#22D3EE" },
+            { icon: BookOpenCheck, val: "184", label: "Questões reais no Portal ENEM", color: "#22D3EE" },
             { icon: ClipboardList, val: "40+", label: "Atividades e simulados", color: "#34D399" },
             { icon: ShieldCheck, val: "22", label: "Descritores SAEB com treino", color: "#D946EF" },
             { icon: Clock3, val: "2019–25", label: "Provas reais do ENEM", color: "#F59E0B" },
@@ -409,7 +409,7 @@ export default function Home() {
             </div>
             <div>
               <h3 className="font-display font-semibold text-lg mb-1">Vai fazer o ENEM? Comece por aqui.</h3>
-              <p className="text-slate-500 text-sm">179 questões reais em 13 temas, com progresso salvo e gabarito comentado.</p>
+              <p className="text-slate-500 text-sm">184 questões reais em 13 temas, com progresso salvo e gabarito comentado.</p>
             </div>
           </div>
           <span className="inline-flex items-center gap-2 px-5 h-11 rounded-lg bg-cyan-400 text-slate-950 font-medium text-sm shrink-0">
