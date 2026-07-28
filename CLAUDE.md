@@ -38,6 +38,29 @@ Intertextualidade
   do ENEM 2018, confirmado contra o PDF oficial do INEP) — removida
   (commit `f8027ff`). Os outros 12 temas (345 questões) ainda NÃO foram
   reauditados dessa forma; o padrão pode não ser um caso isolado.
+- Achado maior no mesmo dia: muitas questões (principalmente as que citam
+  charge/cartaz/tirinha/propaganda) tinham o campo `texto` como uma
+  DESCRIÇÃO em terceira pessoa da imagem, em vez do conteúdo real. Já
+  corrigidas ~27 dessas (imagens reais embutidas como arquivo estático em
+  `assets/img/questoes/`, referenciadas via `<img src='/assets/img/questoes/nome.ext'>`
+  — NÃO usar base64 inline, é o padrão antigo que inflou o arquivo).
+  Ainda faltam 2: peça de recrutamento de talentos (ENEM 2014 Q115) e peça
+  de gráfica rápida (ENEM 2015 Q132), ambas em Argumentação — o gabarito
+  depende de detalhe visual/tipográfico do anúncio que só existe na imagem
+  original, não dá pra reconstruir só com texto/busca. Ainda não foi feita
+  varredura desse padrão nos outros temas fora do que já foi revisado
+  manualmente (Verbal e Não Verbal quase todo revisado; Literatura,
+  Multiletramentos, Literatura II ainda não).
+- Fluxo pra pedir imagem ao usuário: ele consegue ver/colar imagem no chat
+  mas Claude Code NÃO consegue extrair bytes de imagem colada — só de
+  arquivo em disco. Pedir pra ele salvar em `assets/img/questoes/` com um
+  nome identificável (ou "questao<N>.enem<ANO>.ext") e avisar.
+- Quiz não trava mais ao refazer um tema (commit `c65b2c8`): AUTH.saveResult
+  guarda histórico de tentativas e só atualiza o resultado "oficial" mostrado
+  se a nova tentativa empatar ou superar o percentual anterior — nunca perde
+  o melhor resultado já feito.
+- Análise de resultado (commit `7fb8894`) não tem mais senha, filtra
+  Todas/Erros/Acertos/Sem resposta e abre os erros automaticamente.
 
 ## Tema mais fraco: Semântica (17 questões)
 Anos já cobertos nesse tema: 2011, 2012, 2012 PPL, 2013, 2014 (3ª aplicação),
