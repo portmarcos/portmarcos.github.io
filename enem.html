@@ -172,6 +172,10 @@ h1,h2,h3,h4,.num{font-family:'Space Grotesk','Inter',sans-serif}
 .g-alt.escolhida-errada{background:var(--vm-c);color:var(--verm)}
 .g-alt.escolhida-errada .gl{background:var(--verm);color:#fff}
 .g-expl{background:var(--az3);border-radius:var(--r2);padding:14px 16px;font-size:.83rem;line-height:1.65;margin-top:12px;color:var(--az);border-left:3px solid var(--az)}
+.gab-filtros{display:flex;gap:8px;justify-content:center;margin-bottom:20px;flex-wrap:wrap}
+.gab-filtro-btn{padding:8px 18px;border-radius:20px;border:2px solid var(--borda);background:var(--card);cursor:pointer;font-family:'Space Grotesk','Inter',sans-serif;font-weight:700;font-size:.78rem;color:var(--tx2);transition:.2s}
+.gab-filtro-btn.ativo{border-color:var(--az2);color:#fff;background:var(--az2)}
+.gabarito-item.g-hide{display:none}
 
 /* ── MATRIZ ENEM ── */
 .matriz-wrap{max-width:1100px;margin:0 auto;padding:32px 20px 60px}
@@ -660,8 +664,9 @@ h1,h2,h3,h4,.num{font-family:'Space Grotesk','Inter',sans-serif}
       <button class="btn btn-sec" id="btnRefazer" onclick="refazer()">🔁 Refazer este tema</button>
       <button class="btn btn-sec" onclick="irTopicos()">← Outros temas</button>
       <button class="btn btn-sec" onclick="irHome()">← Início</button><button class="btn btn-pri" onclick="irProgresso()">📊 Ver meu desempenho</button>
-      <button class="btn btn-ouro" onclick="abrirGabarito()">Ver gabarito completo ▾</button>
+      <button class="btn btn-ouro" onclick="abrirGabarito()" id="btnGabarito">📊 Ver análise das questões ▾</button>
     </div>
+    <div class="gab-filtros" id="gabFiltros" style="display:none"></div>
     <div id="gabaritoLista"></div>
   </div>
 </div>
@@ -6212,34 +6217,32 @@ function finalizarQuiz(){
 
 function refazer(){iniciarQuiz(S.topico);}
 
-const SENHA_GABARITO = 'enem2026';
-
 function abrirGabarito(){
   const cont=document.getElementById('gabaritoLista');
-  if(cont.innerHTML.trim()) {cont.innerHTML='';return;}
-
-  if(!S.gabaritoLiberado){
-    const tentativa = prompt('Este gabarito é protegido pelo professor.\nDigite a senha para liberar:');
-    if(tentativa === null) return;
-    if(tentativa.trim() !== SENHA_GABARITO){
-      alert('Senha incorreta. Peça a senha ao seu professor.');
-      return;
-    }
-    S.gabaritoLiberado = true;
+  const filtros=document.getElementById('gabFiltros');
+  const btn=document.getElementById('btnGabarito');
+  if(cont.innerHTML.trim()) {
+    cont.innerHTML='';
+    filtros.style.display='none';
+    btn.textContent='📊 Ver análise das questões ▾';
+    return;
   }
+  btn.textContent='📊 Ver análise das questões ▴';
 
   const q=BANCO[S.topico].questoes;
   const letras=['A','B','C','D','E'];
+  let nCertas=0, nErradas=0, nPuladas=0;
   q.forEach((qst,i)=>{
     const resp=S.respostas[i];
     const certa=qst.correta;
     let status='pulou', stLabel='Sem resposta';
     if(resp>=0){
-      if(resp===certa){status='certo';stLabel='✓ Correta';}
-      else {status='errou';stLabel='✗ Errada';}
-    }
+      if(resp===certa){status='certo';stLabel='✓ Correta';nCertas++;}
+      else {status='errou';stLabel='✗ Errada';nErradas++;}
+    } else nPuladas++;
     const item=document.createElement('div');
     item.className='gabarito-item';
+    item.dataset.status=status;
     const textoHtml=qst.texto?'<div class="g-texto">'+qst.texto.replace(/\n/g,'<br>')+'</div>':'';
     const altsHtml=qst.alts.map((a,ai)=>{
       let cls='g-alt';
@@ -6247,8 +6250,29 @@ function abrirGabarito(){
       else if(ai===resp&&resp!==certa) cls+=' escolhida-errada';
       return '<div class="'+cls+'"><span class="gl">'+letras[ai]+'</span><span>'+a+'</span></div>';
     }).join('');
-    item.innerHTML='<div class="gabarito-head" onclick="toggleGab(this)"><span class="g-num">Questão '+(i+1)+'</span><span>&nbsp;'+qst.enun.substring(0,60)+'…</span><span class="g-status '+status+'">'+stLabel+'</span></div><div class="gabarito-body"><div>'+textoHtml+'<div class="g-enun">'+qst.enun+'</div><div class="g-alts">'+altsHtml+'</div><div class="g-expl">💡 '+qst.expl+'</div></div></div>';
+    item.innerHTML='<div class="gabarito-head" onclick="toggleGab(this)"><span class="g-num">Questão '+(i+1)+'</span><span>&nbsp;'+qst.enun.substring(0,60)+'…</span><span class="g-status '+status+'">'+stLabel+'</span></div><div class="gabarito-body'+(status==='errou'?' aberto':'')+'"><div>'+textoHtml+'<div class="g-enun">'+qst.enun+'</div><div class="g-alts">'+altsHtml+'</div><div class="g-expl">💡 '+qst.expl+'</div></div></div>';
     cont.appendChild(item);
+  });
+
+  const filtrosDef=[['todas','Todas ('+q.length+')'],['errou','Erros ('+nErradas+')'],['certo','Acertos ('+nCertas+')'],['pulou','Sem resposta ('+nPuladas+')']];
+  filtros.innerHTML='';
+  filtrosDef.forEach(([key,label])=>{
+    if(key!=='todas' && key!=='errou' && cont.querySelectorAll('[data-status="'+key+'"]').length===0) return;
+    const b=document.createElement('div');
+    b.className='gab-filtro-btn'+(key==='errou'&&nErradas>0?' ativo':key==='todas'&&nErradas===0?' ativo':'');
+    b.textContent=label;
+    b.onclick=()=>filtrarGabarito(key,b);
+    filtros.appendChild(b);
+  });
+  filtros.style.display='flex';
+  if(nErradas>0) filtrarGabarito('errou', filtros.querySelector('.gab-filtro-btn.ativo'));
+}
+
+function filtrarGabarito(status, btnEl){
+  document.querySelectorAll('#gabFiltros .gab-filtro-btn').forEach(b=>b.classList.remove('ativo'));
+  if(btnEl) btnEl.classList.add('ativo');
+  document.querySelectorAll('#gabaritoLista .gabarito-item').forEach(item=>{
+    item.classList.toggle('g-hide', status!=='todas' && item.dataset.status!==status);
   });
 }
 
