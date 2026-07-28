@@ -71,6 +71,8 @@ h1,h2,h3,h4,.num{font-family:'Space Grotesk','Inter',sans-serif}
 .dc-status{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:700;font-family:'Space Grotesk','Inter',sans-serif;padding:5px 12px;border-radius:20px;margin-top:8px}
 .dc-status.ok{background:var(--vd-c);color:var(--verde)}
 .dc-status.livre{background:var(--az3);color:var(--az2)}
+.dc-refazer{display:block;margin-top:10px;padding:6px 14px;border-radius:20px;border:2px solid var(--verde);background:transparent;color:var(--verde);font-family:'Space Grotesk','Inter',sans-serif;font-weight:700;font-size:.72rem;cursor:pointer;transition:.2s}
+.dc-refazer:hover{background:var(--vd-c)}
 .dc-desc{font-size:.78rem;color:var(--tx3);margin:4px 0}
 .dash-acoes{display:flex;gap:10px;justify-content:center;max-width:760px;margin:0 auto 40px;padding:0 20px;flex-wrap:wrap}
 
@@ -5821,12 +5823,18 @@ const AUTH = {
 
   saveResult(topico, result){
     if(!this.current) return;
-    this.current.tentativas[topico]=result;
+    const anterior=this.current.tentativas[topico];
+    const historico=(anterior && anterior.historico)?anterior.historico.slice():(anterior?[{score:anterior.score,total:anterior.total,data:anterior.data,tempo_seg:anterior.tempo_seg}]:[]);
+    historico.push({score:result.score,total:result.total,data:result.data,tempo_seg:result.tempo_seg});
+    const pctNovo=result.score/result.total;
+    const pctAnterior=anterior?anterior.score/anterior.total:-1;
+    const melhor=pctNovo>=pctAnterior?result:anterior;
+    this.current.tentativas[topico]={...melhor, historico, numTentativas:historico.length};
     this._save();
   },
 
   isLocked(topico){
-    return !!(this.current && this.current.tentativas[topico]);
+    return false;
   },
 
   resetProgresso(){
@@ -5856,12 +5864,14 @@ function renderDashboard(){
 
     if(res){
       const pct=Math.round(res.score/res.total*100);
+      const tent=res.numTentativas||1;
       card.className='dash-card concluido';
       card.innerHTML=`
         <div class="dc-num">${info.num}</div>
         <div class="dc-titulo">${info.titulo}</div>
         <div class="dc-score">${res.score}<span style="font-size:.8rem;font-weight:400;color:var(--tx2)">/${res.total}</span></div>
-        <span class="dc-status ok">✓ Concluído — ${pct}%</span>`;
+        <span class="dc-status ok">✓ Melhor: ${pct}%${tent>1?' · '+tent+' tentativas':''}</span>
+        <button class="dc-refazer" onclick="event.stopPropagation();iniciarQuiz('${t}')">🔁 Refazer</button>`;
       card.onclick=()=>irProgresso();
     } else {
       card.className='dash-card disponivel';
@@ -5962,6 +5972,7 @@ function renderProgresso(){
       gridHTML+=`<div class="prog-q ${cls}" title="Q${i+1}: ${r.ok?'Correta':'Errada'}">${i+1}<br>${r.escolhida<0?'—':ico}</div>`;
     });
 
+    const tent=res.numTentativas||1;
     const card=document.createElement('div');
     card.className='prog-tema-card';
     card.innerHTML=`
@@ -5971,7 +5982,8 @@ function renderProgresso(){
       </div>
       <div class="prog-tema-body">
         <div class="prog-qs-grid">${gridHTML}</div>
-        <div class="prog-tema-meta">📅 Realizado em: ${dataStr} &nbsp;|&nbsp; ⏱️ Tempo: ${tempoStr}</div>
+        <div class="prog-tema-meta">📅 Melhor tentativa em: ${dataStr} &nbsp;|&nbsp; ⏱️ Tempo: ${tempoStr}${tent>1?' &nbsp;|&nbsp; 🔁 '+tent+' tentativas':''}</div>
+        <button class="btn btn-sec" style="margin-top:12px" onclick="iniciarQuiz('${t}')">🔁 Refazer este tema</button>
       </div>`;
     wrap.appendChild(card);
   });
