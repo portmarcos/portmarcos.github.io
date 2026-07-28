@@ -40,17 +40,14 @@ Intertextualidade
   reauditados dessa forma; o padrão pode não ser um caso isolado.
 - Achado maior no mesmo dia: muitas questões (principalmente as que citam
   charge/cartaz/tirinha/propaganda) tinham o campo `texto` como uma
-  DESCRIÇÃO em terceira pessoa da imagem, em vez do conteúdo real. Já
-  corrigidas ~27 dessas (imagens reais embutidas como arquivo estático em
+  DESCRIÇÃO em terceira pessoa da imagem, em vez do conteúdo real. Todas as
+  ~29 identificadas foram corrigidas (commits `ebb3039`, `638009d`,
+  `ef78327` — imagens reais embutidas como arquivo estático em
   `assets/img/questoes/`, referenciadas via `<img src='/assets/img/questoes/nome.ext'>`
   — NÃO usar base64 inline, é o padrão antigo que inflou o arquivo).
-  Ainda faltam 2: peça de recrutamento de talentos (ENEM 2014 Q115) e peça
-  de gráfica rápida (ENEM 2015 Q132), ambas em Argumentação — o gabarito
-  depende de detalhe visual/tipográfico do anúncio que só existe na imagem
-  original, não dá pra reconstruir só com texto/busca. Ainda não foi feita
-  varredura desse padrão nos outros temas fora do que já foi revisado
-  manualmente (Verbal e Não Verbal quase todo revisado; Literatura,
-  Multiletramentos, Literatura II ainda não).
+  Essa varredura cobriu principalmente Verbal e Não Verbal, Argumentação,
+  Semântica, Intertextualidade, Gêneros Textuais, Coesão e Figuras — ainda
+  NÃO foi feita em Literatura, Multiletramentos e Literatura II.
 - Fluxo pra pedir imagem ao usuário: ele consegue ver/colar imagem no chat
   mas Claude Code NÃO consegue extrair bytes de imagem colada — só de
   arquivo em disco. Pedir pra ele salvar em `assets/img/questoes/` com um
