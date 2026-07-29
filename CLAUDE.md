@@ -1,5 +1,15 @@
 # Portal ENEM — portmarcos.github.io
 
+## Gerador de provas (commit `42fbb22`)
+Tela `sc-gerador` (escolher tema + quantidade) → `sc-prova` (folha pronta
+pra imprimir, com gabarito opcional). Usa `BANCO[tema].questoes` direto,
+sem mutar a ordem original (embaralha cópia via `.slice()`). CSS de
+impressão é escopado só pra `#sc-prova` — a regra `@media print` antiga do
+site tornava TODAS as `.screen` visíveis ao imprimir; isso foi corrigido
+no processo (rule mais específica/posterior no CSS vence). Usa `:has()`
+pra esconder a navegação do site enquanto a prova está em tela, não só
+na impressão.
+
 ## Estrutura do site
 - Repo público no GitHub Pages: portmarcos/portmarcos.github.io
 - Arquivo principal: enem.html (dentro de <script>, ~2.5MB)
