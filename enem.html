@@ -58,6 +58,8 @@ h1,h2,h3,h4,.num{font-family:'Space Grotesk','Inter',sans-serif}
 .dash-greeting::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
 .dash-greeting h2{font-size:1.8rem;font-weight:800;position:relative;margin-bottom:6px}
 .dash-greeting p{font-size:.9rem;opacity:.75;position:relative}
+.dash-editar-id{background:rgba(255,255,255,.12);border:none;border-radius:50%;width:30px;height:30px;font-size:.85rem;cursor:pointer;vertical-align:middle;transition:.2s}
+.dash-editar-id:hover{background:rgba(255,255,255,.25)}
 .dash-nome-ouro{color:var(--ouro)}
 .dash-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;max-width:760px;margin:-28px auto 0;padding:0 20px 40px;position:relative}
 .dash-card{background:var(--card);border-radius:var(--r);padding:24px 20px;box-shadow:var(--shadow2);border:2px solid transparent;transition:.25s;position:relative;overflow:hidden}
@@ -312,11 +314,17 @@ h1,h2,h3,h4,.num{font-family:'Space Grotesk','Inter',sans-serif}
 .prog-chart-title{font-family:'Space Grotesk','Inter',sans-serif;font-weight:800;font-size:.9rem;color:var(--tx);margin-bottom:24px}
 .prog-grid-temas{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px}
 .prog-tema-mini{background:var(--bg);border-radius:var(--r2);padding:18px 10px;text-align:center;border:1.5px solid var(--borda)}
-.prog-icon-badge{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin:0 auto 10px;background:var(--card);flex-shrink:0}
-.prog-icon-badge.alta{background:var(--vd-c)}
-.prog-icon-badge.media{background:rgba(217,119,6,.15)}
-.prog-icon-badge.baixa{background:var(--vm-c)}
-.prog-icon-badge.vazio{background:var(--card);opacity:.55}
+.prog-icon-badge{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin:0 auto 10px;flex-shrink:0;position:relative;box-shadow:0 3px 8px rgba(0,0,0,.22),inset 0 1px 1px rgba(255,255,255,.55),inset 0 -4px 7px rgba(0,0,0,.18)}
+.prog-icon-badge::after{content:'';position:absolute;top:4px;left:7px;width:13px;height:7px;background:rgba(255,255,255,.6);border-radius:50%;filter:blur(2px);pointer-events:none}
+.prog-icon-badge.alta{background:radial-gradient(circle at 35% 28%,#6EE7B7,#10B981 55%,#047857 100%)}
+.prog-icon-badge.media{background:radial-gradient(circle at 35% 28%,#FCD34D,#D97706 55%,#92400E 100%)}
+.prog-icon-badge.baixa{background:radial-gradient(circle at 35% 28%,#FCA5A5,#EF4444 55%,#B91C1C 100%)}
+.prog-icon-badge.vazio{background:radial-gradient(circle at 35% 28%,#94A3B8,#475569 60%,#1E293B 100%);opacity:.75}
+.prog-mini-badge{width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.82rem;flex-shrink:0;position:relative;box-shadow:0 2px 5px rgba(0,0,0,.2),inset 0 1px 1px rgba(255,255,255,.55),inset 0 -3px 5px rgba(0,0,0,.16)}
+.prog-mini-badge::after{content:'';position:absolute;top:2px;left:4px;width:8px;height:4px;background:rgba(255,255,255,.6);border-radius:50%;filter:blur(1px);pointer-events:none}
+.prog-mini-badge.alta{background:radial-gradient(circle at 35% 28%,#6EE7B7,#10B981 55%,#047857 100%)}
+.prog-mini-badge.media{background:radial-gradient(circle at 35% 28%,#FCD34D,#D97706 55%,#92400E 100%)}
+.prog-mini-badge.baixa{background:radial-gradient(circle at 35% 28%,#FCA5A5,#EF4444 55%,#B91C1C 100%)}
 .prog-tema-mini-nome{font-size:.7rem;font-weight:700;font-family:'Space Grotesk','Inter',sans-serif;color:var(--tx2);line-height:1.35;margin-bottom:8px;min-height:30px;display:flex;align-items:center;justify-content:center}
 .prog-tema-mini-pct{font-family:'Space Grotesk','Inter',sans-serif;font-weight:900;font-size:1.05rem}
 .prog-tema-mini-pct.alta{color:var(--verde)}
@@ -354,7 +362,6 @@ h1,h2,h3,h4,.num{font-family:'Space Grotesk','Inter',sans-serif}
 .prog-insight-item .pi-val{font-family:'Space Grotesk','Inter',sans-serif;font-weight:800}
 .prog-insight-empty{font-size:.8rem;color:var(--tx3);line-height:1.6}
 .prog-insight-item .pi-nome{display:flex;align-items:center;gap:9px}
-.prog-mini-badge{width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
 
 /* Guia de erros de interpretação */
 .prog-guia{background:var(--card);border-radius:var(--r);padding:26px;box-shadow:var(--shadow);margin-bottom:28px}
@@ -539,7 +546,7 @@ body:has(#sc-prova.ativo) > *:not(#sc-prova){display:none!important}
 <!-- SCREEN: HOME LOGADO -->
 <div id="sc-home" class="screen ativo">
   <div class="dash-greeting">
-    <h2>Olá, <span id="dashNome">—</span>! <svg class="wave-ico" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 11V6.5a1.5 1.5 0 0 1 3 0V10"/><path d="M10 10V5a1.5 1.5 0 0 1 3 0v5"/><path d="M13 10V6a1.5 1.5 0 0 1 3 0v7"/><path d="M16 9a1.5 1.5 0 0 1 3 0v4a7 7 0 0 1-7 7h-1a6 6 0 0 1-4.243-1.757L4 14.5a1.5 1.5 0 0 1 2.12-2.12L7.5 14"/></svg></h2>
+    <h2>Olá, <span id="dashNome">—</span>! <svg class="wave-ico" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 11V6.5a1.5 1.5 0 0 1 3 0V10"/><path d="M10 10V5a1.5 1.5 0 0 1 3 0v5"/><path d="M13 10V6a1.5 1.5 0 0 1 3 0v7"/><path d="M16 9a1.5 1.5 0 0 1 3 0v4a7 7 0 0 1-7 7h-1a6 6 0 0 1-4.243-1.757L4 14.5a1.5 1.5 0 0 1 2.12-2.12L7.5 14"/></svg> <button id="btnEditarId" class="dash-editar-id" onclick="editarIdentidade()" title="Editar nome e turma">✏️</button></h2>
     <p id="dashTurma">—</p>
   </div>
   <div class="dash-cards" id="dashCards"></div>
@@ -1131,6 +1138,7 @@ body:has(#sc-prova.ativo) > *:not(#sc-prova){display:none!important}
   </div>
 </div>
 
+<script src="/assets/js/config-sheets.js"></script>
 <script>
 const SENHA = 'professor123';
 
@@ -6001,6 +6009,19 @@ const AUTH = {
 
 // ─── DASHBOARD HOME ─────────────────────────────────────────────────────────
 
+function editarIdentidade(){
+  const nomeAtual = AUTH.current.nome==='Estudante' ? '' : AUTH.current.nome;
+  const novoNome = prompt('Seu nome completo (aparece no relatório do professor):', nomeAtual);
+  if(novoNome===null) return;
+  const turmaAtual = AUTH.current.turma==='ENEM' ? '' : AUTH.current.turma;
+  const novaTurma = prompt('Sua turma (ex: 9ºA, 3EM B):', turmaAtual);
+  if(novaTurma===null) return;
+  AUTH.current.nome = novoNome.trim() || 'Estudante';
+  AUTH.current.turma = novaTurma.trim() || 'ENEM';
+  AUTH._save();
+  renderDashboard();
+}
+
 function renderDashboard(){
   const u=AUTH.current;
   if(!u) return;
@@ -6136,7 +6157,7 @@ function renderProgresso(){
   const fracos=dados.filter(d=>d.pct<60).sort((a,b)=>a.pct-b.pct).slice(0,4);
   const insDiv=document.createElement('div');
   insDiv.className='prog-insights';
-  const itemHTML=d=>`<div class="prog-insight-item"><span class="pi-nome"><span class="prog-mini-badge" style="background:${d.pct>=75?'var(--vd-c)':d.pct<60?'var(--vm-c)':'rgba(217,119,6,.15)'}">${d.emoji}</span>${d.info.titulo}</span><span class="pi-val" style="color:${d.pct>=75?'var(--verde)':d.pct<60?'var(--verm)':'var(--ouro)'}">${d.pct}%</span></div>`;
+  const itemHTML=d=>{const cls=d.pct>=75?'alta':d.pct<60?'baixa':'media';return `<div class="prog-insight-item"><span class="pi-nome"><span class="prog-mini-badge ${cls}">${d.emoji}</span>${d.info.titulo}</span><span class="pi-val" style="color:${d.pct>=75?'var(--verde)':d.pct<60?'var(--verm)':'var(--ouro)'}">${d.pct}%</span></div>`;};
   insDiv.innerHTML=`
     <div class="prog-insight-box fortes">
       <div class="prog-insight-title">💪 Pontos fortes</div>
@@ -6632,7 +6653,28 @@ function finalizarQuiz(){
     tempo_seg: Math.floor((S.endTime - S.startTime)/1000),
     respostas: respostasDetalhadas
   });
+  enviarResultadoSheets(S.topico, certas, q.length, pct, respostasDetalhadas);
   mostrar('sc-result');
+}
+
+function enviarResultadoSheets(topico, certas, totalQ, pct, respostasDetalhadas){
+  const urlSheets = (typeof SHEETS_URL === 'string' ? SHEETS_URL : '').trim();
+  if(!urlSheets.startsWith('https://')) return;
+  const erradas = respostasDetalhadas.filter(r=>!r.ok && r.enun).map(r=>r.enun.slice(0,80));
+  fetch(urlSheets, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: {'Content-Type': 'text/plain;charset=utf-8'},
+    body: JSON.stringify({
+      atividade: 'ENEM · ' + (TEMAS_INFO[topico]?TEMAS_INFO[topico].titulo:topico),
+      nome: (AUTH.current && AUTH.current.nome) || '(sem nome)',
+      turma: (AUTH.current && AUTH.current.turma) || '(sem turma)',
+      acertos: certas,
+      total: totalQ,
+      pct: pct,
+      abertas: erradas.length ? ('Errou: ' + erradas.join(' | ')) : ''
+    })
+  }).catch(()=>{});
 }
 
 function refazer(){iniciarQuiz(S.topico);}
@@ -6878,6 +6920,10 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape') fecharModal();});
 // ─── INICIALIZAÇÃO (sem login — progresso salvo automaticamente) ──────────────
 AUTH.init();
 renderDashboard();
+if(AUTH.current.nome==='Estudante' && !localStorage.getItem('enem_pediu_nome')){
+  localStorage.setItem('enem_pediu_nome','1');
+  setTimeout(()=>{ if(confirm('Quer digitar seu nome e turma agora? Isso ajuda o professor a identificar seu resultado nos relatórios.')) editarIdentidade(); }, 400);
+}
 
 </script>
 <script>
