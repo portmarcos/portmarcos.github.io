@@ -1,5 +1,23 @@
 # Portal ENEM — portmarcos.github.io
 
+## Meu Desempenho v2 (commit `be652fc`)
+Gráfico de barras (flex) trocado por grid de cards (`.prog-grid-temas`) —
+mais robusto pra centralização, não usar flex-chart de novo pra isso.
+Ícones sempre em selo circular (`.prog-icon-badge`/`.prog-mini-badge`),
+nunca emoji solto. Tem um guia estático de erros de interpretação
+(`guiaErrosHTML()`) e uma seção "Questões para revisar" por tema.
+
+IMPORTANTE: `finalizarQuiz()` agora salva `enun/alts/expl` de cada questão
+dentro de `respostas` (não só a posição/índice) — antes disso, reabrir uma
+tentativa antiga podia casar a resposta com a questão errada, já que
+`BANCO[tema].questoes` é reembaralhado a cada `iniciarQuiz()`. Qualquer
+função nova que precise reconstruir "qual questão foi essa resposta" deve
+usar esses campos salvos, nunca `BANCO[tema].questoes[i]` com o índice de
+uma tentativa antiga.
+
+Bug conhecido, não corrigido (tarefa separada aberta): `irMatriz()` /
+`filtrarRep()` quebram porque `#repLista` não existe mais no HTML.
+
 ## Gerador de provas (commit `42fbb22`)
 Tela `sc-gerador` (escolher tema + quantidade) → `sc-prova` (folha pronta
 pra imprimir, com gabarito opcional). Usa `BANCO[tema].questoes` direto,
