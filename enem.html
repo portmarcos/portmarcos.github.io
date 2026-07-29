@@ -88,7 +88,10 @@ h1,h2,h3,h4,.num{font-family:'Space Grotesk','Inter',sans-serif}
 .topic-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;max-width:820px;margin:32px auto;padding:0 20px}
 .topic-card{background:var(--card);border-radius:var(--r);padding:28px 22px;box-shadow:var(--shadow);cursor:pointer;transition:.25s;border-top:5px solid var(--cor,var(--az));text-align:center;position:relative}
 .topic-card:hover{transform:translateY(-4px);box-shadow:var(--shadow2)}
-.topic-card span.tc-ico{font-size:2.4rem;display:block;margin-bottom:12px}
+.topic-card span.tc-ico{width:46px;height:46px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;color:var(--cor,var(--az))}
+.topic-card span.tc-ico svg{width:100%;height:100%;display:block}
+.tema-icon{width:1.15em;height:1.15em;display:inline-block;vertical-align:-.22em;margin-right:.35em;color:currentColor}
+.tema-icon svg{width:100%;height:100%;display:block}
 .topic-card h3{font-size:1rem;font-weight:700;color:var(--az);margin-bottom:8px;font-family:'Space Grotesk','Inter',sans-serif}
 .topic-card p{font-size:.78rem;color:var(--tx2);line-height:1.55}
 .tc-count{margin-top:12px;font-size:.72rem;font-weight:700;font-family:'Space Grotesk','Inter',sans-serif;color:var(--cor,var(--az));background:var(--az3);display:inline-block;padding:4px 12px;border-radius:20px}
@@ -314,17 +317,13 @@ h1,h2,h3,h4,.num{font-family:'Space Grotesk','Inter',sans-serif}
 .prog-chart-title{font-family:'Space Grotesk','Inter',sans-serif;font-weight:800;font-size:.9rem;color:var(--tx);margin-bottom:24px}
 .prog-grid-temas{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px}
 .prog-tema-mini{background:var(--bg);border-radius:var(--r2);padding:18px 10px;text-align:center;border:1.5px solid var(--borda)}
-.prog-icon-badge{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin:0 auto 10px;flex-shrink:0;position:relative;box-shadow:0 3px 8px rgba(0,0,0,.22),inset 0 1px 1px rgba(255,255,255,.55),inset 0 -4px 7px rgba(0,0,0,.18)}
-.prog-icon-badge::after{content:'';position:absolute;top:4px;left:7px;width:13px;height:7px;background:rgba(255,255,255,.6);border-radius:50%;filter:blur(2px);pointer-events:none}
-.prog-icon-badge.alta{background:radial-gradient(circle at 35% 28%,#6EE7B7,#10B981 55%,#047857 100%)}
-.prog-icon-badge.media{background:radial-gradient(circle at 35% 28%,#FCD34D,#D97706 55%,#92400E 100%)}
-.prog-icon-badge.baixa{background:radial-gradient(circle at 35% 28%,#FCA5A5,#EF4444 55%,#B91C1C 100%)}
-.prog-icon-badge.vazio{background:radial-gradient(circle at 35% 28%,#94A3B8,#475569 60%,#1E293B 100%);opacity:.75}
-.prog-mini-badge{width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.82rem;flex-shrink:0;position:relative;box-shadow:0 2px 5px rgba(0,0,0,.2),inset 0 1px 1px rgba(255,255,255,.55),inset 0 -3px 5px rgba(0,0,0,.16)}
-.prog-mini-badge::after{content:'';position:absolute;top:2px;left:4px;width:8px;height:4px;background:rgba(255,255,255,.6);border-radius:50%;filter:blur(1px);pointer-events:none}
-.prog-mini-badge.alta{background:radial-gradient(circle at 35% 28%,#6EE7B7,#10B981 55%,#047857 100%)}
-.prog-mini-badge.media{background:radial-gradient(circle at 35% 28%,#FCD34D,#D97706 55%,#92400E 100%)}
-.prog-mini-badge.baixa{background:radial-gradient(circle at 35% 28%,#FCA5A5,#EF4444 55%,#B91C1C 100%)}
+.tema-icon-ring{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;flex-shrink:0;position:relative;background:rgba(255,255,255,.05);border:2px solid var(--ring-cor,#64748B);color:var(--ring-cor,#94A3B8);transition:.2s}
+.tema-icon-ring svg{width:56%;height:56%;display:block}
+.tema-icon-ring.mini{width:26px;height:26px;border-width:1.5px;margin:0}
+.tema-icon-ring.alta{--ring-cor:#10B981;background:rgba(16,185,129,.1)}
+.tema-icon-ring.media{--ring-cor:#D97706;background:rgba(217,119,6,.1)}
+.tema-icon-ring.baixa{--ring-cor:#EF4444;background:rgba(239,68,68,.1)}
+.tema-icon-ring.vazio{--ring-cor:#64748B;background:rgba(100,116,139,.08);opacity:.7}
 .prog-tema-mini-nome{font-size:.7rem;font-weight:700;font-family:'Space Grotesk','Inter',sans-serif;color:var(--tx2);line-height:1.35;margin-bottom:8px;min-height:30px;display:flex;align-items:center;justify-content:center}
 .prog-tema-mini-pct{font-family:'Space Grotesk','Inter',sans-serif;font-weight:900;font-size:1.05rem}
 .prog-tema-mini-pct.alta{color:var(--verde)}
@@ -638,79 +637,79 @@ body:has(#sc-prova.ativo) > *:not(#sc-prova){display:none!important}
     <p>Cada simulado tem entre 4 e 19 questões e 50 minutos</p>
   </div>
     <div class="topic-grid">
-    <div class="topic-card" style="--cor:#0062CC" onclick="iniciarQuiz('variacao')">
+    <div class="topic-card" data-tema="variacao" style="--cor:#0062CC" onclick="iniciarQuiz('variacao')">
       <span class="tc-num">01 — Competência 5</span>
       <h3>Variação Linguística</h3>
       <p>Dialetos, registros, preconceito linguístico, norma culta, padrão e popular</p>
       <span class="tc-count">45 questões reais ENEM</span>
     </div>
-    <div class="topic-card" style="--cor:#7B2FBE" onclick="iniciarQuiz('intertextualidade')">
+    <div class="topic-card" data-tema="intertextualidade" style="--cor:#7B2FBE" onclick="iniciarQuiz('intertextualidade')">
       <span class="tc-num">02 — Competência 5</span>
       <h3>Intertextualidade</h3>
       <p>Paródia, paráfrase, alusão, citação, charge, HQ e diálogos entre textos</p>
       <span class="tc-count">18 questões reais ENEM · com imagens</span>
     </div>
-    <div class="topic-card" style="--cor:#1A7F4E" onclick="iniciarQuiz('generos')">
+    <div class="topic-card" data-tema="generos" style="--cor:#1A7F4E" onclick="iniciarQuiz('generos')">
       <span class="tc-num">03 — Competência 4</span>
       <h3>Gêneros Textuais</h3>
       <p>Crônica, charge, notícia, reportagem, conto, infográfico, blog e mais</p>
       <span class="tc-count">34 questões reais ENEM</span>
     </div>
-    <div class="topic-card" style="--cor:#D97706" onclick="iniciarQuiz('coesao')">
+    <div class="topic-card" data-tema="coesao" style="--cor:#D97706" onclick="iniciarQuiz('coesao')">
       <span class="tc-num">04 — Competência 4</span>
       <h3>Coesão e Coerência</h3>
       <p>Progressão textual, conectivos, referência, substituição e ellipse</p>
       <span class="tc-count">25 questões reais ENEM 2004-25</span>
     </div>
-    <div class="topic-card" style="--cor:#DC2626" onclick="iniciarQuiz('funcoes')">
+    <div class="topic-card" data-tema="funcoes" style="--cor:#DC2626" onclick="iniciarQuiz('funcoes')">
       <span class="tc-num">05 — Competência 3</span>
       <h3>Funções de Linguagem</h3>
       <p>Referencial, emotiva, conativa, poética, fática e metalinguística</p>
       <span class="tc-count">29 questões reais ENEM 2006-25</span>
     </div>
-    <div class="topic-card" style="--cor:#0891B2" onclick="iniciarQuiz('argumentacao')">
+    <div class="topic-card" data-tema="argumentacao" style="--cor:#0891B2" onclick="iniciarQuiz('argumentacao')">
       <span class="tc-num">06 — Competências 3 e 5</span>
       <h3>Argumentação e Gêneros</h3>
       <p>Estratégias argumentativas, tese, dados, conectivos e gêneros opinativos</p>
       <span class="tc-count">31 questões reais ENEM 2007-25</span>
     </div>
-    <div class="topic-card" style="--cor:#C2410C" onclick="iniciarQuiz('verbal')">
+    <div class="topic-card" data-tema="verbal" style="--cor:#C2410C" onclick="iniciarQuiz('verbal')">
       <span class="tc-num">07 — Competência 1</span>
       <h3>Verbal e Não Verbal</h3>
       <p>Charges, cartazes, campanhas e quadrinhos: como texto e imagem constroem sentido juntos</p>
       <span class="tc-count">22 questões reais ENEM com imagem original</span>
     </div>
-    <div class="topic-card" style="--cor:#9333EA" onclick="iniciarQuiz('figuras')">
+    <div class="topic-card" data-tema="figuras" style="--cor:#9333EA" onclick="iniciarQuiz('figuras')">
       <span class="tc-num">08 — Competência 3</span>
       <h3>Figuras de Linguagem</h3>
       <p>Metáfora, ironia, metalinguagem, antítese e outros recursos expressivos</p>
       <span class="tc-count">21 questões reais ENEM 2004-25</span>
     </div>
-    <div class="topic-card" style="--cor:#0D9488" onclick="iniciarQuiz('interpretacao')">
+    <div class="topic-card" data-tema="interpretacao" style="--cor:#0D9488" onclick="iniciarQuiz('interpretacao')">
       <span class="tc-num">09 — Competência 3</span>
       <h3>Interpretação de Texto</h3>
       <p>Como ler, inferir e responder ao estilo ENEM: estratégias de leitura em textos variados</p>
       <span class="tc-count">34 questões reais ENEM 2004-25</span>
     </div>
-    <div class="topic-card" style="--cor:#6D28D9" onclick="iniciarQuiz('literatura')">
+    <div class="topic-card" data-tema="literatura" style="--cor:#6D28D9" onclick="iniciarQuiz('literatura')">
       <span class="tc-num">10 — Competência 5</span>
       <h3>Literatura</h3>
       <p>Movimentos, obras e autores canônicos: Machado, Clarice, Graciliano, Lima Barreto, Saramago e mais</p>
       <span class="tc-count">38 questões reais ENEM 2004-24</span>
     </div>
-    <div class="topic-card" style="--cor:#DB2777" onclick="iniciarQuiz('multiletramentos')">
+    <div class="topic-card" data-tema="multiletramentos" style="--cor:#DB2777" onclick="iniciarQuiz('multiletramentos')">
       <span class="tc-num">11 — Competência 1</span>
       <h3>Multiletramentos e Gêneros Digitais</h3>
       <p>Memes, hashtags, internetês, blogs e IA: como a internet transforma a língua</p>
       <span class="tc-count">26 questões reais ENEM 2009-24</span>
     </div>
-    <div class="topic-card" style="--cor:#65A30D" onclick="iniciarQuiz('semantica')">
+    <div class="topic-card" data-tema="semantica" style="--cor:#65A30D" onclick="iniciarQuiz('semantica')">
       <span class="tc-num">12 — Competência 5</span>
       <h3>Semântica: Polissemia e Ambiguidade</h3>
       <p>Duplo sentido em charges, anúncios e cartazes: quando uma palavra carrega dois significados</p>
       <span class="tc-count">17 questões reais ENEM 2011-25</span>
     </div>
-    <div class="topic-card" style="--cor:#7C2D12" onclick="iniciarQuiz('movimentos')">
+    <div class="topic-card" data-tema="movimentos" style="--cor:#7C2D12" onclick="iniciarQuiz('movimentos')">
       <span class="tc-num">13 — Competência 8</span>
       <h3>Literatura II: Escolas e Movimentos</h3>
       <p>Barroco, Arcadismo, Parnasianismo, Simbolismo e as 3 fases do Modernismo</p>
@@ -5955,6 +5954,35 @@ const TEMAS_INFO = {
   movimentos:      {titulo:'Literatura II: Escolas e Movimentos', num:'13', cor:'#7C2D12'}
 };
 
+// ─── ÍCONES TEMÁTICOS (sistema único usado em dashboard, quiz, gerador e Meu Desempenho) ─
+const TEMA_ICONS = {
+  variacao:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 1 3.5 6.6L4 20l1.2-3.6A7.96 7.96 0 0 1 4 12Z"/></svg>`,
+  intertextualidade:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 13.5 13.5 10.5"/><path d="M8.5 15.5 6.4 17.6a3 3 0 1 1-4.2-4.2L4.3 11.3a3 3 0 0 1 4.2 0"/><path d="M15.5 8.5l2.1-2.1a3 3 0 1 1 4.2 4.2l-2.1 2.1a3 3 0 0 1-4.2 0"/></svg>`,
+  generos:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H15v13.5A2.5 2.5 0 0 0 17.5 20H6a2 2 0 0 1-2-2V5.5Z"/><path d="M15 8h5v9.5a2.5 2.5 0 0 1-2.5 2.5"/><path d="M7.5 8h4M7.5 11h4M7.5 14h4"/></svg>`,
+  coesao:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M7.7 7.2 10.5 16.2"/><path d="M16.3 7.2 13.5 16.2"/><path d="M8 6h8"/></svg>`,
+  funcoes:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10v4a1 1 0 0 0 1 1h2l1 4h2l-1-4h1l9 4V5L9 9H4a1 1 0 0 0-1 1Z"/><path d="M16 8.5a3.5 3.5 0 0 1 0 7"/></svg>`,
+  argumentacao:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M7 21h10"/><path d="M4 7h6"/><path d="M14 7h6"/><path d="M4 7 1.5 12a2.5 2.5 0 0 0 5 0Z"/><path d="M20 7l-2.5 5a2.5 2.5 0 0 0 5 0Z"/></svg>`,
+  verbal:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="15" rx="1.5"/><circle cx="8.5" cy="9.5" r="1.6"/><path d="M4 17l5-5 3.5 3.5L16 12l4 4.5"/></svg>`,
+  figuras:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.4L19 10l-5.2 1.6L12 17l-1.8-5.4L5 10l5.2-1.6Z"/><path d="M18.5 15v3"/><path d="M17 16.5h3"/></svg>`,
+  interpretacao:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.3 15.3 20 20"/></svg>`,
+  literatura:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5c-1.6-1.2-3.7-1.8-6.5-1.8v13c2.8 0 4.9.6 6.5 1.8"/><path d="M12 6.5c1.6-1.2 3.7-1.8 6.5-1.8v13c-2.8 0-4.9.6-6.5 1.8"/><path d="M12 6.5v13"/></svg>`,
+  multiletramentos:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6.5" y="2.5" width="11" height="19" rx="2"/><path d="M10.5 19h3"/></svg>`,
+  semantica:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v6"/><path d="M12 10 6 16"/><path d="M12 10l6 6"/><path d="M6 16H3"/><path d="M6 16v-3"/><path d="M18 16h3"/><path d="M18 16v-3"/></svg>`,
+  movimentos:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3h16"/><path d="M4 21h16"/><path d="M5.5 6h13"/><path d="M5.5 18h13"/><path d="M7 6v12"/><path d="M11 6v12"/><path d="M13 6v12"/><path d="M17 6v12"/></svg>`,
+  _default:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/></svg>`
+};
+function temaIconSVG(key){ return TEMA_ICONS[key] || TEMA_ICONS._default; }
+
+// injeta os ícones nos cards do dashboard (já existem no DOM antes deste script rodar)
+document.querySelectorAll('.topic-card[data-tema]').forEach(card=>{
+  const key=card.getAttribute('data-tema');
+  if(!key || card.querySelector('.tc-ico')) return;
+  const span=document.createElement('span');
+  span.className='tc-ico';
+  span.innerHTML=temaIconSVG(key);
+  card.insertBefore(span, card.firstChild);
+});
+
 const AUTH = {
   current: null,
   _LK: 'enem_progresso_local',
@@ -6134,7 +6162,7 @@ function renderProgresso(){
     const res=u.tentativas[t];
     const total=res.total||(BANCO[t]?BANCO[t].questoes.length:0)||1;
     const score=res.score||0;
-    return {t, res, info:TEMAS_INFO[t], emoji:(BANCO[t]&&BANCO[t].emoji)||'📘', pct:Math.round(score/total*100), score, total};
+    return {t, res, info:TEMAS_INFO[t], emoji:(BANCO[t]&&BANCO[t].emoji)||'📘', icon:temaIconSVG(t), pct:Math.round(score/total*100), score, total};
   });
 
   // Summary
@@ -6149,7 +6177,7 @@ function renderProgresso(){
     <div class="prog-stat"><div class="ps-val">${feitos.length}/${temas.length}</div><div class="ps-lbl">Temas concluídos</div></div>
     <div class="prog-stat"><div class="ps-val">${totalScore}/${totalQs}</div><div class="ps-lbl">Acertos totais</div></div>
     <div class="prog-stat"><div class="ps-val">${avgPct}%</div><div class="ps-lbl">Aproveitamento geral</div></div>
-    <div class="prog-stat prog-melhor"><div class="ps-val">${melhor?melhor.emoji+' '+melhor.pct+'%':'—'}</div><div class="ps-lbl">Melhor tema</div></div>`;
+    <div class="prog-stat prog-melhor"><div class="ps-val">${melhor?'<span class="tema-icon-ring mini '+(melhor.pct>=75?'alta':melhor.pct<60?'baixa':'media')+'" style="display:inline-flex;vertical-align:middle;margin-right:8px">'+melhor.icon+'</span>'+melhor.pct+'%':'—'}</div><div class="ps-lbl">Melhor tema</div></div>`;
   wrap.appendChild(sumDiv);
 
   // Pontos fortes / a melhorar
@@ -6157,7 +6185,7 @@ function renderProgresso(){
   const fracos=dados.filter(d=>d.pct<60).sort((a,b)=>a.pct-b.pct).slice(0,4);
   const insDiv=document.createElement('div');
   insDiv.className='prog-insights';
-  const itemHTML=d=>{const cls=d.pct>=75?'alta':d.pct<60?'baixa':'media';return `<div class="prog-insight-item"><span class="pi-nome"><span class="prog-mini-badge ${cls}">${d.emoji}</span>${d.info.titulo}</span><span class="pi-val" style="color:${d.pct>=75?'var(--verde)':d.pct<60?'var(--verm)':'var(--ouro)'}">${d.pct}%</span></div>`;};
+  const itemHTML=d=>{const cls=d.pct>=75?'alta':d.pct<60?'baixa':'media';return `<div class="prog-insight-item"><span class="pi-nome"><span class="tema-icon-ring mini ${cls}" style="display:inline-flex;margin-right:8px;vertical-align:middle">${d.icon}</span>${d.info.titulo}</span><span class="pi-val" style="color:${d.pct>=75?'var(--verde)':d.pct<60?'var(--verm)':'var(--ouro)'}">${d.pct}%</span></div>`;};
   insDiv.innerHTML=`
     <div class="prog-insight-box fortes">
       <div class="prog-insight-title">💪 Pontos fortes</div>
@@ -6176,19 +6204,19 @@ function renderProgresso(){
   temas.forEach(t=>{
     const res=u.tentativas[t];
     const info=TEMAS_INFO[t];
-    const emoji=(BANCO[t]&&BANCO[t].emoji)||'📘';
+    const icon=temaIconSVG(t);
     if(res){
       const total=res.total||1;
       const pct=Math.round((res.score||0)/total*100);
       const cls=pct>=75?'alta':pct>=50?'media':'baixa';
       gridTemasHTML+=`<div class="prog-tema-mini">
-        <div class="prog-icon-badge ${cls}">${emoji}</div>
+        <div class="tema-icon-ring ${cls}">${icon}</div>
         <div class="prog-tema-mini-nome">${info.titulo}</div>
         <div class="prog-tema-mini-pct ${cls}">${pct}%</div>
       </div>`;
     } else {
       gridTemasHTML+=`<div class="prog-tema-mini">
-        <div class="prog-icon-badge vazio">${emoji}</div>
+        <div class="tema-icon-ring vazio">${icon}</div>
         <div class="prog-tema-mini-nome">${info.titulo}</div>
         <div class="prog-tema-mini-pct vazio">—</div>
       </div>`;
@@ -6209,10 +6237,9 @@ function renderProgresso(){
     chipsDiv.className='prog-naoiniciados';
     naoFeitos.forEach(t=>{
       const info=TEMAS_INFO[t];
-      const emoji=(BANCO[t]&&BANCO[t].emoji)||'📘';
       const chip=document.createElement('div');
       chip.className='prog-chip';
-      chip.innerHTML=`${emoji} ${info.titulo} <span style="opacity:.6">▶</span>`;
+      chip.innerHTML=`<span class="tema-icon" style="color:${info.cor}">${temaIconSVG(t)}</span>${info.titulo} <span style="opacity:.6">▶</span>`;
       chip.onclick=()=>iniciarQuiz(t);
       chipsDiv.appendChild(chip);
     });
@@ -6232,7 +6259,7 @@ function renderProgresso(){
 
   const letras=['A','B','C','D','E'];
   dados.sort((a,b)=>a.pct-b.pct).forEach(d=>{
-    const {t,res,info,emoji,pct,score,total}=d;
+    const {t,res,info,icon,pct,score,total}=d;
     const dataStr=res.data?new Date(res.data).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}):'—';
     const tempoSeg=res.tempo_seg||0;
     const m=Math.floor(tempoSeg/60), s=tempoSeg%60;
@@ -6273,7 +6300,7 @@ function renderProgresso(){
     card.className='prog-tema-card';
     card.innerHTML=`
       <div class="prog-tema-head" onclick="toggleProgTema(this)">
-        <h3>${emoji} ${info.titulo}</h3>
+        <h3><span class="tema-icon" style="color:${info.cor}">${icon}</span>${info.titulo}</h3>
         <div style="display:flex;align-items:center;gap:10px">
           <div class="prog-tema-score" style="color:${pct>=75?'var(--verde)':pct<60?'var(--verm)':'var(--ouro)'}">${score}/${total} · ${pct}%</div>
           <span class="chev">▾</span>
@@ -6315,7 +6342,6 @@ function renderGeradorForm(){
   grid.innerHTML='';
   TEMAS_ORDEM.forEach(t=>{
     const info=TEMAS_INFO[t];
-    const emoji=(BANCO[t]&&BANCO[t].emoji)||'📘';
     const disp=BANCO[t].questoes.length;
     const card=document.createElement('div');
     card.className='ger-tema-card';
@@ -6323,7 +6349,7 @@ function renderGeradorForm(){
     card.innerHTML=`
       <div class="ger-tema-top">
         <input type="checkbox" id="gerChk-${t}" onchange="gerToggleTema('${t}')">
-        <span class="ger-tema-nome">${emoji} ${info.titulo}</span>
+        <span class="ger-tema-nome"><span class="tema-icon" style="color:${info.cor}">${temaIconSVG(t)}</span>${info.titulo}</span>
       </div>
       <div class="ger-tema-disp">${disp} questões disponíveis</div>
       <div class="ger-tema-qtd">
@@ -6502,7 +6528,7 @@ function iniciarQuiz(topico){
   S.endTime = null;
   S.gabaritoLiberado = false;
   mostrar('sc-quiz');
-  document.getElementById('qTopicName').textContent = t.emoji + ' ' + t.titulo;
+  document.getElementById('qTopicName').innerHTML = '<span class="tema-icon" style="color:'+(TEMAS_INFO[topico]?TEMAS_INFO[topico].cor:'currentColor')+'">'+temaIconSVG(topico)+'</span>' + t.titulo;
   renderNavDots();
   renderQ();
   iniciarTimer();
