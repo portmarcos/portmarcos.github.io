@@ -310,15 +310,19 @@ h1,h2,h3,h4,.num{font-family:'Space Grotesk','Inter',sans-serif}
 .prog-stat .ps-lbl{font-size:.72rem;color:var(--tx3);margin-top:4px;font-family:'Space Grotesk','Inter',sans-serif;font-weight:600}
 .prog-chart-wrap{background:var(--card);border-radius:var(--r);padding:28px;box-shadow:var(--shadow);margin-bottom:24px}
 .prog-chart-title{font-family:'Space Grotesk','Inter',sans-serif;font-weight:800;font-size:.9rem;color:var(--tx);margin-bottom:24px}
-.prog-bars{display:flex;align-items:flex-end;gap:24px;height:150px;padding:0 8px}
-.prog-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;height:100%}
-.prog-bar-bg{flex:1;width:100%;background:var(--bg);border-radius:8px;overflow:hidden;display:flex;align-items:flex-end}
-.prog-bar-fill{width:100%;border-radius:8px 8px 0 0;transition:height .8s ease;min-height:4px}
-.prog-bar-fill.alta{background:linear-gradient(180deg,#34D399,var(--verde))}
-.prog-bar-fill.media{background:linear-gradient(180deg,#FBBF24,#D97706)}
-.prog-bar-fill.baixa{background:linear-gradient(180deg,#F87171,var(--verm))}
-.prog-bar-val{font-family:'Space Grotesk','Inter',sans-serif;font-weight:900;font-size:.95rem;color:var(--tx)}
-.prog-bar-label{font-size:.7rem;color:var(--tx2);text-align:center;font-family:'Space Grotesk','Inter',sans-serif;font-weight:700;line-height:1.4}
+.prog-grid-temas{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px}
+.prog-tema-mini{background:var(--bg);border-radius:var(--r2);padding:18px 10px;text-align:center;border:1.5px solid var(--borda)}
+.prog-icon-badge{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin:0 auto 10px;background:var(--card);flex-shrink:0}
+.prog-icon-badge.alta{background:var(--vd-c)}
+.prog-icon-badge.media{background:rgba(217,119,6,.15)}
+.prog-icon-badge.baixa{background:var(--vm-c)}
+.prog-icon-badge.vazio{background:var(--card);opacity:.55}
+.prog-tema-mini-nome{font-size:.7rem;font-weight:700;font-family:'Space Grotesk','Inter',sans-serif;color:var(--tx2);line-height:1.35;margin-bottom:8px;min-height:30px;display:flex;align-items:center;justify-content:center}
+.prog-tema-mini-pct{font-family:'Space Grotesk','Inter',sans-serif;font-weight:900;font-size:1.05rem}
+.prog-tema-mini-pct.alta{color:var(--verde)}
+.prog-tema-mini-pct.media{color:#D97706}
+.prog-tema-mini-pct.baixa{color:var(--verm)}
+.prog-tema-mini-pct.vazio{color:var(--tx3);font-size:.78rem;font-weight:700}
 .prog-tema-card{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden}
 .prog-tema-head{background:linear-gradient(135deg,#0B1120,#0F172A);color:#fff;padding:16px 22px;display:flex;align-items:center;justify-content:space-between}
 .prog-tema-head h3{font-size:.95rem;font-weight:700;font-family:'Space Grotesk','Inter',sans-serif}
@@ -349,6 +353,30 @@ h1,h2,h3,h4,.num{font-family:'Space Grotesk','Inter',sans-serif}
 .prog-insight-item:first-of-type{border-top:none}
 .prog-insight-item .pi-val{font-family:'Space Grotesk','Inter',sans-serif;font-weight:800}
 .prog-insight-empty{font-size:.8rem;color:var(--tx3);line-height:1.6}
+.prog-insight-item .pi-nome{display:flex;align-items:center;gap:9px}
+.prog-mini-badge{width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
+
+/* Guia de erros de interpretação */
+.prog-guia{background:var(--card);border-radius:var(--r);padding:26px;box-shadow:var(--shadow);margin-bottom:28px}
+.prog-guia-titulo{font-family:'Space Grotesk','Inter',sans-serif;font-weight:800;font-size:1rem;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.prog-guia-sub{font-size:.82rem;color:var(--tx2);margin-bottom:20px;line-height:1.6}
+.prog-guia-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.prog-guia-item{background:var(--bg);border-radius:var(--r2);padding:16px;border-left:3px solid var(--az2)}
+.prog-guia-item h4{font-size:.83rem;font-weight:800;margin-bottom:6px;font-family:'Space Grotesk','Inter',sans-serif}
+.prog-guia-item p{font-size:.78rem;color:var(--tx2);line-height:1.6;margin-bottom:8px}
+.prog-guia-item .exemplo{font-size:.74rem;color:var(--tx3);font-style:italic;background:var(--card);padding:8px 10px;border-radius:6px;line-height:1.5}
+
+/* Questões para revisar (dentro do card de tema) */
+.prog-revisar{margin-top:18px;border-top:1px solid var(--borda);padding-top:16px}
+.prog-revisar-titulo{font-size:.8rem;font-weight:800;font-family:'Space Grotesk','Inter',sans-serif;margin-bottom:12px;color:var(--verm)}
+.prog-revisar-item{background:var(--bg);border-radius:var(--r2);padding:14px 16px;margin-bottom:10px}
+.prog-revisar-enun{font-size:.83rem;font-weight:600;margin-bottom:9px;line-height:1.5}
+.prog-revisar-alts{font-size:.78rem;margin-bottom:9px;line-height:1.8}
+.prog-revisar-alts .sua{color:var(--verm);font-weight:600}
+.prog-revisar-alts .certa{color:var(--verde);font-weight:600}
+.prog-revisar-expl{font-size:.78rem;color:var(--tx2);line-height:1.6;background:var(--az3);padding:10px 12px;border-radius:8px;border-left:3px solid var(--az);margin-bottom:8px}
+.prog-revisar-dica{font-size:.73rem;color:var(--tx3);line-height:1.5;font-style:italic}
+.prog-revisar-vazio{font-size:.8rem;color:var(--tx3);font-style:italic}
 
 .prog-secao-titulo{font-family:'Space Grotesk','Inter',sans-serif;font-weight:800;font-size:.95rem;margin:32px 0 14px}
 .prog-naoiniciados{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px}
@@ -6007,6 +6035,45 @@ function irProgresso(){
   renderProgresso();
 }
 
+function guiaErrosHTML(){
+  return `<div class="prog-guia">
+    <div class="prog-guia-titulo">📖 Guia: por que a gente erra interpretação de texto</div>
+    <div class="prog-guia-sub">A maioria dos erros em Linguagens não é "não saber a matéria" — é cair num desses padrões clássicos de armadilha do ENEM. Reconhecer qual deles te pegou ajuda mais do que só saber se acertou ou errou.</div>
+    <div class="prog-guia-grid">
+      <div class="prog-guia-item">
+        <h4>➕ Extrapolação</h4>
+        <p>A alternativa vai além do que o texto realmente diz, acrescentando uma informação, causa ou consequência plausível — mas que não está no texto.</p>
+        <div class="exemplo">Ex.: o texto descreve o esforço físico dos cortadores de cana; uma alternativa erra ao afirmar que "a maioria morre antes dos 40 anos" — isso não foi dito em nenhum momento.</div>
+      </div>
+      <div class="prog-guia-item">
+        <h4>➖ Redução</h4>
+        <p>A alternativa pega só uma parte do sentido do texto (um detalhe) e trata como se fosse a ideia central, deixando de fora o que o texto defende como um todo.</p>
+        <div class="exemplo">Ex.: um texto compara dois cenários; a alternativa foca só num dado isolado, ignorando a comparação que era o ponto principal do texto.</div>
+      </div>
+      <div class="prog-guia-item">
+        <h4>↗️ Tangenciamento (fuga do tema)</h4>
+        <p>A alternativa fala sobre algo relacionado ao assunto, mas não responde exatamente o que a pergunta pediu — "passa perto" da resposta certa sem realmente acertar o alvo.</p>
+        <div class="exemplo">Ex.: a pergunta é sobre o EFEITO de uma metáfora; a alternativa erra ao só descrever o tema geral do texto, sem falar do efeito de sentido pedido.</div>
+      </div>
+      <div class="prog-guia-item">
+        <h4>🔄 Contradição</h4>
+        <p>A alternativa afirma o oposto do que o texto diz, ou inverte uma relação de causa e efeito.</p>
+        <div class="exemplo">Ex.: o texto defende que nenhuma variedade linguística é superior às outras; uma alternativa erra ao afirmar justamente essa superioridade.</div>
+      </div>
+      <div class="prog-guia-item">
+        <h4>📋 Cópia enganosa</h4>
+        <p>A alternativa usa palavras retiradas literalmente do texto, mas montadas numa frase que muda o sentido original — parece certa por "soar familiar", mas não é isso que o texto afirma.</p>
+        <div class="exemplo">Ex.: o texto usa a palavra "polêmica"; a alternativa repete "polêmica" mas atribui a ela um motivo diferente do que o texto realmente apresentou.</div>
+      </div>
+      <div class="prog-guia-item">
+        <h4>💭 Juízo de valor indevido</h4>
+        <p>A alternativa introduz uma opinião do candidato (o que ELE acha certo, bom ou ruim) em vez do que o texto efetivamente argumenta ou descreve.</p>
+        <div class="exemplo">Ex.: um texto apenas descreve uma variação linguística; a alternativa erra ao classificá-la como "um erro que deveria ser corrigido" — isso é opinião, não está no texto.</div>
+      </div>
+    </div>
+  </div>`;
+}
+
 function renderProgresso(){
   const u=AUTH.current;
   document.getElementById('progHeaderSub').textContent = (u.nome||'Estudante') + ' · ' + (u.turma||'ENEM');
@@ -6050,7 +6117,7 @@ function renderProgresso(){
   const fracos=dados.filter(d=>d.pct<60).sort((a,b)=>a.pct-b.pct).slice(0,4);
   const insDiv=document.createElement('div');
   insDiv.className='prog-insights';
-  const itemHTML=d=>`<div class="prog-insight-item"><span>${d.emoji} ${d.info.titulo}</span><span class="pi-val" style="color:${d.pct>=75?'var(--verde)':d.pct<60?'var(--verm)':'var(--ouro)'}">${d.pct}%</span></div>`;
+  const itemHTML=d=>`<div class="prog-insight-item"><span class="pi-nome"><span class="prog-mini-badge" style="background:${d.pct>=75?'var(--vd-c)':d.pct<60?'var(--vm-c)':'rgba(217,119,6,.15)'}">${d.emoji}</span>${d.info.titulo}</span><span class="pi-val" style="color:${d.pct>=75?'var(--verde)':d.pct<60?'var(--verm)':'var(--ouro)'}">${d.pct}%</span></div>`;
   insDiv.innerHTML=`
     <div class="prog-insight-box fortes">
       <div class="prog-insight-title">💪 Pontos fortes</div>
@@ -6062,10 +6129,10 @@ function renderProgresso(){
     </div>`;
   wrap.appendChild(insDiv);
 
-  // Gráfico de barras (todos os 13 temas)
+  // Grid de status por tema (todos os 13 temas)
   const chartDiv=document.createElement('div');
   chartDiv.className='prog-chart-wrap';
-  let barsHTML='<div class="prog-chart-title">📊 Desempenho por tema</div><div class="prog-bars">';
+  let gridTemasHTML='<div class="prog-chart-title">📊 Desempenho por tema</div><div class="prog-grid-temas">';
   temas.forEach(t=>{
     const res=u.tentativas[t];
     const info=TEMAS_INFO[t];
@@ -6074,21 +6141,21 @@ function renderProgresso(){
       const total=res.total||1;
       const pct=Math.round((res.score||0)/total*100);
       const cls=pct>=75?'alta':pct>=50?'media':'baixa';
-      barsHTML+=`<div class="prog-bar-wrap">
-        <div class="prog-bar-val">${pct}%</div>
-        <div class="prog-bar-bg"><div class="prog-bar-fill ${cls}" style="height:${pct}%"></div></div>
-        <div class="prog-bar-label">${emoji}<br>${info.titulo.split(' ')[0]}</div>
+      gridTemasHTML+=`<div class="prog-tema-mini">
+        <div class="prog-icon-badge ${cls}">${emoji}</div>
+        <div class="prog-tema-mini-nome">${info.titulo}</div>
+        <div class="prog-tema-mini-pct ${cls}">${pct}%</div>
       </div>`;
     } else {
-      barsHTML+=`<div class="prog-bar-wrap">
-        <div class="prog-bar-val" style="color:var(--tx3)">—</div>
-        <div class="prog-bar-bg"><div class="prog-bar-fill" style="height:4%;background:var(--borda)"></div></div>
-        <div class="prog-bar-label" style="color:var(--tx3)">${emoji}<br>${info.titulo.split(' ')[0]}</div>
+      gridTemasHTML+=`<div class="prog-tema-mini">
+        <div class="prog-icon-badge vazio">${emoji}</div>
+        <div class="prog-tema-mini-nome">${info.titulo}</div>
+        <div class="prog-tema-mini-pct vazio">—</div>
       </div>`;
     }
   });
-  barsHTML+='</div>';
-  chartDiv.innerHTML=barsHTML;
+  gridTemasHTML+='</div>';
+  chartDiv.innerHTML=gridTemasHTML;
   wrap.appendChild(chartDiv);
 
   // Temas ainda não iniciados
@@ -6112,12 +6179,18 @@ function renderProgresso(){
     wrap.appendChild(chipsDiv);
   }
 
+  // Guia de erros de interpretação
+  const guiaDiv=document.createElement('div');
+  guiaDiv.innerHTML=guiaErrosHTML();
+  wrap.appendChild(guiaDiv.firstElementChild);
+
   // Detalhamento por tema (colapsável)
   const tit2=document.createElement('div');
   tit2.className='prog-secao-titulo';
   tit2.textContent='📋 Detalhamento por tema concluído';
   wrap.appendChild(tit2);
 
+  const letras=['A','B','C','D','E'];
   dados.sort((a,b)=>a.pct-b.pct).forEach(d=>{
     const {t,res,info,emoji,pct,score,total}=d;
     const dataStr=res.data?new Date(res.data).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}):'—';
@@ -6131,6 +6204,29 @@ function renderProgresso(){
       const ico=r.ok?'✓':'✗';
       gridHTML+=`<div class="prog-q ${cls}" title="Q${i+1}: ${r.ok?'Correta':'Errada'}">${i+1}<br>${r.escolhida<0?'—':ico}</div>`;
     });
+
+    const erradas=(res.respostas||[]).map((r,i)=>({...r, num:i+1})).filter(r=>!r.ok);
+    let revisarHTML='';
+    if(erradas.length>0){
+      const comDetalhe=erradas.filter(r=>r.enun && r.alts);
+      if(comDetalhe.length>0){
+        revisarHTML=`<div class="prog-revisar">
+          <div class="prog-revisar-titulo">🔍 Questões para revisar (${comDetalhe.length})</div>
+          ${comDetalhe.map(r=>`
+            <div class="prog-revisar-item">
+              <div class="prog-revisar-enun">Q${r.num}. ${r.enun}</div>
+              <div class="prog-revisar-alts">
+                <span class="sua">Sua resposta: ${r.escolhida>=0?letras[r.escolhida]+') '+r.alts[r.escolhida]:'Não respondida'}</span><br>
+                <span class="certa">Correta: ${letras[r.correta]}) ${r.alts[r.correta]}</span>
+              </div>
+              ${r.expl?'<div class="prog-revisar-expl">💡 '+r.expl+'</div>':''}
+              <div class="prog-revisar-dica">Compare com o guia acima: essa alternativa extrapolou o texto, reduziu a ideia a só uma parte, fugiu do que foi perguntado (tangenciou), contradisse o texto, ou usou palavras do texto fora de contexto?</div>
+            </div>`).join('')}
+        </div>`;
+      } else {
+        revisarHTML=`<div class="prog-revisar"><div class="prog-revisar-titulo">🔍 Questões para revisar</div><div class="prog-revisar-vazio">Essa tentativa foi salva antes dessa análise existir. Refaça o tema pra habilitar a revisão detalhada dos erros.</div></div>`;
+      }
+    }
 
     const tent=res.numTentativas||1;
     const card=document.createElement('div');
@@ -6147,6 +6243,7 @@ function renderProgresso(){
         <div class="prog-qs-grid">${gridHTML}</div>
         <div class="prog-tema-meta">📅 Melhor tentativa em: ${dataStr} &nbsp;|&nbsp; ⏱️ Tempo: ${tempoStr}${tent>1?' &nbsp;|&nbsp; 🔁 '+tent+' tentativas':''}</div>
         <button class="btn btn-sec" style="margin-top:12px" onclick="event.stopPropagation();iniciarQuiz('${t}')">🔁 Refazer este tema</button>
+        ${revisarHTML}
       </div>`;
     wrap.appendChild(card);
   });
@@ -6499,11 +6596,17 @@ function finalizarQuiz(){
   document.getElementById('gabaritoLista').innerHTML='';
   document.getElementById('btnRefazer').setAttribute('data-topico',S.topico);
   // Salvar resultado no perfil do aluno
-  const respostasDetalhadas = S.respostas.map((r,i)=>({
-    escolhida: r,
-    correta: BANCO[S.topico].questoes[i].correta,
-    ok: r === BANCO[S.topico].questoes[i].correta
-  }));
+  const respostasDetalhadas = S.respostas.map((r,i)=>{
+    const qi=BANCO[S.topico].questoes[i];
+    return {
+      escolhida: r,
+      correta: qi.correta,
+      ok: r === qi.correta,
+      enun: qi.enun,
+      alts: qi.alts,
+      expl: qi.expl
+    };
+  });
   AUTH.saveResult(S.topico, {
     score: certas, total: q.length,
     data: new Date().toISOString(),
