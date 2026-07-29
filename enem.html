@@ -1075,6 +1075,25 @@ body:has(#sc-prova.ativo) > *:not(#sc-prova){display:none!important}
         </div>
       </div></div>
 
+    <!-- REPERTÓRIO -->
+    <div class="matriz-intro" id="bloco-rep">
+      <h2>💡 Repertório sociocultural pronto para usar</h2>
+      <p>Parágrafos prontos por tema, com indicação de quando usar cada um e uma sugestão de conclusão (C5).</p>
+    </div>
+    <div class="rep-filtro">
+      <select onchange="filtrarRep(this.value)">
+        <option value="todos">Todos os temas</option>
+        <option value="ambiente">Meio ambiente</option>
+        <option value="cultura">Cultura</option>
+        <option value="direitos">Direitos humanos</option>
+        <option value="educacao">Educação</option>
+        <option value="saude">Saúde</option>
+        <option value="tecnologia">Tecnologia</option>
+        <option value="trabalho">Trabalho</option>
+      </select>
+    </div>
+    <div id="repLista"></div>
+
     <div style="text-align:center;margin-top:32px">
       <button class="btn btn-sec" onclick="irHome()">← Voltar ao início</button>
     </div>
