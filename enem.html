@@ -357,6 +357,54 @@ h1,h2,h3,h4,.num{font-family:'Space Grotesk','Inter',sans-serif}
 
 @media(max-width:640px){.prog-insights{grid-template-columns:1fr}}
 
+/* Gerador de provas */
+.ger-wrap{max-width:820px;margin:0 auto;padding:28px 20px 60px}
+.ger-config-box{background:var(--card);border-radius:var(--r);padding:24px;box-shadow:var(--shadow);margin-bottom:24px}
+.ger-label{display:block;font-family:'Space Grotesk','Inter',sans-serif;font-weight:700;font-size:.78rem;color:var(--tx2);margin-bottom:6px;margin-top:14px}
+.ger-label:first-child{margin-top:0}
+.ger-input{width:100%;padding:11px 14px;border-radius:var(--r2);border:1.5px solid var(--borda);background:var(--bg);color:var(--tx);font-size:.9rem;font-family:inherit}
+.ger-input:focus{outline:none;border-color:var(--az2)}
+.ger-opcoes{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+.ger-check{display:flex;align-items:center;gap:9px;font-size:.85rem;color:var(--tx2);cursor:pointer}
+.ger-check input{width:17px;height:17px;accent-color:var(--az2);cursor:pointer}
+.ger-temas-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+.ger-temas-header>span:first-child{font-family:'Space Grotesk','Inter',sans-serif;font-weight:800;font-size:.9rem}
+.ger-total-sel{font-family:'Space Grotesk','Inter',sans-serif;font-weight:700;font-size:.8rem;color:var(--az2);background:var(--az3);padding:5px 14px;border-radius:20px}
+.ger-temas-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-bottom:28px}
+.ger-tema-card{background:var(--card);border-radius:var(--r2);padding:16px;box-shadow:var(--shadow);border:2px solid transparent;transition:.2s}
+.ger-tema-card.selecionado{border-color:var(--az2)}
+.ger-tema-top{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.ger-tema-top input[type=checkbox]{width:17px;height:17px;accent-color:var(--az2);cursor:pointer;flex-shrink:0}
+.ger-tema-nome{font-size:.83rem;font-weight:700;font-family:'Space Grotesk','Inter',sans-serif;line-height:1.3}
+.ger-tema-disp{font-size:.72rem;color:var(--tx3);margin-bottom:10px;margin-left:25px}
+.ger-tema-qtd{display:flex;align-items:center;gap:8px;margin-left:25px}
+.ger-tema-qtd input[type=number]{width:60px;padding:6px 8px;border-radius:8px;border:1.5px solid var(--borda);background:var(--bg);color:var(--tx);font-size:.85rem;text-align:center}
+.ger-tema-qtd label{font-size:.75rem;color:var(--tx3)}
+.ger-acoes{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+/* Prova gerada / impressão */
+.prova-folha{max-width:780px;margin:0 auto 60px;background:#fff;color:#111;padding:50px 55px;box-shadow:var(--shadow2);border-radius:8px;font-family:Georgia,'Times New Roman',serif}
+.prova-cabecalho{text-align:center;border-bottom:2.5px solid #111;padding-bottom:16px;margin-bottom:22px}
+.prova-titulo{font-size:1.4rem;font-weight:700;margin-bottom:4px}
+.prova-subtitulo{font-size:.95rem;color:#444}
+.prova-campos{display:flex;flex-wrap:wrap;gap:18px;margin-top:18px;font-size:.88rem}
+.prova-campo{flex:1;min-width:160px;border-bottom:1px solid #999;padding-bottom:3px}
+.prova-instrucoes{font-size:.82rem;color:#444;margin:18px 0 28px;font-style:italic}
+.prova-q{margin-bottom:26px}
+.prova-q-num{font-weight:700;font-size:.95rem;margin-bottom:8px}
+.prova-q-texto{font-size:.87rem;line-height:1.65;white-space:pre-line;margin-bottom:10px;text-align:justify}
+.prova-q-texto img{max-width:100%;border-radius:4px;margin:8px auto;display:block}
+.prova-q-fonte{font-size:.72rem;color:#666;text-align:right;margin-bottom:10px}
+.prova-q-enun{font-size:.9rem;margin-bottom:10px;font-weight:600}
+.prova-q-alts{display:flex;flex-direction:column;gap:6px}
+.prova-q-alt{font-size:.87rem;display:flex;gap:8px}
+.prova-q-alt b{flex-shrink:0}
+.prova-gabarito{margin-top:40px;padding-top:20px;border-top:2.5px solid #111}
+.prova-gabarito h3{font-size:1.05rem;margin-bottom:14px}
+.prova-gab-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:10px;font-size:.85rem}
+.prova-gab-item{text-align:center;background:#f0f0f0;border-radius:6px;padding:6px 2px}
+@media(max-width:640px){.prova-folha{padding:28px 18px}.prova-gab-grid{grid-template-columns:repeat(4,1fr)}}
+
 /* AUTH */
 .auth-wrap{min-height:calc(100vh - 56px);display:flex;align-items:center;justify-content:center;padding:24px;background:linear-gradient(135deg,#020617,#0B1120)}
 .auth-card{background:var(--card);border-radius:var(--r3);box-shadow:var(--shadow3);padding:40px 36px;max-width:420px;width:100%}
@@ -396,6 +444,15 @@ h1,h2,h3,h4,.num{font-family:'Space Grotesk','Inter',sans-serif}
   .auth-card{padding:28px 20px}
 }
 @media print{.topo,.topo-btn,.sc-top-user,.quiz-nav-btns,.essay-nav,.stepper,.btn,.modal-over,.rep-tabs,.rep-filtro{display:none!important}body{background:#fff}.screen{display:block!important}.rev-section,.corr-panel{box-shadow:none;border:1px solid #ccc}}
+/* Impressão da prova gerada: só a folha da prova aparece, resto do app some */
+body:has(#sc-prova.ativo) > *:not(#sc-prova){display:none!important}
+@media print{
+  .screen:not(#sc-prova){display:none!important}
+  #sc-prova{display:block!important}
+  #sc-prova .no-print{display:none!important}
+  .prova-folha{box-shadow:none!important;padding:0!important}
+  .prova-q{break-inside:avoid}
+}
 
 
 /* ── DESIGN V4 ── */
@@ -462,6 +519,7 @@ h1,h2,h3,h4,.num{font-family:'Space Grotesk','Inter',sans-serif}
     <button class="btn btn-pri" onclick="irProgresso()">📊 Meu Desempenho</button>
     <button class="btn btn-verde" onclick="irMatriz()">📋 Preparatório Completo</button>
     <button class="btn btn-sec" onclick="irTemas()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:4px"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>Redação</button>
+    <button class="btn btn-sec" onclick="irGerador()">🖨️ Gerador de Provas</button>
   </div>
 </div>
 
@@ -495,6 +553,47 @@ h1,h2,h3,h4,.num{font-family:'Space Grotesk','Inter',sans-serif}
     <p id="progHeaderSub">—</p>
   </div>
   <div class="prog-wrap" id="progWrap"></div>
+</div>
+
+<!-- SCREEN: GERADOR DE PROVAS -->
+<div id="sc-gerador" class="screen">
+  <div class="section-header">
+    <h2>🖨️ Gerador de Provas</h2>
+    <p>Escolha os temas, quantas questões de cada e gere uma avaliação pronta pra imprimir</p>
+  </div>
+  <div class="ger-wrap">
+    <div class="ger-config-box">
+      <label class="ger-label">Título da avaliação</label>
+      <input type="text" id="gerTitulo" class="ger-input" value="Avaliação de Língua Portuguesa" maxlength="80">
+      <label class="ger-label">Subtítulo (opcional)</label>
+      <input type="text" id="gerSubtitulo" class="ger-input" placeholder="Ex: 9º ano · Simulado ENEM" maxlength="80">
+      <div class="ger-opcoes">
+        <label class="ger-check"><input type="checkbox" id="gerEmbaralhar" checked> Embaralhar a ordem das questões</label>
+        <label class="ger-check"><input type="checkbox" id="gerGabarito" checked> Incluir gabarito ao final</label>
+      </div>
+    </div>
+
+    <div class="ger-temas-header">
+      <span>Temas e quantidade de questões</span>
+      <span id="gerTotalSel" class="ger-total-sel">0 questões selecionadas</span>
+    </div>
+    <div id="gerTemasGrid" class="ger-temas-grid"></div>
+
+    <div class="ger-acoes">
+      <button class="btn btn-sec" onclick="irHome()">← Cancelar</button>
+      <button class="btn btn-pri" onclick="gerarProva()">✓ Gerar Prova</button>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN: PROVA GERADA (impressão) -->
+<div id="sc-prova" class="screen">
+  <div class="ger-acoes no-print" style="margin:20px 0">
+    <button class="btn btn-sec" onclick="irGerador()">← Ajustar seleção</button>
+    <button class="btn btn-sec" onclick="irHome()">← Início</button>
+    <button class="btn btn-pri" onclick="window.print()">🖨️ Imprimir / Salvar PDF</button>
+  </div>
+  <div id="provaFolha" class="prova-folha"></div>
 </div>
 
 <!-- SCREEN: TÓPICOS -->
@@ -6062,6 +6161,124 @@ function renderProgresso(){
 function toggleProgTema(head){
   head.classList.toggle('aberto');
   head.nextElementSibling.classList.toggle('aberto');
+}
+
+// ─── GERADOR DE PROVAS ──────────────────────────────────────────────────────
+
+const TEMAS_ORDEM=['variacao','intertextualidade','generos','coesao','funcoes','argumentacao','verbal','figuras','interpretacao','literatura','multiletramentos','semantica','movimentos'];
+const PROVA={questoes:[], titulo:'', subtitulo:'', gabarito:true};
+
+function irGerador(){
+  mostrar('sc-gerador');
+  renderGeradorForm();
+}
+
+function renderGeradorForm(){
+  const grid=document.getElementById('gerTemasGrid');
+  grid.innerHTML='';
+  TEMAS_ORDEM.forEach(t=>{
+    const info=TEMAS_INFO[t];
+    const emoji=(BANCO[t]&&BANCO[t].emoji)||'📘';
+    const disp=BANCO[t].questoes.length;
+    const card=document.createElement('div');
+    card.className='ger-tema-card';
+    card.id='gerCard-'+t;
+    card.innerHTML=`
+      <div class="ger-tema-top">
+        <input type="checkbox" id="gerChk-${t}" onchange="gerToggleTema('${t}')">
+        <span class="ger-tema-nome">${emoji} ${info.titulo}</span>
+      </div>
+      <div class="ger-tema-disp">${disp} questões disponíveis</div>
+      <div class="ger-tema-qtd">
+        <label>Quantidade:</label>
+        <input type="number" id="gerQtd-${t}" min="1" max="${disp}" value="${Math.min(5,disp)}" disabled oninput="gerAtualizarTotal()">
+      </div>`;
+    grid.appendChild(card);
+  });
+  gerAtualizarTotal();
+}
+
+function gerToggleTema(t){
+  const chk=document.getElementById('gerChk-'+t);
+  document.getElementById('gerQtd-'+t).disabled=!chk.checked;
+  document.getElementById('gerCard-'+t).classList.toggle('selecionado', chk.checked);
+  gerAtualizarTotal();
+}
+
+function gerAtualizarTotal(){
+  let total=0;
+  TEMAS_ORDEM.forEach(t=>{
+    const chk=document.getElementById('gerChk-'+t);
+    if(chk && chk.checked){
+      const disp=BANCO[t].questoes.length;
+      const qtdEl=document.getElementById('gerQtd-'+t);
+      let v=parseInt(qtdEl.value)||0;
+      if(v>disp) v=disp;
+      if(v<1) v=1;
+      qtdEl.value=v;
+      total+=v;
+    }
+  });
+  document.getElementById('gerTotalSel').textContent=total+(total!==1?' questões':' questão')+' selecionada'+(total!==1?'s':'');
+}
+
+function gerarProva(){
+  let selecionadas=[];
+  TEMAS_ORDEM.forEach(t=>{
+    const chk=document.getElementById('gerChk-'+t);
+    if(chk && chk.checked){
+      const qtd=parseInt(document.getElementById('gerQtd-'+t).value)||0;
+      const pool=embaralhar(BANCO[t].questoes.slice());
+      selecionadas=selecionadas.concat(pool.slice(0,qtd));
+    }
+  });
+  if(selecionadas.length===0){
+    alert('Selecione ao menos um tema e defina a quantidade de questões pra gerar a prova.');
+    return;
+  }
+  if(document.getElementById('gerEmbaralhar').checked){
+    selecionadas=embaralhar(selecionadas);
+  }
+  PROVA.questoes=selecionadas;
+  PROVA.titulo=document.getElementById('gerTitulo').value.trim()||'Avaliação de Língua Portuguesa';
+  PROVA.subtitulo=document.getElementById('gerSubtitulo').value.trim();
+  PROVA.gabarito=document.getElementById('gerGabarito').checked;
+  renderProva();
+  mostrar('sc-prova');
+}
+
+function renderProva(){
+  const letras=['A','B','C','D','E'];
+  let html=`<div class="prova-cabecalho">
+    <div class="prova-titulo">${PROVA.titulo}</div>
+    ${PROVA.subtitulo?'<div class="prova-subtitulo">'+PROVA.subtitulo+'</div>':''}
+    <div class="prova-campos">
+      <div class="prova-campo">Nome:</div>
+      <div class="prova-campo">Turma:</div>
+      <div class="prova-campo">Data:</div>
+    </div>
+  </div>
+  <div class="prova-instrucoes">Leia atentamente cada questão antes de responder. Marque apenas uma alternativa por questão.</div>`;
+
+  PROVA.questoes.forEach((q,i)=>{
+    html+=`<div class="prova-q">
+      <div class="prova-q-num">Questão ${i+1}</div>
+      ${q.texto?'<div class="prova-q-texto">'+q.texto.replace(/\n/g,'<br>')+'</div>':''}
+      ${q.fonte?'<div class="prova-q-fonte">'+q.fonte+'</div>':''}
+      <div class="prova-q-enun">${q.enun}</div>
+      <div class="prova-q-alts">${q.alts.map((a,ai)=>'<div class="prova-q-alt"><b>'+letras[ai]+')</b> '+a+'</div>').join('')}</div>
+    </div>`;
+  });
+
+  if(PROVA.gabarito){
+    html+='<div class="prova-gabarito"><h3>Gabarito</h3><div class="prova-gab-grid">';
+    PROVA.questoes.forEach((q,i)=>{
+      html+='<div class="prova-gab-item">'+(i+1)+'. '+letras[q.correta]+'</div>';
+    });
+    html+='</div></div>';
+  }
+
+  document.getElementById('provaFolha').innerHTML=html;
 }
 
 
