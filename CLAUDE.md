@@ -46,6 +46,66 @@ no processo (rule mais específica/posterior no CSS vence). Usa `:has()`
 pra esconder a navegação do site enquanto a prova está em tela, não só
 na impressão.
 
+## Sistema de ícones (commit `fcea41c`)
+Emoji soltos foram substituídos por 13 ícones SVG de linha (um por tema),
+num objeto único `TEMA_ICONS` + função `temaIconSVG(key)` (definidos logo
+depois de `TEMAS_INFO`, perto da linha 5960). Usado em TODO lugar que antes
+tinha emoji: cards do dashboard (`.tc-ico`, injetado via JS a partir de
+`data-tema="..."` no card — os 13 `<div class="topic-card">` precisam manter
+esse atributo), cabeçalho do quiz, cards do gerador de provas (`.tema-icon`,
+ícone inline colorido via `style="color:${info.cor}"`), e Meu Desempenho.
+
+Em Meu Desempenho os selos glossy antigos (`.prog-icon-badge`/`.prog-mini-badge`,
+gradiente+brilho) FORAM REMOVIDOS e viraram `.tema-icon-ring` (+ modificador
+`.mini`): fundo translúcido escuro, borda e ícone na cor do desempenho
+(`.alta`=verde ≥75%, `.media`=amarelo 60-74%, `.baixa`=vermelho <60%,
+`.vazio`=cinza). Não recriar os `.prog-icon-badge`/`.prog-mini-badge` antigos —
+foram completamente substituídos, nenhum código deveria mais referenciá-los.
+Se precisar adicionar um novo lugar que mostra ícone de tema, usar
+`temaIconSVG(key)` + classe `.tema-icon` (inline) ou `.tema-icon-ring` (selo
+circular do Desempenho) — nunca emoji cru ou `BANCO[tema].emoji` pra exibição
+visual (esse campo `emoji` continua existindo no BANCO mas não é mais usado
+na UI, só como fallback interno de algumas funções antigas).
+
+## Auditoria de fabricação — CONCLUÍDA em 29/jul/2026
+Depois da Figuras de Linguagem (28/jul), os outros 12 temas foram auditados
+tema por tema contra fontes externas (INEP, plataformaassaad, descomplica,
+qconcursos, xequematenem) via agentes em paralelo. Achados e já corrigidos:
+- **Literatura II**: questão duplicada de Cruz e Sousa ("Vida obscura") — uma
+  cópia tinha o poema completo mas fonte errada ("Questão 4", devia ser
+  "Questão 124"), a outra tinha fonte certa mas o `texto` virou paráfrase em
+  vez do poema. Mantida só a cópia com o poema real, fonte corrigida, cópia
+  degradada removida.
+- **Literatura II**: removida 1 questão que era real mas de **Ciências
+  Humanas/História** (Barroco/Contrarreforma, ENEM PPL 2021 Q66) — não é de
+  Linguagens, não deveria estar num banco de Português mesmo estando correta.
+- **Argumentação**: gabarito errado (Rita Lee, ENEM 2024) — era D, correto C.
+- **Coesão**: gabarito errado (ratos/vocalização, ENEM 2016 Q101) — era D
+  ("consequência"), correto C ("condição").
+- **Gêneros Textuais**: gabarito errado (Luís Bueno/Vidas Secas, ENEM 2007
+  Q4) — era A, correto D.
+- **Intertextualidade**: 2 rótulos de fonte imprecisos (diziam "2ª aplicação",
+  eram PPL 2016 Q128 e PPL 2018 Q06).
+- **Multiletramentos**: 1 número de questão errado na fonte (era "Questão
+  109", correto "Questão 107").
+- Todos os outros temas (Verbal, Variação, Semântica, Literatura, Interpretação)
+  passaram limpos — nenhuma fabricação nova encontrada. A suspeita inicial de
+  fabricação em Interpretação de Texto (ENEM 2022 Q39, Eco/Carrière) foi
+  FALSO ALARME — confirmado depois como questão 100% real.
+
+**Contagem final: 374 questões reais** (não 376/377 — a contagem por grep de
+"enun:" no arquivo inteiro sempre incluiu 1 falso positivo de um `enun: qi.enun,`
+em código JS não relacionado a `BANCO`; contar só dentro do range de linhas de
+`const BANCO = {...}` ou usar `BANCO[tema].questoes.length` via console).
+
+**Pendência aberta**: em Funções de Linguagem (ENEM 2023 Q44, campanha do
+Ministério da Saúde sobre amamentação), o campo `texto` está mostrando por
+engano o conteúdo de OUTRA questão do mesmo tema (violência doméstica,
+pandemia). Enunciado/alternativas/gabarito dessa questão já foram confirmados
+corretos — só falta a imagem/texto real do cartaz da campanha de amamentação,
+que não foi possível extrair via WebFetch (sites de gabarito renderizam a
+imagem via JS). Pedir a imagem ao usuário (ver fluxo abaixo) antes de fechar.
+
 ## Estrutura do site
 - Repo público no GitHub Pages: portmarcos/portmarcos.github.io
 - Arquivo principal: enem.html (dentro de <script>, ~2.5MB)
