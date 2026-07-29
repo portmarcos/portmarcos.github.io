@@ -46,8 +46,15 @@ Intertextualidade
   `assets/img/questoes/`, referenciadas via `<img src='/assets/img/questoes/nome.ext'>`
   — NÃO usar base64 inline, é o padrão antigo que inflou o arquivo).
   Essa varredura cobriu principalmente Verbal e Não Verbal, Argumentação,
-  Semântica, Intertextualidade, Gêneros Textuais, Coesão e Figuras — ainda
-  NÃO foi feita em Literatura, Multiletramentos e Literatura II.
+  Semântica, Intertextualidade, Gêneros Textuais, Coesão, Figuras e (parcial)
+  Multiletramentos — ainda NÃO foi feita em Literatura e Literatura II.
+- Bug do "undefined" em Meu Desempenho (commit `65ba4ef`): `TEMAS_INFO` só
+  tem `titulo/num/cor`, NÃO tem `emoji` — quem tem emoji é `BANCO[tema].emoji`.
+  Qualquer código novo que precisar do emoji de um tema tem que buscar em
+  `BANCO[tema].emoji`, nunca em `TEMAS_INFO[tema].emoji` (isso sempre foi
+  undefined, incluindo em código antigo que já existia antes desta sessão).
+  De quebra, preenchidos os emoji que estavam vazios em BANCO: intertextualidade
+  🔗, coesao 🧵, funcoes 💬, argumentacao ⚖️.
 - Fluxo pra pedir imagem ao usuário: ele consegue ver/colar imagem no chat
   mas Claude Code NÃO consegue extrair bytes de imagem colada — só de
   arquivo em disco. Pedir pra ele salvar em `assets/img/questoes/` com um
