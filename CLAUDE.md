@@ -1,6 +1,24 @@
 # Portal ENEM — portmarcos.github.io
 
+## Google Sheets + identidade do aluno (commit `a2805d8`)
+enem.html carrega `/assets/js/config-sheets.js` (define `SHEETS_URL`,
+MESMA planilha/Apps Script que as outras atividades do site usam) e
+`finalizarQuiz()` faz POST no-cors pra lá a cada simulado terminado
+(função `enviarResultadoSheets`). Campos: atividade, nome, turma,
+acertos, total, pct, abertas (lista de enunciados errados).
+
+O app não tinha captura de nome de aluno (todo mundo "Estudante"
+genérico) — agora tem `editarIdentidade()` (ícone de lápis no
+dashboard + prompt automático na primeira visita). NUNCA testar o
+envio ao Sheets sem mockar `window.fetch` antes — o endpoint é real e
+grava na planilha de verdade do professor.
+
 ## Meu Desempenho v2 (commit `be652fc`)
+Selos dos ícones agora usam gradiente radial + sombra (efeito glossy),
+classes `.prog-icon-badge`/`.prog-mini-badge` com sufixo
+`.alta/.media/.baixa/.vazio` — não usar `style="background:..."` inline
+pra essas, sempre a classe (havia uma definição CSS duplicada antiga
+que sobrescrevia a nova; cuidado ao editar essa área de novo).
 Gráfico de barras (flex) trocado por grid de cards (`.prog-grid-temas`) —
 mais robusto pra centralização, não usar flex-chart de novo pra isso.
 Ícones sempre em selo circular (`.prog-icon-badge`/`.prog-mini-badge`),
