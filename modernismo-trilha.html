@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trilha do Modernismo — Prof. Marcos Cruz</title>
+<meta name="description" content="Uma jornada guiada pelas duas fases do Modernismo brasileiro, com leituras curtas, vídeos e perguntas de interpretação.">
+<style>
+:root{
+  --bg:#0B0D12; --panel:#131722; --panel2:#1A1F2E; --line:rgba(226,232,240,.12);
+  --ink:#EDEFF5; --tx:#D3D8E4; --tx2:#97A0B5; --tx3:#6B7488;
+  --ambar:#F59E0B; --ambar2:#FBBF24; --terra:#F97316; --terra2:#FB923C;
+  --ok:#22c55e; --err:#ef4444; --radius:18px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--ink); min-height:100vh;
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  position:relative; overflow-x:hidden;
+}
+body::before,body::after{
+  content:''; position:fixed; border-radius:50%; pointer-events:none; z-index:0; filter:blur(2px);
+}
+body::before{ width:420px;height:420px; top:-140px; left:-160px; background:radial-gradient(circle,rgba(245,158,11,.16),transparent 70%); }
+body::after{ width:480px;height:480px; bottom:-180px; right:-180px; background:radial-gradient(circle,rgba(249,115,22,.14),transparent 70%); }
+.deco-tri{
+  position:fixed; width:0; height:0; pointer-events:none; z-index:0;
+  border-left:60px solid transparent; border-right:60px solid transparent; border-bottom:100px solid rgba(245,158,11,.06);
+  top:18%; right:6%; transform:rotate(18deg);
+}
+.deco-tri2{
+  position:fixed; width:80px; height:80px; pointer-events:none; z-index:0;
+  border:2px solid rgba(249,115,22,.12); border-radius:50%;
+  bottom:12%; left:4%;
+}
+#topbar{
+  position:fixed; top:0; left:0; right:0; z-index:50;
+  background:rgba(11,13,18,.92); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line); padding:12px 18px 10px;
+}
+#progress-wrap{ max-width:640px; margin:0 auto; height:6px; background:var(--panel2); border-radius:3px; overflow:hidden; }
+#progress-fill{ height:100%; width:0%; background:linear-gradient(90deg,var(--ambar),var(--terra)); transition:width .5s ease; border-radius:3px; }
+#topbar-info{ max-width:640px; margin:6px auto 0; display:flex; justify-content:space-between; align-items:center; font-size:.8rem; color:var(--tx2); }
+#score-label{ color:var(--ambar); font-weight:800; transition:transform .2s; }
+#score-label.pulse{ transform:scale(1.18); }
+main#stage{ position:relative; z-index:1; max-width:640px; margin:0 auto; padding:88px 18px 70px; }
+.card{
+  background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:28px 26px; box-shadow:0 24px 60px rgba(0,0,0,.4); animation:fadein .35s ease;
+}
+@keyframes fadein{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+.fase-tag{
+  display:inline-flex; align-items:center; gap:6px; padding:5px 13px; border-radius:999px;
+  font-size:.7rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase; margin-bottom:16px;
+}
+.fase-tag.f1{ background:rgba(245,158,11,.15); color:var(--ambar); border:1px solid rgba(245,158,11,.35); }
+.fase-tag.f2{ background:rgba(249,115,22,.15); color:var(--terra2); border:1px solid rgba(249,115,22,.35); }
+.station-kicker{ font-size:.75rem; text-transform:uppercase; letter-spacing:.08em; color:var(--tx3); font-weight:700; margin-bottom:4px; }
+h1.hero-title{
+  font-weight:900; font-size:clamp(1.9rem,7vw,2.6rem); line-height:1.08; letter-spacing:-.02em;
+  margin:14px 0 6px; background:linear-gradient(120deg,var(--ambar),var(--ambar2) 45%,var(--terra));
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; text-transform:uppercase;
+}
+h2.station-title{
+  font-weight:900; font-size:clamp(1.3rem,5vw,1.7rem); line-height:1.18; letter-spacing:-.01em;
+  margin:2px 0 18px; color:var(--ink); position:relative; padding-bottom:12px;
+}
+h2.station-title::after{
+  content:''; position:absolute; left:0; bottom:0; width:46px; height:4px; border-radius:4px;
+  background:linear-gradient(90deg,var(--ambar),var(--terra));
+}
+.contexto p{ color:var(--tx); line-height:1.68; font-size:.98rem; margin:0 0 16px; }
+.trecho{ background:var(--panel2); border-left:4px solid var(--ambar); border-radius:0 12px 12px 0; padding:18px 20px; margin:0 0 6px; }
+.trecho blockquote{ margin:0; font-family:Georgia,'Times New Roman',serif; font-size:1.06rem; line-height:1.75; color:var(--ink); font-style:italic; }
+.trecho .fonte{ display:block; margin-top:10px; font-size:.8rem; font-style:normal; color:var(--tx3); text-align:right; }
+.timer-row{ display:flex; align-items:center; gap:12px; margin-top:22px; }
+.timer-track{ flex:1; height:8px; background:var(--panel2); border-radius:4px; overflow:hidden; }
+.timer-fill{ height:100%; width:100%; background:linear-gradient(90deg,var(--ambar),var(--ambar2)); transition:width 1s linear; border-radius:4px; }
+.timer-label{ font-size:.8rem; color:var(--tx2); white-space:nowrap; min-width:118px; text-align:right; }
+.btn{
+  width:100%; padding:15px; border-radius:14px; border:0; font-weight:800; font-size:1rem;
+  cursor:pointer; margin-top:20px; font-family:inherit; transition:transform .15s, opacity .2s;
+  background:linear-gradient(135deg,var(--ambar),var(--ambar2)); color:#1A1204;
+}
+.btn:hover:not(:disabled){ transform:translateY(-1px); }
+.btn:disabled{ background:var(--panel2); color:var(--tx3); cursor:not-allowed; opacity:.75; }
+.btn-secundario{ background:transparent; border:1px solid var(--line); color:var(--tx2); }
+.video-wrap{ position:relative; padding-top:56.25%; height:0; border-radius:14px; overflow:hidden; background:#000; margin-bottom:4px; }
+.video-wrap iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+.video-status{ text-align:center; font-size:.82rem; color:var(--tx2); margin-top:12px; }
+.video-fallback{ margin-top:16px; padding:14px 16px; border-radius:12px; background:rgba(245,158,11,.08); border:1px solid rgba(245,158,11,.3); font-size:.85rem; color:var(--tx2); }
+.video-fallback button{ margin-top:10px; }
+.alternativas{ display:flex; flex-direction:column; gap:10px; margin:18px 0 6px; }
+.alt-btn{
+  text-align:left; padding:14px 16px; border-radius:12px; border:1px solid var(--line); background:var(--panel2);
+  color:var(--tx); font-family:inherit; font-size:.95rem; line-height:1.4; cursor:pointer;
+  display:flex; gap:12px; align-items:flex-start; transition:all .15s;
+}
+.alt-btn:hover:not(:disabled){ border-color:var(--ambar); background:#20263a; }
+.alt-btn:disabled{ cursor:default; }
+.alt-letra{
+  flex-shrink:0; width:26px; height:26px; border-radius:50%; background:var(--panel); border:1px solid var(--line);
+  display:flex; align-items:center; justify-content:center; font-weight:800; font-size:.78rem; color:var(--tx2);
+}
+.alt-btn.selecionada{ border-color:var(--ambar); }
+.alt-btn.correta{ border-color:var(--ok); background:rgba(34,197,94,.12); color:#dcfce7; }
+.alt-btn.correta .alt-letra{ background:var(--ok); color:#052e12; border-color:var(--ok); }
+.alt-btn.incorreta{ border-color:var(--err); background:rgba(239,68,68,.1); color:#fee2e2; }
+.alt-btn.incorreta .alt-letra{ background:var(--err); color:#450a0a; border-color:var(--err); }
+.pensando{ display:flex; align-items:center; gap:10px; margin-top:16px; font-size:.85rem; color:var(--tx2); }
+.dots span{ display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--ambar); margin-right:4px; animation:blink 1.1s infinite; }
+.dots span:nth-child(2){ animation-delay:.18s; } .dots span:nth-child(3){ animation-delay:.36s; }
+@keyframes blink{ 0%,80%,100%{ opacity:.25 } 40%{ opacity:1 } }
+.feedback{ margin-top:16px; padding:16px 18px; border-radius:12px; font-size:.92rem; line-height:1.6; }
+.feedback.ok{ background:rgba(34,197,94,.12); border:1px solid rgba(34,197,94,.35); color:#bbf7d0; }
+.feedback.errado{ background:rgba(239,68,68,.1); border:1px solid rgba(239,68,68,.3); color:#fecaca; }
+.feedback strong{ display:block; margin-bottom:4px; font-size:.98rem; }
+.pontos-chip{ display:inline-block; margin-top:10px; font-size:.78rem; font-weight:800; color:var(--ambar); background:rgba(245,158,11,.12); border:1px solid rgba(245,158,11,.3); padding:3px 10px; border-radius:999px; }
+#tela-inicio p.sub{ color:var(--tx2); font-size:1rem; line-height:1.6; margin-bottom:20px; }
+.chips-info{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:8px; }
+.chip{ font-size:.78rem; font-weight:700; color:var(--tx2); background:var(--panel2); border:1px solid var(--line); padding:6px 12px; border-radius:999px; }
+.mecanica-lista{ margin:18px 0 4px; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; }
+.mecanica-lista li{ display:flex; gap:10px; align-items:flex-start; font-size:.88rem; color:var(--tx2); line-height:1.5; }
+.mecanica-lista .ico{ flex-shrink:0; font-size:1.1rem; }
+#tela-final .resumo-score{ text-align:center; margin:6px 0 22px; }
+#tela-final .resumo-score .num{ font-size:3.2rem; font-weight:900; background:linear-gradient(120deg,var(--ambar),var(--terra)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; line-height:1; }
+#tela-final .resumo-score .lbl{ font-size:.85rem; color:var(--tx2); margin-top:6px; }
+.resumo-msg{ text-align:center; color:var(--tx); font-size:1rem; line-height:1.6; margin-bottom:22px; }
+.quote-box{ background:var(--panel2); border:1px solid var(--line); border-radius:14px; padding:24px 22px; text-align:center; margin-bottom:24px; position:relative; }
+.quote-box .mark{ font-size:2.4rem; color:var(--ambar); line-height:.4; opacity:.6; }
+.quote-box p{ font-family:Georgia,'Times New Roman',serif; font-style:italic; font-size:1.2rem; color:var(--ink); margin:8px 0 10px; line-height:1.5; }
+.quote-box .autor{ font-size:.82rem; color:var(--tx3); }
+.voltar-link{ display:block; text-align:center; margin-top:10px; color:var(--tx2); font-size:.85rem; text-decoration:none; }
+.voltar-link:hover{ color:var(--ambar); }
+#stage{ min-height:1px; }
+@media (max-width:480px){ main#stage{ padding:82px 14px 60px; } .card{ padding:22px 18px; } }
+</style>
+</head>
+<body>
+
+<div class="deco-tri" aria-hidden="true"></div>
+<div class="deco-tri2" aria-hidden="true"></div>
+
+<div id="topbar">
+  <div id="progress-wrap"><div id="progress-fill"></div></div>
+  <div id="topbar-info">
+    <span id="station-label">Trilha do Modernismo</span>
+    <span id="score-label">✦ 0 pontos</span>
+  </div>
+</div>
+
+<main id="stage"></main>
+
+<script>
+(function(){
+
+var STATIONS = [
+  {
+    type:'leitura', fase:1, tempo:16,
+    titulo:'22 de fevereiro de 1922, Teatro Municipal de São Paulo',
+    contexto:'Naquela noite, um grupo de escritores, pintores e músicos subiu ao palco decidido a provocar. Liam poemas sem métrica fixa, mostravam telas com formas distorcidas e desafiavam tudo o que o público esperava de uma "arte séria". Parte da plateia vaiou, riu e foi embora achando aquilo uma piada de mau gosto. Mas essa "piada" mudaria para sempre os rumos da literatura brasileira: nascia ali a Semana de Arte Moderna.',
+    textoPlaceholder:'A poesia existe nos fatos. Os casebres de açafrão e de ocre nos verdes da Favela, sob o azul cabralino, são fatos estéticos. O Carnaval no Rio é o acontecimento religioso da raça. Pau Brasil. Wagner submerge ante os cordões de Botafogo. Bárbaro e nosso. A formação étnica rica. Riqueza vegetal. O minério. A cozinha. O vatapá, o ouro e a dança.',
+    fontePlaceholder:'Oswald de Andrade, Manifesto da Poesia Pau-Brasil, Correio da Manhã, 18 de março de 1924'
+  },
+  {
+    type:'pergunta', fase:1,
+    titulo:'O que causou tanto barulho?',
+    pergunta:'O que tornou a Semana de Arte Moderna de 1922 um escândalo para boa parte do público da época?',
+    alternativas:[
+      'Ela reafirmava com rigor as regras da poesia parnasiana, o que incomodou os próprios modernistas.',
+      'Ela rompia com as formas artísticas tradicionais e provocou estranhamento, risadas e vaias na plateia.',
+      'Ela era um evento fechado, sem nenhum tipo de repercussão ou reação do público presente.',
+      'Ela apresentava obras iguais às que já eram aceitas nos salões oficiais de arte da época.'
+    ],
+    correta:1,
+    feedbackCerto:'A Semana de 22 rompia justamente com o que se esperava da arte "séria" da época — versos livres, formas distorcidas, temas do cotidiano. Por isso causou tanto espanto: era novidade demais para uma plateia acostumada com outra coisa.',
+    feedbackErrado:'Pense no motivo de tanta gente ter vaiado e rido durante o evento: foi porque viram algo repetido, ou algo que quebrava as regras que conheciam?'
+  },
+  {
+    type:'video', fase:1,
+    titulo:'Veja como foi aquela semana',
+    videoId:'5VWIxMYUq00'
+  },
+  {
+    type:'leitura', fase:1, tempo:15,
+    titulo:'Um poema pode ser uma piada?',
+    contexto:'Entre os nomes daquela geração, Oswald de Andrade se destacou por um jeito quase debochado de escrever. Seus poemas eram curtos, escritos com a língua do dia a dia — sem elegância forçada — e terminavam quase sempre com uma virada de humor ou de crítica. Ficaram conhecidos como "poesia-piada": rápidos como uma tirada de conversa, mas capazes de dizer muito em poucas palavras.',
+    textoPlaceholder:'Dê-me um cigarro\nDiz a gramática\nDo professor e do aluno\nE do mulato sabido\nMas o bom negro e o bom branco\nDa Nação Brasileira\nDizem todos os dias\nDeixa disso camarada\nMe dá um cigarro.',
+    fontePlaceholder:'Oswald de Andrade, "Pronominais", em Pau-Brasil, 1925'
+  },
+  {
+    type:'pergunta', fase:1,
+    titulo:'A cara da poesia-piada',
+    pergunta:'A "poesia-piada" de Oswald de Andrade se caracteriza por:',
+    alternativas:[
+      'Versos longos e rebuscados, seguindo rigidamente a métrica clássica.',
+      'Linguagem coloquial, humor e crítica social feitos de forma leve e irônica, em poucos versos.',
+      'Ausência total de crítica ou reflexão, funcionando apenas como entretenimento vazio.',
+      'Repetição das fórmulas parnasianas aplicadas a temas do dia a dia.'
+    ],
+    correta:1,
+    feedbackCerto:'Isso mesmo! A poesia-piada usa a linguagem simples da conversa e o humor como ferramenta de crítica — em poucos versos, ela consegue provocar e fazer pensar ao mesmo tempo.',
+    feedbackErrado:'Repare no tamanho dos poemas de Oswald e no tom de "piada" que dá nome ao estilo: é sobre linguagem simples ou sobre formalidade?'
+  },
+  {
+    type:'leitura', fase:2, tempo:17,
+    titulo:'Depois da festa, o Brasil real',
+    contexto:'Os anos seguintes a 1922 foram de experimentação e escândalo. Mas em 1930, o país mudou: uma crise econômica mundial, uma revolução política e uma nova geração de escritores levaram a literatura por outro caminho. Em vez de quebrar regras só pelo prazer da ruptura, os romancistas da chamada "geração de 30" passaram a olhar para a seca, a pobreza e a desigualdade nos rincões do Brasil — com uma linguagem mais seca e direta, como a vida que descreviam.',
+    textoPlaceholder:'Na planície avermelhada os juazeiros alargavam duas manchas verdes. Os infelizes tinham caminhado o dia inteiro, estavam cansados e famintos.',
+    fontePlaceholder:'Graciliano Ramos, Vidas Secas, capítulo "Mudança", 1938'
+  },
+  {
+    type:'video', fase:2,
+    titulo:'O Brasil que os romances de 30 mostraram',
+    videoId:'FEx0rIcWhGY'
+  },
+  {
+    type:'leitura', fase:2, tempo:15,
+    titulo:'A poesia que parou para pensar',
+    contexto:'Enquanto o romance regionalista ganhava força, a poesia também mudou de tom. Carlos Drummond de Andrade, um dos grandes nomes dessa segunda fase, escrevia versos mais reflexivos e às vezes irônicos sobre a vida comum, o peso da existência e o próprio Brasil. Não era mais sobre chocar a plateia — era sobre pensar em voz alta.',
+    textoPlaceholder:'Vai, Carlos, ser gauche na vida.',
+    fontePlaceholder:'Carlos Drummond de Andrade, trecho de "Poema de Sete Faces", em Alguma Poesia, 1930'
+  },
+  {
+    type:'pergunta', fase:2,
+    titulo:'Duas fases, dois olhares',
+    pergunta:'Comparando as duas fases do Modernismo brasileiro, é correto dizer que:',
+    alternativas:[
+      'A 1ª fase teve como foco a experimentação e a ruptura com a tradição; a 2ª fase se voltou mais para o romance regionalista e o engajamento social.',
+      'As duas fases são idênticas em temas e estilo, sem nenhuma diferença relevante entre elas.',
+      'A 2ª fase abandonou completamente a prosa e se dedicou só à poesia experimental.',
+      'A 1ª fase já tinha como prioridade retratar a seca e a vida do sertanejo, tema que a 2ª fase abandonou depois.'
+    ],
+    correta:0,
+    feedbackCerto:'Exatamente! A 1ª fase quebrou regras e chocou o público; a 2ª fase usou essa liberdade conquistada para olhar com mais profundidade para os problemas sociais do Brasil, principalmente através do romance regionalista.',
+    feedbackErrado:'Pense no que veio primeiro: o momento de "quebrar as regras" da Semana de 22, ou o momento de "olhar para o Brasil real", com romances como os de Graciliano Ramos?'
+  }
+];
+
+var TOTAL_PERGUNTAS = STATIONS.filter(function(s){ return s.type==='pergunta'; }).length;
+var MAX_PONTOS = TOTAL_PERGUNTAS * 10;
+
+var state = { idx:-1, pontos:0, acertosPrimeira:0, timerHandle:null, ytApiReady:false, ytPlayer:null, ytFallbackTimeout:null };
+
+var stage = document.getElementById('stage');
+var progressFill = document.getElementById('progress-fill');
+var stationLabel = document.getElementById('station-label');
+var scoreLabel = document.getElementById('score-label');
+
+function esc(s){
+  var d = document.createElement('div'); d.textContent = s; return d.innerHTML;
+}
+function escLines(s){
+  return esc(s).replace(/\n/g, '<br>');
+}
+
+function updateTopbar(){
+  var total = STATIONS.length;
+  var current = Math.max(0, state.idx);
+  var pct = state.idx < 0 ? 0 : Math.round(((state.idx) / total) * 100);
+  if(state.idx >= total) pct = 100;
+  progressFill.style.width = pct + '%';
+  if(state.idx < 0){
+    stationLabel.textContent = 'Trilha do Modernismo';
+  } else if(state.idx >= total){
+    stationLabel.textContent = 'Trilha concluída';
+  } else {
+    stationLabel.textContent = 'Estação ' + (state.idx+1) + ' de ' + total;
+  }
+  scoreLabel.textContent = '✦ ' + state.pontos + ' pontos';
+}
+
+function pulseScore(){
+  scoreLabel.classList.add('pulse');
+  setTimeout(function(){ scoreLabel.classList.remove('pulse'); }, 220);
+}
+
+function clearTimers(){
+  if(state.timerHandle){ clearInterval(state.timerHandle); state.timerHandle = null; }
+  if(state.ytFallbackTimeout){ clearTimeout(state.ytFallbackTimeout); state.ytFallbackTimeout = null; }
+}
+
+function goToStation(i){
+  clearTimers();
+  state.idx = i;
+  updateTopbar();
+  if(i >= STATIONS.length){ renderFinal(); return; }
+  var s = STATIONS[i];
+  if(s.type === 'leitura') renderLeitura(s);
+  else if(s.type === 'video') renderVideo(s);
+  else if(s.type === 'pergunta') renderPergunta(s);
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function faseTag(fase){
+  return '<span class="fase-tag f' + fase + '">' + (fase===1 ? '1ª fase · 1922–1930' : '2ª fase · a partir de 1930') + '</span>';
+}
+
+function renderInicio(){
+  state.idx = -1;
+  updateTopbar();
+  stage.innerHTML =
+    '<div class="card" id="tela-inicio">' +
+      '<span class="station-kicker">Literatura · 3º ano</span>' +
+      '<h1 class="hero-title">Trilha do<br>Modernismo</h1>' +
+      '<p class="sub">Uma caminhada curta e tranquila pelas duas fases do Modernismo brasileiro — sem pressa, sem prova, um passo de cada vez.</p>' +
+      '<div class="chips-info">' +
+        '<span class="chip">🧭 ' + STATIONS.length + ' estações</span>' +
+        '<span class="chip">⏱️ uns 10-15 min</span>' +
+        '<span class="chip">✦ pontos por acerto</span>' +
+      '</div>' +
+      '<ul class="mecanica-lista">' +
+        '<li><span class="ico">📖</span> Leituras curtas — só avance quando tiver terminado de ler com calma.</li>' +
+        '<li><span class="ico">🎬</span> Vídeos rápidos — assista até o fim pra liberar o próximo passo.</li>' +
+        '<li><span class="ico">✏️</span> Perguntas simples — errar não é problema, você pode tentar de novo.</li>' +
+      '</ul>' +
+      '<button class="btn" id="btn-comecar">Começar a trilha →</button>' +
+    '</div>';
+  document.getElementById('btn-comecar').onclick = function(){ goToStation(0); };
+}
+
+function renderLeitura(s){
+  var tempo = s.tempo || 16;
+  var restante = tempo;
+  stage.innerHTML =
+    '<div class="card">' +
+      faseTag(s.fase) +
+      '<span class="station-kicker">📖 Leitura</span>' +
+      '<h2 class="station-title">' + esc(s.titulo) + '</h2>' +
+      '<div class="contexto"><p>' + esc(s.contexto) + '</p></div>' +
+      '<div class="trecho"><blockquote>' + escLines(s.textoPlaceholder) + '</blockquote><span class="fonte">— ' + esc(s.fontePlaceholder) + '</span></div>' +
+      '<div class="timer-row">' +
+        '<div class="timer-track"><div class="timer-fill" id="timer-fill"></div></div>' +
+        '<span class="timer-label" id="timer-label">Lendo com calma…</span>' +
+      '</div>' +
+      '<button class="btn" id="btn-continuar" disabled>Continuar →</button>' +
+    '</div>';
+
+  var fill = document.getElementById('timer-fill');
+  var label = document.getElementById('timer-label');
+  var btn = document.getElementById('btn-continuar');
+
+  fill.style.transition = 'width ' + tempo + 's linear';
+  requestAnimationFrame(function(){ fill.style.width = '0%'; });
+
+  state.timerHandle = setInterval(function(){
+    restante -= 1;
+    if(restante <= 0){
+      clearInterval(state.timerHandle);
+      state.timerHandle = null;
+      label.textContent = 'Pronto! ✓';
+      btn.disabled = false;
+      btn.textContent = 'Continuar →';
+    } else {
+      label.textContent = 'Lendo com calma… ' + restante + 's';
+    }
+  }, 1000);
+
+  btn.onclick = function(){ goToStation(state.idx + 1); };
+}
+
+function loadYouTubeApi(cb){
+  if(window.YT && window.YT.Player){ cb(); return; }
+  var existing = document.getElementById('yt-iframe-api');
+  if(!existing){
+    var tag = document.createElement('script');
+    tag.id = 'yt-iframe-api';
+    tag.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(tag);
+  }
+  var prevReady = window.onYouTubeIframeAPIReady;
+  window.onYouTubeIframeAPIReady = function(){
+    if(typeof prevReady === 'function') prevReady();
+    cb();
+  };
+}
+
+function renderVideo(s){
+  var isPlaceholder = /^\[.*\]$/.test(s.videoId || '');
+  var html =
+    '<div class="card">' +
+      faseTag(s.fase) +
+      '<span class="station-kicker">🎬 Vídeo</span>' +
+      '<h2 class="station-title">' + esc(s.titulo) + '</h2>';
+
+  if(isPlaceholder){
+    html +=
+      '<div class="video-fallback">' +
+        'Este vídeo ainda não foi configurado (ID <code>' + esc(s.videoId) + '</code> pendente). ' +
+        'Assim que o professor inserir o link real do YouTube aqui, o botão só libera quando o vídeo terminar.' +
+        '<br><button class="btn btn-secundario" id="btn-pular-video">Pular por enquanto (modo teste)</button>' +
+      '</div>' +
+      '<button class="btn" id="btn-continuar" disabled>Aguardando vídeo…</button>' +
+    '</div>';
+    stage.innerHTML = html;
+    document.getElementById('btn-pular-video').onclick = function(){ goToStation(state.idx + 1); };
+    return;
+  }
+
+  html +=
+      '<div class="video-wrap"><div id="yt-player"></div></div>' +
+      '<p class="video-status" id="video-status">Assista até o fim para liberar o próximo passo.</p>' +
+      '<button class="btn" id="btn-continuar" disabled>Aguardando o vídeo terminar…</button>' +
+    '</div>';
+  stage.innerHTML = html;
+
+  var btn = document.getElementById('btn-continuar');
+  var statusEl = document.getElementById('video-status');
+
+  btn.onclick = function(){ goToStation(state.idx + 1); };
+
+  loadYouTubeApi(function(){
+    state.ytApiReady = true;
+    if(state.ytFallbackTimeout){ clearTimeout(state.ytFallbackTimeout); state.ytFallbackTimeout = null; }
+    try{
+      state.ytPlayer = new YT.Player('yt-player', {
+        videoId: s.videoId,
+        playerVars: { rel:0, modestbranding:1 },
+        events:{
+          onStateChange:function(e){
+            if(e.data === YT.PlayerState.ENDED){
+              btn.disabled = false;
+              btn.textContent = 'Continuar →';
+              statusEl.textContent = 'Vídeo concluído. Pode seguir! ✓';
+            }
+          }
+        }
+      });
+    }catch(err){}
+  });
+
+  state.ytFallbackTimeout = setTimeout(function(){
+    if(!state.ytApiReady){
+      var fb = document.createElement('div');
+      fb.className = 'video-fallback';
+      fb.innerHTML = 'O player não carregou (conexão da escola pode estar bloqueando o YouTube). ' +
+        '<br><button class="btn btn-secundario" id="btn-ja-assisti">Já assisti ao vídeo até o fim</button>';
+      document.querySelector('.card').insertBefore(fb, btn);
+      document.getElementById('btn-ja-assisti').onclick = function(){
+        btn.disabled = false;
+        btn.textContent = 'Continuar →';
+      };
+    }
+  }, 12000);
+}
+
+function renderPergunta(s){
+  stage.innerHTML =
+    '<div class="card">' +
+      faseTag(s.fase) +
+      '<span class="station-kicker">✏️ Pergunta</span>' +
+      '<h2 class="station-title">' + esc(s.titulo) + '</h2>' +
+      '<div class="contexto"><p>' + esc(s.pergunta) + '</p></div>' +
+      '<div class="alternativas" id="alternativas"></div>' +
+      '<div id="area-pensando"></div>' +
+      '<div id="area-feedback"></div>' +
+      '<div id="area-botao"></div>' +
+    '</div>';
+
+  var letras = ['A','B','C','D'];
+  var altWrap = document.getElementById('alternativas');
+  var tentativas = 0;
+
+  s.alternativas.forEach(function(texto, i){
+    var b = document.createElement('button');
+    b.className = 'alt-btn';
+    b.innerHTML = '<span class="alt-letra">' + letras[i] + '</span><span>' + esc(texto) + '</span>';
+    b.onclick = function(){ escolher(i, b); };
+    altWrap.appendChild(b);
+  });
+
+  function setDisabled(disabled){
+    Array.prototype.forEach.call(altWrap.children, function(el){ el.disabled = disabled; });
+  }
+
+  function escolher(i, btnEl){
+    setDisabled(true);
+    btnEl.classList.add('selecionada');
+    tentativas += 1;
+
+    var pensando = document.getElementById('area-pensando');
+    pensando.innerHTML = '<div class="pensando"><span class="dots"><span></span><span></span><span></span></span> Analisando sua resposta…</div>';
+
+    setTimeout(function(){
+      pensando.innerHTML = '';
+      var acertou = (i === s.correta);
+      var feedback = document.getElementById('area-feedback');
+      var botaoArea = document.getElementById('area-botao');
+
+      if(acertou){
+        btnEl.classList.remove('selecionada');
+        btnEl.classList.add('correta');
+        var pontosGanhos = tentativas === 1 ? 10 : 5;
+        state.pontos += pontosGanhos;
+        if(tentativas === 1) state.acertosPrimeira += 1;
+        pulseScore();
+        updateTopbar();
+        feedback.innerHTML =
+          '<div class="feedback ok"><strong>Isso aí! ✓</strong>' + esc(s.feedbackCerto) +
+          '<span class="pontos-chip">+' + pontosGanhos + ' pontos</span></div>';
+        botaoArea.innerHTML = '<button class="btn" id="btn-continuar">Continuar →</button>';
+        document.getElementById('btn-continuar').onclick = function(){ goToStation(state.idx + 1); };
+      } else {
+        var alts = altWrap.querySelectorAll('.alt-btn');
+        alts[s.correta].classList.add('correta');
+        btnEl.classList.remove('selecionada');
+        btnEl.classList.add('incorreta');
+        feedback.innerHTML =
+          '<div class="feedback errado"><strong>Quase! 🤔</strong>' + esc(s.feedbackErrado) + '</div>';
+        botaoArea.innerHTML = '<button class="btn" id="btn-tentar">Tentar de novo</button>';
+        document.getElementById('btn-tentar').onclick = function(){
+          feedback.innerHTML = '';
+          botaoArea.innerHTML = '';
+          Array.prototype.forEach.call(alts, function(el){
+            el.classList.remove('correta','incorreta','selecionada');
+          });
+          setDisabled(false);
+        };
+      }
+    }, 1300);
+  }
+}
+
+function renderFinal(){
+  clearTimers();
+  var pct = MAX_PONTOS > 0 ? Math.round((state.pontos / MAX_PONTOS) * 100) : 0;
+  var msg;
+  if(pct >= 80) msg = 'Você atravessou a trilha com uma leitura afiada — deu pra sentir a diferença entre as duas fases do Modernismo. 🌟';
+  else if(pct >= 50) msg = 'Boa! Você já pegou o espírito das duas fases do Modernismo — vale revisar os trechos que geraram mais dúvida.';
+  else msg = 'Você completou a trilha! Modernismo não se aprende de uma vez só — vale a pena reler com calma os trechos que ficaram mais confusos.';
+
+  stage.innerHTML =
+    '<div class="card" id="tela-final">' +
+      '<span class="station-kicker" style="text-align:center;display:block">Trilha concluída</span>' +
+      '<h1 class="hero-title" style="text-align:center;font-size:clamp(1.6rem,6vw,2.1rem)">Chegou ao fim!</h1>' +
+      '<div class="resumo-score">' +
+        '<div class="num">' + state.pontos + '</div>' +
+        '<div class="lbl">pontos · ' + state.acertosPrimeira + ' de ' + TOTAL_PERGUNTAS + ' certas na primeira tentativa</div>' +
+      '</div>' +
+      '<p class="resumo-msg">' + msg + '</p>' +
+      '<div class="quote-box">' +
+        '<div class="mark">“</div>' +
+        '<p>Tupy, or not tupy that is the question.</p>' +
+        '<div class="autor">— Oswald de Andrade, Manifesto Antropófago (1928)</div>' +
+      '</div>' +
+      '<button class="btn" id="btn-refazer">Refazer a trilha 🔁</button>' +
+      '<a class="voltar-link" href="/index.html">← Voltar ao portal</a>' +
+    '</div>';
+
+  document.getElementById('btn-refazer').onclick = function(){
+    state.pontos = 0; state.acertosPrimeira = 0;
+    renderInicio();
+  };
+}
+
+renderInicio();
+
+})();
+</script>
+</body>
+</html>
