@@ -8,6 +8,7 @@ const ITENS = [
   { icon: "redes", title: "Apostila — Redes de Computadores", desc: "IP, DNS, DHCP, gateway e protocolos explicados passo a passo.", meta: "Curso Técnico · leitura", href: "/informatica/redes/apostila.html", color: ACCENT, badge: "apostila" },
   { icon: "cadeado", title: "Escape Room — Diagnóstico de Rede", desc: "A rede da empresa caiu. Use DNS, DHCP e IP para descobrir o culpado.", meta: "2EM–3EM · 30 min", href: "/informatica/redes/escape-redes.html", color: ACCENT, badge: "jogo" },
   { icon: "clipboard", title: "Projeto de Pesquisa — Guia Completo", desc: "Guia para montar seu projeto científico do zero, módulo por módulo.", meta: "Curso Técnico · contínuo", href: "/informatica/projeto-pesquisa.html", color: ACCENT, badge: "projeto" },
+  { icon: "enem", title: "Explorador Digital", desc: "Curso autoinstrutivo de 15 aulas: hardware, software, internet, senhas, algoritmos e IA — com atividades e certificado ao final.", meta: "6º-7º ano · 15 aulas", href: "/informatica/explorador-digital.html", color: ACCENT, badge: "curso" },
   { icon: "rede", title: "Endereçamento IP", desc: "Detetive de IP, Batalha de Ping e Escape: dominando o endereçamento.", meta: "Em produção", color: "#64748B", badge: "em breve", soon: true },
   { icon: "escudo", title: "Segurança e Malware", desc: "Tipos de malware, ataques digitais e boas práticas de proteção.", meta: "Em produção", color: "#64748B", badge: "em breve", soon: true },
 ];

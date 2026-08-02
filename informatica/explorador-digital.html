@@ -1,0 +1,2052 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Explorador Digital — Curso de Tecnologia · Portal do Professor</title>
+<meta name="description" content="Curso autoinstrutivo de tecnologia para o 6º e 7º ano: 15 aulas sobre hardware, software, internet, senhas, algoritmos e inteligência artificial, com atividades interativas e certificado ao final.">
+<meta property="og:title" content="Explorador Digital — Curso de Tecnologia">
+<meta property="og:description" content="15 aulas autoinstrutivas sobre tecnologia, com atividades práticas e certificado ao final. Para o 6º e 7º ano.">
+<meta property="og:image" content="https://portmarcos.github.io/assets/img/og-capa.png">
+<link rel="icon" href="../favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Lexend:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1C2541; --ink-soft:#4C5578;
+    --paper:#FAF3E4; --card:#FFFFFF; --card-line:#E9DFC7;
+    --teal:#2A9D8F; --teal-soft:#DDF0EC;
+    --amber:#E9A23B; --amber-soft:#FBEBD3;
+    --coral:#E4572E; --coral-soft:#FCE1D6;
+    --success:#2E9E5B; --success-soft:#DEF3E5;
+    --error:#C1292E; --error-soft:#FADADA;
+    --radius:16px; --shadow: 0 4px 14px rgba(28,37,65,0.08);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--paper);
+    background-image: radial-gradient(circle at 1px 1px, rgba(28,37,65,0.06) 1px, transparent 0);
+    background-size: 22px 22px;
+    color:var(--ink); font-family:'Lexend', sans-serif; line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{ font-family:'Fredoka', sans-serif; font-weight:600; }
+  .mono{ font-family:'JetBrains Mono', monospace; }
+  button{ font-family:'Lexend'; }
+
+  /* ============ SCREENS ============ */
+  .screen{ display:none; }
+  .screen.active{ display:block; }
+
+  /* ============ HOME ============ */
+  .home-hero{ max-width:920px; margin:0 auto; padding:48px 22px 20px; text-align:center; }
+  .home-hero .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--ink); color:var(--paper); padding:6px 16px; border-radius:999px;
+    font-family:'JetBrains Mono', monospace; font-size:0.76rem; letter-spacing:0.05em; text-transform:uppercase;
+  }
+  .home-hero h1{ font-size:clamp(2rem,5vw,3rem); margin:18px 0 10px; line-height:1.1; }
+  .home-hero h1 span{ color:var(--coral); }
+  .home-hero p.lead{ color:var(--ink-soft); font-size:1.05rem; max-width:600px; margin:0 auto 22px; }
+
+  .overall-progress{ max-width:480px; margin:0 auto 8px; }
+  .overall-track{ height:12px; background:var(--card-line); border-radius:7px; overflow:hidden; }
+  .overall-fill{ height:100%; width:0%; background:linear-gradient(90deg, var(--teal), var(--amber), var(--coral)); transition:width .4s ease; }
+  .overall-label{ font-family:'JetBrains Mono', monospace; font-size:0.78rem; color:var(--ink-soft); margin-top:8px; }
+
+  .course-grid{ max-width:960px; margin:30px auto 80px; padding:0 22px; display:grid; grid-template-columns:repeat(auto-fill, minmax(255px,1fr)); gap:16px; }
+  .lesson-card{
+    background:var(--card); border:1px solid var(--card-line); border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:18px 18px 16px; border-top:5px solid var(--card-color, var(--teal));
+    display:flex; flex-direction:column; gap:8px; position:relative; transition:transform .15s ease;
+  }
+  .lesson-card.locked{ opacity:0.55; }
+  .lesson-card:not(.locked):hover{ transform:translateY(-2px); }
+  .lc-top{ display:flex; align-items:center; gap:10px; }
+  .lc-num{ font-family:'Fredoka'; font-weight:700; font-size:1.3rem; color:var(--card-color, var(--teal)); }
+  .lc-icon{ font-size:1.4rem; margin-left:auto; }
+  .lc-title{ margin:0; font-size:1.02rem; line-height:1.3; }
+  .lc-status{
+    font-family:'JetBrains Mono', monospace; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.04em;
+    padding:3px 9px; border-radius:999px; align-self:flex-start;
+  }
+  .lc-status.done{ background:var(--success-soft); color:var(--success); }
+  .lc-status.available{ background:var(--card-soft, var(--teal-soft)); color:var(--card-color, var(--teal)); }
+  .lc-status.locked{ background:#EFEAE0; color:var(--ink-soft); }
+  .lc-btn{
+    margin-top:6px; border:none; border-radius:9px; padding:9px 14px; font-weight:600; font-size:0.86rem;
+    cursor:pointer; background:var(--card-color, var(--teal)); color:#fff;
+  }
+  .lc-btn:disabled{ background:#D8D1BF; cursor:not-allowed; }
+  .lc-time{ font-family:'JetBrains Mono', monospace; font-size:0.72rem; color:var(--ink-soft); }
+
+  footer.home-footer{ text-align:center; padding:0 20px 50px; color:var(--ink-soft); font-size:0.85rem; }
+
+  /* ============ LESSON SCREEN ============ */
+  .lesson-topbar{
+    position:sticky; top:0; z-index:40; background:rgba(250,243,228,0.96); backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--card-line); padding:12px 20px;
+  }
+  .lesson-topbar-inner{ max-width:760px; margin:0 auto; display:flex; align-items:center; gap:12px; }
+  .back-btn{
+    border:1.5px solid var(--card-line); background:#fff; border-radius:9px; padding:7px 12px;
+    cursor:pointer; font-size:0.82rem; font-weight:600; color:var(--ink); white-space:nowrap;
+  }
+  .lt-title{ font-family:'Fredoka'; font-size:1rem; font-weight:600; flex:1; }
+  .lt-tag{
+    font-family:'JetBrains Mono', monospace; font-size:0.68rem; padding:4px 10px; border-radius:999px; color:#fff;
+    white-space:nowrap;
+  }
+  .lt-timer{
+    font-family:'JetBrains Mono', monospace; font-size:0.75rem; color:var(--ink-soft);
+    background:#fff; border:1px solid var(--card-line); padding:4px 10px; border-radius:999px; white-space:nowrap;
+  }
+  .step-progress{ max-width:760px; margin:10px auto 0; display:flex; gap:5px; padding:0 20px; }
+  .step-dot{ flex:1; height:6px; border-radius:4px; background:var(--card-line); transition:background .25s; }
+  .step-dot.filled{ background:var(--dot-color, var(--teal)); }
+  .step-dot.current{ background:var(--dot-color, var(--teal)); opacity:0.55; }
+
+  .lesson-body{ max-width:760px; margin:0 auto; padding:28px 20px 130px; min-height:50vh; }
+  .step-panel{ display:none; animation: fadein .25s ease; }
+  .step-panel.active{ display:block; }
+  @keyframes fadein{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+
+  .step-kicker{
+    display:inline-flex; align-items:center; gap:7px;
+    font-family:'JetBrains Mono', monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.05em;
+    color:var(--dot-color, var(--teal)); background:var(--soft-color, var(--teal-soft));
+    padding:5px 12px; border-radius:999px; margin-bottom:14px;
+  }
+  .step-panel h2{ font-size:1.5rem; margin:0 0 14px; }
+  .step-panel > p{ color:var(--ink); font-size:1rem; margin:0 0 14px; }
+
+  .obj-list{ margin:0 0 18px; padding-left:22px; }
+  .obj-list li{ margin-bottom:8px; font-size:0.98rem; }
+  .step-note{ font-size:0.86rem; color:var(--ink-soft); background:#fff; border:1px dashed var(--card-line); padding:10px 14px; border-radius:9px; }
+
+  .teach-block p{ margin:0 0 14px; font-size:0.98rem; }
+  .fun-fact{
+    margin-top:6px; font-size:0.86rem; color:var(--ink-soft); background:#fff; padding:12px 14px; border-radius:10px;
+    border:1px dashed var(--dot-color, var(--teal)); display:flex; gap:8px; align-items:flex-start;
+  }
+
+  .instructions{
+    font-size:0.88rem; background:var(--card); border:1px dashed var(--card-line);
+    padding:10px 14px; border-radius:10px; margin-bottom:16px; color:var(--ink-soft);
+  }
+  .instructions b{ color:var(--ink); }
+
+  .reflect-item{ margin-bottom:16px; }
+  .reflect-q{ font-weight:600; font-size:0.95rem; margin:0 0 8px; }
+  .reflect-input{
+    width:100%; font-family:'Lexend'; font-size:0.92rem; padding:10px 12px; border-radius:9px;
+    border:1.5px solid var(--card-line); resize:vertical; min-height:60px;
+  }
+
+  .summary-list{ margin:0 0 20px; padding-left:22px; }
+  .summary-list li{ margin-bottom:8px; font-size:0.98rem; }
+
+  /* buttons / feedback / components (shared with interactive activities) */
+  .btn{
+    font-weight:600; font-size:0.92rem; border:none; border-radius:10px; padding:10px 18px; cursor:pointer;
+    background:var(--ink); color:#fff; transition: transform .12s ease, opacity .12s ease;
+  }
+  .btn:hover{ transform:translateY(-1px); opacity:0.92; }
+  .btn.ghost{ background:transparent; color:var(--ink); border:1.5px solid var(--card-line); }
+  .btn.tier{ background:var(--dot-color, var(--teal)); }
+  .btn-row{ display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
+
+  .classify-list{ display:flex; flex-direction:column; gap:8px; }
+  .classify-item{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+    background:var(--paper); border:1px solid var(--card-line); border-radius:10px; padding:10px 14px; }
+  .classify-item .item-label{ font-weight:500; }
+  .classify-options{ display:flex; gap:6px; flex-wrap:wrap; }
+  .opt-btn{ font-family:'JetBrains Mono', monospace; font-size:0.76rem; border:1.5px solid var(--card-line);
+    background:#fff; padding:5px 11px; border-radius:8px; cursor:pointer; color:var(--ink-soft); }
+  .opt-btn.selected{ background:var(--ink); color:#fff; border-color:var(--ink); }
+  .classify-item.correct{ border-color:var(--success); background:var(--success-soft); }
+  .classify-item.incorrect{ border-color:var(--error); background:var(--error-soft); }
+  .classify-item .result-icon{ font-size:0.95rem; margin-left:4px; }
+
+  .mcq{ display:flex; flex-direction:column; gap:8px; margin:12px 0 6px; }
+  .mcq-opt{ text-align:left; background:var(--paper); border:1.5px solid var(--card-line); border-radius:10px;
+    padding:10px 14px; cursor:pointer; font-size:0.95rem; color:var(--ink); }
+  .mcq-opt:hover{ border-color:var(--dot-color, var(--teal)); }
+  .mcq-opt.selected{ border-color:var(--ink); background:#fff; }
+  .mcq-opt.correct{ border-color:var(--success); background:var(--success-soft); font-weight:600; }
+  .mcq-opt.incorrect{ border-color:var(--error); background:var(--error-soft); }
+  .mcq-block{ border:1px solid var(--card-line); border-radius:12px; padding:16px 16px 14px; margin-bottom:16px; background:#fffdf8; }
+  .mcq-block p.q{ font-weight:600; margin:0 0 4px; }
+
+  .feedback{ margin-top:14px; padding:12px 14px; border-radius:10px; font-size:0.92rem; display:none; }
+  .feedback.show{ display:block; }
+  .feedback.ok{ background:var(--success-soft); color:var(--success); }
+  .feedback.warn{ background:var(--amber-soft); color:#8a5a15; }
+
+  .match-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+    padding:9px 0; border-bottom:1px dashed var(--card-line); }
+  .match-row:last-child{ border-bottom:none; }
+  .match-row .part{ font-weight:600; font-family:'JetBrains Mono', monospace; font-size:0.88rem; min-width:130px;}
+  select{ font-family:'Lexend'; font-size:0.9rem; padding:8px 10px; border-radius:8px; border:1.5px solid var(--card-line);
+    background:#fff; color:var(--ink); flex:1; min-width:200px; }
+  .match-row.correct select{ border-color:var(--success); }
+  .match-row.incorrect select{ border-color:var(--error); }
+
+  .fill-text{ display:flex; flex-wrap:wrap; align-items:center; gap:6px; font-size:1.02rem; line-height:2.4; }
+  input.blank{ font-family:'JetBrains Mono', monospace; font-size:0.92rem; border:none; border-bottom:2px solid var(--dot-color, var(--teal));
+    background:transparent; padding:3px 4px; width:130px; text-align:center; color:var(--ink); }
+  input.blank:focus{ outline:none; background:var(--paper); }
+  input.blank.correct{ border-color:var(--success); color:var(--success); font-weight:600; }
+  input.blank.incorrect{ border-color:var(--error); color:var(--error); }
+
+  .pw-wrap input[type=text]{ width:100%; font-family:'JetBrains Mono', monospace; font-size:1rem;
+    padding:12px 14px; border-radius:10px; border:1.5px solid var(--card-line); }
+  .pw-bar{ height:8px; border-radius:6px; background:var(--card-line); margin-top:10px; overflow:hidden; }
+  .pw-bar-fill{ height:100%; width:0%; background:var(--error); transition: width .25s, background .25s; }
+  .pw-label{ font-family:'JetBrains Mono', monospace; font-size:0.8rem; margin-top:6px; color:var(--ink-soft); }
+  .pw-checklist{ list-style:none; padding:0; margin:12px 0 0; font-size:0.86rem; color:var(--ink-soft); }
+  .pw-checklist li{ padding:2px 0; }
+  .pw-checklist li.met{ color:var(--success); }
+  .pw-checklist li::before{ content:"○  "; }
+  .pw-checklist li.met::before{ content:"●  "; }
+
+  .seq-pool{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; }
+  .seq-pool button{ font-family:'JetBrains Mono', monospace; font-size:0.82rem; border:1.5px solid var(--card-line);
+    background:#fff; padding:8px 12px; border-radius:8px; cursor:pointer; }
+  .seq-pool button:disabled{ opacity:0.35; cursor:default; }
+  .seq-display{ min-height:46px; display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+    background:var(--paper); border:1px dashed var(--card-line); border-radius:10px; padding:10px 12px; }
+  .seq-display .chip{ background:var(--ink); color:#fff; font-family:'JetBrains Mono', monospace; font-size:0.78rem;
+    padding:5px 10px; border-radius:6px; }
+  .seq-display .placeholder{ color:var(--ink-soft); font-size:0.85rem; font-style:italic; }
+
+  .flowchart{ display:flex; flex-direction:column; align-items:center; gap:0; margin:18px 0 22px; }
+  .fc-box{ background:#fff; border:2px solid var(--ink); border-radius:10px; padding:10px 18px; font-weight:600;
+    font-size:0.92rem; text-align:center; max-width:260px; }
+  .fc-box.start-end{ border-radius:999px; background:var(--ink); color:#fff; }
+  .fc-diamond{ background:var(--amber-soft); border:2px solid var(--amber); padding:16px 14px; font-weight:600;
+    font-size:0.88rem; text-align:center; width:190px; transform:rotate(45deg); display:flex; align-items:center;
+    justify-content:center; margin:6px 0; }
+  .fc-diamond span{ transform:rotate(-45deg); }
+  .fc-arrow{ font-size:1.3rem; color:var(--ink-soft); line-height:1; margin:2px 0; }
+  .fc-branches{ display:flex; gap:60px; margin:6px 0; }
+  .fc-branch{ display:flex; flex-direction:column; align-items:center; }
+  .fc-branch-label{ font-family:'JetBrains Mono', monospace; font-size:0.75rem; color:var(--ink-soft); margin-bottom:2px;}
+
+  .maze-outer{ display:flex; flex-direction:column; align-items:center; gap:16px; }
+  .maze-grid{ position:relative; display:grid; grid-template-columns:repeat(5, 56px); grid-template-rows:repeat(4, 56px);
+    gap:4px; background:var(--ink); padding:4px; border-radius:12px; }
+  .cell{ background:#fff; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; }
+  .cell.wall{ background:#3a3f5c; }
+  .cell.goal{ background:var(--success-soft); }
+  .robot{ position:absolute; font-size:1.6rem; width:56px; height:56px; display:flex; align-items:center; justify-content:center;
+    transition: top .38s ease, left .38s ease; pointer-events:none; }
+  .cmd-pad{ display:flex; flex-direction:column; align-items:center; gap:6px; }
+  .cmd-row{ display:flex; gap:6px; }
+  .cmd-btn{ width:52px; height:44px; border-radius:10px; border:1.5px solid var(--card-line); background:#fff; font-size:1.2rem; cursor:pointer; }
+  .cmd-btn:hover{ border-color:var(--coral); }
+
+  .check-list{ display:flex; flex-direction:column; gap:8px; }
+  .check-row{ display:flex; align-items:center; gap:10px; background:var(--paper); border:1px solid var(--card-line);
+    border-radius:10px; padding:10px 14px; cursor:pointer; }
+  .check-row input{ width:18px; height:18px; accent-color:var(--coral); }
+  .check-row.correct{ border-color:var(--success); background:var(--success-soft); }
+  .check-row.incorrect{ border-color:var(--error); background:var(--error-soft); }
+
+  pre.code-block{ background:#1C2541; color:#EAF0FF; border-radius:10px; padding:16px 18px;
+    font-family:'JetBrains Mono', monospace; font-size:0.85rem; overflow-x:auto; line-height:1.7; margin:0 0 16px; }
+  pre.code-block .ln{ color:#7d88b8; margin-right:10px; }
+
+  .field{ margin-bottom:14px; }
+  .field label{ display:block; font-weight:600; font-size:0.88rem; margin-bottom:5px; }
+  .field input[type=text], .field textarea{ width:100%; font-family:'Lexend'; font-size:0.95rem;
+    padding:10px 12px; border-radius:9px; border:1.5px solid var(--card-line); resize:vertical; }
+
+  .certificate{ display:none; margin-top:22px; border:3px double var(--coral); border-radius:14px; padding:34px 24px;
+    text-align:center; background: repeating-linear-gradient(135deg, #fff, #fff 18px, #FDEFE8 18px, #FDEFE8 36px); }
+  .certificate.show{ display:block; }
+  .certificate .cert-title{ font-family:'Fredoka'; font-size:1.5rem; color:var(--coral); margin-bottom:4px;}
+  .certificate .cert-name{ font-family:'Fredoka'; font-size:1.9rem; margin:14px 0; border-bottom:2px solid var(--ink); display:inline-block; padding-bottom:4px;}
+  .certificate .cert-date{ font-family:'JetBrains Mono', monospace; font-size:0.82rem; color:var(--ink-soft); margin-top:16px; }
+  .certificate .sign-line{ margin-top:30px; font-size:0.85rem; color:var(--ink-soft); }
+  .certificate .sign-line .line{ display:inline-block; width:220px; border-bottom:1px solid var(--ink-soft); margin-left:8px; }
+
+  .challenge-box{ border:2px dashed var(--dot-color, var(--teal)); border-radius:12px; padding:16px 20px; margin-top:4px;
+    background:var(--soft-color, var(--teal-soft)); }
+
+  .lesson-bottom-nav{
+    position:fixed; bottom:0; left:0; right:0; z-index:40; background:rgba(250,243,228,0.98); backdrop-filter:blur(6px);
+    border-top:1px solid var(--card-line); padding:12px 20px;
+  }
+  .lbn-inner{ max-width:760px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:10px; }
+  .step-indicator{ font-family:'JetBrains Mono', monospace; font-size:0.76rem; color:var(--ink-soft); }
+  .nav-btn{ border:none; border-radius:10px; padding:11px 20px; font-weight:600; font-size:0.92rem; cursor:pointer; }
+  .nav-btn.prev{ background:transparent; border:1.5px solid var(--card-line); color:var(--ink); }
+  .nav-btn.prev:disabled{ opacity:0.3; cursor:default; }
+  .nav-btn.next{ background:var(--dot-color, var(--teal)); color:#fff; }
+
+  @media (max-width:600px){
+    .maze-grid{ grid-template-columns:repeat(5, 46px); grid-template-rows:repeat(4, 46px); }
+    .robot{ width:46px; height:46px; font-size:1.3rem; }
+    .fc-branches{ gap:24px; }
+    .lt-title{ display:none; }
+  }
+  @media (prefers-reduced-motion: reduce){ *{ transition:none !important; scroll-behavior:auto !important; } }
+  :focus-visible{ outline:3px solid var(--coral); outline-offset:2px; }
+
+  /* ============ INTEGRAÇÃO COM O PORTAL + RETOQUES VISUAIS ============ */
+  .site-topbar{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    max-width:920px; margin:0 auto; padding:16px 22px 0;
+  }
+  .site-brand{ display:inline-flex; align-items:center; gap:8px; font-family:'Fredoka',sans-serif; font-weight:600; font-size:0.92rem; color:var(--ink); text-decoration:none; }
+  .site-brand .dot{ width:9px; height:9px; border-radius:50%; background:var(--teal); }
+  .site-back{
+    font-size:0.82rem; font-weight:600; color:var(--ink-soft); text-decoration:none;
+    border:1.5px solid var(--card-line); background:#fff; padding:6px 13px; border-radius:999px; transition:.15s;
+  }
+  .site-back:hover{ color:var(--ink); border-color:var(--coral); }
+
+  /* Hero: fundo decorativo mais rico, sem perder a leveza do curso */
+  .home-hero{ position:relative; }
+  .home-hero::before{
+    content:''; position:absolute; inset:-10px -10% auto; height:280px; z-index:-1;
+    background:
+      radial-gradient(circle at 18% 20%, rgba(42,157,143,0.16), transparent 55%),
+      radial-gradient(circle at 82% 10%, rgba(228,87,46,0.13), transparent 50%),
+      radial-gradient(circle at 50% 60%, rgba(233,162,59,0.12), transparent 55%);
+  }
+  .overall-progress{ position:relative; }
+  .overall-track{ box-shadow:inset 0 1px 3px rgba(28,37,65,0.1); }
+  .progress-note{ font-size:0.76rem; color:var(--ink-soft); margin-top:10px; opacity:0.85; }
+  .reset-progress{
+    display:inline-block; margin-top:6px; font-family:'JetBrains Mono',monospace; font-size:0.7rem;
+    color:var(--ink-soft); background:none; border:none; text-decoration:underline; cursor:pointer; padding:2px;
+  }
+  .reset-progress:hover{ color:var(--coral); }
+
+  /* Legenda de níveis */
+  .tier-legend{ display:flex; justify-content:center; gap:14px; flex-wrap:wrap; margin:22px auto 0; max-width:600px; }
+  .tier-chip{ display:inline-flex; align-items:center; gap:6px; font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--ink-soft); }
+  .tier-chip .dot{ width:9px; height:9px; border-radius:50%; }
+
+  /* Cards: mais presença, ícone em selo circular */
+  .lesson-card{ box-shadow:0 2px 8px rgba(28,37,65,0.06); }
+  .lesson-card:not(.locked):hover{ box-shadow:var(--shadow), 0 10px 24px rgba(28,37,65,0.1); }
+  .lc-icon{
+    width:36px; height:36px; border-radius:50%; margin-left:auto;
+    background:var(--card-soft, var(--teal-soft)); display:flex; align-items:center; justify-content:center;
+    font-size:1.15rem;
+  }
+  .lc-num{ opacity:0.55; }
+  .lesson-card.locked .lc-icon{ filter:grayscale(0.4); }
+
+  /* Botões: leve profundidade */
+  .btn{ box-shadow:0 2px 6px rgba(28,37,65,0.12); }
+  .btn.ghost{ box-shadow:none; }
+  .lc-btn{ box-shadow:0 2px 6px rgba(28,37,65,0.14); }
+
+  @media (max-width:600px){
+    .site-topbar{ padding:14px 16px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ HOME SCREEN ============================================================ -->
+<div class="screen active" id="screen-home">
+  <div class="site-topbar">
+    <a class="site-brand" href="../index.html"><span class="dot"></span> Portal Marcos Cruz</a>
+    <a class="site-back" href="index.html">← Informática</a>
+  </div>
+  <div class="home-hero">
+    <span class="eyebrow">🎓 Curso autoinstrutivo · 6º e 7º ano</span>
+    <h1>Explorador <span>Digital</span></h1>
+    <p class="lead">Um curso completo sobre tecnologia, dividido em 15 aulas. Cada aula tem cerca de 50 minutos e várias etapas — leia, pratique, reflita e conclua no seu próprio ritmo!</p>
+    <div class="overall-progress">
+      <div class="overall-track"><div class="overall-fill" id="overallFill"></div></div>
+      <div class="overall-label" id="overallLabel">0 de 15 aulas concluídas</div>
+      <div class="progress-note">💾 Seu progresso fica salvo neste aparelho — pode fechar e voltar depois. <button class="reset-progress" onclick="resetProgress()">Reiniciar progresso</button></div>
+    </div>
+    <div class="tier-legend">
+      <span class="tier-chip"><span class="dot" style="background:#2A9D8F"></span> Iniciante · aulas 1–5</span>
+      <span class="tier-chip"><span class="dot" style="background:#E9A23B"></span> Intermediário · aulas 6–10</span>
+      <span class="tier-chip"><span class="dot" style="background:#E4572E"></span> Avançado · aulas 11–15</span>
+    </div>
+  </div>
+  <div class="course-grid" id="courseGrid"></div>
+  <footer class="home-footer">Curso Explorador Digital — clique em uma aula disponível para começar. 🧭</footer>
+</div>
+
+<!-- ============================================================ LESSON SCREEN (template, reused) ============================================================ -->
+<div class="screen" id="screen-lesson">
+  <div class="lesson-topbar">
+    <div class="lesson-topbar-inner">
+      <button class="back-btn" onclick="backToHome()">← Curso</button>
+      <span class="lt-title" id="ltTitle">—</span>
+      <span class="lt-tag" id="ltTag">—</span>
+      <span class="lt-timer" id="lessonTimer">⏱ 00:00</span>
+    </div>
+    <div class="step-progress" id="stepProgress"></div>
+  </div>
+  <div class="lesson-body" id="lessonBody"></div>
+  <div class="lesson-bottom-nav">
+    <div class="lbn-inner">
+      <button class="nav-btn prev" id="prevBtn" onclick="prevStep()">← Anterior</button>
+      <span class="step-indicator" id="stepIndicator">Etapa 1 de 6</span>
+      <button class="nav-btn next" id="nextBtn" onclick="nextStep()">Próximo →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================================
+   COURSE ENGINE
+   ============================================================================ */
+const TIER_COLOR = { 1:'#2A9D8F', 2:'#E9A23B', 3:'#E4572E' };
+const TIER_SOFT  = { 1:'#DDF0EC', 2:'#FBEBD3', 3:'#FCE1D6' };
+const TIER_NAME  = { 1:'Iniciante', 2:'Intermediário', 3:'Avançado' };
+function tierOf(n){ return n<=5?1:(n<=10?2:3); }
+
+const PROGRESS_KEY = 'exploradorDigital:progresso';
+function loadProgress(){
+  try{
+    const saved = JSON.parse(localStorage.getItem(PROGRESS_KEY) || 'null');
+    if(Array.isArray(saved) && saved.length === 16) return saved;
+  }catch(e){}
+  return new Array(16).fill(false);
+}
+function saveProgress(){
+  try{ localStorage.setItem(PROGRESS_KEY, JSON.stringify(completed)); }catch(e){}
+}
+function resetProgress(){
+  if(!confirm('Isso vai apagar o progresso salvo neste aparelho (todas as aulas voltam a ficar bloqueadas, exceto a 1ª). Continuar?')) return;
+  for(let i=0;i<completed.length;i++) completed[i] = false;
+  saveProgress();
+  renderHome();
+}
+
+const completed = loadProgress();
+let currentLesson = null;
+let currentStep = 1;
+
+/* ---------------------------------------------------------------------------
+   LESSON CONTENT DATA
+   --------------------------------------------------------------------------- */
+const LESSONS = [
+null, // 1-indexed
+{
+  num:1, icon:'🔀', title:'Analógica ou Digital?',
+  objectives:[
+    'Diferenciar tecnologia analógica de tecnologia digital',
+    'Reconhecer que tecnologia existe desde muito antes dos computadores',
+    'Classificar exemplos do dia a dia em cada categoria'
+  ],
+  teaching:{
+    paragraphs:[
+      'A palavra "tecnologia" vem do grego <i>tekhne</i> (técnica) + <i>logos</i> (estudo). Ou seja: tecnologia é qualquer conhecimento aplicado para resolver um problema — não precisa ter tela nem bateria! A roda, o lápis e o fogo também são tecnologias, só que muito antigas.',
+      'Separamos a tecnologia em dois grandes grupos. A <b>analógica</b> representa informação de forma contínua e física — como o ponteiro de um relógio se movendo suavemente. Já a <b>digital</b> representa tudo em números, em <b>0s e 1s</b> (sistema binário), o que permite copiar, guardar e transmitir a informação com muito mais precisão.'
+    ],
+    funfact:'O primeiro computador digital de grande porte, o ENIAC (1945), ocupava uma sala inteira e pesava quase 30 toneladas — hoje, um celular no seu bolso é milhões de vezes mais potente.'
+  },
+  practiceHTML:`
+    <div class="instructions">Clique na opção certa para cada item. Depois, clique em <b>Conferir respostas</b>.</div>
+    <div class="classify-list" id="act1-list"></div>
+    <div class="btn-row">
+      <button class="btn tier" onclick="checkClassify('act1-list', 1)">Conferir respostas</button>
+      <button class="btn ghost" onclick="resetClassify('act1-list')">Limpar</button>
+    </div>
+    <div class="feedback" id="act1-feedback"></div>`,
+  reflect:[
+    'Cite três tecnologias que sua família usava há 20 anos e que hoje são diferentes ou não existem mais.',
+    'Existe alguma tecnologia analógica que você acha melhor que a versão digital equivalente? Por quê?',
+    'Um livro impresso e um e-book contam a mesma história. O que muda entre eles em termos de tecnologia?'
+  ],
+  challenge:'Ande pela sua casa e liste 5 objetos analógicos e 5 digitais que você encontrar.',
+  deepen:{
+    paragraphs:[
+      'Um bom jeito de entender a diferença é pensar em música. Uma fita cassete grava o som como uma onda contínua magnetizada na fita — é tecnologia analógica. Já um arquivo MP3 grava o som como uma sequência enorme de números (0s e 1s) que representam a onda sonora em pequenos "pedacinhos" no tempo.',
+      'Essa diferença explica por que cópias digitais não perdem qualidade: copiar um arquivo digital é só copiar números, exatamente iguais. Já copiar uma fita cassete de outra fita costuma deixar o som com mais chiado a cada cópia, porque pequenos erros físicos vão se acumulando.'
+    ],
+    example:'Uma fotografia impressa (analógica) desbota com o tempo e não pode ser copiada sem perder qualidade. Uma foto digital pode ser copiada milhares de vezes, enviada pelo mundo todo, e continuar exatamente igual à original.'
+  },
+  check:[
+    {q:'Por que uma cópia de um arquivo digital não perde qualidade?', options:['Porque arquivos digitais são mágicos','Porque copiar um arquivo digital é copiar números exatos, sem erro','Porque arquivos digitais não podem ser copiados'], correct:1, explain:'Um arquivo digital é uma sequência de números (0s e 1s); copiar esses números é um processo exato, sem perdas.'},
+    {q:'O que acontece com uma fita cassete quando é copiada várias vezes?', options:['Ela fica idêntica ao original para sempre','Ela tende a perder qualidade (chiado) a cada cópia','Ela vira um arquivo digital automaticamente'], correct:1, explain:'Tecnologias analógicas registram informação de forma física e contínua, então pequenos erros se acumulam a cada cópia.'},
+    {q:'Qual das opções abaixo é um exemplo de tecnologia digital?', options:['Relógio de ponteiros','Arquivo de música MP3','Termômetro de mercúrio'], correct:1, explain:'O MP3 representa o som como números (0s e 1s) — é digital.'}
+  ],
+  summary:[
+    'Tecnologia existe desde ferramentas bem antigas, não só em telas e gadgets',
+    'Analógica representa informação de forma contínua/física',
+    'Digital representa tudo em 0s e 1s (sistema binário)'
+  ]
+},
+{
+  num:2, icon:'🧩', title:'Hardware ou Software?',
+  objectives:[
+    'Diferenciar hardware de software',
+    'Reconhecer exemplos de cada categoria',
+    'Entender como os dois trabalham juntos'
+  ],
+  teaching:{
+    paragraphs:[
+      'Pense num computador como um corpo humano. O <b>hardware</b> é o corpo físico — os órgãos que você pode tocar: tela, teclado, processador, memória. O <b>software</b> é como a mente — as instruções que dizem ao corpo o que fazer. Sem hardware, o software não tem onde "morar". Sem software, o hardware é só uma caixa de peças sem vida.',
+      'Existem dois tipos principais de software: o <b>sistema operacional</b> (Windows, Android, iOS), que organiza tudo por trás das cenas, e os <b>aplicativos</b> (WhatsApp, jogos, editores de texto), que fazem tarefas específicas para o usuário.'
+    ],
+    funfact:'Trocar apenas o software de um computador antigo (por um sistema operacional mais leve) pode fazer ele funcionar quase como novo, sem trocar nenhuma peça física.'
+  },
+  practiceHTML:`
+    <div class="instructions">Dica: se você conseguisse deixar cair no seu pé e doer, provavelmente é hardware!</div>
+    <div class="classify-list" id="act2-list"></div>
+    <div class="btn-row">
+      <button class="btn tier" onclick="checkClassify('act2-list', 2)">Conferir respostas</button>
+      <button class="btn ghost" onclick="resetClassify('act2-list')">Limpar</button>
+    </div>
+    <div class="feedback" id="act2-feedback"></div>`,
+  reflect:[
+    'Se você comprar um celular novo, mas nunca instalar nenhum aplicativo além dos que já vêm de fábrica, ele ainda é útil? Por quê?',
+    'Por que "atualizar o software" às vezes deixa um aparelho antigo mais lento?',
+    'Dê um exemplo de hardware que só funciona bem com um software específico.'
+  ],
+  challenge:'Escolha um aparelho eletrônico da sua casa (micro-ondas, videogame, smart TV) e liste 3 hardwares e 2 softwares que ele provavelmente tem.',
+  deepen:{
+    paragraphs:[
+      'Existe um tipo especial de software chamado firmware: um programa gravado diretamente dentro de um hardware (como a placa-mãe ou um roteador) que ensina aquele hardware a funcionar antes mesmo do sistema operacional carregar. É como as "instruções de fábrica" de um aparelho.',
+      'O hardware impõe um limite para o que o software pode fazer: mesmo o melhor programa de edição de vídeo do mundo não vai rodar bem em um computador com pouca memória RAM ou processador fraco. Por isso, empresas de software costumam informar os "requisitos mínimos" de hardware necessários para cada programa.'
+    ],
+    example:'Um videogame novo pode não rodar (ou travar bastante) em um console de gerações passadas — não porque o jogo (software) esteja com problema, mas porque o hardware daquele console mais antigo não é potente o suficiente.'
+  },
+  check:[
+    {q:'O que é firmware?', options:['Um vírus de computador','Um software gravado dentro de um hardware para ele funcionar','Um tipo de hardware muito pequeno'], correct:1, explain:'Firmware é um programa embutido no próprio hardware, que ensina ele a funcionar.'},
+    {q:'Por que um jogo novo pode não rodar bem em um hardware antigo?', options:['Porque hardware antigo não aceita eletricidade','Porque o hardware não tem capacidade suficiente para rodar aquele software','Porque jogos antigos são sempre melhores'], correct:1, explain:'O hardware impõe um limite de capacidade — softwares mais exigentes precisam de hardware mais potente.'},
+    {q:'Qual das opções é um exemplo de software?', options:['Placa de vídeo','Aplicativo de edição de fotos','Cabo HDMI'], correct:1, explain:'Um aplicativo é um programa — software, não uma peça física.'}
+  ],
+  summary:[
+    'Hardware = parte física do computador',
+    'Software = programas e instruções',
+    'Sistema operacional organiza tudo; aplicativos fazem tarefas específicas'
+  ]
+},
+{
+  num:3, icon:'🖥️', title:'Peças do computador',
+  objectives:[
+    'Conhecer os principais componentes internos de um computador',
+    'Entender a função de CPU, RAM e armazenamento',
+    'Associar cada componente à sua função correta'
+  ],
+  teaching:{
+    paragraphs:[
+      'Abrir a caixa (gabinete) de um computador de mesa revela várias peças trabalhando juntas. O <b>processador (CPU)</b> é o "cérebro": executa cálculos e decide o que fazer a cada instante. A <b>memória RAM</b> é como uma mesa de trabalho — guarda o que está sendo usado agora, mas esquece tudo quando o computador desliga. Já o <b>HD ou SSD</b> é o "arquivo" permanente, onde ficam seus arquivos, fotos e programas mesmo depois de desligar.',
+      'A <b>placa-mãe</b> é a base que conecta todas as peças entre si, como um sistema nervoso, e a <b>fonte</b> fornece a energia elétrica que faz tudo funcionar.'
+    ],
+    funfact:'Um SSD (memória de estado sólido) não tem partes móveis, por isso é muito mais rápido e silencioso que um HD tradicional, que tem discos girando fisicamente lá dentro.'
+  },
+  practiceHTML:`
+    <div class="instructions">Associe cada componente à sua função correta usando os menus abaixo.</div>
+    <div id="act3-rows"></div>
+    <div class="btn-row">
+      <button class="btn tier" onclick="checkMatch()">Conferir respostas</button>
+      <button class="btn ghost" onclick="resetMatch()">Limpar</button>
+    </div>
+    <div class="feedback" id="act3-feedback"></div>`,
+  reflect:[
+    'Por que um computador "esquece" o que estava fazendo quando falta luz de repente?',
+    'Se você quisesse deixar um computador mais rápido para jogos, qual peça trocaria primeiro? Por quê?',
+    'Um celular também tem CPU, memória e armazenamento — só que tudo minúsculo. O que isso diz sobre a evolução da tecnologia?'
+  ],
+  challenge:'Pesquise a "ficha técnica" de um celular ou computador da sua casa e anote quanto de memória RAM e de armazenamento ele tem.',
+  deepen:{
+    paragraphs:[
+      'As peças de um computador precisam se comunicar rapidamente entre si. Se uma peça for muito mais lenta que as outras, ela cria um "gargalo": mesmo que o processador seja rapidíssimo, o computador todo pode ficar lento se o armazenamento (HD) for muito devagar para entregar os dados a tempo.',
+      'Por isso, ao montar ou comprar um computador, é importante equilibrar as peças — de nada adianta um processador ótimo se a memória RAM for pequena demais para acompanhar.'
+    ],
+    example:'É como um restaurante com um chef muito rápido, mas só um garçom lento entregando os pratos: não importa a velocidade da cozinha, os clientes vão esperar por causa do gargalo do serviço de mesa.'
+  },
+  check:[
+    {q:'O que é um "gargalo" em um computador?', options:['Um tipo de vírus','Quando uma peça mais lenta atrasa o desempenho das outras','Um cabo de conexão'], correct:1, explain:'O gargalo acontece quando a peça mais lenta limita o desempenho de todo o sistema.'},
+    {q:'Qual peça guarda os dados de forma temporária, enquanto o computador está ligado?', options:['HD/SSD','RAM','Placa-mãe'], correct:1, explain:'A RAM guarda dados temporariamente, sendo apagada quando o computador desliga.'},
+    {q:'Por que é importante equilibrar as peças de um computador?', options:['Não é importante, só a CPU importa','Porque uma peça fraca pode travar o desempenho das outras','Porque todas as peças custam o mesmo'], correct:1, explain:'Um sistema equilibrado evita que uma peça fraca vire um gargalo para as demais.'}
+  ],
+  summary:[
+    'CPU processa, RAM guarda temporariamente, HD/SSD guarda permanentemente',
+    'Placa-mãe conecta todos os componentes',
+    'A fonte fornece energia elétrica para tudo funcionar'
+  ]
+},
+{
+  num:4, icon:'🔌', title:'Entrada, Saída ou Armazenamento?',
+  objectives:[
+    'Classificar dispositivos pela sua função',
+    'Diferenciar entrada, saída e armazenamento',
+    'Identificar dispositivos que fazem mais de uma função'
+  ],
+  teaching:{
+    paragraphs:[
+      'Pense num computador como alguém conversando com você: ele precisa <b>receber</b> sua mensagem (entrada), <b>responder</b> de algum jeito (saída) e às vezes <b>guardar</b> o que foi dito para lembrar depois (armazenamento). Um dispositivo de entrada leva informação do mundo real para dentro do computador. Um de saída faz o caminho contrário: mostra ou reproduz o resultado para você.',
+      'Alguns aparelhos fazem mais de uma coisa ao mesmo tempo — uma tela sensível ao toque, por exemplo, é entrada (você toca) e saída (ela mostra imagens) ao mesmo tempo!'
+    ],
+    funfact:'A primeira "impressora" foi criada em 1938, mas ela só desenhava linhas — imprimir texto e imagens coloridas como hoje é uma invenção bem mais recente.'
+  },
+  practiceHTML:`
+    <div class="instructions">Classifique cada item e pense no motivo da sua escolha.</div>
+    <div class="classify-list" id="act4-list"></div>
+    <div class="btn-row">
+      <button class="btn tier" onclick="checkClassify('act4-list', 4)">Conferir respostas</button>
+      <button class="btn ghost" onclick="resetClassify('act4-list')">Limpar</button>
+    </div>
+    <div class="feedback" id="act4-feedback"></div>`,
+  reflect:[
+    'Dê um exemplo de um dispositivo que funciona como entrada E saída ao mesmo tempo.',
+    'Por que um pen drive é armazenamento, e não entrada ou saída?',
+    'Imagine um computador sem nenhum dispositivo de saída. Ele ainda seria útil para você? Por quê?'
+  ],
+  challenge:'Liste todos os dispositivos de entrada e saída que você usa em um videogame (console ou celular).',
+  deepen:{
+    paragraphs:[
+      'Alguns aparelhos têm sensores especiais de entrada que captam informações do ambiente: um sensor de luz ajusta o brilho da tela automaticamente, um acelerômetro detecta quando você vira o celular de lado, e um sensor de impressão digital reconhece seu dedo para desbloquear o aparelho.',
+      'Já os dispositivos de armazenamento vêm em diferentes "camadas de velocidade": a memória RAM é rapidíssima mas temporária, enquanto um HD externo é mais lento, porém guarda os dados por muito mais tempo, mesmo sem energia.'
+    ],
+    example:'Um console de videogame com sensor de movimento usa uma câmera como entrada para detectar seus gestos, e a TV como saída para mostrar o resultado na tela.'
+  },
+  check:[
+    {q:'O que um sensor de luz em um celular faz?', options:['Reproduz música','Capta informação do ambiente para ajustar o brilho da tela','Armazena fotos'], correct:1, explain:'Sensores de luz são dispositivos de entrada que captam informação do ambiente.'},
+    {q:'Qual das opções é um dispositivo de armazenamento?', options:['Microfone','Cartão de memória SD','Caixa de som'], correct:1, explain:'O cartão SD guarda dados de forma permanente — é armazenamento.'},
+    {q:'Por que a RAM não é um bom lugar para guardar arquivos permanentemente?', options:['Porque ela é muito lenta','Porque ela apaga o conteúdo quando o computador desliga','Porque ela é muito cara'], correct:1, explain:'A RAM é temporária: perde os dados assim que o computador é desligado.'}
+  ],
+  summary:[
+    'Entrada leva dados do mundo real para o computador',
+    'Saída mostra ou reproduz o resultado para você',
+    'Armazenamento guarda os dados de forma permanente'
+  ]
+},
+{
+  num:5, icon:'📦', title:'Bytes em ordem',
+  objectives:[
+    'Ordenar as unidades de medida digital',
+    'Entender a escala entre elas',
+    'Relacionar o tamanho de um arquivo à unidade certa'
+  ],
+  teaching:{
+    paragraphs:[
+      'Todo arquivo digital — uma foto, uma música, um vídeo — é medido em <b>bytes</b>. Um <b>byte</b> guarda mais ou menos um caractere de texto (como a letra "A"). Como bytes são muito pequenos, usamos múltiplos: <span class="mono">1 KB ≈ mil bytes</span>, <span class="mono">1 MB ≈ mil KB</span>, <span class="mono">1 GB ≈ mil MB</span> e <span class="mono">1 TB ≈ mil GB</span>.',
+      'Para ter noção de tamanho: uma foto de celular tem alguns MB, um filme em alta qualidade tem alguns GB, e um HD externo de 1 TB guarda milhares de fotos e centenas de filmes.'
+    ],
+    funfact:'Um único emoji digitado ocupa cerca de 4 bytes — mas uma foto tirada com o mesmo celular pode ocupar mais de 3 milhões de bytes (3 MB)!'
+  },
+  practiceHTML:`
+    <div class="instructions">Clique nas unidades, na ordem certa, da menor para a maior.</div>
+    <div class="seq-pool" id="act5-pool"></div>
+    <p style="font-size:0.85rem; color:var(--ink-soft); margin:4px 0;">Sua sequência:</p>
+    <div class="seq-display" id="act5-display"><span class="placeholder">clique nas unidades acima...</span></div>
+    <div class="btn-row">
+      <button class="btn tier" onclick="checkSeq5()">Conferir ordem</button>
+      <button class="btn ghost" onclick="resetSeq5()">Limpar</button>
+    </div>
+    <div class="feedback" id="act5-feedback"></div>`,
+  reflect:[
+    'Um celular com 128 GB de armazenamento — isso é muito ou pouco? Compare com o tamanho médio de uma foto ou vídeo.',
+    'Por que um vídeo ocupa muito mais espaço que um texto do mesmo assunto?',
+    'Se seu celular está com "pouco espaço", quais arquivos você apagaria primeiro para liberar mais GB de uma vez?'
+  ],
+  challenge:'Veja nas configurações de um celular ou computador quanto de armazenamento total ele tem e quanto já está sendo usado.',
+  deepen:{
+    paragraphs:[
+      'Alguns formatos de arquivo usam "compressão" para ocupar menos espaço: uma foto em JPG, por exemplo, é bem menor que a mesma foto sem compressão, porque o formato descarta detalhes que o olho humano dificilmente perceberia.',
+      'Isso explica por que vídeos em alta definição (4K) ocupam muito mais espaço que vídeos comuns: mais detalhes visuais significam mais informação para armazenar, mesmo com compressão.'
+    ],
+    example:'Um vídeo de 10 minutos em qualidade padrão pode ocupar cerca de 100 MB, enquanto o mesmo vídeo em 4K pode passar de 1 GB — dez vezes mais espaço para a mesma duração.'
+  },
+  check:[
+    {q:'O que é compressão de arquivo?', options:['Apagar o arquivo','Uma técnica para reduzir o tamanho do arquivo, descartando detalhes pouco perceptíveis','Transformar um arquivo digital em analógico'], correct:1, explain:'A compressão reduz o tamanho do arquivo removendo detalhes que quase não fazem diferença perceptível.'},
+    {q:'Por que vídeos em 4K ocupam mais espaço que vídeos em qualidade padrão?', options:['Porque têm mais detalhes visuais para armazenar','Porque são mais antigos','Porque usam menos bytes'], correct:0, explain:'Mais detalhes visuais significam mais informação a ser armazenada.'},
+    {q:'Qual seria o MAIOR arquivo entre estes?', options:['Uma mensagem de texto (poucos bytes)','Uma foto (poucos MB)','Um filme completo em alta qualidade (vários GB)'], correct:2, explain:'GB é uma unidade muito maior que MB ou bytes — um filme ocupa muito mais espaço.'}
+  ],
+  summary:[
+    'Byte < KB < MB < GB < TB',
+    'Cada unidade é cerca de mil vezes maior que a anterior',
+    'Fotos ficam na casa de MB; filmes e HDs, na casa de GB/TB'
+  ]
+},
+{
+  num:6, icon:'🌐', title:'Como a internet funciona',
+  objectives:[
+    'Entender como uma página chega até seu dispositivo',
+    'Reconhecer o papel de navegador, servidor, roteador e IP',
+    'Relacionar o Wi-Fi à conexão com a internet'
+  ],
+  teaching:{
+    paragraphs:[
+      'A internet é uma gigantesca rede de computadores conectados no mundo todo. Quando você digita um endereço no <b>navegador</b> (Chrome, Firefox...), seu aparelho envia um pedido pela rede — muitas vezes por <b>Wi-Fi</b>. Esse pedido passa por um <b>roteador</b>, que distribui o sinal entre os dispositivos, e viaja até um <b>servidor</b>: um computador especial, ligado 24h por dia, que guarda o site.',
+      'Para que a informação chegue ao aparelho certo, cada dispositivo conectado à internet tem um número único chamado <b>IP</b> — como se fosse o "endereço de casa" dele na rede.'
+    ],
+    funfact:'Quando você abre um site, a resposta do servidor pode viajar por cabos de fibra óptica debaixo do oceano, atravessando países inteiros, em uma fração de segundo.'
+  },
+  practiceHTML:`
+    <div class="instructions">Banco de palavras: <span class="mono">roteador · servidor · Wi-Fi · navegador · IP</span></div>
+    <p class="fill-text" id="act6-text"></p>
+    <div class="btn-row">
+      <button class="btn tier" onclick="checkFill6()">Conferir respostas</button>
+      <button class="btn ghost" onclick="resetFill6()">Limpar</button>
+    </div>
+    <div class="feedback" id="act6-feedback"></div>`,
+  reflect:[
+    'Por que às vezes um site "não abre" quando o Wi-Fi está fraco?',
+    'O que acontece se o servidor de um site sair do ar por manutenção?',
+    'Dois computadores na mesma casa acessam a internet ao mesmo tempo. Como o roteador sabe para qual enviar cada resposta?'
+  ],
+  challenge:'Peça para um adulto mostrar o roteador de Wi-Fi da sua casa. Observe as luzes piscando e imagine o que elas indicam.',
+  deepen:{
+    paragraphs:[
+      'Quando você digita um endereço como "www.exemplo.com.br", seu navegador precisa descobrir o IP daquele site. Isso é feito por um serviço chamado DNS, que funciona como uma "lista telefônica" da internet: ele traduz nomes fáceis de lembrar em números de IP, os endereços reais das máquinas.',
+      'Depois que o DNS descobre o IP certo, o navegador envia o pedido até aquele servidor específico, e o mesmo caminho é percorrido de volta para trazer a resposta até você.'
+    ],
+    example:'É como discar um nome de contato no celular em vez de decorar o número de telefone: você digita "google.com", e o DNS descobre o número (IP) por trás daquele nome, sem você precisar saber.'
+  },
+  check:[
+    {q:'O que faz o serviço de DNS?', options:['Cria senhas para os sites','Traduz nomes de sites em endereços IP','Aumenta a velocidade do Wi-Fi'], correct:1, explain:'O DNS funciona como uma lista telefônica, traduzindo nomes de sites em endereços IP.'},
+    {q:'Por que precisamos do DNS, e não digitamos IPs diretamente?', options:['Porque IPs são proibidos por lei','Porque nomes são muito mais fáceis de lembrar do que números','Porque o DNS é mais rápido que os IPs'], correct:1, explain:'Nomes de sites são muito mais fáceis de lembrar do que sequências de números.'},
+    {q:'O que acontece primeiro quando você digita um endereço de site no navegador?', options:['O navegador imprime a página','O DNS traduz o nome do site para um IP','O roteador desliga'], correct:1, explain:'Antes de tudo, o DNS precisa traduzir o nome em um IP para que o pedido possa ser enviado.'}
+  ],
+  summary:[
+    'O navegador pede a página; o servidor responde',
+    'O roteador distribui o sinal entre os aparelhos de casa',
+    'Cada dispositivo conectado tem um número IP único'
+  ]
+},
+{
+  num:7, icon:'🔐', title:'Senha forte, senha fraca',
+  objectives:[
+    'Reconhecer as características de uma senha forte',
+    'Testar a força de uma senha na prática',
+    'Entender os riscos de senhas fracas ou repetidas'
+  ],
+  teaching:{
+    paragraphs:[
+      'Uma senha é a principal barreira entre alguém mal-intencionado e suas informações pessoais. Senhas fracas — como "123456" ou o próprio nome — podem ser descobertas em segundos. Uma senha forte combina <b>letras maiúsculas e minúsculas, números e símbolos</b>, e é longa (idealmente 12 caracteres ou mais).',
+      'Uma boa estratégia é criar uma <b>frase secreta</b> só sua e transformá-la: "Meu Gato Come 3 Peixes!" vira uma senha longa, fácil de lembrar e difícil de adivinhar.'
+    ],
+    funfact:'Um computador comum pode tentar bilhões de combinações de senha por segundo. Uma senha de 6 caracteres simples pode ser descoberta em minutos; uma de 12 com símbolos pode levar séculos.'
+  },
+  practiceHTML:`
+    <div class="instructions">Digite uma senha de teste (não use uma senha real!) e veja a força em tempo real.</div>
+    <div class="pw-wrap">
+      <input type="text" id="pwInput" placeholder="Digite uma senha de teste aqui..." autocomplete="off">
+      <div class="pw-bar"><div class="pw-bar-fill" id="pwBarFill"></div></div>
+      <div class="pw-label" id="pwLabel">força: —</div>
+      <ul class="pw-checklist" id="pwChecklist">
+        <li id="pw-len">Tem 8 caracteres ou mais</li>
+        <li id="pw-upper">Tem letra maiúscula</li>
+        <li id="pw-lower">Tem letra minúscula</li>
+        <li id="pw-num">Tem número</li>
+        <li id="pw-sym">Tem símbolo (!@#$%...)</li>
+      </ul>
+    </div>
+    <p style="margin-top:20px;"><b>Agora responda:</b> qual dessas é a senha mais segura?</p>
+    <div class="mcq" id="act7-mcq"></div>
+    <div class="btn-row"><button class="btn tier" onclick="checkMCQSingle('act7-mcq', 7, 'act7-feedback', 'Isso mesmo! Senhas longas, com letras, números e símbolos misturados são muito mais difíceis de descobrir.')">Conferir resposta</button></div>
+    <div class="feedback" id="act7-feedback"></div>`,
+  reflect:[
+    'Por que usar a mesma senha em todos os aplicativos é arriscado?',
+    'O que é "autenticação em duas etapas" e por que ela deixa uma conta ainda mais segura?',
+    'Por que compartilhar sua senha, mesmo com um amigo próximo, não é uma boa ideia?'
+  ],
+  challenge:'Crie (só no papel, sem usar de verdade) uma frase secreta pessoal e transforme-a em uma senha forte.',
+  deepen:{
+    paragraphs:[
+      'Como é difícil lembrar uma senha forte e diferente para cada conta, muitas pessoas usam gerenciadores de senha: programas que criam e guardam senhas complexas de forma segura, exigindo que você lembre apenas uma senha mestra.',
+      'Além da senha em si, é importante desconfiar de mensagens que pedem para você "confirmar sua senha" clicando em um link — isso costuma ser phishing, uma tentativa de roubar sua senha fingindo ser um site ou empresa confiável.'
+    ],
+    example:'Um golpe comum é enviar um e-mail parecido com o de um banco ou jogo popular, pedindo para você clicar em um link e digitar sua senha "para confirmar a conta". Sites e empresas de verdade raramente pedem isso por e-mail.'
+  },
+  check:[
+    {q:'O que é um gerenciador de senhas?', options:['Um vírus que rouba senhas','Um programa que cria e guarda senhas fortes para você, com segurança','Um tipo de teclado especial'], correct:1, explain:'Gerenciadores de senha criam e guardam senhas fortes, exigindo que você lembre apenas uma senha mestra.'},
+    {q:'O que é phishing?', options:['Um jogo de pescaria virtual','Uma tentativa de enganar alguém para roubar senhas ou dados','Um tipo de senha muito forte'], correct:1, explain:'Phishing é um golpe que tenta enganar a vítima para roubar informações como senhas.'},
+    {q:'O que fazer se receber um e-mail pedindo para "confirmar sua senha" num link suspeito?', options:['Clicar rapidamente antes que expire','Não clicar, e verificar diretamente no site ou app oficial','Responder o e-mail com sua senha'], correct:1, explain:'O ideal é nunca clicar em links suspeitos e sempre verificar diretamente no site ou app oficial.'}
+  ],
+  summary:[
+    'Senha forte = longa + letras, números e símbolos misturados',
+    'Nunca repita a mesma senha em vários lugares',
+    'Autenticação em duas etapas adiciona uma camada extra de segurança'
+  ]
+},
+{
+  num:8, icon:'🤝', title:'Cidadania digital',
+  objectives:[
+    'Reconhecer situações de risco no ambiente online',
+    'Escolher atitudes seguras e responsáveis',
+    'Saber identificar quando é hora de pedir ajuda'
+  ],
+  teaching:{
+    paragraphs:[
+      '<b>Cidadania digital</b> é agir com responsabilidade e respeito no mundo online, assim como fazemos (ou deveríamos fazer) no mundo real. Isso inclui proteger sua privacidade, tratar as pessoas com respeito, checar informações antes de compartilhar e saber pedir ajuda quando algo parece errado.',
+      'Muitas situações desconfortáveis online têm algo em comum: alguém tenta te fazer agir rápido, sem pensar. Parar, respirar e pedir ajuda a um adulto de confiança quase sempre é a atitude mais segura.'
+    ],
+    funfact:'A maioria das plataformas tem canais de denúncia para mensagens suspeitas, golpes ou bullying — usar esses canais é uma atitude de cidadania digital, não "fofoca".'
+  },
+  practiceHTML:`
+    <div class="instructions">Leia cada situação, pense com calma, e depois compare com a explicação que aparece.</div>
+    <div id="act8-scenarios"></div>`,
+  reflect:[
+    'Você já viveu ou presenciou uma situação parecida com alguma dessas? (sem precisar dar nomes) Como foi resolvida?',
+    'Por que é tão importante avisar um adulto de confiança em vez de tentar resolver sozinho(a)?',
+    'O que você diria a um colega mais novo sobre como se comportar bem na internet?'
+  ],
+  challenge:'Escreva 3 combinados que sua turma poderia adotar para o uso de grupos de mensagens da escola.',
+  deepen:{
+    paragraphs:[
+      'Mensagens de texto não mostram tom de voz nem expressão facial, por isso uma piada ou brincadeira pode ser mal interpretada como ofensa. Essa é uma das razões por que desentendimentos acontecem tanto em conversas online.',
+      'Cyberbullying é quando alguém usa a internet repetidamente para intimidar, humilhar ou excluir outra pessoa. Diferente de um conflito pontual, o bullying (online ou não) é insistente e busca causar dano — por isso merece atenção séria de adultos responsáveis.'
+    ],
+    example:'Enviar uma mensagem engraçada para os amigos é diferente de criar um grupo para excluir e debochar de um colega repetidamente — o segundo caso é cyberbullying e deve ser levado a um adulto de confiança.'
+  },
+  check:[
+    {q:'Por que mensagens de texto podem ser mal interpretadas?', options:['Porque a internet é lenta','Porque não mostram tom de voz nem expressão facial','Porque todo mundo escreve errado'], correct:1, explain:'A falta de tom de voz e expressão facial deixa o texto mais aberto a interpretações erradas.'},
+    {q:'O que caracteriza o cyberbullying?', options:['Uma brincadeira única entre amigos','Ações repetidas para intimidar ou humilhar alguém online','Enviar uma mensagem de bom dia'], correct:1, explain:'Cyberbullying envolve ações repetidas e intencionais para causar dano a alguém.'},
+    {q:'Qual a atitude mais indicada ao perceber uma situação de cyberbullying?', options:['Ignorar, não é da sua conta','Avisar um adulto de confiança','Comentar rindo junto'], correct:1, explain:'Avisar um adulto de confiança é a atitude mais segura e responsável.'}
+  ],
+  summary:[
+    'Desconfie de mensagens que pedem urgência ou dados pessoais',
+    'Nunca espalhe conteúdo constrangedor de outra pessoa',
+    'Sempre avise um adulto de confiança em situações desconfortáveis'
+  ]
+},
+{
+  num:9, icon:'🧠', title:'Pensando como um algoritmo',
+  objectives:[
+    'Entender o que é um algoritmo',
+    'Organizar passos em uma ordem lógica',
+    'Perceber por que a ordem certa é essencial'
+  ],
+  teaching:{
+    paragraphs:[
+      'Todo programa de computador é, no fundo, um <b>algoritmo</b>: uma sequência de instruções claras e ordenadas para chegar a um resultado. Não precisa de tela nem de código para existir — uma receita de bolo e as instruções de um jogo de tabuleiro também são algoritmos!',
+      'A ordem dos passos importa muito: trocar a sequência pode fazer o algoritmo falhar completamente. Por isso, programadores testam e revisam algoritmos com cuidado antes de considerá-los prontos.'
+    ],
+    funfact:'A palavra "algoritmo" vem do nome do matemático persa Al-Khwarizmi, que viveu há mais de 1200 anos e escreveu métodos passo a passo para resolver problemas matemáticos.'
+  },
+  practiceHTML:`
+    <div class="instructions">Clique nos passos, na ordem certa, para montar o algoritmo de "ligar o computador e abrir um programa".</div>
+    <div class="seq-pool" id="act9-pool"></div>
+    <p style="font-size:0.85rem; color:var(--ink-soft); margin:4px 0;">Sua sequência:</p>
+    <div class="seq-display" id="act9-display"><span class="placeholder">clique nos passos acima, na ordem certa...</span></div>
+    <div class="btn-row">
+      <button class="btn tier" onclick="checkSeq9()">Conferir ordem</button>
+      <button class="btn ghost" onclick="resetSeq9()">Limpar</button>
+    </div>
+    <div class="feedback" id="act9-feedback"></div>`,
+  reflect:[
+    'Escreva no caderno um algoritmo de pelo menos 6 passos para uma tarefa do seu dia a dia. Ele ficaria claro para outra pessoa seguir sem "adivinhar" nada?',
+    'Por que um computador não consegue "adivinhar" um passo que ficou faltando, como uma pessoa consegue?',
+    'O que esse exercício ensina sobre a importância de sermos específicos ao programar?'
+  ],
+  challenge:'Escreva o algoritmo completo de como fazer um sanduíche, com pelo menos 8 passos bem detalhados.',
+  deepen:{
+    paragraphs:[
+      'Muitos algoritmos usam repetição: um conjunto de passos que se repete várias vezes até uma condição ser satisfeita. Por exemplo, "escovar cada dente" é repetido para todos os dentes, não é escrito um passo separado para cada um.',
+      'Na programação, essa repetição se chama "loop" (laço). Usar loops deixa os algoritmos mais curtos e organizados, em vez de repetir a mesma instrução escrita várias vezes.'
+    ],
+    example:'Em vez de escrever "pule" 10 vezes seguidas em um jogo, um programador escreve algo como "repita 10 vezes: pule" — um loop que executa a mesma ação o número de vezes necessário.'
+  },
+  check:[
+    {q:'O que é um "loop" (laço) em um algoritmo?', options:['Um erro de programação','Um conjunto de passos que se repete várias vezes','Um tipo de variável'], correct:1, explain:'Um loop é uma estrutura que repete um conjunto de passos várias vezes.'},
+    {q:'Por que usar loops é útil?', options:['Deixa o algoritmo mais longo e confuso','Evita repetir a mesma instrução escrita várias vezes','Só serve para jogos'], correct:1, explain:'Loops deixam o algoritmo mais curto e organizado, evitando repetição desnecessária de instruções.'},
+    {q:'Qual dessas tarefas do dia a dia usa repetição, como um loop?', options:['Ligar o computador uma vez','Escovar cada um dos dentes','Abrir um único programa'], correct:1, explain:'Escovar cada dente é uma ação repetida várias vezes, assim como um loop.'}
+  ],
+  summary:[
+    'Algoritmo é uma sequência de passos para resolver um problema',
+    'A ordem dos passos importa — trocar a ordem pode quebrar tudo',
+    'Programas de computador seguem instruções exatas, sem "adivinhar"'
+  ]
+},
+{
+  num:10, icon:'🗺️', title:'Lendo fluxogramas',
+  objectives:[
+    'Ler os símbolos usados em um fluxograma',
+    'Interpretar decisões representadas por losangos',
+    'Criar um fluxograma simples com uma decisão'
+  ],
+  teaching:{
+    paragraphs:[
+      'Um <b>fluxograma</b> é um desenho que representa um algoritmo usando formas padronizadas: <b>oval</b> para início/fim, <b>retângulo</b> para uma ação, e <b>losango</b> para uma decisão (Sim/Não). As setas mostram o caminho que o "pensamento" segue, de cima para baixo.',
+      'Fluxogramas ajudam programadores a planejar um programa antes de escrever qualquer código — e ajudam qualquer pessoa a visualizar decisões do dia a dia de forma clara.'
+    ],
+    funfact:'Antes de existir qualquer linguagem de programação moderna, engenheiros já desenhavam fluxogramas à mão em papel para planejar programas de computadores gigantes, nos anos 1950.'
+  },
+  practiceHTML:`
+    <div class="instructions">Observe o fluxograma e responda às perguntas.</div>
+    <div class="flowchart">
+      <div class="fc-box start-end">Início</div>
+      <div class="fc-arrow">↓</div>
+      <div class="fc-diamond"><span>Está chovendo?</span></div>
+      <div class="fc-branches">
+        <div class="fc-branch"><span class="fc-branch-label">SIM</span><div class="fc-arrow">↓</div><div class="fc-box">Levar guarda-chuva</div></div>
+        <div class="fc-branch"><span class="fc-branch-label">NÃO</span><div class="fc-arrow">↓</div><div class="fc-box">Sair sem guarda-chuva</div></div>
+      </div>
+      <div class="fc-arrow">↓</div>
+      <div class="fc-box start-end">Fim</div>
+    </div>
+    <div class="mcq-block">
+      <p class="q">1. O que o fluxograma decide?</p>
+      <div class="mcq" id="act10-mcq1"></div>
+    </div>
+    <div class="mcq-block">
+      <p class="q">2. Se NÃO estiver chovendo, o que a pessoa faz?</p>
+      <div class="mcq" id="act10-mcq2"></div>
+    </div>
+    <div class="btn-row"><button class="btn tier" onclick="checkAll10()">Conferir respostas</button></div>
+    <div class="feedback" id="act10-feedback"></div>`,
+  reflect:[
+    'Desenhe no caderno um fluxograma com pelo menos uma decisão (losango) para uma situação do seu dia a dia.',
+    'Foi fácil ou difícil representar uma decisão do dia a dia usando só oval, retângulo e losango? Por quê?',
+    'Em que profissões (além de programação) um fluxograma pode ser útil?'
+  ],
+  challenge:'Desenhe um fluxograma com duas decisões (dois losangos) para o algoritmo "decidir o que fazer no fim de semana".',
+  deepen:{
+    paragraphs:[
+      'Fluxogramas também podem representar repetição: uma seta que volta para uma decisão anterior indica um loop. Por exemplo, "ainda tem louça para lavar?" pode apontar de volta para a ação "lavar um prato", repetindo até a resposta ser "não".',
+      'Essa forma de desenhar ajuda a visualizar processos que se repetem até uma condição mudar, exatamente como vimos na aula sobre algoritmos.'
+    ],
+    example:'Um fluxograma de "estudar para a prova" poderia ter um losango perguntando "já revisei tudo?" — se a resposta for "não", a seta volta para "revisar mais um tópico", repetindo até a resposta ser "sim".'
+  },
+  check:[
+    {q:'Como um fluxograma costuma representar uma repetição (loop)?', options:['Com uma cor diferente','Com uma seta que volta para uma decisão anterior','Com um retângulo maior'], correct:1, explain:'Uma seta que volta para uma decisão anterior representa a repetição de um processo.'},
+    {q:'O que o losango representa em um fluxograma?', options:['Uma ação simples','Uma decisão (Sim/Não)','O fim do processo'], correct:1, explain:'O losango sempre representa uma decisão, com caminhos diferentes para Sim e Não.'},
+    {q:'Em qual situação um fluxograma com repetição seria útil?', options:['Para representar uma única ação sem decisões','Para representar algo que se repete até uma condição mudar','Fluxogramas nunca têm repetição'], correct:1, explain:'Fluxogramas com repetição são úteis para representar processos que se repetem até uma condição mudar.'}
+  ],
+  summary:[
+    'Oval = início/fim; Retângulo = ação; Losango = decisão',
+    'As setas mostram o caminho do raciocínio',
+    'Fluxogramas ajudam a planejar antes de programar'
+  ]
+},
+{
+  num:11, icon:'🤖', title:'Programe o robô',
+  objectives:[
+    'Programar uma sequência de comandos para um robô',
+    'Testar e corrigir um caminho até um objetivo',
+    'Entender a lógica por trás da programação em blocos'
+  ],
+  teaching:{
+    paragraphs:[
+      'Programar é dar instruções exatas para uma máquina executar, na ordem certa. Aqui, cada seta que você clica é uma "linha de código" simples. O robô só faz exatamente o que você mandou — nem mais, nem menos — por isso é preciso pensar no caminho inteiro antes de executar.',
+      'Esse tipo de exercício é chamado de <b>programação em blocos</b> e é usado em ferramentas reais como Scratch e App Inventor, muito usadas para ensinar lógica de programação no mundo todo.'
+    ],
+    funfact:'Robôs de armazém de empresas de logística usam uma lógica parecida com essa: sequências de movimentos programados para pegar produtos nas prateleiras certas, sem colidir uns com os outros.'
+  },
+  practiceHTML:`
+    <div class="instructions">Monte uma sequência de comandos (⬆️⬇️⬅️➡️) para levar o robô 🤖 até a bandeira 🏁, sem esbarrar nos obstáculos 🚧.</div>
+    <div class="maze-outer">
+      <div class="maze-grid" id="mazeGrid"><div class="robot" id="mazeRobot">🤖</div></div>
+      <div class="cmd-pad">
+        <div class="cmd-row"><button class="cmd-btn" onclick="addMove('up')">⬆️</button></div>
+        <div class="cmd-row">
+          <button class="cmd-btn" onclick="addMove('left')">⬅️</button>
+          <button class="cmd-btn" onclick="addMove('down')">⬇️</button>
+          <button class="cmd-btn" onclick="addMove('right')">➡️</button>
+        </div>
+      </div>
+      <p style="font-size:0.85rem; color:var(--ink-soft); margin:4px 0 0;">Sequência de comandos:</p>
+      <div class="seq-display" id="mazeSeqDisplay" style="width:100%; max-width:420px;"><span class="placeholder">clique nas setas para montar o caminho...</span></div>
+      <div class="btn-row">
+        <button class="btn tier" onclick="runMaze()">▶ Executar</button>
+        <button class="btn ghost" onclick="resetMaze()">Limpar</button>
+      </div>
+      <div class="feedback" id="act11-feedback" style="width:100%; text-align:center;"></div>
+    </div>`,
+  reflect:[
+    'Depois de chegar até a bandeira, tente de novo usando o menor número possível de comandos. Qual foi o caminho mais curto que você encontrou?',
+    'O que acontece quando a sequência de comandos tem um erro? Isso lembra algo sobre "bugs"?',
+    'Por que é importante testar um programa várias vezes antes de considerá-lo pronto?'
+  ],
+  challenge:'No caderno, desenhe um labirinto novo (com obstáculos) e escreva a sequência de setas que resolveria esse labirinto.',
+  deepen:{
+    paragraphs:[
+      'Robôs reais, como aspiradores robôs, usam sensores para detectar obstáculos e tomam decisões automáticas: "se detectar uma parede, então vire; senão, continue em frente". Isso se chama estrutura condicional — uma decisão baseada em uma condição, parecida com o losango dos fluxogramas.',
+      'No labirinto que você programou, cada seta foi uma instrução fixa. Robôs mais avançados combinam sequências de comandos com condicionais, reagindo ao ambiente em tempo real, em vez de seguir sempre o mesmo caminho decorado.'
+    ],
+    example:'Um aspirador robô doméstico pode ter uma regra assim: "se a bateria estiver fraca, volte para a base de carregamento; senão, continue limpando".'
+  },
+  check:[
+    {q:'O que é uma estrutura condicional em programação?', options:['Um tipo de erro','Uma decisão baseada em uma condição (se... então...)','Um tipo de hardware'], correct:1, explain:'Uma estrutura condicional executa uma ação diferente dependendo de uma condição.'},
+    {q:'Por que robôs reais usam sensores além de sequências de comandos fixas?', options:['Para reagir ao ambiente em tempo real','Porque sensores são decorativos','Robôs reais não usam sensores'], correct:0, explain:'Sensores permitem que o robô reaja a mudanças no ambiente, em vez de seguir sempre o mesmo caminho.'},
+    {q:'No exercício do labirinto, o que acontece se você der um comando que leva o robô para fora do mapa?', options:['O robô voaria','O robô bate em um obstáculo ou sai da área válida','Nada, o jogo ignora erros'], correct:1, explain:'Assim como no exercício, comandos incorretos fazem o robô esbarrar em obstáculos ou sair do mapa.'}
+  ],
+  summary:[
+    'Programar é dar instruções exatas, na ordem certa',
+    'Testar e corrigir faz parte do processo de programação',
+    'Robôs reais usam uma lógica de comandos parecida'
+  ]
+},
+{
+  num:12, icon:'🐛', title:'Caça ao bug',
+  objectives:[
+    'Reconhecer o que é um bug em um programa',
+    'Praticar a depuração (encontrar e corrigir erros)',
+    'Entender a importância de revisar um código com atenção'
+  ],
+  teaching:{
+    paragraphs:[
+      'Um <b>bug</b> é um erro em um programa que faz ele se comportar de forma diferente do esperado. O termo existe desde 1947, quando uma traça (bug, em inglês) ficou presa em um computador gigante e causou uma falha! Encontrar e corrigir bugs se chama <b>depuração</b> (<i>debugging</i>), e é uma parte enorme do trabalho de qualquer programador.',
+      'Bugs comuns incluem: erros de digitação em nomes de variáveis, condições que nunca terminam (loops infinitos) e cálculos incompletos, como esquecer um passo da conta.'
+    ],
+    funfact:'Em 1996, um único bug de programação fez um foguete não-tripulado (Ariane 5) explodir segundos após o lançamento, causando um prejuízo de centenas de milhões de dólares.'
+  },
+  practiceHTML:`
+    <div class="instructions">Leia cada trecho de código com atenção antes de escolher a resposta — o erro pode estar em um detalhe pequeno!</div>
+    <div id="act12-snippets"></div>`,
+  reflect:[
+    'Escolha um dos algoritmos que você já criou nas aulas anteriores e imagine: que tipo de bug poderia acontecer nele?',
+    'Por que às vezes é mais fácil encontrar um erro no código de outra pessoa do que no seu próprio?',
+    'Por que programadores costumam pedir para outra pessoa revisar o código deles, além de revisar sozinhos?'
+  ],
+  challenge:'Escreva um pseudocódigo curto (4 a 6 linhas) com um bug escondido para desafiar um colega ou familiar a encontrar.',
+  deepen:{
+    paragraphs:[
+      'Uma técnica famosa entre programadores é a "depuração do patinho de borracha": explicar o código, linha por linha, para um objeto qualquer (como um patinho de borracha) em voz alta. Muitas vezes, o simples ato de explicar o problema em voz alta ajuda a encontrar o erro sozinho.',
+      'Outra estratégia comum é testar o programa aos poucos, verificando se cada parte funciona antes de seguir para a próxima — em vez de escrever tudo de uma vez e só testar no final, quando fica mais difícil saber onde está o erro.'
+    ],
+    example:'Se um programa de cálculo de média está dando um resultado errado, um bom programador testaria primeiro se a soma das notas está certa, depois se a divisão está certa — em vez de tentar adivinhar o erro no código inteiro de uma vez.'
+  },
+  check:[
+    {q:'O que é a técnica do "patinho de borracha"?', options:['Um jogo de tabuleiro sobre programação','Explicar o código em voz alta para encontrar o erro sozinho','Um tipo de teclado especial para programadores'], correct:1, explain:'É uma técnica de explicar o código em voz alta, o que ajuda a encontrar erros por conta própria.'},
+    {q:'Por que é melhor testar um programa aos poucos, e não só no final?', options:['Fica mais fácil descobrir em qual parte está o erro','Não faz diferença nenhuma','Porque programas pequenos não têm erros'], correct:0, explain:'Testar aos poucos ajuda a isolar exatamente onde está o problema.'},
+    {q:'Qual dessas é uma boa prática de depuração?', options:['Nunca testar o programa antes de entregar','Testar cada parte separadamente antes de seguir em frente','Reescrever tudo do zero ao primeiro erro'], correct:1, explain:'Testar cada parte separadamente ajuda a identificar erros com mais precisão.'}
+  ],
+  summary:[
+    'Bug é um erro que faz o programa se comportar de forma inesperada',
+    'Depuração é o processo de encontrar e corrigir esses erros',
+    'Revisar com atenção (ou com outra pessoa) ajuda a achar bugs'
+  ]
+},
+{
+  num:13, icon:'👣', title:'Minha pegada digital',
+  objectives:[
+    'Entender o conceito de pegada digital',
+    'Reconhecer informações seguras e arriscadas de compartilhar',
+    'Refletir sobre privacidade no ambiente online'
+  ],
+  teaching:{
+    paragraphs:[
+      'Sua <b>pegada digital</b> é o conjunto de rastros que você deixa ao usar a internet: fotos publicadas, comentários, curtidas, buscas, localização e até o tempo que você passa em cada aplicativo. Diferente de uma pegada na areia, a digital pode durar anos — e ser vista, copiada ou compartilhada por muita gente, mesmo depois de apagada da fonte original.',
+      'Isso não significa que você deve ter medo da internet — significa que vale a pena pensar antes de publicar, configurar bem a privacidade das suas contas e nunca compartilhar informações sensíveis publicamente.'
+    ],
+    funfact:'Empresas de recrutamento e faculdades já pesquisam o nome de candidatos na internet antes de tomar decisões — sua pegada digital pode te acompanhar até décadas depois de criada.'
+  },
+  practiceHTML:`
+    <div class="instructions">Marque se cada informação é segura ou arriscada de compartilhar publicamente.</div>
+    <div class="check-list" id="act13-checks"></div>
+    <div class="btn-row"><button class="btn tier" onclick="checkAct13()">Conferir respostas</button></div>
+    <div class="feedback" id="act13-feedback"></div>
+    <p style="margin-top:22px;"><b>Verdadeiro ou Falso?</b></p>
+    <div id="act13-tf"></div>`,
+  reflect:[
+    'No papel, desenhe você no centro de uma folha e, ao redor, escreva os aplicativos que mais usa. Que tipo de informação sua cada um guarda?',
+    'Você ficou surpreso com a quantidade de informação que os aplicativos podem ter sobre você?',
+    'O que é possível fazer para reduzir a quantidade de informação pessoal exposta publicamente?'
+  ],
+  challenge:'Com ajuda de um adulto, revise as configurações de privacidade de um aplicativo que você usa e veja quem pode ver o seu perfil.',
+  deepen:{
+    paragraphs:[
+      'No Brasil, existe uma lei chamada LGPD (Lei Geral de Proteção de Dados) que dá às pessoas o direito de saber quais dados uma empresa guarda sobre elas, e até pedir para apagar essas informações em alguns casos.',
+      'Mesmo assim, é importante lembrar que apagar um post não garante que ninguém mais tenha uma cópia — capturas de tela (prints) e compartilhamentos podem continuar circulando mesmo depois. Por isso, pensar antes de publicar continua sendo a melhor proteção.'
+    ],
+    example:'Se alguém tira um print de uma conversa antes de você apagar a mensagem, aquele print pode continuar sendo compartilhado, mesmo que a mensagem original já não exista mais no aplicativo.'
+  },
+  check:[
+    {q:'O que é a LGPD?', options:['Um vírus de computador','Uma lei brasileira sobre proteção de dados pessoais','Um tipo de senha'], correct:1, explain:'A LGPD é a Lei Geral de Proteção de Dados, que protege as informações pessoais dos brasileiros.'},
+    {q:'Por que apagar uma publicação não garante que ela sumiu de vez?', options:['Porque apagar nunca funciona','Porque outras pessoas podem já ter tirado print ou compartilhado antes','Porque a internet apaga tudo automaticamente'], correct:1, explain:'Cópias (prints, compartilhamentos) podem continuar existindo mesmo após você apagar o post original.'},
+    {q:'Qual é a melhor forma de proteger sua pegada digital?', options:['Pensar antes de publicar qualquer coisa','Postar tudo sem se preocupar, já que dá para apagar depois','Nunca usar a internet'], correct:0, explain:'Pensar antes de publicar é a proteção mais eficaz, já que apagar depois nem sempre resolve.'}
+  ],
+  summary:[
+    'Tudo que publicamos online deixa um rastro duradouro',
+    'Configurações de privacidade ajudam a controlar quem vê o quê',
+    'Pense antes de postar informações sensíveis'
+  ]
+},
+{
+  num:14, icon:'🔮', title:'IA: mito ou verdade?',
+  objectives:[
+    'Entender o que é Inteligência Artificial',
+    'Separar fatos de mitos sobre IA',
+    'Reconhecer exemplos de IA no dia a dia'
+  ],
+  teaching:{
+    paragraphs:[
+      'A <b>Inteligência Artificial (IA)</b> é uma área da tecnologia que cria sistemas capazes de reconhecer padrões, aprender com dados e tomar decisões — sem seguir apenas regras fixas escritas por uma pessoa. Diferente de uma calculadora, que só segue instruções exatas, uma IA de recomendação de vídeos "aprende" seus gostos observando o que você assiste.',
+      'É importante separar fato de exagero: a IA não "pensa" nem "sente" como um ser humano, e pode errar — às vezes de forma bem convincente. Por isso, é sempre bom checar informações importantes em outras fontes.'
+    ],
+    funfact:'Os primeiros estudos sérios sobre Inteligência Artificial começaram na década de 1950 — muito antes dos assistentes de voz e chatbots que conhecemos hoje.'
+  },
+  practiceHTML:`
+    <div class="instructions">Marque cada frase como verdadeira ou falsa.</div>
+    <div id="act14-tf"></div>
+    <p style="margin-top:22px;"><b>Agora classifique:</b> esse exemplo usa Inteligência Artificial ou não?</p>
+    <div class="classify-list" id="act14-list"></div>
+    <div class="btn-row">
+      <button class="btn tier" onclick="checkClassify('act14-list', 14)">Conferir respostas</button>
+      <button class="btn ghost" onclick="resetClassify('act14-list')">Limpar</button>
+    </div>
+    <div class="feedback" id="act14-feedback"></div>`,
+  reflect:[
+    'Cite três lugares do seu dia a dia onde você provavelmente já interage com alguma IA, mesmo sem perceber.',
+    'Por que é importante checar a informação que uma IA (como um chatbot) fornece, em vez de confiar cegamente?',
+    'Que tipo de tarefa você acha que uma IA nunca deveria fazer sozinha, sem supervisão de uma pessoa?'
+  ],
+  challenge:'Liste 3 aplicativos ou sites que você usa que provavelmente têm IA por trás, e escreva o que você imagina que ela faz em cada um.',
+  deepen:{
+    paragraphs:[
+      'Uma IA aprende observando exemplos (dados). Se esses dados tiverem preconceitos ou erros, a IA pode repetir esses mesmos problemas — isso se chama viés (bias). Por exemplo, se um sistema de IA for treinado majoritariamente com fotos de um único grupo de pessoas, ele pode ter dificuldade em reconhecer corretamente pessoas de outros grupos.',
+      'Por isso, empresas responsáveis testam suas IAs cuidadosamente antes de usá-las em decisões importantes, e continuam sendo necessárias pessoas para supervisionar e corrigir os erros que a IA comete.'
+    ],
+    example:'Um aplicativo de tradução automática pode traduzir bem frases comuns, mas errar em expressões regionais ou gírias que não apareceram muito nos dados usados para treiná-lo.'
+  },
+  check:[
+    {q:'O que é "viés" (bias) em uma Inteligência Artificial?', options:['Um tipo de vírus','Quando a IA repete preconceitos ou erros presentes nos dados usados para treiná-la','Um recurso que deixa a IA mais rápida'], correct:1, explain:'Viés acontece quando a IA aprende e repete padrões injustos ou incorretos presentes nos dados de treinamento.'},
+    {q:'Por que é importante ter pessoas supervisionando decisões tomadas por IA?', options:['Porque IA nunca comete erros','Porque a IA pode errar ou repetir vieses dos dados de treinamento','Não é importante'], correct:1, explain:'Como a IA pode errar ou ter vieses, a supervisão humana continua sendo essencial.'},
+    {q:'De onde vem o "conhecimento" de uma Inteligência Artificial?', options:['Ela nasce sabendo tudo','Ela aprende observando muitos exemplos (dados)','Ela copia de um único programador'], correct:1, explain:'A IA aprende reconhecendo padrões em grandes quantidades de dados de exemplo.'}
+  ],
+  summary:[
+    'IA aprende reconhecendo padrões em grandes quantidades de dados',
+    'IA pode errar — não é perfeita nem "pensa" como um humano',
+    'Está presente em assistentes de voz, recomendações e reconhecimento facial'
+  ]
+},
+{
+  num:15, icon:'🏆', title:'Hackathon da turma',
+  objectives:[
+    'Aplicar tudo o que você aprendeu em um projeto',
+    'Criar uma solução tecnológica para um problema real',
+    'Concluir o curso Explorador Digital'
+  ],
+  teaching:{
+    paragraphs:[
+      'Um <b>hackathon</b> de verdade reúne pessoas para, em pouco tempo, ir da ideia ao protótipo de uma solução. Empresas, universidades e até órgãos públicos usam hackathons para resolver problemas reais. O segredo não é ter a ideia perfeita logo de cara, mas pensar em quem tem o problema, o que a tecnologia pode fazer por essa pessoa, e como isso funcionaria na prática.',
+      'Agora é sua vez de usar tudo o que aprendeu nas 14 aulas anteriores — hardware, software, internet, algoritmos, segurança e IA — para imaginar sua própria solução tecnológica.'
+    ],
+    funfact:'Vários aplicativos famosos começaram como protótipos simples feitos em hackathons ou fins de semana de experimentação.'
+  },
+  practiceHTML:`
+    <div class="instructions">Escolha um problema do seu dia a dia (na escola, em casa ou no bairro) e imagine uma solução tecnológica para ele. Não existe resposta errada — use a criatividade!</div>
+    <div class="field">
+      <label for="p-nome">🚀 Nome do seu projeto</label>
+      <input type="text" id="p-nome" placeholder="Ex: EcoRota — app que encontra pontos de reciclagem perto de você">
+    </div>
+    <div class="field">
+      <label for="p-problema">❓ Que problema ele resolve?</label>
+      <textarea id="p-problema" rows="2" placeholder="Descreva o problema..."></textarea>
+    </div>
+    <div class="field">
+      <label for="p-tech">🛠️ Que tecnologia ele usaria? (app, site, sensor, IA, robô...)</label>
+      <input type="text" id="p-tech" placeholder="Ex: aplicativo de celular com geolocalização">
+    </div>
+    <div class="field">
+      <label for="p-publico">🎯 Quem vai usar essa solução?</label>
+      <input type="text" id="p-publico" placeholder="Ex: moradores do bairro, alunos da escola...">
+    </div>
+    <div class="field">
+      <label for="p-como">⚙️ Como ela funciona, passo a passo?</label>
+      <textarea id="p-como" rows="3" placeholder="Explique o funcionamento em 2 ou 3 passos..."></textarea>
+    </div>
+    <div class="field">
+      <label for="p-aluno">✍️ Seu nome, para o certificado</label>
+      <input type="text" id="p-aluno" placeholder="Digite seu nome completo">
+    </div>
+    <div class="btn-row"><button class="btn tier" onclick="generateCertificate()">🏆 Gerar meu certificado</button></div>
+    <div class="feedback" id="act15-feedback"></div>
+    <div class="certificate" id="certificate">
+      <div class="cert-title">🏅 CERTIFICADO DE EXPLORADOR(A) DIGITAL</div>
+      <p>Certificamos que</p>
+      <div class="cert-name" id="certName">—</div>
+      <p>concluiu com sucesso as <b>15 aulas</b> do curso<br><i>Explorador Digital</i>,<br>demonstrando conhecimento em hardware, software, internet, segurança digital,<br>lógica de programação e inteligência artificial.</p>
+      <div class="cert-date" id="certDate"></div>
+      <div class="sign-line">Assinatura do(a) professor(a): <span class="line"></span></div>
+    </div>`,
+  reflect:[
+    'Das 15 aulas do curso, qual foi a que você mais gostou? Por quê?',
+    'O que você aprendeu que pretende usar ou explicar para outra pessoa (família, amigos)?',
+    'Se você pudesse continuar seu projeto do hackathon de verdade, qual seria o próximo passo?'
+  ],
+  challenge:'Apresente seu projeto para alguém da sua casa em até 1 minuto: nome, problema, e como a tecnologia ajuda.',
+  deepen:{
+    paragraphs:[
+      'No mundo da tecnologia, um "MVP" (produto mínimo viável) é a versão mais simples possível de uma ideia, criada rapidamente para testar se ela funciona antes de investir muito tempo aperfeiçoando os detalhes.',
+      'Depois de criar essa primeira versão simples, os criadores costumam melhorá-la aos poucos, com base no que aprenderam testando — esse processo se chama iteração, e é assim que a maioria das tecnologias que usamos hoje foi desenvolvida.'
+    ],
+    example:'O primeiro protótipo de um aplicativo de caronas pode ter sido apenas um formulário simples e algumas mensagens trocadas manualmente — bem diferente do aplicativo completo, com mapa e pagamento automático, que existe hoje.'
+  },
+  check:[
+    {q:'O que é um MVP (produto mínimo viável)?', options:['A versão final e perfeita de um produto','A versão mais simples de uma ideia, criada para testar se ela funciona','Um tipo de hardware caro'], correct:1, explain:'O MVP é a versão mais simples de uma ideia, usada para testar rapidamente se ela funciona.'},
+    {q:'O que é "iteração" no desenvolvimento de tecnologia?', options:['Desistir do projeto após o primeiro erro','Melhorar o projeto aos poucos, com base no que se aprende testando','Copiar o projeto de outra pessoa'], correct:1, explain:'Iteração é o processo de melhorar um projeto aos poucos, com base em testes e aprendizados.'},
+    {q:'Por que hackathons costumam criar protótipos simples, em vez de produtos completos?', options:['Porque não há tempo suficiente, e testar a ideia é o mais importante','Porque protótipos simples são mais bonitos','Hackathons não criam protótipos'], correct:0, explain:'Com pouco tempo disponível, o foco é testar se a ideia funciona, não criar um produto acabado.'}
+  ],
+  summary:[
+    'Você concluiu as 15 aulas do curso Explorador Digital! 🎉',
+    'Aprendeu sobre hardware, software, internet, segurança, lógica de programação e IA',
+    'Agora você pode aplicar esse conhecimento para criar suas próprias soluções tecnológicas'
+  ]
+}
+];
+
+/* ---------------------------------------------------------------------------
+   HOME SCREEN
+   --------------------------------------------------------------------------- */
+function isUnlocked(n){ return n===1 || completed[n-1]; }
+
+function renderHome(){
+  const grid = document.getElementById('courseGrid');
+  grid.innerHTML = '';
+  for(let n=1;n<=15;n++){
+    const L = LESSONS[n];
+    const tier = tierOf(n);
+    const unlocked = isUnlocked(n);
+    const isDone = completed[n];
+    const card = document.createElement('div');
+    card.className = 'lesson-card' + (unlocked ? '' : ' locked');
+    card.style.setProperty('--card-color', TIER_COLOR[tier]);
+    card.style.setProperty('--card-soft', TIER_SOFT[tier]);
+    const statusClass = isDone ? 'done' : (unlocked ? 'available' : 'locked');
+    const statusText = isDone ? '✅ Concluída' : (unlocked ? 'Disponível' : '🔒 Bloqueada');
+    card.innerHTML = `
+      <div class="lc-top"><span class="lc-num">${String(n).padStart(2,'0')}</span><span class="lc-icon">${L.icon}</span></div>
+      <h3 class="lc-title">${L.title}</h3>
+      <span class="lc-status ${statusClass}">${statusText}</span>
+      <span class="lc-time">⏱ 50 min · Nível ${TIER_NAME[tier]}</span>
+      <button class="lc-btn" ${unlocked ? '' : 'disabled'} onclick="${unlocked ? 'openLesson('+n+')' : ''}">${isDone ? 'Revisar aula' : (unlocked ? 'Começar aula' : 'Bloqueada')}</button>
+    `;
+    grid.appendChild(card);
+  }
+  const doneCount = completed.filter(Boolean).length;
+  document.getElementById('overallFill').style.width = (doneCount/15*100)+'%';
+  document.getElementById('overallLabel').textContent = doneCount + ' de 15 aulas concluídas';
+}
+
+function backToHome(){
+  stopLessonTimer();
+  if(gateInterval){ clearInterval(gateInterval); gateInterval=null; }
+  document.getElementById('screen-lesson').classList.remove('active');
+  document.getElementById('screen-home').classList.add('active');
+  renderHome();
+  window.scrollTo(0,0);
+}
+
+/* ---------------------------------------------------------------------------
+   LESSON SCREEN ENGINE  (8 steps, with reading/engagement gates so a lesson
+   genuinely takes ~50 minutes instead of being click-through-able in 15)
+   --------------------------------------------------------------------------- */
+const STEPS = 8;
+const GATE_SECONDS = { 2:70, 3:70, 6:60 }; // Aprenda, Aprofundando, Reflita
+let gateState = {};       // per-lesson-session: step -> passed?
+let gateInterval = null;
+let lessonTimerInterval = null;
+let lessonStartTime = null;
+
+function stepTemplate1(L){
+  return `
+    <span class="step-kicker">🎯 Objetivos · ~2 min</span>
+    <h2>Aula ${L.num}: ${L.title}</h2>
+    <p>Bem-vindo(a)! Nesta aula você vai:</p>
+    <ul class="obj-list">${L.objectives.map(o=>'<li>'+o+'</li>').join('')}</ul>
+    <div class="step-note">⏱ Tempo estimado: 50 minutos, em 8 etapas. Leia com atenção — algumas etapas só liberam o botão "Próximo" depois de alguns segundos, para garantir que você realmente aproveite o conteúdo.</div>
+  `;
+}
+function stepTemplate2(L){
+  return `
+    <span class="step-kicker">📘 Aprenda · ~8 min</span>
+    <h2>O que você precisa saber</h2>
+    <div class="teach-block">${L.teaching.paragraphs.map(p=>'<p>'+p+'</p>').join('')}</div>
+    <div class="fun-fact">💡 <span><b>Você sabia?</b> ${L.teaching.funfact}</span></div>
+  `;
+}
+function stepTemplate3(L){
+  return `
+    <span class="step-kicker">🔎 Aprofundando · ~8 min</span>
+    <h2>Vamos analisar de perto</h2>
+    <div class="teach-block">${L.deepen.paragraphs.map(p=>'<p>'+p+'</p>').join('')}</div>
+    <div class="fun-fact">🧭 <span><b>Na prática:</b> ${L.deepen.example}</span></div>
+  `;
+}
+function stepTemplate4(L){
+  return `
+    <span class="step-kicker">✅ Verifique · ~5 min</span>
+    <h2>O que ficou da leitura?</h2>
+    <p>Responda às 3 perguntas antes de seguir para a prática.</p>
+    <div id="check-container"></div>
+  `;
+}
+function stepTemplate6(L){
+  return `
+    <span class="step-kicker">💭 Reflita · ~8 min</span>
+    <h2>Pense com calma</h2>
+    <p>Não existe resposta errada aqui — é só para você organizar suas ideias. Escreva pelo menos 2-3 frases em cada resposta.</p>
+    ${L.reflect.map((q,i)=>`<div class="reflect-item"><p class="reflect-q">${i+1}. ${q}</p><textarea class="reflect-input" data-reflect="${i}" placeholder="Escreva aqui..." oninput="onReflectInput()"></textarea></div>`).join('')}
+  `;
+}
+function stepTemplate7(L){
+  return `
+    <span class="step-kicker">🌟 Desafio extra · opcional</span>
+    <h2>Quer ir além?</h2>
+    <div class="challenge-box"><p style="margin:0;">${L.challenge}</p></div>
+    <label class="check-row" style="margin-top:14px; max-width:280px;"><input type="checkbox"> <span>Já fiz esse desafio</span></label>
+  `;
+}
+function stepTemplate8(L){
+  const isLast = L.num === 15;
+  return `
+    <span class="step-kicker">🏁 Resumo · ~3 min</span>
+    <h2>${isLast ? 'Parabéns, você concluiu o curso! 🎉' : 'O que você aprendeu hoje'}</h2>
+    <ul class="summary-list">${L.summary.map(s=>'<li>'+s+'</li>').join('')}</ul>
+    <div class="btn-row"><button class="btn tier" onclick="completeLesson()">${isLast ? 'Finalizar curso 🏆' : 'Concluir aula e voltar ao curso 🎉'}</button></div>
+  `;
+}
+
+function buildLessonScreen(n){
+  const L = LESSONS[n];
+  const tier = tierOf(n);
+  const lessonScreen = document.getElementById('screen-lesson');
+  lessonScreen.style.setProperty('--dot-color', TIER_COLOR[tier]);
+  lessonScreen.style.setProperty('--soft-color', TIER_SOFT[tier]);
+  document.getElementById('ltTitle').textContent = 'Aula ' + n + ' · ' + L.title;
+  const tag = document.getElementById('ltTag');
+  tag.textContent = TIER_NAME[tier];
+  tag.style.background = TIER_COLOR[tier];
+
+  const progress = document.getElementById('stepProgress');
+  progress.innerHTML = '';
+  for(let i=1;i<=STEPS;i++){
+    const dot = document.createElement('div');
+    dot.className = 'step-dot';
+    dot.id = 'dot-'+i;
+    dot.style.setProperty('--dot-color', TIER_COLOR[tier]);
+    progress.appendChild(dot);
+  }
+
+  const body = document.getElementById('lessonBody');
+  body.innerHTML = `
+    <div class="step-panel" data-step="1" id="panel-1">${stepTemplate1(L)}</div>
+    <div class="step-panel" data-step="2" id="panel-2">${stepTemplate2(L)}</div>
+    <div class="step-panel" data-step="3" id="panel-3">${stepTemplate3(L)}</div>
+    <div class="step-panel" data-step="4" id="panel-4">${stepTemplate4(L)}</div>
+    <div class="step-panel" data-step="5" id="panel-5">
+      <span class="step-kicker">🕹️ Pratique · ~18 min</span>
+      <h2>Mão na massa</h2>
+      ${L.practiceHTML}
+    </div>
+    <div class="step-panel" data-step="6" id="panel-6">${stepTemplate6(L)}</div>
+    <div class="step-panel" data-step="7" id="panel-7">${stepTemplate7(L)}</div>
+    <div class="step-panel" data-step="8" id="panel-8">${stepTemplate8(L)}</div>
+  `;
+
+  gateState = {};
+  buildCheckStep(L);
+  startLessonTimer();
+}
+
+/* ---- lesson-wide running timer (visible, transparent — encourages a real pace) ---- */
+function startLessonTimer(){
+  lessonStartTime = Date.now();
+  if(lessonTimerInterval) clearInterval(lessonTimerInterval);
+  updateLessonTimerDisplay();
+  lessonTimerInterval = setInterval(updateLessonTimerDisplay, 1000);
+}
+function updateLessonTimerDisplay(){
+  const el = document.getElementById('lessonTimer');
+  if(!el) return;
+  const elapsed = Math.floor((Date.now() - lessonStartTime)/1000);
+  const m = String(Math.floor(elapsed/60)).padStart(2,'0');
+  const s = String(elapsed%60).padStart(2,'0');
+  el.textContent = '⏱ ' + m + ':' + s;
+}
+function stopLessonTimer(){ if(lessonTimerInterval){ clearInterval(lessonTimerInterval); lessonTimerInterval=null; } }
+
+/* ---- gating ---- */
+function setNextEnabled(enabled){
+  document.getElementById('nextBtn').disabled = !enabled;
+}
+function startReadGate(step){
+  if(gateInterval) clearInterval(gateInterval);
+  if(gateState[step]){ setNextEnabled(true); return; }
+  let remaining = GATE_SECONDS[step];
+  const nextBtn = document.getElementById('nextBtn');
+  setNextEnabled(false);
+  const tick = ()=>{
+    if(remaining <= 0){
+      clearInterval(gateInterval);
+      gateState[step] = true;
+      updateNextButtonState();
+      return;
+    }
+    nextBtn.textContent = '⏳ Aguarde ' + remaining + 's...';
+    remaining--;
+  };
+  tick();
+  gateInterval = setInterval(tick, 1000);
+}
+function allCheckAnswered(){
+  const boxes = document.querySelectorAll('#check-container .mcq');
+  if(boxes.length === 0) return false;
+  return Array.from(boxes).every(b => b.dataset.chosen !== undefined);
+}
+function allReflectFilled(){
+  const boxes = document.querySelectorAll('#panel-6 .reflect-input');
+  if(boxes.length === 0) return true;
+  return Array.from(boxes).every(t => t.value.trim().length >= 15);
+}
+function onReflectInput(){ if(currentStep === 6) updateNextButtonState(); }
+
+function updateNextButtonState(){
+  const nextBtn = document.getElementById('nextBtn');
+  if(currentStep === STEPS){
+    nextBtn.disabled = false;
+    nextBtn.textContent = 'Concluir ↓';
+    nextBtn.onclick = function(){ document.querySelector('#panel-'+STEPS+' .btn.tier').scrollIntoView({behavior:'smooth', block:'center'}); };
+    return;
+  }
+  nextBtn.onclick = nextStep;
+  if(currentStep === 2 || currentStep === 3 || currentStep === 6){
+    startReadGate(currentStep);
+    if(currentStep === 6){
+      // combine timed gate with "actually wrote something" gate
+      const combined = ()=> setNextEnabled(gateState[6] && allReflectFilled());
+      document.querySelectorAll('#panel-6 .reflect-input').forEach(t=>t.addEventListener('input', combined));
+      if(gateState[6]) combined();
+    }
+    nextBtn.textContent = gateState[currentStep] ? 'Próximo →' : nextBtn.textContent;
+  } else if(currentStep === 4){
+    setNextEnabled(allCheckAnswered());
+    nextBtn.textContent = 'Próximo →';
+  } else {
+    setNextEnabled(true);
+    nextBtn.textContent = 'Próximo →';
+  }
+}
+
+function showStep(step){
+  currentStep = step;
+  if(gateInterval){ clearInterval(gateInterval); gateInterval=null; }
+  document.querySelectorAll('.step-panel').forEach(p=>{
+    p.classList.toggle('active', parseInt(p.dataset.step) === step);
+  });
+  for(let i=1;i<=STEPS;i++){
+    const dot = document.getElementById('dot-'+i);
+    dot.classList.toggle('filled', i < step);
+    dot.classList.toggle('current', i === step);
+  }
+  document.getElementById('stepIndicator').textContent = 'Etapa ' + step + ' de ' + STEPS;
+  document.getElementById('prevBtn').disabled = (step === 1);
+  updateNextButtonState();
+  document.getElementById('lessonBody').scrollTop = 0;
+  window.scrollTo(0,0);
+}
+
+function nextStep(){ if(currentStep < STEPS){ showStep(currentStep+1); } }
+function prevStep(){ if(currentStep > 1){ showStep(currentStep-1); } }
+
+function buildCheckStep(L){
+  const container = document.getElementById('check-container');
+  if(!container) return;
+  container.innerHTML = '';
+  L.check.forEach((item, i)=>{
+    const block = document.createElement('div');
+    block.className = 'mcq-block';
+    const q = document.createElement('p'); q.className = 'q'; q.textContent = (i+1) + '. ' + item.q;
+    block.appendChild(q);
+    const mcq = document.createElement('div'); mcq.className = 'mcq'; mcq.id = 'checkq-'+i;
+    block.appendChild(mcq);
+    const fb = document.createElement('div'); fb.className = 'feedback';
+    block.appendChild(fb);
+    container.appendChild(block);
+    buildMCQ(mcq.id, item.options, item.correct);
+    mcq.querySelectorAll('.mcq-opt').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        revealMCQAnswer(mcq.id);
+        const isCorrect = mcq.dataset.chosen === mcq.dataset.correct;
+        fb.classList.add('show', isCorrect ? 'ok' : 'warn');
+        fb.textContent = isCorrect ? '✅ Isso mesmo!' : ('💡 ' + item.explain);
+        if(currentStep === 4) updateNextButtonState();
+      });
+    });
+  });
+}
+
+
+function openLesson(n){
+  if(!isUnlocked(n)) return;
+  currentLesson = n;
+  buildLessonScreen(n);
+  initLessonActivities(n);
+  document.getElementById('screen-home').classList.remove('active');
+  document.getElementById('screen-lesson').classList.add('active');
+  showStep(1);
+}
+
+function completeLesson(){
+  if(currentLesson == null) return;
+  completed[currentLesson] = true;
+  saveProgress();
+  backToHome();
+}
+
+/* markComplete kept as a lightweight no-op hook for reused activity code (lesson completion is via the final step button, not tied to quiz score) */
+function markComplete(activityNum){ /* intentionally no-op in the course engine */ }
+
+/* ============================================================================
+   REUSED INTERACTIVE ACTIVITY LOGIC (adapted from the classroom version)
+   ============================================================================ */
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+
+function buildClassifyList(containerId, items, optionLabels){
+  const container = document.getElementById(containerId);
+  if(!container) return;
+  container.innerHTML = '';
+  items.forEach((item)=>{
+    const row = document.createElement('div');
+    row.className = 'classify-item';
+    row.dataset.answer = item.answer;
+    const label = document.createElement('span');
+    label.className = 'item-label';
+    label.textContent = item.label;
+    row.appendChild(label);
+    const opts = document.createElement('div');
+    opts.className = 'classify-options';
+    optionLabels.forEach(optLabel=>{
+      const b = document.createElement('button');
+      b.className = 'opt-btn'; b.type = 'button'; b.textContent = optLabel; b.dataset.value = optLabel;
+      b.addEventListener('click', ()=>{
+        opts.querySelectorAll('.opt-btn').forEach(x=>x.classList.remove('selected'));
+        b.classList.add('selected');
+        row.dataset.chosen = optLabel;
+        row.classList.remove('correct','incorrect');
+        const oldIcon = row.querySelector('.result-icon');
+        if(oldIcon) oldIcon.remove();
+      });
+      opts.appendChild(b);
+    });
+    row.appendChild(opts);
+    container.appendChild(row);
+  });
+}
+
+function checkClassify(containerId, activityNum){
+  const container = document.getElementById(containerId);
+  const rows = container.querySelectorAll('.classify-item');
+  let correct = 0;
+  rows.forEach(row=>{
+    row.classList.remove('correct','incorrect');
+    const oldIcon = row.querySelector('.result-icon');
+    if(oldIcon) oldIcon.remove();
+    const icon = document.createElement('span');
+    icon.className = 'result-icon';
+    if(row.dataset.chosen === row.dataset.answer){ row.classList.add('correct'); icon.textContent='✅'; correct++; }
+    else { row.classList.add('incorrect'); icon.textContent = row.dataset.chosen ? '❌' : '⬜'; }
+    row.appendChild(icon);
+  });
+  showScore(containerId.split('-')[0] + '-feedback', correct, rows.length);
+  markComplete(activityNum);
+}
+function resetClassify(containerId){
+  const container = document.getElementById(containerId);
+  container.querySelectorAll('.classify-item').forEach(row=>{
+    row.classList.remove('correct','incorrect');
+    delete row.dataset.chosen;
+    row.querySelectorAll('.opt-btn').forEach(b=>b.classList.remove('selected'));
+    const icon = row.querySelector('.result-icon');
+    if(icon) icon.remove();
+  });
+  const fb = document.getElementById(containerId.split('-')[0] + '-feedback');
+  if(fb) fb.classList.remove('show');
+}
+function showScore(feedbackId, correct, total){
+  const fb = document.getElementById(feedbackId);
+  if(!fb) return;
+  fb.classList.remove('ok','warn'); fb.classList.add('show');
+  if(correct === total){ fb.classList.add('ok'); fb.textContent = '🎉 Mandou bem! Você acertou ' + correct + ' de ' + total + '.'; }
+  else { fb.classList.add('warn'); fb.textContent = '🔎 Você acertou ' + correct + ' de ' + total + '. Reveja os itens marcados com ❌ e tente de novo!'; }
+}
+
+function buildMCQ(containerId, options, correctIndex){
+  const c = document.getElementById(containerId);
+  if(!c) return;
+  c.innerHTML = ''; c.dataset.correct = correctIndex;
+  options.forEach((opt, i)=>{
+    const b = document.createElement('button');
+    b.className = 'mcq-opt'; b.type = 'button'; b.textContent = opt; b.dataset.idx = i;
+    b.addEventListener('click', ()=>{
+      c.querySelectorAll('.mcq-opt').forEach(x=>x.classList.remove('selected'));
+      b.classList.add('selected'); c.dataset.chosen = i;
+    });
+    c.appendChild(b);
+  });
+}
+function revealMCQAnswer(containerId){
+  const c = document.getElementById(containerId);
+  const correct = parseInt(c.dataset.correct);
+  c.querySelectorAll('.mcq-opt').forEach(b=>{
+    const idx = parseInt(b.dataset.idx);
+    if(idx === correct) b.classList.add('correct');
+    else if(String(idx) === c.dataset.chosen) b.classList.add('incorrect');
+  });
+}
+function checkMCQSingle(containerId, activityNum, feedbackId, correctMsg){
+  const c = document.getElementById(containerId);
+  revealMCQAnswer(containerId);
+  const isCorrect = c.dataset.chosen === c.dataset.correct;
+  const fb = document.getElementById(feedbackId);
+  fb.classList.remove('ok','warn'); fb.classList.add('show', isCorrect ? 'ok' : 'warn');
+  fb.textContent = isCorrect ? ('✅ ' + correctMsg) : '🔎 Quase! Veja a opção marcada em verde, que é a correta, e compare com a sua escolha.';
+  if(c.dataset.chosen !== undefined) markComplete(activityNum);
+}
+
+/* ACT 3: matching */
+const act3Data = [
+  {part:'CPU (processador)', correct:'É o "cérebro" que processa as informações'},
+  {part:'RAM (memória)', correct:'Guarda dados temporariamente enquanto o computador está ligado'},
+  {part:'HD / SSD', correct:'Armazena os dados de forma permanente'},
+  {part:'Placa-mãe', correct:'Conecta e permite a comunicação entre todos os componentes'},
+  {part:'Fonte de alimentação', correct:'Fornece energia elétrica para o computador'},
+];
+const act3WrongOptions = ['Mostra as imagens na tela','Transmite o sinal de Wi-Fi para outros aparelhos','Resfria o ambiente da sala'];
+function buildAct3(){
+  const container = document.getElementById('act3-rows');
+  if(!container) return;
+  container.innerHTML = '';
+  const allOptions = shuffle(act3Data.map(d=>d.correct).concat(act3WrongOptions));
+  act3Data.forEach((d, i)=>{
+    const row = document.createElement('div');
+    row.className = 'match-row'; row.dataset.correct = d.correct;
+    const part = document.createElement('span'); part.className = 'part'; part.textContent = d.part;
+    const sel = document.createElement('select'); sel.id = 'act3-sel-' + i;
+    const blank = document.createElement('option'); blank.textContent = 'Selecione a função...'; blank.value = '';
+    sel.appendChild(blank);
+    allOptions.forEach(opt=>{ const o = document.createElement('option'); o.textContent = opt; o.value = opt; sel.appendChild(o); });
+    row.appendChild(part); row.appendChild(sel); container.appendChild(row);
+  });
+}
+function checkMatch(){
+  const rows = document.querySelectorAll('#act3-rows .match-row');
+  let correct = 0;
+  rows.forEach(row=>{
+    const sel = row.querySelector('select');
+    row.classList.remove('correct','incorrect');
+    if(sel.value === row.dataset.correct){ row.classList.add('correct'); correct++; } else { row.classList.add('incorrect'); }
+  });
+  showScore('act3-feedback', correct, rows.length);
+  markComplete(3);
+}
+function resetMatch(){
+  document.querySelectorAll('#act3-rows .match-row select').forEach(s=>s.value='');
+  document.querySelectorAll('#act3-rows .match-row').forEach(r=>r.classList.remove('correct','incorrect'));
+  const fb = document.getElementById('act3-feedback'); if(fb) fb.classList.remove('show');
+}
+
+/* ACT 5: byte ordering */
+const act5Correct = ['Byte','KB','MB','GB','TB'];
+let act5Seq = [];
+function buildAct5(){
+  const pool = document.getElementById('act5-pool');
+  if(!pool) return;
+  pool.innerHTML = '';
+  shuffle(act5Correct).forEach(unit=>{
+    const b = document.createElement('button'); b.textContent = unit; b.dataset.unit = unit;
+    b.addEventListener('click', ()=>{ if(b.disabled) return; act5Seq.push(unit); b.disabled = true; renderSeq5(); });
+    pool.appendChild(b);
+  });
+}
+function renderSeq5(){
+  const display = document.getElementById('act5-display');
+  if(!display) return;
+  if(act5Seq.length === 0){ display.innerHTML = '<span class="placeholder">clique nas unidades acima...</span>'; return; }
+  display.innerHTML = act5Seq.map(u=>'<span class="chip">'+u+'</span>').join('<span style="color:var(--ink-soft)">→</span>');
+}
+function resetSeq5(){ act5Seq = []; buildAct5(); renderSeq5(); const fb=document.getElementById('act5-feedback'); if(fb) fb.classList.remove('show'); }
+function checkSeq5(){
+  const isCorrect = act5Seq.length === act5Correct.length && act5Seq.every((v,i)=>v===act5Correct[i]);
+  const fb = document.getElementById('act5-feedback');
+  fb.classList.remove('ok','warn'); fb.classList.add('show', isCorrect ? 'ok' : 'warn');
+  fb.textContent = isCorrect ? '🎉 Isso mesmo! Byte < KB < MB < GB < TB.' : '🔎 Ainda não é essa a ordem. Pense: qual unidade guardaria um único caractere? E qual guardaria centenas de filmes?';
+  if(isCorrect) markComplete(5);
+}
+
+/* ACT 6: fill blanks */
+const act6Answers = ['wi-fi','navegador','servidor','ip','roteador'];
+function buildAct6(){
+  const p = document.getElementById('act6-text');
+  if(!p) return;
+  p.innerHTML =
+    'Quando você quer acessar um site, seu celular ou computador se conecta à internet, geralmente por meio de uma rede ' +
+    '<input class="blank" data-a="0" placeholder="rede sem fio">' +
+    '. Você abre um programa chamado ' +
+    '<input class="blank" data-a="1" placeholder="programa">' +
+    ' (como o Chrome), que envia um pedido para um computador especial chamado ' +
+    '<input class="blank" data-a="2" placeholder="computador especial">' +
+    ', responsável por guardar o site. Cada aparelho conectado à internet tem um endereço único chamado ' +
+    '<input class="blank" data-a="3" placeholder="endereço">' +
+    '. Dentro de casa, o aparelho que distribui o sinal de internet para os outros dispositivos é o ' +
+    '<input class="blank" data-a="4" placeholder="aparelho">' + '.';
+}
+function checkFill6(){
+  const inputs = document.querySelectorAll('#act6-text input.blank');
+  let correct = 0;
+  inputs.forEach(inp=>{
+    const idx = parseInt(inp.dataset.a);
+    const val = inp.value.trim().toLowerCase();
+    inp.classList.remove('correct','incorrect');
+    if(val === act6Answers[idx] || (idx===0 && val==='wifi')){ inp.classList.add('correct'); correct++; }
+    else { inp.classList.add('incorrect'); }
+  });
+  showScore('act6-feedback', correct, inputs.length);
+  markComplete(6);
+}
+function resetFill6(){
+  document.querySelectorAll('#act6-text input.blank').forEach(inp=>{ inp.value=''; inp.classList.remove('correct','incorrect'); });
+  const fb=document.getElementById('act6-feedback'); if(fb) fb.classList.remove('show');
+}
+
+/* ACT 7: password strength */
+function initPasswordChecker(){
+  const input = document.getElementById('pwInput');
+  if(!input || input.dataset.bound) return;
+  input.dataset.bound = '1';
+  input.addEventListener('input', (e)=>{
+    const v = e.target.value;
+    const checks = { len:v.length>=8, upper:/[A-Z]/.test(v), lower:/[a-z]/.test(v), num:/[0-9]/.test(v), sym:/[^A-Za-z0-9]/.test(v) };
+    Object.keys(checks).forEach(k=>{ document.getElementById('pw-'+k).classList.toggle('met', checks[k]); });
+    const score = Object.values(checks).filter(Boolean).length;
+    const fill = document.getElementById('pwBarFill'); const label = document.getElementById('pwLabel');
+    fill.style.width = (score/5*100) + '%';
+    if(v.length === 0){ fill.style.background = 'var(--card-line)'; label.textContent = 'força: —'; }
+    else if(score <= 2){ fill.style.background = 'var(--error)'; label.textContent = 'força: fraca 😬'; }
+    else if(score <= 4){ fill.style.background = 'var(--amber)'; label.textContent = 'força: média 🙂'; }
+    else { fill.style.background = 'var(--success)'; label.textContent = 'força: forte 💪'; }
+  });
+  buildMCQ('act7-mcq', ['123456', 'nome123', 'Gt7#mLp9!qX', 'senha'], 2);
+}
+
+/* ACT 8: scenarios */
+const act8Scenarios = [
+  { text:'Você recebe uma mensagem de um perfil que você não conhece, dizendo que ganhou um prêmio e pedindo seus dados pessoais.',
+    options:['Enviar os dados, afinal é um prêmio', 'Não responder e contar para um adulto de confiança', 'Responder perguntando mais detalhes'], correct:1,
+    explain:'Perfis desconhecidos oferecendo "prêmios" costumam ser golpes de phishing. O ideal é não interagir e avisar um adulto de confiança.' },
+  { text:'Você vê uma foto constrangedora de um colega de turma circulando em um grupo.',
+    options:['Encaminhar para mais pessoas, já que todo mundo já viu', 'Ignorar e não fazer nada', 'Não encaminhar e avisar um adulto ou a escola sobre o que está acontecendo'], correct:2,
+    explain:'Encaminhar aumenta o dano à pessoa. O correto é não espalhar e buscar ajuda de um adulto, pois isso pode ser uma forma de cyberbullying.' },
+  { text:'Você encontra uma notícia chocante compartilhada em uma rede social, sem informar a fonte.',
+    options:['Compartilhar rápido, antes que outras pessoas vejam', 'Verificar se sites confiáveis também noticiaram antes de compartilhar', 'Comentar afirmando que é verdade'], correct:1,
+    explain:'Antes de compartilhar, é importante checar a fonte em sites de notícias confiáveis, para não espalhar desinformação (fake news).' },
+  { text:'Um colega pede sua senha do jogo emprestada "só um minutinho".',
+    options:['Emprestar, porque é só um amigo', 'Não compartilhar a senha com ninguém, nem amigos', 'Compartilhar, mas trocar a senha depois'], correct:1,
+    explain:'Senhas são pessoais e intransferíveis — mesmo compartilhar "só por um minuto" pode gerar problemas de segurança.' },
+];
+function buildAct8(){
+  const container = document.getElementById('act8-scenarios');
+  if(!container || container.dataset.built) return;
+  container.dataset.built = '1';
+  act8Scenarios.forEach((sc, i)=>{
+    const block = document.createElement('div'); block.className = 'mcq-block';
+    const q = document.createElement('p'); q.className = 'q'; q.textContent = (i+1) + '. ' + sc.text; block.appendChild(q);
+    const mcq = document.createElement('div'); mcq.className = 'mcq'; mcq.id = 'act8-mcq-' + i; block.appendChild(mcq);
+    const fb = document.createElement('div'); fb.className = 'feedback'; fb.id = 'act8-fb-' + i; block.appendChild(fb);
+    container.appendChild(block);
+    buildMCQ(mcq.id, sc.options, sc.correct);
+    mcq.querySelectorAll('.mcq-opt').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        revealMCQAnswer(mcq.id);
+        fb.classList.add('show','ok'); fb.textContent = '💡 ' + sc.explain;
+        markComplete(8);
+      });
+    });
+  });
+}
+
+/* ACT 9: algorithm ordering */
+const act9Steps = [
+  'Pressionar o botão de ligar o computador','Aguardar o sistema operacional carregar','Digitar a senha de login',
+  'Clicar duas vezes no ícone do programa desejado','Aguardar o programa abrir na tela',
+];
+let act9Seq = [];
+function buildAct9(){
+  const pool = document.getElementById('act9-pool');
+  if(!pool) return;
+  pool.innerHTML = '';
+  shuffle(act9Steps).forEach(step=>{
+    const b = document.createElement('button'); b.textContent = step; b.dataset.step = step;
+    b.addEventListener('click', ()=>{ if(b.disabled) return; act9Seq.push(step); b.disabled = true; renderSeq9(); });
+    pool.appendChild(b);
+  });
+}
+function renderSeq9(){
+  const display = document.getElementById('act9-display');
+  if(!display) return;
+  if(act9Seq.length === 0){ display.innerHTML = '<span class="placeholder">clique nos passos acima, na ordem certa...</span>'; return; }
+  display.innerHTML = act9Seq.map((s,i)=>'<span class="chip">'+(i+1)+'. '+s+'</span>').join('');
+}
+function resetSeq9(){ act9Seq = []; buildAct9(); renderSeq9(); const fb=document.getElementById('act9-feedback'); if(fb) fb.classList.remove('show'); }
+function checkSeq9(){
+  const isCorrect = act9Seq.length === act9Steps.length && act9Seq.every((v,i)=>v===act9Steps[i]);
+  const fb = document.getElementById('act9-feedback');
+  fb.classList.remove('ok','warn'); fb.classList.add('show', isCorrect ? 'ok' : 'warn');
+  fb.textContent = isCorrect ? '🎉 Perfeito! Essa é a ordem lógica correta.' : '🔎 A ordem ainda não está certa. Pense no que precisa acontecer primeiro para que o próximo passo seja possível.';
+  if(isCorrect) markComplete(9);
+}
+
+/* ACT 10: flowchart quiz */
+function initAct10(){
+  buildMCQ('act10-mcq1', ['Se a pessoa vai andar de bicicleta ou não', 'Se está chovendo ou não', 'Se é dia ou noite'], 1);
+  buildMCQ('act10-mcq2', ['Ela leva o guarda-chuva mesmo assim', 'Ela sai sem guarda-chuva', 'O fluxograma não diz o que fazer'], 1);
+}
+function checkAll10(){
+  revealMCQAnswer('act10-mcq1'); revealMCQAnswer('act10-mcq2');
+  const c1 = document.getElementById('act10-mcq1'); const c2 = document.getElementById('act10-mcq2');
+  const correct = (c1.dataset.chosen === c1.dataset.correct ? 1:0) + (c2.dataset.chosen === c2.dataset.correct ? 1:0);
+  showScore('act10-feedback', correct, 2);
+  markComplete(10);
+}
+
+/* ACT 11: maze */
+const MAZE_ROWS = 4, MAZE_COLS = 5;
+const MAZE_START = {r:0,c:0}; const MAZE_GOAL = {r:3,c:4};
+const MAZE_WALLS = [{r:1,c:1},{r:1,c:2},{r:2,c:3}];
+let mazeSeq = []; let mazeCellSize = 56;
+function isWall(r,c){ return MAZE_WALLS.some(w=>w.r===r && w.c===c); }
+function buildMaze(){
+  const grid = document.getElementById('mazeGrid');
+  if(!grid) return;
+  grid.querySelectorAll('.cell').forEach(c=>c.remove());
+  for(let r=0;r<MAZE_ROWS;r++){
+    for(let c=0;c<MAZE_COLS;c++){
+      const cell = document.createElement('div'); cell.className = 'cell';
+      if(isWall(r,c)){ cell.classList.add('wall'); cell.textContent = '🚧'; }
+      else if(r===MAZE_GOAL.r && c===MAZE_GOAL.c){ cell.classList.add('goal'); cell.textContent = '🏁'; }
+      grid.appendChild(cell);
+    }
+  }
+  positionRobot(MAZE_START.r, MAZE_START.c, false);
+}
+function positionRobot(r,c, animate){
+  const robot = document.getElementById('mazeRobot');
+  if(!robot) return;
+  const size = mazeCellSize + 4;
+  robot.style.transition = animate ? 'top .38s ease, left .38s ease' : 'none';
+  robot.style.top = (r*size + 4) + 'px'; robot.style.left = (c*size + 4) + 'px';
+}
+function addMove(dir){ if(mazeSeq.length >= 10) return; mazeSeq.push(dir); renderMazeSeq(); }
+const arrowChar = {up:'⬆️',down:'⬇️',left:'⬅️',right:'➡️'};
+function renderMazeSeq(){
+  const display = document.getElementById('mazeSeqDisplay');
+  if(!display) return;
+  if(mazeSeq.length===0){ display.innerHTML = '<span class="placeholder">clique nas setas para montar o caminho...</span>'; return; }
+  display.innerHTML = mazeSeq.map(d=>'<span class="chip">'+arrowChar[d]+'</span>').join('');
+}
+function resetMaze(){ mazeSeq = []; renderMazeSeq(); positionRobot(MAZE_START.r, MAZE_START.c, false); const fb=document.getElementById('act11-feedback'); if(fb) fb.classList.remove('show'); }
+async function runMaze(){
+  const fb = document.getElementById('act11-feedback');
+  fb.classList.remove('show','ok','warn');
+  let r = MAZE_START.r, c = MAZE_START.c;
+  positionRobot(r,c,false);
+  await new Promise(res=>setTimeout(res,150));
+  for(const dir of mazeSeq){
+    if(dir==='up') r--; else if(dir==='down') r++; else if(dir==='left') c--; else if(dir==='right') c++;
+    if(r<0||r>=MAZE_ROWS||c<0||c>=MAZE_COLS||isWall(r,c)){
+      positionRobot(Math.max(0,Math.min(MAZE_ROWS-1,r)), Math.max(0,Math.min(MAZE_COLS-1,c)), true);
+      await new Promise(res=>setTimeout(res,420));
+      fb.classList.add('show','warn');
+      fb.textContent = '💥 Ops! O robô bateu em um obstáculo ou saiu do mapa. Clique em "Limpar" e tente outro caminho.';
+      return;
+    }
+    positionRobot(r,c,true);
+    await new Promise(res=>setTimeout(res,420));
+  }
+  if(r===MAZE_GOAL.r && c===MAZE_GOAL.c){
+    fb.classList.add('show','ok'); fb.textContent = '🎉 Você programou o robô com sucesso! Ele chegou até a bandeira.';
+    markComplete(11);
+  } else {
+    fb.classList.add('show','warn'); fb.textContent = '🤔 O robô parou, mas ainda não chegou na bandeira 🏁. Ajuste a sequência e tente de novo.';
+  }
+}
+
+/* ACT 12: debugging */
+const act12Snippets = [
+  { code:['Início','Definir nome = "Ana"','Escrever nomee','Fim'],
+    options:['Faltou o comando "Fim" no final','O nome da variável está escrito errado: "nomee" em vez de "nome"','Faltou colocar aspas em "Ana"'], correct:1,
+    explain:'A variável foi criada como "nome", mas o comando Escrever chama "nomee" — um simples erro de digitação já quebra o programa!' },
+  { code:['Início','Definir contador = 1','Enquanto contador > 0 faça','    Escrever contador','    contador = contador + 1','Fim Enquanto','Fim'],
+    options:['A condição nunca fica falsa, então o programa entra em loop infinito','Faltou definir a variável "contador"','O comando Escrever está no lugar errado'], correct:0,
+    explain:'Como o contador só aumenta e a condição é "maior que 0", ela nunca vai ficar falsa — o programa repetiria para sempre!' },
+  { code:['Início','Definir nota1 = 7','Definir nota2 = 9','Definir media = nota1 + nota2','Escrever "A média é: " + media','Fim'],
+    options:['Faltou multiplicar as notas','As variáveis foram nomeadas de forma errada','Faltou dividir a soma das notas por 2 para calcular a média'], correct:2,
+    explain:'Média é a soma dividida pela quantidade de valores. O código apenas soma as notas, sem dividir por 2.' },
+];
+function buildAct12(){
+  const container = document.getElementById('act12-snippets');
+  if(!container || container.dataset.built) return;
+  container.dataset.built = '1';
+  act12Snippets.forEach((sn, i)=>{
+    const block = document.createElement('div'); block.className = 'mcq-block';
+    const pre = document.createElement('pre'); pre.className = 'code-block';
+    pre.innerHTML = sn.code.map((line,li)=>'<span class="ln">'+(li+1)+'</span>'+line).join('\\n');
+    block.appendChild(pre);
+    const q = document.createElement('p'); q.className = 'q'; q.textContent = 'Trecho ' + (i+1) + ' — Qual é o erro?'; block.appendChild(q);
+    const mcq = document.createElement('div'); mcq.className = 'mcq'; mcq.id = 'act12-mcq-' + i; block.appendChild(mcq);
+    const fb = document.createElement('div'); fb.className = 'feedback'; fb.id = 'act12-fb-' + i; block.appendChild(fb);
+    container.appendChild(block);
+    buildMCQ(mcq.id, sn.options, sn.correct);
+    mcq.querySelectorAll('.mcq-opt').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        revealMCQAnswer(mcq.id);
+        const isCorrect = mcq.dataset.chosen === mcq.dataset.correct;
+        fb.classList.add('show', isCorrect ? 'ok' : 'warn');
+        fb.textContent = (isCorrect ? '✅ ' : '💡 A correta era outra. ') + sn.explain;
+        markComplete(12);
+      });
+    });
+  });
+}
+
+/* ACT 13: footprint checklist + TF */
+const act13Items = [
+  {label:'Sua senha de e-mail', safe:false}, {label:'Seu endereço de casa', safe:false},
+  {label:'Sua cor favorita', safe:true}, {label:'Sua localização em tempo real', safe:false},
+  {label:'O nome do seu jogo favorito', safe:true}, {label:'Uma foto sua íntima ou constrangedora', safe:false},
+];
+function buildAct13Checks(){
+  const container = document.getElementById('act13-checks');
+  if(!container || container.dataset.built) return;
+  container.dataset.built = '1';
+  act13Items.forEach((item,i)=>{
+    const row = document.createElement('label'); row.className = 'check-row'; row.dataset.safe = item.safe;
+    row.innerHTML = '<input type="checkbox" id="act13-c-'+i+'"><span>'+item.label+' — <b>é seguro compartilhar publicamente?</b></span>';
+    container.appendChild(row);
+  });
+}
+function checkAct13(){
+  const rows = document.querySelectorAll('#act13-checks .check-row');
+  let correct = 0;
+  rows.forEach(row=>{
+    const checked = row.querySelector('input').checked;
+    const safe = row.dataset.safe === 'true';
+    row.classList.remove('correct','incorrect');
+    if(checked === safe){ row.classList.add('correct'); correct++; } else { row.classList.add('incorrect'); }
+  });
+  showScore('act13-feedback', correct, rows.length);
+  markComplete(13);
+}
+const act13TF = [
+  {text:'Depois que você publica algo online, é possível que outras pessoas façam cópias, mesmo que você apague depois.', answer:true},
+  {text:'Sua pegada digital só é formada por fotos que você publica.', answer:false},
+  {text:'Configurar o perfil como privado ajuda a controlar quem vê suas informações.', answer:true},
+];
+function buildTF(containerId, items, onAnswered){
+  const container = document.getElementById(containerId);
+  if(!container || container.dataset.built) return;
+  container.dataset.built = '1';
+  items.forEach((item)=>{
+    const block = document.createElement('div'); block.className = 'mcq-block';
+    const q = document.createElement('p'); q.className = 'q'; q.textContent = item.text; block.appendChild(q);
+    const row = document.createElement('div'); row.className = 'mcq'; row.style.flexDirection = 'row'; row.style.flexWrap = 'wrap';
+    const trueBtn = document.createElement('button'); trueBtn.className = 'mcq-opt'; trueBtn.textContent = 'Verdadeiro'; trueBtn.style.flex = '1';
+    const falseBtn = document.createElement('button'); falseBtn.className = 'mcq-opt'; falseBtn.textContent = 'Falso'; falseBtn.style.flex = '1';
+    const fb = document.createElement('div'); fb.className = 'feedback';
+    row.appendChild(trueBtn); row.appendChild(falseBtn); block.appendChild(row); block.appendChild(fb);
+    container.appendChild(block);
+    function answer(val, btn){
+      trueBtn.classList.remove('correct','incorrect'); falseBtn.classList.remove('correct','incorrect');
+      const correctBtn = item.answer ? trueBtn : falseBtn; correctBtn.classList.add('correct');
+      if(val !== item.answer) btn.classList.add('incorrect');
+      fb.classList.add('show', val===item.answer ? 'ok':'warn');
+      fb.textContent = val===item.answer ? '✅ Isso mesmo!' : ('❌ Na verdade, é ' + (item.answer? '"Verdadeiro"':'"Falso"') + '.');
+      if(onAnswered) onAnswered();
+    }
+    trueBtn.addEventListener('click', ()=>answer(true, trueBtn));
+    falseBtn.addEventListener('click', ()=>answer(false, falseBtn));
+  });
+}
+
+/* ACT 14: AI myths + classification */
+const act14TF = [
+  {text:'A Inteligência Artificial aprende a partir de grandes quantidades de dados.', answer:true},
+  {text:'A IA pensa e sente exatamente como um ser humano.', answer:false},
+  {text:'Todo assistente de voz (como Siri ou Alexa) usa algum tipo de Inteligência Artificial.', answer:true},
+  {text:'A IA sempre acerta e nunca comete erros.', answer:false},
+  {text:'Recomendações de vídeos e músicas em aplicativos costumam usar IA.', answer:true},
+];
+
+/* ACT 15: certificate */
+function generateCertificate(){
+  const nome = document.getElementById('p-aluno').value.trim();
+  const fb = document.getElementById('act15-feedback');
+  if(!nome){ fb.classList.add('show','warn'); fb.textContent = '✏️ Digite seu nome no campo acima para gerar o certificado.'; return; }
+  fb.classList.remove('warn'); fb.classList.add('show','ok'); fb.textContent = '🎉 Certificado gerado! Role para baixo para ver.';
+  document.getElementById('certName').textContent = nome;
+  const d = new Date();
+  document.getElementById('certDate').textContent = 'Concluído em ' + d.toLocaleDateString('pt-BR');
+  const cert = document.getElementById('certificate');
+  cert.classList.add('show');
+  cert.scrollIntoView({behavior:'smooth', block:'center'});
+  markComplete(15);
+}
+
+/* ---------------------------------------------------------------------------
+   PER-LESSON ACTIVITY INITIALIZATION (called right after a lesson's DOM is built)
+   --------------------------------------------------------------------------- */
+function initLessonActivities(n){
+  if(n===1){
+    buildClassifyList('act1-list', [
+      {label:'Livro de papel', answer:'Analógica'}, {label:'Calculadora científica de bolso (com tela numérica)', answer:'Digital'},
+      {label:'Rádio antigo de dial (sintonia giratória)', answer:'Analógica'}, {label:'Smartphone', answer:'Digital'},
+      {label:'Relógio de sol', answer:'Analógica'}, {label:'Relógio digital de pulso', answer:'Digital'},
+      {label:'Máquina de escrever mecânica', answer:'Analógica'}, {label:'Computador', answer:'Digital'},
+      {label:'Bússola magnética', answer:'Analógica'}, {label:'GPS do celular', answer:'Digital'},
+    ], ['Analógica','Digital']);
+  }
+  if(n===2){
+    buildClassifyList('act2-list', [
+      {label:'Mouse', answer:'Hardware'}, {label:'Teclado', answer:'Hardware'},
+      {label:'Sistema operacional (Windows, macOS...)', answer:'Software'}, {label:'Aplicativo de jogos', answer:'Software'},
+      {label:'Monitor', answer:'Hardware'}, {label:'Impressora', answer:'Hardware'},
+      {label:'Navegador de internet (Chrome, Firefox...)', answer:'Software'}, {label:'Processador (CPU)', answer:'Hardware'},
+      {label:'Antivírus', answer:'Software'}, {label:'Placa de vídeo', answer:'Hardware'},
+    ], ['Hardware','Software']);
+  }
+  if(n===3){ buildAct3(); }
+  if(n===4){
+    buildClassifyList('act4-list', [
+      {label:'Teclado', answer:'Entrada'}, {label:'Mouse', answer:'Entrada'}, {label:'Microfone', answer:'Entrada'},
+      {label:'Monitor', answer:'Saída'}, {label:'Caixa de som', answer:'Saída'}, {label:'Impressora', answer:'Saída'},
+      {label:'Pen drive', answer:'Armazenamento'}, {label:'HD externo', answer:'Armazenamento'},
+      {label:'Cartão de memória (SD)', answer:'Armazenamento'}, {label:'Webcam', answer:'Entrada'},
+    ], ['Entrada','Saída','Armazenamento']);
+  }
+  if(n===5){ buildAct5(); renderSeq5(); }
+  if(n===6){ buildAct6(); }
+  if(n===7){ initPasswordChecker(); }
+  if(n===8){ buildAct8(); }
+  if(n===9){ buildAct9(); renderSeq9(); }
+  if(n===10){ initAct10(); }
+  if(n===11){ buildMaze(); renderMazeSeq(); }
+  if(n===12){ buildAct12(); }
+  if(n===13){ buildAct13Checks(); buildTF('act13-tf', act13TF, ()=>markComplete(13)); }
+  if(n===14){
+    buildTF('act14-tf', act14TF, ()=>markComplete(14));
+    buildClassifyList('act14-list', [
+      {label:'Assistente virtual (ex: Alexa, Siri)', answer:'Usa IA'}, {label:'Calculadora simples somando 2 + 2', answer:'Não usa IA'},
+      {label:'Sistema de recomendação de vídeos de um app de streaming', answer:'Usa IA'},
+      {label:'Um chatbot que conversa e responde perguntas variadas', answer:'Usa IA'},
+      {label:'Planilha somando uma coluna de números', answer:'Não usa IA'},
+      {label:'Reconhecimento facial para desbloquear o celular', answer:'Usa IA'},
+    ], ['Usa IA','Não usa IA']);
+  }
+  /* n===15 needs no special init beyond the form fields already in the DOM */
+}
+
+/* ---------------------------------------------------------------------------
+   INIT
+   --------------------------------------------------------------------------- */
+renderHome();
+</script>
+</body>
+</html>
