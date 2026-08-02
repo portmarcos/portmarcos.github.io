@@ -302,6 +302,7 @@ function abrir(i){
       <div class="anos mono">${e.anos} · ${e.p==='BR'?'Brasil':'Portugal'}</div>
       <h2 class="serif">${e.nome}</h2>
       <p>${e.contexto}</p>
+      ${/^Modernismo — [12]ª fase$/.test(e.nome) ? '<a class="dl-btn" href="/modernismo-trilha.html">🧭 Fazer a Trilha do Modernismo (atividade interativa)</a>' : ''}
     </div>
     <div class="tabs">${TABS.map((t,k)=>`<button class="tab${k===0?' on':''}" data-t="${t[0]}">${t[1]}</button>`).join('')}</div>
     <div class="pane on" data-p="contexto">${ctxHTML}</div>
