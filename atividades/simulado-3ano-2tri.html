@@ -69,28 +69,6 @@
     /* Resultado — medalha e mensagem por faixa de acerto */
     #medalha-final{ font-size:3rem; line-height:1; margin-bottom:2px; }
     #msg-final{ color:var(--tinta-suave); font-size:.94rem; max-width:46ch; margin:10px auto 0; }
-    #envio-status{ margin-top:14px; font-size:.85rem; font-weight:700; }
-    #envio-status.enviando{ color:var(--tinta-suave); }
-    #envio-status.ok{ color:var(--certo); }
-
-    /* ===== Prova impressa (só aparece no papel — ver .somente-impressao no design-system.css) ===== */
-    .prova-cabecalho{ text-align:center; margin-bottom:22px; }
-    .prova-cabecalho h1{ font-family:'Cormorant Garamond',serif; font-size:1.5rem; margin:0 0 4px; }
-    .prova-cabecalho .prova-sub{ font-size:.82rem; color:#555; margin:0 0 12px; }
-    .prova-campos{ display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; font-size:.85rem; border-top:1px solid #999; border-bottom:1px solid #999; padding:8px 2px; }
-    .prova-lista{ list-style:none; counter-reset:pq; padding:0; margin:20px 0 0; }
-    .prova-questao{ counter-increment:pq; margin-bottom:22px; page-break-inside:avoid; }
-    .prova-texto-base{ background:#f7f4ee; border-left:3px solid #999; padding:10px 14px; font-size:.9rem; line-height:1.6; margin-bottom:8px; }
-    .prova-texto-base p{ margin:0 0 8px; } .prova-texto-base p:last-child{ margin:0; }
-    .prova-texto-base .fonte{ font-size:.74rem; color:#555; font-style:italic; }
-    .prova-texto-base img{ max-width:100%; margin:6px 0; }
-    .prova-enunciado{ font-weight:700; font-size:.94rem; margin:0 0 6px; }
-    .prova-enunciado b::before{ content:counter(pq) ". "; }
-    .prova-alternativas{ margin:0; padding-left:22px; font-size:.9rem; line-height:1.75; }
-    .prova-gabarito{ display:none; margin-top:28px; page-break-before:always; }
-    body.com-gabarito .prova-gabarito{ display:block; }
-    .prova-gabarito h2{ font-family:'Cormorant Garamond',serif; font-size:1.2rem; }
-    .prova-gabarito p{ font-family:'JetBrains Mono',monospace; font-size:.95rem; letter-spacing:.04em; line-height:2; }
   </style>
 </head>
 <!-- A classe abaixo define a cor da página: alinhado ao Currículo (CRMG) = vinho -->
@@ -136,12 +114,8 @@
     <!-- Painel de impressão -->
     <section class="painel painel-imprimir">
       <h3>🖨️ Versão para imprimir</h3>
-      <p>Gera as 15 questões formatadas para aplicação em papel, com espaço para nome, turma e data no cabeçalho.</p>
-      <label class="campo-check" for="chk-gabarito">
-        <input type="checkbox" id="chk-gabarito">
-        Incluir gabarito ao final (cópia do professor)
-      </label>
-      <button id="btn-imprimir" class="btn btn-secundario btn-bloco" type="button">🖨️ Gerar prova para impressão</button>
+      <p>Abre as 15 questões numa página própria, já formatadas para papel — com espaço para nome, turma e data. O que aparece na tela ali é exatamente o que vai ser impresso.</p>
+      <a href="simulado-3ano-2tri-imprimir.html" target="_blank" class="btn btn-secundario btn-bloco">🖨️ Abrir versão para impressão →</a>
     </section>
 
     <!-- TELA 2: questão -->
@@ -167,9 +141,6 @@
     </section>
   </main>
 
-  <!-- ===== PROVA IMPRESSA — só aparece ao imprimir (ver .somente-impressao no design-system.css) ===== -->
-  <div class="somente-impressao" id="prova-impressao"></div>
-
   <footer class="rodape nao-imprimir"><div class="container">Portal Marcos Cruz · Prof. Marcos Cruz</div></footer>
 
   <!-- 1º: os dados · 2º: o confete (CDN) · 3º: o motor -->
@@ -179,65 +150,6 @@
   <script src="../assets/js/quiz-engine.js"></script>
 
   <script>
-    /* ===== Gera a versão impressa a partir dos mesmos dados do quiz ===== */
-    (function () {
-      const letras = ["A", "B", "C", "D", "E", "F"];
-      const alvo = document.getElementById("prova-impressao");
-      if (!alvo || typeof QUIZ_DADOS === "undefined") return;
-
-      // Embaralha as alternativas de cada questão (a ordem do banco de dados
-      // sempre traz a resposta certa primeiro — sem isso, "A" seria sempre
-      // o gabarito na prova impressa).
-      function embaralhar(lista) {
-        const c = [...lista];
-        for (let i = c.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [c[i], c[j]] = [c[j], c[i]];
-        }
-        return c;
-      }
-
-      const gabaritoPartes = [];
-      const questoes = QUIZ_DADOS.questoes.map((q, i) => {
-        const opcoesEmbaralhadas = embaralhar(q.opcoes);
-        const idxCorreta = opcoesEmbaralhadas.indexOf(q.correta);
-        gabaritoPartes.push(`${i + 1}–${letras[idxCorreta]}`);
-        const alts = opcoesEmbaralhadas.map(o => `<li>${o}</li>`).join("");
-        return `<li class="prova-questao">
-          <div class="prova-texto-base">${q.texto}</div>
-          <p class="prova-enunciado"><b></b> ${q.pergunta}</p>
-          <ol class="prova-alternativas" type="A">${alts}</ol>
-        </li>`;
-      }).join("");
-
-      const gabarito = gabaritoPartes.join("&nbsp;&nbsp;&nbsp;");
-
-      alvo.innerHTML = `
-        <div class="prova-cabecalho">
-          <h1>${QUIZ_DADOS.titulo}</h1>
-          <p class="prova-sub">Prof. Marcos Cruz · Língua Portuguesa · Plano de Curso 2026 (CRMG)</p>
-          <div class="prova-campos">
-            <span>Nome: _______________________________________</span>
-            <span>Turma: ______</span>
-            <span>Data: ___/___/2026</span>
-          </div>
-        </div>
-        <ol class="prova-lista">${questoes}</ol>
-        <div class="prova-gabarito">
-          <h2>Gabarito</h2>
-          <p>${gabarito}</p>
-        </div>`;
-
-      const btn = document.getElementById("btn-imprimir");
-      const chk = document.getElementById("chk-gabarito");
-      if (btn) {
-        btn.addEventListener("click", function () {
-          document.body.classList.toggle("com-gabarito", !!(chk && chk.checked));
-          window.print();
-        });
-      }
-    })();
-
     /* ===== Resultado final: medalha e mensagem de acordo com a faixa de acerto ===== */
     (function () {
       const telaFinal = document.getElementById("tela-final");

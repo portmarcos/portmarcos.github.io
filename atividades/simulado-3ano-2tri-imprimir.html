@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Imprimir — Simulado 3º Ano · 2º Trimestre — Portal de Aulas</title>
+  <link rel="icon" href="../favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Página autocontida, sem depender do design-system.css: o que aparece
+       na tela é exatamente o que vai para o papel — nada fica escondido
+       até a hora de imprimir, pra não repetir o bug de página em branco
+       em drivers de PDF que ignoram @media print de forma seletiva. */
+    :root{
+      --tinta:#1B2430; --tinta-suave:#5A6473; --linha:#D9DEE6; --fundo:#F4F6F9;
+      --vinho:#AD1457; --vinho-claro:#FAE3EC; --certo:#2E7D32; --errado:#C62828;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:'Atkinson Hyperlegible',system-ui,sans-serif;font-size:15px;line-height:1.6;color:var(--tinta);background:var(--fundo)}
+    .container{width:min(780px, 100% - 28px);margin:0 auto;padding:20px 0 60px}
+
+    .barra-controles{
+      display:flex;flex-wrap:wrap;align-items:center;gap:14px;
+      background:#fff;border:1px solid var(--linha);border-radius:12px;
+      padding:14px 18px;margin-bottom:22px;position:sticky;top:10px;box-shadow:0 4px 16px rgba(27,36,48,.08);
+    }
+    .barra-controles a{color:var(--vinho);text-decoration:none;font-weight:700;font-size:.9rem}
+    .campo-check{display:flex;align-items:center;gap:8px;font-size:.9rem;cursor:pointer;user-select:none}
+    .campo-check input{width:17px;height:17px;accent-color:var(--vinho)}
+    .btn-imprimir{
+      margin-left:auto;border:none;border-radius:24px;background:var(--vinho);color:#fff;
+      font:700 .92rem 'Atkinson Hyperlegible',sans-serif;padding:11px 22px;cursor:pointer;
+    }
+    .btn-imprimir:hover{filter:brightness(1.08)}
+    .aviso{font-size:.8rem;color:var(--tinta-suave);width:100%}
+
+    .prova-cabecalho{text-align:center;margin-bottom:26px;border-bottom:2px solid var(--tinta);padding-bottom:16px}
+    .prova-cabecalho h1{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.7rem;margin:0 0 4px}
+    .prova-cabecalho .sub{font-size:.85rem;color:var(--tinta-suave);margin:0 0 14px}
+    .prova-campos{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.9rem;border-top:1px solid #999;border-bottom:1px solid #999;padding:9px 2px}
+
+    .prova-lista{list-style:none;counter-reset:pq;padding:0;margin:22px 0 0}
+    .prova-questao{counter-increment:pq;background:#fff;border:1px solid var(--linha);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+    .prova-texto-base{background:#FBF8F1;border-left:3px solid #B8A164;padding:11px 15px;font-size:.92rem;line-height:1.65;margin-bottom:10px;border-radius:0 8px 8px 0}
+    .prova-texto-base p{margin:0 0 8px}.prova-texto-base p:last-child{margin:0}
+    .prova-texto-base .fonte{font-size:.74rem;color:var(--tinta-suave);font-style:italic}
+    .prova-texto-base img{max-width:100%;margin:6px 0;border-radius:4px}
+    .prova-enunciado{font-weight:700;font-size:.95rem;margin:0 0 8px}
+    .prova-enunciado b::before{content:counter(pq) ". "}
+    .prova-alternativas{margin:0;padding-left:22px;font-size:.92rem;line-height:1.85}
+
+    .prova-gabarito{margin-top:26px;background:#fff;border:2px dashed var(--vinho);border-radius:10px;padding:16px 18px}
+    .prova-gabarito h2{font-family:'Cormorant Garamond',serif;font-size:1.25rem;margin:0 0 8px;color:var(--vinho)}
+    .prova-gabarito p{font-family:'JetBrains Mono',monospace;font-size:.95rem;letter-spacing:.04em;line-height:2;margin:0}
+    .prova-gabarito.escondido{ display:none; }
+
+    @media print{
+      body{background:#fff}
+      .nao-imprimir{display:none !important}
+      .prova-questao{border:1px solid #999;page-break-inside:avoid;box-shadow:none}
+      .prova-gabarito{page-break-before:always;border-color:#999}
+      a{color:#000}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="barra-controles nao-imprimir">
+      <a href="simulado-3ano-2tri.html">← Voltar ao simulado</a>
+      <label class="campo-check" for="chk-gabarito">
+        <input type="checkbox" id="chk-gabarito">
+        Mostrar/incluir gabarito
+      </label>
+      <button class="btn-imprimir" id="btn-imprimir" type="button">🖨️ Imprimir agora</button>
+      <span class="aviso">O que aparece abaixo é exatamente o que será impresso — confira antes de imprimir.</span>
+    </div>
+
+    <div id="prova"></div>
+  </div>
+
+  <script src="../dados/simulado-3ano-2tri.js"></script>
+  <script>
+    (function () {
+      const letras = ["A", "B", "C", "D", "E", "F"];
+
+      function embaralhar(lista) {
+        const c = [...lista];
+        for (let i = c.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [c[i], c[j]] = [c[j], c[i]];
+        }
+        return c;
+      }
+
+      const alvo = document.getElementById("prova");
+      if (!alvo || typeof QUIZ_DADOS === "undefined") {
+        alvo.textContent = "Não foi possível carregar as questões. Recarregue a página.";
+        return;
+      }
+
+      const gabaritoPartes = [];
+      const questoesHTML = QUIZ_DADOS.questoes.map((q, i) => {
+        const opcoesEmbaralhadas = embaralhar(q.opcoes);
+        const idxCorreta = opcoesEmbaralhadas.indexOf(q.correta);
+        gabaritoPartes.push(`${i + 1}–${letras[idxCorreta]}`);
+        const alts = opcoesEmbaralhadas.map(o => `<li>${o}</li>`).join("");
+        return `<li class="prova-questao">
+          <div class="prova-texto-base">${q.texto}</div>
+          <p class="prova-enunciado"><b></b> ${q.pergunta}</p>
+          <ol class="prova-alternativas" type="A">${alts}</ol>
+        </li>`;
+      }).join("");
+
+      alvo.innerHTML = `
+        <div class="prova-cabecalho">
+          <h1>${QUIZ_DADOS.titulo}</h1>
+          <p class="sub">Prof. Marcos Cruz · Língua Portuguesa · Plano de Curso 2026 (CRMG)</p>
+          <div class="prova-campos">
+            <span>Nome: _______________________________________</span>
+            <span>Turma: ______</span>
+            <span>Data: ___/___/2026</span>
+          </div>
+        </div>
+        <ol class="prova-lista">${questoesHTML}</ol>
+        <div class="prova-gabarito escondido" id="prova-gabarito">
+          <h2>Gabarito</h2>
+          <p>${gabaritoPartes.join("&nbsp;&nbsp;&nbsp;")}</p>
+        </div>`;
+
+      const chk = document.getElementById("chk-gabarito");
+      const gab = document.getElementById("prova-gabarito");
+      chk.addEventListener("change", function () {
+        gab.classList.toggle("escondido", !chk.checked);
+      });
+      document.getElementById("btn-imprimir").addEventListener("click", function () {
+        window.print();
+      });
+    })();
+  </script>
+<script defer src="/assets/lantern.js"></script></body>
+</html>
