@@ -181,8 +181,15 @@ export function ContentCard({ item, hovered, onEnter, onLeave }) {
       )}
       <div className="relative">
         <div className="flex items-start justify-between mb-4">
-          <div className="w-11 h-11 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110" style={{ backgroundColor: `${item.color}1f`, color: item.color }}>
-            <Icon size={21} strokeWidth={1.75} />
+          <div
+            className="w-12 h-12 rounded-2xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
+            style={{ background: `linear-gradient(145deg, ${item.color}33, ${item.color}14)`, color: item.color, boxShadow: `inset 0 1px 0 rgba(255,255,255,0.2), 0 0 0 1px ${item.color}26` }}
+          >
+            {item.svg ? (
+              <span style={{ width: 24, height: 24, display: "flex" }} dangerouslySetInnerHTML={{ __html: item.svg }} />
+            ) : (
+              <Icon size={22} strokeWidth={1.7} />
+            )}
           </div>
           {item.badge && (
             <span className="text-xs font-mono2 px-2 py-0.5 rounded-full" style={disabled ? { color: "#94A3B8", border: "1px solid rgba(148,163,184,0.3)" } : { color: item.color, backgroundColor: `${item.color}1f` }}>
