@@ -157,9 +157,9 @@ h2.station-title::after{
 
 var STATIONS = [
   {
-    type:'leitura', fase:1, tempo:16,
+    type:'leitura', fase:1, tempo:26,
     titulo:'22 de fevereiro de 1922, Teatro Municipal de São Paulo',
-    contexto:'Naquela noite, um grupo de escritores, pintores e músicos subiu ao palco decidido a provocar. Liam poemas sem métrica fixa, mostravam telas com formas distorcidas e desafiavam tudo o que o público esperava de uma "arte séria". Parte da plateia vaiou, riu e foi embora achando aquilo uma piada de mau gosto. Mas essa "piada" mudaria para sempre os rumos da literatura brasileira: nascia ali a Semana de Arte Moderna.',
+    contexto:'Naquela noite, um grupo de escritores, pintores e músicos subiu ao palco decidido a provocar. Liam poemas sem métrica fixa, mostravam telas com formas distorcidas e desafiavam tudo o que o público esperava de uma "arte séria". O escritor Graça Aranha abriu a noite com um discurso contra o "academicismo", e pouco depois, quando o poeta Ronald de Carvalho declamou versos livres, parte da plateia começou a vaiar e a imitar miados de gato, achando aquilo ridículo. Cinco anos antes, em 1917, a pintora Anita Malfatti já tinha causado um escândalo parecido ao expor telas de traço moderno em São Paulo — um sinal de que essa ruptura já estava no ar bem antes da Semana. Mas aquela "piada" toda mudaria para sempre os rumos da arte brasileira: nascia ali a Semana de Arte Moderna.',
     textoPlaceholder:'A poesia existe nos fatos. Os casebres de açafrão e de ocre nos verdes da Favela, sob o azul cabralino, são fatos estéticos. O Carnaval no Rio é o acontecimento religioso da raça. Pau Brasil. Wagner submerge ante os cordões de Botafogo. Bárbaro e nosso. A formação étnica rica. Riqueza vegetal. O minério. A cozinha. O vatapá, o ouro e a dança.',
     fontePlaceholder:'Oswald de Andrade, Manifesto da Poesia Pau-Brasil, Correio da Manhã, 18 de março de 1924'
   },
@@ -168,14 +168,14 @@ var STATIONS = [
     titulo:'O que causou tanto barulho?',
     pergunta:'O que tornou a Semana de Arte Moderna de 1922 um escândalo para boa parte do público da época?',
     alternativas:[
-      'Ela reafirmava com rigor as regras da poesia parnasiana, o que incomodou os próprios modernistas.',
-      'Ela rompia com as formas artísticas tradicionais e provocou estranhamento, risadas e vaias na plateia.',
-      'Ela era um evento fechado, sem nenhum tipo de repercussão ou reação do público presente.',
-      'Ela apresentava obras iguais às que já eram aceitas nos salões oficiais de arte da época.'
+      'Ela repetia com fidelidade as regras da poesia parnasiana da época.',
+      'Ela era restrita a convidados, sem nenhuma repercussão fora do teatro.',
+      'Ela rompia com as formas tradicionais e causou estranhamento na plateia.',
+      'Ela reproduzia exatamente as obras já aceitas nos salões oficiais.'
     ],
-    correta:1,
+    correta:2,
     feedbackCerto:'A Semana de 22 rompia justamente com o que se esperava da arte "séria" da época — versos livres, formas distorcidas, temas do cotidiano. Por isso causou tanto espanto: era novidade demais para uma plateia acostumada com outra coisa.',
-    feedbackErrado:'Pense no motivo de tanta gente ter vaiado e rido durante o evento: foi porque viram algo repetido, ou algo que quebrava as regras que conheciam?'
+    feedbackErrado:'Pense no motivo de tanta gente ter vaiado e imitado miados de gato durante o evento: foi porque viram algo repetido, ou algo que quebrava as regras que conheciam?'
   },
   {
     type:'video', fase:1,
@@ -183,9 +183,23 @@ var STATIONS = [
     videoId:'5VWIxMYUq00'
   },
   {
-    type:'leitura', fase:1, tempo:15,
+    type:'pergunta', fase:1,
+    titulo:'Mais que literatura',
+    pergunta:'Além da literatura, quais outras linguagens artísticas também estiveram no palco e nos corredores da Semana de Arte Moderna?',
+    alternativas:[
+      'Só o teatro e o cinema, ainda novidades por aqui.',
+      'Pintura, escultura, música e arquitetura, ao lado da literatura.',
+      'Apenas a fotografia, técnica ainda pouco difundida no país.',
+      'Só a dança, apresentada ali pela primeira vez em público.'
+    ],
+    correta:1,
+    feedbackCerto:'Isso mesmo! A Semana foi um evento multiartístico — teve exposição de pintura e escultura (com nomes como Anita Malfatti e Di Cavalcanti) e apresentações de música erudita (Villa-Lobos), além dos recitais de poesia e prosa.',
+    feedbackErrado:'Pense no motivo de o evento acontecer dentro de um teatro, com exposições nos corredores: será que só teve gente lendo poema no palco?'
+  },
+  {
+    type:'leitura', fase:1, tempo:24,
     titulo:'Um poema pode ser uma piada?',
-    contexto:'Entre os nomes daquela geração, Oswald de Andrade se destacou por um jeito quase debochado de escrever. Seus poemas eram curtos, escritos com a língua do dia a dia — sem elegância forçada — e terminavam quase sempre com uma virada de humor ou de crítica. Ficaram conhecidos como "poesia-piada": rápidos como uma tirada de conversa, mas capazes de dizer muito em poucas palavras.',
+    contexto:'Entre os nomes daquela geração, Oswald de Andrade se destacou por um jeito quase debochado de escrever. Seus poemas eram curtos, escritos com a língua do dia a dia — sem elegância forçada — e terminavam quase sempre com uma virada de humor ou de crítica. Ficaram conhecidos como "poesia-piada": rápidos como uma tirada de conversa, mas capazes de dizer muito em poucas palavras. Em 1924, Oswald foi além da poesia e lançou o Manifesto da Poesia Pau-Brasil, comparando a literatura brasileira a uma matéria-prima de exportação: assim como o pau-brasil dava nome ao país lá fora, a poesia deveria ser "brasileira" de verdade — sem cópia dos modelos europeus.',
     textoPlaceholder:'Dê-me um cigarro\nDiz a gramática\nDo professor e do aluno\nE do mulato sabido\nMas o bom negro e o bom branco\nDa Nação Brasileira\nDizem todos os dias\nDeixa disso camarada\nMe dá um cigarro.',
     fontePlaceholder:'Oswald de Andrade, "Pronominais", em Pau-Brasil, 1925'
   },
@@ -194,21 +208,35 @@ var STATIONS = [
     titulo:'A cara da poesia-piada',
     pergunta:'A "poesia-piada" de Oswald de Andrade se caracteriza por:',
     alternativas:[
-      'Versos longos e rebuscados, seguindo rigidamente a métrica clássica.',
-      'Linguagem coloquial, humor e crítica social feitos de forma leve e irônica, em poucos versos.',
-      'Ausência total de crítica ou reflexão, funcionando apenas como entretenimento vazio.',
-      'Repetição das fórmulas parnasianas aplicadas a temas do dia a dia.'
+      'Ausência de qualquer crítica, sendo só entretenimento vazio.',
+      'Repetição das fórmulas parnasianas com temas do cotidiano.',
+      'Versos longos e formais, seguindo rígida métrica clássica.',
+      'Linguagem simples, humor e crítica social em poucos versos.'
     ],
-    correta:1,
+    correta:3,
     feedbackCerto:'Isso mesmo! A poesia-piada usa a linguagem simples da conversa e o humor como ferramenta de crítica — em poucos versos, ela consegue provocar e fazer pensar ao mesmo tempo.',
     feedbackErrado:'Repare no tamanho dos poemas de Oswald e no tom de "piada" que dá nome ao estilo: é sobre linguagem simples ou sobre formalidade?'
   },
   {
-    type:'leitura', fase:2, tempo:17,
+    type:'leitura', fase:2, tempo:26,
     titulo:'Depois da festa, o Brasil real',
-    contexto:'Os anos seguintes a 1922 foram de experimentação e escândalo. Mas em 1930, o país mudou: uma crise econômica mundial, uma revolução política e uma nova geração de escritores levaram a literatura por outro caminho. Em vez de quebrar regras só pelo prazer da ruptura, os romancistas da chamada "geração de 30" passaram a olhar para a seca, a pobreza e a desigualdade nos rincões do Brasil — com uma linguagem mais seca e direta, como a vida que descreviam.',
+    contexto:'Os anos seguintes a 1922 foram de experimentação e escândalo. Mas em 1930, o país mudou: a quebra da bolsa de Nova York em 1929 abalou a economia cafeeira brasileira, e uma revolução política levou Getúlio Vargas ao poder, encerrando a chamada República Velha. Nesse novo cenário, uma nova geração de escritores levou a literatura por outro caminho. Em vez de quebrar regras só pelo prazer da ruptura, os romancistas da chamada "geração de 30" — como Graciliano Ramos, Jorge Amado e Rachel de Queiroz — passaram a olhar para a seca, a pobreza e a desigualdade nos rincões do Brasil, com uma linguagem mais seca e direta, como a vida que descreviam.',
     textoPlaceholder:'Na planície avermelhada os juazeiros alargavam duas manchas verdes. Os infelizes tinham caminhado o dia inteiro, estavam cansados e famintos.',
     fontePlaceholder:'Graciliano Ramos, Vidas Secas, capítulo "Mudança", 1938'
+  },
+  {
+    type:'pergunta', fase:2,
+    titulo:'Um jeito novo de escrever',
+    pergunta:'Comparado com a experimentação da década anterior, o que mudou na escrita dos romancistas da Geração de 30?',
+    alternativas:[
+      'Passaram a escrever peças de teatro, abandonando de vez a prosa.',
+      'Voltaram a seguir rigidamente as regras da poesia parnasiana.',
+      'Adotaram uma linguagem mais direta e seca, próxima da fala do povo.',
+      'Passaram a usar frases mais longas e cheias de metáforas raras.'
+    ],
+    correta:2,
+    feedbackCerto:'Exatamente! Os romancistas de 30 trocaram a experimentação formal da 1ª fase por uma prosa mais enxuta e direta — do jeito que combinava com a dureza da vida no sertão que eles queriam retratar.',
+    feedbackErrado:'Pense no tipo de história que esses romances contavam: a vida dura do sertanejo pedia uma linguagem rebuscada ou uma linguagem mais seca e direta?'
   },
   {
     type:'video', fase:2,
@@ -216,9 +244,9 @@ var STATIONS = [
     videoId:'FEx0rIcWhGY'
   },
   {
-    type:'leitura', fase:2, tempo:15,
+    type:'leitura', fase:2, tempo:24,
     titulo:'A poesia que parou para pensar',
-    contexto:'Enquanto o romance regionalista ganhava força, a poesia também mudou de tom. Carlos Drummond de Andrade, um dos grandes nomes dessa segunda fase, escrevia versos mais reflexivos e às vezes irônicos sobre a vida comum, o peso da existência e o próprio Brasil. Não era mais sobre chocar a plateia — era sobre pensar em voz alta.',
+    contexto:'Enquanto o romance regionalista ganhava força, a poesia também mudou de tom. Carlos Drummond de Andrade, nascido na pequena Itabira, cidade mineira de mineração que voltaria várias vezes em seus versos, é um dos grandes nomes dessa segunda fase. Seu primeiro livro, Alguma Poesia (1930), já trazia versos mais reflexivos e às vezes irônicos sobre a vida comum, o peso da existência e o próprio Brasil. Com o tempo, sua poesia foi ficando cada vez mais engajada com os problemas sociais do país, como em Sentimento do Mundo (1940). Não era mais sobre chocar a plateia — era sobre pensar em voz alta.',
     textoPlaceholder:'Vai, Carlos, ser gauche na vida.',
     fontePlaceholder:'Carlos Drummond de Andrade, trecho de "Poema de Sete Faces", em Alguma Poesia, 1930'
   },
@@ -227,12 +255,12 @@ var STATIONS = [
     titulo:'Duas fases, dois olhares',
     pergunta:'Comparando as duas fases do Modernismo brasileiro, é correto dizer que:',
     alternativas:[
-      'A 1ª fase teve como foco a experimentação e a ruptura com a tradição; a 2ª fase se voltou mais para o romance regionalista e o engajamento social.',
-      'As duas fases são idênticas em temas e estilo, sem nenhuma diferença relevante entre elas.',
-      'A 2ª fase abandonou completamente a prosa e se dedicou só à poesia experimental.',
-      'A 1ª fase já tinha como prioridade retratar a seca e a vida do sertanejo, tema que a 2ª fase abandonou depois.'
+      'As duas fases compartilham os mesmos temas e o mesmo estilo, sem diferença.',
+      'A 2ª fase deixou de lado toda a prosa e só fez poesia livre.',
+      'A 1ª fase já era voltada à seca e à vida do sertanejo.',
+      'A 1ª fase rompeu com a tradição; a 2ª voltou o olhar pro Brasil social.'
     ],
-    correta:0,
+    correta:3,
     feedbackCerto:'Exatamente! A 1ª fase quebrou regras e chocou o público; a 2ª fase usou essa liberdade conquistada para olhar com mais profundidade para os problemas sociais do Brasil, principalmente através do romance regionalista.',
     feedbackErrado:'Pense no que veio primeiro: o momento de "quebrar as regras" da Semana de 22, ou o momento de "olhar para o Brasil real", com romances como os de Graciliano Ramos?'
   }
@@ -307,7 +335,7 @@ function renderInicio(){
       '<p class="sub">Uma caminhada curta e tranquila pelas duas fases do Modernismo brasileiro — sem pressa, sem prova, um passo de cada vez.</p>' +
       '<div class="chips-info">' +
         '<span class="chip">🧭 ' + STATIONS.length + ' estações</span>' +
-        '<span class="chip">⏱️ uns 10-15 min</span>' +
+        '<span class="chip">⏱️ uns 15-20 min</span>' +
         '<span class="chip">✦ pontos por acerto</span>' +
       '</div>' +
       '<ul class="mecanica-lista">' +
