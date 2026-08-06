@@ -1,5 +1,27 @@
 # Portal ENEM — portmarcos.github.io
 
+## Redação ENEM reformulada (commit `cbee059`)
+30 temas de redação (era 9), em `const TEMAS` — cada um com `id`, `cor`,
+`titulo`, `textos` (3 textos de apoio) e `dicas` (intro/dev1/dev2/conclusao).
+`TEMA_EIXOS` mapeia cada `id` pra um dos 10 eixos em `EIXOS_REDACAO`
+(tecnologia, educação, saúde, ambiente, direitos, trabalho, cultura,
+segurança, cidades, família) — usado no filtro por chip na tela de escolha
+de tema (`renderEixoFiltro`/`filtrarEixo`). Ícones em `TEMA_REDACAO_ICONS`
++ `temaRedacaoIconSVG(id)`, mesmo padrão SVG de linha do banco de questões
+— não usar emoji cru nem `t.emoji` (campo ainda existe mas ficou vazio,
+não é mais usado na UI).
+
+Novo: botão "📤 Enviar para o professor" na etapa de revisão da redação
+(`renderRevisao`) manda o texto completo pro Google Sheets numa aba
+**Redações** separada (`enviarRedacaoSheets`, payload com `tipo:'redacao'`).
+Só dispara com clique explícito do aluno (ao contrário do quiz, que envia
+sozinho ao terminar) — o `doPost` do Apps Script (`docs/APPS-SCRIPT.gs`)
+agora olha `d.tipo` pra decidir se escreve na aba Resultados ou Redações.
+**Isso exige que o professor cole o `APPS-SCRIPT.gs` atualizado no editor
+e implante uma Nova versão** — sem isso a aba Redações nunca é criada e o
+envio falha silenciosamente (mesmo problema de sempre: salvar o código não
+basta, precisa reimplantar). Ver fluxo de diagnóstico em `INSTRUCOES-SHEETS.md`.
+
 ## Google Sheets + identidade do aluno (commit `a2805d8`)
 enem.html carrega `/assets/js/config-sheets.js` (define `SHEETS_URL`,
 MESMA planilha/Apps Script que as outras atividades do site usam) e
