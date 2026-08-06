@@ -29,6 +29,18 @@ A partir daí, toda vez que um aluno terminar um quiz, vai aparecer
 uma linha nova na aba **Resultados** com: data, atividade, nome,
 turma, acertos e porcentagem.
 
-> Dica: se um dia você mudar o código do Apps Script, é preciso
-> implantar de novo (Implantar → Gerenciar implantações → editar →
-> Nova versão).
+Quando um aluno terminar de escrever uma redação (na tela de revisão,
+etapa 5) e clicar em **"📤 Enviar para o professor"**, o texto completo
+(introdução, dois parágrafos de desenvolvimento e conclusão) chega numa
+aba separada chamada **Redações**, junto com nome, turma, tema e total
+de palavras. O envio só acontece se o aluno clicar no botão — não é
+automático como nos quizzes — e o botão vira "✓ Enviada" depois, pra
+evitar reenvio duplicado.
+
+> Dica: se um dia você mudar o código do Apps Script (como aconteceu
+> na versão que adicionou a aba Redações), é preciso implantar de novo
+> (Implantar → Gerenciar implantações → editar (✏️) → Nova versão →
+> Implantar). Só salvar o código (💾) NÃO atualiza a URL que já está
+> em uso — é um erro comum. Depois de implantar, abra a própria URL
+> do App da Web no navegador: se aparecer "✅ Receptor funcionando!",
+> deu certo.

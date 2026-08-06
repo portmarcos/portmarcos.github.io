@@ -267,8 +267,14 @@ h1,h2,h3,h4,.num{font-family:'Space Grotesk','Inter',sans-serif}
 .tema-card{background:var(--card);border-radius:var(--r);padding:26px 22px;box-shadow:var(--shadow);cursor:pointer;transition:.25s;border-top:5px solid var(--cor,var(--az));position:relative;overflow:hidden}
 .tema-card:hover{transform:translateY(-4px);box-shadow:var(--shadow2)}
 .tema-emoji{font-size:2.2rem;margin-bottom:12px;display:block}
+.tema-icon-badge{width:44px;height:44px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;color:var(--cor,var(--az));background:color-mix(in srgb, var(--cor,var(--az)) 14%, transparent);border-radius:12px}
+.tema-icon-badge svg{width:60%;height:60%}
 .tema-card h3{font-size:.98rem;font-weight:700;color:var(--az);margin-bottom:8px;line-height:1.4;font-family:'Space Grotesk','Inter',sans-serif}
 .tema-card p{font-size:.78rem;color:var(--tx2);line-height:1.55}
+.eixo-filtro{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:920px;margin:0 auto 8px;padding:0 20px}
+.eixo-chip{font-family:'Space Grotesk','Inter',sans-serif;font-weight:600;font-size:.74rem;padding:7px 14px;border-radius:20px;border:1.5px solid var(--borda);color:var(--tx2);cursor:pointer;transition:.15s;white-space:nowrap}
+.eixo-chip:hover{border-color:var(--az2);color:var(--az)}
+.eixo-chip.ativo{background:var(--az);border-color:var(--az);color:#fff}
 
 /* ── REVISÃO ── */
 .rev-section{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden}
@@ -477,7 +483,7 @@ h1,h2,h3,h4,.num{font-family:'Space Grotesk','Inter',sans-serif}
   .q-box{padding:20px 16px}
   .auth-card{padding:28px 20px}
 }
-@media print{.topo,.topo-btn,.sc-top-user,.quiz-nav-btns,.essay-nav,.stepper,.btn,.modal-over,.rep-tabs,.rep-filtro{display:none!important}body{background:#fff}.screen{display:block!important}.rev-section,.corr-panel{box-shadow:none;border:1px solid #ccc}}
+@media print{.topo,.topo-btn,.sc-top-user,.quiz-nav-btns,.essay-nav,.stepper,.btn,.modal-over,.rep-tabs,.rep-filtro,.eixo-filtro{display:none!important}body{background:#fff}.screen{display:block!important}.rev-section,.corr-panel{box-shadow:none;border:1px solid #ccc}}
 /* Impressão da prova gerada: só a folha da prova aparece, resto do app some */
 body:has(#sc-prova.ativo) > *:not(#sc-prova){display:none!important}
 @media print{
@@ -1110,8 +1116,9 @@ body:has(#sc-prova.ativo) > *:not(#sc-prova){display:none!important}
 <div id="sc-temas" class="screen">
   <div class="section-header">
     <h2>Redação ENEM</h2>
-    <p>Escolha um tema e escreva por etapas</p>
+    <p>30 propostas nos moldes do ENEM, com textos de apoio e dicas por etapa</p>
   </div>
+  <div class="eixo-filtro" id="eixoFiltro"></div>
   <div class="tema-grid" id="temaGrid"></div>
 </div>
 
@@ -5624,6 +5631,67 @@ uma jarra de flores.`,
 };
 // ─── TEMAS DE REDAÇÃO ─────────────────────────────────────────────────────────
 
+const EIXOS_REDACAO = [
+  {id:'tecnologia', label:'Tecnologia e mundo digital'},
+  {id:'educacao', label:'Educação'},
+  {id:'saude', label:'Saúde'},
+  {id:'ambiente', label:'Meio ambiente'},
+  {id:'direitos', label:'Direitos humanos e cidadania'},
+  {id:'trabalho', label:'Trabalho e economia'},
+  {id:'cultura', label:'Cultura e identidade'},
+  {id:'seguranca', label:'Segurança pública'},
+  {id:'cidades', label:'Cidades e mobilidade'},
+  {id:'familia', label:'Família e sociedade'}
+];
+
+const TEMA_EIXOS = {
+  ia:'tecnologia', fk:'tecnologia', iagen:'tecnologia', telas:'tecnologia', cyberb:'tecnologia',
+  evasao:'educacao', inclusao:'educacao', docente:'educacao', anf:'educacao',
+  sm:'saude', obesidade:'saude', burnout:'saude', sus:'saude',
+  clm:'ambiente',
+  dv:'direitos', ind:'direitos', racismo:'direitos', pcd:'direitos', pobreza:'direitos', lgbt:'direitos',
+  informal:'trabalho', publinf:'trabalho',
+  patrim:'cultura', afro:'cultura',
+  escolar:'seguranca', crimorg:'seguranca',
+  mob:'cidades',
+  env:'familia', cuidado:'familia', paternidade:'familia'
+};
+
+const TEMA_REDACAO_ICONS = {
+  ia:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.5 5.5 8 8M16 16l2.5 2.5M5.5 18.5 8 16M16 8l2.5-2.5"/></svg>`,
+  dv:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3Z"/><path d="M12 8v5"/><path d="M12 16v.01"/></svg>`,
+  sm:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M9.5 8c0-1.2.8-2 1.5-1s1.5 1 2 0"/><path d="M8 19v-3.5M16 19v-3.5M12 19v-2.5"/></svg>`,
+  ind:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-6 0-14 4-14 13v3h3c9 0 13-8 13-14V4Z"/><path d="M12 15 4 22"/><path d="M14 11 9 13"/><path d="M16.5 8 12 10"/></svg>`,
+  fk:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 1 3.5 6.6L4 20l1.2-3.6A7.96 7.96 0 0 1 4 12Z"/><path d="M12 8v4.5"/><path d="M12 15v.01"/></svg>`,
+  env:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12"/><path d="M6 21h12"/><path d="M7 3c0 5 10 5 10 9s-10 4-10 9"/><path d="M17 3c0 5-10 5-10 9s10 4 10 9"/></svg>`,
+  anf:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5c-1.6-1.2-3.7-1.8-6.5-1.8v13c2.8 0 4.9.6 6.5 1.8"/><path d="M12 6.5c1.6-1.2 3.7-1.8 6.5-1.8v13c-2.8 0-4.9.6-6.5 1.8"/><path d="M12 6.5v13"/></svg>`,
+  clm:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14.5V5a2 2 0 0 1 4 0v9.5a4 4 0 1 1-4 0Z"/><path d="M12 8v6.5"/></svg>`,
+  mob:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="6" width="17" height="11" rx="2"/><path d="M3.5 12h17"/><circle cx="7.5" cy="19.5" r="1.3"/><circle cx="16.5" cy="19.5" r="1.3"/></svg>`,
+  evasao:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h7"/><path d="M11 12h9"/><path d="M17 8l4 4-4 4"/></svg>`,
+  inclusao:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2"/><path d="M12 8v5l-4 7M12 13l4 7M8 11h8"/></svg>`,
+  docente:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4" width="17" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/><path d="M7 8h6M7 11h4"/></svg>`,
+  obesidade:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8c-3 0-5 2.2-5 5.5S9 20 12 20s5-2.7 5-6.5S15 8 12 8Z"/><path d="M12 8c0-2 1-3 2.5-3.5"/><path d="M10 6.5c.8-.8 2-.8 2.5 0"/></svg>`,
+  burnout:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="15" height="8" rx="1.5"/><path d="M18 10.5h2.5v3H18"/><path d="M6 8v8"/></svg>`,
+  sus:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 5c-2.5 4.5-9.5 9-9.5 9Z"/><path d="M4 12h3l1.5-3L11 15l1.5-4H20"/></svg>`,
+  racismo:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="5"/><circle cx="15" cy="15" r="5"/></svg>`,
+  pcd:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="17" cy="18" r="3.2"/><circle cx="9" cy="5" r="1.5"/><path d="M9 7v6l3 2 3 6"/><path d="M9 11h6"/></svg>`,
+  pobreza:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="12" rx="2"/><path d="M3 10h18"/><circle cx="16" cy="14.5" r="1.5"/></svg>`,
+  lgbt:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 5c-2.5 4.5-9.5 9-9.5 9Z"/></svg>`,
+  informal:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="7.5" width="17" height="12" rx="2"/><path d="M8 7.5V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1.5"/><path d="M3.5 12h17"/></svg>`,
+  publinf:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8M12 17v4"/></svg>`,
+  patrim:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21h16"/><path d="M5 21V10M19 21V10"/><path d="M4 10c0-4.5 3.5-8 8-8s8 3.5 8 8"/></svg>`,
+  afro:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6h12l-1.5 14h-9L6 6Z"/><ellipse cx="12" cy="6" rx="6" ry="2.3"/></svg>`,
+  escolar:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3Z"/><path d="M9 12l2 2 4-4"/></svg>`,
+  crimorg:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>`,
+  iagen:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3Z"/><path d="M18.5 15v3"/><path d="M17 16.5h3"/></svg>`,
+  telas:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M12 8.5V10l1 1"/><path d="M9 20h6"/></svg>`,
+  cyberb:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 1 3.5 6.6L4 20l1.2-3.6A7.96 7.96 0 0 1 4 12Z"/><path d="M9.5 9.5l5 5M14.5 9.5l-5 5"/></svg>`,
+  cuidado:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15s-4-2.5-4-6a2.5 2.5 0 0 1 4-2 2.5 2.5 0 0 1 4 2c0 3.5-4 6-4 6Z"/><path d="M4 19c1.5-2 4-2 5-1l1 1M20 19c-1.5-2-4-2-5-1l-1 1"/></svg>`,
+  paternidade:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="6" r="2.3"/><path d="M8 10c-2.5 0-4 1.8-4 4v4"/><circle cx="16.5" cy="9.5" r="1.6"/><path d="M16.5 12.5c-1.8 0-3 1.3-3 3v2.5"/></svg>`,
+  _default:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/></svg>`
+};
+function temaRedacaoIconSVG(id){ return TEMA_REDACAO_ICONS[id] || TEMA_REDACAO_ICONS._default; }
+
 const TEMAS = [
 {
   id:'ia', emoji:'🤖', cor:'#0062CC',
@@ -5758,6 +5826,321 @@ const TEMAS = [
     dev1:"📌 1º argumento: priorização do automóvel em detrimento do transporte coletivo. Use os dados do Texto 1.",
     dev2:"📌 2º argumento: mobilidade precária como fator de desigualdade (Texto 2, direito à cidade). Conecte transporte com acesso a direitos.",
     conclusao:"📌 Proposta C5: Agente (prefeituras + governos estaduais) + Ação (ampliar transporte público de qualidade e mobilidade ativa) + Meio (investimento em corredores, ciclovias e integração tarifária) + Objetivo (reduzir tempo e custo de deslocamento) + Resultado (cidades mais justas, saudáveis e sustentáveis)."
+  }
+},
+{
+  id:"evasao", emoji:"", cor:"#DC2626",
+  titulo:"Evasão escolar no ensino médio: o desafio de garantir a permanência dos jovens brasileiros na escola",
+  textos:[
+    {rotulo:"Texto 1 — Dados",conteudo:"Segundo estimativas do IBGE, uma parcela significativa dos jovens de 15 a 17 anos ainda está fora da escola ou atrasada em relação à série esperada no Brasil. Pesquisas indicam que a evasão no ensino médio é maior entre estudantes de baixa renda, sobretudo nas regiões Norte e Nordeste, revelando um problema estrutural de acesso e permanência."},
+    {rotulo:"Texto 2 — Causas estruturais",conteudo:"Dados apontam que a necessidade de trabalhar para complementar a renda familiar é um dos principais motivos citados pelos próprios jovens para abandonar os estudos. Some-se a isso currículos pouco atrativos, distância entre escola e moradia e falta de apoio psicossocial, fatores que empurram parte da juventude para fora da sala de aula."},
+    {rotulo:"Texto 3 — Perspectiva de solução",conteudo:"\"Educação não transforma o mundo. Educação muda pessoas. Pessoas transformam o mundo\", já dizia Paulo Freire. Especialistas defendem que programas de bolsa-permanência, ensino em tempo integral e currículos mais conectados à realidade dos estudantes são caminhos eficazes para reduzir a evasão e resgatar jovens já afastados da escola."}
+  ],
+  dicas:{
+    intro:"📌 Contextualize o cenário da evasão no ensino médio brasileiro → apresente o paradoxo entre o direito constitucional à educação e a realidade de milhares de jovens fora da escola → formule sua tese sobre o principal desafio a enfrentar.",
+    dev1:"📌 1º argumento: explore as causas socioeconômicas da evasão (necessidade de trabalhar, baixa renda). Use o Texto 1 e o Texto 2 para mostrar como a desigualdade social empurra jovens para fora da escola.",
+    dev2:"📌 2º argumento: aborde a desconexão entre o currículo escolar e a realidade dos estudantes, além da falta de apoio psicossocial. Conecte com a citação de Paulo Freire do Texto 3 para defender uma educação mais significativa.",
+    conclusao:"📌 Proposta C5: Agente (Ministério da Educação em parceria com as secretarias estaduais) + Ação (criação de programas de bolsa-permanência e busca ativa escolar) + Meio (mapeamento de estudantes em risco de evasão e apoio psicossocial nas escolas) + Objetivo (garantir a permanência dos jovens até a conclusão do ensino médio) + Resultado esperado (redução da evasão e maior equidade educacional no país)."
+  }
+},
+{
+  id:"inclusao", emoji:"", cor:"#9333EA",
+  titulo:"Desafios da educação inclusiva para pessoas com deficiência nas escolas brasileiras",
+  textos:[
+    {rotulo:"Texto 1 — Dados",conteudo:"Segundo o Censo Escolar, o número de matrículas de estudantes com deficiência em classes comuns cresceu de forma expressiva nas últimas décadas. Ainda assim, dados indicam que grande parte das escolas brasileiras carece de infraestrutura acessível, materiais adaptados e profissionais de apoio especializado, o que compromete a qualidade da inclusão."},
+    {rotulo:"Texto 2 — Marco legal",conteudo:"A Lei Brasileira de Inclusão (2015) e a Política Nacional de Educação Especial garantem o direito ao Atendimento Educacional Especializado (AEE) e à matrícula em escolas regulares. Na prática, porém, a falta de professores capacitados em Libras, Braille e tecnologias assistivas ainda distancia a lei da realidade vivida por muitas famílias."},
+    {rotulo:"Texto 3 — Perspectiva social",conteudo:"\"A inclusão acontece quando se aprende com as diferenças e não se cresce apenas tolerando-as\", resume a educadora Maria Teresa Mantoan. Especialistas defendem que a inclusão verdadeira exige formação continuada de professores, salas de recursos multifuncionais e uma mudança cultural que veja a diversidade como parte natural da escola."}
+  ],
+  dicas:{
+    intro:"📌 Contextualize o avanço legal da educação inclusiva → apresente o paradoxo entre o direito garantido por lei e as barreiras estruturais enfrentadas nas escolas → formule sua tese sobre o principal desafio a superar.",
+    dev1:"📌 1º argumento: mostre a falta de infraestrutura e de profissionais capacitados (professores de apoio, intérpretes de Libras). Use o Texto 1 e o Texto 2 para evidenciar o descompasso entre legislação e prática.",
+    dev2:"📌 2º argumento: aborde a dimensão cultural do preconceito e do capacitismo, que também dificultam a inclusão. Use a citação do Texto 3 para defender uma mudança de mentalidade dentro e fora da escola.",
+    conclusao:"📌 Proposta C5: Agente (Ministério da Educação e secretarias de educação) + Ação (formação continuada de professores em educação inclusiva e ampliação das salas de recursos multifuncionais) + Meio (investimento em tecnologia assistiva e contratação de profissionais de apoio) + Objetivo (garantir aprendizagem de qualidade para estudantes com deficiência) + Resultado esperado (escolas verdadeiramente inclusivas e redução do capacitismo)."
+  }
+},
+{
+  id:"docente", emoji:"", cor:"#EA580C",
+  titulo:"Valorização do professor e a crise de formação e permanência docente no Brasil",
+  textos:[
+    {rotulo:"Texto 1 — Dados",conteudo:"Pesquisas do Inep indicam que o número de jovens que ingressam em cursos de licenciatura vem caindo, enquanto boa parte dos professores já em sala manifesta a intenção de deixar a profissão nos próximos anos. Baixos salários, sobrecarga de trabalho e falta de reconhecimento social aparecem entre os principais motivos apontados."},
+    {rotulo:"Texto 2 — Condições de trabalho",conteudo:"Dados apontam que professores da educação básica brasileira acumulam, em média, mais turmas e turnos do que o recomendado por especialistas em saúde ocupacional, o que contribui para altos índices de afastamento por problemas físicos e emocionais. A violência escolar e a falta de estrutura das escolas agravam esse quadro."},
+    {rotulo:"Texto 3 — Perspectiva comparativa",conteudo:"\"Não há saber mais ou saber menos: há saberes diferentes\", ensinava Paulo Freire sobre a relação entre professor e aluno. Em países com sistemas educacionais bem avaliados, como Finlândia e Coreia do Sul, a docência é uma das carreiras mais concorridas — justamente onde salário, formação continuada e prestígio social andam juntos."}
+  ],
+  dicas:{
+    intro:"📌 Contextualize a queda no interesse pela carreira docente → apresente o paradoxo entre a importância social do professor e a desvalorização da profissão → formule sua tese sobre o principal desafio a enfrentar.",
+    dev1:"📌 1º argumento: explore as condições de trabalho precárias (baixos salários, sobrecarga, violência escolar). Use o Texto 1 e o Texto 2 para mostrar por que a profissão perde atratividade.",
+    dev2:"📌 2º argumento: compare com países onde a docência é valorizada (Texto 3), destacando o vínculo entre reconhecimento social, formação continuada e qualidade da educação.",
+    conclusao:"📌 Proposta C5: Agente (governo federal em parceria com estados e municípios) + Ação (plano nacional de valorização docente, com reajuste salarial e formação continuada) + Meio (piso salarial atualizado e programas de apoio à saúde mental dos professores) + Objetivo (atrair e reter profissionais qualificados na educação básica) + Resultado esperado (melhoria na qualidade do ensino e resgate do prestígio da carreira docente)."
+  }
+},
+{
+  id:"obesidade", emoji:"", cor:"#65A30D",
+  titulo:"Obesidade infantil e os desafios da alimentação saudável no Brasil",
+  textos:[
+    {rotulo:"Texto 1 — Dados",conteudo:"Segundo estimativas do Ministério da Saúde, o número de crianças e adolescentes com excesso de peso mais que dobrou nas últimas décadas no Brasil. Pesquisas da Fiocruz e da OMS associam esse crescimento ao consumo cada vez maior de alimentos ultraprocessados e à redução da atividade física entre os mais jovens."},
+    {rotulo:"Texto 2 — Acesso e desigualdade",conteudo:"Dados indicam que alimentos ultraprocessados costumam ser mais baratos e acessíveis do que opções in natura, especialmente em regiões com poucos mercados e forte presença de fast-food. Some-se a isso a publicidade infantil voltada a produtos açucarados, apontada por pesquisadores como um dos maiores indutores do consumo excessivo entre crianças."},
+    {rotulo:"Texto 3 — Perspectiva de solução",conteudo:"\"Que teu alimento seja teu remédio\", já dizia Hipócrates, pai da medicina. Países que adotaram taxação de bebidas açucaradas e restrição à publicidade infantil, como o Chile, registraram redução mensurável no consumo desses produtos — um exemplo citado por especialistas como caminho possível para o Brasil."}
+  ],
+  dicas:{
+    intro:"📌 Contextualize o crescimento da obesidade infantil no Brasil → apresente o paradoxo entre fartura de alimentos ultraprocessados e escassez de alimentação saudável acessível → formule sua tese sobre o principal desafio a enfrentar.",
+    dev1:"📌 1º argumento: explore o acesso desigual a alimentos saudáveis e o papel da publicidade infantil. Use o Texto 1 e o Texto 2 para mostrar como fatores econômicos e mercadológicos favorecem o ultraprocessado.",
+    dev2:"📌 2º argumento: traga a experiência internacional (Texto 3), como a taxação de bebidas açucaradas, para defender políticas públicas de incentivo à alimentação saudável.",
+    conclusao:"📌 Proposta C5: Agente (Ministério da Saúde em parceria com o Ministério da Educação) + Ação (regulamentação da publicidade infantil de ultraprocessados e ampliação da merenda escolar saudável) + Meio (parcerias com escolas para educação alimentar e incentivo à agricultura familiar) + Objetivo (reduzir os índices de obesidade infantil) + Resultado esperado (crianças mais saudáveis e redução de doenças crônicas na vida adulta)."
+  }
+},
+{
+  id:"burnout", emoji:"", cor:"#0891B2",
+  titulo:"Saúde mental no trabalho e os desafios da síndrome de burnout no Brasil",
+  textos:[
+    {rotulo:"Texto 1 — Dados",conteudo:"Segundo estimativas da Organização Mundial da Saúde, o Brasil está entre os países com os maiores índices de esgotamento profissional do mundo. Levantamentos recentes apontam que uma parcela expressiva dos trabalhadores brasileiros já apresentou sintomas de burnout, como exaustão extrema, cinismo em relação ao trabalho e queda de produtividade."},
+    {rotulo:"Texto 2 — Marco legal e institucional",conteudo:"Desde 2022, a síndrome de burnout é reconhecida pela OMS como doença ocupacional, o que passou a obrigar empresas brasileiras a considerá-la nos afastamentos pelo INSS. Ainda assim, especialistas apontam que a cultura da hiperprodutividade e a falta de políticas efetivas de prevenção nas empresas continuam alimentando o problema."},
+    {rotulo:"Texto 3 — Perspectiva de solução",conteudo:"\"Descansar não é sinônimo de fraqueza, e sim de sabedoria\", resume o psiquiatra e pesquisador Augusto Cury. Países que adotaram o direito à desconexão digital e jornadas de trabalho mais flexíveis registraram melhora nos indicadores de bem-estar — um modelo que especialistas defendem para o contexto brasileiro."}
+  ],
+  dicas:{
+    intro:"📌 Contextualize o aumento dos casos de burnout no Brasil → apresente o paradoxo entre a cultura da produtividade extrema e o adoecimento dos trabalhadores → formule sua tese sobre o principal desafio a enfrentar.",
+    dev1:"📌 1º argumento: explore os dados sobre esgotamento profissional e o reconhecimento do burnout como doença ocupacional. Use o Texto 1 e o Texto 2 para mostrar a dimensão do problema e a lacuna entre lei e prática.",
+    dev2:"📌 2º argumento: aborde a cultura da hiperprodutividade e a ausência do direito à desconexão. Use a citação do Texto 3 para defender políticas de equilíbrio entre vida profissional e pessoal.",
+    conclusao:"📌 Proposta C5: Agente (Ministério do Trabalho em parceria com empresas e sindicatos) + Ação (implementação de políticas de saúde mental e direito à desconexão digital) + Meio (campanhas de conscientização e canais de apoio psicológico nas empresas) + Objetivo (reduzir os índices de burnout entre trabalhadores) + Resultado esperado (ambientes de trabalho mais saudáveis e sustentáveis)."
+  }
+},
+{
+  id:"racismo", emoji:"", cor:"#92400E",
+  titulo:"Racismo estrutural: os desafios para a construção da igualdade racial no Brasil",
+  textos:[
+    {rotulo:"Texto 1 — Dados",conteudo:"Segundo o IBGE, pessoas pretas e pardas somam mais da metade da população brasileira, mas recebem, em média, quase 30% a menos que pessoas brancas em cargos equivalentes. Dados do Atlas da Violência apontam que jovens negros são as principais vítimas de homicídio no país, evidenciando desigualdades que atravessam renda, educação e segurança pública."},
+    {rotulo:"Texto 2 — Marco legal",conteudo:"A Lei nº 7.716/1989 criminaliza o racismo e a Lei nº 10.639/2003 tornou obrigatório o ensino de história e cultura afro-brasileira nas escolas. Ainda assim, especialistas apontam que o racismo estrutural — enraizado em instituições, no mercado de trabalho e no imaginário social — segue naturalizado, exigindo políticas que vão além da punição individual."},
+    {rotulo:"Texto 3 — Perspectiva estrutural",conteudo:"\"O racismo é uma tecnologia de manutenção de privilégios que atua por meio de instituições, e não apenas de indivíduos preconceituosos.\" (Silvio Almeida, adaptado). Para o filósofo, superar o racismo estrutural exige transformar as próprias estruturas — educação, justiça, mercado de trabalho — e não apenas mudar atitudes isoladas."}
+  ],
+  dicas:{
+    intro:"📌 Contextualize a herança histórica da escravidão e sua permanência nas desigualdades atuais → apresente o paradoxo (país miscigenado que nega o racismo) → tese: o principal desafio para a superação do racismo estrutural no Brasil.",
+    dev1:"📌 1º argumento: desigualdades concretas de renda, emprego e segurança que atingem a população negra. Use os dados do Texto 1. Mostre que o racismo tem efeitos materiais mensuráveis, não é só atitude individual.",
+    dev2:"📌 2º argumento: limites da legislação existente diante de um racismo institucional e estrutural. Use o Texto 2 e a citação de Silvio Almeida (Texto 3). Argumente que leis punitivas não bastam sem mudança nas instituições.",
+    conclusao:"📌 Retome a tese. Proposta C5 completa: Agente (Ministério da Igualdade Racial em parceria com escolas e empresas) + Ação (implementar programas de educação antirracista e fiscalizar políticas de equidade racial no mercado de trabalho) + Meio (capacitação de profissionais e parcerias público-privadas) + Objetivo (reduzir as desigualdades raciais estruturais) + Resultado (uma sociedade mais equitativa e consciente de sua diversidade)."
+  }
+},
+{
+  id:"pcd", emoji:"", cor:"#6D28D9",
+  titulo:"A invisibilidade da pessoa com deficiência na sociedade brasileira",
+  textos:[
+    {rotulo:"Texto 1 — Dados",conteudo:"Segundo o Censo do IBGE, mais de 18 milhões de brasileiros declaram ter alguma deficiência. Ainda assim, pesquisas indicam que menos de 1% dos vínculos formais de trabalho são ocupados por pessoas com deficiência, e grande parte das cidades brasileiras carece de calçadas, transporte e prédios públicos plenamente acessíveis."},
+    {rotulo:"Texto 2 — Marco legal",conteudo:"A Lei Brasileira de Inclusão (Lei nº 13.146/2015), conhecida como Estatuto da Pessoa com Deficiência, garante direitos à acessibilidade, educação e trabalho. Na prática, no entanto, a fiscalização é frágil, e barreiras físicas, comunicacionais e atitudinais continuam limitando a plena participação social desse grupo."},
+    {rotulo:"Texto 3 — Perspectiva social",conteudo:"\"Nada sobre nós, sem nós\" — lema histórico do movimento internacional de pessoas com deficiência, adotado na Convenção da ONU sobre os Direitos das Pessoas com Deficiência (2006). A frase resume a exigência de que políticas públicas sejam construídas com a participação ativa das próprias pessoas com deficiência, e não apenas para elas."}
+  ],
+  dicas:{
+    intro:"📌 Contextualize a diferença entre deficiência e incapacidade, mostrando que muitas limitações são impostas pelo ambiente, não pelo corpo → apresente o paradoxo (direitos garantidos em lei x invisibilidade cotidiana) → tese: o principal desafio para a inclusão da pessoa com deficiência na sociedade brasileira.",
+    dev1:"📌 1º argumento: barreiras concretas de acessibilidade e baixa empregabilidade. Use os dados do Texto 1. Mostre que a exclusão é estrutural, presente no espaço urbano e no mercado de trabalho.",
+    dev2:"📌 2º argumento: distância entre a lei (Texto 2) e sua efetivação, e a importância da participação das próprias pessoas com deficiência nas decisões que as afetam (lema do Texto 3). Argumente que inclusão exige protagonismo, não apenas legislação.",
+    conclusao:"📌 Retome a tese. Proposta C5 completa: Agente (Ministérios das Cidades e dos Direitos Humanos, em conjunto com prefeituras) + Ação (fiscalizar a acessibilidade em espaços públicos e criar incentivos à contratação de pessoas com deficiência) + Meio (auditorias periódicas e parcerias com organizações representativas do grupo) + Objetivo (garantir participação plena na vida social e econômica) + Resultado (cidades e empresas efetivamente acessíveis e inclusivas)."
+  }
+},
+{
+  id:"pobreza", emoji:"", cor:"#B91C1C",
+  titulo:"Os desafios para a redução da desigualdade social no Brasil",
+  textos:[
+    {rotulo:"Texto 1 — Dados",conteudo:"O Brasil está entre os países mais desiguais do mundo: dados do IBGE mostram que o 1% mais rico da população concentra renda equivalente à de dezenas de milhões de brasileiros nas camadas mais pobres. Estimativas do Ipea e da ONU apontam que milhões de pessoas ainda vivem em situação de pobreza ou extrema pobreza no país."},
+    {rotulo:"Texto 2 — Raízes estruturais",conteudo:"Herança de um passado marcado pela escravidão e pela concentração fundiária, a desigualdade brasileira também é alimentada pelo acesso desigual à educação de qualidade, à saúde e ao crédito. Pesquisadores apontam que essas barreiras se acumulam ao longo de gerações, dificultando a mobilidade social das famílias mais pobres."},
+    {rotulo:"Texto 3 — Perspectiva de solução",conteudo:"\"Pobreza não é apenas falta de renda, mas privação de capacidades e liberdades básicas para viver a vida que se tem razão para valorizar.\" (Amartya Sen, adaptado). Para o economista, combater a desigualdade exige políticas que ampliem oportunidades reais — educação, saúde, trabalho digno — e não apenas transferências emergenciais de renda."}
+  ],
+  dicas:{
+    intro:"📌 Contextualize a desigualdade histórica brasileira → apresente o paradoxo (uma das maiores economias do mundo com índices de desigualdade entre os piores do planeta) → tese: o principal desafio para reduzir a desigualdade social no Brasil.",
+    dev1:"📌 1º argumento: concentração de renda e persistência da pobreza extrema. Use os dados do Texto 1. Mostre a dimensão numérica do problema.",
+    dev2:"📌 2º argumento: raízes históricas e estruturais da desigualdade (Texto 2), e a ideia de pobreza como privação de oportunidades, não só de renda (citação de Amartya Sen, Texto 3). Argumente que soluções pontuais não bastam sem mudança estrutural.",
+    conclusao:"📌 Retome a tese. Proposta C5 completa: Agente (governo federal em articulação com estados e municípios) + Ação (ampliar o acesso à educação pública de qualidade e a programas de qualificação profissional) + Meio (investimento continuado e integração de políticas sociais) + Objetivo (romper o ciclo intergeracional de pobreza) + Resultado (maior mobilidade social e redução das desigualdades no longo prazo)."
+  }
+},
+{
+  id:"lgbt", emoji:"", cor:"#BE185D",
+  titulo:"Os desafios para a aceitação da população LGBTQIA+ na sociedade brasileira",
+  textos:[
+    {rotulo:"Texto 1 — Dados",conteudo:"Levantamentos de organizações como o Grupo Gay da Bahia e a ANTRA apontam que o Brasil está entre os países que mais registram assassinatos de pessoas LGBTQIA+ no mundo, com destaque para a violência contra pessoas trans. Pesquisas indicam ainda altos índices de discriminação em ambientes escolares e no mercado de trabalho."},
+    {rotulo:"Texto 2 — Marco legal",conteudo:"Em 2019, o Supremo Tribunal Federal decidiu que a homofobia e a transfobia devem ser enquadradas como crimes de racismo até que o Congresso aprove legislação específica. Apesar do avanço, o Brasil ainda não possui uma lei federal exclusiva contra a discriminação por orientação sexual e identidade de gênero, o que fragiliza a proteção legal desse grupo."},
+    {rotulo:"Texto 3 — Perspectiva social",conteudo:"\"Ninguém nasce odiando outra pessoa por causa da cor de sua pele, ou de sua origem, ou ainda por sua religião. Para odiar, as pessoas precisam aprender.\" (Nelson Mandela, adaptado). A reflexão se aplica também à LGBTfobia: o preconceito é aprendido socialmente e, por isso, pode ser combatido por meio da educação e da convivência com a diversidade."}
+  ],
+  dicas:{
+    intro:"📌 Contextualize a diversidade sexual e de gênero como parte histórica da sociedade → apresente o paradoxo (avanços legais recentes x altos índices de violência) → tese: o principal desafio para a aceitação da população LGBTQIA+ no Brasil.",
+    dev1:"📌 1º argumento: violência e discriminação cotidianas enfrentadas por pessoas LGBTQIA+. Use os dados do Texto 1. Mostre a gravidade e a urgência do problema.",
+    dev2:"📌 2º argumento: fragilidade da proteção legal (Texto 2) e o caráter socialmente aprendido do preconceito (citação de Mandela, Texto 3). Argumente que educação e legislação específica precisam caminhar juntas.",
+    conclusao:"📌 Retome a tese. Proposta C5 completa: Agente (Congresso Nacional e Ministério da Educação) + Ação (aprovar legislação federal específica de proteção e incluir educação para a diversidade no currículo escolar) + Meio (campanhas de conscientização e formação de professores) + Objetivo (reduzir a violência e a discriminação contra pessoas LGBTQIA+) + Resultado (uma sociedade mais segura e respeitosa com a diversidade sexual e de gênero)."
+  }
+},
+{
+  id:"informal", emoji:"", cor:"#475569",
+  titulo:"Os desafios da empregabilidade e do trabalho informal no Brasil",
+  textos:[
+    {rotulo:"Texto 1 — Dados",conteudo:"Segundo a Pesquisa Nacional por Amostra de Domicílios (PNAD Contínua/IBGE), cerca de 4 em cada 10 trabalhadores brasileiros estão em ocupações informais, sem carteira assinada ou proteção previdenciária. Dados indicam ainda que a informalidade é maior entre jovens, mulheres e trabalhadores com menor escolaridade."},
+    {rotulo:"Texto 2 — Causas estruturais",conteudo:"A informalidade no Brasil é impulsionada por fatores como baixa qualificação profissional, burocracia para formalizar pequenos negócios e a expansão de plataformas digitais de trabalho sob demanda, os chamados aplicativos. Especialistas apontam que esse cenário compromete direitos trabalhistas e a arrecadação previdenciária do país."},
+    {rotulo:"Texto 3 — Perspectiva de solução",conteudo:"\"O trabalho digno não é apenas ter uma ocupação, mas ter direitos, segurança e perspectiva de futuro.\" (adaptado de debates da Organização Internacional do Trabalho — OIT). Para a entidade, enfrentar a informalidade exige políticas que combinem qualificação profissional, simplificação para empreendedores e ampliação de direitos para novas formas de trabalho."}
+  ],
+  dicas:{
+    intro:"📌 Contextualize as transformações do mundo do trabalho no Brasil → apresente o paradoxo (crescimento de novas formas de ocupação x precarização de direitos) → tese: o principal desafio da empregabilidade e do combate ao trabalho informal no Brasil.",
+    dev1:"📌 1º argumento: dimensão e perfil da informalidade no país. Use os dados do Texto 1. Mostre quem é mais afetado e por quê.",
+    dev2:"📌 2º argumento: causas estruturais da informalidade, incluindo baixa qualificação e expansão do trabalho por aplicativo (Texto 2), e a necessidade de trabalho digno com direitos (citação da OIT, Texto 3). Argumente que a solução exige mais que geração de vagas.",
+    conclusao:"📌 Retome a tese. Proposta C5 completa: Agente (Ministério do Trabalho em parceria com institutos de qualificação profissional) + Ação (ampliar programas de capacitação técnica e simplificar a formalização de pequenos negócios) + Meio (parcerias com escolas técnicas e desburocratização digital) + Objetivo (reduzir a informalidade e ampliar o acesso a trabalho digno) + Resultado (maior proteção social e estabilidade econômica para os trabalhadores brasileiros)."
+  }
+},
+{
+  id:"publinf", emoji:"", cor:"#CA8A04",
+  titulo:"A publicidade infantil e os limites éticos do consumo na infância",
+  textos:[
+    {rotulo:"Texto 1 — Dados",conteudo:"Pesquisas apontam que crianças brasileiras estão entre as que mais têm contato com publicidade voltada ao consumo, seja pela televisão, seja pelas redes sociais e por influenciadores digitais. Estudos relacionam essa exposição precoce ao aumento do consumo de alimentos ultraprocessados e à pressão por padrões de consumo entre os mais jovens."},
+    {rotulo:"Texto 2 — Marco legal",conteudo:"O Estatuto da Criança e do Adolescente (ECA) prevê a proteção integral da infância, e a resolução nº 163/2014 do CONANDA considera abusiva toda publicidade dirigida diretamente à criança, por explorar sua inexperiência e credulidade. Ainda assim, a fiscalização é limitada, sobretudo diante do avanço da publicidade digital e do marketing de influenciadores infantis."},
+    {rotulo:"Texto 3 — Perspectiva pedagógica",conteudo:"\"A criança não tem o discernimento crítico para separar entretenimento de persuasão comercial.\" (adaptado de estudos sobre desenvolvimento infantil). Especialistas em educação defendem que a formação para o consumo consciente deve começar cedo, envolvendo família, escola e regulação do mercado publicitário."}
+  ],
+  dicas:{
+    intro:"📌 Contextualize a infância como fase de formação vulnerável à persuasão comercial → apresente o paradoxo (proteção legal prevista x exposição crescente à publicidade digital) → tese: o principal desafio ético da publicidade voltada ao público infantil no Brasil.",
+    dev1:"📌 1º argumento: efeitos da exposição precoce ao consumo, incluindo hábitos alimentares e pressão social. Use os dados do Texto 1. Mostre o impacto concreto na infância.",
+    dev2:"📌 2º argumento: existência de proteção legal (Texto 2) frente à fragilidade da fiscalização, especialmente no ambiente digital, e a imaturidade cognitiva infantil para lidar com persuasão comercial (Texto 3). Argumente que regulação e educação precisam se complementar.",
+    conclusao:"📌 Retome a tese. Proposta C5 completa: Agente (órgãos de defesa do consumidor e Ministério da Educação) + Ação (fiscalizar a publicidade digital dirigida a crianças e promover educação midiática nas escolas) + Meio (parcerias com plataformas digitais e campanhas junto às famílias) + Objetivo (proteger a infância de práticas comerciais abusivas) + Resultado (crianças mais protegidas e formação de consumidores mais conscientes no futuro)."
+  }
+},
+{
+  id:"patrim", emoji:"", cor:"#57534E",
+  titulo:"Desafios para a preservação do patrimônio histórico-cultural brasileiro",
+  textos:[
+    {rotulo:"Texto 1 — Dados",conteudo:"O Brasil possui mais de 1.500 bens tombados pelo IPHAN e 23 sítios reconhecidos pela UNESCO, mas estimativas de institutos de pesquisa indicam que grande parte desse acervo sofre com falta de manutenção. Incêndios, como os do Museu Nacional (2018) e do Centro Cultural do Banco do Brasil, expuseram a fragilidade da proteção patrimonial no país."},
+    {rotulo:"Texto 2 — Descaso e desigualdade",conteudo:"Dados de órgãos de cultura apontam que a maior parte dos recursos de preservação se concentra em monumentos das regiões Sul e Sudeste, enquanto patrimônios de matriz indígena e afro-brasileira, como terreiros e sítios arqueológicos, recebem investimento mínimo. Pesquisadores associam esse desequilíbrio a uma hierarquização histórica do que é considerado \"digno\" de memória."},
+    {rotulo:"Texto 3 — Pensamento sobre memória",conteudo:"\"Um povo sem memória é um povo sem futuro\" (Milton Santos, adaptado). Especialistas em patrimônio defendem que preservar não é apenas restaurar prédios, mas garantir que comunidades locais participem das decisões sobre sua própria história, evitando que a preservação vire apenas fachada para o turismo."}
+  ],
+  dicas:{
+    intro:"📌 Contextualize: o Brasil tem um patrimônio histórico-cultural vasto e diverso, reconhecido inclusive internacionalmente → apresente o paradoxo (riqueza cultural vs. descaso e destruição) → tese: o principal entrave à preservação efetiva desse patrimônio hoje.",
+    dev1:"📌 1º argumento: falta de investimento e manutenção como causa de perdas irreparáveis (cite o Texto 1 — incêndios e falta de recursos). Argumente que a ausência de política de prevenção transforma tragédias em algo previsível.",
+    dev2:"📌 2º argumento: desigualdade na preservação — patrimônios de grupos historicamente marginalizados são negligenciados (use o Texto 2). Relacione com apagamento simbólico e hierarquização de memórias.",
+    conclusao:"📌 Proposta C5: Agente (Ministério da Cultura em parceria com o IPHAN e prefeituras) + Ação (criação de um plano nacional de manutenção preventiva e diversificação dos bens tombados) + Meio (destinação de verba orçamentária fixa e parcerias com universidades para mapeamento de sítios negligenciados) + Objetivo (evitar perdas irreparáveis e ampliar a representatividade do patrimônio protegido) + Resultado (preservação mais justa e abrangente da memória nacional)."
+  }
+},
+{
+  id:"afro", emoji:"", cor:"#166534",
+  titulo:"Desafios para a valorização da cultura afro-brasileira",
+  textos:[
+    {rotulo:"Texto 1 — Dados",conteudo:"Segundo estimativas do IBGE, mais da metade da população brasileira se autodeclara preta ou parda, refletindo a enorme influência da herança africana na formação do país. Ainda assim, pesquisas apontam que expressões culturais de matriz africana, como capoeira, candomblé e congado, seguem alvo de preconceito e intolerância religiosa em diversas regiões."},
+    {rotulo:"Texto 2 — Marco legal",conteudo:"A Lei 10.639/2003 tornou obrigatório o ensino de história e cultura afro-brasileira nas escolas, buscando reparar séculos de apagamento. Estudos indicam, porém, que sua aplicação ainda é irregular, dependendo da formação de professores e do engajamento das redes de ensino, o que compromete o alcance real da lei."},
+    {rotulo:"Texto 3 — Pensamento e intolerância",conteudo:"\"Enquanto a violência sexista e a violência racista não forem tratadas como urgência nacional, o Brasil continuará sendo esse país que não conhece a si mesmo\" (Lélia Gonzalez, adaptado). Dados de organismos de direitos humanos mostram crescimento nos registros de intolerância religiosa contra terreiros nos últimos anos."}
+  ],
+  dicas:{
+    intro:"📌 Contextualize: a cultura afro-brasileira é uma das bases da identidade nacional, presente na música, religião, culinária e língua → apresente o paradoxo (influência inegável vs. preconceito persistente) → tese: o principal obstáculo à valorização plena dessa cultura hoje.",
+    dev1:"📌 1º argumento: intolerância religiosa e preconceito contra expressões de matriz africana (use o Texto 1 e o Texto 3 — dados sobre ataques a terreiros). Mostre como o racismo estrutural se manifesta na perseguição cultural.",
+    dev2:"📌 2º argumento: falha na efetivação da Lei 10.639/2003 no ensino (use o Texto 2). Argumente que lei sem formação docente e fiscalização não transforma a realidade escolar.",
+    conclusao:"📌 Proposta C5: Agente (MEC em parceria com secretarias estaduais de educação e movimentos negros) + Ação (implementação efetiva da Lei 10.639/2003 via formação continuada de professores) + Meio (criação de materiais didáticos revisados e parcerias com mestres de cultura popular) + Objetivo (combater o racismo estrutural e valorizar a herança afro-brasileira) + Resultado (sociedade mais consciente da própria formação cultural e menos tolerante à intolerância religiosa)."
+  }
+},
+{
+  id:"escolar", emoji:"", cor:"#B45309",
+  titulo:"Desafios para o combate à violência nas escolas brasileiras",
+  textos:[
+    {rotulo:"Texto 1 — Dados",conteudo:"Pesquisas de institutos de educação indicam que uma parcela significativa dos estudantes brasileiros já presenciou ou sofreu algum episódio de violência física ou verbal no ambiente escolar. Dados da Unicef e de secretarias de segurança apontam aumento nos casos de bullying e cyberbullying registrados nos últimos anos, agravados pelo uso intenso de redes sociais."},
+    {rotulo:"Texto 2 — Causas estruturais",conteudo:"Especialistas em educação associam parte da violência escolar a fatores externos à escola, como desigualdade social, ausência de políticas de saúde mental e enfraquecimento de vínculos familiares e comunitários. Levantamentos indicam que escolas com equipes de psicologia e assistência social registram menor incidência de conflitos graves."},
+    {rotulo:"Texto 3 — Perspectiva de solução",conteudo:"\"A escola precisa deixar de ser apenas lugar de ensino de conteúdo e se tornar espaço de escuta e acolhimento\" (especialista em educação, adaptado). Países que investem em mediação de conflitos e educação socioemocional desde os anos iniciais registram, segundo estudos internacionais, redução expressiva nos episódios de violência escolar."}
+  ],
+  dicas:{
+    intro:"📌 Contextualize: a escola deveria ser espaço seguro de formação e convivência → apresente o paradoxo (função protetora da escola vs. crescimento dos casos de violência) → tese: o principal fator que dificulta o combate efetivo à violência escolar hoje, tratando o tema com foco em causas estruturais e políticas públicas, sem detalhar episódios de violência.",
+    dev1:"📌 1º argumento: ausência de suporte psicossocial e enfraquecimento de vínculos como raiz do problema (use o Texto 2). Argumente que a violência escolar é sintoma de causas mais amplas, não um problema isolado da escola.",
+    dev2:"📌 2º argumento: agravamento pelo ambiente digital e cyberbullying, e a falta de preparo institucional para lidar com conflitos (use o Texto 1 e o Texto 3). Defenda a importância da educação socioemocional e mediação de conflitos.",
+    conclusao:"📌 Proposta C5: Agente (Ministério da Educação em parceria com secretarias de saúde e assistência social) + Ação (implantação de equipes multidisciplinares — psicólogos e assistentes sociais — e programas de educação socioemocional nas escolas) + Meio (capacitação de professores para mediação de conflitos e canais de escuta para alunos) + Objetivo (prevenir episódios de violência e fortalecer vínculos na comunidade escolar) + Resultado (ambiente escolar mais seguro e acolhedor para toda a comunidade)."
+  }
+},
+{
+  id:"crimorg", emoji:"", cor:"#1E3A8A",
+  titulo:"Segurança pública: os desafios do combate ao crime organizado no Brasil",
+  textos:[
+    {rotulo:"Texto 1 — Dados",conteudo:"Estudos de institutos de segurança pública indicam que facções criminosas ampliaram sua atuação para além do tráfico de drogas nas últimas décadas, envolvendo-se em contrabando, milícias e infiltração em setores econômicos legais. Dados apontam que a presença dessas organizações já é registrada na maioria dos estados brasileiros."},
+    {rotulo:"Texto 2 — Causas estruturais",conteudo:"Pesquisadores em segurança pública associam a expansão do crime organizado à ausência do Estado em regiões periféricas, onde serviços públicos básicos são escassos e o crime se apresenta como alternativa de renda e pertencimento para jovens em situação de vulnerabilidade social."},
+    {rotulo:"Texto 3 — Perspectiva de solução",conteudo:"\"Não se combate o crime organizado apenas com repressão policial, mas com inteligência, integração entre estados e presença social do Estado\" (especialista em segurança pública, adaptado). Países que investem em cooperação entre forças de segurança e políticas sociais integradas registram, segundo levantamentos internacionais, maior eficácia no enfraquecimento de organizações criminosas."}
+  ],
+  dicas:{
+    intro:"📌 Contextualize: o crime organizado se consolidou como uma rede complexa que ultrapassa fronteiras estaduais e afeta a segurança de toda a sociedade → apresente o paradoxo (aumento do investimento em segurança vs. expansão contínua das facções) → tese: o principal desafio para um combate eficaz ao crime organizado hoje, com foco em causas estruturais e políticas públicas, evitando detalhes gráficos de violência.",
+    dev1:"📌 1º argumento: ausência do Estado em áreas vulneráveis como terreno fértil para a expansão criminosa (use o Texto 2). Argumente que a falta de oportunidades empurra jovens para o crime como alternativa de sobrevivência.",
+    dev2:"📌 2º argumento: fragmentação e falta de integração entre forças de segurança estaduais e federais frente a organizações que atuam de forma nacional (use o Texto 1 e o Texto 3). Defenda a necessidade de inteligência e cooperação, não apenas repressão pontual.",
+    conclusao:"📌 Proposta C5: Agente (Ministério da Justiça e Segurança Pública em articulação com estados e municípios) + Ação (criação de um sistema nacional integrado de inteligência policial associado a programas sociais em áreas vulneráveis) + Meio (compartilhamento de dados entre forças de segurança e investimento em educação, esporte e geração de renda para jovens em risco) + Objetivo (enfraquecer as bases sociais e logísticas do crime organizado) + Resultado (redução sustentável da criminalidade e fortalecimento da presença do Estado nas comunidades)."
+  }
+},
+{
+  id:"iagen", emoji:"", cor:"#4F46E5",
+  titulo:"Os limites éticos da inteligência artificial generativa",
+  textos:[
+    {rotulo:"Texto 1 — Dados",conteudo:"Pesquisas recentes indicam crescimento acelerado no uso de ferramentas de inteligência artificial generativa por usuários brasileiros, capazes de criar textos, imagens, áudios e vídeos em segundos. Levantamentos apontam também aumento expressivo nos casos de desinformação e imagens falsas (deepfakes) compartilhadas em redes sociais, muitas vezes indistinguíveis de conteúdo real."},
+    {rotulo:"Texto 2 — Direitos autorais e criação",conteudo:"Especialistas em direito digital destacam que modelos de IA generativa são treinados com grandes volumes de textos, imagens e obras protegidas por direitos autorais, muitas vezes sem consentimento ou remuneração aos criadores originais. Essa prática tem gerado disputas judiciais em diversos países e debates sobre autoria em obras produzidas com auxílio de IA."},
+    {rotulo:"Texto 3 — Perspectiva ética",conteudo:"\"A tecnologia não é neutra: os limites que não colocamos nela refletem os limites que aceitamos para nós mesmos\" (especialista em ética digital, adaptado). Órgãos internacionais defendem a criação de marcos regulatórios que exijam identificação clara de conteúdo gerado por IA, de modo a preservar a confiança pública na informação."}
+  ],
+  dicas:{
+    intro:"📌 Contextualize: a inteligência artificial generativa democratizou a criação de conteúdo em velocidade sem precedentes → apresente o paradoxo (potencial criativo e produtivo vs. riscos de desinformação e violação de direitos) → tese: o principal limite ético que precisa ser enfrentado no uso dessa tecnologia hoje.",
+    dev1:"📌 1º argumento: risco da desinformação e dos deepfakes para a confiança pública e o debate democrático (use o Texto 1 e o Texto 3). Argumente que a ausência de identificação clara de conteúdo gerado por IA fragiliza a percepção coletiva da verdade.",
+    dev2:"📌 2º argumento: violação de direitos autorais e apagamento da autoria humana no processo criativo (use o Texto 2). Argumente que treinar modelos sem consentimento dos criadores originais é uma forma de apropriação que carece de regulação.",
+    conclusao:"📌 Proposta C5: Agente (Congresso Nacional em articulação com órgãos de defesa do consumidor e especialistas em tecnologia) + Ação (criação de marco regulatório para IA generativa que exija identificação de conteúdo sintético e proteção de direitos autorais) + Meio (fiscalização por agência reguladora específica e parcerias com plataformas digitais para rotulagem automática) + Objetivo (garantir uso ético e transparente da tecnologia) + Resultado (maior confiança pública na informação digital e proteção da produção criativa humana)."
+  }
+},
+{
+  id:"telas", emoji:"", cor:"#0D9488",
+  titulo:"O uso excessivo de telas e os desafios do enfrentamento da dependência digital entre crianças e adolescentes",
+  textos:[
+    {rotulo:"Texto 1 — Dados",conteudo:"Pesquisas indicam que crianças e adolescentes brasileiros somam, em média, mais de sete horas diárias em frente a telas de celulares, tablets e computadores, segundo levantamentos recentes sobre comportamento digital. Dados apontam que esse tempo praticamente dobrou na última década, impulsionado pela popularização dos smartphones e pela oferta cada vez mais direcionada de conteúdo audiovisual e jogos online."},
+    {rotulo:"Texto 2 — Impactos no desenvolvimento",conteudo:"Estudos em neurociência e pediatria associam o uso excessivo e precoce de telas a atrasos na fala, dificuldades de concentração e prejuízos no sono de crianças pequenas. A Sociedade Brasileira de Pediatria recomenda restrição de telas para menores de dois anos, mas pesquisas indicam que a orientação é seguida por uma minoria das famílias, sobretudo pela ausência de alternativas de cuidado e lazer."},
+    {rotulo:"Texto 3 — Perspectiva especializada",conteudo:"'Não é a tecnologia que estraga a infância, é a ausência de limites', afirma a psicóloga Ana Suy, referência em saúde digital infantil, ao defender que o problema não está no dispositivo em si, mas na falta de mediação de adultos e de políticas públicas de educação digital nas escolas e nas famílias brasileiras."}
+  ],
+  dicas:{
+    intro:"📌 Contextualize o paradoxo: as telas conectam e informam, mas seu uso descontrolado prejudica o desenvolvimento infantil → apresente a dimensão do problema com dado do Texto 1 → tese: o principal obstáculo ao enfrentamento da dependência digital entre crianças e adolescentes.",
+    dev1:"📌 1º argumento: ausência de mediação e orientação familiar sobre o tempo de tela. Use o Texto 2 (impactos no desenvolvimento) para embasar os riscos do uso precoce e sem limites.",
+    dev2:"📌 2º argumento: falta de educação digital estruturada nas escolas e de políticas públicas de orientação às famílias. Use o Texto 3, mostrando que o problema é de mediação, não da tecnologia em si.",
+    conclusao:"📌 Retome a tese. Proposta C5: Agente (MEC, em parceria com o Ministério da Saúde) + Ação (implementar programas de educação digital e orientação familiar) + Meio (capacitação de professores e cartilhas distribuídas em escolas e unidades de saúde) + Objetivo (promover o uso consciente das tecnologias) + Resultado (redução dos prejuízos ao desenvolvimento infantil e adolescente)."
+  }
+},
+{
+  id:"cyberb", emoji:"", cor:"#C026D3",
+  titulo:"O cyberbullying e os desafios da construção de uma convivência digital saudável entre jovens",
+  textos:[
+    {rotulo:"Texto 1 — Dados",conteudo:"Pesquisas apontam que cerca de um em cada três estudantes brasileiros já sofreu algum tipo de cyberbullying, seja por meio de mensagens ofensivas, exposição de imagens sem consentimento ou exclusão intencional de grupos online. Levantamentos indicam que a prática cresce junto ao uso de redes sociais, atingindo principalmente adolescentes entre 12 e 17 anos."},
+    {rotulo:"Texto 2 — Marco legal",conteudo:"A Lei nº 13.185/2015 institui o Programa de Combate à Intimidação Sistemática e a Lei nº 14.811/2024 equipara o cyberbullying grave a crime, prevendo penas mais severas. Apesar do avanço legal, especialistas apontam que a maioria das escolas ainda carece de protocolos claros de identificação e acolhimento das vítimas."},
+    {rotulo:"Texto 3 — Perspectiva psicológica",conteudo:"'O silêncio da vítima costuma ser o maior aliado do agressor virtual', afirma a psicopedagoga Rosely Sayão, destacando que o medo de represálias e a naturalização das ofensas online dificultam a denúncia. Para especialistas, o combate ao cyberbullying exige tanto punição quanto educação socioemocional desde a infância."}
+  ],
+  dicas:{
+    intro:"📌 Contextualize o contraste: as redes sociais aproximam jovens, mas também viram palco de humilhação e violência psicológica → cite o dado do Texto 1 → tese: o principal desafio para conter o cyberbullying e garantir uma convivência digital saudável entre jovens.",
+    dev1:"📌 1º argumento: o anonimato e a naturalização da violência online, que dificultam a denúncia das vítimas. Use os Textos 1 e 3.",
+    dev2:"📌 2º argumento: a fragilidade institucional das escolas, que apesar do avanço legal (Texto 2) ainda não têm protocolos consistentes de prevenção e acolhimento.",
+    conclusao:"📌 Retome a tese. Proposta C5: Agente (MEC, em conjunto com as secretarias estaduais de educação) + Ação (implementar protocolos escolares de prevenção, identificação e acolhimento) + Meio (capacitação de professores e rodas de conversa sobre convivência digital) + Objetivo (reduzir os casos de cyberbullying entre estudantes) + Resultado (ambiente escolar e digital mais seguro e preservação da saúde emocional dos jovens)."
+  }
+},
+{
+  id:"cuidado", emoji:"", cor:"#059669",
+  titulo:"A invisibilidade do trabalho de cuidado e sua desigual distribuição entre homens e mulheres no Brasil",
+  textos:[
+    {rotulo:"Texto 1 — Dados",conteudo:"Segundo o IBGE, mulheres brasileiras dedicam, em média, quase o dobro do tempo que os homens a afazeres domésticos e cuidado de pessoas — cerca de 21 horas semanais contra pouco mais de 11. Dados indicam que essa sobrecarga é ainda maior entre mulheres negras e de baixa renda, que frequentemente acumulam trabalho remunerado e cuidado não remunerado."},
+    {rotulo:"Texto 2 — Impacto econômico e social",conteudo:"Pesquisas apontam que o trabalho de cuidado não remunerado, se contabilizado, representaria uma parcela significativa do PIB brasileiro. Essa sobrecarga limita a participação das mulheres no mercado de trabalho formal, reduz sua renda ao longo da vida e compromete o acesso a aposentadoria e proteção social equivalentes às dos homens."},
+    {rotulo:"Texto 3 — Perspectiva de solução",conteudo:"'Cuidar não é destino biológico, é organização social', afirma a socióloga e ex-ministra Nilcéa Freire, defendendo políticas de corresponsabilidade. O Uruguai já implementou um sistema nacional de cuidados, integrando creches, centros-dia para idosos e licenças parentais equilibradas como forma de redistribuir essa carga entre homens e mulheres."}
+  ],
+  dicas:{
+    intro:"📌 Contextualize o contraste: o trabalho de cuidado sustenta famílias e a economia, mas segue invisibilizado e não remunerado → cite o dado do Texto 1 → tese: o principal entrave à distribuição justa do trabalho de cuidado entre homens e mulheres no Brasil.",
+    dev1:"📌 1º argumento: papéis de gênero naturalizados que atribuem o cuidado como função quase exclusiva das mulheres. Use o Texto 1.",
+    dev2:"📌 2º argumento: a ausência de política pública estruturada de cuidado, que perpetua a sobrecarga feminina e limita sua autonomia econômica. Use os Textos 2 e 3, trazendo o exemplo internacional como contraponto.",
+    conclusao:"📌 Retome a tese. Proposta C5: Agente (governo federal, em parceria com o Ministério das Mulheres) + Ação (implementar um Sistema Nacional de Cuidados) + Meio (ampliação de creches, centros-dia para idosos e licença parental equilibrada entre pais e mães) + Objetivo (redistribuir o trabalho de cuidado entre homens e mulheres) + Resultado (maior autonomia econômica feminina e avanço na equidade de gênero)."
+  }
+},
+{
+  id:"paternidade", emoji:"", cor:"#EC4899",
+  titulo:"Os desafios da paternidade ativa e do cuidado compartilhado entre pais e mães no Brasil",
+  textos:[
+    {rotulo:"Texto 1 — Dados",conteudo:"Levantamentos indicam que a licença-paternidade no Brasil é de apenas cinco dias, uma das mais curtas entre países da América Latina, enquanto a licença-maternidade chega a 120 dias. Pesquisas apontam que essa diferença reforça, desde o nascimento, a ideia de que o cuidado com os filhos é responsabilidade prioritariamente da mãe."},
+    {rotulo:"Texto 2 — Marco legal e social",conteudo:"O programa Empresa Cidadã permite a extensão da licença-paternidade para 20 dias em empresas aderentes, mas dados indicam que a adesão ainda é baixa, sobretudo entre pequenas empresas. Estudos apontam que pais mais presentes nos primeiros meses de vida tendem a manter maior envolvimento no cuidado dos filhos ao longo da infância."},
+    {rotulo:"Texto 3 — Perspectiva internacional",conteudo:"Países como a Suécia oferecem licenças parentais de meses, com cotas específicas e intransferíveis para os pais, incentivo que elevou significativamente o engajamento paterno. 'Paternidade não é ajuda, é responsabilidade', resume o psicólogo Ricardo Franklin, ao defender que o envolvimento paterno deve ser tratado como direito da criança, não favor à mãe."}
+  ],
+  dicas:{
+    intro:"📌 Contextualize o contraste: o papel do pai mudou culturalmente, mas leis e práticas ainda tratam o cuidado como tarefa secundária masculina → cite o dado do Texto 1 → tese: o principal obstáculo à consolidação da paternidade ativa no Brasil.",
+    dev1:"📌 1º argumento: a legislação insuficiente, com licença-paternidade curta e baixa adesão a programas de extensão. Use os Textos 1 e 2.",
+    dev2:"📌 2º argumento: a cultura que naturaliza o cuidado como tarefa feminina e a falta de referências de paternidade ativa. Use o Texto 3, trazendo o exemplo internacional como contraponto.",
+    conclusao:"📌 Retome a tese. Proposta C5: Agente (Congresso Nacional, em conjunto com o Ministério do Trabalho) + Ação (ampliar e tornar obrigatória a licença-paternidade) + Meio (incentivos fiscais a empresas aderentes e campanhas de conscientização sobre corresponsabilidade parental) + Objetivo (estimular o envolvimento paterno desde o nascimento) + Resultado (cuidado mais equilibrado entre pais e mães e desenvolvimento infantil favorecido)."
+  }
+},
+{
+  id:"sus", emoji:"", cor:"#2563EB",
+  titulo:"Os desafios do acesso universal e de qualidade à saúde pública no Brasil",
+  textos:[
+    {rotulo:"Texto 1 — Dados",conteudo:"Segundo dados do Ministério da Saúde, o SUS realiza anualmente bilhões de atendimentos, da atenção básica a transplantes, sendo um dos maiores sistemas públicos de saúde do mundo. Ainda assim, pesquisas indicam que o tempo médio de espera por consultas especializadas e cirurgias eletivas pode ultrapassar vários meses em diversas regiões do país."},
+    {rotulo:"Texto 2 — Desigualdade regional",conteudo:"Dados apontam uma distribuição desigual de médicos e leitos hospitalares entre as regiões brasileiras, com Norte e Nordeste apresentando menor cobertura por habitante do que Sul e Sudeste. Municípios pequenos frequentemente dependem de deslocamentos longos para garantir acesso a especialidades médicas e exames de maior complexidade."},
+    {rotulo:"Texto 3 — Marco legal e perspectiva",conteudo:"'Saúde é direito de todos e dever do Estado', prevê a Constituição de 1988, princípio que fundou o SUS como sistema universal e gratuito. Especialistas, como aponta a Fiocruz, indicam que o subfinanciamento crônico da saúde pública tende a acumular filas e sobrecarregar hospitais, mesmo diante de uma rede assistencial tão ampla."}
+  ],
+  dicas:{
+    intro:"📌 Contextualize o contraste: o SUS é uma conquista constitucional reconhecida mundialmente, mas convive com filas e desigualdade de acesso → cite o dado do Texto 1 → tese: o principal desafio para garantir acesso universal e de qualidade à saúde pública no Brasil.",
+    dev1:"📌 1º argumento: o subfinanciamento crônico do sistema, que compromete sua capacidade de atendimento apesar da previsão constitucional. Use os Textos 1 e 3.",
+    dev2:"📌 2º argumento: a desigualdade regional na distribuição de profissionais e infraestrutura de saúde. Use o Texto 2, mostrando o impacto sobre municípios menores e regiões mais pobres.",
+    conclusao:"📌 Retome a tese. Proposta C5: Agente (governo federal, em articulação com estados e municípios) + Ação (ampliar o financiamento e promover a interiorização de profissionais de saúde) + Meio (programas de fixação de médicos em regiões carentes e investimento em infraestrutura hospitalar) + Objetivo (reduzir as filas e as desigualdades regionais de acesso) + Resultado (atendimento mais rápido, equânime e de qualidade à população)."
   }
 }
 ];
@@ -6059,7 +6442,7 @@ function renderDashboard(){
   // Card de redação
   const cr=document.createElement('div');
   cr.className='dash-card disponivel';
-  cr.innerHTML=`<span class="dc-ico"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span><div class="dc-titulo">Redação ENEM</div><div style="font-size:.78rem;color:var(--tx2);margin:4px 0">5 temas · escrita por etapas</div><span class="dc-status livre">▶ Acessar</span>`;
+  cr.innerHTML=`<span class="dc-ico"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span><div class="dc-titulo">Redação ENEM</div><div style="font-size:.78rem;color:var(--tx2);margin:4px 0">30 temas · escrita por etapas</div><span class="dc-status livre">▶ Acessar</span>`;
   cr.onclick=()=>irTemas();
   cont.appendChild(cr);
 }
@@ -6739,17 +7122,39 @@ function toggleGab(head){
 
 // ─── REDAÇÃO ──────────────────────────────────────────────────────────────────
 
+let eixoAtivo='todos';
+
+function renderEixoFiltro(){
+  const wrap=document.getElementById('eixoFiltro');
+  if(!wrap) return;
+  const chips=[{id:'todos',label:'Todos os temas ('+TEMAS.length+')'}].concat(
+    EIXOS_REDACAO.map(e=>({id:e.id,label:e.label+' ('+TEMAS.filter(t=>TEMA_EIXOS[t.id]===e.id).length+')'}))
+  );
+  wrap.innerHTML=chips.map(c=>'<span class="eixo-chip'+(eixoAtivo===c.id?' ativo':'')+'" onclick="filtrarEixo(\''+c.id+'\')">'+c.label+'</span>').join('');
+}
+
+function filtrarEixo(id){
+  eixoAtivo=id;
+  renderEixoFiltro();
+  renderTemas();
+}
+
 function renderTemas(){
+  renderEixoFiltro();
   const grid=document.getElementById('temaGrid');
   grid.innerHTML='';
-  TEMAS.forEach(t=>{
+  const lista=eixoAtivo==='todos'?TEMAS:TEMAS.filter(t=>TEMA_EIXOS[t.id]===eixoAtivo);
+  lista.forEach(t=>{
     const c=document.createElement('div');
     c.className='tema-card';
     c.style.setProperty('--cor',t.cor);
-    c.innerHTML='<span class="tema-emoji">'+t.emoji+'</span><h3>'+t.titulo+'</h3><p>'+t.textos[0].conteudo.substring(0,100)+'…</p>';
+    c.innerHTML='<span class="tema-icon-badge">'+temaRedacaoIconSVG(t.id)+'</span><h3>'+t.titulo+'</h3><p>'+t.textos[0].conteudo.substring(0,100)+'…</p>';
     c.onclick=()=>iniciarRedacao(t.id);
     grid.appendChild(c);
   });
+  if(!lista.length){
+    grid.innerHTML='<p style="text-align:center;color:var(--tx2);grid-column:1/-1">Nenhum tema nesse eixo ainda.</p>';
+  }
 }
 
 function iniciarRedacao(id){
@@ -6757,6 +7162,7 @@ function iniciarRedacao(id){
   S.etapa=1;
   S.texto={intro:'',dev1:'',dev2:'',conclusao:''};
   S.profMode=false;
+  S.redacaoEnviada=false;
   S.correcao={c1:-1,c2:-1,c3:-1,c4:-1,c5:-1};
   mostrar('sc-essay');
   renderEssay();
@@ -6804,7 +7210,7 @@ function renderEssay(){
     textosHtml+='</div>';
   }
 
-  cont.innerHTML='<div class="essay-panel"><h3>'+titulos[S.etapa-1]+'</h3><p class="essay-tema-label">📌 '+S.tema.titulo+'</p>'+textosHtml+'<div class="guide-box"><strong>Guia para esta etapa:</strong>'+dica+'</div><textarea class="essay-textarea" id="essayTA" placeholder="Escreva aqui seu texto..." oninput="atualizarWC()">'+S.texto[txtKey]+'</textarea><div class="wcount" id="wc">0 palavras</div><div class="essay-nav">'+(S.etapa>1?'<button class="btn btn-sec" onclick="navEssay(-1)">← Anterior</button>':'<span></span>')+'<button class="btn btn-pri" onclick="navEssay(1)">'+(S.etapa===4?'Finalizar ✓':'Próxima →')+'</button></div></div>';
+  cont.innerHTML='<div class="essay-panel"><h3>'+titulos[S.etapa-1]+'</h3><p class="essay-tema-label"><span class="tema-icon" style="color:'+S.tema.cor+'">'+temaRedacaoIconSVG(S.tema.id)+'</span>'+S.tema.titulo+'</p>'+textosHtml+'<div class="guide-box"><strong>Guia para esta etapa:</strong>'+dica+'</div><textarea class="essay-textarea" id="essayTA" placeholder="Escreva aqui seu texto..." oninput="atualizarWC()">'+S.texto[txtKey]+'</textarea><div class="wcount" id="wc">0 palavras</div><div class="essay-nav">'+(S.etapa>1?'<button class="btn btn-sec" onclick="navEssay(-1)">← Anterior</button>':'<span></span>')+'<button class="btn btn-pri" onclick="navEssay(1)">'+(S.etapa===4?'Finalizar ✓':'Próxima →')+'</button></div></div>';
 
   setTimeout(atualizarWC,50);
 }
@@ -6843,10 +7249,53 @@ function renderRevisao(cont){
     total+=words;
     html+='<div class="rev-section"><div class="rev-head">'+s.titulo+'</div><div class="rev-body">'+escHtml(txt)+'</div><div class="rev-wcount">'+words+' palavras</div></div>';
   });
-  html+='<div style="display:flex;gap:10px;justify-content:center;margin:24px 0;flex-wrap:wrap"><button class="btn btn-sec" onclick="navEssay(-1)">← Editar conclusão</button><button class="btn btn-ouro" onclick="pedirSenha()">🔑 Modo Professor</button><button class="btn btn-pri" onclick="window.print()">🖨️ Imprimir</button></div>';
+  const jaEnviada=S.redacaoEnviada;
+  html+='<div style="display:flex;gap:10px;justify-content:center;margin:24px 0;flex-wrap:wrap"><button class="btn btn-sec" onclick="navEssay(-1)">← Editar conclusão</button><button class="btn btn-verde" id="btnEnviarRedacao" onclick="enviarRedacaoParaProfessor()"'+(jaEnviada?' disabled':'')+'>'+(jaEnviada?'✓ Enviada para o professor':'📤 Enviar para o professor')+'</button><button class="btn btn-ouro" onclick="pedirSenha()">🔑 Modo Professor</button><button class="btn btn-pri" onclick="window.print()">🖨️ Imprimir</button></div>';
+  html+='<div id="envioStatus" style="text-align:center;font-size:.8rem;color:var(--tx2);margin-top:-14px;margin-bottom:10px">'+(jaEnviada?'O professor já pode ler esta redação na planilha de acompanhamento.':'Envie sua versão final para o professor poder ler e corrigir — não é possível editar depois de enviar.')+'</div>';
   html+='<div id="corrPanel" style="display:none"></div>';
   cont.innerHTML=html;
   document.getElementById('totalWC').textContent='Total: '+total+' palavra'+(total!==1?'s':'')+' · Redação completa';
+}
+
+function enviarRedacaoParaProfessor(){
+  const btn=document.getElementById('btnEnviarRedacao');
+  const status=document.getElementById('envioStatus');
+  if(S.redacaoEnviada) return;
+  const total=['intro','dev1','dev2','conclusao'].reduce((acc,k)=>{
+    const t=(S.texto[k]||'').trim();
+    return acc+(t?t.split(/\s+/).length:0);
+  },0);
+  if(total<50){
+    if(!confirm('Sua redação tem só '+total+' palavras — parece incompleta. Enviar mesmo assim?')) return;
+  }
+  btn.disabled=true;
+  btn.textContent='Enviando...';
+  enviarRedacaoSheets(S.tema, S.texto, total);
+  S.redacaoEnviada=true;
+  btn.textContent='✓ Enviada para o professor';
+  if(status) status.textContent='O professor já pode ler esta redação na planilha de acompanhamento.';
+}
+
+function enviarRedacaoSheets(tema, texto, totalPalavras){
+  const urlSheets=(typeof SHEETS_URL==='string'?SHEETS_URL:'').trim();
+  if(!urlSheets.startsWith('https://')) return;
+  fetch(urlSheets, {
+    method:'POST',
+    mode:'no-cors',
+    headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify({
+      tipo:'redacao',
+      atividade:'Redação · '+tema.titulo,
+      nome:(AUTH.current && AUTH.current.nome) || '(sem nome)',
+      turma:(AUTH.current && AUTH.current.turma) || '(sem turma)',
+      tema:tema.titulo,
+      introducao:texto.intro||'',
+      dev1:texto.dev1||'',
+      dev2:texto.dev2||'',
+      conclusao:texto.conclusao||'',
+      totalPalavras:totalPalavras
+    })
+  }).catch(()=>{});
 }
 
 function escHtml(str){
