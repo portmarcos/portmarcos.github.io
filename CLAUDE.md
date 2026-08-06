@@ -88,23 +88,35 @@ qconcursos, xequematenem) via agentes em paralelo. Achados e já corrigidos:
   eram PPL 2016 Q128 e PPL 2018 Q06).
 - **Multiletramentos**: 1 número de questão errado na fonte (era "Questão
   109", correto "Questão 107").
+- **Argumentação**: removida questão duplicada e incompleta (Antônio Prata x
+  Graciliano Ramos, ENEM 2024 Q30) — faltava o Texto I (carta de Graciliano a
+  Portinari), citado no enunciado e na explicação mas ausente do texto-base.
+  Mantida a cópia completa (com os dois textos) já existente em Literatura.
 - Todos os outros temas (Verbal, Variação, Semântica, Literatura, Interpretação)
   passaram limpos — nenhuma fabricação nova encontrada. A suspeita inicial de
   fabricação em Interpretação de Texto (ENEM 2022 Q39, Eco/Carrière) foi
   FALSO ALARME — confirmado depois como questão 100% real.
 
-**Contagem final: 374 questões reais** (não 376/377 — a contagem por grep de
-"enun:" no arquivo inteiro sempre incluiu 1 falso positivo de um `enun: qi.enun,`
-em código JS não relacionado a `BANCO`; contar só dentro do range de linhas de
-`const BANCO = {...}` ou usar `BANCO[tema].questoes.length` via console).
+A pedido do professor, foi removida também a questão sobre a campanha da
+Defensoria Pública contra violência doméstica na pandemia (Funções de
+Linguagem, ENEM 2023) — questão real e correta, mas removida por decisão
+editorial, não por problema de conteúdo.
+
+**Contagem final: 372 questões reais** (não confiar em contagem por grep de
+"enun:" no arquivo inteiro — sempre inclui 1 falso positivo de um
+`enun: qi.enun,` em código JS não relacionado a `BANCO`; contar só dentro do
+range de linhas de `const BANCO = {...}` ou usar `BANCO[tema].questoes.length`
+via console, ou somar `BANCO[t].questoes.length` dos 13 temas).
 
 **Pendência aberta**: em Funções de Linguagem (ENEM 2023 Q44, campanha do
-Ministério da Saúde sobre amamentação), o campo `texto` está mostrando por
-engano o conteúdo de OUTRA questão do mesmo tema (violência doméstica,
-pandemia). Enunciado/alternativas/gabarito dessa questão já foram confirmados
-corretos — só falta a imagem/texto real do cartaz da campanha de amamentação,
-que não foi possível extrair via WebFetch (sites de gabarito renderizam a
-imagem via JS). Pedir a imagem ao usuário (ver fluxo abaixo) antes de fechar.
+Ministério da Saúde sobre amamentação), o campo `texto` continua mostrando por
+engano o conteúdo da questão de violência doméstica que existia no mesmo tema
+(removida a pedido do professor, mas o texto duplicado permaneceu colado nesta
+questão, já que era uma cópia literal, não uma referência). Enunciado/
+alternativas/gabarito da questão de amamentação já foram confirmados corretos
+— só falta a imagem/texto real do cartaz da campanha de amamentação, que não
+foi possível extrair via WebFetch (sites de gabarito renderizam a imagem via
+JS). Pedir a imagem ao usuário (ver fluxo abaixo) antes de fechar.
 
 ## Estrutura do site
 - Repo público no GitHub Pages: portmarcos/portmarcos.github.io
