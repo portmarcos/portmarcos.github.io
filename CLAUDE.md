@@ -1,15 +1,32 @@
 # Portal ENEM — portmarcos.github.io
 
-## Redação ENEM reformulada (commit `cbee059`)
-30 temas de redação (era 9), em `const TEMAS` — cada um com `id`, `cor`,
-`titulo`, `textos` (3 textos de apoio) e `dicas` (intro/dev1/dev2/conclusao).
+## Redação ENEM reformulada (commits `cbee059`, `129e4ee`)
+50 temas de redação (era 9), em `const TEMAS` — cada um com `id`, `cor`,
+`titulo`, `textos` (3 textos de apoio, no estilo excerto real do ENEM: um
+com fonte/citação no fim tipo "Disponível em... Acesso em... (adaptado)",
+um normativo/legal citando artigo de lei, e um com citação direta entre
+aspas) e `dicas`, um objeto por etapa (intro/dev1/dev2/conclusao), cada
+etapa com `{dica, conectivo, evitar}` — `dica` é a orientação de conteúdo,
+`conectivo` sugere frase de abertura/conectivos pra aquela etapa, `evitar`
+aponta um erro comum específico. **Não usar mais o formato antigo onde
+`dicas.intro` era só uma string** — `renderEssay()` já suporta os dois
+formatos (tem fallback), mas todo tema novo deve usar o objeto.
+
 `TEMA_EIXOS` mapeia cada `id` pra um dos 10 eixos em `EIXOS_REDACAO`
 (tecnologia, educação, saúde, ambiente, direitos, trabalho, cultura,
 segurança, cidades, família) — usado no filtro por chip na tela de escolha
 de tema (`renderEixoFiltro`/`filtrarEixo`). Ícones em `TEMA_REDACAO_ICONS`
 + `temaRedacaoIconSVG(id)`, mesmo padrão SVG de linha do banco de questões
 — não usar emoji cru nem `t.emoji` (campo ainda existe mas ficou vazio,
-não é mais usado na UI).
+não é mais usado na UI). Todo `id` novo precisa de entrada em AMBOS
+`TEMA_EIXOS` e `TEMA_REDACAO_ICONS`, senão cai no ícone `_default`/fica
+sem filtro.
+
+**Cuidado com duplicata de tema**: numa sessão anterior um tema (`sus`)
+ficou duplicado — uma cópia nova no meio do array e uma cópia antiga
+esquecida bem no final, antes do `];` de fechamento. Antes de adicionar
+temas novos, sempre conferir `TEMAS.map(t=>t.id)` por id repetido no
+console do navegador.
 
 Novo: botão "📤 Enviar para o professor" na etapa de revisão da redação
 (`renderRevisao`) manda o texto completo pro Google Sheets numa aba
