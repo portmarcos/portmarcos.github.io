@@ -67,7 +67,8 @@ h1,h2,h3,h4,.num{font-family:'Space Grotesk','Inter',sans-serif}
 .dash-card.disponivel{cursor:pointer}
 .dash-card.disponivel:hover{transform:translateY(-5px);box-shadow:var(--shadow3);border-color:var(--az3)}
 .dash-card.concluido{--grad:var(--verde);border-color:#A7F3D0;background:linear-gradient(135deg,rgba(52,211,153,0.08),rgba(15,23,42,0.75))}
-.dc-ico{font-size:2.4rem;margin-bottom:12px;display:block}
+.dc-ico{width:34px;height:34px;display:flex;align-items:center;margin-bottom:12px}
+.dc-ico svg{width:100%;height:100%;display:block}
 .dc-titulo{font-family:'Space Grotesk','Inter',sans-serif;font-weight:700;font-size:.92rem;color:var(--az);margin-bottom:4px}
 .dc-score{font-size:2rem;font-weight:900;font-family:'Space Grotesk','Inter',sans-serif;color:var(--verde);line-height:1;margin:6px 0}
 .dc-status{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:700;font-family:'Space Grotesk','Inter',sans-serif;padding:5px 12px;border-radius:20px;margin-top:8px}
@@ -7554,6 +7555,7 @@ function renderDashboard(){
       const tent=res.numTentativas||1;
       card.className='dash-card concluido';
       card.innerHTML=`
+        <span class="dc-ico" style="color:${info.cor}">${temaIconSVG(t)}</span>
         <div class="dc-num">${info.num}</div>
         <div class="dc-titulo">${info.titulo}</div>
         <div class="dc-score">${res.score}<span style="font-size:.8rem;font-weight:400;color:var(--tx2)">/${res.total}</span></div>
@@ -7563,6 +7565,7 @@ function renderDashboard(){
     } else {
       card.className='dash-card disponivel';
       card.innerHTML=`
+        <span class="dc-ico" style="color:${info.cor}">${temaIconSVG(t)}</span>
         <div class="dc-num">${info.num}</div>
         <div class="dc-titulo">${info.titulo}</div>
         <div style="font-size:.78rem;color:var(--tx2);margin:4px 0">${BANCO[t].questoes.length} questões · 50 min</div>
