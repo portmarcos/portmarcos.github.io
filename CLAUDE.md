@@ -1,5 +1,52 @@
 # Portal ENEM — portmarcos.github.io
 
+## Interpretação em Provas de Concurso (commit `2843986`)
+`portugues/interpretacao-concursos.html` — quiz separado do banco ENEM, com
+160 questões reais de português de 16 provas de concurso público (baixadas de
+pciconcursos.com.br, PDFs em `materiais/materiais-concursos-interpretacao/`,
+**gitignorado** — não republicar o PDF inteiro no repo público, só as
+questões extraídas como texto são commitadas). 3 temas por **cargo**, não por
+assunto: `administrador` (80), `advogado` (40), `agente_administrativo` (40),
+em `TEMAS_ORDEM`/`TEMAS_INFO`/`TEMA_ICONS` dentro do próprio HTML (BANCO
+grande demais pra manter num arquivo separado, igual ao padrão do enem.html).
+
+**Particularidade importante desse banco**: diferente do ENEM, essas provas
+da pciconcursos vêm **sem gabarito** (nem no PDF nem em fonte externa
+rastreável — os PDFs não têm capa com nome do concurso/banca/ano, só
+começam direto nas questões). Não dá pra aplicar a regra de ouro do ENEM
+("confirmar gabarito em fonte externa") porque não existe fonte externa pra
+essas provas especificamente. Em vez disso, o gabarito e a explicação de
+cada questão foram determinados por leitura cuidadosa do texto-base e análise
+gramatical (16 agentes em paralelo, um por prova, cada um com campo
+`confianca` alta/media/baixa e `duvida` explicando o raciocínio nos casos
+mais discutíveis). Questões de interpretação/gramática amarradas a um texto
+dado são autoverificáveis dessa forma — não é o mesmo risco de fabricação
+de uma questão inteira inventada.
+
+Pipeline usado (scripts descartáveis em `_build-concursos/`, gitignorado):
+PDF → `pdftotext -enc UTF-8 -layout` → `parse_concursos.py` (isola a seção
+"PROVA DE LÍNGUA PORTUGUESA", separa texto-suporte e questões, mecânico, sem
+IA) → classificação por agentes (gabarito+explicação) → `image-manifest.json`
+(mapeamento manual verificado visualmente de qual imagem real, em
+`assets/img/questoes/concursos/`, cada texto-suporte precisa — várias
+questões citam charge/tirinha/cartaz/infográfico onde só a legenda
+"Disponível em: URL" foi extraída como texto, a imagem em si não) →
+`merge_concursos.py` (junta tudo, mecânico) → `inject_html.py` (substitui
+`BANCO_PLACEHOLDER` no HTML). Se for reprocessar ou adicionar mais provas,
+reusar esse pipeline em vez de recomeçar do zero.
+
+**Achados dessa auditoria, pra não repetir o trabalho**: duas duplicatas
+completas descobertas por comparação par a par de todas as provas
+(`administrador` ≡ `administrador_hospitalar`, `administrador4` ≡
+`administrador_pessoal` — mesma prova de português reaplicada em cargos
+diferentes do mesmo edital) — as duas cópias (`administrador_hospitalar`,
+`administrador_pessoal`) foram excluídas do banco final, só continuam como
+arquivo bruto em `_build-concursos/concursos-parse/` caso precise conferir.
+A questão 18 de `advogado (1)` tem duas alternativas idênticas
+("II, III e IV, apenas.") **no PDF original** — não é erro de extração,
+conferido direto no PDF; mantida como está (fiel à fonte), só documentando
+aqui pra não achar que é bug do parser numa auditoria futura.
+
 ## Redação ENEM reformulada (commits `cbee059`, `129e4ee`)
 50 temas de redação (era 9), em `const TEMAS` — cada um com `id`, `cor`,
 `titulo`, `textos` (3 textos de apoio, no estilo excerto real do ENEM: um
