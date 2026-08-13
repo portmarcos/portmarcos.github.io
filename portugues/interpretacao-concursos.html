@@ -2753,13 +2753,23 @@ function renderNavDots(){
   }
 }
 
+function formatarTexto(t){
+  // o pdftotext do PDF de origem quebra cada linha de coluna com \n e, em
+  // textos com numeração de linha (para citações tipo "Linha 45"), ainda
+  // insere uma linha em branco extra entre elas — sem isso, cada linha da
+  // coluna vira um parágrafo com espaço de sobra e o texto fica cheio de
+  // buracos. Colapsa qualquer sequência de quebras em uma só antes de gerar
+  // os <br>, então cada linha original fica compacta e legível.
+  return t.replace(/\n{2,}/g, '\n').replace(/\n/g, '<br>');
+}
+
 function renderQ(){
   const total=BANCO[S.topico].questoes.length;
   const q=BANCO[S.topico].questoes[S.qIdx];
   document.getElementById('qNum').textContent='Questão '+(S.qIdx+1)+' de '+total+(S.blocos.length>1?' · Bloco '+(S.blocoAtivo+1)+' de '+S.blocos.length:'');
   const tDiv=document.getElementById('qTexto');
   if(q.texto&&q.texto.trim()){
-    tDiv.innerHTML='<div class="q-texto">'+q.texto.replace(/\n/g,'<br>')+'<div class="q-fonte">'+q.fonte+'</div></div>';
+    tDiv.innerHTML='<div class="q-texto">'+formatarTexto(q.texto)+'<div class="q-fonte">'+q.fonte+'</div></div>';
   } else {
     tDiv.innerHTML='';
   }
@@ -2891,7 +2901,7 @@ function abrirGabarito(){
     const item=document.createElement('div');
     item.className='gabarito-item';
     item.dataset.status=status;
-    const textoHtml=qst.texto?'<div class="g-texto">'+qst.texto.replace(/\n/g,'<br>')+'</div>':'';
+    const textoHtml=qst.texto?'<div class="g-texto">'+formatarTexto(qst.texto)+'</div>':'';
     const altsHtml=qst.alts.map((a,ai)=>{
       let cls='g-alt';
       if(ai===certa) cls+=' correta-alt';
@@ -3023,7 +3033,7 @@ function renderProva(){
   PROVA.questoes.forEach((q,i)=>{
     html+=`<div class="prova-q">
       <div class="prova-q-num">Questão ${i+1}</div>
-      ${q.texto?'<div class="prova-q-texto">'+q.texto.replace(/\n/g,'<br>')+'</div>':''}
+      ${q.texto?'<div class="prova-q-texto">'+formatarTexto(q.texto)+'</div>':''}
       ${q.fonte?'<div class="prova-q-fonte">'+q.fonte+'</div>':''}
       <div class="prova-q-enun">${q.enun}</div>
       <div class="prova-q-alts">${q.alts.map((a,ai)=>'<div class="prova-q-alt"><b>'+letras[ai]+')</b> '+a+'</div>').join('')}</div>
