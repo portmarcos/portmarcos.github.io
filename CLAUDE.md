@@ -35,6 +35,20 @@ questões citam charge/tirinha/cartaz/infográfico onde só a legenda
 `BANCO_PLACEHOLDER` no HTML). Se for reprocessar ou adicionar mais provas,
 reusar esse pipeline em vez de recomeçar do zero.
 
+**Cuidado com o limiar `precisaImagem` do parser** (commit `a09dd0c`): ele só
+marca um texto-suporte como "precisa de imagem" se `charCount < 150`, mas 6
+tirinhas/anúncios com balões em colunas passaram batido nesse limiar porque o
+pdftotext conseguia extrair ALGO de texto delas — só que fora de ordem de
+leitura (os balões de quadros diferentes viram uma sopa de letra ilegível,
+tipo "MARATONOU". SOU DO TEMPO EM ... E NÃO FICAR O HUNF!..."). Antes de
+fechar o banco, sempre rodar uma varredura tipo `150 <= charCount < 500 and
+not precisaImagem` em cada `_build-concursos/concursos-parse/*.json` e ler
+manualmente o conteúdo de cada resultado — se não formar frase coesa, é
+tirinha/anúncio embaralhado, não texto corrido. As imagens desses 6 casos já
+estavam baixadas em `assets/img/questoes/concursos/` mas com o campo
+`suprimirTexto: true` no manifesto (`merge_concursos.py` respeita esse campo
+e usa só a imagem, descartando o texto embaralhado).
+
 **Achados dessa auditoria, pra não repetir o trabalho**: duas duplicatas
 completas descobertas por comparação par a par de todas as provas
 (`administrador` ≡ `administrador_hospitalar`, `administrador4` ≡
