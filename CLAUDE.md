@@ -35,6 +35,21 @@ questões citam charge/tirinha/cartaz/infográfico onde só a legenda
 `BANCO_PLACEHOLDER` no HTML). Se for reprocessar ou adicionar mais provas,
 reusar esse pipeline em vez de recomeçar do zero.
 
+**`reflow_paragrafos()` em `merge_concursos.py`** (commit `5fe56d1`): o
+`pdftotext -layout` quebra cada linha de coluna do PDF com `\n` (às vezes
+`\n\n`) — nunca é quebra de parágrafo de verdade, só a largura da coluna
+impressa. Sem isso, o texto-suporte aparecia picado, uma linha por
+"parágrafo". A função rejunta em parágrafos corridos com uma heurística:
+bloco curto (≤65 char) sem pontuação final = cabeçalho/título/autor, fica em
+linha própria; do resto, só quebra parágrafo quando o bloco anterior termina
+em pontuação de fechamento de frase (`.!?…”"')]`). Efeito colateral aceito:
+em textos com numeração de linha para citação tipo "(Linha 45)", o número
+some do início da linha e sobra solto no meio da frase corrida (ex: "...
+utilizados no 5 cálculo do...") — não tentei remover esses dígitos soltos
+porque não dá pra diferenciar com segurança "marcador de linha" de "número
+que é conteúdo de verdade" só com regex; aceitar como resíduo cosmético
+menor — não vale o risco de apagar um número que seja conteúdo real.
+
 **Cuidado com o limiar `precisaImagem` do parser** (commit `a09dd0c`): ele só
 marca um texto-suporte como "precisa de imagem" se `charCount < 150`, mas 6
 tirinhas/anúncios com balões em colunas passaram batido nesse limiar porque o
