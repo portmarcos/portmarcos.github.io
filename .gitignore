@@ -1,0 +1,16 @@
+# Pasta de trabalho temporária do pipeline de extração/verificação do banco de
+# questões de concursos (portugues/interpretacao-concursos.html) — dados
+# intermediários (texto bruto, JSON de parse, notas de verificação de gabarito),
+# não faz parte do site publicado.
+/_build-concursos/
+
+# PDFs originais das provas de concurso baixados do pciconcursos.com.br — só
+# servem de matéria-prima para extrair as questões (que viram texto próprio em
+# portugues/interpretacao-concursos.html); republicar o PDF inteiro num repo
+# público é risco de direito autoral que a extração de questões não é.
+/materiais/materiais-concursos-interpretacao/
+
+# Config local do Claude Code — permissões e lock de sessão específicos desta
+# máquina, não fazem parte do projeto.
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
