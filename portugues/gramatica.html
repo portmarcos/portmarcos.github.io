@@ -108,6 +108,8 @@
   /* quiz */
   .q-block{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:14px}
   .q-enun{font-size:.93rem;color:var(--tx);margin:0 0 12px;font-weight:500;line-height:1.55}
+  .q-fonte{display:inline-block;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ambar);background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.35);padding:2px 10px;border-radius:12px;margin-bottom:10px}
+  .q-texto{font-size:.86rem;color:var(--tx2);line-height:1.6;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:11px 14px;margin-bottom:12px;white-space:pre-line}
   .q-opts{display:flex;flex-direction:column;gap:8px}
   .q-opt{display:flex;align-items:flex-start;gap:10px;text-align:left;width:100%;background:var(--panel);border:1px solid var(--line);color:var(--tx);font-family:inherit;font-size:.88rem;padding:11px 13px;border-radius:10px;cursor:pointer;transition:.15s;line-height:1.45}
   .q-opt:hover:not(:disabled){border-color:var(--azul);background:rgba(59,130,246,.08)}
@@ -557,6 +559,8 @@ function abrir(i){
 
   const quizHTML = '<p style="font-size:.85rem;color:var(--tx2);margin:0 0 14px">Responda e leia a correção comentada — cada distrator simula um erro de raciocínio real.</p>'
     + t.quiz.map((q,qi)=>'<div class="q-block" data-correta="'+q.correta+'">'
+      +(q.fonte?'<span class="q-fonte mono">'+q.fonte+'</span>':'')
+      +(q.texto?'<div class="q-texto">'+q.texto+'</div>':'')
       +'<p class="q-enun">'+(qi+1)+'. '+q.enun+'</p>'
       +'<div class="q-opts">'+q.alts.map((a,ai)=>'<button class="q-opt" data-ai="'+ai+'"><span class="q-letra">'+'ABCDE'[ai]+'</span><span>'+a+'</span></button>').join('')+'</div>'
       +'<div class="q-expl"><b>Resposta: '+'ABCDE'[q.correta]+'.</b> '+q.expl+'</div></div>').join('')
@@ -736,6 +740,8 @@ document.getElementById('btn-rl').onclick=()=>{
     +'<button class="fechar" aria-label="Fechar">×</button></div>'
     +'<div class="pane on" style="display:block"><div class="rl-head"><span class="mono" id="rl-res">Boa prova!</span></div>'
     +dez.map((par,qi)=>'<div class="q-block" data-correta="'+par.q.correta+'">'
+      +(par.q.fonte?'<span class="q-fonte mono">'+par.q.fonte+'</span>':'')
+      +(par.q.texto?'<div class="q-texto">'+par.q.texto+'</div>':'')
       +'<p class="q-enun"><span class="mono" style="font-size:.7rem;color:var(--tx3)">['+par.top.nome+']</span><br>'+(qi+1)+'. '+par.q.enun+'</p>'
       +'<div class="q-opts">'+par.q.alts.map((a,ai)=>'<button class="q-opt" data-ai="'+ai+'"><span class="q-letra">'+'ABCDE'[ai]+'</span><span>'+a+'</span></button>').join('')+'</div>'
       +'<div class="q-expl"><b>Resposta: '+'ABCDE'[par.q.correta]+'.</b> '+par.q.expl+'</div></div>').join('')
