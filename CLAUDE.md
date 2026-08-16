@@ -1,5 +1,71 @@
 # Portal ENEM — portmarcos.github.io
 
+## Guia de Gramática (16/ago/2026)
+`portugues/gramatica.html` — 20 tópicos em 5 níveis (Fundamentos, Morfologia,
+Sintaxe, Norma-padrão em ação, Semântica & estilo), cada um com explicação em
+seções, exemplos comentados, quiz, jogo e progresso salvo em `localStorage`.
+Estrutura de dados: `const TOPICOS = [...]` numa única linha minificada de
+JSON (gerada por `json.dumps(..., ensure_ascii=False)`), seguida de
+`const NIVEIS = [...]`. Cada tópico tem `secoes` (título + parágrafos e/ou
+lista, opcionalmente uma `tabela`), `exemplos`, `quiz` (4 alternativas, não 5
+como no banco ENEM), `jogo` (classifique/julgue/complete), `mnem`, `sabia` e,
+desde essa sessão, `mapa` (mapa mental).
+
+**Nunca editar essa linha `const TOPICOS = [...]` manualmente no editor** —
+ela é grande demais e qualquer aspas/vírgula fora do lugar quebra a página
+inteira sem erro visível no HTML. Para alterar dado de tópico (novo mapa,
+tabela, questão), sempre passar por um script Python: ler o arquivo com
+`encoding="utf-8", newline=""` (o arquivo é CRLF; abrir sem `newline=""`
+faz o Python normalizar pra LF e gera um diff gigante trocando toda quebra
+de linha), extrair o bloco com regex `r"const TOPICOS = (\[.*?\]);\r?\n"`,
+`json.loads`, editar o dict Python, `json.dumps(data, ensure_ascii=False)` e
+reescrever só esse trecho — nunca reescrever o arquivo inteiro à mão. Depois
+de qualquer merge, validar com `json.loads` de novo antes de considerar
+pronto (um JSON inválido quebra a página inteira, ela "trava" — não dá erro
+parcial, o script inteiro para de rodar).
+
+**Aba "Mapa mental" nova** (6ª aba, depois de Jogo): renderizada por
+`renderMapa(t)` em HTML/CSS puro (`.mapa-central` + `.mapa-grid` de
+`.mapa-ramo`), não em SVG com coordenadas calculadas — decisão deliberada
+pra evitar overlap de texto em 20 conteúdos de tamanho variável (SVG com
+texto posicionado à mão não escala bem pra conteúdo dinâmico; grid CSS
+`auto-fit` sempre encaixa, em qualquer largura de tela, sem cálculo).
+Campo `mapa: {centro, ramos:[{t, itens:[...]}]}` obrigatório em todo
+tópico — o código tem fallback (`renderMapa` retorna aviso em vez de
+quebrar) mas a ausência nunca deveria acontecer nos 20 tópicos atuais.
+
+**Tabelas-resumo** (`s.tabela` dentro de uma entrada de `secoes`, campo
+`{cab:[...], linhas:[[...]], legenda?}`) renderizadas como
+`<table class="tabela-gram">` dentro de `.tabela-wrap` (scroll horizontal
+próprio via `overflow-x:auto`, nunca deixa a página inteira rolar de lado
+no celular). Adicionadas em 15 dos 20 tópicos onde um paradigma/lista
+tabular ajuda mais que prosa (pronomes pessoais, conjugação regular,
+regência verbal, crase, colocação pronominal, figuras de linguagem etc.) —
+`fonologia`, `nomes`, `complementos`, `oracao` e `funcoes` ficaram sem
+tabela por não terem um paradigma tabular natural.
+
+Quiz expandido de 3 para 7 questões por tópico (pontuação já tinha 8 e não
+foi mexida) — 76 questões novas escritas por 5 agentes em paralelo (um por
+nível), cada um seguindo o padrão de qualidade já estabelecido no quiz de
+`fonologia` (4 alternativas, todo distrator com erro de raciocínio real
+explicado em `expl`, não pegadinha gratuita). Diferente do banco ENEM, essas
+são questões pedagógicas originais (não extraídas de prova real), então não
+se aplica a regra de "confirmar gabarito em fonte externa" — a rigor aqui é
+gramatical (norma culta / NGB), verificado por leitura própria antes do
+merge. Os agentes devolveram os campos `enun`/`expl` com `<b>`/`<i>` como
+entidades HTML escapadas (`&lt;b&gt;`) em vez de tags literais — o script de
+merge usa `html.unescape()` recursivo em todo string antes de injetar no
+JSON, senão as tags apareciam como texto cru na tela em vez de renderizar.
+
+**"Imagens"**: não há fotos/assets externos nessa página — o pedido de
+"exemplos com imagens" foi atendido com diagramas HTML/CSS (mapa mental,
+tabelas), não arquivos de imagem, por ser mais robusto (nunca quebra link,
+sempre no tema claro/escuro) e mais útil pra gramática do que foto
+decorativa. Se um pedido futuro for por ilustração de fato (ex.: charge,
+foto de placa com erro de português), aplicar o mesmo fluxo do banco ENEM:
+pedir o arquivo ao usuário, salvar em `assets/img/questoes/`, nunca base64
+inline.
+
 ## Interpretação em Provas de Concurso (commit `2843986`)
 `portugues/interpretacao-concursos.html` — quiz separado do banco ENEM, com
 393 questões reais de português de provas de concurso público (pciconcursos.com.br
