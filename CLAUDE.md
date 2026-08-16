@@ -76,6 +76,108 @@ A questão 18 de `advogado (1)` tem duas alternativas idênticas
 conferido direto no PDF; mantida como está (fiel à fonte), só documentando
 aqui pra não achar que é bug do parser numa auditoria futura.
 
+### Lote Cesgranrio — 239 questões novas (15/ago/2026)
+O professor colou 22 PDFs à mão em
+`materiais/materiais-provas-cesgranrio-interpretacao/` (**gitignorado**,
+mesmo padrão do outro lote) — provas reais da banca Cesgranrio (TRANSPETRO,
+ELETRONUCLEAR, BNDES, CHESF, UNIRIO, TCE-RO, CEFET, INNOVA, DECEA/Aeronáutica,
+Prefeitura de Manaus, MP-RO), baixadas manualmente porque o download direto
+do pciconcursos.com.br é bloqueado por CAPTCHA (Cloudflare Turnstile) —
+**nunca tentar automatizar esse download** (contornar CAPTCHA é proibido
+pelas regras de segurança do agente; só o usuário pode clicar).
+
+**Layout do PDF é diferente do lote pciconcursos genérico**: página em 2
+colunas (texto-suporte à esquerda, questões à direita, lado a lado), então
+`pdftotext -layout` intercala as duas colunas linha a linha e vira sopa de
+letra ilegível. A solução foi extrair **sem** `-layout`
+(`pdftotext -enc UTF-8 arquivo.pdf saida.txt`) — nessa banca especificamente,
+isso dá a coluna inteira em ordem de leitura (texto todo, depois questões
+todas), bem mais limpo. Script novo: `_build-concursos/parse_cesgranrio.py`
+(não reusa `parse_concursos.py` — formato de marcador de questão é diferente,
+Cesgranrio não usa "QUESTÃO N", só o número colado ou sozinho na linha).
+
+**Particularidades do parser da Cesgranrio** (todas em `parse_cesgranrio.py`):
+- Diferencia marcador de QUESTÃO de marcador de PARÁGRAFO do texto-suporte
+  vendo se ~5 alternativas "(A)...(E)" aparecem logo a seguir (`ALT_LOOKAHEAD`
+  = 1500 chars) — não dá pra confiar só em "número sozinho na linha vs.
+  colado ao texto" porque os dois formatos aparecem para os dois tipos
+  dependendo da prova.
+- Busca a sequência 1, 2, 3... mas tolera buraco (questão anulada, ou questão
+  fisicamente fora de ordem no fluxo de leitura por quebra de página/coluna —
+  aconteceu de verdade em `decea0106_prova01`, onde Q7/8/9 aparecem ANTES de
+  Q6 no texto extraído) — desiste depois de 4 falhas seguidas.
+- `RE_NEXT_SUBJECT` fecha a seção de Português no cabeçalho da PRÓXIMA
+  matéria (Inglês, Específicos etc.) — lista de palavras-chave montada na
+  marra vendo caso a caso; **6 provas** (`5administrador`, `administraca2o`,
+  `advogado (122)`, `prova_1_administrador_a_jnior`, `prova_objetiva`,
+  `semsa0105_supadmini`, `sup_adm`) tinham nome de matéria seguinte fora da
+  lista (ex.: "SISTEMA FINANCEIRO NACIONAL E CONHECIMENTOS BANCÁRIOS") e
+  precisaram de corte manual por número de questão em `N_OVERRIDE` (valor
+  conferido a mão na tabela de distribuição da capa de cada prova).
+- **Provas com mais de um texto-suporte** ("Texto I" + "Texto II" dentro da
+  mesma seção de Português): cada questão carrega seu PRÓPRIO campo `texto`
+  (não um texto único por prova) — bug achado por um dos agentes de
+  classificação (`administrador ()` tinha Texto II não capturado, questões
+  12-20 ficavam sem o texto que citavam) e corrigido depois.
+- `prova (1).json` (MP-RO, Analista em Administração) foi **excluída do
+  lote inteiro** — a mesma classe de bug da reordenação do decea, só que
+  aqui o resultado juntava o enunciado de uma questão com as alternativas de
+  OUTRA (risco real de gabarito errado, não só perder questão), então não
+  valia arriscar.
+- 3 questões de `prova_1_administrador` (Q4, Q5, Q10) excluídas — dependem
+  do conteúdo de imagens (charge, propaganda de cigarro) que não foi
+  extraído como texto, mesmo problema de sempre, sem imagem manifestada
+  ainda pra essas.
+- `advogado (1).json` (ELETRONUCLEAR) é duplicata quase perfeita de
+  `administrador (1).json` — mesmo edital, "Conhecimentos Básicos" idêntico
+  pros dois cargos (só a prova de "Específicos", não usada aqui, difere).
+  Excluída em `merge_cesgranrio.py::DUPLICATAS_EXCLUIR`.
+
+**Gabarito**: uma das 22 provas (`administracao.pdf`, TRANSPETRO) veio com
+o gabarito oficial real no mesmo lote colado pelo professor
+(`gabarito administracao.pdf`) — usado direto, sem inferência, confiança
+"alta" garantida nas 10 questões. As outras 20 (agora 21 provas úteis, já
+que uma foi excluída) não têm gabarito rastreável, então seguiram o mesmo
+método do lote pciconcursos: 21 agentes em paralelo, um por prova, campo
+`confianca`/`duvida`. Ao rodar esse lote, **3 dos 21 agentes bateram no
+limite de sessão da conta** no meio da tarefa — 2 ainda tinham escrito o
+JSON completo antes de falhar (só precisou validar), 1 escreveu com uma
+vírgula sobrando (JSON inválido, corrigido à mão). Lição: sempre validar
+`json.load()` de cada arquivo em `cesgranrio-classified/` antes de assumir
+que "failed" no agente = arquivo perdido — às vezes só falhou na confirmação
+final, o trabalho já estava salvo.
+
+**Limpeza de texto** (`merge_cesgranrio.py`): como a extração é sem
+`-layout`, cada linha visual do PDF vira `\n\n` solto (não `\n` como no
+outro lote) — `reflow_cesgranrio()` (diferente de `reflow_paragrafos()` do
+outro pipeline) remove marcador de parágrafo solto (número sozinho na
+linha) e rejunta hifenização de fim de linha (`"repen-" + "te"` →
+`"repente"`, cuidado pra não comer o hífen de verdade de palavras compostas
+tipo `"levantou-" + "-se"` → `"levantou-se"`, não `"levantouse"`). Ruído de
+rodapé de página (nome do órgão/cargo colado no fim de enunciado ou
+alternativa, tipo "...metais pesados. 2 PROFISSIONAL DE NÍVEL SUPERIOR
+FORMAÇÃO: ADMINISTRADOR ELETRONUCLEAR") é cortado por heurística: depois da
+última pontuação final de frase, se o que sobra não tem nenhuma sequência
+de 3+ letras minúsculas, é rodapé (maiúscula/número/pontuação pura), não
+prosa de verdade.
+
+**Resultado**: 239 questões novas, todas dentro dos temas já existentes
+(`administrador`: 80→309, `advogado`: 40→50 — nenhum tema novo criado dessa
+vez, o professor não pediu cargo novo explicitamente nessa leva). Varredura
+de sanidade rodada no BANCO final via console do navegador (sem ruído de
+`pciconcursos`/`pcimarkpci` vazado, todas com exatamente 5 alternativas,
+`correta` no range, sem hífen solto) — 0 problemas nas 239 questões novas.
+Pipeline completo em `_build-concursos/parse_cesgranrio.py` +
+`merge_cesgranrio.py`, reusa o `inject_html.py`... na verdade não usou
+`inject_html.py` dessa vez (ele sobrescreve `TEMAS_ORDEM`/`TEMA_ICONS` do
+zero, que já tinham os 3 temas certos) — o merge final com o `BANCO` já
+injetado no HTML foi feito direto por um script Python ad-hoc que faz
+`json.loads` do bloco `const BANCO = {...};`, dá `.extend()` nas listas de
+questões dos temas certos, e escreve de volta. Se for adicionar mais provas
+Cesgranrio no futuro, esse é o padrão a seguir (não dá pra usar
+`inject_html.py` como está sem adaptar, ele assume que tá substituindo o
+banco inteiro, não somando).
+
 ## Redação ENEM reformulada (commits `cbee059`, `129e4ee`)
 50 temas de redação (era 9), em `const TEMAS` — cada um com `id`, `cor`,
 `titulo`, `textos` (3 textos de apoio, no estilo excerto real do ENEM: um
