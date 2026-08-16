@@ -2,13 +2,21 @@
 
 ## Interpretação em Provas de Concurso (commit `2843986`)
 `portugues/interpretacao-concursos.html` — quiz separado do banco ENEM, com
-160 questões reais de português de 16 provas de concurso público (baixadas de
-pciconcursos.com.br, PDFs em `materiais/materiais-concursos-interpretacao/`,
-**gitignorado** — não republicar o PDF inteiro no repo público, só as
-questões extraídas como texto são commitadas). 3 temas por **cargo**, não por
-assunto: `administrador` (80), `advogado` (40), `agente_administrativo` (40),
-em `TEMAS_ORDEM`/`TEMAS_INFO`/`TEMA_ICONS` dentro do próprio HTML (BANCO
-grande demais pra manter num arquivo separado, igual ao padrão do enem.html).
+393 questões reais de português de provas de concurso público (pciconcursos.com.br
++ Cesgranrio, PDFs em `materiais/materiais-concursos-interpretacao/` e
+`materiais/materiais-provas-cesgranrio-interpretacao/`, ambos **gitignorados**
+— não republicar o PDF inteiro no repo público, só as questões extraídas como
+texto são commitadas). **Estrutura atual (desde 15/ago/2026, ver
+"Reestruturação: cargo → tema + dificuldade" mais abaixo): 3 temas por
+ASSUNTO**, não por cargo: `interpretacao` (141), `gramatica` (142), `coesao`
+(110), cada um com filtro de dificuldade (fácil/médio/difícil/todas) dentro
+do tema — em `TEMAS_ORDEM`/`TEMAS_INFO`/`TEMA_ICONS` dentro do próprio HTML
+(BANCO grande demais pra manter num arquivo separado, igual ao padrão do
+enem.html). Os parágrafos logo abaixo (sobre o lote pciconcursos original de
+160 questões e o cargo `administrador`/`advogado`/`agente_administrativo`)
+descrevem a estrutura ANTIGA por cargo — mantidos por history/contexto do
+pipeline de extração (que continua igual), mas a organização de navegação do
+quiz mudou.
 
 **Particularidade importante desse banco**: diferente do ENEM, essas provas
 da pciconcursos vêm **sem gabarito** (nem no PDF nem em fonte externa
@@ -173,10 +181,83 @@ Pipeline completo em `_build-concursos/parse_cesgranrio.py` +
 zero, que já tinham os 3 temas certos) — o merge final com o `BANCO` já
 injetado no HTML foi feito direto por um script Python ad-hoc que faz
 `json.loads` do bloco `const BANCO = {...};`, dá `.extend()` nas listas de
-questões dos temas certos, e escreve de volta. Se for adicionar mais provas
-Cesgranrio no futuro, esse é o padrão a seguir (não dá pra usar
-`inject_html.py` como está sem adaptar, ele assume que tá substituindo o
-banco inteiro, não somando).
+questões dos temas certos, e escreve de volta. **Isso ficou obsoleto pela
+reestruturação por tema/dificuldade documentada logo abaixo** — os temas não
+são mais `administrador`/`advogado`/`agente_administrativo`, então uma prova
+nova não entra mais "no tema certo" automaticamente, precisa passar pela
+classificação de tema+dificuldade também.
+
+### Reestruturação: cargo → tema + dificuldade (15/ago/2026)
+Depois do lote Cesgranrio, o tema `administrador` ficou com 309 questões
+num bloco só — grande demais pra navegar. A pedido do professor, o quiz
+inteiro (as 399 questões que existiam até então: 160 do lote pciconcursos
+original + 239 do lote Cesgranrio) foi reclassificado e reorganizado:
+
+- **3 temas por ASSUNTO** (não mais por cargo): `interpretacao`
+  ("Interpretação de Texto"), `gramatica` ("Gramática Normativa": crase,
+  concordância, regência, colocação pronominal, pontuação, ortografia,
+  sintaxe), `coesao` ("Coesão, Coerência e Semântica": sinônimo/antônimo,
+  retomada pronominal, ambiguidade, figura de linguagem, valor semântico de
+  conectivo, argumentação). Split final: interpretação 141, gramática 142,
+  coesão 110 (393 — 6 a menos que 399, ver auditoria de ruído abaixo).
+- **3 níveis de dificuldade** (`facil`/`medio`/`dificil`) como campo
+  `dificuldade` em CADA questão — não é um tema novo, é um FILTRO dentro do
+  tema. Tela nova `sc-dificuldade` (entre o dashboard e o quiz) deixa o
+  aluno escolher o nível (ou "Todas as questões") antes de começar.
+- Classificação feita por 8 agentes em paralelo (lotes de ~50 questões,
+  usando só `enun`+`alts`+`expl` de cada questão — não precisa do texto-base
+  inteiro pra saber se é regra de gramática ou compreensão geral). Cada
+  questão já carregava sua explicação (`expl`) determinada nas etapas
+  anteriores, o que torna essa classificação BEM mais barata/rápida que
+  resolver a questão do zero — é só rotular o que já foi resolvido.
+
+**Mudança estrutural relevante em `interpretacao-concursos.html`**: como
+agora existe filtro por dificuldade, `iniciarQuiz(topico, dificuldade)`
+filtra a partir de `BANCO[topico]._todas` (cópia intocada da lista
+completa, populada uma vez logo após `TEMAS_ORDEM` ser definido) e guarda o
+resultado embaralhado em `S.questoesAtivas` — TODO o código do quiz em
+execução (render de questão, timer, resultado, gabarito) lê
+`S.questoesAtivas`, nunca mais `BANCO[S.topico].questoes` diretamente.
+Isso importa porque `iniciarQuiz` SOBRESCREVE `BANCO[topico].questoes` com
+o subconjunto filtrado da tentativa atual (efeito colateral antigo, mantido
+por compatibilidade) — qualquer código novo que precise da lista COMPLETA
+de um tema (ex.: o Gerador de Provas, que soma questões de todos os temas
+pra montar uma prova pra imprimir) tem que usar `BANCO[t]._todas`, nunca
+`BANCO[t].questoes`, senão pega só o que sobrou da última tentativa de quiz
+daquele tema. Resultado salvo em `AUTH.current.tentativas` agora usa chave
+composta `"tema:dificuldade"` (ex.: `"interpretacao:facil"`), não mais só
+o tema — os 4 níveis (facil/medio/dificil/todas) de um mesmo tema guardam
+melhor resultado e histórico separados.
+
+**Auditoria de ruído de rodapé (feita durante essa reestruturação, achado
+por um dos 8 agentes de classificação por acaso, testando a prova de
+verdade no navegador)**: a limpeza de rodapé de página do lote Cesgranrio
+(`strip_footer_noise` em `merge_cesgranrio.py`) só cortava ruído colado
+DEPOIS da última pontuação final de frase — alternativas curtas sem ponto
+final (comuns em questão de vocabulário/gramática, tipo uma palavra só)
+não passavam por nenhuma limpeza, deixando ruído tipo "UNIRIO",
+"PROVA 8 3 ADMINISTRADOR", "JÚNIOR 2 INNOVA" grudado ou substituindo
+alternativas inteiras. Rodada uma limpeza adicional direto no `BANCO` já
+injetado no HTML (script ad-hoc, não ficou salvo como arquivo do
+pipeline): heurística por PALAVRA (não regex de pontuação) — corta do fim
+da alternativa qualquer sequência de 2+ tokens maiúsculo/número que bata
+com uma lista de nomes de órgão/prova conhecidos (`UNIRIO`,
+`ELETRONUCLEAR`, `TRANSPETRO`, `INNOVA`, `BNDES`, `PROVA`, etc.), desde que
+sobre conteúdo de verdade (pelo menos 1 letra minúscula) depois do corte.
+**6 questões** tinham uma alternativa INTEIRA substituída por ruído (não dava
+pra recuperar o conteúdo real sem voltar no texto bruto da prova original)
+e foram removidas do banco (399 → 393). De quebra, achado e corrigido um
+caractere de área de uso privado Unicode (`U+F06C`) que aparecia no lugar
+da letra "l" em citações tipo "(l. 45)" em 10 questões — resíduo de um
+glifo especial da fonte do PDF original que o `pdftotext` não conseguiu
+mapear pra Unicode normal.
+
+**Lição pra próximas auditorias de ruído**: sempre testar um quiz de
+verdade no navegador (não só rodar a varredura automática por regex) —
+foi testando a UI ao vivo, respondendo questões de verdade, que esse
+padrão de ruído em alternativa curta apareceu; a varredura automática
+anterior (que só checava por comprimento excessivo de alternativa) não
+pegava esse caso porque a alternativa corrompida ficava CURTA, não longa.
 
 ## Redação ENEM reformulada (commits `cbee059`, `129e4ee`)
 50 temas de redação (era 9), em `const TEMAS` — cada um com `id`, `cor`,
