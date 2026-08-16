@@ -207,6 +207,61 @@
   .envio-nota{font-size:.78rem;color:var(--tx3);margin-top:10px;min-height:16px}
   .envio-nota.ok{color:#4ade80}
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+  /* gerador de provas — formulário (tema escuro do site) */
+  .ger-label{display:block;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--tx3);margin:16px 0 6px}
+  .ger-label:first-child{margin-top:0}
+  .ger-input{width:100%;padding:11px 13px;border-radius:10px;border:1px solid var(--line);background:var(--panel2);color:var(--ink);font-size:.9rem;font-family:inherit}
+  .ger-input:focus{outline:none;border-color:var(--azul)}
+  .ger-opcoes{display:flex;flex-direction:column;gap:9px;margin-top:16px}
+  .ger-check{display:flex;align-items:center;gap:9px;font-size:.86rem;color:var(--tx2);cursor:pointer}
+  .ger-check input{width:16px;height:16px;accent-color:var(--azul);cursor:pointer}
+  .ger-temas-header{display:flex;align-items:center;justify-content:space-between;margin:22px 0 12px;flex-wrap:wrap;gap:8px}
+  .ger-temas-header>span:first-child{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.05rem;color:var(--ink)}
+  .ger-total-sel{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:.76rem;color:var(--azul);background:rgba(59,130,246,.12);padding:5px 13px;border-radius:20px;white-space:nowrap}
+  .ger-temas-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:24px}
+  .ger-tema-card{background:var(--panel2);border-radius:12px;padding:13px 15px;border:1px solid var(--line);transition:.2s}
+  .ger-tema-card.selecionado{border-color:var(--azul)}
+  .ger-tema-top{display:flex;align-items:flex-start;gap:8px;margin-bottom:5px}
+  .ger-tema-top input[type=checkbox]{width:16px;height:16px;accent-color:var(--azul);cursor:pointer;flex-shrink:0;margin-top:2px}
+  .ger-tema-nome{font-size:.85rem;font-weight:600;color:var(--ink);line-height:1.3}
+  .ger-tema-disp{font-size:.72rem;color:var(--tx3);margin-bottom:9px;margin-left:24px}
+  .ger-tema-qtd{display:flex;align-items:center;gap:8px;margin-left:24px}
+  .ger-tema-qtd input[type=number]{width:56px;padding:5px 7px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font-size:.83rem;text-align:center}
+  .ger-tema-qtd label{font-size:.74rem;color:var(--tx3)}
+  .ger-acoes{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+  /* folha da prova — sempre em papel branco, independente do tema do site */
+  #prova-view{display:none;position:fixed;inset:0;z-index:80;background:#3a3a3a;overflow-y:auto;padding:30px 16px 60px}
+  #prova-view.on{display:block}
+  .prova-folha{max-width:780px;margin:0 auto 40px;background:#fff;color:#161616;padding:50px 55px;box-shadow:0 20px 60px rgba(0,0,0,.4);border-radius:8px;font-family:Georgia,'Times New Roman',serif}
+  .prova-cabecalho{text-align:center;border-bottom:2.5px solid #111;padding-bottom:16px;margin-bottom:22px}
+  .prova-titulo{font-size:1.4rem;font-weight:700;margin-bottom:4px}
+  .prova-subtitulo{font-size:.95rem;color:#444}
+  .prova-campos{display:flex;flex-wrap:wrap;gap:18px;margin-top:18px;font-size:.88rem}
+  .prova-campo{flex:1;min-width:160px;border-bottom:1px solid #999;padding-bottom:3px}
+  .prova-instrucoes{font-size:.82rem;color:#444;margin:18px 0 28px;font-style:italic}
+  .prova-q{margin-bottom:26px}
+  .prova-q-num{font-weight:700;font-size:.95rem;margin-bottom:8px}
+  .prova-q-texto{font-size:.87rem;line-height:1.65;white-space:pre-line;margin-bottom:10px;text-align:justify}
+  .prova-q-fonte{font-size:.72rem;color:#666;text-align:right;margin-bottom:10px}
+  .prova-q-enun{font-size:.9rem;margin-bottom:10px;font-weight:600}
+  .prova-q-alts{display:flex;flex-direction:column;gap:6px}
+  .prova-q-alt{font-size:.87rem;display:flex;gap:8px}
+  .prova-q-alt b{flex-shrink:0}
+  .prova-gabarito{margin-top:40px;padding-top:20px;border-top:2.5px solid #111}
+  .prova-gabarito h3{font-size:1.05rem;margin-bottom:14px;font-family:Georgia,serif}
+  .prova-gab-item{margin-bottom:14px;font-size:.85rem;line-height:1.5}
+  .prova-gab-item b{color:#111}
+  @media(max-width:640px){.prova-folha{padding:28px 18px}}
+  body:has(#prova-view.on) > *:not(#prova-view){display:none!important}
+  @media print{
+    body>*:not(#prova-view){display:none!important}
+    #prova-view{position:static!important;background:#fff!important;padding:0!important;display:block!important}
+    #prova-view .no-print{display:none!important}
+    .prova-folha{box-shadow:none!important;padding:0!important;border-radius:0!important;max-width:none!important}
+    .prova-q{break-inside:avoid}
+  }
 </style>
 </head>
 <body>
@@ -255,6 +310,7 @@
   </div>
   <div class="acoes">
     <button class="btn-relampago" id="btn-rl"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="vertical-align:-2px;margin-right:6px"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>Simulado-relâmpago (10 questões)</button>
+    <button class="btn-limpar" id="btn-prova"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:6px"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Criar prova</button>
     <button class="btn-limpar" id="btn-reset">Zerar progresso</button>
   </div>
 </section>
@@ -264,6 +320,45 @@
 
 <div class="over" id="over" role="dialog" aria-modal="true">
   <div class="sheet" id="sheet"></div>
+</div>
+
+<div class="over" id="prova-over" role="dialog" aria-modal="true">
+  <div class="sheet" id="prova-sheet" style="max-width:900px">
+    <div class="sheet-top">
+      <span class="nivtag mono">🖨️ Gerador de provas</span>
+      <h2 class="serif">Criar prova</h2>
+      <p>Escolha os tópicos, quantas questões de cada e gere uma avaliação pronta pra imprimir.</p>
+      <button class="fechar" id="prova-fechar" aria-label="Fechar">×</button>
+    </div>
+    <div class="pane on" style="display:block">
+      <label class="ger-label">Título da avaliação</label>
+      <input type="text" id="gerTitulo" class="ger-input" value="Avaliação de Gramática" maxlength="80">
+      <label class="ger-label">Subtítulo (opcional)</label>
+      <input type="text" id="gerSubtitulo" class="ger-input" placeholder="Ex: 9º ano · Norma-padrão" maxlength="80">
+      <div class="ger-opcoes">
+        <label class="ger-check"><input type="checkbox" id="gerEmbaralhar" checked> Embaralhar a ordem das questões</label>
+        <label class="ger-check"><input type="checkbox" id="gerGabarito" checked> Incluir gabarito comentado ao final</label>
+      </div>
+      <div class="ger-temas-header">
+        <span>Tópicos e quantidade de questões</span>
+        <span id="gerTotalSel" class="ger-total-sel">0 questões selecionadas</span>
+      </div>
+      <div id="gerTemasGrid" class="ger-temas-grid"></div>
+      <div class="ger-acoes">
+        <button class="btn-limpar" id="prova-cancelar">Cancelar</button>
+        <button class="btn-relampago" id="prova-gerar">✓ Gerar prova</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="prova-view">
+  <div class="ger-acoes no-print" style="margin:20px auto;max-width:780px">
+    <button class="btn-limpar" id="prova-ajustar">← Ajustar seleção</button>
+    <button class="btn-limpar" id="prova-fechar2">Fechar</button>
+    <button class="btn-relampago" id="prova-imprimir">🖨️ Imprimir / Salvar PDF</button>
+  </div>
+  <div id="provaFolha" class="prova-folha"></div>
 </div>
 
 <footer>
@@ -654,6 +749,119 @@ document.getElementById('btn-rl').onclick=()=>{
 document.getElementById('btn-reset').onclick=()=>{
   if(confirm('Zerar todo o progresso salvo neste dispositivo?')){ localStorage.removeItem(LSKEY); pintarProgresso(); }
 };
+
+/* ---------- gerador de provas ---------- */
+const provaOver = document.getElementById('prova-over');
+const provaView = document.getElementById('prova-view');
+const PROVA = {questoes:[], titulo:'', subtitulo:'', gabarito:true};
+
+function abrirProvaOver(){
+  renderGeradorForm();
+  provaOver.classList.add('on'); document.body.style.overflow='hidden';
+}
+function fecharProvaOver(){ provaOver.classList.remove('on'); document.body.style.overflow=''; }
+function fecharProvaView(){ provaView.classList.remove('on'); document.body.style.overflow=''; }
+
+document.getElementById('btn-prova').onclick = abrirProvaOver;
+document.getElementById('prova-fechar').onclick = fecharProvaOver;
+document.getElementById('prova-cancelar').onclick = fecharProvaOver;
+provaOver.addEventListener('click', e=>{ if(e.target===provaOver) fecharProvaOver(); });
+
+function renderGeradorForm(){
+  const grid = document.getElementById('gerTemasGrid');
+  grid.innerHTML='';
+  TOPICOS.forEach(t=>{
+    const nv = NIVEIS.find(n=>n.n===t.niv);
+    const disp = t.quiz.length;
+    const card = document.createElement('div');
+    card.className='ger-tema-card'; card.id='gerCard-'+t.id;
+    card.innerHTML =
+      '<div class="ger-tema-top"><input type="checkbox" id="gerChk-'+t.id+'" onchange="gerToggleTopico(\''+t.id+'\')">'
+      +'<span class="ger-tema-nome">'+t.nome+' <span class="mono" style="color:'+nv.cor+';font-size:.68rem">· nível '+t.niv+'</span></span></div>'
+      +'<div class="ger-tema-disp">'+disp+' questões disponíveis</div>'
+      +'<div class="ger-tema-qtd"><label>Quantidade:</label><input type="number" id="gerQtd-'+t.id+'" min="1" max="'+disp+'" value="'+Math.min(5,disp)+'" disabled oninput="gerAtualizarTotal()"></div>';
+    grid.appendChild(card);
+  });
+  gerAtualizarTotal();
+}
+
+function gerToggleTopico(id){
+  const chk = document.getElementById('gerChk-'+id);
+  document.getElementById('gerQtd-'+id).disabled = !chk.checked;
+  document.getElementById('gerCard-'+id).classList.toggle('selecionado', chk.checked);
+  gerAtualizarTotal();
+}
+
+function gerAtualizarTotal(){
+  let total=0;
+  TOPICOS.forEach(t=>{
+    const chk = document.getElementById('gerChk-'+t.id);
+    if(chk && chk.checked){
+      const disp = t.quiz.length;
+      const qtdEl = document.getElementById('gerQtd-'+t.id);
+      let v = parseInt(qtdEl.value)||0;
+      if(v>disp) v=disp;
+      if(v<1) v=1;
+      qtdEl.value=v;
+      total+=v;
+    }
+  });
+  document.getElementById('gerTotalSel').textContent = total+(total!==1?' questões':' questão')+' selecionada'+(total!==1?'s':'');
+}
+
+document.getElementById('prova-gerar').onclick = ()=>{
+  let selecionadas=[];
+  TOPICOS.forEach(t=>{
+    const chk = document.getElementById('gerChk-'+t.id);
+    if(chk && chk.checked){
+      const qtd = parseInt(document.getElementById('gerQtd-'+t.id).value)||0;
+      const pool = shuffle(t.quiz.slice());
+      selecionadas = selecionadas.concat(pool.slice(0,qtd));
+    }
+  });
+  if(!selecionadas.length){
+    alert('Selecione ao menos um tópico e defina a quantidade de questões pra gerar a prova.');
+    return;
+  }
+  if(document.getElementById('gerEmbaralhar').checked) selecionadas = shuffle(selecionadas);
+  PROVA.questoes = selecionadas;
+  PROVA.titulo = document.getElementById('gerTitulo').value.trim() || 'Avaliação de Gramática';
+  PROVA.subtitulo = document.getElementById('gerSubtitulo').value.trim();
+  PROVA.gabarito = document.getElementById('gerGabarito').checked;
+  renderProva();
+  fecharProvaOver();
+  provaView.classList.add('on'); document.body.style.overflow='hidden'; provaView.scrollTop=0;
+};
+
+function renderProva(){
+  const letras=['A','B','C','D','E'];
+  let html = '<div class="prova-cabecalho"><div class="prova-titulo">'+PROVA.titulo+'</div>'
+    + (PROVA.subtitulo?'<div class="prova-subtitulo">'+PROVA.subtitulo+'</div>':'')
+    + '<div class="prova-campos"><div class="prova-campo">Nome:</div><div class="prova-campo">Turma:</div><div class="prova-campo">Data:</div></div></div>'
+    + '<div class="prova-instrucoes">Leia atentamente cada questão antes de responder. Marque apenas uma alternativa por questão.</div>';
+
+  PROVA.questoes.forEach((q,i)=>{
+    html += '<div class="prova-q"><div class="prova-q-num">Questão '+(i+1)+'</div>'
+      + (q.texto?'<div class="prova-q-texto">'+q.texto+'</div>':'')
+      + (q.fonte?'<div class="prova-q-fonte">'+q.fonte+'</div>':'')
+      + '<div class="prova-q-enun">'+q.enun+'</div>'
+      + '<div class="prova-q-alts">'+q.alts.map((a,ai)=>'<div class="prova-q-alt"><b>'+letras[ai]+')</b> '+a+'</div>').join('')+'</div></div>';
+  });
+
+  if(PROVA.gabarito){
+    html += '<div class="prova-gabarito"><h3>Gabarito comentado</h3>';
+    PROVA.questoes.forEach((q,i)=>{
+      html += '<div class="prova-gab-item"><b>'+(i+1)+'. '+letras[q.correta]+'.</b> '+q.expl+'</div>';
+    });
+    html += '</div>';
+  }
+
+  document.getElementById('provaFolha').innerHTML = html;
+}
+
+document.getElementById('prova-ajustar').onclick = ()=>{ fecharProvaView(); abrirProvaOver(); };
+document.getElementById('prova-fechar2').onclick = fecharProvaView;
+document.getElementById('prova-imprimir').onclick = ()=>window.print();
 
 /* ---------- init ---------- */
 document.getElementById('st-top').textContent=TOPICOS.length;
