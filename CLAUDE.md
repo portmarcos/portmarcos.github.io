@@ -140,6 +140,82 @@ lote de mapas/tabelas, 141 depois do lote de expansão pedagógica, 177
 depois das 36 questões reais) — todas com badge `[fonte]` visível
 diferenciando-as das pedagógicas.
 
+## Portal SAEB — conteúdo e tema escuro (17/ago/2026)
+Pedido do professor: deixar `saeb/` "Perfeito", com conteúdo mais rico E
+"um design como o resto do site" — inicialmente interpretei isso como só
+conteúdo (adicionei `<section class="dica-ouro painel">` e
+`<section class="painel glossario">` em 8 descritores que estavam mais
+fracos: D06, D07, D10, D13, D14, D19, D25/D26/D27/D28), sem mexer no
+visual, por julgamento próprio de que o azul/dourado "oficial" combinava
+com o clima de prova. **Julgamento errado** — o professor confirmou
+explicitamente (`AskUserQuestion`) que queria o tema escuro (Cormorant
+Garamond + Inter, paleta do Guia de Gramática/Banco de Questões) também,
+não só mais conteúdo. Lição: quando o pedido original já mencionar
+"design", não decidir sozinho que a página deve ficar diferente do resto
+do site sem perguntar antes.
+
+**Redesign técnico**: as 21 páginas de descritor + `d21-23-25-28.html`
+compartilham um bloco `<style>` quase idêntico (só variam num pequeno
+trecho final por página — algumas têm CSS extra tipo `.func-*`/`.tese-box`
+de D07/D08/D13 etc., outras não têm o jogo de classificação
+`.cat-btn.cat-*`). Por isso o find-and-replace do bloco inteiro (como fiz
+no Guia de Gramática) não funcionou pra 20 dos 21 arquivos — só D01 bateu
+exato. Solução: diff linha a linha entre o CSS antigo e o novo (só 41 das
+157 linhas realmente mudam valor — a maioria das regras usa
+`var(--azul)` etc. e herda o novo tema automaticamente só remapeando o
+`:root`) e aplicar cada par (linha antiga → linha nova) como replace
+independente em cada arquivo, tolerando 0 ocorrências (regra que não
+existe naquele arquivo, ex.: `.cat-btn.cat-tema.ok` só existe em quem tem
+o jogo de classificar). Nomes de variável CSS mantidos idênticos
+(`--azul`, `--branco` etc.) — só os VALORES mudaram — de propósito, pra
+não precisar caçar cada `var(--branco)` em 22 arquivos.
+
+**Cor hardcoded fora do bloco `<style>`, dentro do próprio conteúdo**: as
+questões (`const QRAW=[...]`) têm caixas de texto-suporte com
+`style="background:#f7f9fc;border-left:4px solid #235a8c"` inline, coladas
+questão por questão — eram cores do tema claro escritas direto no HTML da
+questão, não numa classe CSS, então o replace do bloco `<style>` não
+alcançava. Motivo de existir: essas caixas citam "TEXTO 1"/"TEXTO 2" ou
+rótulos como "ANÚNCIO" dentro do enunciado, coloridas à mão questão a
+questão. Resolvido com um dicionário de ~20 cores hex antigas → equivalente
+escuro (aplicado como replace literal de string, sem tocar na estrutura
+JSON/HTML ao redor — seguro porque cor hex é um token isolado). Validado
+com `json.loads` do `QRAW` de cada arquivo depois do replace pra garantir
+que nada quebrou.
+
+**Bug de contraste que o remapeamento ingênuo teria causado**: `.badge`,
+`.qnum` e `.btn.ouro` usam fundo `var(--ouro)` (âmbar) com texto
+`var(--azul)` — no tema claro `--azul` era azul-marinho quase preto,
+ótimo contraste sobre âmbar. Só trocar o VALOR de `--azul` pro azul vivo
+`#3B82F6` do tema escuro teria deixado azul-vivo sobre âmbar (dois tons
+médios, contraste ruim). Corrigido trocando o texto desses três pra
+`var(--bg)` (quase preto) especificamente — mesmo ajuste replicado em
+`saeb/index.html` pro `.badge-header` e `.btn-card.breve-btn`.
+
+**Bug de input invisível**: `.gate-field input[type=text]` (nome do
+aluno) e `.senha-box input[type=password]` nunca tinham `background`
+explícito no CSS original — dependiam do branco padrão do navegador. Com
+`color:var(--txt)` virando quase-branco no tema escuro, o texto digitado
+ficava branco sobre fundo branco do input (invisível). Corrigido
+adicionando `background:var(--branco)` explícito nos dois.
+
+**`saeb/index.html`** tratado à parte (estrutura de dashboard bem
+diferente dos descritores — grid de cards, legenda, tabela de matriz — não
+o mesmo bloco `<style>` compartilhado): mesma técnica de remapear
+`:root` (incluindo `--lilas`/`--lilas-c`, aparentemente não usadas em
+lugar nenhum do arquivo, mas mantidas por precaução) e headings pra
+Cormorant Garamond, mais o mesmo fix de contraste do badge/botão âmbar.
+Como a "Matriz de Referência Completa" desse painel tem CSS de impressão
+dedicado (`.aviso-print`, `page-break-before`) — é claramente pensada pra
+ser impressa —, adicionado um bloco `@media print` extra forçando
+`body`/`.matrix-ref`/tabela de volta pras cores do tema claro só na
+impressão, senão o texto quase-branco do tema escuro ficaria ilegível em
+papel branco (o navegador normalmente descarta `background` no print mas
+mantém `color`). Os 21 descritores individuais NÃO receberam esse mesmo
+reforço de impressão — eles não têm um fluxo de impressão dedicado
+equivalente (diferente do Gerador de Provas do Guia de Gramática), então
+ficou fora de escopo por ora.
+
 ## Banco de Questões de Português (17/ago/2026)
 `portugues/banco-questoes.html` — novo, a pedido do professor inspirado no
 site tudosaladeaula.com (só como referência de conceito/organização por
