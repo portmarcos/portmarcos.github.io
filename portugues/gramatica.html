@@ -132,15 +132,30 @@
   .tabela-legenda{font-size:.78rem;color:var(--tx3);margin:-8px 0 16px}
   /* mapa mental */
   .mapa-intro{font-size:.85rem;color:var(--tx2);margin:0 0 20px}
-  .mapa-central{text-align:center;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.5rem;color:var(--ink);border:2px solid var(--nc,var(--azul));background:color-mix(in srgb,var(--nc,var(--azul)) 14%,transparent);border-radius:18px;padding:14px 24px;max-width:360px;margin:0 auto 30px;position:relative;line-height:1.2}
-  .mapa-central::after{content:'';position:absolute;left:50%;bottom:-16px;width:2px;height:16px;background:var(--nc,var(--azul));opacity:.5;transform:translateX(-50%)}
-  .mapa-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}
-  .mapa-ramo{background:var(--panel2);border:1px solid var(--line);border-top:3px solid var(--nc,var(--azul));border-radius:12px;padding:14px 16px}
-  .mapa-ramo h5{margin:0 0 9px;font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--nc,var(--azul));font-weight:700;line-height:1.2}
-  .mapa-ramo ul{margin:0;padding-left:16px}
-  .mapa-ramo li{font-size:.82rem;color:var(--tx2);margin-bottom:6px;line-height:1.42}
+  .mapa-wrap{position:relative;padding-top:6px}
+  .mapa-wrap::before{content:'';position:absolute;top:-40px;left:50%;width:min(720px,140%);height:260px;transform:translateX(-50%);z-index:0;pointer-events:none;
+    background:
+      radial-gradient(circle at 12% 20%, rgba(59,130,246,.24), transparent 42%),
+      radial-gradient(circle at 50% 8%, rgba(245,158,11,.22), transparent 40%),
+      radial-gradient(circle at 88% 22%, rgba(34,197,94,.22), transparent 42%),
+      radial-gradient(circle at 22% 85%, rgba(236,72,153,.2), transparent 42%),
+      radial-gradient(circle at 78% 82%, rgba(167,139,250,.2), transparent 42%);
+    filter:blur(18px)}
+  .mapa-central{text-align:center;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.6rem;color:var(--ink);border:2px solid var(--nc,var(--azul));background:linear-gradient(160deg,color-mix(in srgb,var(--nc,var(--azul)) 20%,var(--panel)),var(--panel));box-shadow:0 8px 28px -8px color-mix(in srgb,var(--nc,var(--azul)) 55%,transparent),inset 0 1px 0 rgba(255,255,255,.06);border-radius:20px;padding:16px 26px;max-width:380px;margin:0 auto 34px;position:relative;z-index:1;line-height:1.2}
+  .mapa-eyebrow{display:block;font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--nc,var(--azul));opacity:.85;margin-bottom:6px}
+  .mapa-central::after{content:'';position:absolute;left:50%;bottom:-18px;width:2px;height:18px;background:linear-gradient(var(--nc,var(--azul)),transparent);transform:translateX(-50%)}
+  .mapa-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;position:relative;z-index:1}
+  .mapa-ramo{--rc:var(--nc,var(--azul));background:linear-gradient(165deg,color-mix(in srgb,var(--rc) 10%,var(--panel2)),var(--panel2));border:1px solid var(--line);border-top:3px solid var(--rc);border-radius:14px;padding:15px 17px;transition:transform .18s,box-shadow .18s,border-color .18s}
+  .mapa-ramo:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--rc) 60%,var(--line));box-shadow:0 10px 22px -8px color-mix(in srgb,var(--rc) 45%,transparent)}
+  .mapa-ramo-head{display:flex;align-items:center;gap:9px;margin:0 0 10px}
+  .mapa-num{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:24px;height:24px;border-radius:50%;background:var(--rc);color:#0B0D12;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.72rem;box-shadow:0 0 0 3px color-mix(in srgb,var(--rc) 22%,transparent)}
+  .mapa-ramo h5{margin:0;font-family:'Cormorant Garamond',serif;font-size:1.14rem;color:var(--rc);font-weight:700;line-height:1.2}
+  .mapa-ramo ul{margin:0;padding-left:0;list-style:none}
+  .mapa-ramo li{position:relative;padding-left:15px;font-size:.83rem;color:var(--tx);margin-bottom:7px;line-height:1.45}
+  .mapa-ramo li::before{content:'';position:absolute;left:0;top:.55em;width:6px;height:6px;border-radius:50%;background:var(--rc)}
   .mapa-ramo li:last-child{margin-bottom:0}
-  @media(max-width:560px){.mapa-central{font-size:1.24rem;padding:12px 18px}}
+  .mapa-ramo li i{color:var(--tx2);font-style:italic}
+  @media(max-width:560px){.mapa-central{font-size:1.3rem;padding:13px 18px}}
   /* memorize */
   .mnem-box{background:linear-gradient(135deg,rgba(245,158,11,.1),transparent 70%);border:1px solid rgba(245,158,11,.35);border-radius:14px;padding:16px 18px;margin-bottom:16px;font-size:.94rem}
   .fato{display:flex;gap:10px;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px 15px;margin-bottom:10px;font-size:.89rem}
@@ -522,14 +537,18 @@ const TICO={
 const TABS=[['exp','Explicação'],['ex','Exemplos'],['quiz','Quiz'],['jogo','Jogo'],['mapa','Mapa mental'],['mem','Memorize']];
 
 /* ---------- mapa mental (hub + ramos, HTML/CSS puro — sempre renderiza, sem geometria SVG) ---------- */
+const MAPA_CORES=['#3B82F6','#F59E0B','#22C55E','#EC4899','#A78BFA','#14B8A6','#EF4444','#F97316'];
 function renderMapa(t){
   const m = t.mapa;
   if(!m || !m.ramos || !m.ramos.length) return '<p style="color:var(--tx3);font-size:.88rem">Mapa mental em preparação para este tópico.</p>';
   let h = '<p class="mapa-intro">Visão geral do tópico em um golpe de vista — ótimo para revisar rápido antes da prova.</p>';
-  h += '<div class="mapa-central">'+m.centro+'</div>';
-  h += '<div class="mapa-grid">'+m.ramos.map(r=>
-    '<div class="mapa-ramo"><h5>'+r.t+'</h5><ul>'+r.itens.map(x=>'<li>'+x+'</li>').join('')+'</ul></div>'
-  ).join('')+'</div>';
+  h += '<div class="mapa-wrap">';
+  h += '<div class="mapa-central"><span class="mapa-eyebrow">Tema central</span>'+m.centro+'</div>';
+  h += '<div class="mapa-grid">'+m.ramos.map((r,i)=>{
+    const c = MAPA_CORES[i % MAPA_CORES.length];
+    return '<div class="mapa-ramo" style="--rc:'+c+'"><div class="mapa-ramo-head"><span class="mapa-num">'+(i+1)+'</span><h5>'+r.t+'</h5></div><ul>'+r.itens.map(x=>'<li>'+x+'</li>').join('')+'</ul></div>';
+  }).join('')+'</div>';
+  h += '</div>';
   return h;
 }
 let jogoTimer=null;
