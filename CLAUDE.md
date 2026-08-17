@@ -140,6 +140,47 @@ lote de mapas/tabelas, 141 depois do lote de expansão pedagógica, 177
 depois das 36 questões reais) — todas com badge `[fonte]` visível
 diferenciando-as das pedagógicas.
 
+## Banco de Questões de Português (17/ago/2026)
+`portugues/banco-questoes.html` — novo, a pedido do professor inspirado no
+site tudosaladeaula.com (só como referência de conceito/organização por
+campo de atuação — nunca copiado; aviso de direitos autorais deles proíbe
+reprodução, então o conteúdo aqui é 100% autoral ou de domínio público
+verificado, com pipeline próprio). Reaproveita quase 1:1 a arquitetura do
+Guia de Gramática (mesmo tema escuro, mesmo padrão `.over`/`.sheet`,
+mesmo `ligarQuiz`, mesmo gerador de lista/prova com `body:has()`), só
+trocando `TOPICOS` por `ATIVIDADES` e `NIVEIS` por `CAMPOS_INFO` (os 4
+campos de atuação da BNCC: jornalístico-midiático, artístico-literário,
+vida pública, estudo e pesquisa). Cada atividade = texto-base + 4-5
+questões (schema com `alts` de 4, não 5 como no banco ENEM). Filtro duplo
+por campo E por ano (6º-9º, array `ano` em cada atividade — uma atividade
+pode servir a mais de um ano).
+
+**25 atividades, 119 questões**, escritas por 4 agentes em paralelo (um
+por campo), cada um seguindo o padrão de rigor do `saeb/D01.html` (texto
+com fonte citada, gabarito com `expl` justificando cada alternativa).
+Regra de direitos autorais seguida à risca: textos de domínio público só
+com autor morto há mais de 70 anos, **verificados via WebFetch antes de
+reproduzir** (um agente confirmou "Um Apólogo" de Machado de Assis, "Meus
+Oito Anos" de Casimiro de Abreu e o soneto de Bilac direto em
+machadodeassis.net/culturagenial antes de usá-los) — todo o resto é texto
+original assinado como tal no campo `fonte` ("Texto original, elaborado
+para fins didáticos"), incluindo cartas, biografias (só fatos genéricos
+e amplamente conhecidos, sem data/número inventado), verbetes e
+infográficos de ciências/geografia/história. Nenhuma letra de música em
+nenhuma hipótese — um agente encontrou candidata forte e descartou sozinho.
+
+**Gênero "Manifesto"/"Campanha" não existe como valor de `genero`** — não
+tem ícone próprio em `GEN_ICONS`. Um agente sinalizou isso e usou
+"Artigo de opinião" para os dois textos de opinião/manifesto que escreveu,
+solução mantida. Se pedir mais desse tipo de texto no futuro, ou criar
+ícone novo ou continuar usando esse mapeamento.
+
+**2 dos 4 agentes de conteúdo falharam na primeira tentativa** (erro de
+API / resposta truncada) — relançados com o mesmo prompt mais um aviso
+final pra manter enunciados/explicações objetivos e evitar corte no meio
+da resposta; os dois deram certo na segunda tentativa, sem alterar o
+padrão de qualidade.
+
 ## Interpretação em Provas de Concurso (commit `2843986`)
 `portugues/interpretacao-concursos.html` — quiz separado do banco ENEM, com
 393 questões reais de português de provas de concurso público (pciconcursos.com.br
