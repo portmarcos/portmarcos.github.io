@@ -66,6 +66,80 @@ foto de placa com erro de português), aplicar o mesmo fluxo do banco ENEM:
 pedir o arquivo ao usuário, salvar em `assets/img/questoes/`, nunca base64
 inline.
 
+### Sessão de 17/ago/2026: prova, teoria completa, questões reais
+Pedido do professor: "mais completo", questões reais de vestibular/ENEM
+(não só pedagógicas), textos reais nas explicações, e uma função de
+criar prova — tudo isso sem "travar" (esclarecido que era o **app**
+Claude Code travando em sessão anterior, não a página — daí o cuidado
+de trabalhar em lotes pequenos, commitando e dando push a cada lote
+concluído, em vez de uma única operação gigante no fim).
+
+**Gerador de provas** (`#prova-over` config + `#prova-view` folha):
+reaproveita quase 1:1 o padrão já usado no Gerador de Provas do
+`enem.html` (`ger-tema-card`, `prova-folha`, truque
+`body:has(#prova-view.on) > *:not(#prova-view){display:none!important}`
+pra isolar a folha na impressão), só adaptado pro tema escuro do site
+e pra estrutura de `TOPICOS` (em vez de `BANCO`). A folha impressa
+sempre usa papel branco (`#fff`) independente do tema do site — herdado
+de propósito do enem.html, não é bug.
+
+**Teoria "completíssima"**: 3 seções novas por tópico (60 seções no
+total, 92→162), escritas por 5 agentes em paralelo por nível, cada um
+com instrução explícita de ler `secoes`/`tabela`/`mapa`/`quiz`
+existentes antes de escrever, pra não repetir conteúdo. Se um tópico já
+termina com uma seção `tabela` (quadro-resumo), o merge insere as
+seções novas ANTES dela, não depois — a tabela continua sendo o
+fechamento do tópico. Script de merge: `merge_theory.py` no scratchpad
+da sessão (não ficou no repo, só o resultado).
+
+**Questões reais de vestibular/ENEM** (campo novo `fonte`, e `texto`
+quando há texto-base — mesmo padrão dos campos que o Gerador de Provas
+já esperava, então não precisou mexer no `renderProva`; só precisou
+adicionar renderização de `q.fonte`/`q.texto` no quiz do próprio tópico
+e no simulado-relâmpago, que antes só mostravam `enun`/`alts`/`expl`).
+36 questões novas, 5 agentes em paralelo por nível com acesso a
+WebSearch/WebFetch, cada um instruído a **devolver zero questões pra um
+tópico em vez de arriscar gabarito não confirmado em pelo menos 2 fontes
+independentes** — path já testado no `interpretacao-concursos.html` e
+reaplicado aqui. Na primeira tentativa os 5 agentes de pesquisa
+falharam por limite de sessão da conta (resetava 18h20 BRT); relançados
+depois do reset, sem alterar o prompt.
+
+**Uma questão foi descartada por mim mesmo, não pelo agente**: o agente
+do nível 4 (`colocacao`) devolveu uma questão citando "Banco do Brasil"
+como fonte, mas confessou no próprio resumo que **reconstruiu as
+alternativas** porque não achou o gabarito original — isso não é uma
+questão real verificada, é uma questão inventada com fonte real colada
+em cima. Removida antes do merge. Regra pra próximas rodadas: sempre
+ler o resumo em prosa do agente (fora do bloco JSON) antes de confiar
+cegamente no JSON — é lá que esse tipo de confissão aparece.
+
+**Textos-base reais reproduzidos** (poema completo "Anatomia" de
+Ademir Assunção/A. Caetano no ENEM PPL 2021, trecho de Vinicius de
+Moraes na FUVEST 2012, trecho de Machado de Assis na FUVEST, diálogo de
+Drummond em "Contos de Aprendiz" no ENEM 2014, Lira XIV de Tomás
+Antônio Gonzaga na UFMG): mesmo padrão já usado nos temas de
+Literatura do `enem.html` (reproduzir o texto de apoio necessário pra
+resolver a questão real de vestibular é prática padrão de site de
+preparatório, não viola nada) — não reproduzir letra de música em
+nenhuma hipótese continua valendo (um agente encontrou uma candidata
+forte baseada em "O Meu Guri" e descartou sozinho, corretamente, sem
+eu precisar intervir).
+
+**Questão ENEM 2009 sinalizada**: a prova de 2009 vazou antes da
+aplicação oficial e foi cancelada/reaplicada em dezembro daquele ano —
+a questão sobre coesão referencial (cavalo de Troia) usada aqui circula
+amplamente em material de estudo com gabarito consistente entre fontes,
+mas não tem publicação oficial do INEP pra essa versão específica. Isso
+está documentado no próprio campo `fonte` dessa questão no `BANCO`, à
+vista do professor — não escondido.
+
+Contagem final dessa sessão: 20 mapas mentais, 15 tabelas-resumo,
+162 seções teóricas (era 92), 177 questões de quiz (era 60: 65 depois do
+lote de mapas/tabelas, 141 depois do lote de expansão pedagógica, 177
+depois das 36 questões reais) — todas com badge `[fonte]` visível
+diferenciando-as das pedagógicas.
+
 ## Interpretação em Provas de Concurso (commit `2843986`)
 `portugues/interpretacao-concursos.html` — quiz separado do banco ENEM, com
 393 questões reais de português de provas de concurso público (pciconcursos.com.br
