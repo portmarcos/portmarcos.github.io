@@ -140,6 +140,53 @@ lote de mapas/tabelas, 141 depois do lote de expansão pedagógica, 177
 depois das 36 questões reais) — todas com badge `[fonte]` visível
 diferenciando-as das pedagógicas.
 
+### Sessão de 22/ago/2026: reforço leve de questões reais nos 18 tópicos fracos
+Pedido: retomar um pedido de sessão anterior ("mais completo, nível top")
+que tinha ficado pela metade porque a janela de contexto daquela sessão
+encheu. Ao investigar, a maior parte do pedido original já tinha sido
+entregue (mapas, tabelas, teoria, jogo, gerador de provas); o único gap
+real era o desbalanceamento de questões reais — só `fonologia` (16) e
+`acentuacao` (18) tinham lote grande, os outros 18 tópicos tinham 0 a 3
+cada, com `colocacao` e `pontuacao` zerados. Escopo acordado com o
+professor via `AskUserQuestion` (ele estava de olho no gasto de tokens,
+queria guardar orçamento pra apostila/prova da semana): "reforço leve" de
+2-3 questões reais por tópico fraco, e manter os diagramas HTML/CSS em vez
+de pedir fotos reais.
+
+**5 agentes em paralelo, um por lote de ~4 tópicos** (A: ortografia→
+pronomes, B: verbo→complementos, C: coordenação→regência, D: colocação→
+semântica, E: figuras→coesão), cada um com WebSearch/WebFetch, mesma regra
+de ouro de sempre (gabarito confirmado em ≥2 fontes independentes, zero
+questões pro tópico em vez de arriscar, nunca letra de música). **Os 5
+caíram juntos por limite de sessão da conta na primeira tentativa** — só o
+lote A tinha escrito algo em disco antes de cair (salvou por acaso, não
+por instrução). Relançados os 4 que ficaram vazios (B, C, D, E) com uma
+instrução nova explícita: escrever/atualizar o arquivo de saída a cada
+questão pronta, não só no final — dessa vez os 4 terminaram sem cair de
+novo. **Lição pra próxima leva de agentes de pesquisa longos**: sempre
+incluir essa instrução de salvar incrementalmente desde a primeira
+tentativa, não só depois de já ter levado uma queda.
+
+Mesclado e commitado **um lote por vez** (5 commits separados, não um
+commit gigante no fim) assim que cada agente terminava, reaproveitando o
+pipeline já documentado (`json.loads` do bloco `TOPICOS`, extend na lista
+`quiz` do tópico, `html.unescape` recursivo nos campos de texto, `json.dumps`
+de volta, revalidar com `json.loads`). Testado ao vivo num servidor
+estático local (`python -m http.server`, já que `file://` no preview do
+navegador não carrega o console corretamente) antes de cada commit —
+0 erros de console, contagem de questões batendo com o esperado em todos
+os 5 lotes.
+
+**Contagem final: 259 questões de quiz (era 209), 118 reais (era 68)** —
+todos os 20 tópicos com pelo menos 2 questões reais agora. 4 questões
+candidatas descartadas pelos agentes por conflito de gabarito entre fontes
+(2 de crase) ou fonte única não confiável — nenhuma forçada. Uma questão
+de regência (FUVEST) pegou um caso em que uma busca sugeriu gabarito C mas
+o agente reconheceu que violava a regra clássica de regência do verbo
+"preferir" e confirmou E como correto numa segunda fonte — vale reforçar
+esse tipo de checagem de sanidade gramatical em cima do resultado de busca,
+não só contar fontes batendo.
+
 ## Portal SAEB — conteúdo e tema escuro (17/ago/2026)
 Pedido do professor: deixar `saeb/` "Perfeito", com conteúdo mais rico E
 "um design como o resto do site" — inicialmente interpretei isso como só
