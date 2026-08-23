@@ -55,6 +55,41 @@
     return parseInt(h.substr(0, 2), 16) + ',' + parseInt(h.substr(2, 2), 16) + ',' + parseInt(h.substr(4, 2), 16);
   }
 
+  // Atalho pra Prova 3EM/3ºTri. Tentei inserir um <li> a mais dentro do
+  // rodapé (que é HTML estático exportado pelo Next.js), mas essa página
+  // hidrata e RECONCILIA a árvore inteira repetidamente — qualquer nó extra
+  // que o bundle compilado não espera é removido de novo assim que o React
+  // re-renderiza, não importa quanto se espere (~10s de teste real, sempre
+  // removido de novo). Por isso o atalho vai FORA de #__next, direto no
+  // <body>, como um botão flutuante — o React nunca gerencia nem reconcilia
+  // nada fora da raiz onde foi montado, então este elemento não pode ser
+  // apagado por ele.
+  function adicionarAtalhoProva() {
+    // só na página inicial — este script também roda em informatica/index.html e jogos/index.html
+    var p = location.pathname;
+    if (p !== '/' && p !== '/index.html') return;
+    if (document.getElementById('pm-atalho-prova')) return;
+    var a = document.createElement('a');
+    a.id = 'pm-atalho-prova';
+    a.href = '/atividades/prova-3em-3tri-portugues.html';
+    a.textContent = '📝 Prova 3º EM — 3º Tri';
+    a.style.cssText = [
+      'position:fixed', 'right:18px', 'bottom:18px', 'z-index:9999',
+      'display:inline-flex', 'align-items:center', 'gap:8px',
+      'padding:11px 18px', 'border-radius:999px',
+      'background:#22D3EE', 'color:#020617',
+      'font-family:Inter,system-ui,sans-serif', 'font-weight:700', 'font-size:13px',
+      'text-decoration:none', 'box-shadow:0 8px 24px rgba(34,211,238,0.35)',
+      'transition:transform .2s'
+    ].join(';');
+    a.addEventListener('mouseenter', function () { a.style.transform = 'translateY(-2px)'; });
+    a.addEventListener('mouseleave', function () { a.style.transform = 'none'; });
+    document.body.appendChild(a);
+  }
+  adicionarAtalhoProva();
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', adicionarAtalhoProva);
+  window.addEventListener('load', adicionarAtalhoProva);
+
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
   else run();
   // reexecuta após hidratação do Next.js
