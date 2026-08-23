@@ -124,13 +124,13 @@
       <button id="btn-proxima" class="btn btn-primario btn-bloco" style="margin-top:18px" hidden></button>
     </section>
 
-    <!-- TELA 3: resultado -->
+    <!-- TELA 3: resultado (sem nota/medalha à vista — o aluno não vê o resultado, só o professor no Sheets) -->
     <section id="tela-final" class="painel placar-final" hidden>
-      <h2>Resultado</h2>
-      <div id="medalha-final"></div>
-      <div class="nota" id="nota-final"></div>
-      <p id="nota-pct" style="font-weight:700"></p>
-      <p class="melhor" id="nota-melhor"></p>
+      <h2>Prova enviada! ✅</h2>
+      <div id="medalha-final" hidden></div>
+      <div class="nota" id="nota-final" hidden></div>
+      <p id="nota-pct" style="font-weight:700" hidden></p>
+      <p class="melhor" id="nota-melhor" hidden></p>
       <p id="msg-final"></p>
       <button id="btn-refazer" class="btn btn-primario btn-bloco">Refazer prova 🔁</button>
       <a class="btn btn-secundario btn-bloco" style="margin-top:8px" href="../portugues/index.html">Voltar ao Português</a>
@@ -152,25 +152,19 @@
       }
     })();
   </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.3/confetti.browser.min.js" defer></script>
+  <!-- Sem confete: confetti() só dispara com nota >= 70%, o que entregaria pista da nota. -->
   <script src="../assets/js/config-sheets.js"></script>
   <script src="../assets/js/quiz-engine.js"></script>
 
   <script>
-    /* ===== Resultado final: medalha e mensagem de acordo com a faixa de acerto ===== */
+    /* ===== Mensagem final única — sem nota/medalha à vista, de propósito ===== */
     (function () {
       const telaFinal = document.getElementById("tela-final");
       if (!telaFinal) return;
       const obs = new MutationObserver(function () {
         if (telaFinal.hidden) return;
-        const pctTxt = (document.getElementById("nota-pct") || {}).textContent || "0";
-        const pct = parseInt(pctTxt, 10) || 0;
-        let medalha = "📘", msg = "Prova concluída! O professor vai corrigir e comentar as questões com a turma em sala.";
-        if (pct >= 90) { medalha = "🏅"; msg = "Excelente! O professor vai corrigir e comentar as questões com a turma em sala."; }
-        else if (pct >= 70) { medalha = "⭐"; msg = "Muito bom! O professor vai corrigir e comentar as questões com a turma em sala."; }
-        else if (pct >= 50) { medalha = "🌱"; msg = "Prova concluída! O professor vai corrigir e comentar as questões com a turma em sala."; }
-        document.getElementById("medalha-final").textContent = medalha;
-        document.getElementById("msg-final").textContent = msg;
+        document.getElementById("msg-final").textContent =
+          "Suas respostas foram registradas. O professor vai corrigir e comentar as questões com a turma em sala.";
       });
       obs.observe(telaFinal, { attributes: true, attributeFilter: ["hidden"] });
     })();
