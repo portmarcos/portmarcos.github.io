@@ -51,10 +51,15 @@
     /* ── Modo prova: NÃO revela certo/errado nem explicação — o professor corrige em sala ──
        (sobrescreve as classes .correta/.errada que o motor aplica ao responder) */
     #tela-questao .opcao.correta,
-    #tela-questao .opcao.errada{ background:var(--superficie) !important; border-color:var(--linha) !important; font-weight:400 !important; }
+    #tela-questao .opcao.errada{ background-color:var(--superficie) !important; border-color:var(--linha) !important; font-weight:400 !important; }
     #tela-questao .opcao.correta::before,
-    #tela-questao .opcao.errada::before{ background:var(--cor-materia-claro) !important; color:var(--cor-materia) !important; }
+    #tela-questao .opcao.errada::before{ background-color:var(--cor-materia-claro) !important; color:var(--cor-materia) !important; }
     #explicacao{ display:none !important; }
+    /* Marca só a alternativa que o aluno clicou — neutra, não indica se é a certa.
+       Precisa vir DEPOIS da regra .correta/.errada acima (mesma especificidade,
+       ordem no CSS decide, e essa regra precisa vencer nas 2 classes .errada/.correta). */
+    #tela-questao .opcao.pm-selecionada{ border-color:var(--cor-materia) !important; background-color:var(--cor-materia-claro) !important; font-weight:700 !important; }
+    #tela-questao .opcao.pm-selecionada::before{ background-color:var(--cor-materia) !important; color:#fff !important; }
 
     .explicacao{ line-height:1.6; }
 
@@ -225,6 +230,31 @@
         }).catch(function () {});
       });
       obs.observe(telaFinal, { attributes: true, attributeFilter: ["hidden"] });
+    })();
+  </script>
+
+  <script>
+    /* ============================================================
+       Marca visualmente só a alternativa que o aluno clicou (nem
+       "certo" nem "errado", só "foi essa que eu escolhi") — sem
+       isso, depois de responder nenhuma opção mostra nada e fica
+       estranho (parece que o clique não registrou). O motor
+       compartilhado (quiz-engine.js) já aplica as classes .correta/
+       .errada nos bastidores (é delas que a nota real depende), mas
+       o CSS acima as deixa neutras — aqui só adicionamos uma marca
+       própria na alternativa clicada, sem revelar se acertou.
+       Delegação de evento no #opcoes: como o motor recria os botões
+       a cada questão (innerHTML = ""), um listener por botão se
+       perderia — o container #opcoes, porém, nunca é recriado.
+       ============================================================ */
+    (function () {
+      const elOpcoes = document.getElementById("opcoes");
+      if (!elOpcoes) return;
+      elOpcoes.addEventListener("click", function (e) {
+        const btn = e.target.closest(".opcao");
+        if (!btn || !elOpcoes.contains(btn)) return;
+        btn.classList.add("pm-selecionada");
+      });
     })();
   </script>
 <script defer src="/assets/lantern.js"></script></body>
