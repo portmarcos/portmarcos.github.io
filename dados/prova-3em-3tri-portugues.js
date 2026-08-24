@@ -38,8 +38,8 @@ const QUIZ_DADOS = {
 
     /* 5. Texto dissertativo-argumentativo */
     { pergunta: "O texto dissertativo-argumentativo, como o exigido na redação do ENEM, se caracteriza por:",
-      opcoes: ["Narrar um fato de sua vida com linguagem emotiva", "Descrever detalhadamente um cenário ou personagem", "Defender um ponto de vista sobre um tema com argumentos e evidências", "Listar informações sobre um assunto sem tomar partido"],
-      correta: "Defender um ponto de vista sobre um tema com argumentos e evidências",
+      opcoes: ["Narrar um fato pessoal, usando linguagem emotiva e subjetiva", "Descrever com detalhes um cenário, objeto ou personagem", "Defender uma tese sobre um tema, com argumentos e evidências", "Listar informações sobre um assunto, sem se posicionar sobre ele"],
+      correta: "Defender uma tese sobre um tema, com argumentos e evidências",
       explicacao: "O texto dissertativo-argumentativo exige a defesa de uma tese (ponto de vista) sobre um tema, sustentada por argumentos e repertório sociocultural — diferente da narração (contar um fato) e da descrição (detalhar um cenário)." },
 
     /* 6. Interpretação — ENEM */
@@ -72,14 +72,14 @@ const QUIZ_DADOS = {
 
     /* 9. Memórias Póstumas de Brás Cubas — enredo (pedagógica) */
     { pergunta: "No romance, Brás Cubas dedica boa parte da vida adulta a um projeto que nunca conclui. Do que se trata esse projeto?",
-      opcoes: ["Um tratado filosófico sobre o Humanitismo", "Um emplasto (remédio) contra a hipocondria, que traria fama e cura à humanidade", "Uma candidatura a deputado pelo partido conservador", "Uma biografia do pai, Bento Cubas"],
-      correta: "Um emplasto (remédio) contra a hipocondria, que traria fama e cura à humanidade",
+      opcoes: ["Um tratado filosófico completo sobre a doutrina do Humanitismo", "Um emplasto contra a hipocondria, que traria fama e cura", "Uma candidatura a deputado pelo partido conservador da época", "Uma biografia cuidadosa e detalhada do pai, Bento Cubas"],
+      correta: "Um emplasto contra a hipocondria, que traria fama e cura",
       explicacao: "(Questão pedagógica, não de vestibular.) O \"emplasto Brás Cubas\" é a grande ambição da vida do narrador — um remédio contra a hipocondria que lhe daria fama e glória. Ele morre antes de terminá-lo, e o próprio livro é, em certo sentido, o produto que sobrou desse projeto fracassado." },
 
     /* 10. Memórias Póstumas de Brás Cubas — enredo (pedagógica) */
     { pergunta: "Brás Cubas considera Eugênia, filha de Dona Eusébia, moralmente superior às outras mulheres que conheceu, mas desiste de se casar com ela. Qual motivo ele mesmo confessa para essa desistência?",
-      opcoes: ["A diferença de classe social entre as duas famílias", "A vaidade: tem vergonha de apresentar à sociedade uma esposa com uma deficiência física, já que ela é coxa", "A oposição da própria mãe de Brás Cubas ao casamento", "A descoberta de que Eugênia já amava outro homem"],
-      correta: "A vaidade: tem vergonha de apresentar à sociedade uma esposa com uma deficiência física, já que ela é coxa",
+      opcoes: ["A diferença de classe social entre as duas famílias envolvidas", "A vaidade: a vergonha de ter, perante a sociedade, uma esposa coxa", "A oposição direta da própria mãe de Brás Cubas a esse casamento", "A descoberta de que Eugênia já amava secretamente outro homem"],
+      correta: "A vaidade: a vergonha de ter, perante a sociedade, uma esposa coxa",
       explicacao: "(Questão pedagógica, não de vestibular.) Apesar de reconhecer o valor de Eugênia, Brás Cubas confessa que a vaidade — o medo do julgamento social por causa da deficiência física dela — falou mais alto. É um dos momentos que mais expõem a mesquinhez do narrador." },
 
     /* 11. Funções da linguagem */
