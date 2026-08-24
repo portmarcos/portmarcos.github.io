@@ -49,23 +49,18 @@
       display:flex; align-items:center; justify-content:center;
     }
     /* ── Modo prova: NÃO revela certo/errado nem explicação — o professor corrige em sala ──
-       (sobrescreve as classes .correta/.errada que o motor aplica ao responder)
-       transition:none nas 3 regras abaixo é proposital: .opcao tem
-       "transition: border-color .15s, background .15s" no design-system.css, e como
-       essas classes só são aplicadas no exato momento do clique (resposta desabilitada
-       logo em seguida), deixar o navegador animar entre os dois estados podia fazer a
-       cor antiga (não-clicada) ainda aparecer nas primeiras leituras/telas mais lentas —
-       aqui o objetivo é feedback instantâneo, não uma transição suave. */
-    #tela-questao .opcao.correta,
-    #tela-questao .opcao.errada{ background-color:var(--superficie) !important; border-color:var(--linha) !important; font-weight:400 !important; transition:none !important; }
-    #tela-questao .opcao.correta::before,
-    #tela-questao .opcao.errada::before{ background-color:var(--cor-materia-claro) !important; color:var(--cor-materia) !important; }
+       (sobrescreve as classes .correta/.errada que o motor aplica ao responder).
+       A cor de fundo/borda de cada botão (neutra ou "foi essa que eu cliquei") é
+       controlada por JS via style inline mais abaixo, não por classe CSS — depois de
+       dois bugs reais em produção (a cor não aparecia pra alguns alunos mesmo com
+       cache limpo/aba anônima, provável guerra de especificidade com as regras de
+       .opcao/.opcao.correta/.opcao.errada do design-system.css que não reproduzia de
+       forma confiável em teste), inline style é a única forma 100% determinística de
+       garantir que essa regra vence sem depender de ordem de cascata. O selo circular
+       (::before, com a letra A/B/C/D) não pode receber style inline diretamente — por
+       isso usa uma variável CSS (--badge-bg/--badge-fg) que o JS seta no próprio botão. */
+    #tela-questao .opcao::before{ background-color:var(--badge-bg, var(--cor-materia-claro)) !important; color:var(--badge-fg, var(--cor-materia)) !important; }
     #explicacao{ display:none !important; }
-    /* Marca só a alternativa que o aluno clicou — neutra, não indica se é a certa.
-       Precisa vir DEPOIS da regra .correta/.errada acima (mesma especificidade,
-       ordem no CSS decide, e essa regra precisa vencer nas 2 classes .errada/.correta). */
-    #tela-questao .opcao.pm-selecionada{ border-color:var(--cor-materia) !important; background-color:var(--cor-materia-claro) !important; font-weight:700 !important; transition:none !important; }
-    #tela-questao .opcao.pm-selecionada::before{ background-color:var(--cor-materia) !important; color:#fff !important; }
 
     .explicacao{ line-height:1.6; }
 
@@ -246,9 +241,18 @@
        isso, depois de responder nenhuma opção mostra nada e fica
        estranho (parece que o clique não registrou). O motor
        compartilhado (quiz-engine.js) já aplica as classes .correta/
-       .errada nos bastidores (é delas que a nota real depende), mas
-       o CSS acima as deixa neutras — aqui só adicionamos uma marca
-       própria na alternativa clicada, sem revelar se acertou.
+       .errada nos bastidores (é delas que a nota real depende, não
+       mexemos nisso) — mas visualmente, em vez de tentar sobrepor
+       essas classes com CSS !important (isso já causou dois bugs
+       reais em produção: a cor não aplicava de jeito nenhum pra
+       alguns alunos, mesmo depois de cache/aba anônima — provável
+       guerra de especificidade/cascata com as regras de
+       design-system.css que não reproduziu de forma confiável em
+       teste), aqui setamos a cor de cada botão diretamente por JS
+       (style inline) depois que o motor já rodou. Inline style
+       sempre vence regra de folha de estilo sem !important, então
+       isso é determinístico — não depende de ordem de regra CSS
+       nem de transição terminando a tempo.
        Delegação de evento no #opcoes: como o motor recria os botões
        a cada questão (innerHTML = ""), um listener por botão se
        perderia — o container #opcoes, porém, nunca é recriado.
@@ -256,10 +260,33 @@
     (function () {
       const elOpcoes = document.getElementById("opcoes");
       if (!elOpcoes) return;
+      const cs = getComputedStyle(document.documentElement);
+      const corMateria      = cs.getPropertyValue("--cor-materia").trim();
+      const corMateriaClaro = cs.getPropertyValue("--cor-materia-claro").trim();
+      const corFundo        = cs.getPropertyValue("--fundo").trim();
+      const corLinha         = cs.getPropertyValue("--linha").trim();
       elOpcoes.addEventListener("click", function (e) {
-        const btn = e.target.closest(".opcao");
-        if (!btn || !elOpcoes.contains(btn)) return;
-        btn.classList.add("pm-selecionada");
+        const alvo = e.target.closest(".opcao");
+        if (!alvo || !elOpcoes.contains(alvo)) return;
+        // espera o motor (responder(), chamado pelo listener do próprio
+        // botão) já ter rodado — mesmo evento de clique, fase de bolha,
+        // então quando chega aqui as classes .correta/.errada já existem.
+        elOpcoes.querySelectorAll(".opcao").forEach(function (b) {
+          if (b === alvo) {
+            b.style.setProperty("background-color", corMateriaClaro, "important");
+            b.style.setProperty("border-color", corMateria, "important");
+            b.style.setProperty("font-weight", "700", "important");
+            // selo (::before) não aceita style inline direto — passa por variável CSS
+            b.style.setProperty("--badge-bg", corMateria);
+            b.style.setProperty("--badge-fg", "#fff");
+          } else {
+            b.style.setProperty("background-color", corFundo, "important");
+            b.style.setProperty("border-color", corLinha, "important");
+            b.style.setProperty("font-weight", "400", "important");
+            b.style.setProperty("--badge-bg", corMateriaClaro);
+            b.style.setProperty("--badge-fg", corMateria);
+          }
+        });
       });
     })();
   </script>
