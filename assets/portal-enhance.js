@@ -90,6 +90,33 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', adicionarAtalhoProva);
   window.addEventListener('load', adicionarAtalhoProva);
 
+  // Mesmo atalho flutuante, agora pra Prova 2EM/2ºTri — empilhado ACIMA do
+  // botão do 3º ano (bottom:78px em vez de 18px) pra não sobrepor os dois.
+  function adicionarAtalhoProva2Ano() {
+    var p = location.pathname;
+    if (p !== '/' && p !== '/index.html') return;
+    if (document.getElementById('pm-atalho-prova-2ano')) return;
+    var a = document.createElement('a');
+    a.id = 'pm-atalho-prova-2ano';
+    a.href = '/atividades/prova-2em-2tri-portugues.html';
+    a.textContent = '📝 Prova 2º EM — 2º Tri';
+    a.style.cssText = [
+      'position:fixed', 'right:18px', 'bottom:78px', 'z-index:9999',
+      'display:inline-flex', 'align-items:center', 'gap:8px',
+      'padding:11px 18px', 'border-radius:999px',
+      'background:#D8B36A', 'color:#0C0A15',
+      'font-family:Inter,system-ui,sans-serif', 'font-weight:700', 'font-size:13px',
+      'text-decoration:none', 'box-shadow:0 8px 24px rgba(216,179,106,0.35)',
+      'transition:transform .2s'
+    ].join(';');
+    a.addEventListener('mouseenter', function () { a.style.transform = 'translateY(-2px)'; });
+    a.addEventListener('mouseleave', function () { a.style.transform = 'none'; });
+    document.body.appendChild(a);
+  }
+  adicionarAtalhoProva2Ano();
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', adicionarAtalhoProva2Ano);
+  window.addEventListener('load', adicionarAtalhoProva2Ano);
+
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
   else run();
   // reexecuta após hidratação do Next.js
