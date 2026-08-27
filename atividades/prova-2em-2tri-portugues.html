@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prova — 2º Ano · 2º Trimestre 2026 · Português — Portal de Aulas</title>
+
+  <!-- Preview no WhatsApp -->
+  <meta property="og:title" content="Prova 2º Ano — 2º Trimestre 📋 Língua Portuguesa">
+  <meta property="og:description" content="13 questões misturando sintaxe do período, literatura e interpretação — 2º trimestre 2026.">
+  <meta property="og:image" content="https://portmarcos.github.io/assets/img/og-capa.png">
+
+  <link rel="icon" href="../favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Atkinson+Hyperlegible:wght@400;700&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/design-system.css">
+  <style>
+    #quiz-titulo{ font-family:'Cormorant Garamond',serif; font-weight:700; letter-spacing:-.01em; }
+
+    .hero-simulado{
+      position:relative; overflow:hidden;
+      border-radius:var(--raio); padding:clamp(22px,5vw,34px) clamp(20px,5vw,30px);
+      margin-bottom:var(--esp-2);
+      background:
+        radial-gradient(120% 140% at 100% 0%, color-mix(in srgb, var(--cor-materia) 16%, transparent), transparent 60%),
+        var(--superficie);
+      border:1px solid var(--linha);
+      box-shadow:var(--sombra);
+    }
+    .hero-simulado .lead{ color:var(--tinta-suave); font-size:.96rem; max-width:64ch; margin:0 }
+    .blocos-resumo{ display:flex; flex-wrap:wrap; gap:8px; margin-top:16px }
+    .bloco-chip{
+      display:inline-flex; align-items:center; gap:7px;
+      font-size:.78rem; font-weight:700; color:var(--tinta);
+      background:var(--fundo); border:1px solid var(--linha);
+      border-radius:var(--raio-pill); padding:6px 13px;
+    }
+    .bloco-chip i{ width:8px; height:8px; border-radius:50%; background:var(--dot,var(--cor-materia)); display:inline-block }
+
+    .opcoes{ counter-reset: opt; }
+    .opcao{ counter-increment: opt; position:relative; padding-left:54px !important; }
+    .opcao::before{
+      content: counter(opt, upper-alpha);
+      position:absolute; left:12px; top:50%; transform:translateY(-50%);
+      width:28px; height:28px; border-radius:50%;
+      background:var(--cor-materia-claro); color:var(--cor-materia);
+      font:800 .82rem var(--fonte-titulo);
+      display:flex; align-items:center; justify-content:center;
+    }
+    /* ── Modo prova: NÃO revela certo/errado nem explicação — o professor corrige em sala ──
+       (sobrescreve as classes .correta/.errada que o motor aplica ao responder).
+       A cor de fundo/borda de cada botão (neutra ou "foi essa que eu cliquei") é
+       controlada por JS via style inline mais abaixo, não por classe CSS — mesma
+       técnica já usada na prova do 3º ano, por ser a única forma 100% determinística
+       de garantir que essa regra vence sem depender de ordem de cascata. O selo circular
+       (::before, com a letra A/B/C/D) não pode receber style inline diretamente — por
+       isso usa uma variável CSS (--badge-bg/--badge-fg) que o JS seta no próprio botão. */
+    #tela-questao .opcao::before{ background-color:var(--badge-bg, var(--cor-materia-claro)) !important; color:var(--badge-fg, var(--cor-materia)) !important; }
+    #explicacao{ display:none !important; }
+
+    .explicacao{ line-height:1.6; }
+
+    .painel-sheets{ display:flex; align-items:flex-start; gap:10px; margin-top:var(--esp-2); padding:14px 16px; border-radius:var(--raio); background:var(--cor-materia-claro); font-size:.85rem; color:var(--tinta); }
+    .painel-sheets b{ color:var(--cor-materia); }
+
+    .painel-aviso{ display:flex; align-items:flex-start; gap:10px; margin-top:10px; padding:14px 16px; border-radius:var(--raio); background:#fff7ed; border:1px solid #fdba74; font-size:.85rem; color:#7c2d12; }
+
+    #medalha-final{ font-size:3rem; line-height:1; margin-bottom:2px; }
+    #msg-final{ color:var(--tinta-suave); font-size:.94rem; max-width:46ch; margin:10px auto 0; }
+
+    /* ── Modo prova: dificulta selecionar/copiar o texto das questões ── */
+    #tela-questao, #tela-questao *{ user-select:none; -webkit-user-select:none; }
+    #tela-questao textarea{ user-select:text; -webkit-user-select:text; } /* dissertativas continuam editáveis */
+  </style>
+</head>
+<body class="materia-bncc">
+
+  <div class="barra-tricolor"></div>
+  <header class="cabecalho">
+    <div class="container cabecalho-conteudo">
+      <span class="marca"><a href="../index.html"><span class="pm-logo" aria-hidden="true" style="display:inline-flex;line-height:0;vertical-align:middle;margin-right:9px;filter:drop-shadow(0 2px 7px rgba(216,179,106,.42))"><svg width="36" height="36" viewBox="0 0 64 64" fill="none"><defs><linearGradient id="slr" x1="10" y1="10" x2="54" y2="54" gradientUnits="userSpaceOnUse"><stop stop-color="#EBCB84"/><stop offset=".5" stop-color="#D8B36A"/><stop offset="1" stop-color="#A855F7"/></linearGradient></defs><circle cx="32" cy="32" r="30" fill="#0C0A15"/><circle cx="32" cy="32" r="29" fill="none" stroke="url(#slr)" stroke-width="2"/><circle cx="32" cy="32" r="23.5" fill="none" stroke="#D8B36A" stroke-width="1" opacity=".5"/><text x="32" y="41" text-anchor="middle" font-family="'Cormorant Garamond',Georgia,serif" font-weight="700" font-size="25" fill="#F5F0E6">MC</text><circle cx="14.5" cy="32" r="1.6" fill="#D8B36A"/><circle cx="49.5" cy="32" r="1.6" fill="#D8B36A"/></svg></span>Portal Marcos Cruz</a></span>
+    </div>
+  </header>
+
+  <main class="container nao-imprimir" style="max-width:760px">
+    <a class="voltar nao-imprimir" href="../portugues/index.html">← Voltar ao Português</a>
+    <span class="etiqueta-materia">Avaliação · 2º Trimestre 2026 · 2º Ano EM</span>
+
+    <div class="hero-simulado">
+      <h1 id="quiz-titulo" style="margin-top:10px">…</h1>
+      <p class="lead">13 questões misturando sintaxe do período, literatura e interpretação de texto. Cada aluno recebe as questões e alternativas em ordem diferente.</p>
+      <div class="blocos-resumo">
+        <span class="bloco-chip"><i></i>Sintaxe</span>
+        <span class="bloco-chip"><i></i>Gramática</span>
+        <span class="bloco-chip"><i></i>Literatura</span>
+        <span class="bloco-chip"><i></i>Interpretação</span>
+      </div>
+    </div>
+
+    <!-- TELA 1: início -->
+    <section id="tela-inicio" class="painel">
+      <p id="quiz-descricao"></p>
+      <div class="info-chips">
+        <span class="tag" id="info-questoes"></span>
+        <span class="tag" id="info-tempo"></span>
+        <span class="tag" id="info-melhor" hidden>🏆</span>
+      </div>
+      <button id="btn-comecar" class="btn btn-primario btn-bloco">Começar a prova ▶</button>
+      <div class="painel-sheets">
+        <span aria-hidden="true">📤</span>
+        <span><b>Resultado enviado automaticamente.</b> Ao concluir, nome, turma e nota vão direto para a planilha do professor — nenhuma ação extra é necessária.</span>
+      </div>
+      <div class="painel-aviso">
+        <span aria-hidden="true">⚠️</span>
+        <span><b>Uma questão por vez, sem voltar.</b> A prova não mostra se você acertou ou errou cada questão — a correção será feita pelo professor em sala. Não copie/cole nem troque de aba durante a prova: o sistema registra essas ações e envia junto com o resultado.</span>
+      </div>
+    </section>
+
+    <!-- TELA 2: questão -->
+    <section id="tela-questao" class="painel" hidden>
+      <p class="progresso-texto" id="progresso"></p>
+      <div class="timer-trilho" aria-hidden="true"><div class="timer-barra" id="timer-barra"></div></div>
+      <h2 class="enunciado" id="enunciado"></h2>
+      <div class="opcoes" id="opcoes"></div>
+      <div class="explicacao" id="explicacao" role="status" hidden></div>
+      <button id="btn-proxima" class="btn btn-primario btn-bloco" style="margin-top:18px" hidden></button>
+    </section>
+
+    <!-- TELA 3: resultado (sem nota/medalha à vista — o aluno não vê o resultado, só o professor no Sheets) -->
+    <section id="tela-final" class="painel placar-final" hidden>
+      <h2>Prova enviada! ✅</h2>
+      <div id="medalha-final" hidden></div>
+      <div class="nota" id="nota-final" hidden></div>
+      <p id="nota-pct" style="font-weight:700" hidden></p>
+      <p class="melhor" id="nota-melhor" hidden></p>
+      <p id="msg-final"></p>
+      <button id="btn-refazer" class="btn btn-primario btn-bloco">Refazer prova 🔁</button>
+      <a class="btn btn-secundario btn-bloco" style="margin-top:8px" href="../portugues/index.html">Voltar ao Português</a>
+    </section>
+  </main>
+
+  <footer class="rodape nao-imprimir"><div class="container">Portal Marcos Cruz · Prof. Marcos Cruz</div></footer>
+
+  <!-- 1º: os dados · 2º: embaralha a ordem das questões · 3º: confete · 4º: o motor -->
+  <script src="../dados/prova-2em-2tri-portugues.js"></script>
+  <script>
+    /* ===== Embaralha a ORDEM das questões (o motor já embaralha as alternativas) =====
+       Cada aluno recebe uma sequência diferente — dificulta compartilhar/colar o gabarito. */
+    (function () {
+      const arr = QUIZ_DADOS.questoes;
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+    })();
+  </script>
+  <!-- Sem confete: confetti() só dispara com nota >= 70%, o que entregaria pista da nota. -->
+  <script src="../assets/js/config-sheets.js"></script>
+  <script src="../assets/js/quiz-engine.js"></script>
+
+  <script>
+    /* ===== Mensagem final única — sem nota/medalha à vista, de propósito ===== */
+    (function () {
+      const telaFinal = document.getElementById("tela-final");
+      if (!telaFinal) return;
+      const obs = new MutationObserver(function () {
+        if (telaFinal.hidden) return;
+        document.getElementById("msg-final").textContent =
+          "Suas respostas foram registradas. O professor vai corrigir e comentar as questões com a turma em sala.";
+      });
+      obs.observe(telaFinal, { attributes: true, attributeFilter: ["hidden"] });
+    })();
+  </script>
+
+  <script>
+    /* ============================================================
+       MODO PROVA — dificultadores extras (não mexe no motor
+       compartilhado, só observa a página e registra eventos):
+       1) bloqueia copiar/colar/recortar e o menu de contexto
+       2) conta quantas vezes o aluno trocou de aba/minimizou
+       3) ao concluir, envia esse registro pro mesmo Google Sheets
+          (linha extra, mesma planilha, não exige mudar o Apps Script)
+       ============================================================ */
+    (function () {
+      let trocasDeAba = 0;
+      let provaComecou = false;
+      let jaEnviouRegistro = false;
+
+      document.getElementById("btn-comecar").addEventListener("click", function () {
+        provaComecou = true;
+      });
+
+      ["copy", "cut", "contextmenu"].forEach(function (evento) {
+        document.addEventListener(evento, function (e) {
+          const dentroDaQuestao = e.target.closest && e.target.closest("#tela-questao");
+          if (dentroDaQuestao) e.preventDefault();
+        });
+      });
+
+      document.addEventListener("visibilitychange", function () {
+        const provaEmAndamento = provaComecou && document.getElementById("tela-final").hidden;
+        if (provaEmAndamento && document.visibilityState === "hidden") trocasDeAba++;
+      });
+
+      const telaFinal = document.getElementById("tela-final");
+      if (!telaFinal) return;
+      const obs = new MutationObserver(function () {
+        if (telaFinal.hidden || jaEnviouRegistro) return;
+        jaEnviouRegistro = true;
+        const urlSheets = (typeof SHEETS_URL === "string" ? SHEETS_URL : "").trim();
+        if (!urlSheets.startsWith("https://")) return;
+        const nome  = localStorage.getItem("aluno-nome")  || "(sem nome)";
+        const turma = localStorage.getItem("aluno-turma") || "(sem turma)";
+        fetch(urlSheets, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({
+            atividade: QUIZ_DADOS.titulo + " — Registro de integridade",
+            nome: nome,
+            turma: turma,
+            acertos: "",
+            total: "",
+            pct: "",
+            abertas: "Trocas de aba/minimizações durante a prova: " + trocasDeAba
+          })
+        }).catch(function () {});
+      });
+      obs.observe(telaFinal, { attributes: true, attributeFilter: ["hidden"] });
+    })();
+  </script>
+
+  <script>
+    /* ============================================================
+       Marca visualmente só a alternativa que o aluno clicou (nem
+       "certo" nem "errado", só "foi essa que eu escolhi") — sem
+       isso, depois de responder nenhuma opção mostra nada e fica
+       estranho (parece que o clique não registrou). O motor
+       compartilhado (quiz-engine.js) já aplica as classes .correta/
+       .errada nos bastidores (é delas que a nota real depende, não
+       mexemos nisso) — mas visualmente, em vez de tentar sobrepor
+       essas classes com CSS !important (isso já causou dois bugs
+       reais em produção na prova do 3º ano: a cor não aplicava de
+       jeito nenhum pra alguns alunos, mesmo depois de cache/aba
+       anônima — provável guerra de especificidade/cascata com as
+       regras de design-system.css que não reproduziu de forma
+       confiável em teste), aqui setamos a cor de cada botão
+       diretamente por JS (style inline) depois que o motor já
+       rodou. Inline style sempre vence regra de folha de estilo
+       sem !important, então isso é determinístico — não depende de
+       ordem de regra CSS nem de transição terminando a tempo.
+       Delegação de evento no #opcoes: como o motor recria os botões
+       a cada questão (innerHTML = ""), um listener por botão se
+       perderia — o container #opcoes, porém, nunca é recriado.
+       ============================================================ */
+    (function () {
+      const elOpcoes = document.getElementById("opcoes");
+      if (!elOpcoes) return;
+      const cs = getComputedStyle(document.documentElement);
+      const corMateria      = cs.getPropertyValue("--cor-materia").trim();
+      const corMateriaClaro = cs.getPropertyValue("--cor-materia-claro").trim();
+      const corFundo        = cs.getPropertyValue("--fundo").trim();
+      const corLinha         = cs.getPropertyValue("--linha").trim();
+      elOpcoes.addEventListener("click", function (e) {
+        const alvo = e.target.closest(".opcao");
+        if (!alvo || !elOpcoes.contains(alvo)) return;
+        // espera o motor (responder(), chamado pelo listener do próprio
+        // botão) já ter rodado — mesmo evento de clique, fase de bolha,
+        // então quando chega aqui as classes .correta/.errada já existem.
+        elOpcoes.querySelectorAll(".opcao").forEach(function (b) {
+          if (b === alvo) {
+            b.style.setProperty("background-color", corMateriaClaro, "important");
+            b.style.setProperty("border-color", corMateria, "important");
+            b.style.setProperty("font-weight", "700", "important");
+            // selo (::before) não aceita style inline direto — passa por variável CSS
+            b.style.setProperty("--badge-bg", corMateria);
+            b.style.setProperty("--badge-fg", "#fff");
+          } else {
+            b.style.setProperty("background-color", corFundo, "important");
+            b.style.setProperty("border-color", corLinha, "important");
+            b.style.setProperty("font-weight", "400", "important");
+            b.style.setProperty("--badge-bg", corMateriaClaro);
+            b.style.setProperty("--badge-fg", corMateria);
+          }
+        });
+      });
+    })();
+  </script>
+<script defer src="/assets/lantern.js"></script></body>
+</html>
