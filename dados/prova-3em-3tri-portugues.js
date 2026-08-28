@@ -21,23 +21,49 @@ const QUIZ_DADOS = {
       correta: "Determinismo",
       explicacao: "A divisão tripartite da obra (A terra / O homem / A luta) reproduz a tríade determinista difundida no século XIX por Hippolyte Taine — meio, raça e momento histórico —, segundo a qual o comportamento humano é moldado por esses três fatores: o meio geográfico árido (\"A terra\") molda um tipo humano, o sertanejo (\"O homem\"), que entra em confronto com o Estado (\"A luta\"). Idealismo, Iluminismo e Socialismo não correspondem à base filosófico-científica que orienta a composição da obra, marcadamente naturalista-determinista. (Fonte: VUNESP — UNESP 2021.)" },
 
-    /* 2. Regência Verbal */
-    { pergunta: "Assinale a alternativa gramaticalmente correta quanto à regência verbal:",
-      opcoes: ["Não tenham dúvidas que ele vencerá.", "O escravo ama e obedece o seu senhor.", "O livro que te referes é célebre.", "Se lhe disserem que não o respeito, enganam-no."],
-      correta: "Se lhe disserem que não o respeito, enganam-no.",
-      explicacao: "\"Respeitar\" é transitivo direto (\"respeitar alguém\"), por isso o pronome oblíquo correto é \"o\" — sem erro de regência aí. Nas demais: falta a preposição \"de\" depois de \"dúvidas\" (dúvidas DE que); falta a preposição \"a\" depois de \"obedece\" (obedece AO seu senhor); falta a preposição \"a\" antes do pronome relativo em \"referir-se\" (o livro A QUE te referes). (Fonte: FUVEST)" },
+    /* 2. Regência Verbal (real, contextualizada — banco portugues/interpretacao-concursos.html do próprio site) */
+    { texto: `<p>Ele não aceitava a moça. Ela foi, foi, conversou, conversou, rodou, rodou, artimanhou, manhou, arte e manha, miou, afinal rendeu. Criança de emoções superficiais, rápidas, espontâneas e passageiras, ele cedeu. Aceitou-a.</p>
+      <p>Fiquei pensando em algo tão definido pelos psicólogos e literatos, porém inesgotável e eterno como o tema humano: a necessidade de ser aceito.</p>
+      <p>Ser aceito não é receber a concordância. É receber até a discordância, mas dentro de um princípio indefinível e fluídico de acolhimento prévio e gratuito do que se é como pessoa.</p>
+      <p>Ser aceito é realizar a plenitude dos sentidos do verbo latino Accipio, que deu origem à palavra portuguesa. Accipio quer dizer: tomar para si; receber, acolher; perceber; ouvir, ouvir dizer; saber; compreender; interpretar; sofrer; experimentar; aprovar; aceitar; estar satisfeito com. Tem vários sentidos, tal e qual essa aceitação misteriosa e empática que alguns nos concedem.</p>
+      <p>Ser aceito é ser percebido antes de ser entendido. É ser acolhido antes de ser querido. É ser recebido antes de ser conhecido. É ser experimentado antes da experiência. É, pois, um estado de compreensão prévia, que abre caminho para uma posterior concordância ou discordância, sem perda do afeto natural por nossa maneira de ser.</p>
+      <p><b>Ser aceito implica mecanismos mais sutis e de maior alcance</b> do que os que derivam da razão. Implica intuição; compreensão milagrosa porque antecipatória; conhecimento efetivo e afetivo do universo interior; compreensão pela fraqueza; cuidado com as cicatrizes e nervos expostos, tolerância com delírio, tolices, medos, desordens, vesícula preguiçosa, medo do dentista ou disritmia.</p>
+      <p>Ser aceito é ser feliz. Raro, pois. Quer fazer alguém feliz? Aceite-a em profundidade. E depois discorde à vontade. Ela aceitará.</p>
+      <p class="fonte">Artur da Távola, "Da arte de aceitar" (crônica) — questão de prova de concurso público.</p>`,
+      pergunta: "Assinale a opção cuja regência do verbo apresentado é a mesma do verbo destacado na passagem \"Ser aceito implica mecanismos mais sutis e de maior alcance...\":",
+      opcoes: ["Lembrar-se.", "Obedecer.", "Visar (no sentido de almejar).", "Respeitar."],
+      correta: "Respeitar.",
+      explicacao: "Em \"Ser aceito implica mecanismos mais sutis...\", o verbo \"implicar\" (no sentido de \"envolver\", \"acarretar\") é transitivo direto, sem preposição. \"Respeitar\" tem a mesma regência (transitivo direto: \"respeitar algo/alguém\"). Os demais verbos das opções exigem preposição: \"lembrar-se DE\", \"obedecer A\", \"visar A\" (no sentido de almejar). (Fonte: prova de concurso público, banca não identificável no PDF original — questão do banco portugues/interpretacao-concursos.html deste site, tema Gramática; gabarito conferido por leitura gramatical direta.)" },
 
-    /* 3. Regência Verbal */
-    { pergunta: "Assinale a alternativa INCORRETA quanto à regência verbal:",
-      opcoes: ["Ele custará muito para me entender.", "Hei de querer-lhe como se fosse minha filha.", "Em todos os recantos do sítio, as crianças sentem-se felizes, porque aspiram o ar puro.", "O presidente assiste em Brasília há quatro anos."],
-      correta: "Ele custará muito para me entender.",
-      explicacao: "\"Custar\", no sentido de \"ser difícil\", é verbo impessoal — só se conjuga na 3ª pessoa do singular, com a pessoa a quem custa vindo como objeto indireto (ex.: \"Custou-me muito entendê-lo\"). A frase inverte essa lógica, tratando \"ele\" como sujeito; o correto seria algo como \"Custou-lhe muito entender-me\". As demais estão corretas: \"querer-lhe\" (amá-lo) é transitivo indireto; \"aspirar\" no sentido de inalar é transitivo direto; \"assistir\" no sentido de morar rege \"em\". (Fonte: Mackenzie)" },
+    /* 3. Regência Verbal (real, contextualizada — banco portugues/interpretacao-concursos.html do próprio site) */
+    { texto: `<p><b>SABIÁ GANHA STATUS DE AVE NACIONAL</b></p>
+      <p>O sabiá sempre foi o pássaro escolhido por poetas e compositores brasileiros para representar o país. Já ganhou versos de alguns dos maiores artistas nacionais: de Gonçalves Dias, em sua "Canção do exílio", a Tom Jobim e Chico Buarque, em "Sabiá", passando por Luiz Gonzaga, na canção também chamada "Sabiá". Tamanho currículo capacitou o passarinho de peito alaranjado a ser considerado a ave nacional do Brasil, desbancando uma concorrente de peso: a ararajuba, com suas vistosas penas verdes e amarelas.</p>
+      <p>Um decreto assinado pelo Presidente da República confirmou que o Dia da Ave é 5 de outubro e informou que "o centro de interesse para as festividades desse dia será o sabiá, como símbolo representativo da fauna ornitológica brasileira e considerado popularmente Ave Nacional do Brasil."</p>
+      <p>– A ave nacional de um país não pode ser escolhida em razão da cor da bandeira – afirma o ornitólogo Johan Dalgas Frisch, presidente da ONG Associação de Preservação da Vida Selvagem e um dos maiores cabos eleitorais do passarinho. – Ela representa o folclore, a música, a poesia, a alma do povo. E não existe qualquer música com ararajuba, poesia alguma.</p>
+      <p>Dalgas Frisch lembra ainda que, se a ararajuba fosse indicada ave nacional, correria o risco de ser extinta: – Uma ararajuba vale hoje cerca de US$ 5 mil entre os traficantes de animais. Se fosse ave nacional, passaria a valer uns US$ 50 mil. Acabaria sendo extinta e não representaria o espírito poético e folclórico da nação.</p>
+      <p>O Brasil, com 1.667 espécies de aves, era um dos poucos países a não ter ave nacional. A águia de cabeça branca, nos Estados Unidos, simboliza a união de todos os estados. Já o robim, na Grã-Bretanha, foi escolhido por ter inspirado William Shakespeare. Na Argentina, a ave nacional é o hornero (joão-de-barro), que representa o gaúcho dos pampas.</p>
+      <p>A campanha de Frisch para que o sabiá se tornasse ave nacional tem mais de 35 anos. Remonta ao tempo em que o então presidente Costa e Silva assinou um decreto criando o Dia da Ave.</p>
+      <p>– Foram anos de luta, mas ganhamos a batalha e ainda salvamos a ararajuba – comemora.</p>
+      <p class="fonte">O Globo, 23 nov. 2002 (com adaptações) — questão de prova de concurso público.</p>`,
+      pergunta: "Marque a opção em que a regência do verbo NÃO está adequada, conforme a norma culta:",
+      opcoes: ["O pesquisador agregou-se ao grupo da universidade.", "O auxiliar inseriu os dados no computador.", "A criança agradeceu os primos o presente.", "Eu entreguei o requerimento ao advogado."],
+      correta: "A criança agradeceu os primos o presente.",
+      explicacao: "Pela norma culta, \"agradecer\" rege o objeto direto para a coisa e o objeto indireto (com \"a\") para a pessoa: \"agradeceu o presente aos primos\", nunca \"agradeceu os primos o presente\". As demais regências estão corretas: \"agregar-se a\" e \"entregar a\" são usos consagrados, assim como \"inserir em\". (Fonte: O Globo, 23 nov. 2002 — questão do banco portugues/interpretacao-concursos.html deste site, tema Gramática.)" },
 
-    /* 4. Pronomes */
-    { pergunta: "Assinale a alternativa em que o pronome pessoal está empregado corretamente:",
-      opcoes: ["Este é um problema para mim resolver.", "Entre eu e tu não há mais nada.", "Para mim, viajar de avião é um suplício.", "Quando voltei a si, não sabia onde me encontrava."],
-      correta: "Para mim, viajar de avião é um suplício.",
-      explicacao: "\"Mim\" (pronome oblíquo) segue corretamente a preposição \"para\", sem ser sujeito de verbo nenhum. Nas erradas: \"mim\" não pode ser sujeito de infinitivo (o certo seria \"para eu resolver\"); depois de preposição, usa-se a forma oblíqua também na segunda ocorrência (\"entre mim e ti\"); \"voltar a si\" descreve a 3ª pessoa, não quem fala na 1ª (o certo seria \"voltei a mim\"). (Fonte: FUVEST)" },
+    /* 4. Pronomes (real, contextualizada — banco portugues/interpretacao-concursos.html do próprio site) */
+    { texto: `<p>Olívia se aproximou de Eugênio e com um lenço enxugou-lhe o suor da testa. Estava terminada a traqueostomia. A enfermeira juntava os ferros.</p>
+      <p>Ruído de metais tinindo, de mesas se arrastando.</p>
+      <p>Eugênio tirou as luvas e foi tomar o pulso do pequeno paciente. A criança como que ressuscitava.</p>
+      <p>A respiração voltava lentamente, a princípio superficial, depois mais funda e visível. O rosto perdia aos poucos a rigidez cianótica.</p>
+      <p><b>Eugênio examinava-lhe as mudanças do rosto</b> com comovida atenção.</p>
+      <p>Vencera! Salvara a vida de uma criança!</p>
+      <p>A vida é boa! – pensava Eugênio. Ele tinha salvo uma criança. Começou a cantarolar baixinho uma canção antiga que julgava esquecida. Sorvia com delícia o refresco impregnado do cheiro da gasolina queimada. Sentia-se leve e aéreo. Era como se dentro dele as nuvens de tempestade se tivessem despejado em chuva e sua alma agora estivesse límpida, fresca e estrelada como a noite.</p>
+      <p>– Por que será – perguntou ele a Olívia – por que será que às vezes de repente a gente tem a impressão de que acabou de nascer... ou de que o mundo ainda está fresquinho, recém-saído das mãos de quem o fez?</p>
+      <p class="fonte">VERÍSSIMO, Érico. Olhai os lírios do campo. Rio de Janeiro: Globo, 1987 (fragmento) — questão de prova de concurso público.</p>`,
+      pergunta: "Na passagem \"Eugênio examinava-lhe as mudanças do rosto com comovida atenção\", o pronome oblíquo \"lhe\" exerce função sintática idêntica ao termo destacado em:",
+      opcoes: ["\"Olívia se aproximou de Eugênio...\"", "\"A enfermeira juntava os ferros.\"", "\"A respiração voltava lentamente,\"", "\"Sentia-se leve e aéreo.\""],
+      correta: "\"Olívia se aproximou de Eugênio...\"",
+      explicacao: "\"Lhe\" em \"examinava-lhe as mudanças do rosto\" é objeto indireto do verbo (dativo, equivalente a \"examinava as mudanças do rosto dele\"). \"De Eugênio\", em \"aproximou-se de Eugênio\", também é objeto indireto, complemento exigido pela regência do verbo pronominal \"aproximar-se de\", tendo assim a mesma função sintática. As demais opções trazem sujeito (\"a enfermeira\", \"a respiração\") ou uma construção reflexiva sem valor de objeto indireto equivalente. (Fonte: Érico Veríssimo, Olhai os lírios do campo, 1987 — questão do banco portugues/interpretacao-concursos.html deste site, tema Gramática.)" },
 
     /* 5. Estratégias argumentativas (real, contextualizada — ENEM PPL 2015) */
     { texto: `<p>Ao interagirmos socialmente, é comum deixarmos claro nosso posicionamento a respeito do assunto discutido. Para isso, muitas vezes, recorremos a determinadas estratégias argumentativas, dentre as quais se encontra o argumento de autoridade.</p>
