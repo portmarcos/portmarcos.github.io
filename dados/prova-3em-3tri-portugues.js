@@ -1,10 +1,16 @@
 /* Prova — 3º Ano EM, 3º Trimestre 2026 (Língua Portuguesa)
    13 questões misturando os assuntos pedidos pelo professor: Pré-Modernismo,
-   Regência Verbal, Pronomes, Texto dissertativo-argumentativo, Interpretação
-   (ENEM + concurso), Crase, Memórias Póstumas de Brás Cubas (enredo),
-   Funções da linguagem, 1ª fase do Modernismo e Pontuação.
-   Questões marcadas "(pedagógica)" no campo explicacao são de autoria do
-   professor/site, não de vestibular real — as demais têm fonte real citada. */
+   Regência Verbal, Pronomes, Estratégias argumentativas, Interpretação
+   (ENEM + concurso), Crase, Memórias Póstumas de Brás Cubas, Funções da
+   linguagem, 1ª fase do Modernismo e Pontuação.
+   Estado em 28/ago/2026 (sessão de contextualização com questões reais):
+   12 das 13 questões são reais de vestibular/ENEM/concurso, cada uma com
+   texto de apoio (contextualizada) — só 1 segue pedagógica (1ª fase do
+   Modernismo, tópico 12: a única candidata real encontrada, UNICAMP 2024,
+   é duplicata exata da questão já usada no Parnasianismo da prova 2EM/2ºTri,
+   por isso foi descartada). A questão de Pontuação (tópico 13) é real
+   (Vestibular F.E. Bauru) mas ainda sem texto de apoio próprio — nenhuma
+   substituta contextualizada e não-duplicada foi confirmada até agora. */
 const QUIZ_DADOS = {
   id: "prova-3em-3tri-2026-portugues",
   titulo: "Prova — 3º Ano EM · 3º Trimestre (Língua Portuguesa)",

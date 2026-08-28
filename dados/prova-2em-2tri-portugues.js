@@ -3,13 +3,15 @@
    e composto, Orações coordenadas e subordinadas, Tipos de sujeito,
    Vocativo, Concordância verbal, Pontuação, Parnasianismo e Simbolismo,
    Interpretação textual (4 questões, 2 textos-base) e Memórias Póstumas
-   de Brás Cubas. As questões de interpretação foram escritas de propósito
-   de forma indireta/inferencial (a resposta não está localizável como
-   cópia literal de uma frase do texto — exige relacionar trechos,
-   perceber contraste implícito ou tom), a pedido do professor.
-   Todas as questões são de autoria do professor/site (pedagógicas),
-   exceto o trecho de Memórias Póstumas de Brás Cubas (Machado de Assis,
-   1881, domínio público), reproduzido e citado como fonte real. */
+   de Brás Cubas (2 questões, 1 texto-base).
+   Estado em 28/ago/2026 (sessão de contextualização com questões reais):
+   13 das 15 questões são reais de vestibular (majoritariamente FUVEST/
+   Unicamp/ITA, via dataset acadêmico BLUEX), cada uma com texto de apoio
+   real. Só 2 seguem pedagógicas por falta de substituto real e
+   contextualizado confiável: Período simples/composto (tópico 1) e
+   Vocativo (tópico 5) — buscas extensas (WebSearch + varredura no dataset
+   BLUEX inteiro) não encontraram nenhuma questão real de Fuvest/Unicamp
+   pedindo essa classificação específica a partir de um texto de apoio. */
 const QUIZ_DADOS = {
   id: "prova-2em-2tri-2026-portugues",
   titulo: "Prova — 2º Ano EM · 2º Trimestre (Língua Portuguesa)",
