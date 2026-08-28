@@ -12,11 +12,14 @@ const QUIZ_DADOS = {
   tempoPorQuestao: 120,
   questoes: [
 
-    /* 1. Pré-Modernismo */
-    { pergunta: "A obra \"Os Sertões\", de Euclides da Cunha, relata qual conflito histórico?",
-      opcoes: ["A Guerra de Canudos", "A Revolta da Vacina", "A Guerra do Paraguai", "A Revolta da Chibata"],
-      correta: "A Guerra de Canudos",
-      explicacao: "Euclides cobriu a Guerra de Canudos (1896–1897) como correspondente do jornal O Estado de S. Paulo e transformou a experiência no livro publicado em 1902 — um dos marcos do Pré-Modernismo brasileiro." },
+    /* 1. Pré-Modernismo (real, contextualizada — VUNESP/UNESP 2021) */
+    { texto: `<p>Percorrendo certa vez, nos fins de setembro [de 1897], as cercanias de Canudos, fugindo à monotonia de um canhoneio frouxo de tiros espaçados e soturnos, encontramos, no descer de uma encosta, anfiteatro irregular, onde as colinas se dispunham circulando um vale único. Pequenos arbustos, icozeiros virentes viçando em tufos intermeados de palmatórias de flores rutilantes, davam ao lugar a aparência exata de algum velho jardim em abandono. Ao lado uma árvore única, uma quixabeira alta, sobranceando a vegetação franzina.</p>
+      <p>(Euclides da Cunha, "Os Sertões", 1902 — trecho da parte "A terra". A obra, dividida em três partes — "A terra", "O homem" e "A luta" —, nasceu da cobertura jornalística que o autor fez da Guerra de Canudos para o jornal <i>O Estado de S. Paulo</i>, entre agosto e outubro de 1897.)</p>
+      <p class="fonte">VUNESP — UNESP 2021, 1ª fase, 1º dia, Questão 13.</p>`,
+      pergunta: "Além da primeira parte, intitulada \"A terra\", outras duas partes, intituladas \"O homem\" e \"A luta\", compõem Os sertões. Verifica-se, assim, na própria estrutura da obra, uma nítida influência do(a):",
+      opcoes: ["Determinismo", "Idealismo", "Iluminismo", "Socialismo"],
+      correta: "Determinismo",
+      explicacao: "A divisão tripartite da obra (A terra / O homem / A luta) reproduz a tríade determinista difundida no século XIX por Hippolyte Taine — meio, raça e momento histórico —, segundo a qual o comportamento humano é moldado por esses três fatores: o meio geográfico árido (\"A terra\") molda um tipo humano, o sertanejo (\"O homem\"), que entra em confronto com o Estado (\"A luta\"). Idealismo, Iluminismo e Socialismo não correspondem à base filosófico-científica que orienta a composição da obra, marcadamente naturalista-determinista. (Fonte: VUNESP — UNESP 2021.)" },
 
     /* 2. Regência Verbal */
     { pergunta: "Assinale a alternativa gramaticalmente correta quanto à regência verbal:",
@@ -36,11 +39,17 @@ const QUIZ_DADOS = {
       correta: "Para mim, viajar de avião é um suplício.",
       explicacao: "\"Mim\" (pronome oblíquo) segue corretamente a preposição \"para\", sem ser sujeito de verbo nenhum. Nas erradas: \"mim\" não pode ser sujeito de infinitivo (o certo seria \"para eu resolver\"); depois de preposição, usa-se a forma oblíqua também na segunda ocorrência (\"entre mim e ti\"); \"voltar a si\" descreve a 3ª pessoa, não quem fala na 1ª (o certo seria \"voltei a mim\"). (Fonte: FUVEST)" },
 
-    /* 5. Texto dissertativo-argumentativo */
-    { pergunta: "O texto dissertativo-argumentativo, como o exigido na redação do ENEM, se caracteriza por:",
-      opcoes: ["Narrar um fato pessoal, usando linguagem emotiva e subjetiva", "Descrever com detalhes um cenário, objeto ou personagem", "Defender uma tese sobre um tema, com argumentos e evidências", "Listar informações sobre um assunto, sem se posicionar sobre ele"],
-      correta: "Defender uma tese sobre um tema, com argumentos e evidências",
-      explicacao: "O texto dissertativo-argumentativo exige a defesa de uma tese (ponto de vista) sobre um tema, sustentada por argumentos e repertório sociocultural — diferente da narração (contar um fato) e da descrição (detalhar um cenário)." },
+    /* 5. Estratégias argumentativas (real, contextualizada — ENEM PPL 2015) */
+    { texto: `<p>Ao interagirmos socialmente, é comum deixarmos claro nosso posicionamento a respeito do assunto discutido. Para isso, muitas vezes, recorremos a determinadas estratégias argumentativas, dentre as quais se encontra o argumento de autoridade.</p>
+      <p><b>Trecho 1:</b> "Seja curioso, saboreie os momentos da vida e tome consciência de como se sente. Refletir sobre suas experiências ajuda a descobrir o que realmente importa."</p>
+      <p><b>Trecho 2:</b> "As pesquisas mostram que quem tem menos de três pessoas em sua rede de contatos próxima — entre família e amigos — tem mais chance de desenvolver uma doença mental."</p>
+      <p><b>Trecho 3:</b> "Caminhe ou corra, ande de bicicleta, pratique um esporte, dance. Os exercícios fazem as pessoas se sentirem bem."</p>
+      <p><b>Trecho 4:</b> "Fazer parte de uma comunidade traz benefícios — entre eles, relações sociais mais significativas."</p>
+      <p class="fonte">ENEM PPL 2015 — 2ª Aplicação, 2º dia, Caderno 13 (Cinza), Questão 102.</p>`,
+      pergunta: "Considerando o texto em suas partes, constata-se que há o emprego de argumento de autoridade no trecho:",
+      opcoes: ["Trecho 1", "Trecho 2", "Trecho 3", "Trecho 4"],
+      correta: "Trecho 2",
+      explicacao: "O argumento de autoridade consiste em sustentar uma afirmação recorrendo a uma fonte especializada, institucional ou reconhecida socialmente — no Trecho 2, a expressão \"as pesquisas mostram\" cumpre exatamente esse papel, transferindo credibilidade científica à recomendação. Os demais trechos usam outras estratégias (apelo à reflexão pessoal, recomendação de hábito, afirmação genérica sobre benefício social), mas nenhum deles cita uma fonte externa que valide a afirmação. (Fonte: ENEM PPL 2015, 2ª Aplicação.)" },
 
     /* 6. Interpretação — ENEM */
     { texto: `<p>Ora, sempre que surge uma nova técnica, ela quer demonstrar que revogará as regras e coerções que presidiram o nascimento de todas as outras invenções do passado. Ela se pretende orgulhosa e única. Como se a nova técnica carreasse com ela, automaticamente, para seus novos usuários, uma propensão natural a fazer economia de qualquer aprendizagem. Como se ela se preparasse para varrer tudo que a precedeu, ao mesmo tempo transformando em analfabetos todos os que ousassem repeli-la.</p>
@@ -70,17 +79,24 @@ const QUIZ_DADOS = {
       correta: "altera a identificação do real homenageado.",
       explicacao: "A crase só ocorre quando a preposição \"a\" se funde com um artigo feminino diante de palavra feminina. \"Bituca\" é apelido masculino — o acento indevido sugere, pelo padrão visual \"à + palavra\", que o homenageado seria identificado por nome/apelido feminino, desvirtuando a identificação de quem de fato está sendo homenageado." },
 
-    /* 9. Memórias Póstumas de Brás Cubas — enredo (pedagógica) */
-    { pergunta: "No romance, Brás Cubas dedica boa parte da vida adulta a um projeto que nunca conclui. Do que se trata esse projeto?",
-      opcoes: ["Um tratado filosófico completo sobre a doutrina do Humanitismo", "Um emplasto contra a hipocondria, que traria fama e cura", "Uma candidatura a deputado pelo partido conservador da época", "Uma biografia cuidadosa e detalhada do pai, Bento Cubas"],
-      correta: "Um emplasto contra a hipocondria, que traria fama e cura",
-      explicacao: "(Questão pedagógica, não de vestibular.) O \"emplasto Brás Cubas\" é a grande ambição da vida do narrador — um remédio contra a hipocondria que lhe daria fama e glória. Ele morre antes de terminá-lo, e o próprio livro é, em certo sentido, o produto que sobrou desse projeto fracassado." },
+    /* 9. Memórias Póstumas de Brás Cubas (real, contextualizada — FUVEST 2014, Cap. LXXI) */
+    { texto: `<p>Começo a arrepender-me deste livro. Não que ele me canse; eu não tenho que fazer; e, realmente, expedir alguns magros capítulos para esse mundo sempre é tarefa que distrai um pouco da eternidade. Mas o livro é enfadonho, cheira a sepulcro, traz certa contração cadavérica; vício grave, e aliás ínfimo, porque o maior defeito deste livro és tu, leitor. Tu tens pressa de envelhecer, e o livro anda devagar; tu amas a narração direita e nutrida, o estilo compassado e liso, e este livro e o meu estilo são como os ébrios, guinam à direita e à esquerda, andam e param, resmungam, urram, gargalham, ameaçam o céu, escorregam e caem...</p>
+      <p>(Machado de Assis, "Memórias Póstumas de Brás Cubas", 1881 — trecho do Capítulo LXXI, "O senão do livro".)</p>
+      <p class="fonte">FUVEST — 2014, 1ª fase, Prova V, Questão 83.</p>`,
+      pergunta: "Um leitor que tivesse as mesmas inclinações atribuídas, pelo narrador, ao leitor de Memórias Póstumas de Brás Cubas teria maior probabilidade de impacientar-se, também, com a leitura de:",
+      opcoes: ["Memórias de um sargento de milícias", "Viagens na minha terra", "O cortiço", "A cidade e as serras"],
+      correta: "Viagens na minha terra",
+      explicacao: "O narrador descreve seu próprio livro como digressivo, inconstante, sem a \"narração direita e nutrida\" que um leitor apressado espera. Viagens na Minha Terra, de Almeida Garrett, tem exatamente esse mesmo caráter: intercala crônica de viagem, novela sentimental e cartas, com pouquíssima linearidade — por isso um leitor impaciente com Brás Cubas se impacientaria igualmente com essa obra. Memórias de um sargento de milícias, O cortiço e A cidade e as serras, apesar de digressões pontuais, têm conduções narrativas bem mais lineares. (Fonte: FUVEST 2014.)" },
 
-    /* 10. Memórias Póstumas de Brás Cubas — enredo (pedagógica) */
-    { pergunta: "Brás Cubas considera Eugênia, filha de Dona Eusébia, moralmente superior às outras mulheres que conheceu, mas desiste de se casar com ela. Qual motivo ele mesmo confessa para essa desistência?",
-      opcoes: ["A diferença de classe social entre as duas famílias envolvidas", "A vaidade: a vergonha de ter, perante a sociedade, uma esposa coxa", "A oposição direta da própria mãe de Brás Cubas a esse casamento", "A descoberta de que Eugênia já amava secretamente outro homem"],
-      correta: "A vaidade: a vergonha de ter, perante a sociedade, uma esposa coxa",
-      explicacao: "(Questão pedagógica, não de vestibular.) Apesar de reconhecer o valor de Eugênia, Brás Cubas confessa que a vaidade — o medo do julgamento social por causa da deficiência física dela — falou mais alto. É um dos momentos que mais expõem a mesquinhez do narrador." },
+    /* 10. Memórias Póstumas de Brás Cubas (real, contextualizada — FUVEST 2015, Cap. CVII-CVIII) */
+    { texto: `<p><i>[Capítulo "Bilhete": Virgília, temendo que o marido, Lobo Neves, desconfie do caso extraconjugal dela com Brás Cubas, manda-lhe às pressas um recado.]</i></p>
+      <p>"Não houve nada, mas ele suspeita alguma coisa; está muito sério e não fala; agora saiu. Sorriu uma vez somente, para Nhonhô, depois de o fitar muito tempo, carrancudo. Não me tratou mal nem bem. Não sei o que vai acontecer; Deus queira que isto passe. Muita cautela, por ora, muita cautela."</p>
+      <p>Eis aí o drama, eis aí a ponta da orelha trágica de Shakespeare. Esse retalhinho de papel, garatujado em partes, machucado das mãos, era um documento de análise, que eu não farei neste capítulo, nem no outro, nem talvez em todo o resto do livro. Poderia eu tirar ao leitor o gosto de notar por si mesmo a frieza, a perspicácia e o ânimo dessas poucas linhas traçadas à pressa; e por trás delas a tempestade de outro cérebro, a raiva dissimulada, o desespero que se constrange e medita, porque tem de resolver-se na lama, ou nas lágrimas?</p>
+      <p class="fonte">Machado de Assis, "Memórias Póstumas de Brás Cubas", 1881 — Capítulos CVII-CVIII. FUVEST — 2015, 1ª fase, Prova V, Questão 30.</p>`,
+      pergunta: "Ao comentar o bilhete de Virgília, o narrador afirma que não fará a análise do documento — e, na frase seguinte, passa a apontar exatamente a \"frieza\", a \"perspicácia\" e o \"ânimo\" das linhas escritas por ela. Esse procedimento configura a figura de linguagem chamada:",
+      opcoes: ["Hipérbato", "Hipérbole", "Preterição", "Eufemismo"],
+      correta: "Preterição",
+      explicacao: "Preterição é a figura pela qual se finge não querer falar de algo sobre o qual, no entanto, se está efetivamente falando — exatamente o que o narrador faz: anuncia que não analisará o bilhete e, na sequência, tece uma análise detalhada dele. Hipérbato é inversão da ordem das palavras, hipérbole é exagero expressivo e eufemismo é a substituição de uma expressão desagradável por outra mais suave — nenhuma dessas descreve o gesto de \"dizer que não vai dizer\" que caracteriza o trecho. (Fonte: FUVEST 2015.)" },
 
     /* 11. Funções da linguagem */
     { texto: `<p>O telefone tocou.<br>— Alô? Quem fala?<br>— Como? Com quem deseja falar?<br>— Quero falar com o sr. Samuel Cardoso.<br>— É ele mesmo. Quem fala, por obséquio?<br>— Não se lembra mais da minha voz, seu Samuel? Faça um esforço.<br>— Lamento muito, minha senhora, mas não me lembro. Pode dizer-me de quem se trata?</p>
