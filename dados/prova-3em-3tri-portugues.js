@@ -106,7 +106,12 @@ const QUIZ_DADOS = {
       correta: "fática.",
       explicacao: "A função fática se concentra no CANAL de comunicação — sua marca é verificar, prolongar ou interromper o contato entre quem fala e quem ouve, sem necessariamente transmitir informação nova. Isso fica evidente em todo o diálogo: os dois interlocutores só confirmam que a ligação continua ativa e identificam um ao outro." },
 
-    /* 12. 1ª fase do Modernismo */
+    /* 12. 1ª fase do Modernismo (pedagógica — mantida)
+       Candidata real encontrada (UNICAMP 2024, Q11: crítica de Mário de
+       Andrade a Olavo Bilac + poema "As Estrelas") foi DESCARTADA por
+       duplicar exatamente a questão já usada no tópico "Parnasianismo" da
+       prova do 2º Ano/2º Trimestre deste mesmo site — mesmo texto, mesmo
+       gabarito. Segue pedagógica até surgir um substituto real e diferente. */
     { pergunta: "O que tornou a Semana de Arte Moderna de 1922 um escândalo para boa parte do público da época?",
       opcoes: ["Ela repetia com fidelidade as regras da poesia parnasiana da época.", "Ela era restrita a convidados, sem nenhuma repercussão fora do teatro.", "Ela rompia com as formas tradicionais e causou estranhamento na plateia.", "Ela reproduzia exatamente as obras já aceitas nos salões oficiais."],
       correta: "Ela rompia com as formas tradicionais e causou estranhamento na plateia.",
