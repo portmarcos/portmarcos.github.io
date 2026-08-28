@@ -1,15 +1,19 @@
 /* Prova — 2º Ano EM, 2º Trimestre 2026 (Língua Portuguesa)
-   13 questões cobrindo os assuntos pedidos pelo professor: Período simples
+   15 questões cobrindo os assuntos pedidos pelo professor: Período simples
    e composto, Orações coordenadas e subordinadas, Tipos de sujeito,
    Vocativo, Concordância verbal, Pontuação, Parnasianismo e Simbolismo,
-   Interpretação textual e Memórias Póstumas de Brás Cubas.
+   Interpretação textual (4 questões, 2 textos-base) e Memórias Póstumas
+   de Brás Cubas. As questões de interpretação foram escritas de propósito
+   de forma indireta/inferencial (a resposta não está localizável como
+   cópia literal de uma frase do texto — exige relacionar trechos,
+   perceber contraste implícito ou tom), a pedido do professor.
    Todas as questões são de autoria do professor/site (pedagógicas),
    exceto o trecho de Memórias Póstumas de Brás Cubas (Machado de Assis,
    1881, domínio público), reproduzido e citado como fonte real. */
 const QUIZ_DADOS = {
   id: "prova-2em-2tri-2026-portugues",
   titulo: "Prova — 2º Ano EM · 2º Trimestre (Língua Portuguesa)",
-  descricao: "13 questões misturando sintaxe do período (simples/composto, orações coordenadas e subordinadas, tipos de sujeito, vocativo), gramática (concordância verbal, pontuação), literatura (Parnasianismo, Simbolismo, Memórias Póstumas de Brás Cubas) e interpretação de texto.",
+  descricao: "15 questões misturando sintaxe do período (simples/composto, orações coordenadas e subordinadas, tipos de sujeito, vocativo), gramática (concordância verbal, pontuação), literatura (Parnasianismo, Simbolismo, Memórias Póstumas de Brás Cubas) e interpretação de texto.",
   tempoPorQuestao: 120,
   questoes: [
 
@@ -67,25 +71,43 @@ const QUIZ_DADOS = {
       correta: "Musicalidade, sugestão e uso de sinestesias para expressar estados de alma.",
       explicacao: "O Simbolismo (Cruz e Sousa é o principal nome no Brasil) valoriza a musicalidade do verso, a sugestão — em vez da descrição direta — e as sinestesias (mistura de sensações, como \"cor que se ouve\"), buscando expressar estados de alma e o plano espiritual/misterioso, em oposição à objetividade parnasiana. As demais alternativas descrevem, respectivamente, o Realismo/Parnasianismo, a 1ª fase do Modernismo e o Parnasianismo." },
 
-    /* 10. Interpretação textual */
+    /* 10. Interpretação textual (inferência sobre a postura do autor, não uma informação dita de forma direta) */
     { texto: `<p>Nos últimos anos, cresceu o número de jovens que preferem ouvir um audiobook a ler um livro impresso. Para alguns professores, essa mudança é motivo de preocupação: a leitura em voz alta, dizem eles, dispensa o esforço de decodificar o texto escrito e pode prejudicar o vocabulário e a ortografia dos estudantes.</p>
       <p>Outros especialistas discordam: para eles, o que importa é o contato com a história, os argumentos e as ideias do texto — o suporte (papel, tela ou áudio) seria apenas um detalhe secundário. Enquanto essa discussão não se resolve, uma coisa é certa: nunca se produziu, ao mesmo tempo, tanto conteúdo em tantos formatos diferentes para quem quer ler — ou ouvir.</p>
       <p class="fonte">Texto original, elaborado para fins didáticos.</p>`,
-      pergunta: "De acordo com o texto, a principal divergência entre os dois grupos de especialistas citados diz respeito a:",
-      opcoes: ["se os audiobooks devem ou não ser proibidos nas escolas.", "se o suporte usado para a leitura (papel, tela ou áudio) interfere na aprendizagem.", "se os jovens leem mais hoje do que há vinte anos.", "se os audiobooks custam mais caro que os livros impressos."],
-      correta: "se o suporte usado para a leitura (papel, tela ou áudio) interfere na aprendizagem.",
-      explicacao: "O texto opõe dois grupos: um que teme que ouvir (em vez de ler) prejudique vocabulário e ortografia, e outro que considera o suporte \"um detalhe secundário\" diante do contato com a história e as ideias. A divergência central é justamente sobre o peso do suporte na aprendizagem — as demais opções não são discutidas no texto." },
+      pergunta: "A forma como o texto apresenta a opinião de um grupo e, na sequência, a do outro, sem validar nenhuma das duas, sugere que o autor:",
+      opcoes: ["defende abertamente que os audiobooks são superiores aos livros impressos.", "busca manter uma postura imparcial diante de um debate que ainda segue em aberto.", "considera que os professores estão certos ao ver a mudança como um problema.", "pretende convencer o leitor de que os livros impressos estão com os dias contados."],
+      correta: "busca manter uma postura imparcial diante de um debate que ainda segue em aberto.",
+      explicacao: "O texto apresenta os dois lados (\"Para alguns professores...\" / \"Outros especialistas discordam\") sem tomar partido explícito por nenhum deles, e a frase final (\"Enquanto essa discussão não se resolve...\") reforça que o debate continua sem solução — construção típica de texto informativo equilibrado, não de texto de opinião. As demais alternativas atribuem ao autor uma posição que o texto, em nenhum momento, assume abertamente." },
 
-    /* 11. Interpretação textual (mesmo texto) */
+    /* 11. Interpretação textual (mesmo texto — exige interpretar a intenção da conclusão, não apenas localizá-la) */
     { texto: `<p>Nos últimos anos, cresceu o número de jovens que preferem ouvir um audiobook a ler um livro impresso. Para alguns professores, essa mudança é motivo de preocupação: a leitura em voz alta, dizem eles, dispensa o esforço de decodificar o texto escrito e pode prejudicar o vocabulário e a ortografia dos estudantes.</p>
       <p>Outros especialistas discordam: para eles, o que importa é o contato com a história, os argumentos e as ideias do texto — o suporte (papel, tela ou áudio) seria apenas um detalhe secundário. Enquanto essa discussão não se resolve, uma coisa é certa: nunca se produziu, ao mesmo tempo, tanto conteúdo em tantos formatos diferentes para quem quer ler — ou ouvir.</p>
       <p class="fonte">Texto original, elaborado para fins didáticos.</p>`,
-      pergunta: "A expressão \"um detalhe secundário\", no texto, é usada para expressar a opinião de que:",
-      opcoes: ["o conteúdo do texto importa mais do que o formato em que ele é consumido.", "os audiobooks são sempre inferiores aos livros impressos.", "os professores estão certos ao se preocupar com a ortografia.", "não há diferença nenhuma entre ler e ouvir uma história."],
-      correta: "o conteúdo do texto importa mais do que o formato em que ele é consumido.",
-      explicacao: "Ao chamar o suporte de \"detalhe secundário\", o texto resume a posição do segundo grupo de especialistas: o que importa de fato é o conteúdo — história, argumentos, ideias —, não o meio pelo qual ele chega ao leitor ou ouvinte. As demais alternativas contradizem ou exageram o que o texto afirma." },
+      pergunta: "Ao encerrar afirmando que \"nunca se produziu, ao mesmo tempo, tanto conteúdo em tantos formatos diferentes para quem quer ler — ou ouvir\", o texto sugere, sem dizer isso de forma direta, que:",
+      opcoes: ["o verdadeiro problema atual é a falta de opções de acesso à leitura.", "a disputa entre os dois grupos perde parte da sua urgência diante da variedade inédita de formas de acesso ao conteúdo.", "os audiobooks vão substituir totalmente os livros impressos em pouco tempo.", "só os livros impressos garantem que o leitor realmente aprenda algo."],
+      correta: "a disputa entre os dois grupos perde parte da sua urgência diante da variedade inédita de formas de acesso ao conteúdo.",
+      explicacao: "Ao fechar o texto destacando a abundância inédita de formatos disponíveis, o autor sugere — sem afirmar isso com essas palavras — que essa variedade relativiza a disputa entre os dois grupos: importa menos QUAL suporte se usa, e mais o fato de que o acesso a conteúdo nunca foi tão amplo. É uma conclusão que precisa ser interpretada, não apenas localizada no texto." },
 
-    /* 12. Memórias Póstumas de Brás Cubas */
+    /* 12. Interpretação textual (crônica curta, crítica implícita ao automatismo do celular) */
+    { texto: `<p>Basta o som de uma notificação para que, em qualquer ambiente — sala de aula, fila de banco, mesa de jantar —, dezenas de mãos desçam ao mesmo tempo até o bolso, como se movidas por um único comando. Ninguém combinou esse gesto; ele simplesmente se instalou, silencioso, até deixar de causar estranhamento em quase ninguém.</p>
+      <p>Curioso é que a mensagem, na maior parte das vezes, poderia esperar alguns minutos sem problema nenhum. A mão, essa, é que parece não saber mais esperar.</p>
+      <p class="fonte">Texto original, elaborado para fins didáticos.</p>`,
+      pergunta: "A comparação do gesto de pegar o celular a algo \"movido por um único comando\" sugere, principalmente, que esse comportamento:",
+      opcoes: ["é sempre proposital e pensado antes de ser executado.", "tornou-se quase automático, escapando ao controle consciente de quem o pratica.", "acontece só em ambientes formais, como a sala de aula.", "foi combinado previamente entre as pessoas presentes no ambiente."],
+      correta: "tornou-se quase automático, escapando ao controle consciente de quem o pratica.",
+      explicacao: "A expressão \"como se movidas por um único comando\", somada ao trecho seguinte (\"Ninguém combinou esse gesto; ele simplesmente se instalou\"), sugere — sem afirmar isso diretamente — que o gesto virou um hábito automático, que dispensa reflexão consciente, e não algo pensado ou combinado entre as pessoas. As demais alternativas contrariam essa leitura implícita do texto." },
+
+    /* 13. Interpretação textual (mesma crônica — crítica construída por contraste, não enunciada) */
+    { texto: `<p>Basta o som de uma notificação para que, em qualquer ambiente — sala de aula, fila de banco, mesa de jantar —, dezenas de mãos desçam ao mesmo tempo até o bolso, como se movidas por um único comando. Ninguém combinou esse gesto; ele simplesmente se instalou, silencioso, até deixar de causar estranhamento em quase ninguém.</p>
+      <p>Curioso é que a mensagem, na maior parte das vezes, poderia esperar alguns minutos sem problema nenhum. A mão, essa, é que parece não saber mais esperar.</p>
+      <p class="fonte">Texto original, elaborado para fins didáticos.</p>`,
+      pergunta: "Ao contrapor \"a mensagem... poderia esperar\" e \"a mão... não saber mais esperar\", o texto constrói, de forma implícita, uma crítica:",
+      opcoes: ["à baixa qualidade das mensagens recebidas por celular atualmente.", "ao descompasso entre a urgência real de checar o celular e a urgência que se sente ao fazê-lo.", "à demora das operadoras de telefonia para entregar notificações.", "à substituição das conversas presenciais por mensagens de texto."],
+      correta: "ao descompasso entre a urgência real de checar o celular e a urgência que se sente ao fazê-lo.",
+      explicacao: "O texto não formula uma crítica explícita, mas a contraposição entre o que \"poderia esperar\" (a mensagem, de fato) e o que \"não sabe mais esperar\" (a reação da mão) evidencia, por contraste, uma urgência desproporcional: a pressa é do hábito, não da real necessidade daquela mensagem. É uma leitura que exige inferir a crítica, já que o texto em nenhum momento a formula diretamente." },
+
+    /* 14. Memórias Póstumas de Brás Cubas */
     { texto: `<p>Algum tempo hesitei se devia abrir estas memórias pelo princípio ou pelo fim, isto é, se poria em primeiro lugar o meu nascimento ou a minha morte. Suposto o uso vulgar seja começar pelo nascimento, duas considerações me levaram a adotar diferente método: a primeira é que eu não sou propriamente um autor defunto, mas um defunto autor, para quem a campa foi outro berço; a segunda é que o escrito ficaria assim mais galante e mais novo.</p>
       <p>Dito isto, expirei às duas horas da tarde de uma sexta-feira do mês de agosto de 1869, na minha bela chácara de Catumbi. Tinha uns sessenta e quatro anos, rijos e prósperos, era solteiro, possuía cerca de trezentos contos e fui acompanhado ao cemitério por onze amigos.</p>
       <p class="fonte">ASSIS, Machado de. Memórias Póstumas de Brás Cubas. Rio de Janeiro, 1881. Capítulo I — "Óbito do Autor".</p>`,
@@ -94,7 +116,7 @@ const QUIZ_DADOS = {
       correta: "ele não é um autor defunto, mas um \"defunto autor\" — já está morto ao narrar.",
       explicacao: "O narrador brinca com as palavras para explicar sua condição incomum: ele \"não é propriamente um autor defunto, mas um defunto autor\" — ou seja, já morreu, e é desse lugar (post-mortem) que narra toda a história. Essa inversão (contar a morte antes do nascimento) é a marca mais famosa do romance. Sobre o Pentateuco, o texto afirma o contrário: há \"diferença radical\" entre os dois livros." },
 
-    /* 13. Memórias Póstumas de Brás Cubas (mesmo trecho) */
+    /* 15. Memórias Póstumas de Brás Cubas (mesmo trecho) */
     { texto: `<p>Algum tempo hesitei se devia abrir estas memórias pelo princípio ou pelo fim, isto é, se poria em primeiro lugar o meu nascimento ou a minha morte. Suposto o uso vulgar seja começar pelo nascimento, duas considerações me levaram a adotar diferente método: a primeira é que eu não sou propriamente um autor defunto, mas um defunto autor, para quem a campa foi outro berço; a segunda é que o escrito ficaria assim mais galante e mais novo.</p>
       <p>Dito isto, expirei às duas horas da tarde de uma sexta-feira do mês de agosto de 1869, na minha bela chácara de Catumbi. Tinha uns sessenta e quatro anos, rijos e prósperos, era solteiro, possuía cerca de trezentos contos e fui acompanhado ao cemitério por onze amigos.</p>
       <p class="fonte">ASSIS, Machado de. Memórias Póstumas de Brás Cubas. Rio de Janeiro, 1881. Capítulo I — "Óbito do Autor".</p>`,
