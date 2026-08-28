@@ -23,23 +23,30 @@ const QUIZ_DADOS = {
       correta: "Estudei bastante, mas não tirei uma boa nota.",
       explicacao: "Período composto é aquele que tem duas ou mais orações, ou seja, dois ou mais verbos. Em \"Estudei bastante, mas não tirei uma boa nota\" há dois verbos (\"estudei\" e \"tirei\"), ligados pela conjunção \"mas\" — logo, é composto. As demais alternativas têm apenas um verbo cada, sendo períodos simples (uma só oração)." },
 
-    /* 2. Orações coordenadas */
-    { pergunta: "Na oração \"Estudei bastante, mas não tirei uma boa nota\", a oração destacada (\"mas não tirei uma boa nota\") é uma oração coordenada sindética:",
-      opcoes: ["Aditiva", "Adversativa", "Alternativa", "Conclusiva"],
-      correta: "Adversativa",
-      explicacao: "A conjunção \"mas\" liga duas orações independentes exprimindo contraste ou oposição entre as ideias — é essa a marca da oração coordenada sindética adversativa. A aditiva usa \"e\"; a alternativa, \"ou\"; a conclusiva, \"logo\"/\"portanto\"." },
+    /* 2. Orações coordenadas (real, contextualizada — FUVEST 1992) */
+    { texto: `<p>O trecho abaixo faz parte de um discurso do empresário Ricardo Semler dirigido a empresários brasileiros, no qual ele reflete sobre a posição econômica do Brasil e o papel da elite empresarial do país diante das desigualdades sociais do início dos anos 1990.</p>
+      <p class="fonte">RICARDO SEMLER. Discurso de Semler aos Empresários. Folha de S. Paulo, 11/09/1991 (texto usado na prova de Português da FUVEST 1992).</p>`,
+      pergunta: "Dentre os períodos a seguir, retirados do discurso, assinale aquele que é composto por coordenação e contém uma oração coordenada sindética adversativa:",
+      opcoes: ["A frustração cresce e a desesperança não cede.", "O que dizer sem resvalar para o pessimismo, a crítica pungente ou a auto-absolvição?", "É também ocioso pensar que nós, da tal elite, temos riqueza suficiente para distribuir.", "Em termos mundiais somos irrelevantes como potência econômica, mas ao mesmo tempo extremamente representativos como população."],
+      correta: "Em termos mundiais somos irrelevantes como potência econômica, mas ao mesmo tempo extremamente representativos como população.",
+      explicacao: "Esse período tem duas orações independentes ligadas pela conjunção adversativa \"mas\", que marca o contraste entre a irrelevância econômica do Brasil no cenário mundial e sua representatividade populacional — por isso é uma oração coordenada sindética adversativa. Em \"A frustração cresce e a desesperança não cede\", a conjunção \"e\" também liga duas orações coordenadas, mas de sentido aditivo, não adversativo. Em \"O que dizer sem resvalar...\", há um único verbo no infinitivo (\"dizer\"), o que caracteriza período simples. Em \"É também ocioso pensar que nós...temos riqueza suficiente...\", o verbo \"temos\" introduz uma oração subordinada substantiva objetiva direta de \"pensar\" — período composto por subordinação, não por coordenação. (Fonte: FUVEST 1992, discurso de Ricardo Semler, Folha de S. Paulo, 11/09/1991.)" },
 
-    /* 3. Orações subordinadas */
-    { pergunta: "Em \"Quando o sinal tocou, os alunos entraram em fila\", a oração destacada (\"Quando o sinal tocou\") é uma oração subordinada adverbial:",
-      opcoes: ["Causal", "Temporal", "Condicional", "Concessiva"],
-      correta: "Temporal",
-      explicacao: "A conjunção \"quando\" introduz uma oração subordinada adverbial temporal, indicando o momento em que ocorre a ação da oração principal (\"os alunos entraram em fila\"). A causal seria introduzida por \"porque\"/\"já que\"; a condicional, por \"se\"; a concessiva, por \"embora\"/\"ainda que\"." },
+    /* 3. Orações subordinadas adverbiais (real, contextualizada — FUVEST 2021) */
+    { texto: `<p>Uma última gargalhada estrondosa. E depois, o silêncio. O palhaço jazia imóvel no chão. Mas seu rosto continua sorrindo, para sempre. Porque a carreira original do Coringa era para durar apenas 30 páginas. O tempo de envenenar Gotham, sequestrar Robin, enfiar um par de sopapos no Homem-Morcego e disparar o primeiro "vou te matar" na sua relação.</p>
+      <p>Na briga final do Batman nº 1, o "horripilante bufão" sofria um final digno de sua desumana ironia: ao tropeçar, cravava sua própria adaga no peito. Assim decidiram e desenharam seus pais, os artistas Bill Finger, Bob Kane e Jerry Robinson. Entretanto, o criminoso mostrou, já em sua primeira aventura, um enorme talento para se rebelar contra a ordem estabelecida. Seu carisma seduziu a editora DC Comics, que impôs o acréscimo de um quadrinho. Já dentro da ambulância, vinha à tona "um dado desconcertante". E então um médico sentenciava: "Continua vivo. E vai sobreviver!".</p>
+      <p class="fonte">TOMMASO KOCH. "O Coringa completa 80 anos e na Espanha ganha duas HQs, que inspiram debates filosóficos sobre a liberdade". El País, junho de 2020 (texto usado na prova de Português da FUVEST 2021).</p>`,
+      pergunta: "No fragmento \"AO TROPEÇAR, cravava sua própria adaga no peito\", a oração destacada em letras maiúsculas abrange, simultaneamente, as noções de:",
+      opcoes: ["causa e proporção.", "tempo e consequência.", "explicação e consequência.", "tempo e causa."],
+      correta: "tempo e causa.",
+      explicacao: "\"Ao tropeçar\" é uma oração subordinada adverbial reduzida de infinitivo que, nesse contexto, admite duas leituras simultâneas: pode ser parafraseada tanto por \"quando tropeçou\" (valor temporal, o momento em que o gesto aconteceu) quanto por \"porque tropeçou\" (valor causal, o motivo de a adaga ter sido cravada) — foi justamente o tropeço que causou o gesto fatal, no mesmo instante em que ele ocorreu. Não há relação de proporção (não indica variação simultânea e crescente de duas ações, como em \"à medida que\"), nem de consequência (o tropeço é a causa do gesto, não seu resultado), nem de explicação (não justifica uma ordem ou um pedido anterior). (Fonte: FUVEST 2021 (USP), reportagem de Tommaso Koch, El País, junho de 2020.)" },
 
-    /* 4. Tipos de sujeito */
-    { pergunta: "Assinale a alternativa em que o sujeito da oração é indeterminado:",
-      opcoes: ["Choveu a noite inteira.", "Falaram mal de você na reunião.", "Os alunos terminaram a prova cedo.", "Ele e ela viajaram juntos."],
-      correta: "Falaram mal de você na reunião.",
-      explicacao: "Quando o verbo está na 3ª pessoa do plural sem que se saiba (ou sem que importe) quem pratica a ação, o sujeito é indeterminado — é o caso de \"Falaram mal de você\". Em \"Choveu a noite inteira\", o verbo é impessoal (fenômeno da natureza), por isso a oração não tem sujeito (sujeito inexistente). Em \"Os alunos terminaram...\", o sujeito é simples (\"os alunos\"); em \"Ele e ela viajaram...\", é composto (dois núcleos: \"ele\" e \"ela\")." },
+    /* 4. Tipos de sujeito (real, contextualizada — FUVEST 2019) */
+    { texto: `<p>Mito, na acepção aqui empregada, não significa mentira, falsidade ou mistificação. Tomo de empréstimo a formulação de Hans Blumenberg do mito político como um processo contínuo de trabalho de uma narrativa que responde a uma necessidade prática de uma sociedade em determinado período. Narrativa simbólica que é, o mito político coloca em suspenso o problema da verdade. Seu discurso não pretende ter validade factual, mas também não pode ser percebido como mentira (do contrário, não seria mito). O mito político confere um sentido às circunstâncias que envolvem os indivíduos: ao fazê-los ver sua condição presente como parte de uma história em curso, ajuda a compreender e suportar o mundo em que vivem.</p>
+      <p class="fonte">ENGELKE, Antonio. "O anjo redentor". Revista Piauí, ago. 2018, ed. 143, p. 24 (texto usado na prova de Português da FUVEST 2019).</p>`,
+      pergunta: "Sobre o sujeito da oração \"em que vivem\", destacada no fim do texto, é correto afirmar:",
+      opcoes: ["Expressa indeterminação, cabendo ao leitor deduzir a quem se refere a ação verbal.", "Está oculto e visa evitar a repetição da palavra \"circunstâncias\".", "É uma função sintática preenchida pelo pronome \"que\".", "Está oculto e seu referente é o mesmo do pronome \"os\" em \"fazê-los\"."],
+      correta: "Está oculto e seu referente é o mesmo do pronome \"os\" em \"fazê-los\".",
+      explicacao: "O sujeito de \"vivem\" está oculto (desinencial): não aparece expresso na oração, mas é recuperável pela desinência verbal de 3ª pessoa do plural e pelo contexto — refere-se aos mesmos indivíduos retomados pelo pronome oblíquo \"os\" em \"fazê-los\", ou seja, \"os indivíduos\" mencionados antes no texto. Não é sujeito indeterminado, porque sujeito indeterminado ocorre quando NÃO é possível identificar a quem a ação se refere — aqui o referente é perfeitamente identificável. Também não é \"circunstâncias\" o referente do sujeito oculto, porque \"circunstâncias\" é palavra feminina singular e o verbo \"vivem\" está no plural — não haveria concordância. E o pronome \"que\" em \"em que vivem\" não exerce a função de sujeito: ele retoma \"o mundo\" e funciona como adjunto adverbial de lugar dentro da própria oração (\"vivem NO MUNDO\" = \"vivem EM QUE\"), preposicionado por \"em\" — por isso não pode ao mesmo tempo ser o sujeito de \"vivem\". (Fonte: FUVEST 2019 (USP), artigo de Antonio Engelke, revista Piauí, ago. 2018.)" },
 
     /* 5. Vocativo */
     { pergunta: "Em qual das alternativas há um vocativo?",
@@ -47,82 +54,158 @@ const QUIZ_DADOS = {
       correta: "Maria, você estudou muito para a prova?",
       explicacao: "O vocativo é o termo usado para chamar, invocar ou interpelar diretamente alguém, isolado por vírgula(s) e sem função sintática na oração (não é sujeito nem complemento). Em \"Maria, você estudou muito para a prova?\", \"Maria\" está sendo chamada — é vocativo. Nas demais alternativas, \"Maria\" exerce função sintática: sujeito (1ª e 4ª) ou adjunto adnominal (3ª)." },
 
-    /* 6. Concordância verbal */
-    { pergunta: "Assinale a alternativa em que a concordância verbal está CORRETA:",
-      opcoes: ["Haviam muitos alunos na sala.", "Fazem dois anos que não o vejo.", "Mais de um aluno faltou à prova.", "Existe muitos motivos para estudar."],
-      correta: "Mais de um aluno faltou à prova.",
-      explicacao: "Com a expressão \"mais de um\" seguida de substantivo no singular, o verbo fica no singular (\"mais de um aluno faltou\"), exceto quando há ideia de reciprocidade. As demais têm erro: \"haver\" indicando existência é impessoal e fica sempre no singular (\"Havia muitos alunos\"); \"fazer\" indicando tempo decorrido também é impessoal (\"Faz dois anos\"); \"existir\" não é impessoal e concorda normalmente com o sujeito plural (\"Existem muitos motivos\")." },
+    /* 6. Concordância verbal (real, contextualizada — FUVEST 2021, poema de Cecília Meireles) */
+    { texto: `<p>Ai, palavras, ai, palavras,<br>
+      que estranha potência, a vossa!<br>
+      Ai, palavras, ai, palavras,<br>
+      sois de vento, ides no vento,<br>
+      no vento que não retorna,<br>
+      e, em tão rápida existência,<br>
+      tudo se forma e transforma!</p>
+      <p>Sois de vento, ides no vento,<br>
+      e quedais, com sorte nova! (...)</p>
+      <p>Ai, palavras, ai, palavras,<br>
+      que estranha potência, a vossa!<br>
+      Perdão podíeis ter sido!<br>
+      – sois madeira que se corta,<br>
+      – sois vinte degraus de escada,<br>
+      – sois um pedaço de corda...<br>
+      – sois povo pelas janelas,<br>
+      cortejo, bandeiras, tropa...</p>
+      <p>Ai, palavras, ai, palavras,<br>
+      que estranha potência, a vossa!<br>
+      Éreis um sopro na aragem...<br>
+      – sois um homem que se enforca!</p>
+      <p class="fonte">CECÍLIA MEIRELES. "Romance LIII ou Das Palavras Aéreas", em Romanceiro da Inconfidência. FUVEST (Vestibular USP), 2021, 1ª fase — Questão 68.</p>`,
+      pergunta: "Ao substituir a pessoa verbal utilizada para se referir ao substantivo \"palavras\" pela 3ª pessoa do plural, os verbos dos versos \"sois de vento, ides no vento,\" (v. 4) / \"Perdão podíeis ter sido!\" (v. 12) / \"Éreis um sopro na aragem...\" (v. 20) seriam conjugados conforme apresentado na alternativa:",
+      opcoes: ["são, vão, podiam, eram.", "seriam, iriam, podiam, serão.", "eram, foram, poderiam, seriam.", "são, vão, poderiam, eram."],
+      correta: "são, vão, podiam, eram.",
+      explicacao: "No poema, os verbos estão na 2ª pessoa do plural (vós): \"sois\" e \"ides\" no presente do indicativo; \"podíeis\" e \"éreis\" no pretérito imperfeito do indicativo. Ao trocar o sujeito para a 3ª pessoa do plural (eles/elas), mantendo o mesmo modo e tempo verbal, o verbo precisa concordar em número e pessoa com esse novo sujeito: \"sois\"→\"são\" e \"ides\"→\"vão\" (presente do indicativo, 3ª pessoa do plural); \"podíeis\"→\"podiam\" e \"éreis\"→\"eram\" (pretérito imperfeito do indicativo, 3ª pessoa do plural). É esse mesmo princípio — o verbo flexiona para concordar em pessoa e número com o sujeito a que se refere, mesmo quando o texto muda a forma de se dirigir a esse sujeito — que rege toda concordância verbal. As alternativas erradas trocam o tempo ou o modo verbal (ex.: \"poderiam\" é futuro do pretérito, não pretérito imperfeito, que é o tempo original de \"podíeis\"). (Fonte: FUVEST 2021, 1ª fase, Português, Questão 68.)" },
 
-    /* 7. Pontuação */
-    { pergunta: "Assinale a alternativa em que HÁ erro de pontuação:",
-      opcoes: ["Maria, venha até aqui.", "Os alunos que estudaram, foram bem na prova.", "Chegou tarde; por isso, perdeu a explicação.", "Ana, minha colega de turma, ajudou-me com o dever."],
-      correta: "Os alunos que estudaram, foram bem na prova.",
-      explicacao: "Nunca se separa o sujeito do predicado por vírgula — nem quando o sujeito vem desenvolvido por uma oração adjetiva restritiva, como em \"Os alunos que estudaram foram bem na prova\" (a oração \"que estudaram\" restringe QUAIS alunos, por isso não pode vir isolada por vírgula). As demais estão corretas: vocativo isolado por vírgula (1ª), ponto e vírgula separando orações + vírgula após conectivo deslocado (3ª), aposto isolado por vírgulas (4ª)." },
+    /* 7. Pontuação (real, contextualizada — FUVEST 2021, mesma reportagem do Coringa usada noutra questão) */
+    { texto: `<p>Uma última gargalhada estrondosa. E depois, o silêncio. O palhaço jazia imóvel no chão. Mas seu rosto continua sorrindo, para sempre. Porque a carreira original do Coringa era para durar apenas 30 páginas. O tempo de envenenar Gotham, sequestrar Robin, enfiar um par de sopapos no Homem-Morcego e disparar o primeiro "vou te matar" na sua relação.</p>
+      <p>Na briga final do Batman nº 1, o "horripilante bufão" sofria um final digno de sua desumana ironia: ao tropeçar, cravava sua própria adaga no peito. Assim decidiram e desenharam seus pais, os artistas Bill Finger, Bob Kane e Jerry Robinson. Entretanto, o criminoso mostrou, já em sua primeira aventura, um enorme talento para se rebelar contra a ordem estabelecida. Seu carisma seduziu a editora DC Comics, que impôs o acréscimo de um quadrinho. Já dentro da ambulância, vinha à tona "um dado desconcertante". E então um médico sentenciava: "Continua vivo. E vai sobreviver!".</p>
+      <p class="fonte">Tommaso Koch. "O Coringa completa 80 anos e na Espanha ganha duas HQs, que inspiram debates filosóficos sobre a liberdade". El País, junho/2020. FUVEST (Vestibular USP), 2021, 1ª fase — Questão 64.</p>`,
+      pergunta: "As vírgulas em \"E depois, o silêncio.\" e em \"Mas seu rosto continua sorrindo, para sempre.\" são usadas, respectivamente, com a mesma finalidade que as vírgulas em:",
+      opcoes: ["\"Após a queda, tomaram mais cuidado.\" e \"Quanto mais espaço, mais liberdade.\"", "\"Colheram trigo e nós, algodão.\" e \"Eles se encontraram nas férias, mas não viajaram.\"", "\"Para meus amigos, o melhor.\" e \"Organizava tudo, cautelosamente.\"", "\"Viu o espetáculo, considerado o maior fenômeno de bilheteria.\" e \"'Conheço muito bem', afirmou o rapaz.\""],
+      correta: "\"Para meus amigos, o melhor.\" e \"Organizava tudo, cautelosamente.\"",
+      explicacao: "A vírgula em \"E depois, o silêncio.\" separa um adjunto adverbial de tempo (\"depois\") deslocado para o início da frase. A vírgula em \"Mas seu rosto continua sorrindo, para sempre.\" isola um adjunto adverbial (\"para sempre\") deslocado para o FINAL da frase, destacando-o com uma pausa expressiva. Só \"Para meus amigos, o melhor.\" e \"Organizava tudo, cautelosamente.\" repetem exatamente essas duas funções: a primeira vírgula separa um adjunto (\"Para meus amigos\") deslocado para o início; a segunda isola um adjunto de modo (\"cautelosamente\") deslocado para o final. Nas outras alternativas, a vírgula tem outra função — separar um sujeito composto com elipse do verbo (\"nós, algodão\"), separar orações coordenadas (ligadas por \"e\"/\"mas\"), ou isolar um aposto explicativo antes de uma fala em discurso direto. (Fonte: FUVEST 2021, 1ª fase, Português, Questão 64.)" },
 
-    /* 8. Parnasianismo */
-    { pergunta: "São características centrais do Parnasianismo, movimento literário brasileiro de fins do século XIX:",
-      opcoes: ["Culto da forma perfeita, rigor métrico e o ideal da \"arte pela arte\".", "Musicalidade sugestiva, subjetivismo extremo e uso de sinestesias.", "Valorização da língua falada, humor e nacionalismo crítico.", "Idealização da natureza e do índio como símbolo nacional."],
-      correta: "Culto da forma perfeita, rigor métrico e o ideal da \"arte pela arte\".",
-      explicacao: "O Parnasianismo (fins do séc. XIX, tendo Olavo Bilac como principal nome no Brasil) prega a \"arte pela arte\": poesia objetiva, descritiva, com rigor formal — o soneto é a forma predileta —, vocabulário rebuscado e busca da perfeição técnica, em oposição ao subjetivismo romântico. As demais alternativas descrevem, respectivamente, o Simbolismo, a 1ª fase do Modernismo e o Romantismo (indianismo)." },
+    /* 8. Parnasianismo (real, contextualizada — UNICAMP 2024, crítica de Mário de Andrade + poema de Bilac) */
+    { texto: `<p>Em 1921, Mário de Andrade, escrevendo a série de artigos "Mestres do passado", publicados no Jornal do Comércio (edição de São Paulo), observou:</p>
+      <p>"Tarde [de Olavo Bilac] foi uma promessa de anos seguidos. Tais são, tão salientes os artifícios e tão repetidos que muito bem provam o esforço do poeta decaído da poesia e a sua parca inspiração (...)."</p>
+      <p class="fonte">(ANDRADE, M. Mestres do passado – Olavo Bilac. In: BRITO, M.S. História do modernismo brasileiro. Antecedentes da Semana de Arte Moderna. 5. ed. Rio de Janeiro: Civilização Brasileira, p. 288-289, 1978.)</p>
+      <p><b>As estrelas</b><br>
+      Olavo Bilac</p>
+      <p>Desenrola-se a sombra no regaço<br>
+      Da morna tarde, no esmaiado anil;<br>
+      Dorme, no ofego do calor febril,<br>
+      A natureza, mole de cansaço.</p>
+      <p>Vagarosas estrelas! passo a passo,<br>
+      O aprisco desertando, às mil e às mil,<br>
+      Vindes do ignoto seio do redil<br>
+      Num compacto rebanho, e encheis o espaço...</p>
+      <p>E, enquanto, lentas, sobre a paz terrena,<br>
+      Vos tresmalhais tremulamente a flux,<br>
+      – Uma divina música serena<br>
+      Desce rolando pela vossa luz:</p>
+      <p>Cuida-se ouvir, ovelhas de ouro: a avena<br>
+      Do invisível pastor que vos conduz...</p>
+      <p class="fonte">(BILAC, Olavo. Tarde. Rio de Janeiro: Livraria Francisco Alves, p. 42-43, 1919.)<br>
+      Glossário: esmaiado = esmaecido, pálido; aprisco = curral; redil = curral para o gado ovino ou caprino, rebanho de ovelhas; tresmalhar = afastar-se, perder-se do rebanho; flux = fluxo; avena = flauta pastoril.<br>
+      UNICAMP, 2024, 1ª fase, Português — Questão 11.</p>`,
+      pergunta: "Relacione, ao poema acima, o trecho da crítica de Mário de Andrade citado, assinalando a alternativa que coincide com a ideia geral de Mário sobre a obra de Bilac:",
+      opcoes: ["O crítico lamenta o espaçamento da criação poética de Bilac, o que se expressa no poema pela imagem das estrelas que se afastam umas das outras.", "O crítico elogia os salientes artifícios da linguagem poética de Tarde, o que se pode perceber, por exemplo, pela variedade de sinônimos para a palavra \"curral\".", "O crítico evoca, como resultado da pouca inspiração artística do poeta, a sobrecarga de investimento formal (os hipérbatos ou inversões, por exemplo).", "O crítico associa a poesia de Bilac ao estilo decadentista, o que é reforçado pelas imagens de esgotamento, como se vê nas palavras \"morna\", \"esmaiado\", \"ofego\", \"mole\", \"lentas\"."],
+      correta: "O crítico evoca, como resultado da pouca inspiração artística do poeta, a sobrecarga de investimento formal (os hipérbatos ou inversões, por exemplo).",
+      explicacao: "Mário de Andrade critica Bilac por, em sua visão, faltar-lhe inspiração genuína — o poeta compensaria essa \"parca inspiração\" com um excesso de \"artifícios\" formais \"tão salientes\" e \"tão repetidos\". No poema \"As Estrelas\", esse excesso de investimento formal aparece em vários hipérbatos (inversões da ordem direta): já o primeiro verso, \"Desenrola-se a sombra no regaço da morna tarde\", equivaleria, em ordem direta, a \"A sombra desenrola-se no regaço da morna tarde\". É exatamente esse traço — culto excessivo da forma como sintoma de falta de inspiração — que a alternativa correta resume. As demais erram o sentido da crítica: Mário não fala de estrelas se \"espaçando\" (a), não elogia os artifícios — o tom da crítica é claramente negativo, não elogioso (b) —, e não associa Bilac ao Decadentismo, movimento distinto do Parnasianismo (d). (Fonte: UNICAMP 2024, 1ª fase, Português, Questão 11.)" },
 
-    /* 9. Simbolismo */
-    { pergunta: "O Simbolismo, movimento contemporâneo ao Parnasianismo, se caracteriza sobretudo por:",
-      opcoes: ["Descrição objetiva e impessoal da realidade.", "Musicalidade, sugestão e uso de sinestesias para expressar estados de alma.", "Crítica social direta e linguagem coloquial.", "Culto do soneto perfeito e do vocabulário técnico-científico."],
-      correta: "Musicalidade, sugestão e uso de sinestesias para expressar estados de alma.",
-      explicacao: "O Simbolismo (Cruz e Sousa é o principal nome no Brasil) valoriza a musicalidade do verso, a sugestão — em vez da descrição direta — e as sinestesias (mistura de sensações, como \"cor que se ouve\"), buscando expressar estados de alma e o plano espiritual/misterioso, em oposição à objetividade parnasiana. As demais alternativas descrevem, respectivamente, o Realismo/Parnasianismo, a 1ª fase do Modernismo e o Parnasianismo." },
+    /* 9. Simbolismo (real, contextualizada — ITA 2013, poema de Cruz e Sousa) */
+    { texto: `<p>Ah! plangentes violões dormentes, mornos,<br>
+      Soluços ao luar, choros ao vento...<br>
+      Tristes perfis, os mais vagos contornos,<br>
+      Bocas murmurejantes de lamento.</p>
+      <p>Noites de além, remotas, que eu recordo,<br>
+      Noites de solidão, noites remotas<br>
+      Que nos azuis da Fantasia bordo,<br>
+      Vou constelando de visões ignotas.</p>
+      <p>Sutis palpitações à luz da lua,<br>
+      Anseio dos momentos mais saudosos,<br>
+      Quando lá choram na deserta rua<br>
+      As cordas vivas dos violões chorosos.</p>
+      <p class="fonte">CRUZ E SOUSA. "Violões que Choram...". ITA (Instituto Tecnológico de Aeronáutica), 2013, 1ª fase, Português.</p>`,
+      pergunta: "O poema acima traz a seguinte característica da escola literária em que se insere:",
+      opcoes: ["tendência à morbidez", "lirismo sentimental e intimista", "precisão vocabular e economia verbal", "registro da realidade através da percepção sensorial do poeta"],
+      correta: "registro da realidade através da percepção sensorial do poeta",
+      explicacao: "O eu lírico registra a realidade (o som dos violões, a noite, a rua deserta) filtrada pela percepção sensorial — a musicalidade e a sinestesia (sons que viram imagens visuais e sensações táteis/afetivas) são a marca do Simbolismo de Cruz e Sousa. \"Tendência à morbidez\" e \"lirismo sentimental e intimista\" são características de outras escolas (Romantismo, sobretudo), não o traço central destacado neste trecho. \"Precisão vocabular e economia verbal\" é, na verdade, um valor do Parnasianismo (culto da forma e do rigor lexical), o movimento rival do Simbolismo — colocá-la aqui inverteria a lógica da questão. (Fonte: ITA 2013, 1ª fase, Português.)" },
 
-    /* 10. Interpretação textual (inferência sobre a postura do autor, não uma informação dita de forma direta) */
-    { texto: `<p>Nos últimos anos, cresceu o número de jovens que preferem ouvir um audiobook a ler um livro impresso. Para alguns professores, essa mudança é motivo de preocupação: a leitura em voz alta, dizem eles, dispensa o esforço de decodificar o texto escrito e pode prejudicar o vocabulário e a ortografia dos estudantes.</p>
-      <p>Outros especialistas discordam: para eles, o que importa é o contato com a história, os argumentos e as ideias do texto — o suporte (papel, tela ou áudio) seria apenas um detalhe secundário. Enquanto essa discussão não se resolve, uma coisa é certa: nunca se produziu, ao mesmo tempo, tanto conteúdo em tantos formatos diferentes para quem quer ler — ou ouvir.</p>
-      <p class="fonte">Texto original, elaborado para fins didáticos.</p>`,
-      pergunta: "A forma como o texto apresenta a opinião de um grupo e, na sequência, a do outro, sem validar nenhuma das duas, sugere que o autor:",
-      opcoes: ["defende abertamente que os audiobooks são superiores aos livros impressos.", "busca manter uma postura imparcial diante de um debate que ainda segue em aberto.", "considera que os professores estão certos ao ver a mudança como um problema.", "pretende convencer o leitor de que os livros impressos estão com os dias contados."],
-      correta: "busca manter uma postura imparcial diante de um debate que ainda segue em aberto.",
-      explicacao: "O texto apresenta os dois lados (\"Para alguns professores...\" / \"Outros especialistas discordam\") sem tomar partido explícito por nenhum deles, e a frase final (\"Enquanto essa discussão não se resolve...\") reforça que o debate continua sem solução — construção típica de texto informativo equilibrado, não de texto de opinião. As demais alternativas atribuem ao autor uma posição que o texto, em nenhum momento, assume abertamente." },
+    /* 10. Interpretação textual (real, contextualizada — FUVEST 2018, "O Cortiço") */
+    { texto: `<p>"O rumor crescia, condensando-se; o zunzum de todos os dias acentuava-se; já se não destacavam vozes dispersas, mas um só ruído compacto que enchia todo o cortiço. Começavam a fazer compras na venda; ensarilhavam-se* discussões e rezingas**; ouviam-se gargalhadas e pragas; já se não falava, gritava-se. Sentia-se naquela fermentação sanguínea, naquela gula viçosa de plantas rasteiras que mergulham os pés vigorosos na lama preta e nutriente da vida, o prazer animal de existir, a triunfante satisfação de respirar sobre a terra.</p>
+      <p>Da porta da venda que dava para o cortiço iam e vinham como formigas, fazendo compras.</p>
+      <p>Duas janelas do Miranda abriram-se. Apareceu numa a Isaura, que se dispunha a começar a limpeza da casa.</p>
+      <p>— Nhá Dunga! — gritou ela para baixo, a sacudir um pano de mesa. — Se você tem cuscuz de milho hoje, bata na porta, ouviu?"</p>
+      <p><small>* ensarilhar-se: emaranhar-se. ** rezinga: resmungo.</small></p>
+      <p class="fonte">Aluísio Azevedo, O Cortiço (1890) — Fuvest 2018 (USP), Questão 76.</p>`,
+      pergunta: "Uma característica do Naturalismo presente no texto é:",
+      opcoes: ["forte apelo aos sentidos.", "idealização do espaço.", "exaltação da natureza.", "ênfase nas individualidades."],
+      correta: "forte apelo aos sentidos.",
+      explicacao: "O trecho descreve o cortiço através de sensações físicas intensas e quase animalescas — rumor, zunzum, gargalhadas, \"fermentação sanguínea\", \"gula viçosa\", \"prazer animal de existir\" —, típicas da visão naturalista do ser humano como organismo movido por impulsos físicos, não por razão ou idealismo. \"Idealização do espaço\" está errada porque o Naturalismo rejeita justamente a idealização romântica: o cortiço é descrito de forma bruta e degradante. \"Exaltação da natureza\" também não se sustenta, pois o texto não celebra a natureza em si, mas usa metáforas fisiológicas para descrever o comportamento humano coletivo. E \"ênfase nas individualidades\" está invertida: o narrador funde as vozes num \"só ruído compacto\", retratando a massa humana, não indivíduos isolados. (Fonte: Fuvest 2018 (USP), Questão 76.)" },
 
-    /* 11. Interpretação textual (mesmo texto — exige interpretar a intenção da conclusão, não apenas localizá-la) */
-    { texto: `<p>Nos últimos anos, cresceu o número de jovens que preferem ouvir um audiobook a ler um livro impresso. Para alguns professores, essa mudança é motivo de preocupação: a leitura em voz alta, dizem eles, dispensa o esforço de decodificar o texto escrito e pode prejudicar o vocabulário e a ortografia dos estudantes.</p>
-      <p>Outros especialistas discordam: para eles, o que importa é o contato com a história, os argumentos e as ideias do texto — o suporte (papel, tela ou áudio) seria apenas um detalhe secundário. Enquanto essa discussão não se resolve, uma coisa é certa: nunca se produziu, ao mesmo tempo, tanto conteúdo em tantos formatos diferentes para quem quer ler — ou ouvir.</p>
-      <p class="fonte">Texto original, elaborado para fins didáticos.</p>`,
-      pergunta: "Ao encerrar afirmando que \"nunca se produziu, ao mesmo tempo, tanto conteúdo em tantos formatos diferentes para quem quer ler — ou ouvir\", o texto sugere, sem dizer isso de forma direta, que:",
-      opcoes: ["o verdadeiro problema atual é a falta de opções de acesso à leitura.", "a disputa entre os dois grupos perde parte da sua urgência diante da variedade inédita de formas de acesso ao conteúdo.", "os audiobooks vão substituir totalmente os livros impressos em pouco tempo.", "só os livros impressos garantem que o leitor realmente aprenda algo."],
-      correta: "a disputa entre os dois grupos perde parte da sua urgência diante da variedade inédita de formas de acesso ao conteúdo.",
-      explicacao: "Ao fechar o texto destacando a abundância inédita de formatos disponíveis, o autor sugere — sem afirmar isso com essas palavras — que essa variedade relativiza a disputa entre os dois grupos: importa menos QUAL suporte se usa, e mais o fato de que o acesso a conteúdo nunca foi tão amplo. É uma conclusão que precisa ser interpretada, não apenas localizada no texto." },
+    /* 11. Interpretação textual (mesmo texto — real, FUVEST 2018) */
+    { texto: `<p>"O rumor crescia, condensando-se; o zunzum de todos os dias acentuava-se; já se não destacavam vozes dispersas, mas um só ruído compacto que enchia todo o cortiço. Começavam a fazer compras na venda; ensarilhavam-se* discussões e rezingas**; ouviam-se gargalhadas e pragas; já se não falava, gritava-se. Sentia-se naquela fermentação sanguínea, naquela gula viçosa de plantas rasteiras que mergulham os pés vigorosos na lama preta e nutriente da vida, o prazer animal de existir, a triunfante satisfação de respirar sobre a terra.</p>
+      <p>Da porta da venda que dava para o cortiço iam e vinham como formigas, fazendo compras.</p>
+      <p>Duas janelas do Miranda abriram-se. Apareceu numa a Isaura, que se dispunha a começar a limpeza da casa.</p>
+      <p>— Nhá Dunga! — gritou ela para baixo, a sacudir um pano de mesa. — Se você tem cuscuz de milho hoje, bata na porta, ouviu?"</p>
+      <p><small>* ensarilhar-se: emaranhar-se. ** rezinga: resmungo.</small></p>
+      <p class="fonte">Aluísio Azevedo, O Cortiço (1890) — Fuvest 2018 (USP), Questão 77.</p>`,
+      pergunta: "Constitui marca do registro informal da língua o trecho:",
+      opcoes: ["\"ouviam-se gargalhadas\" (na 1ª frase).", "\"o prazer animal de existir\" (na 1ª frase).", "\"gritou ela para baixo\" (perto do fim).", "\"bata na porta\" (no final)."],
+      correta: "\"bata na porta\" (no final).",
+      explicacao: "\"Bata na porta\" é fala direta de uma personagem (Isaura, gritando para a vizinha) — um imperativo coloquial, oral, típico da conversa cotidiana entre moradoras do cortiço. Já \"ouviam-se gargalhadas\" e \"o prazer animal de existir\" são descrições do narrador, em prosa literária culta. \"Gritou ela para baixo\" também é fala do NARRADOR descrevendo a ação (verbo \"gritou\" introduzindo o discurso), não a fala informal em si — a marca de oralidade só aparece de fato na frase entre aspas que a personagem pronuncia. (Fonte: Fuvest 2018 (USP), Questão 77.)" },
 
-    /* 12. Interpretação textual (crônica curta, crítica implícita ao automatismo do celular) */
-    { texto: `<p>Basta o som de uma notificação para que, em qualquer ambiente — sala de aula, fila de banco, mesa de jantar —, dezenas de mãos desçam ao mesmo tempo até o bolso, como se movidas por um único comando. Ninguém combinou esse gesto; ele simplesmente se instalou, silencioso, até deixar de causar estranhamento em quase ninguém.</p>
-      <p>Curioso é que a mensagem, na maior parte das vezes, poderia esperar alguns minutos sem problema nenhum. A mão, essa, é que parece não saber mais esperar.</p>
-      <p class="fonte">Texto original, elaborado para fins didáticos.</p>`,
-      pergunta: "A comparação do gesto de pegar o celular a algo \"movido por um único comando\" sugere, principalmente, que esse comportamento:",
-      opcoes: ["é sempre proposital e pensado antes de ser executado.", "tornou-se quase automático, escapando ao controle consciente de quem o pratica.", "acontece só em ambientes formais, como a sala de aula.", "foi combinado previamente entre as pessoas presentes no ambiente."],
-      correta: "tornou-se quase automático, escapando ao controle consciente de quem o pratica.",
-      explicacao: "A expressão \"como se movidas por um único comando\", somada ao trecho seguinte (\"Ninguém combinou esse gesto; ele simplesmente se instalou\"), sugere — sem afirmar isso diretamente — que o gesto virou um hábito automático, que dispensa reflexão consciente, e não algo pensado ou combinado entre as pessoas. As demais alternativas contrariam essa leitura implícita do texto." },
+    /* 12. Interpretação textual (real, contextualizada — FUVEST 2019, prefácio + Iracema, José de Alencar) */
+    { texto: `<p>"O povo que chupa o caju, a manga, o cambucá e a jabuticaba, pode falar uma língua com igual pronúncia e o mesmo espírito do povo que sorve o figo, a pera, o damasco e a nêspera?"</p>
+      <p class="fonte-interna">José de Alencar, Benção Paterna, prefácio a Sonhos d'ouro.</p>
+      <p>"A graciosa ará, sua companheira e amiga, brinca junto dela. Às vezes sobe aos ramos da árvore e de lá chama a virgem pelo nome, <u>outras</u> remexe o uru de palha matizada, onde traz a selvagem seus perfumes, os alvos fios do crautá, as agulhas da juçara com que tece a renda e as tintas de que matiza o algodão."</p>
+      <p class="fonte-interna">José de Alencar, Iracema.</p>
+      <p><small>Glossário: "ará": periquito; "uru": cesto; "crautá": espécie de bromélia; "juçara": tipo de palmeira espinhosa.</small></p>
+      <p class="fonte">José de Alencar — Fuvest 2019 (USP), Questão 66.</p>`,
+      pergunta: "Com base nos trechos acima, é adequado afirmar:",
+      opcoes: ["Ao discutir, no primeiro trecho, a importação de ideias e costumes, Alencar propõe uma literatura baseada no abrasileiramento da língua portuguesa, como se verifica no segundo trecho.", "O contraste entre os verbos \"chupar\" e \"sorver\", empregados no primeiro trecho, revela o rebaixamento de linguagem buscado pelo escritor em Iracema.", "Em Iracema, a construção de uma literatura exótica, tal como se verifica no segundo trecho, pautou-se pela recusa de nossos elementos naturais.", "Ambos os trechos são representativos da tendência escapista de nosso romantismo, na medida em que valorizam os elementos naturais em detrimento da realidade rotineira."],
+      correta: "Ao discutir, no primeiro trecho, a importação de ideias e costumes, Alencar propõe uma literatura baseada no abrasileiramento da língua portuguesa, como se verifica no segundo trecho.",
+      explicacao: "No prefácio, Alencar questiona se um povo que come frutas tropicais (caju, manga) pode falar \"com o mesmo espírito\" de um povo que come frutas europeias (figo, pera) — sugerindo que a língua literária brasileira precisa se adaptar à realidade local, não apenas copiar o modelo europeu. Em Iracema, isso se concretiza no vocabulário indígena incorporado à prosa em português (\"ará\", \"uru\", \"crautá\", \"juçara\") — exatamente esse \"abrasileiramento\" da língua que ele defende. As demais alternativas invertem o sentido do texto: o contraste \"chupar\"/\"sorver\" não indica \"rebaixamento\" de linguagem, mas diferença cultural; Iracema não recusa elementos naturais — ao contrário, os valoriza; e não se trata de escapismo, mas de afirmação nacionalista/indianista. (Fonte: Fuvest 2019 (USP), Questão 66.)" },
 
-    /* 13. Interpretação textual (mesma crônica — crítica construída por contraste, não enunciada) */
-    { texto: `<p>Basta o som de uma notificação para que, em qualquer ambiente — sala de aula, fila de banco, mesa de jantar —, dezenas de mãos desçam ao mesmo tempo até o bolso, como se movidas por um único comando. Ninguém combinou esse gesto; ele simplesmente se instalou, silencioso, até deixar de causar estranhamento em quase ninguém.</p>
-      <p>Curioso é que a mensagem, na maior parte das vezes, poderia esperar alguns minutos sem problema nenhum. A mão, essa, é que parece não saber mais esperar.</p>
-      <p class="fonte">Texto original, elaborado para fins didáticos.</p>`,
-      pergunta: "Ao contrapor \"a mensagem... poderia esperar\" e \"a mão... não saber mais esperar\", o texto constrói, de forma implícita, uma crítica:",
-      opcoes: ["à baixa qualidade das mensagens recebidas por celular atualmente.", "ao descompasso entre a urgência real de checar o celular e a urgência que se sente ao fazê-lo.", "à demora das operadoras de telefonia para entregar notificações.", "à substituição das conversas presenciais por mensagens de texto."],
-      correta: "ao descompasso entre a urgência real de checar o celular e a urgência que se sente ao fazê-lo.",
-      explicacao: "O texto não formula uma crítica explícita, mas a contraposição entre o que \"poderia esperar\" (a mensagem, de fato) e o que \"não sabe mais esperar\" (a reação da mão) evidencia, por contraste, uma urgência desproporcional: a pressa é do hábito, não da real necessidade daquela mensagem. É uma leitura que exige inferir a crítica, já que o texto em nenhum momento a formula diretamente." },
+    /* 13. Interpretação textual (mesmo texto — real, FUVEST 2019) */
+    { texto: `<p>"O povo que chupa o caju, a manga, o cambucá e a jabuticaba, pode falar uma língua com igual pronúncia e o mesmo espírito do povo que sorve o figo, a pera, o damasco e a nêspera?"</p>
+      <p class="fonte-interna">José de Alencar, Benção Paterna, prefácio a Sonhos d'ouro.</p>
+      <p>"A graciosa ará, sua companheira e amiga, brinca junto dela. Às vezes sobe aos ramos da árvore e de lá chama a virgem pelo nome, <u>outras</u> remexe o uru de palha matizada, onde traz a selvagem seus perfumes, os alvos fios do crautá, as agulhas da juçara com que tece a renda e as tintas de que matiza o algodão."</p>
+      <p class="fonte-interna">José de Alencar, Iracema.</p>
+      <p><small>Glossário: "ará": periquito; "uru": cesto; "crautá": espécie de bromélia; "juçara": tipo de palmeira espinhosa.</small></p>
+      <p class="fonte">José de Alencar — Fuvest 2019 (USP), Questão 67.</p>`,
+      pergunta: "No trecho \"outras remexe o uru de palha matizada\", a palavra sublinhada (outras) expressa ideia de",
+      opcoes: ["finalidade.", "adição.", "tempo.", "consequência."],
+      correta: "tempo.",
+      explicacao: "\"Outras\" retoma \"às vezes\", funcionando como \"em outras ocasiões/vezes\" — marca uma alternância temporal entre duas ações da personagem (ora sobe à árvore, outras vezes mexe no cesto). Não é \"finalidade\" (não indica propósito de uma ação), nem \"adição\" (não soma elementos, alterna momentos), nem \"consequência\" (não há relação de causa e efeito entre as ações). (Fonte: Fuvest 2019 (USP), Questão 67.)" },
 
-    /* 14. Memórias Póstumas de Brás Cubas */
-    { texto: `<p>Algum tempo hesitei se devia abrir estas memórias pelo princípio ou pelo fim, isto é, se poria em primeiro lugar o meu nascimento ou a minha morte. Suposto o uso vulgar seja começar pelo nascimento, duas considerações me levaram a adotar diferente método: a primeira é que eu não sou propriamente um autor defunto, mas um defunto autor, para quem a campa foi outro berço; a segunda é que o escrito ficaria assim mais galante e mais novo.</p>
-      <p>Dito isto, expirei às duas horas da tarde de uma sexta-feira do mês de agosto de 1869, na minha bela chácara de Catumbi. Tinha uns sessenta e quatro anos, rijos e prósperos, era solteiro, possuía cerca de trezentos contos e fui acompanhado ao cemitério por onze amigos.</p>
-      <p class="fonte">ASSIS, Machado de. Memórias Póstumas de Brás Cubas. Rio de Janeiro, 1881. Capítulo I — "Óbito do Autor".</p>`,
-      pergunta: "No trecho, o narrador Brás Cubas explica por que decidiu contar sua morte antes do nascimento. Segundo ele, a razão principal é que:",
-      opcoes: ["ele tem medo de morrer antes de terminar de escrever o livro.", "ele não é um autor defunto, mas um \"defunto autor\" — já está morto ao narrar.", "ele quer imitar fielmente o livro do Pentateuco, de Moisés.", "ele considera o nascimento um assunto vergonhoso demais para abrir o livro."],
-      correta: "ele não é um autor defunto, mas um \"defunto autor\" — já está morto ao narrar.",
-      explicacao: "O narrador brinca com as palavras para explicar sua condição incomum: ele \"não é propriamente um autor defunto, mas um defunto autor\" — ou seja, já morreu, e é desse lugar (post-mortem) que narra toda a história. Essa inversão (contar a morte antes do nascimento) é a marca mais famosa do romance. Sobre o Pentateuco, o texto afirma o contrário: há \"diferença radical\" entre os dois livros." },
+    /* 14. Memórias Póstumas de Brás Cubas (real, contextualizada — FUVEST 2018, cap. final "Das Negativas" + Helena Morley) */
+    { texto: `<p>"Este último capítulo é todo de negativas. Não alcancei a celebridade do emplasto, não fui ministro, não fui califa, não conheci o casamento. Verdade é que, ao lado dessas faltas, coube-me a boa fortuna de não comprar o pão com o suor do meu rosto. Mais; não padeci a morte de dona Plácida, nem a semidemência do Quincas Borba. Somadas umas coisas e outras, qualquer pessoa imaginará que não houve míngua nem sobra, e, conseguintemente, que saí quite com a vida. E imaginará mal; porque ao chegar a este outro lado do mistério, achei-me com um pequeno saldo, que é a derradeira negativa deste capítulo de negativas: — Não tive filhos, não transmiti a nenhuma criatura o legado da nossa miséria."</p>
+      <p class="fonte-interna">Machado de Assis, Memórias Póstumas de Brás Cubas (capítulo final, "Das Negativas").</p>
+      <p>"Não sei por que até hoje todo o mundo diz que tinha pena dos escravos. Eu não penso assim. Acho que se fosse obrigada a trabalhar o dia inteiro não seria infeliz. Ser obrigada a ficar à toa é que seria castigo para mim. Mamãe às vezes diz que ela até deseja que eu fique preguiçosa; a minha esperteza é que a amofina. Eu então respondo: 'Se eu fosse preguiçosa não sei o que seria da senhora, meu pai e meus irmãos, sem uma empregada em casa'."</p>
+      <p class="fonte-interna">Helena Morley, Minha vida de menina.</p>
+      <p class="fonte">Machado de Assis / Helena Morley — Fuvest 2018 (USP), Questão 72.</p>`,
+      pergunta: "São características dos narradores Brás Cubas e Helena, respectivamente,",
+      opcoes: ["malícia e ingenuidade.", "solidariedade e egoísmo.", "apatia e determinação.", "rebeldia e conformismo."],
+      correta: "apatia e determinação.",
+      explicacao: "Brás Cubas narra as \"negativas\" da própria vida com distanciamento irônico e indiferença — o tom de quem já morreu e nada mais lhe afeta, uma apatia típica do \"defunto-autor\". Helena, ao contrário, afirma com firmeza o que aceita e o que não aceita (recusa a ociosidade, orgulha-se da própria esperteza) — postura determinada e assertiva. Os outros pares (malícia/ingenuidade, solidariedade/egoísmo, rebeldia/conformismo) não correspondem ao contraste central evidenciado nos dois trechos. (Fonte: Fuvest 2018 (USP), Questão 72.)" },
 
-    /* 15. Memórias Póstumas de Brás Cubas (mesmo trecho) */
-    { texto: `<p>Algum tempo hesitei se devia abrir estas memórias pelo princípio ou pelo fim, isto é, se poria em primeiro lugar o meu nascimento ou a minha morte. Suposto o uso vulgar seja começar pelo nascimento, duas considerações me levaram a adotar diferente método: a primeira é que eu não sou propriamente um autor defunto, mas um defunto autor, para quem a campa foi outro berço; a segunda é que o escrito ficaria assim mais galante e mais novo.</p>
-      <p>Dito isto, expirei às duas horas da tarde de uma sexta-feira do mês de agosto de 1869, na minha bela chácara de Catumbi. Tinha uns sessenta e quatro anos, rijos e prósperos, era solteiro, possuía cerca de trezentos contos e fui acompanhado ao cemitério por onze amigos.</p>
-      <p class="fonte">ASSIS, Machado de. Memórias Póstumas de Brás Cubas. Rio de Janeiro, 1881. Capítulo I — "Óbito do Autor".</p>`,
-      pergunta: "O tom empregado por Brás Cubas ao narrar a própria morte — com humor, distanciamento e detalhes triviais (\"expirei às duas horas da tarde de uma sexta-feira...\") — é uma marca da obra de Machado de Assis conhecida como:",
-      opcoes: ["sentimentalismo romântico.", "objetivismo naturalista.", "pessimismo irônico (humor corrosivo) do narrador defunto.", "idealização heroica do protagonista."],
-      correta: "pessimismo irônico (humor corrosivo) do narrador defunto.",
-      explicacao: "Machado de Assis constrói, por meio de Brás Cubas, um narrador defunto que analisa a própria vida e morte com ironia, deboche e um pessimismo corrosivo em relação à sociedade e a si mesmo — traço central do chamado \"realismo machadiano\", que rompe com o sentimentalismo romântico anterior. Brás Cubas é um anti-herói, não um protagonista idealizado." }
+    /* 15. Memórias Póstumas de Brás Cubas (mesmo par de trechos — real, FUVEST 2018) */
+    { texto: `<p>"Este último capítulo é todo de negativas. Não alcancei a celebridade do emplasto, não fui ministro, não fui califa, não conheci o casamento. Verdade é que, ao lado dessas faltas, coube-me a boa fortuna de não comprar o pão com o suor do meu rosto. Mais; não padeci a morte de dona Plácida, nem a semidemência do Quincas Borba. Somadas umas coisas e outras, qualquer pessoa imaginará que não houve míngua nem sobra, e, conseguintemente, que saí quite com a vida. E imaginará mal; porque ao chegar a este outro lado do mistério, achei-me com um pequeno saldo, que é a derradeira negativa deste capítulo de negativas: — Não tive filhos, não transmiti a nenhuma criatura o legado da nossa miséria."</p>
+      <p class="fonte-interna">Machado de Assis, Memórias Póstumas de Brás Cubas (capítulo final, "Das Negativas").</p>
+      <p>"Não sei por que até hoje todo o mundo diz que tinha pena dos escravos. Eu não penso assim. Acho que se fosse obrigada a trabalhar o dia inteiro não seria infeliz. Ser obrigada a ficar à toa é que seria castigo para mim. Mamãe às vezes diz que ela até deseja que eu fique preguiçosa; a minha esperteza é que a amofina. Eu então respondo: 'Se eu fosse preguiçosa não sei o que seria da senhora, meu pai e meus irmãos, sem uma empregada em casa'."</p>
+      <p class="fonte-interna">Helena Morley, Minha vida de menina.</p>
+      <p class="fonte">Machado de Assis / Helena Morley — Fuvest 2018 (USP), Questão 73.</p>`,
+      pergunta: "Nos dois textos, obtém-se ênfase por meio do emprego de um mesmo recurso expressivo, como se pode verificar nos seguintes trechos:",
+      opcoes: ["\"Verdade é que, ao lado dessas faltas, coube-me a boa fortuna de não comprar o pão com o suor do meu rosto\" / \"Ser obrigada a ficar à toa é que seria castigo para mim\".", "\"qualquer pessoa imaginará que não houve míngua nem sobra\" / \"Mamãe às vezes diz que ela até deseja que eu fique preguiçosa\".", "\"Não tive filhos, não transmiti a nenhuma criatura o legado da nossa miséria\" / \"Acho que se fosse obrigada a trabalhar o dia inteiro não seria infeliz\".", "\"não fui ministro, não fui califa, não conheci o casamento\" / \"Não sei por que até hoje todo o mundo diz que tinha pena dos escravos\"."],
+      correta: "\"Verdade é que, ao lado dessas faltas, coube-me a boa fortuna de não comprar o pão com o suor do meu rosto\" / \"Ser obrigada a ficar à toa é que seria castigo para mim\".",
+      explicacao: "Os dois trechos usam o mesmo recurso: uma inversão irônica da expectativa comum sobre trabalho e ócio. Brás Cubas trata o fato de nunca ter precisado \"comprar o pão com o suor do rosto\" (isto é, nunca ter precisado trabalhar) como uma \"boa fortuna\" — o que soa como elogio a um privilégio, mas revela o comodismo/apatia do narrador. Helena inverte a expectativa na direção oposta: para ela, é justamente a ociosidade (\"ficar à toa\"), e não o trabalho, que seria um castigo. Ambos os trechos geram ênfase por esse mesmo tipo de contraste/antítese em torno da ideia de trabalho x ócio, o que não ocorre nos outros pares de trechos, que não compartilham esse recurso específico. (Fonte: Fuvest 2018 (USP), Questão 73.)" }
   ]
 };
