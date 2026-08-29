@@ -136,28 +136,45 @@
   // tocado por ele. O MutationObserver (childList) reaplica sempre que uma
   // troca de node acontecer de novo em algum lugar da árvore.
   var SVG_ICONS = {
+    terminal: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2.5" y="4" width="19" height="16" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M2.5 8.2h19" stroke="currentColor" stroke-width="1.6"/><circle cx="5.3" cy="6.1" r="0.6" fill="currentColor"/><circle cx="7.1" cy="6.1" r="0.6" fill="currentColor"/><circle cx="8.9" cy="6.1" r="0.6" fill="currentColor"/><path d="M6 12l2.6 2.2L6 16.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M11.5 16.4h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>',
     redes: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="4.6" r="2.4" stroke="currentColor" stroke-width="1.6"/><circle cx="4.6" cy="17.5" r="2.4" stroke="currentColor" stroke-width="1.6"/><circle cx="19.4" cy="17.5" r="2.4" stroke="currentColor" stroke-width="1.6"/><path d="M10.4 6.6 6.6 15.4M13.6 6.6l3.8 8.8M7.4 17.5h9.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="4.6" r="0.9" fill="currentColor"/><circle cx="4.6" cy="17.5" r="0.9" fill="currentColor"/><circle cx="19.4" cy="17.5" r="0.9" fill="currentColor"/></svg>',
     cadeado: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4.5" y="10.5" width="15" height="10" rx="2.6" stroke="currentColor" stroke-width="1.6"/><path d="M7.5 10.5V7.8a4.5 4.5 0 0 1 9 0v2.7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="14.6" r="1.5" fill="currentColor"/><path d="M12 16.1v2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
     clipboard: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4.5" y="4.2" width="15" height="17.6" rx="2.4" stroke="currentColor" stroke-width="1.6"/><rect x="8.5" y="2.5" width="7" height="3.4" rx="1.4" stroke="currentColor" stroke-width="1.6"/><path d="M8 12h5.4M8 15.4h8M8 8.6h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
     curso: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 9.4 12 5l9.5 4.4L12 13.8 2.5 9.4Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M6.6 11.4v4.3c0 1.6 2.4 2.9 5.4 2.9s5.4-1.3 5.4-2.9v-4.3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 9.6v5.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="21" cy="16.6" r="1" fill="currentColor"/></svg>',
-    escudo: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.8 4.6 5.6v6c0 5 3.2 8.3 7.4 9.6 4.2-1.3 7.4-4.6 7.4-9.6v-6L12 2.8Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8.8 12.2l2.3 2.3 4.1-4.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+    escudo: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.8 4.6 5.6v6c0 5 3.2 8.3 7.4 9.6 4.2-1.3 7.4-4.6 7.4-9.6v-6L12 2.8Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8.8 12.2l2.3 2.3 4.1-4.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    ip: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="5" cy="6" r="2.1" stroke="currentColor" stroke-width="1.6"/><circle cx="19" cy="6" r="2.1" stroke="currentColor" stroke-width="1.6"/><path d="M7 7.4 17 15.6M9 5h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M17.5 15c0 3-3.3 5.4-3.3 5.4S10.9 18 10.9 15a3.3 3.3 0 0 1 6.6 0Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="14.2" cy="15" r="1.1" fill="currentColor"/></svg>'
   };
-  // oldTitle: como o card aparece no bundle compilado (o que precisamos achar pra substituir)
+  // oldTitle: como o card aparece no bundle compilado (o que precisamos achar pra substituir).
+  // Os dois primeiros (avaliação e endereçamento IP) só precisam perder o
+  // badge quebrado — cor e link já estavam certos; os demais também trocam cor/link.
   var CARD_FIXES = [
-    { oldTitle: 'Apostila — Redes de Computadores', title: 'Apostila — Redes de Computadores', desc: 'IP, DNS, DHCP, gateway e protocolos explicados passo a passo.', meta: 'Curso Técnico · leitura', href: '/informatica/redes/apostila.html', badge: 'apostila', icon: 'redes', hex: '2563EB' },
-    { oldTitle: 'Escape Room — Diagnóstico de Rede', title: 'Escape Room — Diagnóstico de Rede', desc: 'A rede da empresa caiu. Use DNS, DHCP e IP para descobrir o culpado.', meta: '2EM–3EM · 30 min', href: '/informatica/redes/escape-redes.html', badge: 'jogo', icon: 'cadeado', hex: 'F59E0B' },
-    { oldTitle: 'Projeto de Pesquisa — Guia Completo', title: 'Projeto de Pesquisa — Guia Completo', desc: 'Guia para montar seu projeto científico do zero, módulo por módulo.', meta: 'Curso Técnico · contínuo', href: '/informatica/projeto-pesquisa.html', badge: 'projeto', icon: 'clipboard', hex: '7C3AED' },
-    { oldTitle: 'Explorador Digital', title: 'Explorador Digital', desc: 'Curso autoinstrutivo de 15 aulas: hardware, software, internet, senhas, algoritmos e IA — com atividades e certificado ao final.', meta: '6º-7º ano · 15 aulas', href: '/informatica/explorador-digital.html', badge: 'curso', icon: 'curso', hex: 'EA580C' },
-    { oldTitle: 'Segurança e Malware', title: 'Apostila — Segurança da Informação', desc: 'Tríade CID, malware, criptografia, função hash, segurança física e ambiental — com quiz interativo.', meta: 'Curso Técnico · leitura', href: '/informatica/seguranca/apostila.html', badge: 'apostila', icon: 'escudo', hex: 'DC2626' }
+    { oldTitle: 'Avaliação — Linux Mint', title: 'Avaliação — Linux Mint', desc: 'Sistema operacional, terminal e comandos essenciais na prática.', meta: '1EM–2EM · 40 min', href: '/informatica/linux/avaliacao.html', icon: 'terminal', hex: '10B981' },
+    { oldTitle: 'Apostila — Redes de Computadores', title: 'Apostila — Redes de Computadores', desc: 'IP, DNS, DHCP, gateway e protocolos explicados passo a passo.', meta: 'Curso Técnico · leitura', href: '/informatica/redes/apostila.html', icon: 'redes', hex: '2563EB' },
+    { oldTitle: 'Escape Room — Diagnóstico de Rede', title: 'Escape Room — Diagnóstico de Rede', desc: 'A rede da empresa caiu. Use DNS, DHCP e IP para descobrir o culpado.', meta: '2EM–3EM · 30 min', href: '/informatica/redes/escape-redes.html', icon: 'cadeado', hex: 'F59E0B' },
+    { oldTitle: 'Projeto de Pesquisa — Guia Completo', title: 'Projeto de Pesquisa — Guia Completo', desc: 'Guia para montar seu projeto científico do zero, módulo por módulo.', meta: 'Curso Técnico · contínuo', href: '/informatica/projeto-pesquisa.html', icon: 'clipboard', hex: '7C3AED' },
+    { oldTitle: 'Explorador Digital', title: 'Explorador Digital', desc: 'Curso autoinstrutivo de 15 aulas: hardware, software, internet, senhas, algoritmos e IA — com atividades e certificado ao final.', meta: '6º-7º ano · 15 aulas', href: '/informatica/explorador-digital.html', icon: 'curso', hex: 'EA580C' },
+    { oldTitle: 'Segurança e Malware', title: 'Apostila — Segurança da Informação', desc: 'Tríade CID, malware, criptografia, função hash, segurança física e ambiental — com quiz interativo.', meta: 'Curso Técnico · leitura', href: '/informatica/seguranca/apostila.html', icon: 'escudo', hex: 'DC2626' },
+    { oldTitle: 'Endereçamento IP', title: 'Endereçamento IP', desc: 'Detetive de IP, Batalha de Ping e Escape: dominando o endereçamento.', meta: 'Em produção', icon: 'ip', hex: '64748B', soon: true }
   ];
 
   function buildCardHTML(def) {
+    if (def.soon) {
+      return '<div data-pm-fixed="1" class="spotlight group relative rounded-2xl border p-6 transition-all duration-300 block overflow-hidden cursor-default" style="border-color:rgba(51,65,85,0.6);background:rgba(15,23,42,0.4);transform:translateY(0);box-shadow:none;opacity:0.55;--spot:#' + def.hex + '22">' +
+        '<div class="relative"><div class="flex items-start justify-between mb-4">' +
+        '<div class="w-12 h-12 rounded-2xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110" style="background:linear-gradient(145deg,#' + def.hex + '33,#' + def.hex + '14);color:#' + def.hex + ';box-shadow:inset 0 1px 0 rgba(255,255,255,0.15),0 0 0 1px #' + def.hex + '26">' +
+        SVG_ICONS[def.icon] +
+        '</div></div>' +
+        '<h3 class="font-display font-semibold text-base mb-1.5 text-slate-100">' + def.title + '</h3>' +
+        '<p class="text-sm text-slate-500 leading-snug mb-4">' + def.desc + '</p>' +
+        '<div class="flex items-center justify-between"><span class="font-mono2 text-xs text-slate-500">' + def.meta + '</span></div>' +
+        '</div></div>';
+    }
     return '<a href="' + def.href + '" data-pm-fixed="1" class="spotlight group relative rounded-2xl border p-6 transition-all duration-300 block overflow-hidden cursor-pointer" style="border-color:rgba(51,65,85,0.6);background:rgba(15,23,42,0.4);transform:translateY(0);box-shadow:none;opacity:1;--spot:#' + def.hex + '22">' +
       '<span class="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" style="background:radial-gradient(320px circle at var(--mx) var(--my), var(--spot), transparent 60%)"></span>' +
       '<div class="relative"><div class="flex items-start justify-between mb-4">' +
       '<div class="w-12 h-12 rounded-2xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110" style="background:linear-gradient(145deg,#' + def.hex + '33,#' + def.hex + '14);color:#' + def.hex + ';box-shadow:inset 0 1px 0 rgba(255,255,255,0.2),0 0 0 1px #' + def.hex + '26">' +
       SVG_ICONS[def.icon] +
-      '</div><span class="text-xs font-mono2 px-2 py-0.5 rounded-full" style="color:#' + def.hex + ';background-color:#' + def.hex + '1f">' + def.badge + '</span></div>' +
+      '</div></div>' +
       '<h3 class="font-display font-semibold text-base mb-1.5 text-slate-100">' + def.title + '</h3>' +
       '<p class="text-sm text-slate-500 leading-snug mb-4">' + def.desc + '</p>' +
       '<div class="flex items-center justify-between"><span class="font-mono2 text-xs text-slate-500">' + def.meta + '</span>' +
