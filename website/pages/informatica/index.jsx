@@ -19,12 +19,12 @@ const SVG = {
 
 const ITENS = [
   { icon: "terminal", svg: SVG.terminal, title: "Avaliação — Linux Mint", desc: "Sistema operacional, terminal e comandos essenciais na prática.", meta: "1EM–2EM · 40 min", href: "/informatica/linux/avaliacao.html", color: ACCENT, badge: "avaliação" },
-  { icon: "redes", svg: SVG.redes, title: "Apostila — Redes de Computadores", desc: "IP, DNS, DHCP, gateway e protocolos explicados passo a passo.", meta: "Curso Técnico · leitura", href: "/informatica/redes/apostila.html", color: ACCENT, badge: "apostila" },
-  { icon: "cadeado", svg: SVG.cadeado, title: "Escape Room — Diagnóstico de Rede", desc: "A rede da empresa caiu. Use DNS, DHCP e IP para descobrir o culpado.", meta: "2EM–3EM · 30 min", href: "/informatica/redes/escape-redes.html", color: ACCENT, badge: "jogo" },
-  { icon: "clipboard", svg: SVG.clipboard, title: "Projeto de Pesquisa — Guia Completo", desc: "Guia para montar seu projeto científico do zero, módulo por módulo.", meta: "Curso Técnico · contínuo", href: "/informatica/projeto-pesquisa.html", color: ACCENT, badge: "projeto" },
-  { icon: "enem", svg: SVG.curso, title: "Explorador Digital", desc: "Curso autoinstrutivo de 15 aulas: hardware, software, internet, senhas, algoritmos e IA — com atividades e certificado ao final.", meta: "6º-7º ano · 15 aulas", href: "/informatica/explorador-digital.html", color: ACCENT, badge: "curso" },
+  { icon: "redes", svg: SVG.redes, title: "Apostila — Redes de Computadores", desc: "IP, DNS, DHCP, gateway e protocolos explicados passo a passo.", meta: "Curso Técnico · leitura", href: "/informatica/redes/apostila.html", color: "#2563EB", badge: "apostila" },
+  { icon: "cadeado", svg: SVG.cadeado, title: "Escape Room — Diagnóstico de Rede", desc: "A rede da empresa caiu. Use DNS, DHCP e IP para descobrir o culpado.", meta: "2EM–3EM · 30 min", href: "/informatica/redes/escape-redes.html", color: "#F59E0B", badge: "jogo" },
+  { icon: "clipboard", svg: SVG.clipboard, title: "Projeto de Pesquisa — Guia Completo", desc: "Guia para montar seu projeto científico do zero, módulo por módulo.", meta: "Curso Técnico · contínuo", href: "/informatica/projeto-pesquisa.html", color: "#7C3AED", badge: "projeto" },
+  { icon: "enem", svg: SVG.curso, title: "Explorador Digital", desc: "Curso autoinstrutivo de 15 aulas: hardware, software, internet, senhas, algoritmos e IA — com atividades e certificado ao final.", meta: "6º-7º ano · 15 aulas", href: "/informatica/explorador-digital.html", color: "#EA580C", badge: "curso" },
   { icon: "rede", svg: SVG.ip, title: "Endereçamento IP", desc: "Detetive de IP, Batalha de Ping e Escape: dominando o endereçamento.", meta: "Em produção", color: "#64748B", badge: "em breve", soon: true },
-  { icon: "escudo", svg: SVG.escudo, title: "Apostila — Segurança da Informação", desc: "Tríade CID, malware, criptografia, função hash, segurança física e ambiental — com quiz interativo.", meta: "Curso Técnico · leitura", href: "/informatica/seguranca/apostila.html", color: ACCENT, badge: "apostila" },
+  { icon: "escudo", svg: SVG.escudo, title: "Apostila — Segurança da Informação", desc: "Tríade CID, malware, criptografia, função hash, segurança física e ambiental — com quiz interativo.", meta: "Curso Técnico · leitura", href: "/informatica/seguranca/apostila.html", color: "#DC2626", badge: "apostila" },
 ];
 
 export default function Informatica() {
