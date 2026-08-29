@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Prova — 3º Ano · 2º Trimestre 2026 · Português — Portal de Aulas</title>
+  <title>Prova — 2º Ano · 2º Trimestre 2026 · Português — Portal de Aulas</title>
 
   <!-- Preview no WhatsApp -->
-  <meta property="og:title" content="Prova 3º Ano — 2º Trimestre 📋 Língua Portuguesa">
-  <meta property="og:description" content="15 questões misturando literatura, gramática, interpretação e redação — 2º trimestre 2026.">
+  <meta property="og:title" content="Prova 2º Ano — 2º Trimestre 📋 Língua Portuguesa">
+  <meta property="og:description" content="15 questões misturando sintaxe do período, literatura e interpretação — 2º trimestre 2026.">
   <meta property="og:image" content="https://portmarcos.github.io/assets/img/og-capa.png">
 
   <link rel="icon" href="../favicon.ico">
@@ -51,12 +51,9 @@
     /* ── Modo prova: NÃO revela certo/errado nem explicação — o professor corrige em sala ──
        (sobrescreve as classes .correta/.errada que o motor aplica ao responder).
        A cor de fundo/borda de cada botão (neutra ou "foi essa que eu cliquei") é
-       controlada por JS via style inline mais abaixo, não por classe CSS — depois de
-       dois bugs reais em produção (a cor não aparecia pra alguns alunos mesmo com
-       cache limpo/aba anônima, provável guerra de especificidade com as regras de
-       .opcao/.opcao.correta/.opcao.errada do design-system.css que não reproduzia de
-       forma confiável em teste), inline style é a única forma 100% determinística de
-       garantir que essa regra vence sem depender de ordem de cascata. O selo circular
+       controlada por JS via style inline mais abaixo, não por classe CSS — mesma
+       técnica já usada na prova do 3º ano, por ser a única forma 100% determinística
+       de garantir que essa regra vence sem depender de ordem de cascata. O selo circular
        (::before, com a letra A/B/C/D) não pode receber style inline diretamente — por
        isso usa uma variável CSS (--badge-bg/--badge-fg) que o JS seta no próprio botão. */
     #tela-questao .opcao::before{ background-color:var(--badge-bg, var(--cor-materia-claro)) !important; color:var(--badge-fg, var(--cor-materia)) !important; }
@@ -103,16 +100,16 @@
 
   <main class="container nao-imprimir" style="max-width:760px">
     <a class="voltar nao-imprimir" href="../portugues/index.html">← Voltar ao Português</a>
-    <span class="etiqueta-materia">Avaliação · 2º Trimestre 2026 · 3º Ano EM</span>
+    <span class="etiqueta-materia">Avaliação · 2º Trimestre 2026 · 2º Ano EM</span>
 
     <div class="hero-simulado">
       <h1 id="quiz-titulo" style="margin-top:10px">…</h1>
-      <p class="lead">15 questões misturando literatura, gramática, interpretação e redação. Cada aluno recebe as questões e alternativas em ordem diferente.</p>
+      <p class="lead">15 questões misturando sintaxe do período, literatura e interpretação de texto. Cada aluno recebe as questões e alternativas em ordem diferente.</p>
       <div class="blocos-resumo">
-        <span class="bloco-chip"><i></i>Literatura</span>
+        <span class="bloco-chip"><i></i>Sintaxe</span>
         <span class="bloco-chip"><i></i>Gramática</span>
+        <span class="bloco-chip"><i></i>Literatura</span>
         <span class="bloco-chip"><i></i>Interpretação</span>
-        <span class="bloco-chip"><i></i>Redação</span>
       </div>
     </div>
 
@@ -172,7 +169,7 @@
   <footer class="rodape nao-imprimir"><div class="container">Portal Marcos Cruz · Prof. Marcos Cruz</div></footer>
 
   <!-- 1º: os dados · 2º: embaralha a ordem das questões · 3º: confete · 4º: o motor -->
-  <script src="../dados/prova-3em-3tri-portugues.js"></script>
+  <script src="../dados/prova-2em-2tri-portugues.js"></script>
   <script>
     /* ===== Embaralha a ORDEM das questões (o motor já embaralha as alternativas) =====
        Cada aluno recebe uma sequência diferente — dificulta compartilhar/colar o gabarito. */
@@ -270,15 +267,15 @@
        .errada nos bastidores (é delas que a nota real depende, não
        mexemos nisso) — mas visualmente, em vez de tentar sobrepor
        essas classes com CSS !important (isso já causou dois bugs
-       reais em produção: a cor não aplicava de jeito nenhum pra
-       alguns alunos, mesmo depois de cache/aba anônima — provável
-       guerra de especificidade/cascata com as regras de
-       design-system.css que não reproduziu de forma confiável em
-       teste), aqui setamos a cor de cada botão diretamente por JS
-       (style inline) depois que o motor já rodou. Inline style
-       sempre vence regra de folha de estilo sem !important, então
-       isso é determinístico — não depende de ordem de regra CSS
-       nem de transição terminando a tempo.
+       reais em produção na prova do 3º ano: a cor não aplicava de
+       jeito nenhum pra alguns alunos, mesmo depois de cache/aba
+       anônima — provável guerra de especificidade/cascata com as
+       regras de design-system.css que não reproduziu de forma
+       confiável em teste), aqui setamos a cor de cada botão
+       diretamente por JS (style inline) depois que o motor já
+       rodou. Inline style sempre vence regra de folha de estilo
+       sem !important, então isso é determinístico — não depende de
+       ordem de regra CSS nem de transição terminando a tempo.
        Delegação de evento no #opcoes: como o motor recria os botões
        a cada questão (innerHTML = ""), um listener por botão se
        perderia — o container #opcoes, porém, nunca é recriado.
@@ -321,24 +318,24 @@
     /* ===== Glossário — termos de gramática/literatura desta prova =====
        Só abre a partir da tela inicial (antes de "Começar a prova"), nunca
        durante a prova em si: várias questões pedem pra reconhecer um termo
-       (ex.: "preterição") entre as próprias alternativas, e deixar o
+       (ex.: "hipérbato") entre as próprias alternativas, e deixar o
        glossário acessível durante o teste entregaria a resposta. Como
        material de revisão prévia, isso não é um problema. */
     (function () {
       const GLOSSARIO = [
-        { termo: "Regência verbal", def: "A relação entre um verbo e a preposição (ou a ausência dela) que ele exige antes do complemento." },
-        { termo: "Transitivo direto", def: "Verbo cujo complemento não precisa de preposição (ex.: \"respeitar alguém\")." },
-        { termo: "Transitivo indireto", def: "Verbo cujo complemento é obrigatoriamente introduzido por preposição (ex.: \"obedecer a alguém\")." },
-        { termo: "Verbo impessoal", def: "Verbo que não tem sujeito, como \"haver\" (existência) e \"custar\" (no sentido de \"ser difícil\")." },
-        { termo: "Crase", def: "Fusão da preposição \"a\" com o artigo feminino \"a\" (ou com pronomes demonstrativos), indicada pelo acento grave (à)." },
-        { termo: "Argumento de autoridade", def: "Estratégia argumentativa que recorre a uma fonte especializada, institucional ou reconhecida para sustentar uma ideia." },
-        { termo: "Função fática da linguagem", def: "Uso da linguagem para testar, manter ou interromper o contato entre quem fala e quem ouve (ex.: \"Alô? Quem fala?\")." },
-        { termo: "Determinismo", def: "Corrente de pensamento do século XIX segundo a qual o comportamento humano é moldado pelo meio, pela raça e pelo momento histórico." },
-        { termo: "Preterição", def: "Figura de linguagem em que se finge não querer falar de algo sobre o qual, na verdade, já se está falando." },
+        { termo: "Oração coordenada", def: "Oração independente, que não exerce função sintática dentro de outra oração." },
+        { termo: "Oração subordinada", def: "Oração que depende sintaticamente de outra (a oração principal), completando ou modificando seu sentido." },
+        { termo: "Conjunção adversativa", def: "Conjunção que liga duas ideias contrastantes, de oposição (ex.: mas, porém, todavia, contudo)." },
+        { termo: "Oração subordinada adverbial", def: "Oração que funciona como um advérbio da oração principal, indicando circunstância — tempo, causa, condição, concessão etc." },
+        { termo: "Sujeito oculto (desinencial)", def: "Sujeito que não aparece escrito na frase, mas é identificado pela desinência (terminação) do verbo." },
+        { termo: "Sujeito indeterminado", def: "Ocorre quando não se sabe — ou não importa — quem pratica a ação verbal." },
+        { termo: "Verbo impessoal", def: "Verbo que não tem sujeito algum, como \"haver\" (existência) e \"fazer\" (tempo decorrido)." },
+        { termo: "Vocativo", def: "Termo usado para chamar, invocar ou interpelar diretamente alguém; não exerce função sintática na oração." },
+        { termo: "Adjunto adverbial", def: "Termo que indica uma circunstância (tempo, modo, lugar, causa etc.) e costuma poder ser deslocado na frase." },
         { termo: "Hipérbato", def: "Inversão da ordem direta das palavras numa frase ou verso, para efeito expressivo." },
-        { termo: "Eufemismo", def: "Substituição de uma expressão desagradável ou chocante por outra mais suave." },
-        { termo: "Narrador defunto", def: "Narrador que já morreu e conta a própria história desse lugar — marca célebre de Memórias Póstumas de Brás Cubas, de Machado de Assis." },
-        { termo: "Estratégia argumentativa multimodal", def: "Uso combinado de texto e imagem (charge, cartaz, campanha) para reforçar um argumento." }
+        { termo: "Sinestesia", def: "Mistura de sensações de sentidos diferentes numa mesma expressão (ex.: \"cor que se ouve\")." },
+        { termo: "Antítese", def: "Aproximação de ideias opostas na mesma frase ou trecho, para criar contraste expressivo." },
+        { termo: "Narrador defunto", def: "Narrador que já morreu e conta a própria história desse lugar — marca célebre de Memórias Póstumas de Brás Cubas, de Machado de Assis." }
       ];
       const lista = document.getElementById("glossario-lista");
       GLOSSARIO.forEach(function (item) {

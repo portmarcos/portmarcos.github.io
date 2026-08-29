@@ -446,7 +446,7 @@ export default function Home() {
             <ul className="space-y-2.5 text-sm text-slate-400">
               <li><a href="/enem.html" className="hover:text-slate-100 transition-colors">Portal ENEM · LP</a></li>
               <li><a href="/atividades/simulado-enem-2025.html" className="hover:text-slate-100 transition-colors">ENEM 2025 — Prova real</a></li>
-              <li><a href="/atividades/prova-3em-3tri-portugues.html" className="hover:text-slate-100 transition-colors">Prova 3º EM — 3º Trimestre</a></li>
+              <li><a href="/atividades/prova-3em-3tri-portugues.html" className="hover:text-slate-100 transition-colors">Prova 3º EM — 2º Trimestre</a></li>
               <li><a href="/saeb/index.html" className="hover:text-slate-100 transition-colors">Painel SAEB / SIMAVE</a></li>
               <li><a href="/portugues/redacao-enem/avaliacao.html" className="hover:text-slate-100 transition-colors">Redação ENEM</a></li>
             </ul>
