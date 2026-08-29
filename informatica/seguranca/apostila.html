@@ -7,11 +7,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --p:#059669;--pl:#10b981;--pll:#6ee7b7;--pbg:#ecfdf5;
-  --bg:#f0fdf9;--card:#ffffff;--border:#e2e8f0;
-  --t:#0f172a;--t2:#475569;--t3:#94a3b8;
-  --shadow:0 2px 8px rgba(5,150,105,.1);
-  --shadow2:0 12px 32px rgba(5,150,105,.18);
+  --p:#10b981;--pl:#34d399;--pll:#6ee7b7;--pbg:rgba(16,185,129,.14);
+  --bg:#020617;--card:rgba(15,23,42,.6);--border:rgba(51,65,85,.6);
+  --t:#f1f5f9;--t2:#94a3b8;--t3:#64748b;
+  --shadow:0 2px 10px rgba(0,0,0,.35);
+  --shadow2:0 16px 40px rgba(0,0,0,.5);
   --radius:14px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -20,57 +20,58 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t);line-hei
 
 /* ── HERO ── */
 .hero{
-  background:linear-gradient(-45deg,#d1fae5,#e0f2fe,#fef3c7,#d1fae5);
-  background-size:400% 400%;animation:gbg 10s ease infinite;
+  background:linear-gradient(-45deg,#022c22,#0c1a2e,#1a0a05,#022c22);
+  background-size:400% 400%;animation:gbg 12s ease infinite;
   padding:40px;position:relative;overflow:hidden;
 }
 @keyframes gbg{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-.shape{position:absolute;border-radius:50%;opacity:.15;}
+.shape{position:absolute;border-radius:50%;opacity:.22;filter:blur(2px)}
 .s1{width:300px;height:300px;background:#10b981;top:-100px;right:-80px;animation:fl1 7s ease-in-out infinite}
 .s2{width:200px;height:200px;background:#dc2626;bottom:-60px;left:-40px;animation:fl2 9s ease-in-out infinite}
 .s3{width:150px;height:150px;background:#0ea5e9;top:30%;right:20%;animation:fl1 6s ease-in-out infinite reverse}
 @keyframes fl1{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-25px) scale(1.05)}}
 @keyframes fl2{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-15px) rotate(10deg)}}
 .hero-inner{position:relative;z-index:1;max-width:900px;margin:0 auto}
-.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(5,150,105,.1);
-  border:1px solid rgba(5,150,105,.2);color:var(--p);padding:5px 14px;border-radius:30px;
+.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(16,185,129,.12);
+  border:1px solid rgba(16,185,129,.3);color:var(--pl);padding:5px 14px;border-radius:30px;
   font-size:.72rem;font-weight:700;letter-spacing:.08em;margin-bottom:16px}
 .hero-title{font-size:clamp(1.8rem,5vw,3rem);font-weight:800;color:var(--t);
   letter-spacing:-.03em;line-height:1.1;margin-bottom:6px}
-.hero-title span{background:linear-gradient(135deg,var(--p),#dc2626);
+.hero-title span{background:linear-gradient(135deg,var(--pl),#f87171);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .hero-sub{color:var(--t2);font-size:.9rem;margin-bottom:28px;max-width:620px}
-.student-card{background:white;border-radius:var(--radius);padding:22px;
+.student-card{background:var(--card);backdrop-filter:blur(10px);border-radius:var(--radius);padding:22px;
   box-shadow:var(--shadow2);border:1px solid var(--border)}
-.sc-title{font-size:.75rem;font-weight:700;color:var(--p);letter-spacing:.1em;
+.sc-title{font-size:.75rem;font-weight:700;color:var(--pl);letter-spacing:.1em;
   text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
 .form-row{display:flex;gap:12px;flex-wrap:wrap}
 .ff{display:flex;flex-direction:column;gap:5px;flex:1;min-width:140px}
 .fl{font-size:.7rem;font-weight:600;color:var(--t2)}
-.fi{background:#f8fafc;border:1.5px solid var(--border);color:var(--t);
+.fi{background:rgba(255,255,255,.04);border:1.5px solid var(--border);color:var(--t);
   padding:9px 13px;font-family:'Inter',sans-serif;font-size:.88rem;
-  border-radius:8px;outline:none;transition:.2s}
-.fi:focus{border-color:var(--pl);background:white;box-shadow:0 0 0 3px rgba(16,185,129,.15)}
+  border-radius:8px;outline:none;transition:.2s;color-scheme:dark}
+.fi::placeholder{color:var(--t3)}
+.fi:focus{border-color:var(--pl);background:rgba(255,255,255,.07);box-shadow:0 0 0 3px rgba(16,185,129,.15)}
 
 /* ── NAV ── */
-#nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.92);
+#nav{position:sticky;top:0;z-index:200;background:rgba(2,6,23,.86);
   backdrop-filter:blur(12px);border-bottom:1px solid var(--border);
   padding:0 40px;display:flex;align-items:center;justify-content:space-between;
-  min-height:52px;gap:12px;flex-wrap:wrap;box-shadow:0 1px 8px rgba(0,0,0,.06)}
+  min-height:52px;gap:12px;flex-wrap:wrap;box-shadow:0 1px 8px rgba(0,0,0,.2)}
 .nav-links{display:flex;gap:4px}
 .nl{padding:7px 16px;border:1px solid transparent;background:transparent;
   color:var(--t3);font-size:.72rem;font-weight:600;letter-spacing:.06em;
   cursor:pointer;border-radius:8px;transition:.2s;text-decoration:none;display:block}
-.nl:hover,.nl.active{background:var(--pbg);border-color:rgba(5,150,105,.2);color:var(--p)}
+.nl:hover,.nl.active{background:var(--pbg);border-color:rgba(16,185,129,.25);color:var(--pl)}
 .nav-right{display:flex;gap:10px;align-items:center}
 #prog-txt{font-size:.7rem;font-weight:600;color:var(--t2)}
-#prog-bar{width:120px;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden}
+#prog-bar{width:120px;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
 #prog-fill{height:100%;background:linear-gradient(90deg,var(--p),#dc2626);width:0%;
   border-radius:3px;transition:width .5s cubic-bezier(.4,0,.2,1)}
 .btn-sm{padding:6px 14px;border-radius:8px;font-size:.7rem;font-weight:600;
   cursor:pointer;border:1.5px solid;transition:.2s}
-.btn-outline{border-color:var(--border);background:white;color:var(--t2)}
-.btn-outline:hover{background:var(--pbg);border-color:var(--pll);color:var(--p)}
+.btn-outline{border-color:var(--border);background:rgba(255,255,255,.03);color:var(--t2)}
+.btn-outline:hover{background:var(--pbg);border-color:var(--pll);color:var(--pl)}
 
 /* ── PAGE SECTIONS ── */
 .page-sec{max-width:960px;margin:0 auto;padding:60px 40px}
@@ -83,7 +84,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t);line-hei
 
 /* ── THEORY CARDS ── */
 .tc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-.tc{background:white;border-radius:var(--radius);overflow:hidden;
+.tc{background:var(--card);backdrop-filter:blur(8px);border-radius:var(--radius);overflow:hidden;
   box-shadow:var(--shadow);border:1px solid var(--border);
   transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s,border-color .35s;
   display:flex;flex-direction:column}
@@ -102,7 +103,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t);line-hei
 .tc-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.2rem;font-weight:700;
   line-height:1.15;letter-spacing:-.005em;position:relative;z-index:1}
 .tc-sub{font-size:.64rem;opacity:.85;margin-top:2px;letter-spacing:.02em;position:relative;z-index:1}
-.tc-svg{padding:14px;background:linear-gradient(180deg,#fafbfc,#f4f6f8);border-bottom:1px solid var(--border)}
+.tc-svg{padding:14px;background:rgba(255,255,255,.02);border-bottom:1px solid var(--border)}
 .tc-svg svg{width:100%;height:auto;display:block}
 .tc-body{padding:16px 16px 14px;flex:1;display:flex;flex-direction:column}
 .tc-bullets{list-style:none;margin:0;font-size:.82rem;color:var(--t2);line-height:1.5;
@@ -115,33 +116,31 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t);line-hei
 .tc-detail.open{display:block;animation:fadeIn .3s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
 .tc-more{margin-top:12px;background:none;border:none;cursor:pointer;
-  font-size:.74rem;font-weight:700;color:var(--p);padding:0;text-align:left;
+  font-size:.74rem;font-weight:700;color:var(--pl);padding:0;text-align:left;
   transition:opacity .2s}
 .tc-more:hover{opacity:.7}
-.tc-foot{margin:0 16px 16px;padding:6px 12px;background:var(--pbg);border-radius:999px;
-  font-size:.66rem;font-weight:700;color:var(--p);letter-spacing:.03em;
-  display:inline-flex;align-items:center;gap:5px;align-self:flex-start;border:1px solid rgba(5,150,105,.15)}
 .mini-tbl{width:100%;border-collapse:collapse;font-size:.72rem;margin-top:4px;border-radius:8px;overflow:hidden}
 .mini-tbl th,.mini-tbl td{border:1px solid var(--border);padding:7px 9px;text-align:left}
-.mini-tbl th{background:var(--pbg);color:var(--p);font-weight:700}
+.mini-tbl th{background:var(--pbg);color:var(--pl);font-weight:700}
+.mini-tbl td{color:var(--t2)}
 
 /* ── QUESTION CARDS ── */
 .qdiff{margin-bottom:36px}
 .qdiff-hdr{display:flex;align-items:center;gap:12px;margin-bottom:18px;
-  padding:14px 18px;border-radius:var(--radius);}
-.qdiff-hdr.logica{background:linear-gradient(135deg,#ede9fe,#ddd6fe)}
-.qdiff-hdr.fisica{background:linear-gradient(135deg,#dbeafe,#bfdbfe)}
-.qdiff-hdr.ambiental{background:linear-gradient(135deg,#fef9c3,#fde68a)}
+  padding:14px 18px;border-radius:var(--radius);border:1px solid var(--border)}
+.qdiff-hdr.logica{background:linear-gradient(135deg,rgba(124,58,237,.16),rgba(124,58,237,.05))}
+.qdiff-hdr.fisica{background:linear-gradient(135deg,rgba(37,99,235,.16),rgba(37,99,235,.05))}
+.qdiff-hdr.ambiental{background:linear-gradient(135deg,rgba(217,119,6,.18),rgba(217,119,6,.05))}
 .qdiff-ico{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;
   justify-content:center;font-weight:900;font-size:1rem;flex-shrink:0}
 .qdiff-ico.logica{background:#7c3aed;color:white}
 .qdiff-ico.fisica{background:#2563eb;color:white}
 .qdiff-ico.ambiental{background:#d97706;color:white}
 .qdiff-label{font-size:1.1rem;font-weight:800}
-.qdiff-label.logica{color:#5b21b6} .qdiff-label.fisica{color:#1e40af} .qdiff-label.ambiental{color:#92400e}
+.qdiff-label.logica{color:#c4b5fd} .qdiff-label.fisica{color:#93c5fd} .qdiff-label.ambiental{color:#fcd34d}
 .qdiff-sub{font-size:.65rem;font-weight:600;letter-spacing:.1em;margin-top:2px}
-.qdiff-sub.logica{color:#7c3aed} .qdiff-sub.fisica{color:#2563eb} .qdiff-sub.ambiental{color:#b45309}
-.qc{background:white;border-radius:var(--radius);padding:22px;margin-bottom:14px;
+.qdiff-sub.logica{color:#a78bfa} .qdiff-sub.fisica{color:#60a5fa} .qdiff-sub.ambiental{color:#fbbf24}
+.qc{background:var(--card);backdrop-filter:blur(8px);border-radius:var(--radius);padding:22px;margin-bottom:14px;
   border:1.5px solid var(--border);box-shadow:var(--shadow);
   transition:all .3s;border-left:4px solid}
 .qc:hover{box-shadow:var(--shadow2);transform:translateX(2px)}
@@ -152,34 +151,34 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t);line-hei
 .qnum{font-size:.72rem;font-weight:700;color:var(--t3)}
 .qbadge{font-size:.6rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
   padding:3px 10px;border-radius:30px}
-.qbadge.logica{background:#ede9fe;color:#6d28d9}
-.qbadge.fisica{background:#dbeafe;color:#1d4ed8}
-.qbadge.ambiental{background:#fef3c7;color:#92400e}
+.qbadge.logica{background:rgba(124,58,237,.18);color:#c4b5fd}
+.qbadge.fisica{background:rgba(37,99,235,.18);color:#93c5fd}
+.qbadge.ambiental{background:rgba(217,119,6,.2);color:#fcd34d}
 .qsrc{font-size:.68rem;font-weight:600;color:var(--t3);margin-bottom:10px;font-style:italic}
 .qt{font-size:.9rem;color:var(--t);line-height:1.7;margin-bottom:14px}
-.qt strong{color:var(--p);font-weight:600}
+.qt strong{color:var(--pl);font-weight:600}
 .opts{display:flex;flex-direction:column;gap:6px}
 .opt{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;
-  background:#f8fafc;border:1.5px solid var(--border);border-radius:9px;
+  background:rgba(255,255,255,.03);border:1.5px solid var(--border);border-radius:9px;
   cursor:pointer;transition:all .2s;font-size:.86rem;color:var(--t2)}
 .opt:hover{background:var(--pbg);border-color:var(--pll);color:var(--t)}
-.opt input[type=radio]{accent-color:var(--p);margin-top:3px;min-width:14px}
-.opt:has(input:checked){background:var(--pbg);border-color:var(--pl);color:var(--p);font-weight:500}
-.opt.certo{background:#ecfdf5;border-color:#10b981;color:#065f46;font-weight:600}
-.opt.errado{background:#fef2f2;border-color:#f87171;color:#991b1b}
+.opt input[type=radio]{accent-color:var(--pl);margin-top:3px;min-width:14px}
+.opt:has(input:checked){background:var(--pbg);border-color:var(--pl);color:var(--pl);font-weight:500}
+.opt.certo{background:rgba(16,185,129,.16);border-color:#10b981;color:#6ee7b7;font-weight:600}
+.opt.errado{background:rgba(248,113,113,.14);border-color:#f87171;color:#fca5a5}
 
 /* ── SUBMIT ── */
-.submit-card{background:white;border-radius:var(--radius);padding:32px;
+.submit-card{border-radius:var(--radius);padding:32px;
   box-shadow:var(--shadow2);border:1px solid var(--border);
-  background:linear-gradient(135deg,white,#ecfdf5)}
+  background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(15,23,42,.6))}
 .sub-title{font-size:1.2rem;font-weight:800;color:var(--t);margin-bottom:6px}
 .sub-note{font-size:.85rem;color:var(--t2);margin-bottom:24px}
 .stats-row{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap}
 .stat{background:var(--pbg);border:1.5px solid var(--pll);border-radius:10px;
   padding:12px 18px;flex:1;min-width:90px;text-align:center}
-.stat-n{font-size:1.5rem;font-weight:800}
+.stat-n{font-size:1.5rem;font-weight:800;color:var(--t)}
 .stat-l{font-size:.62rem;font-weight:600;color:var(--t3);letter-spacing:.08em;margin-top:2px}
-.btn-check{width:100%;padding:13px;background:white;color:var(--p);
+.btn-check{width:100%;padding:13px;background:rgba(255,255,255,.03);color:var(--pl);
   font-family:'Inter',sans-serif;font-size:.9rem;font-weight:700;
   letter-spacing:.04em;border:1.5px solid var(--p);border-radius:10px;cursor:pointer;
   transition:all .2s;margin-bottom:12px}
@@ -191,14 +190,14 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t);line-hei
 .btn-submit:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(5,150,105,.4)}
 .btn-submit:disabled{opacity:.5;cursor:not-allowed;transform:none}
 #smsg{display:none;margin-top:16px;padding:14px 18px;border-radius:10px;font-size:.88rem;border:1.5px solid}
-#smsg.ok{background:#f0fdf4;border-color:#86efac;color:#166534}
-#smsg.err{background:#fef2f2;border-color:#fca5a5;color:#991b1b}
-#smsg.loading{background:var(--pbg);border-color:var(--pll);color:var(--p)}
+#smsg.ok{background:rgba(16,185,129,.14);border-color:#34d399;color:#6ee7b7}
+#smsg.err{background:rgba(248,113,113,.14);border-color:#f87171;color:#fca5a5}
+#smsg.loading{background:var(--pbg);border-color:var(--pll);color:var(--pl)}
 
 /* ── LAB NOTE ── */
-.lab-note{background:white;border-radius:var(--radius);padding:22px;margin-top:20px;
+.lab-note{background:var(--card);backdrop-filter:blur(8px);border-radius:var(--radius);padding:22px;margin-top:20px;
   border:1.5px dashed var(--pll);box-shadow:var(--shadow)}
-.lab-note h3{font-size:.95rem;font-weight:800;color:var(--p);margin-bottom:8px}
+.lab-note h3{font-size:.95rem;font-weight:800;color:var(--pl);margin-bottom:8px}
 .lab-note p{font-size:.85rem;color:var(--t2);line-height:1.7}
 
 /* ── ANIMATE IN ── */
@@ -211,9 +210,17 @@ footer a{color:var(--p);text-decoration:none;font-weight:500}
 
 @media print{
   #nav,.hero .shape,.btn-sm,footer,.btn-check{display:none!important}
-  .hero{background:#fff;padding:20px} .tc:hover{transform:none}
+  .hero{background:#fff!important;padding:20px} .tc:hover{transform:none}
   .tc-detail{display:block!important} .submit-card{display:none!important}
-  body{background:#fff} .qc{break-inside:avoid}
+  /* tema da tela é escuro, mas a folha impressa sempre sai clara/legível em papel branco */
+  body,.tc,.qc,.student-card,.lab-note,#nav{background:#fff!important;color:#0f172a!important;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .hero-title,.hero-sub,.sec-title,.sec-desc,.tc-bullets,.tc-detail,.qt,.qsrc,
+  .stat-l,.sub-note,.lab-note p{color:#0f172a!important}
+  .qt strong,.tc-more,.sc-title{color:#059669!important}
+  .opt{background:#f8fafc!important;color:#334155!important;border-color:#e2e8f0!important}
+  .fi{background:#f8fafc!important;color:#0f172a!important;border-color:#e2e8f0!important}
+  .qc{break-inside:avoid}
 }
 @media(max-width:900px){.tc-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:600px){
@@ -272,14 +279,14 @@ footer a{color:var(--p);text-decoration:none;font-weight:500}
         <div><div class="tc-title">Tríade CID</div><div class="tc-sub">Confidencialidade · Integridade · Disponibilidade</div></div>
       </div>
       <div class="tc-svg"><svg viewBox="0 0 220 110" xmlns="http://www.w3.org/2000/svg">
-  <rect width="220" height="110" rx="10" fill="#ecfdf5"/>
-  <polygon points="110,14 190,92 30,92" fill="none" stroke="#059669" stroke-width="2.5"/>
+  <rect width="220" height="110" rx="10" fill="#0b1a15"/>
+  <polygon points="110,14 190,92 30,92" fill="none" stroke="#34d399" stroke-width="2.5"/>
   <circle cx="110" cy="14" r="16" fill="#059669"/><text x="110" y="18" text-anchor="middle" font-size="9" fill="white" font-weight="700">C</text>
   <circle cx="190" cy="92" r="16" fill="#0ea5e9"/><text x="190" y="96" text-anchor="middle" font-size="9" fill="white" font-weight="700">I</text>
   <circle cx="30" cy="92" r="16" fill="#d97706"/><text x="30" y="96" text-anchor="middle" font-size="9" fill="white" font-weight="700">D</text>
-  <text x="110" y="40" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#065f46">Confidencialidade</text>
-  <text x="185" y="70" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#0369a1">Integridade</text>
-  <text x="35" y="70" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#92400e">Disponibilidade</text>
+  <text x="110" y="40" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#6ee7b7">Confidencialidade</text>
+  <text x="185" y="70" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#7dd3fc">Integridade</text>
+  <text x="35" y="70" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#fcd34d">Disponibilidade</text>
 </svg></div>
       <div class="tc-body">
         <ul class="tc-bullets"><li>Confidencialidade: só quem tem autorização acessa</li><li>Integridade: a informação não é alterada indevidamente</li><li>Disponibilidade: acessível sempre que necessário</li></ul>
@@ -287,7 +294,6 @@ footer a{color:var(--p);text-decoration:none;font-weight:500}
 <p style="margin-top:8px">"A confidencialidade diz que a informação só está disponível para aqueles devidamente autorizados; a integridade diz que a informação não é destruída ou corrompida; e a disponibilidade diz que os serviços/recursos do sistema estão disponíveis sempre que necessário." — CERT.br, Cartilha de Segurança para Internet</p></div>
         <button class="tc-more" onclick="toggleDetail('cid')">Ver teoria completa ▸</button>
       </div>
-      <div class="tc-foot">🎯 Base de todo o conteúdo</div>
     </div>
 
     <div class="tc animate-in" id="tc-ameacas">
@@ -296,19 +302,36 @@ footer a{color:var(--p);text-decoration:none;font-weight:500}
         <div><div class="tc-title">Ameaças Lógicas</div><div class="tc-sub">Malware · Phishing · Força Bruta · DoS/DDoS</div></div>
       </div>
       <div class="tc-svg"><svg viewBox="0 0 220 110" xmlns="http://www.w3.org/2000/svg">
-  <rect width="220" height="110" rx="10" fill="#faf5ff"/>
-  <circle cx="42" cy="38" r="20" fill="#ede9fe" stroke="#c4b5fd" stroke-width="1.5"/>
-  <text x="42" y="45" text-anchor="middle" font-size="17">🦠</text>
-  <circle cx="94" cy="38" r="20" fill="#ede9fe" stroke="#c4b5fd" stroke-width="1.5"/>
-  <text x="94" y="45" text-anchor="middle" font-size="17">🎣</text>
-  <circle cx="146" cy="38" r="20" fill="#ede9fe" stroke="#c4b5fd" stroke-width="1.5"/>
-  <text x="146" y="45" text-anchor="middle" font-size="17">🔨</text>
-  <circle cx="198" cy="38" r="20" fill="#ede9fe" stroke="#c4b5fd" stroke-width="1.5"/>
-  <text x="198" y="45" text-anchor="middle" font-size="16">🌊</text>
-  <text x="42" y="70" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#5b21b6" font-weight="700">Malware</text>
-  <text x="94" y="70" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#5b21b6" font-weight="700">Phishing</text>
-  <text x="146" y="70" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#5b21b6" font-weight="700">Força bruta</text>
-  <text x="198" y="70" text-anchor="middle" font-family="sans-serif" font-size="6.7" fill="#5b21b6" font-weight="700">DoS/DDoS</text>
+  <rect width="220" height="110" rx="10" fill="#160f26"/>
+  <circle cx="42" cy="38" r="20" fill="#2a1f4a" stroke="#7c3aed" stroke-width="1.5"/>
+  <g transform="translate(42,39)" stroke="#c4b5fd" fill="none" stroke-width="1.4" stroke-linecap="round">
+    <ellipse cx="0" cy="1" rx="5" ry="6"/>
+    <line x1="-5" y1="-2" x2="-8" y2="-4"/><line x1="5" y1="-2" x2="8" y2="-4"/>
+    <line x1="-5" y1="2" x2="-8" y2="2"/><line x1="5" y1="2" x2="8" y2="2"/>
+    <line x1="-5" y1="5" x2="-7" y2="7"/><line x1="5" y1="5" x2="7" y2="7"/>
+    <circle cx="-2" cy="-7" r="1" fill="#c4b5fd" stroke="none"/><circle cx="2" cy="-7" r="1" fill="#c4b5fd" stroke="none"/>
+  </g>
+  <circle cx="94" cy="38" r="20" fill="#2a1f4a" stroke="#7c3aed" stroke-width="1.5"/>
+  <g transform="translate(94,39)" stroke="#c4b5fd" fill="none" stroke-width="1.4" stroke-linejoin="round">
+    <rect x="-9" y="-6" width="18" height="13" rx="2"/>
+    <path d="M -9 -6 L 0 2 L 9 -6"/>
+  </g>
+  <circle cx="146" cy="38" r="20" fill="#2a1f4a" stroke="#7c3aed" stroke-width="1.5"/>
+  <g transform="translate(146,39)" stroke="#c4b5fd" fill="#c4b5fd" stroke-width="1.3">
+    <rect x="-2" y="-9" width="4" height="9" rx="1"/>
+    <rect x="-7" y="-11" width="14" height="6" rx="2" fill="none"/>
+  </g>
+  <circle cx="198" cy="38" r="20" fill="#2a1f4a" stroke="#7c3aed" stroke-width="1.5"/>
+  <g transform="translate(198,39)" stroke="#c4b5fd" fill="#c4b5fd" stroke-linecap="round">
+    <circle cx="0" cy="0" r="2.2" stroke="none"/>
+    <path d="M -9 -7 L -3 -2" stroke-width="1.4" fill="none"/>
+    <path d="M 9 -7 L 3 -2" stroke-width="1.4" fill="none"/>
+    <path d="M 0 9 L 0 3" stroke-width="1.4" fill="none"/>
+  </g>
+  <text x="42" y="70" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#c4b5fd" font-weight="700">Malware</text>
+  <text x="94" y="70" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#c4b5fd" font-weight="700">Phishing</text>
+  <text x="146" y="70" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#c4b5fd" font-weight="700">Força bruta</text>
+  <text x="198" y="70" text-anchor="middle" font-family="sans-serif" font-size="6.7" fill="#c4b5fd" font-weight="700">DoS/DDoS</text>
   <rect x="10" y="84" width="200" height="18" rx="9" fill="#7c3aed"/>
   <text x="110" y="96" text-anchor="middle" font-family="sans-serif" font-size="7" fill="white">Cada ameaça ataca um pilar da tríade CID</text>
 </svg></div>
@@ -318,7 +341,6 @@ footer a{color:var(--p);text-decoration:none;font-weight:500}
 <p style="margin-top:8px">Um phishing sofisticado costuma falsificar o campo "De:" (spoofing). Três mecanismos combatem isso: <b>SPF</b> (lista servidores autorizados a enviar e-mail pelo domínio), <b>DKIM</b> (assina digitalmente cabeçalho/corpo com chave privada) e <b>DMARC</b> (define o que fazer quando SPF/DKIM falham). Falhar nos três é forte indício técnico de phishing.</p></div>
         <button class="tc-more" onclick="toggleDetail('ameacas')">Ver teoria completa ▸</button>
       </div>
-      <div class="tc-foot">🎯 Questões: 01·02·03·04·10</div>
     </div>
 
     <div class="tc animate-in" id="tc-cripto">
@@ -327,19 +349,29 @@ footer a{color:var(--p);text-decoration:none;font-weight:500}
         <div><div class="tc-title">Criptografia</div><div class="tc-sub">Simétrica × Assimétrica</div></div>
       </div>
       <div class="tc-svg"><svg viewBox="0 0 220 110" xmlns="http://www.w3.org/2000/svg">
-  <rect width="220" height="110" rx="10" fill="#eff6ff"/>
-  <rect x="8" y="10" width="98" height="90" rx="8" fill="#dbeafe"/>
-  <text x="57" y="26" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#1d4ed8" font-weight="700">SIMÉTRICA</text>
-  <text x="57" y="48" text-anchor="middle" font-size="18">🔑</text>
-  <text x="57" y="66" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#1e40af">1 chave secreta</text>
-  <text x="57" y="78" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#1e40af">cifra e decifra</text>
-  <text x="57" y="94" text-anchor="middle" font-family="monospace" font-size="7" fill="#2563eb">AES · DES — rápida</text>
-  <rect x="114" y="10" width="98" height="90" rx="8" fill="#e0e7ff"/>
-  <text x="163" y="26" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#4338ca" font-weight="700">ASSIMÉTRICA</text>
-  <text x="150" y="48" text-anchor="middle" font-size="15">🔓</text><text x="176" y="48" text-anchor="middle" font-size="15">🔒</text>
-  <text x="163" y="66" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#3730a3">2 chaves: pública</text>
-  <text x="163" y="78" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#3730a3">+ privada</text>
-  <text x="163" y="94" text-anchor="middle" font-family="monospace" font-size="7" fill="#4f46e5">RSA · ECC — lenta</text>
+  <rect width="220" height="110" rx="10" fill="#0a1526"/>
+  <rect x="8" y="10" width="98" height="90" rx="8" fill="#122544"/>
+  <text x="57" y="26" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#93c5fd" font-weight="700">SIMÉTRICA</text>
+  <g transform="translate(57,44)" stroke="#60a5fa" fill="none" stroke-width="1.6" stroke-linecap="round">
+    <circle cx="-5" cy="0" r="4.5"/>
+    <path d="M -1 0 L 9 0 M 5 0 L 5 4 M 8 0 L 8 3"/>
+  </g>
+  <text x="57" y="66" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#bfdbfe">1 chave secreta</text>
+  <text x="57" y="78" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#bfdbfe">cifra e decifra</text>
+  <text x="57" y="94" text-anchor="middle" font-family="monospace" font-size="7" fill="#60a5fa">AES · DES — rápida</text>
+  <rect x="114" y="10" width="98" height="90" rx="8" fill="#181c3a"/>
+  <text x="163" y="26" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#a5b4fc" font-weight="700">ASSIMÉTRICA</text>
+  <g transform="translate(150,45)" stroke="#818cf8" fill="none" stroke-width="1.4" stroke-linejoin="round">
+    <rect x="-6" y="-1" width="12" height="8" rx="2"/>
+    <path d="M -3.5 -1 V -4 a3.5 3.5 0 0 1 6.5 -1.8"/>
+  </g>
+  <g transform="translate(176,45)" stroke="#818cf8" fill="none" stroke-width="1.4" stroke-linejoin="round">
+    <rect x="-6" y="-1" width="12" height="8" rx="2"/>
+    <path d="M -3.5 -1 V -4 a3.5 3.5 0 0 1 7 0 V -1"/>
+  </g>
+  <text x="163" y="66" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#c7d2fe">2 chaves: pública</text>
+  <text x="163" y="78" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#c7d2fe">+ privada</text>
+  <text x="163" y="94" text-anchor="middle" font-family="monospace" font-size="7" fill="#818cf8">RSA · ECC — lenta</text>
 </svg></div>
       <div class="tc-body">
         <ul class="tc-bullets"><li>Simétrica: 1 chave secreta, rápida, difícil distribuir</li><li>Assimétrica: par de chaves, resolve a distribuição</li><li>HTTPS/TLS usa as duas: modelo híbrido</li></ul>
@@ -353,7 +385,6 @@ footer a{color:var(--p);text-decoration:none;font-weight:500}
         </div>
         <button class="tc-more" onclick="toggleDetail('cripto')">Ver teoria completa ▸</button>
       </div>
-      <div class="tc-foot">🎯 Questões: 05·06</div>
     </div>
 
     <div class="tc animate-in" id="tc-hash">
@@ -362,17 +393,24 @@ footer a{color:var(--p);text-decoration:none;font-weight:500}
         <div><div class="tc-title">Função Hash</div><div class="tc-sub">Assinatura Digital · Integridade</div></div>
       </div>
       <div class="tc-svg"><svg viewBox="0 0 220 110" xmlns="http://www.w3.org/2000/svg">
-  <rect width="220" height="110" rx="10" fill="#fef2f2"/>
-  <rect x="8" y="30" width="60" height="26" rx="6" fill="#fecaca"/><text x="38" y="47" text-anchor="middle" font-family="monospace" font-size="7.5" fill="#991b1b">"segurança"</text>
-  <path d="M 70 43 L 92 43" stroke="#dc2626" stroke-width="2" marker-end="url(#hs)"/>
-  <defs><marker id="hs" markerWidth="6" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#dc2626"/></marker></defs>
-  <rect x="94" y="26" width="44" height="34" rx="6" fill="#dc2626"/><text x="116" y="46" text-anchor="middle" font-size="14">⚙</text><text x="116" y="56" text-anchor="middle" font-family="sans-serif" font-size="6" fill="white">HASH</text>
-  <path d="M 140 43 L 162 43" stroke="#dc2626" stroke-width="2" marker-end="url(#hs)"/>
-  <rect x="164" y="30" width="48" height="26" rx="6" fill="#fee2e2"/><text x="188" y="47" text-anchor="middle" font-family="monospace" font-size="6.5" fill="#991b1b">a3f9...c81</text>
-  <text x="8" y="80" font-family="monospace" font-size="7.5" fill="#991b1b">"segurançA" →</text>
-  <rect x="94" y="70" width="44" height="24" rx="6" fill="#dc2626" opacity=".7"/><text x="116" y="86" text-anchor="middle" font-size="12">⚙</text>
-  <rect x="164" y="70" width="48" height="24" rx="6" fill="#fecaca"/><text x="188" y="86" text-anchor="middle" font-family="monospace" font-size="6.5" fill="#7f1d1d">9k2d...44e</text>
-  <text x="110" y="104" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#dc2626">1 letra muda → hash inteiramente diferente (efeito avalanche)</text>
+  <rect width="220" height="110" rx="10" fill="#210b0b"/>
+  <rect x="8" y="30" width="60" height="26" rx="6" fill="#451414"/><text x="38" y="47" text-anchor="middle" font-family="monospace" font-size="7.5" fill="#fca5a5">"segurança"</text>
+  <path d="M 70 43 L 92 43" stroke="#f87171" stroke-width="2" marker-end="url(#hs)"/>
+  <defs><marker id="hs" markerWidth="6" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#f87171"/></marker></defs>
+  <rect x="94" y="26" width="44" height="34" rx="6" fill="#dc2626"/>
+  <g transform="translate(116,40)" stroke="white" stroke-width="1.3" stroke-linecap="round">
+    <path d="M -3 -6 L -5 6 M 3 -6 L 1 6 M -6 -2 L 5 -2 M -6 2 L 5 2"/>
+  </g>
+  <text x="116" y="56" text-anchor="middle" font-family="sans-serif" font-size="6" fill="white">HASH</text>
+  <path d="M 140 43 L 162 43" stroke="#f87171" stroke-width="2" marker-end="url(#hs)"/>
+  <rect x="164" y="30" width="48" height="26" rx="6" fill="#451414"/><text x="188" y="47" text-anchor="middle" font-family="monospace" font-size="6.5" fill="#fca5a5">a3f9...c81</text>
+  <text x="8" y="80" font-family="monospace" font-size="7.5" fill="#fca5a5">"segurançA" →</text>
+  <rect x="94" y="70" width="44" height="24" rx="6" fill="#dc2626" opacity=".75"/>
+  <g transform="translate(116,82)" stroke="white" stroke-width="1.1" stroke-linecap="round">
+    <path d="M -2.4 -5 L -4 5 M 2.4 -5 L 0.8 5 M -5 -1.6 L 4 -1.6 M -5 1.6 L 4 1.6"/>
+  </g>
+  <rect x="164" y="70" width="48" height="24" rx="6" fill="#451414"/><text x="188" y="86" text-anchor="middle" font-family="monospace" font-size="6.5" fill="#fca5a5">9k2d...44e</text>
+  <text x="110" y="104" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#f87171">1 letra muda → hash inteiramente diferente (efeito avalanche)</text>
 </svg></div>
       <div class="tc-body">
         <ul class="tc-bullets"><li>Entrada de qualquer tamanho → saída de tamanho fixo</li><li>Mão única: não dá para reverter o hash à entrada</li><li>Assinatura digital = hash + cifra com chave privada</li></ul>
@@ -382,7 +420,6 @@ footer a{color:var(--p);text-decoration:none;font-weight:500}
 <p style="margin-top:8px">O SHA-256 processa a mensagem em blocos de 512 bits, produzindo um resumo de 256 bits. A assinatura digital não cifra o documento inteiro — por eficiência, cifra apenas o HASH do documento.</p></div>
         <button class="tc-more" onclick="toggleDetail('hash')">Ver teoria completa ▸</button>
       </div>
-      <div class="tc-foot">🎯 Questões: 07·08·09</div>
     </div>
 
     <div class="tc animate-in" id="tc-fisica">
@@ -391,15 +428,18 @@ footer a{color:var(--p);text-decoration:none;font-weight:500}
         <div><div class="tc-title">Segurança Física</div><div class="tc-sub">Controle de Acesso · Defesa em Profundidade</div></div>
       </div>
       <div class="tc-svg"><svg viewBox="0 0 220 110" xmlns="http://www.w3.org/2000/svg">
-  <rect width="220" height="110" rx="10" fill="#eff6ff"/>
-  <circle cx="110" cy="55" r="48" fill="#bfdbfe" opacity=".5"/>
-  <circle cx="110" cy="55" r="34" fill="#93c5fd" opacity=".6"/>
+  <rect width="220" height="110" rx="10" fill="#0a1526"/>
+  <circle cx="110" cy="55" r="48" fill="#16305c" opacity=".55"/>
+  <circle cx="110" cy="55" r="34" fill="#1d4ed8" opacity=".45"/>
   <circle cx="110" cy="55" r="20" fill="#2563eb"/>
-  <text x="110" y="59" text-anchor="middle" font-size="14">🖥</text>
-  <text x="110" y="12" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#1e40af">Perímetro</text>
-  <text x="110" y="26" text-anchor="middle" font-family="sans-serif" font-size="6.5" fill="#1e40af">Prédio/andar</text>
+  <g transform="translate(110,55)" stroke="white" fill="none" stroke-width="1.5" stroke-linecap="round">
+    <rect x="-7" y="-6" width="14" height="9" rx="1.5"/>
+    <line x1="-3" y1="6" x2="3" y2="6"/><line x1="0" y1="3" x2="0" y2="6"/>
+  </g>
+  <text x="110" y="12" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#93c5fd">Perímetro</text>
+  <text x="110" y="26" text-anchor="middle" font-family="sans-serif" font-size="6.5" fill="#93c5fd">Prédio/andar</text>
   <text x="110" y="76" text-anchor="middle" font-family="sans-serif" font-size="6.5" fill="white">Rack</text>
-  <text x="110" y="104" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#2563eb">Cada camada = 1 obstáculo a mais p/ o invasor</text>
+  <text x="110" y="104" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#93c5fd">Cada camada = 1 obstáculo a mais p/ o invasor</text>
 </svg></div>
       <div class="tc-body">
         <ul class="tc-bullets"><li>Protege instalações, equipamentos e pessoas</li><li>Tailgating: entrar "de carona" sem se identificar</li><li>Mantrap, CFTV, biometria, sala-cofre, crachá individual</li></ul>
@@ -408,7 +448,6 @@ footer a{color:var(--p);text-decoration:none;font-weight:500}
 <p style="margin-top:8px"><b>Mantrap</b> (eclusa): duas portas intertravadas, só uma pessoa passa por vez — combate o tailgating tecnicamente. <b>CFTV</b> é controle detectivo/dissuasório, não impede fisicamente por si só. <b>Defesa em profundidade</b>: múltiplas barreiras (perímetro → prédio → sala → rack), nenhuma camada sozinha é suficiente.</p></div>
         <button class="tc-more" onclick="toggleDetail('fisica')">Ver teoria completa ▸</button>
       </div>
-      <div class="tc-foot">🎯 Questões: 11·12·13·14·15·16·17·18·19·20</div>
     </div>
 
     <div class="tc animate-in" id="tc-ambiental">
@@ -417,25 +456,33 @@ footer a{color:var(--p);text-decoration:none;font-weight:500}
         <div><div class="tc-title">Segurança Ambiental</div><div class="tc-sub">Energia · Temperatura · Incêndio</div></div>
       </div>
       <div class="tc-svg"><svg viewBox="0 0 220 110" xmlns="http://www.w3.org/2000/svg">
-  <rect width="220" height="110" rx="10" fill="#fffbeb"/>
-  <rect x="8" y="14" width="62" height="82" rx="6" fill="#fde68a"/>
-  <text x="39" y="34" text-anchor="middle" font-size="14">🌡</text>
-  <text x="39" y="48" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#92400e">18°C–27°C</text>
-  <text x="39" y="60" text-anchor="middle" font-family="sans-serif" font-size="6.5" fill="#92400e">ASHRAE TC9.9</text>
-  <text x="39" y="78" text-anchor="middle" font-size="12">💧</text>
-  <text x="39" y="90" text-anchor="middle" font-family="sans-serif" font-size="6.5" fill="#92400e">Umidade 40-60%</text>
-  <rect x="76" y="14" width="62" height="82" rx="6" fill="#fed7aa"/>
-  <text x="107" y="34" text-anchor="middle" font-size="14">🔋</text>
-  <text x="107" y="48" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#9a3412">Nobreak</text>
-  <text x="107" y="60" text-anchor="middle" font-family="sans-serif" font-size="6.5" fill="#9a3412">minutos</text>
-  <text x="107" y="78" text-anchor="middle" font-size="12">⚡</text>
-  <text x="107" y="90" text-anchor="middle" font-family="sans-serif" font-size="6.5" fill="#9a3412">Gerador: horas</text>
-  <rect x="144" y="14" width="68" height="82" rx="6" fill="#fecaca"/>
-  <text x="178" y="34" text-anchor="middle" font-size="14">🧯</text>
-  <text x="178" y="48" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#991b1b">CO2 / pó seco</text>
-  <text x="178" y="60" text-anchor="middle" font-family="sans-serif" font-size="6.5" fill="#991b1b">não conduz</text>
-  <text x="178" y="60" text-anchor="middle" font-family="sans-serif" font-size="6.5" fill="#991b1b" dy="10">eletricidade</text>
-  <text x="178" y="86" text-anchor="middle" font-family="sans-serif" font-size="6.5" fill="#991b1b">nunca água!</text>
+  <rect width="220" height="110" rx="10" fill="#1c1305"/>
+  <rect x="8" y="14" width="62" height="82" rx="6" fill="#3a2a0a"/>
+  <g transform="translate(39,26)" stroke="#fcd34d" fill="none" stroke-width="1.3" stroke-linecap="round">
+    <rect x="-1.5" y="-7" width="3" height="9" rx="1.5"/><circle cx="0" cy="4" r="3" fill="#fcd34d" stroke="none"/>
+  </g>
+  <text x="39" y="48" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#fcd34d">18°C–27°C</text>
+  <text x="39" y="60" text-anchor="middle" font-family="sans-serif" font-size="6.5" fill="#fbbf24">ASHRAE TC9.9</text>
+  <path d="M39 69 C43 74 43 78 39 81 C35 78 35 74 39 69Z" fill="#fcd34d"/>
+  <text x="39" y="90" text-anchor="middle" font-family="sans-serif" font-size="6.5" fill="#fbbf24">Umidade 40-60%</text>
+  <rect x="76" y="14" width="62" height="82" rx="6" fill="#3a220a"/>
+  <g transform="translate(107,28)" stroke="#fdba74" fill="none" stroke-width="1.3">
+    <rect x="-7" y="-4" width="12" height="8" rx="1"/><rect x="5" y="-2" width="2" height="4" fill="#fdba74" stroke="none"/>
+    <rect x="-5" y="-2" width="3" height="4" fill="#fdba74" stroke="none"/>
+  </g>
+  <text x="107" y="48" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#fdba74">Nobreak</text>
+  <text x="107" y="60" text-anchor="middle" font-family="sans-serif" font-size="6.5" fill="#fb923c">minutos</text>
+  <path d="M108 69 L102 78 L106 78 L104 85 L111 75 L107 75 Z" fill="#fdba74"/>
+  <text x="107" y="90" text-anchor="middle" font-family="sans-serif" font-size="6.5" fill="#fb923c">Gerador: horas</text>
+  <rect x="144" y="14" width="68" height="82" rx="6" fill="#330a0a"/>
+  <g transform="translate(178,28)" stroke="#fca5a5" fill="none" stroke-width="1.3" stroke-linecap="round">
+    <path d="M0 -6 C3 -3 3 1 0 4 C-3 1 -2 -2 0 -6Z"/>
+    <line x1="-6" y1="6" x2="6" y2="-6"/>
+  </g>
+  <text x="178" y="48" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#fca5a5">CO2 / pó seco</text>
+  <text x="178" y="60" text-anchor="middle" font-family="sans-serif" font-size="6.5" fill="#f87171">não conduz</text>
+  <text x="178" y="60" text-anchor="middle" font-family="sans-serif" font-size="6.5" fill="#f87171" dy="10">eletricidade</text>
+  <text x="178" y="86" text-anchor="middle" font-family="sans-serif" font-size="6.5" fill="#f87171">nunca água!</text>
 </svg></div>
       <div class="tc-body">
         <ul class="tc-bullets"><li>Temperatura/umidade: faixa ASHRAE 18-27°C, 40-60%</li><li>Nobreak (minutos) + gerador (horas) são complementares</li><li>Nunca água/espuma em incêndio com energia ligada</li></ul>
@@ -445,7 +492,6 @@ footer a{color:var(--p);text-decoration:none;font-weight:500}
 <p style="margin-top:8px"><b>N+1</b>: uma unidade reserva além do mínimo necessário — se uma falhar, as demais sustentam a carga sem interrupção. <b>Piso elevado</b>: organiza cabeamento e, em muitos projetos, distribui o ar frio da climatização até os racks.</p></div>
         <button class="tc-more" onclick="toggleDetail('ambiental')">Ver teoria completa ▸</button>
       </div>
-      <div class="tc-foot">🎯 Questões: 21·22·23·24·25·26·27·28·29·30</div>
     </div>
 
     <div class="tc animate-in" id="tc-camadas">
@@ -454,16 +500,27 @@ footer a{color:var(--p);text-decoration:none;font-weight:500}
         <div><div class="tc-title">As Três Camadas</div><div class="tc-sub">Lógica × Física × Ambiental</div></div>
       </div>
       <div class="tc-svg"><svg viewBox="0 0 220 110" xmlns="http://www.w3.org/2000/svg">
-  <rect width="220" height="110" rx="10" fill="#f8fafc"/>
-  <rect x="10" y="12" width="200" height="28" rx="6" fill="#ede9fe"/>
-  <text x="24" y="30" font-family="sans-serif" font-size="9" fill="#5b21b6" font-weight="700">🖥 Lógica</text>
-  <text x="150" y="30" font-family="sans-serif" font-size="7.5" fill="#6d28d9">dados · sistemas</text>
-  <rect x="10" y="44" width="200" height="28" rx="6" fill="#dbeafe"/>
-  <text x="24" y="62" font-family="sans-serif" font-size="9" fill="#1e40af" font-weight="700">🏢 Física</text>
-  <text x="150" y="62" font-family="sans-serif" font-size="7.5" fill="#1d4ed8">instalações · pessoas</text>
-  <rect x="10" y="76" width="200" height="28" rx="6" fill="#fef3c7"/>
-  <text x="24" y="94" font-family="sans-serif" font-size="9" fill="#92400e" font-weight="700">🌡 Ambiental</text>
-  <text x="150" y="94" font-family="sans-serif" font-size="7.5" fill="#b45309">energia · clima</text>
+  <rect width="220" height="110" rx="10" fill="#0f172a"/>
+  <rect x="10" y="12" width="200" height="28" rx="6" fill="#241b3d"/>
+  <g transform="translate(24,26)" stroke="#c4b5fd" fill="none" stroke-width="1.3" stroke-linecap="round">
+    <rect x="-6" y="-5" width="12" height="8" rx="1.3"/><line x1="-2.5" y1="5" x2="2.5" y2="5"/><line x1="0" y1="3" x2="0" y2="5"/>
+  </g>
+  <text x="40" y="30" font-family="sans-serif" font-size="9" fill="#c4b5fd" font-weight="700">Lógica</text>
+  <text x="150" y="30" font-family="sans-serif" font-size="7.5" fill="#a78bfa">dados · sistemas</text>
+  <rect x="10" y="44" width="200" height="28" rx="6" fill="#122340"/>
+  <g transform="translate(24,58)" stroke="#93c5fd" fill="none" stroke-width="1.2">
+    <rect x="-4.5" y="-6" width="9" height="12"/>
+    <rect x="-2.5" y="-4" width="1.6" height="1.6" fill="#93c5fd" stroke="none"/><rect x="1" y="-4" width="1.6" height="1.6" fill="#93c5fd" stroke="none"/>
+    <rect x="-2.5" y="-0.5" width="1.6" height="1.6" fill="#93c5fd" stroke="none"/><rect x="1" y="-0.5" width="1.6" height="1.6" fill="#93c5fd" stroke="none"/>
+  </g>
+  <text x="40" y="62" font-family="sans-serif" font-size="9" fill="#93c5fd" font-weight="700">Física</text>
+  <text x="150" y="62" font-family="sans-serif" font-size="7.5" fill="#7dd3fc">instalações · pessoas</text>
+  <rect x="10" y="76" width="200" height="28" rx="6" fill="#3a2a0a"/>
+  <g transform="translate(24,90)" stroke="#fcd34d" fill="none" stroke-width="1.2" stroke-linecap="round">
+    <rect x="-1.3" y="-6" width="2.6" height="8" rx="1.3"/><circle cx="0" cy="3.5" r="2.6" fill="#fcd34d" stroke="none"/>
+  </g>
+  <text x="40" y="94" font-family="sans-serif" font-size="9" fill="#fcd34d" font-weight="700">Ambiental</text>
+  <text x="150" y="94" font-family="sans-serif" font-size="7.5" fill="#fbbf24">energia · clima</text>
 </svg></div>
       <div class="tc-body" style="padding-top:14px">
         <table class="mini-tbl"><tr><th>Camada</th><th>O que protege</th><th>Exemplo de ameaça</th></tr>
@@ -475,7 +532,6 @@ footer a{color:var(--p);text-decoration:none;font-weight:500}
         </div>
         <button class="tc-more" onclick="toggleDetail('camadas')">Ver teoria completa ▸</button>
       </div>
-      <div class="tc-foot">📌 Conteúdo complementar</div>
     </div>
 
   </div>
