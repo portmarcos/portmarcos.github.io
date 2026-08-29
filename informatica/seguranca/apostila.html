@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Segurança da Informação · Prof. Marcos Cruz</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --p:#059669;--pl:#10b981;--pll:#6ee7b7;--pbg:#ecfdf5;
+  --bg:#f0fdf9;--card:#ffffff;--border:#e2e8f0;
+  --t:#0f172a;--t2:#475569;--t3:#94a3b8;
+  --shadow:0 2px 8px rgba(5,150,105,.1);
+  --shadow2:0 12px 32px rgba(5,150,105,.18);
+  --radius:14px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t);line-height:1.6;overflow-x:hidden}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(-45deg,#d1fae5,#e0f2fe,#fef3c7,#d1fae5);
+  background-size:400% 400%;animation:gbg 10s ease infinite;
+  padding:40px;position:relative;overflow:hidden;
+}
+@keyframes gbg{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.shape{position:absolute;border-radius:50%;opacity:.15;}
+.s1{width:300px;height:300px;background:#10b981;top:-100px;right:-80px;animation:fl1 7s ease-in-out infinite}
+.s2{width:200px;height:200px;background:#dc2626;bottom:-60px;left:-40px;animation:fl2 9s ease-in-out infinite}
+.s3{width:150px;height:150px;background:#0ea5e9;top:30%;right:20%;animation:fl1 6s ease-in-out infinite reverse}
+@keyframes fl1{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-25px) scale(1.05)}}
+@keyframes fl2{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-15px) rotate(10deg)}}
+.hero-inner{position:relative;z-index:1;max-width:900px;margin:0 auto}
+.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(5,150,105,.1);
+  border:1px solid rgba(5,150,105,.2);color:var(--p);padding:5px 14px;border-radius:30px;
+  font-size:.72rem;font-weight:700;letter-spacing:.08em;margin-bottom:16px}
+.hero-title{font-size:clamp(1.8rem,5vw,3rem);font-weight:800;color:var(--t);
+  letter-spacing:-.03em;line-height:1.1;margin-bottom:6px}
+.hero-title span{background:linear-gradient(135deg,var(--p),#dc2626);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{color:var(--t2);font-size:.9rem;margin-bottom:28px;max-width:620px}
+.student-card{background:white;border-radius:var(--radius);padding:22px;
+  box-shadow:var(--shadow2);border:1px solid var(--border)}
+.sc-title{font-size:.75rem;font-weight:700;color:var(--p);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.form-row{display:flex;gap:12px;flex-wrap:wrap}
+.ff{display:flex;flex-direction:column;gap:5px;flex:1;min-width:140px}
+.fl{font-size:.7rem;font-weight:600;color:var(--t2)}
+.fi{background:#f8fafc;border:1.5px solid var(--border);color:var(--t);
+  padding:9px 13px;font-family:'Inter',sans-serif;font-size:.88rem;
+  border-radius:8px;outline:none;transition:.2s}
+.fi:focus{border-color:var(--pl);background:white;box-shadow:0 0 0 3px rgba(16,185,129,.15)}
+
+/* ── NAV ── */
+#nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.92);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--border);
+  padding:0 40px;display:flex;align-items:center;justify-content:space-between;
+  min-height:52px;gap:12px;flex-wrap:wrap;box-shadow:0 1px 8px rgba(0,0,0,.06)}
+.nav-links{display:flex;gap:4px}
+.nl{padding:7px 16px;border:1px solid transparent;background:transparent;
+  color:var(--t3);font-size:.72rem;font-weight:600;letter-spacing:.06em;
+  cursor:pointer;border-radius:8px;transition:.2s;text-decoration:none;display:block}
+.nl:hover,.nl.active{background:var(--pbg);border-color:rgba(5,150,105,.2);color:var(--p)}
+.nav-right{display:flex;gap:10px;align-items:center}
+#prog-txt{font-size:.7rem;font-weight:600;color:var(--t2)}
+#prog-bar{width:120px;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden}
+#prog-fill{height:100%;background:linear-gradient(90deg,var(--p),#dc2626);width:0%;
+  border-radius:3px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.btn-sm{padding:6px 14px;border-radius:8px;font-size:.7rem;font-weight:600;
+  cursor:pointer;border:1.5px solid;transition:.2s}
+.btn-outline{border-color:var(--border);background:white;color:var(--t2)}
+.btn-outline:hover{background:var(--pbg);border-color:var(--pll);color:var(--p)}
+
+/* ── PAGE SECTIONS ── */
+.page-sec{max-width:960px;margin:0 auto;padding:60px 40px}
+.sec-hdr{text-align:center;margin-bottom:40px}
+.sec-eyebrow{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--p);margin-bottom:10px}
+.sec-title{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;color:var(--t);letter-spacing:-.02em}
+.sec-desc{color:var(--t2);font-size:.92rem;margin-top:8px;max-width:520px;margin-left:auto;margin-right:auto}
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:0 40px}
+
+/* ── THEORY CARDS ── */
+.tc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.tc{background:white;border-radius:var(--radius);overflow:hidden;
+  box-shadow:var(--shadow);border:1px solid var(--border);
+  transition:transform .3s,box-shadow .3s;display:flex;flex-direction:column}
+.tc:hover{transform:translateY(-5px);box-shadow:var(--shadow2)}
+.tc-head{padding:14px 16px;display:flex;align-items:center;gap:10px;color:white}
+.tc-num{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.25);
+  display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:800;flex-shrink:0}
+.tc-title{font-size:.88rem;font-weight:700;line-height:1.2}
+.tc-sub{font-size:.62rem;opacity:.8;margin-top:1px}
+.tc-svg{padding:12px;background:#fafbfc;border-bottom:1px solid var(--border)}
+.tc-svg svg{width:100%;height:auto;display:block}
+.tc-body{padding:14px;flex:1;display:flex;flex-direction:column}
+.tc-bullets{margin-left:14px;font-size:.8rem;color:var(--t2);line-height:1.8}
+.tc-bullets li{margin-bottom:2px}
+.tc-detail{display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);
+  font-size:.8rem;color:var(--t2);line-height:1.7}
+.tc-detail.open{display:block;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
+.tc-more{margin-top:10px;background:none;border:none;cursor:pointer;
+  font-size:.72rem;font-weight:600;color:var(--p);padding:0;text-align:left;
+  transition:opacity .2s}
+.tc-more:hover{opacity:.7}
+.tc-foot{padding:8px 14px;background:#f8fafc;border-top:1px solid var(--border);
+  font-size:.68rem;font-weight:600;color:var(--p);letter-spacing:.05em}
+.mini-tbl{width:100%;border-collapse:collapse;font-size:.72rem;margin-top:4px}
+.mini-tbl th,.mini-tbl td{border:1px solid var(--border);padding:6px 8px;text-align:left}
+.mini-tbl th{background:var(--pbg);color:var(--p);font-weight:700}
+
+/* ── QUESTION CARDS ── */
+.qdiff{margin-bottom:36px}
+.qdiff-hdr{display:flex;align-items:center;gap:12px;margin-bottom:18px;
+  padding:14px 18px;border-radius:var(--radius);}
+.qdiff-hdr.logica{background:linear-gradient(135deg,#ede9fe,#ddd6fe)}
+.qdiff-hdr.fisica{background:linear-gradient(135deg,#dbeafe,#bfdbfe)}
+.qdiff-hdr.ambiental{background:linear-gradient(135deg,#fef9c3,#fde68a)}
+.qdiff-ico{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;
+  justify-content:center;font-weight:900;font-size:1rem;flex-shrink:0}
+.qdiff-ico.logica{background:#7c3aed;color:white}
+.qdiff-ico.fisica{background:#2563eb;color:white}
+.qdiff-ico.ambiental{background:#d97706;color:white}
+.qdiff-label{font-size:1.1rem;font-weight:800}
+.qdiff-label.logica{color:#5b21b6} .qdiff-label.fisica{color:#1e40af} .qdiff-label.ambiental{color:#92400e}
+.qdiff-sub{font-size:.65rem;font-weight:600;letter-spacing:.1em;margin-top:2px}
+.qdiff-sub.logica{color:#7c3aed} .qdiff-sub.fisica{color:#2563eb} .qdiff-sub.ambiental{color:#b45309}
+.qc{background:white;border-radius:var(--radius);padding:22px;margin-bottom:14px;
+  border:1.5px solid var(--border);box-shadow:var(--shadow);
+  transition:all .3s;border-left:4px solid}
+.qc:hover{box-shadow:var(--shadow2);transform:translateX(2px)}
+.qc.logica{border-left-color:#7c3aed}
+.qc.fisica{border-left-color:#2563eb}
+.qc.ambiental{border-left-color:#d97706}
+.qh{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.qnum{font-size:.72rem;font-weight:700;color:var(--t3)}
+.qbadge{font-size:.6rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  padding:3px 10px;border-radius:30px}
+.qbadge.logica{background:#ede9fe;color:#6d28d9}
+.qbadge.fisica{background:#dbeafe;color:#1d4ed8}
+.qbadge.ambiental{background:#fef3c7;color:#92400e}
+.qsrc{font-size:.68rem;font-weight:600;color:var(--t3);margin-bottom:10px;font-style:italic}
+.qt{font-size:.9rem;color:var(--t);line-height:1.7;margin-bottom:14px}
+.qt strong{color:var(--p);font-weight:600}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;
+  background:#f8fafc;border:1.5px solid var(--border);border-radius:9px;
+  cursor:pointer;transition:all .2s;font-size:.86rem;color:var(--t2)}
+.opt:hover{background:var(--pbg);border-color:var(--pll);color:var(--t)}
+.opt input[type=radio]{accent-color:var(--p);margin-top:3px;min-width:14px}
+.opt:has(input:checked){background:var(--pbg);border-color:var(--pl);color:var(--p);font-weight:500}
+.opt.certo{background:#ecfdf5;border-color:#10b981;color:#065f46;font-weight:600}
+.opt.errado{background:#fef2f2;border-color:#f87171;color:#991b1b}
+
+/* ── SUBMIT ── */
+.submit-card{background:white;border-radius:var(--radius);padding:32px;
+  box-shadow:var(--shadow2);border:1px solid var(--border);
+  background:linear-gradient(135deg,white,#ecfdf5)}
+.sub-title{font-size:1.2rem;font-weight:800;color:var(--t);margin-bottom:6px}
+.sub-note{font-size:.85rem;color:var(--t2);margin-bottom:24px}
+.stats-row{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap}
+.stat{background:var(--pbg);border:1.5px solid var(--pll);border-radius:10px;
+  padding:12px 18px;flex:1;min-width:90px;text-align:center}
+.stat-n{font-size:1.5rem;font-weight:800}
+.stat-l{font-size:.62rem;font-weight:600;color:var(--t3);letter-spacing:.08em;margin-top:2px}
+.btn-check{width:100%;padding:13px;background:white;color:var(--p);
+  font-family:'Inter',sans-serif;font-size:.9rem;font-weight:700;
+  letter-spacing:.04em;border:1.5px solid var(--p);border-radius:10px;cursor:pointer;
+  transition:all .2s;margin-bottom:12px}
+.btn-check:hover{background:var(--pbg)}
+.btn-submit{width:100%;padding:15px;background:linear-gradient(135deg,var(--p),#dc2626);
+  color:white;font-family:'Inter',sans-serif;font-size:.95rem;font-weight:700;
+  letter-spacing:.06em;border:none;border-radius:10px;cursor:pointer;
+  transition:all .3s;box-shadow:0 4px 12px rgba(5,150,105,.3)}
+.btn-submit:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(5,150,105,.4)}
+.btn-submit:disabled{opacity:.5;cursor:not-allowed;transform:none}
+#smsg{display:none;margin-top:16px;padding:14px 18px;border-radius:10px;font-size:.88rem;border:1.5px solid}
+#smsg.ok{background:#f0fdf4;border-color:#86efac;color:#166534}
+#smsg.err{background:#fef2f2;border-color:#fca5a5;color:#991b1b}
+#smsg.loading{background:var(--pbg);border-color:var(--pll);color:var(--p)}
+
+/* ── LAB NOTE ── */
+.lab-note{background:white;border-radius:var(--radius);padding:22px;margin-top:20px;
+  border:1.5px dashed var(--pll);box-shadow:var(--shadow)}
+.lab-note h3{font-size:.95rem;font-weight:800;color:var(--p);margin-bottom:8px}
+.lab-note p{font-size:.85rem;color:var(--t2);line-height:1.7}
+
+/* ── ANIMATE IN ── */
+.animate-in{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.animate-in.visible{opacity:1;transform:none}
+
+footer{text-align:center;padding:24px 40px;border-top:1px solid var(--border);
+  font-size:.72rem;color:var(--t3)}
+footer a{color:var(--p);text-decoration:none;font-weight:500}
+
+@media print{
+  #nav,.hero .shape,.btn-sm,footer,.btn-check{display:none!important}
+  .hero{background:#fff;padding:20px} .tc:hover{transform:none}
+  .tc-detail{display:block!important} .submit-card{display:none!important}
+  body{background:#fff} .qc{break-inside:avoid}
+}
+@media(max-width:900px){.tc-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){
+  .tc-grid{grid-template-columns:1fr}
+  .hero,.page-sec,#nav,footer{padding-left:16px;padding-right:16px}
+  .form-row{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="shape s1"></div><div class="shape s2"></div><div class="shape s3"></div>
+  <div class="hero-inner">
+    <div class="badge">🛡️ INFORMÁTICA TÉCNICA · PROF. MARCOS CRUZ</div>
+    <h1 class="hero-title">Segurança da <span>Informação</span></h1>
+    <p class="hero-sub">Tríade CID · Segurança Lógica · Malware · Criptografia · Função Hash e Assinatura Digital · Segurança Física · Segurança Ambiental</p>
+    <div class="student-card">
+      <div class="sc-title">✏️ IDENTIFICAÇÃO DO ALUNO</div>
+      <div class="form-row">
+        <div class="ff"><label class="fl">Nome completo</label><input class="fi" id="nome" type="text" placeholder="Seu nome" oninput="upd()"></div>
+        <div class="ff"><label class="fl">Turma</label><input class="fi" id="turma" type="text" placeholder="Ex: 2º Ano A"></div>
+        <div class="ff"><label class="fl">Data</label><input class="fi" id="data-ativ" type="date"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-links">
+    <a class="nl" href="#teoria">📚 Teoria</a>
+    <a class="nl" href="#questoes">📝 Questões</a>
+    <a class="nl" href="#enviar">📤 Enviar</a>
+  </div>
+  <div class="nav-right">
+    <span id="prog-txt">0 / 30 respondidas</span>
+    <div id="prog-bar"><div id="prog-fill"></div></div>
+    <button class="btn-sm btn-outline" onclick="window.print()">🖨 Imprimir</button>
+  </div>
+</nav>
+
+<!-- ══ TEORIA ══ -->
+<section class="page-sec" id="teoria">
+  <div class="sec-hdr animate-in">
+    <div class="sec-eyebrow">📚 Teoria</div>
+    <h2 class="sec-title">Leia antes de responder</h2>
+    <p class="sec-desc">Clique em "Ver teoria completa" em cada card para aprofundar o conteúdo. Capítulos 1 a 3 da apostila: Segurança Lógica, Segurança Física e Segurança Ambiental.</p>
+  </div>
+  <div class="tc-grid">
+
+    <div class="tc animate-in" id="tc-cid">
+      <div class="tc-head" style="background:#059669">
+        <div class="tc-num">•</div>
+        <div><div class="tc-title">Tríade CID</div><div class="tc-sub">Confidencialidade · Integridade · Disponibilidade</div></div>
+      </div>
+      <div class="tc-svg"><svg viewBox="0 0 220 110" xmlns="http://www.w3.org/2000/svg">
+  <rect width="220" height="110" rx="10" fill="#ecfdf5"/>
+  <polygon points="110,14 190,92 30,92" fill="none" stroke="#059669" stroke-width="2.5"/>
+  <circle cx="110" cy="14" r="16" fill="#059669"/><text x="110" y="18" text-anchor="middle" font-size="9" fill="white" font-weight="700">C</text>
+  <circle cx="190" cy="92" r="16" fill="#0ea5e9"/><text x="190" y="96" text-anchor="middle" font-size="9" fill="white" font-weight="700">I</text>
+  <circle cx="30" cy="92" r="16" fill="#d97706"/><text x="30" y="96" text-anchor="middle" font-size="9" fill="white" font-weight="700">D</text>
+  <text x="110" y="40" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#065f46">Confidencialidade</text>
+  <text x="185" y="70" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#0369a1">Integridade</text>
+  <text x="35" y="70" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#92400e">Disponibilidade</text>
+</svg></div>
+      <div class="tc-body">
+        <ul class="tc-bullets"><li>Confidencialidade: só quem tem autorização acessa</li><li>Integridade: a informação não é alterada indevidamente</li><li>Disponibilidade: acessível sempre que necessário</li></ul>
+        <div class="tc-detail" id="det-cid"><p>Um sistema só é considerado seguro quando atende <b>ao mesmo tempo</b> aos três pilares. Cada ameaça costuma atacar diretamente um deles: malware pode violar integridade e confidencialidade; um ataque DDoS ataca a disponibilidade; phishing normalmente visa quebrar a confidencialidade.</p>
+<p style="margin-top:8px">"A confidencialidade diz que a informação só está disponível para aqueles devidamente autorizados; a integridade diz que a informação não é destruída ou corrompida; e a disponibilidade diz que os serviços/recursos do sistema estão disponíveis sempre que necessário." — CERT.br, Cartilha de Segurança para Internet</p></div>
+        <button class="tc-more" onclick="toggleDetail('cid')">Ver teoria completa ▸</button>
+      </div>
+      <div class="tc-foot">🎯 Base de todo o conteúdo</div>
+    </div>
+
+    <div class="tc animate-in" id="tc-ameacas">
+      <div class="tc-head" style="background:#7c3aed">
+        <div class="tc-num">1</div>
+        <div><div class="tc-title">Ameaças Lógicas</div><div class="tc-sub">Malware · Phishing · Força Bruta · DoS/DDoS</div></div>
+      </div>
+      <div class="tc-svg"><svg viewBox="0 0 220 110" xmlns="http://www.w3.org/2000/svg">
+  <rect width="220" height="110" rx="10" fill="#faf5ff"/>
+  <text x="12" y="20" font-family="sans-serif" font-size="8" fill="#5b21b6" font-weight="700">Ameaça → Pilar da CID atacado</text>
+  <rect x="12" y="28" width="90" height="18" rx="4" fill="#ddd6fe"/><text x="18" y="41" font-family="sans-serif" font-size="7.5" fill="#5b21b6">🦠 Malware/Ransomware</text>
+  <rect x="112" y="28" width="96" height="18" rx="4" fill="#ede9fe"/><text x="118" y="41" font-family="sans-serif" font-size="7.5" fill="#5b21b6">Integridade/Confid.</text>
+  <rect x="12" y="50" width="90" height="18" rx="4" fill="#ddd6fe"/><text x="18" y="63" font-family="sans-serif" font-size="7.5" fill="#5b21b6">🎣 Phishing/Eng. social</text>
+  <rect x="112" y="50" width="96" height="18" rx="4" fill="#ede9fe"/><text x="118" y="63" font-family="sans-serif" font-size="7.5" fill="#5b21b6">Confidencialidade</text>
+  <rect x="12" y="72" width="90" height="18" rx="4" fill="#ddd6fe"/><text x="18" y="85" font-family="sans-serif" font-size="7.5" fill="#5b21b6">🌊 DoS / DDoS</text>
+  <rect x="112" y="72" width="96" height="18" rx="4" fill="#ede9fe"/><text x="118" y="85" font-family="sans-serif" font-size="7.5" fill="#5b21b6">Disponibilidade</text>
+  <text x="110" y="102" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#7c3aed">+ Força bruta · Exploração de vulnerabilidades</text>
+</svg></div>
+      <div class="tc-body">
+        <ul class="tc-bullets"><li>Malware: vírus, worm, trojan, spyware, ransomware</li><li>Phishing/engenharia social: explora a confiança humana</li><li>Força bruta e DoS/DDoS: automatizados, exaustivos</li></ul>
+        <div class="tc-detail" id="det-ameacas"><p><b>Vírus</b> precisa de um hospedeiro e ação do usuário para se ativar. <b>Worm</b> se propaga sozinho pela rede, explorando falhas. <b>Trojan</b> se disfarça de programa legítimo e não se autorreplica.</p>
+<p style="margin-top:8px">Um phishing sofisticado costuma falsificar o campo "De:" (spoofing). Três mecanismos combatem isso: <b>SPF</b> (lista servidores autorizados a enviar e-mail pelo domínio), <b>DKIM</b> (assina digitalmente cabeçalho/corpo com chave privada) e <b>DMARC</b> (define o que fazer quando SPF/DKIM falham). Falhar nos três é forte indício técnico de phishing.</p></div>
+        <button class="tc-more" onclick="toggleDetail('ameacas')">Ver teoria completa ▸</button>
+      </div>
+      <div class="tc-foot">🎯 Questões: 01·02·03·04·10</div>
+    </div>
+
+    <div class="tc animate-in" id="tc-cripto">
+      <div class="tc-head" style="background:#2563eb">
+        <div class="tc-num">2</div>
+        <div><div class="tc-title">Criptografia</div><div class="tc-sub">Simétrica × Assimétrica</div></div>
+      </div>
+      <div class="tc-svg"><svg viewBox="0 0 220 110" xmlns="http://www.w3.org/2000/svg">
+  <rect width="220" height="110" rx="10" fill="#eff6ff"/>
+  <rect x="8" y="10" width="98" height="90" rx="8" fill="#dbeafe"/>
+  <text x="57" y="26" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#1d4ed8" font-weight="700">SIMÉTRICA</text>
+  <text x="57" y="48" text-anchor="middle" font-size="18">🔑</text>
+  <text x="57" y="66" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#1e40af">1 chave secreta</text>
+  <text x="57" y="78" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#1e40af">cifra e decifra</text>
+  <text x="57" y="94" text-anchor="middle" font-family="monospace" font-size="7" fill="#2563eb">AES · DES — rápida</text>
+  <rect x="114" y="10" width="98" height="90" rx="8" fill="#e0e7ff"/>
+  <text x="163" y="26" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#4338ca" font-weight="700">ASSIMÉTRICA</text>
+  <text x="150" y="48" text-anchor="middle" font-size="15">🔓</text><text x="176" y="48" text-anchor="middle" font-size="15">🔒</text>
+  <text x="163" y="66" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#3730a3">2 chaves: pública</text>
+  <text x="163" y="78" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#3730a3">+ privada</text>
+  <text x="163" y="94" text-anchor="middle" font-family="monospace" font-size="7" fill="#4f46e5">RSA · ECC — lenta</text>
+</svg></div>
+      <div class="tc-body">
+        <ul class="tc-bullets"><li>Simétrica: 1 chave secreta, rápida, difícil distribuir</li><li>Assimétrica: par de chaves, resolve a distribuição</li><li>HTTPS/TLS usa as duas: modelo híbrido</li></ul>
+        <div class="tc-detail" id="det-cripto">
+          <table class="mini-tbl"><tr><th></th><th>Simétrica</th><th>Assimétrica</th></tr>
+          <tr><td><b>Como funciona</b></td><td>1 chave secreta cifra e decifra</td><td>Chave pública + chave privada</td></tr>
+          <tr><td><b>Vantagem</b></td><td>Muito mais rápida e leve</td><td>Resolve a troca segura de chave</td></tr>
+          <tr><td><b>Desvantagem</b></td><td>Difícil combinar a chave com segurança</td><td>Centenas de vezes mais lenta</td></tr>
+          <tr><td><b>Exemplos</b></td><td>AES, DES</td><td>RSA, ECC</td></tr></table>
+          <p style="margin-top:8px">No modelo híbrido (HTTPS/TLS): a assimétrica troca com segurança uma chave de sessão; a partir daí, tudo passa a usar criptografia simétrica, muito mais rápida para grandes volumes.</p>
+        </div>
+        <button class="tc-more" onclick="toggleDetail('cripto')">Ver teoria completa ▸</button>
+      </div>
+      <div class="tc-foot">🎯 Questões: 05·06</div>
+    </div>
+
+    <div class="tc animate-in" id="tc-hash">
+      <div class="tc-head" style="background:#dc2626">
+        <div class="tc-num">3</div>
+        <div><div class="tc-title">Função Hash</div><div class="tc-sub">Assinatura Digital · Integridade</div></div>
+      </div>
+      <div class="tc-svg"><svg viewBox="0 0 220 110" xmlns="http://www.w3.org/2000/svg">
+  <rect width="220" height="110" rx="10" fill="#fef2f2"/>
+  <rect x="8" y="30" width="60" height="26" rx="6" fill="#fecaca"/><text x="38" y="47" text-anchor="middle" font-family="monospace" font-size="7.5" fill="#991b1b">"segurança"</text>
+  <path d="M 70 43 L 92 43" stroke="#dc2626" stroke-width="2" marker-end="url(#hs)"/>
+  <defs><marker id="hs" markerWidth="6" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#dc2626"/></marker></defs>
+  <rect x="94" y="26" width="44" height="34" rx="6" fill="#dc2626"/><text x="116" y="46" text-anchor="middle" font-size="14">⚙</text><text x="116" y="56" text-anchor="middle" font-family="sans-serif" font-size="6" fill="white">HASH</text>
+  <path d="M 140 43 L 162 43" stroke="#dc2626" stroke-width="2" marker-end="url(#hs)"/>
+  <rect x="164" y="30" width="48" height="26" rx="6" fill="#fee2e2"/><text x="188" y="47" text-anchor="middle" font-family="monospace" font-size="6.5" fill="#991b1b">a3f9...c81</text>
+  <text x="8" y="80" font-family="monospace" font-size="7.5" fill="#991b1b">"segurançA" →</text>
+  <rect x="94" y="70" width="44" height="24" rx="6" fill="#dc2626" opacity=".7"/><text x="116" y="86" text-anchor="middle" font-size="12">⚙</text>
+  <rect x="164" y="70" width="48" height="24" rx="6" fill="#fecaca"/><text x="188" y="86" text-anchor="middle" font-family="monospace" font-size="6.5" fill="#7f1d1d">9k2d...44e</text>
+  <text x="110" y="104" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#dc2626">1 letra muda → hash inteiramente diferente (efeito avalanche)</text>
+</svg></div>
+      <div class="tc-body">
+        <ul class="tc-bullets"><li>Entrada de qualquer tamanho → saída de tamanho fixo</li><li>Mão única: não dá para reverter o hash à entrada</li><li>Assinatura digital = hash + cifra com chave privada</li></ul>
+        <div class="tc-detail" id="det-hash"><p>Uma <b>função hash</b> recebe qualquer quantidade de dados e produz uma sequência de tamanho fixo (o "resumo" ou "impressão digital"). Mudar 1 caractere do conteúdo original altera completamente o hash gerado — isso permite detectar qualquer alteração, por menor que seja.</p>
+<p style="margin-top:8px"><b>Assinatura digital</b>: 1) calcula-se o hash do documento; 2) esse hash é cifrado com a chave <b>privada</b> do autor. Qualquer pessoa usa a chave <b>pública</b> correspondente para conferir que só quem possui aquela chave privada poderia ter gerado a assinatura — e que o documento não foi alterado depois de assinado.</p>
+<p style="margin-top:8px">É esse mecanismo que torna juridicamente válida, no Brasil, a assinatura de documentos com certificado digital (ICP-Brasil): a chave privada fica protegida em token/smartcard do titular, e a chave pública permite a qualquer destinatário conferir autenticidade e integridade.</p>
+<p style="margin-top:8px">O SHA-256 processa a mensagem em blocos de 512 bits, produzindo um resumo de 256 bits. A assinatura digital não cifra o documento inteiro — por eficiência, cifra apenas o HASH do documento.</p></div>
+        <button class="tc-more" onclick="toggleDetail('hash')">Ver teoria completa ▸</button>
+      </div>
+      <div class="tc-foot">🎯 Questões: 07·08·09</div>
+    </div>
+
+    <div class="tc animate-in" id="tc-fisica">
+      <div class="tc-head" style="background:#2563eb">
+        <div class="tc-num">4</div>
+        <div><div class="tc-title">Segurança Física</div><div class="tc-sub">Controle de Acesso · Defesa em Profundidade</div></div>
+      </div>
+      <div class="tc-svg"><svg viewBox="0 0 220 110" xmlns="http://www.w3.org/2000/svg">
+  <rect width="220" height="110" rx="10" fill="#eff6ff"/>
+  <circle cx="110" cy="55" r="48" fill="#bfdbfe" opacity=".5"/>
+  <circle cx="110" cy="55" r="34" fill="#93c5fd" opacity=".6"/>
+  <circle cx="110" cy="55" r="20" fill="#2563eb"/>
+  <text x="110" y="59" text-anchor="middle" font-size="14">🖥</text>
+  <text x="110" y="12" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#1e40af">Perímetro</text>
+  <text x="110" y="26" text-anchor="middle" font-family="sans-serif" font-size="6.5" fill="#1e40af">Prédio/andar</text>
+  <text x="110" y="76" text-anchor="middle" font-family="sans-serif" font-size="6.5" fill="white">Rack</text>
+  <text x="110" y="104" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#2563eb">Cada camada = 1 obstáculo a mais p/ o invasor</text>
+</svg></div>
+      <div class="tc-body">
+        <ul class="tc-bullets"><li>Protege instalações, equipamentos e pessoas</li><li>Tailgating: entrar "de carona" sem se identificar</li><li>Mantrap, CFTV, biometria, sala-cofre, crachá individual</li></ul>
+        <div class="tc-detail" id="det-fisica"><p>Segurança física e lógica se <b>complementam</b>: de nada adianta senha forte se qualquer um entra na sala e leva o servidor.</p>
+<p style="margin-top:8px"><b>Biometria fisiológica</b> (digital, íris, face, geometria da mão) usa características físicas estáveis do corpo; <b>biometria comportamental</b> (assinatura, dinâmica de digitação, forma de andar) usa padrões de comportamento.</p>
+<p style="margin-top:8px"><b>Mantrap</b> (eclusa): duas portas intertravadas, só uma pessoa passa por vez — combate o tailgating tecnicamente. <b>CFTV</b> é controle detectivo/dissuasório, não impede fisicamente por si só. <b>Defesa em profundidade</b>: múltiplas barreiras (perímetro → prédio → sala → rack), nenhuma camada sozinha é suficiente.</p></div>
+        <button class="tc-more" onclick="toggleDetail('fisica')">Ver teoria completa ▸</button>
+      </div>
+      <div class="tc-foot">🎯 Questões: 11·12·13·14·15·16·17·18·19·20</div>
+    </div>
+
+    <div class="tc animate-in" id="tc-ambiental">
+      <div class="tc-head" style="background:#d97706">
+        <div class="tc-num">5</div>
+        <div><div class="tc-title">Segurança Ambiental</div><div class="tc-sub">Energia · Temperatura · Incêndio</div></div>
+      </div>
+      <div class="tc-svg"><svg viewBox="0 0 220 110" xmlns="http://www.w3.org/2000/svg">
+  <rect width="220" height="110" rx="10" fill="#fffbeb"/>
+  <rect x="8" y="14" width="62" height="82" rx="6" fill="#fde68a"/>
+  <text x="39" y="34" text-anchor="middle" font-size="14">🌡</text>
+  <text x="39" y="48" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#92400e">18°C–27°C</text>
+  <text x="39" y="60" text-anchor="middle" font-family="sans-serif" font-size="6.5" fill="#92400e">ASHRAE TC9.9</text>
+  <text x="39" y="78" text-anchor="middle" font-size="12">💧</text>
+  <text x="39" y="90" text-anchor="middle" font-family="sans-serif" font-size="6.5" fill="#92400e">Umidade 40-60%</text>
+  <rect x="76" y="14" width="62" height="82" rx="6" fill="#fed7aa"/>
+  <text x="107" y="34" text-anchor="middle" font-size="14">🔋</text>
+  <text x="107" y="48" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#9a3412">Nobreak</text>
+  <text x="107" y="60" text-anchor="middle" font-family="sans-serif" font-size="6.5" fill="#9a3412">minutos</text>
+  <text x="107" y="78" text-anchor="middle" font-size="12">⚡</text>
+  <text x="107" y="90" text-anchor="middle" font-family="sans-serif" font-size="6.5" fill="#9a3412">Gerador: horas</text>
+  <rect x="144" y="14" width="68" height="82" rx="6" fill="#fecaca"/>
+  <text x="178" y="34" text-anchor="middle" font-size="14">🧯</text>
+  <text x="178" y="48" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#991b1b">CO2 / pó seco</text>
+  <text x="178" y="60" text-anchor="middle" font-family="sans-serif" font-size="6.5" fill="#991b1b">não conduz</text>
+  <text x="178" y="60" text-anchor="middle" font-family="sans-serif" font-size="6.5" fill="#991b1b" dy="10">eletricidade</text>
+  <text x="178" y="86" text-anchor="middle" font-family="sans-serif" font-size="6.5" fill="#991b1b">nunca água!</text>
+</svg></div>
+      <div class="tc-body">
+        <ul class="tc-bullets"><li>Temperatura/umidade: faixa ASHRAE 18-27°C, 40-60%</li><li>Nobreak (minutos) + gerador (horas) são complementares</li><li>Nunca água/espuma em incêndio com energia ligada</li></ul>
+        <div class="tc-detail" id="det-ambiental"><p>Praticamente 100% da energia elétrica de um equipamento de TI vira calor. Ultrapassar a faixa ASHRAE não desliga o equipamento na hora, mas reduz a vida útil esperada e aumenta a taxa de falha.</p>
+<p style="margin-top:8px"><b>Nobreak (UPS)</b>: autonomia curta (minutos), cobre a transição imediata. <b>Gerador</b>: demora segundos para ligar, mas sustenta por horas. Um data center crítico tem os dois porque cobrem momentos diferentes da falha.</p>
+<p style="margin-top:8px"><b>Incêndio com equipamento energizado</b>: água e espuma conduzem eletricidade (choque + curto-circuito) — usa-se CO2, pó químico seco ou gás limpo (FM-200/Novec), que não deixam resíduo.</p>
+<p style="margin-top:8px"><b>N+1</b>: uma unidade reserva além do mínimo necessário — se uma falhar, as demais sustentam a carga sem interrupção. <b>Piso elevado</b>: organiza cabeamento e, em muitos projetos, distribui o ar frio da climatização até os racks.</p></div>
+        <button class="tc-more" onclick="toggleDetail('ambiental')">Ver teoria completa ▸</button>
+      </div>
+      <div class="tc-foot">🎯 Questões: 21·22·23·24·25·26·27·28·29·30</div>
+    </div>
+
+    <div class="tc animate-in" id="tc-camadas">
+      <div class="tc-head" style="background:#059669">
+        <div class="tc-num">•</div>
+        <div><div class="tc-title">As Três Camadas</div><div class="tc-sub">Lógica × Física × Ambiental</div></div>
+      </div>
+      <div class="tc-body" style="padding-top:14px">
+        <table class="mini-tbl"><tr><th>Camada</th><th>O que protege</th><th>Exemplo de ameaça</th></tr>
+        <tr><td><b>Lógica</b></td><td>Dados, sistemas, redes, programas</td><td>Vírus, invasão remota, senha fraca</td></tr>
+        <tr><td><b>Física</b></td><td>Instalações, equipamentos, pessoas</td><td>Furto de servidor, acesso indevido</td></tr>
+        <tr><td><b>Ambiental</b></td><td>Condições do ambiente ao redor</td><td>Queda de energia, incêndio, enchente</td></tr></table>
+        <div class="tc-detail" id="det-camadas" style="margin-top:10px">
+          <p>As três camadas não atuam isoladas — falham <b>juntas</b> quando um mesmo evento as atravessa. Uma queda de energia é primariamente ambiental, mas sem nobreak suficiente pode causar corrupção de dados (consequência lógica) ou falha de fechadura eletrônica (consequência física).</p>
+        </div>
+        <button class="tc-more" onclick="toggleDetail('camadas')">Ver teoria completa ▸</button>
+      </div>
+      <div class="tc-foot">📌 Conteúdo complementar</div>
+    </div>
+
+  </div>
+  <div style="text-align:center;margin-top:36px" class="animate-in">
+    <a href="#questoes" style="display:inline-block;padding:13px 32px;
+      background:linear-gradient(135deg,#059669,#dc2626);color:white;
+      font-weight:700;font-size:.88rem;letter-spacing:.06em;text-decoration:none;
+      border-radius:10px;box-shadow:0 4px 16px rgba(5,150,105,.35);transition:.3s"
+      onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+      📝 Ir para as Questões →</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ QUESTÕES ══ -->
+<section class="page-sec" id="questoes">
+
+  <div class="sec-hdr animate-in">
+    <div class="sec-eyebrow">📝 Atividade</div>
+    <h2 class="sec-title">30 questões objetivas</h2>
+    <p class="sec-desc">10 por capítulo. Questões com fonte vêm de provas reais de concurso; as demais são autorais. Clique em "Corrigir" para ver o gabarito comentado antes de enviar.</p>
+  </div>
+
+  <!-- LÓGICA -->
+  <div class="qdiff animate-in">
+    <div class="qdiff-hdr logica"><div class="qdiff-ico logica">1</div>
+    <div><div class="qdiff-label logica">Segurança Lógica</div>
+    <div class="qdiff-sub logica">QUESTÕES 01–10 · MALWARE · CRIPTOGRAFIA · HASH · ASSINATURA DIGITAL</div></div></div>
+
+    <div class="qc logica"><div class="qh"><span class="qnum">01</span><span class="qbadge logica">Segurança Lógica</span></div>
+    <div class="qt">A ameaça à segurança da informação que manipula o tráfego de um site legítimo, redirecionando o usuário para um site falso sem que ele perceba, é conhecida como:</div><div class="qsrc">Fonte: FUMARC – 2022 – PC-MG – Técnico Assistente (Auxiliar de Perícia)</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q1" value="A" onchange="upd()"> A) Ransomware</label>
+      <label class="opt"><input type="radio" name="q1" value="B" onchange="upd()"> B) Pharming</label>
+      <label class="opt"><input type="radio" name="q1" value="C" onchange="upd()"> C) Spam</label>
+      <label class="opt"><input type="radio" name="q1" value="D" onchange="upd()"> D) Worm</label>
+    </div></div>
+
+    <div class="qc logica"><div class="qh"><span class="qnum">02</span><span class="qbadge logica">Segurança Lógica</span></div>
+    <div class="qt">Um programa que permite o retorno de um invasor a um computador comprometido, possibilitando acesso futuro sem que ele precise recorrer novamente aos métodos utilizados na invasão original, é denominado:</div><div class="qsrc">Fonte: EXATUS-PR – 2018 – Prefeitura de Caxias do Sul/RS – Técnico em Informática</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q2" value="A" onchange="upd()"> A) Vírus</label>
+      <label class="opt"><input type="radio" name="q2" value="B" onchange="upd()"> B) Spyware</label>
+      <label class="opt"><input type="radio" name="q2" value="C" onchange="upd()"> C) Worm</label>
+      <label class="opt"><input type="radio" name="q2" value="D" onchange="upd()"> D) Backdoor</label>
+    </div></div>
+
+    <div class="qc logica"><div class="qh"><span class="qnum">03</span><span class="qbadge logica">Segurança Lógica</span></div>
+    <div class="qt">Sobre malware, assinale a alternativa correta:</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q3" value="A" onchange="upd()"> A) O worm se propaga automaticamente pela rede, explorando vulnerabilidades, sem depender da execução de um arquivo hospedeiro por parte do usuário.</label>
+      <label class="opt"><input type="radio" name="q3" value="B" onchange="upd()"> B) O vírus de computador se propaga automaticamente pela rede sem necessitar de nenhuma ação do usuário.</label>
+      <label class="opt"><input type="radio" name="q3" value="C" onchange="upd()"> C) Trojan (cavalo de troia) é sinônimo de vírus, pois ambos se replicam automaticamente.</label>
+      <label class="opt"><input type="radio" name="q3" value="D" onchange="upd()"> D) Spyware tem como função primária destruir arquivos do sistema operacional infectado.</label>
+    </div></div>
+
+    <div class="qc logica"><div class="qh"><span class="qnum">04</span><span class="qbadge logica">Segurança Lógica</span></div>
+    <div class="qt">Engenharia social, no contexto de segurança da informação, é a técnica que:</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q4" value="A" onchange="upd()"> A) explora exclusivamente vulnerabilidades de software desatualizado para invadir sistemas.</label>
+      <label class="opt"><input type="radio" name="q4" value="B" onchange="upd()"> B) consiste no uso de força bruta para descobrir senhas por tentativa e erro.</label>
+      <label class="opt"><input type="radio" name="q4" value="C" onchange="upd()"> C) explora características do comportamento humano (confiança, urgência, autoridade) para induzir a vítima a fornecer informações sigilosas ou realizar ações que comprometam a segurança.</label>
+      <label class="opt"><input type="radio" name="q4" value="D" onchange="upd()"> D) refere-se à criptoanálise de algoritmos de cifra para quebrar mensagens cifradas.</label>
+    </div></div>
+
+    <div class="qc logica"><div class="qh"><span class="qnum">05</span><span class="qbadge logica">Segurança Lógica</span></div>
+    <div class="qt">Sobre a criptografia simétrica, é correto afirmar que:</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q5" value="A" onchange="upd()"> A) utiliza duas chaves diferentes e matematicamente relacionadas, uma pública e uma privada.</label>
+      <label class="opt"><input type="radio" name="q5" value="B" onchange="upd()"> B) utiliza a mesma chave tanto para cifrar quanto para decifrar a mensagem, sendo geralmente mais rápida que a criptografia assimétrica, mas com o desafio de distribuir a chave de forma segura entre as partes.</label>
+      <label class="opt"><input type="radio" name="q5" value="C" onchange="upd()"> C) dispensa completamente o uso de chaves, pois a segurança depende apenas do sigilo do algoritmo.</label>
+      <label class="opt"><input type="radio" name="q5" value="D" onchange="upd()"> D) é sempre mais lenta que a criptografia assimétrica, por isso é pouco usada atualmente.</label>
+    </div></div>
+
+    <div class="qc logica"><div class="qh"><span class="qnum">06</span><span class="qbadge logica">Segurança Lógica</span></div>
+    <div class="qt">Em um sistema de criptografia assimétrica (chave pública), quando Ana deseja enviar uma mensagem sigilosa que só Bruno consiga ler, ela deve cifrar a mensagem com:</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q6" value="A" onchange="upd()"> A) a chave privada de Bruno, que qualquer pessoa pode usar para decifrar.</label>
+      <label class="opt"><input type="radio" name="q6" value="B" onchange="upd()"> B) a chave pública dela mesma (Ana), pois a chave pública é sempre do remetente.</label>
+      <label class="opt"><input type="radio" name="q6" value="C" onchange="upd()"> C) a mesma chave que Bruno usará para decifrar, previamente combinada por telefone.</label>
+      <label class="opt"><input type="radio" name="q6" value="D" onchange="upd()"> D) a chave pública de Bruno, que só pode ser decifrada com a chave privada de Bruno.</label>
+    </div></div>
+
+    <div class="qc logica"><div class="qh"><span class="qnum">07</span><span class="qbadge logica">Segurança Lógica</span></div>
+    <div class="qt">Sobre funções de hash criptográfico (como o SHA-256), é correto afirmar que:</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q7" value="A" onchange="upd()"> A) geram, a partir de uma entrada de tamanho variável, uma saída de tamanho fixo, e são projetadas para que seja computacionalmente inviável reverter o processo (obter a entrada a partir da saída).</label>
+      <label class="opt"><input type="radio" name="q7" value="B" onchange="upd()"> B) são reversíveis, ou seja, é sempre possível recuperar a mensagem original a partir do valor de hash.</label>
+      <label class="opt"><input type="radio" name="q7" value="C" onchange="upd()"> C) servem para cifrar mensagens de forma que só o destinatário com a chave correta consiga lê-las.</label>
+      <label class="opt"><input type="radio" name="q7" value="D" onchange="upd()"> D) produzem uma saída cujo tamanho varia proporcionalmente ao tamanho da entrada.</label>
+    </div></div>
+
+    <div class="qc logica"><div class="qh"><span class="qnum">08</span><span class="qbadge logica">Segurança Lógica</span></div>
+    <div class="qt">No processo de assinatura digital de um documento, a sequência correta de etapas realizadas pelo remetente é:</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q8" value="A" onchange="upd()"> A) cifrar o documento inteiro com a chave pública do destinatário e depois gerar o hash do resultado.</label>
+      <label class="opt"><input type="radio" name="q8" value="B" onchange="upd()"> B) gerar o hash do documento e cifrá-lo com a chave pública do destinatário.</label>
+      <label class="opt"><input type="radio" name="q8" value="C" onchange="upd()"> C) gerar o hash (resumo) do documento e, em seguida, cifrar esse hash com a própria chave privada.</label>
+      <label class="opt"><input type="radio" name="q8" value="D" onchange="upd()"> D) cifrar o documento com a chave privada do destinatário, obtida previamente por engenharia social.</label>
+    </div></div>
+
+    <div class="qc logica"><div class="qh"><span class="qnum">09</span><span class="qbadge logica">Segurança Lógica</span></div>
+    <div class="qt">Um certificado digital emitido dentro da ICP-Brasil tem como principal função:</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q9" value="A" onchange="upd()"> A) substituir integralmente a necessidade de senhas em qualquer sistema de autenticação.</label>
+      <label class="opt"><input type="radio" name="q9" value="B" onchange="upd()"> B) cifrar automaticamente todo o tráfego de rede do titular, dispensando o uso de HTTPS.</label>
+      <label class="opt"><input type="radio" name="q9" value="C" onchange="upd()"> C) armazenar fisicamente a chave privada do titular em um servidor público, para facilitar a recuperação em caso de perda.</label>
+      <label class="opt"><input type="radio" name="q9" value="D" onchange="upd()"> D) vincular, de forma confiável, uma chave pública à identidade de seu titular (pessoa física, jurídica ou servidor), por meio da validação feita por uma Autoridade Certificadora.</label>
+    </div></div>
+
+    <div class="qc logica"><div class="qh"><span class="qnum">10</span><span class="qbadge logica">Segurança Lógica</span></div>
+    <div class="qt">Um funcionário percebe que todos os arquivos de sua estação de trabalho foram cifrados e uma mensagem na tela exige pagamento em criptomoeda para restaurar o acesso. Esse é um caso típico de:</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q10" value="A" onchange="upd()"> A) Spyware.</label>
+      <label class="opt"><input type="radio" name="q10" value="B" onchange="upd()"> B) Ransomware.</label>
+      <label class="opt"><input type="radio" name="q10" value="C" onchange="upd()"> C) Worm sem carga maliciosa (payload).</label>
+      <label class="opt"><input type="radio" name="q10" value="D" onchange="upd()"> D) Ataque de força bruta.</label>
+    </div></div>
+
+  </div>
+
+  <!-- FÍSICA -->
+  <div class="qdiff animate-in">
+    <div class="qdiff-hdr fisica"><div class="qdiff-ico fisica">2</div>
+    <div><div class="qdiff-label fisica">Segurança Física</div>
+    <div class="qdiff-sub fisica">QUESTÕES 11–20 · CONTROLE DE ACESSO · DEFESA EM PROFUNDIDADE</div></div></div>
+
+    <div class="qc fisica"><div class="qh"><span class="qnum">11</span><span class="qbadge fisica">Segurança Física</span></div>
+    <div class="qt">Assinale a alternativa que apresenta corretamente um exemplo de controle de segurança FÍSICA e um exemplo de controle de segurança LÓGICA:</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q11" value="A" onchange="upd()"> A) Firewall de rede (física) e câmera de CFTV (lógica).</label>
+      <label class="opt"><input type="radio" name="q11" value="B" onchange="upd()"> B) Antivírus instalado no servidor (física) e cofre resistente a incêndio (lógica).</label>
+      <label class="opt"><input type="radio" name="q11" value="C" onchange="upd()"> C) Catraca com leitura biométrica na entrada do prédio (física) e exigência de senha forte para login no sistema (lógica).</label>
+      <label class="opt"><input type="radio" name="q11" value="D" onchange="upd()"> D) Criptografia do disco rígido (física) e vigilante na portaria (lógica).</label>
+    </div></div>
+
+    <div class="qc fisica"><div class="qh"><span class="qnum">12</span><span class="qbadge fisica">Segurança Física</span></div>
+    <div class="qt">Tailgating (ou piggybacking) é a técnica em que:</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q12" value="A" onchange="upd()"> A) uma pessoa não autorizada segue de perto um funcionário autorizado por uma porta de acesso controlado, aproveitando o momento em que ela é aberta, sem se identificar.</label>
+      <label class="opt"><input type="radio" name="q12" value="B" onchange="upd()"> B) um invasor explora uma vulnerabilidade de software para obter acesso remoto a um servidor.</label>
+      <label class="opt"><input type="radio" name="q12" value="C" onchange="upd()"> C) um funcionário compartilha sua senha de rede com um colega de outro setor.</label>
+      <label class="opt"><input type="radio" name="q12" value="D" onchange="upd()"> D) um atacante intercepta o tráfego de rede entre duas máquinas para capturar dados sigilosos.</label>
+    </div></div>
+
+    <div class="qc fisica"><div class="qh"><span class="qnum">13</span><span class="qbadge fisica">Segurança Física</span></div>
+    <div class="qt">Sobre as modalidades de biometria usadas em controle de acesso físico, é correto afirmar que:</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q13" value="A" onchange="upd()"> A) toda biometria é obrigatoriamente comportamental, pois depende da ação de o usuário se posicionar diante do leitor.</label>
+      <label class="opt"><input type="radio" name="q13" value="B" onchange="upd()"> B) a biometria facial é classificada como comportamental, pois depende da expressão facial no momento da leitura.</label>
+      <label class="opt"><input type="radio" name="q13" value="C" onchange="upd()"> C) impressão digital e reconhecimento de íris são exemplos de biometria comportamental.</label>
+      <label class="opt"><input type="radio" name="q13" value="D" onchange="upd()"> D) modalidades fisiológicas (impressão digital, geometria da mão, reconhecimento facial, íris) baseiam-se em características físicas do corpo, enquanto modalidades comportamentais (assinatura, dinâmica de digitação, forma de andar) baseiam-se em padrões de comportamento da pessoa.</label>
+    </div></div>
+
+    <div class="qc fisica"><div class="qh"><span class="qnum">14</span><span class="qbadge fisica">Segurança Física</span></div>
+    <div class="qt">Uma eclusa de segurança (mantrap) instalada na entrada de uma sala de servidores tem como principal objetivo:</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q14" value="A" onchange="upd()"> A) registrar em vídeo todas as pessoas que circulam pelo corredor de acesso.</label>
+      <label class="opt"><input type="radio" name="q14" value="B" onchange="upd()"> B) impedir fisicamente que mais de uma pessoa passe por vez, garantindo que a segunda porta só se abra depois que a primeira for fechada e a identidade for validada, prevenindo o tailgating.</label>
+      <label class="opt"><input type="radio" name="q14" value="C" onchange="upd()"> C) cifrar os dados armazenados nos servidores durante o horário noturno.</label>
+      <label class="opt"><input type="radio" name="q14" value="D" onchange="upd()"> D) reduzir a temperatura ambiente da sala de servidores durante picos de uso.</label>
+    </div></div>
+
+    <div class="qc fisica"><div class="qh"><span class="qnum">15</span><span class="qbadge fisica">Segurança Física</span></div>
+    <div class="qt">O uso de câmeras de CFTV (circuito fechado de televisão) em um data center tem como principal função de segurança:</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q15" value="A" onchange="upd()"> A) impedir fisicamente qualquer pessoa não autorizada de entrar no ambiente, dispensando outros controles de acesso.</label>
+      <label class="opt"><input type="radio" name="q15" value="B" onchange="upd()"> B) substituir a necessidade de crachás e catracas, já que a câmera já identifica quem está entrando.</label>
+      <label class="opt"><input type="radio" name="q15" value="C" onchange="upd()"> C) monitorar e registrar em vídeo o que ocorre no ambiente, funcionando como dissuasão e como evidência para investigação, mas não impede fisicamente, por si só, um acesso não autorizado.</label>
+      <label class="opt"><input type="radio" name="q15" value="D" onchange="upd()"> D) controlar automaticamente a temperatura e a umidade do ambiente monitorado.</label>
+    </div></div>
+
+    <div class="qc fisica"><div class="qh"><span class="qnum">16</span><span class="qbadge fisica">Segurança Física</span></div>
+    <div class="qt">O princípio de segurança física conhecido como 'defesa em profundidade' (camadas de segurança) aplicado a um data center consiste em:</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q16" value="A" onchange="upd()"> A) criar múltiplas barreiras sucessivas (perímetro externo, prédio, andar, sala de servidores, rack), de modo que um invasor precise vencer várias camadas independentes, não apenas uma, para chegar ao ativo protegido.</label>
+      <label class="opt"><input type="radio" name="q16" value="B" onchange="upd()"> B) instalar uma única catraca robusta na entrada principal do prédio, considerada suficiente para proteger todo o ambiente interno.</label>
+      <label class="opt"><input type="radio" name="q16" value="C" onchange="upd()"> C) concentrar todo o investimento de segurança apenas no rack onde ficam os servidores, já que é o ativo mais crítico.</label>
+      <label class="opt"><input type="radio" name="q16" value="D" onchange="upd()"> D) eliminar a necessidade de vigilância humana, substituindo-a inteiramente por câmeras.</label>
+    </div></div>
+
+    <div class="qc fisica"><div class="qh"><span class="qnum">17</span><span class="qbadge fisica">Segurança Física</span></div>
+    <div class="qt">Uma sala-cofre (ou sala cofre) usada para abrigar servidores críticos é projetada, entre outras coisas, para resistir a:</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q17" value="A" onchange="upd()"> A) apenas ataques cibernéticos vindos da internet, sem qualquer relação com ameaças físicas.</label>
+      <label class="opt"><input type="radio" name="q17" value="B" onchange="upd()"> B) apenas variações de tensão elétrica, sem qualquer proteção estrutural contra incêndio ou arrombamento.</label>
+      <label class="opt"><input type="radio" name="q17" value="C" onchange="upd()"> C) exclusivamente a entrada de poeira, não oferecendo nenhuma resistência a fogo ou arrombamento.</label>
+      <label class="opt"><input type="radio" name="q17" value="D" onchange="upd()"> D) furto, incêndio e outras ameaças físicas, por meio de paredes, portas e lajes reforçadas, com classificação de resistência ao fogo por tempo determinado (por exemplo, 2 ou 4 horas).</label>
+    </div></div>
+
+    <div class="qc fisica"><div class="qh"><span class="qnum">18</span><span class="qbadge fisica">Segurança Física</span></div>
+    <div class="qt">Sobre o uso de crachás/cartões de proximidade em um sistema de controle de acesso físico, é correto afirmar que:</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q18" value="A" onchange="upd()"> A) é uma prática recomendada compartilhar um mesmo crachá entre vários funcionários do mesmo setor, para reduzir custos.</label>
+      <label class="opt"><input type="radio" name="q18" value="B" onchange="upd()"> B) cada crachá deve ser individual e intransferível, pois isso permite registrar em log quem entrou e saiu de cada área em determinado horário, viabilizando auditoria e responsabilização.</label>
+      <label class="opt"><input type="radio" name="q18" value="C" onchange="upd()"> C) o crachá substitui integralmente a necessidade de qualquer outro controle de acesso, como catracas ou biometria.</label>
+      <label class="opt"><input type="radio" name="q18" value="D" onchange="upd()"> D) o principal objetivo do crachá é apenas estético, para identificação visual, sem função de registro de acesso.</label>
+    </div></div>
+
+    <div class="qc fisica"><div class="qh"><span class="qnum">19</span><span class="qbadge fisica">Segurança Física</span></div>
+    <div class="qt">Em um edital de concurso, um serviço de vigilância patrimonial (vigilantes humanos) faz parte de qual tipo de controle de segurança da informação?</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q19" value="A" onchange="upd()"> A) Controle lógico, pois depende de sistemas informatizados para funcionar.</label>
+      <label class="opt"><input type="radio" name="q19" value="B" onchange="upd()"> B) Controle administrativo apenas, sem nenhuma relação com a proteção do ambiente físico.</label>
+      <label class="opt"><input type="radio" name="q19" value="C" onchange="upd()"> C) Controle físico, pois atua diretamente na proteção do ambiente e dos ativos contra acesso não autorizado, furto e outras ameaças físicas.</label>
+      <label class="opt"><input type="radio" name="q19" value="D" onchange="upd()"> D) Não é considerado um controle de segurança da informação, pois só se aplica à segurança patrimonial de bens, não a dados.</label>
+    </div></div>
+
+    <div class="qc fisica"><div class="qh"><span class="qnum">20</span><span class="qbadge fisica">Segurança Física</span></div>
+    <div class="qt">Um notebook corporativo com dados sigilosos foi furtado da mesa de um funcionário durante o expediente. Sob a ótica da segurança física, a medida preventiva mais diretamente relacionada a esse incidente seria:</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q20" value="A" onchange="upd()"> A) adotar política de mesa limpa e uso de cabo de segurança (trava física) prendendo o notebook ao mobiliário quando o funcionário se ausenta.</label>
+      <label class="opt"><input type="radio" name="q20" value="B" onchange="upd()"> B) instalar um firewall mais restritivo na rede corporativa.</label>
+      <label class="opt"><input type="radio" name="q20" value="C" onchange="upd()"> C) trocar a senha de acesso ao sistema de folha de pagamento.</label>
+      <label class="opt"><input type="radio" name="q20" value="D" onchange="upd()"> D) aumentar o tamanho da chave de criptografia usada no banco de dados da empresa.</label>
+    </div></div>
+
+  </div>
+
+  <!-- AMBIENTAL -->
+  <div class="qdiff animate-in">
+    <div class="qdiff-hdr ambiental"><div class="qdiff-ico ambiental">3</div>
+    <div><div class="qdiff-label ambiental">Segurança Ambiental</div>
+    <div class="qdiff-sub ambiental">QUESTÕES 21–30 · ENERGIA · TEMPERATURA · INCÊNDIO</div></div></div>
+
+    <div class="qc ambiental"><div class="qh"><span class="qnum">21</span><span class="qbadge ambiental">Segurança Ambiental</span></div>
+    <div class="qt">Sobre o controle de temperatura em uma sala de servidores, é correto afirmar que:</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q21" value="A" onchange="upd()"> A) quanto mais fria a sala, sempre melhor, não havendo limite inferior de temperatura recomendado para equipamentos de TI.</label>
+      <label class="opt"><input type="radio" name="q21" value="B" onchange="upd()"> B) a temperatura da sala de servidores não tem nenhuma relação com a vida útil ou a estabilidade dos equipamentos.</label>
+      <label class="opt"><input type="radio" name="q21" value="C" onchange="upd()"> C) servidores modernos dispensam qualquer climatização, pois são projetados para funcionar em qualquer temperatura ambiente.</label>
+      <label class="opt"><input type="radio" name="q21" value="D" onchange="upd()"> D) temperaturas muito altas aceleram o desgaste dos componentes eletrônicos e podem causar desligamento automático (thermal shutdown) ou falha por superaquecimento, por isso a faixa recomendada por normas de referência (como as diretrizes da ASHRAE) fica em torno de 18°C a 27°C.</label>
+    </div></div>
+
+    <div class="qc ambiental"><div class="qh"><span class="qnum">22</span><span class="qbadge ambiental">Segurança Ambiental</span></div>
+    <div class="qt">Em relação à umidade relativa do ar em um data center, é correto afirmar que:</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q22" value="A" onchange="upd()"> A) a umidade relativa do ar não tem nenhum efeito sobre equipamentos eletrônicos, apenas sobre o conforto humano.</label>
+      <label class="opt"><input type="radio" name="q22" value="B" onchange="upd()"> B) umidade relativa muito baixa aumenta o risco de descargas eletrostáticas (ESD) que podem danificar componentes eletrônicos, enquanto umidade muito alta favorece condensação e corrosão em placas e conectores — por isso ela deve ser mantida dentro de uma faixa controlada.</label>
+      <label class="opt"><input type="radio" name="q22" value="C" onchange="upd()"> C) quanto mais alta a umidade, melhor, pois isso elimina totalmente o risco de eletricidade estática.</label>
+      <label class="opt"><input type="radio" name="q22" value="D" onchange="upd()"> D) quanto mais baixa a umidade, melhor, pois isso elimina totalmente o risco de corrosão.</label>
+    </div></div>
+
+    <div class="qc ambiental"><div class="qh"><span class="qnum">23</span><span class="qbadge ambiental">Segurança Ambiental</span></div>
+    <div class="qt">A principal função de um nobreak (UPS – Uninterruptible Power Supply) em uma sala de servidores é:</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q23" value="A" onchange="upd()"> A) fornecer energia elétrica ininterrupta por um período limitado (geralmente minutos) em caso de queda de energia, tempo suficiente para acionar um gerador ou realizar o desligamento seguro dos equipamentos, evitando perda ou corrupção de dados.</label>
+      <label class="opt"><input type="radio" name="q23" value="B" onchange="upd()"> B) fornecer energia elétrica por tempo ilimitado, substituindo completamente a necessidade de um gerador em qualquer cenário.</label>
+      <label class="opt"><input type="radio" name="q23" value="C" onchange="upd()"> C) resfriar os equipamentos durante picos de temperatura, funcionando como um sistema de ar-condicionado reserva.</label>
+      <label class="opt"><input type="radio" name="q23" value="D" onchange="upd()"> D) aumentar permanentemente a velocidade de processamento dos servidores conectados a ele.</label>
+    </div></div>
+
+    <div class="qc ambiental"><div class="qh"><span class="qnum">24</span><span class="qbadge ambiental">Segurança Ambiental</span></div>
+    <div class="qt">Em uma infraestrutura crítica de TI, por que um data center costuma ter tanto um nobreak (UPS) quanto um gerador de energia (a diesel, por exemplo)?</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q24" value="A" onchange="upd()"> A) porque o gerador é usado no lugar do nobreak sempre que o custo de baterias fica muito alto, sendo mutuamente excludentes.</label>
+      <label class="opt"><input type="radio" name="q24" value="B" onchange="upd()"> B) porque o nobreak e o gerador têm exatamente a mesma função e autonomia, sendo redundância pura sem diferença técnica entre eles.</label>
+      <label class="opt"><input type="radio" name="q24" value="C" onchange="upd()"> C) porque o nobreak cobre apenas a transição imediata após a queda de energia (com autonomia limitada de bateria), enquanto o gerador assume o fornecimento de energia por períodos mais longos, até que a energia da concessionária seja restabelecida.</label>
+      <label class="opt"><input type="radio" name="q24" value="D" onchange="upd()"> D) porque a legislação brasileira proíbe o uso isolado de nobreak em qualquer ambiente empresarial.</label>
+    </div></div>
+
+    <div class="qc ambiental"><div class="qh"><span class="qnum">25</span><span class="qbadge ambiental">Segurança Ambiental</span></div>
+    <div class="qt">Em caso de princípio de incêndio em um ambiente com equipamentos elétricos energizados, como uma sala de servidores, o agente extintor recomendado é:</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q25" value="A" onchange="upd()"> A) água, pois é o agente mais eficiente para resfriar rapidamente equipamentos eletrônicos superaquecidos.</label>
+      <label class="opt"><input type="radio" name="q25" value="B" onchange="upd()"> B) espuma mecânica, pois forma uma camada isolante sobre os equipamentos energizados.</label>
+      <label class="opt"><input type="radio" name="q25" value="C" onchange="upd()"> C) qualquer agente extintor disponível, já que o tipo de agente não influencia o risco em equipamentos energizados.</label>
+      <label class="opt"><input type="radio" name="q25" value="D" onchange="upd()"> D) gás carbônico (CO2) ou pó químico seco, por não serem condutores de eletricidade, evitando o risco de choque elétrico durante o combate ao fogo.</label>
+    </div></div>
+
+    <div class="qc ambiental"><div class="qh"><span class="qnum">26</span><span class="qbadge ambiental">Segurança Ambiental</span></div>
+    <div class="qt">Sistemas de supressão de incêndio por gás limpo (como FM-200 ou Novec 1230), usados em datacenters, são preferidos a sprinklers de água principalmente porque:</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q26" value="A" onchange="upd()"> A) são mais baratos de instalar do que qualquer sistema de sprinklers convencional em qualquer cenário.</label>
+      <label class="opt"><input type="radio" name="q26" value="B" onchange="upd()"> B) extinguem o fogo sem deixar resíduos e sem danificar os equipamentos eletrônicos por contato com líquido, ao contrário da água, que pode causar curto-circuito e corrosão nos servidores.</label>
+      <label class="opt"><input type="radio" name="q26" value="C" onchange="upd()"> C) eliminam totalmente a necessidade de detectores de fumaça no ambiente.</label>
+      <label class="opt"><input type="radio" name="q26" value="D" onchange="upd()"> D) aumentam a temperatura do ambiente para eliminar a umidade que causaria o incêndio.</label>
+    </div></div>
+
+    <div class="qc ambiental"><div class="qh"><span class="qnum">27</span><span class="qbadge ambiental">Segurança Ambiental</span></div>
+    <div class="qt">Em projetos de infraestrutura de data center, a notação de redundância 'N+1' aplicada aos sistemas de climatização ou energia significa que:</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q27" value="A" onchange="upd()"> A) há uma unidade reserva além do número mínimo necessário para suportar a carga total, de modo que, se uma unidade falhar ou precisar de manutenção, as demais continuam garantindo o funcionamento sem interrupção.</label>
+      <label class="opt"><input type="radio" name="q27" value="B" onchange="upd()"> B) existe apenas uma única unidade instalada, sem nenhuma redundância, e o '+1' se refere apenas à numeração do equipamento.</label>
+      <label class="opt"><input type="radio" name="q27" value="C" onchange="upd()"> C) todos os equipamentos do data center são duplicados integralmente, incluindo servidores, sem relação com climatização ou energia.</label>
+      <label class="opt"><input type="radio" name="q27" value="D" onchange="upd()"> D) a carga total do ambiente é dividida igualmente entre duas unidades, sem nenhuma unidade reserva disponível.</label>
+    </div></div>
+
+    <div class="qc ambiental"><div class="qh"><span class="qnum">28</span><span class="qbadge ambiental">Segurança Ambiental</span></div>
+    <div class="qt">O piso elevado (piso técnico) instalado em muitas salas de servidores tem como principais funções:</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q28" value="A" onchange="upd()"> A) servir exclusivamente como proteção contra incêndio, sem nenhuma relação com cabeamento ou climatização.</label>
+      <label class="opt"><input type="radio" name="q28" value="B" onchange="upd()"> B) aumentar a resistência estrutural do prédio contra terremotos, sendo essa sua única finalidade.</label>
+      <label class="opt"><input type="radio" name="q28" value="C" onchange="upd()"> C) criar um espaço para passagem organizada de cabos de rede/energia e, em muitos projetos, servir de plenum para distribuição do ar frio vindo do sistema de climatização até a base dos racks.</label>
+      <label class="opt"><input type="radio" name="q28" value="D" onchange="upd()"> D) eliminar totalmente a necessidade de qualquer sistema de ar-condicionado no ambiente.</label>
+    </div></div>
+
+    <div class="qc ambiental"><div class="qh"><span class="qnum">29</span><span class="qbadge ambiental">Segurança Ambiental</span></div>
+    <div class="qt">Detectores de fumaça por aspiração de alta sensibilidade (como os sistemas VESDA) são preferidos a detectores pontuais convencionais em salas de servidores porque:</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q29" value="A" onchange="upd()"> A) são sempre mais baratos de instalar do que qualquer detector pontual de fumaça no mercado.</label>
+      <label class="opt"><input type="radio" name="q29" value="B" onchange="upd()"> B) dispensam completamente a necessidade de qualquer sistema de supressão de incêndio no ambiente.</label>
+      <label class="opt"><input type="radio" name="q29" value="C" onchange="upd()"> C) servem apenas para medir a temperatura ambiente, sem nenhuma relação com detecção de fumaça.</label>
+      <label class="opt"><input type="radio" name="q29" value="D" onchange="upd()"> D) conseguem identificar concentrações muito baixas de partículas de fumaça, permitindo detecção de um princípio de incêndio em estágio muito inicial, antes que o fogo se desenvolva o suficiente para acionar um detector convencional.</label>
+    </div></div>
+
+    <div class="qc ambiental"><div class="qh"><span class="qnum">30</span><span class="qbadge ambiental">Segurança Ambiental</span></div>
+    <div class="qt">Em uma sala de servidores sem nobreak, ocorre uma queda súbita de energia elétrica durante o processamento de um grande lote de dados. A consequência ambiental/operacional mais diretamente associada a esse cenário é:</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q30" value="A" onchange="upd()"> A) aumento imediato da umidade relativa do ar na sala, causado diretamente pela falta de energia.</label>
+      <label class="opt"><input type="radio" name="q30" value="B" onchange="upd()"> B) corrupção de arquivos abertos ou em gravação no momento da queda, além do desligamento abrupto dos servidores, que pode danificar componentes de hardware por interrupção não controlada.</label>
+      <label class="opt"><input type="radio" name="q30" value="C" onchange="upd()"> C) elevação da resistência ao fogo das paredes da sala de servidores.</label>
+      <label class="opt"><input type="radio" name="q30" value="D" onchange="upd()"> D) melhoria da vida útil das baterias dos equipamentos conectados, por reduzir seu uso momentaneamente.</label>
+    </div></div>
+
+  </div>
+
+  <div class="lab-note animate-in">
+    <h3>🧪 Prática de Laboratório e Questões Dissertativas</h3>
+    <p>Além das 30 questões objetivas acima, a apostila completa (impressa/PDF, com o professor) traz 15 questões dissertativas e 15 atividades práticas de laboratório para cada capítulo — verificação de hash com Certutil, reconhecimento de phishing, cálculo de autonomia de nobreak, cálculo de carga térmica (BTU), auditoria fotográfica de segurança física e mais. Peça ao professor o material completo para entregar essas atividades.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ ENVIO ══ -->
+<section class="page-sec" id="enviar" style="padding-bottom:80px">
+
+  <div class="submit-card animate-in" style="max-width:600px;margin:0 auto">
+    <div class="sub-title">📊 Resumo das Respostas</div>
+    <p class="sub-note">Verifique se respondeu todas as questões. Você pode corrigir antes de enviar.</p>
+    <div class="stats-row">
+      <div class="stat"><div class="stat-n" id="ct" style="color:var(--p)">0</div><div class="stat-l">RESPONDIDAS / 30</div></div>
+      <div class="stat"><div class="stat-n" id="cf" style="color:#059669">—</div><div class="stat-l">ACERTOS</div></div>
+      <div class="stat"><div class="stat-n" id="cp" style="color:#dc2626">—</div><div class="stat-l">% APROVEITAMENTO</div></div>
+    </div>
+    <button class="btn-check" onclick="corrigir()">✅ CORRIGIR RESPOSTAS</button>
+    <button class="btn-submit" id="bsend" onclick="send()">📤 ENVIAR RESULTADO PARA O PROFESSOR</button>
+    <div id="smsg"></div>
+  </div>
+</section>
+
+<footer>
+  Prof. <a href="#">Marcos Cruz</a> · Informática Técnica · E.E. Prefeito Odílio Fernandes Costa · Santo Antônio do Retiro/MG
+</footer>
+
+<script src="/assets/js/config-sheets.js"></script>
+<script>
+const CORRETAS = [null,"B","D","A","C","B","D","A","C","D","B","C","A","D","B","C","A","D","B","C","A","D","B","A","C","D","B","A","C","D","B"];  // 1-indexed, q1..q30
+const TOTAL = 30;
+
+function toggleDetail(id){
+  const d=document.getElementById('det-'+id);
+  const b=d.closest('.tc').querySelector('.tc-more');
+  d.classList.toggle('open');
+  b.textContent=d.classList.contains('open')?'Fechar teoria ▴':'Ver teoria completa ▸';
+}
+
+function upd(){
+  let t=0;
+  for(let n=1;n<=TOTAL;n++){ if(document.querySelector(`input[name="q${n}"]:checked`)) t++; }
+  document.getElementById('ct').textContent=t+'/'+TOTAL;
+  document.getElementById('prog-fill').style.width=(t/TOTAL*100)+'%';
+  document.getElementById('prog-txt').textContent=t+' / '+TOTAL+' respondidas';
+}
+
+function corrigir(){
+  let acertos=0;
+  for(let n=1;n<=TOTAL;n++){
+    const sel=document.querySelector(`input[name="q${n}"]:checked`);
+    const opts=document.querySelectorAll(`input[name="q${n}"]`);
+    opts.forEach(o=>{
+      const label=o.closest('.opt');
+      label.classList.remove('certo','errado');
+      if(o.value===CORRETAS[n]) label.classList.add('certo');
+      else if(sel && o===sel) label.classList.add('errado');
+    });
+    if(sel && sel.value===CORRETAS[n]) acertos++;
+  }
+  const pct=Math.round(acertos/TOTAL*100);
+  document.getElementById('cf').textContent=acertos+'/'+TOTAL;
+  document.getElementById('cp').textContent=pct+'%';
+}
+
+function coletarAbertas(){
+  const erradas=[];
+  for(let n=1;n<=TOTAL;n++){
+    const sel=document.querySelector(`input[name="q${n}"]:checked`);
+    if(!sel || sel.value!==CORRETAS[n]){
+      const enun=document.querySelector(`.qc:has(input[name="q${n}"]) .qt`).textContent.trim();
+      erradas.push('Q'+n+': '+enun.slice(0,90));
+    }
+  }
+  return erradas.join(' | ');
+}
+
+async function send(){
+  const nome=document.getElementById('nome').value.trim();
+  const turma=document.getElementById('turma').value.trim();
+  if(!nome||!turma){msg('err','Preencha nome e turma antes de enviar.');return;}
+  let acertos=0;
+  for(let n=1;n<=TOTAL;n++){
+    const sel=document.querySelector(`input[name="q${n}"]:checked`);
+    if(sel && sel.value===CORRETAS[n]) acertos++;
+  }
+  const pct=Math.round(acertos/TOTAL*100);
+  const abertas=coletarAbertas();
+  const btn=document.getElementById('bsend');
+  btn.disabled=true; msg('loading','⏳ Enviando resultado…');
+  try{
+    await fetch(SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:JSON.stringify({atividade:'Segurança da Informação — Física, Ambiental, Lógica e Hash',nome,turma,acertos,total:TOTAL,pct,abertas})});
+    msg('ok','✅ Resultado enviado com sucesso! O professor receberá na planilha.');
+  }catch(e){msg('err','❌ Erro ao enviar. Tente novamente.');btn.disabled=false;}
+}
+function msg(t,x){const e=document.getElementById('smsg');e.className=t;e.textContent=x;e.style.display='block';}
+
+// Scroll animations
+const obs=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}
+}),{threshold:.08,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.animate-in').forEach((el,i)=>{
+  el.style.transitionDelay=(i%4)*80+'ms'; obs.observe(el);
+});
+upd();
+</script>
+<script defer src="/assets/lantern.js"></script></body>
+</html>

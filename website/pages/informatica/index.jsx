@@ -24,7 +24,7 @@ const ITENS = [
   { icon: "clipboard", svg: SVG.clipboard, title: "Projeto de Pesquisa — Guia Completo", desc: "Guia para montar seu projeto científico do zero, módulo por módulo.", meta: "Curso Técnico · contínuo", href: "/informatica/projeto-pesquisa.html", color: ACCENT, badge: "projeto" },
   { icon: "enem", svg: SVG.curso, title: "Explorador Digital", desc: "Curso autoinstrutivo de 15 aulas: hardware, software, internet, senhas, algoritmos e IA — com atividades e certificado ao final.", meta: "6º-7º ano · 15 aulas", href: "/informatica/explorador-digital.html", color: ACCENT, badge: "curso" },
   { icon: "rede", svg: SVG.ip, title: "Endereçamento IP", desc: "Detetive de IP, Batalha de Ping e Escape: dominando o endereçamento.", meta: "Em produção", color: "#64748B", badge: "em breve", soon: true },
-  { icon: "escudo", svg: SVG.escudo, title: "Segurança e Malware", desc: "Tipos de malware, ataques digitais e boas práticas de proteção.", meta: "Em produção", color: "#64748B", badge: "em breve", soon: true },
+  { icon: "escudo", svg: SVG.escudo, title: "Apostila — Segurança da Informação", desc: "Tríade CID, malware, criptografia, função hash, segurança física e ambiental — com quiz interativo.", meta: "Curso Técnico · leitura", href: "/informatica/seguranca/apostila.html", color: ACCENT, badge: "apostila" },
 ];
 
 export default function Informatica() {
