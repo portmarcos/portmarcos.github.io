@@ -20,8 +20,17 @@
 
   let indice = 0, acertos = 0, cronometro = null, restante = 0;
   let abertas = [];   /* respostas dissertativas do aluno */
-  const TEMPO = (d.tempoPorQuestao || 45) * 10;
+  const TEMPO_PADRAO = (d.tempoPorQuestao || 45) * 10;
   const CHAVE_PLACAR = "placar:" + d.id;
+
+  /* Tempo da questão atual: cada questão pode opcionalmente ter seu próprio
+     "tempoQuestao" (em segundos) — usado nas provas com texto de apoio maior,
+     que precisam de mais tempo de leitura. Sem esse campo, usa o padrão da
+     atividade (d.tempoPorQuestao), igual a sempre — nenhuma outra atividade
+     do site é afetada por essa mudança. */
+  function tempoDaQuestao(q) {
+    return (q && q.tempoQuestao) ? q.tempoQuestao * 10 : TEMPO_PADRAO;
+  }
 
   /* Sheets configurado? */
   const urlSheets = (typeof SHEETS_URL === "string" ? SHEETS_URL : "").trim();
@@ -41,7 +50,9 @@
   $("quiz-titulo").textContent = d.titulo;
   $("quiz-descricao").textContent = d.descricao || "";
   $("info-questoes").textContent = d.questoes.length + " questões";
-  $("info-tempo").textContent = (d.tempoPorQuestao || 45) + "s por questão";
+  const temTempoVariavel = d.questoes.some(q => q.tempoQuestao);
+  $("info-tempo").textContent = (d.tempoPorQuestao || 45) + "s por questão"
+    + (temTempoVariavel ? " (mais tempo nas com texto de apoio)" : "");
   const melhorSalvo = localStorage.getItem(CHAVE_PLACAR);
   if (melhorSalvo) $("info-melhor").textContent = "🏆 Seu recorde: " + melhorSalvo;
 
@@ -73,7 +84,7 @@
 
   /* ---------- Timer ---------- */
   function iniciarTimer() {
-    pararTimer(); restante = TEMPO; atualizarBarra();
+    pararTimer(); restante = tempoDaQuestao(d.questoes[indice]); atualizarBarra();
     cronometro = setInterval(() => {
       restante--; atualizarBarra();
       if (restante <= 0) responder(null);
@@ -81,7 +92,7 @@
   }
   function pararTimer() { if (cronometro) clearInterval(cronometro); cronometro = null; }
   function atualizarBarra() {
-    const pct = (restante / TEMPO) * 100;
+    const pct = (restante / tempoDaQuestao(d.questoes[indice])) * 100;
     elBarra.style.width = pct + "%";
     elBarra.classList.toggle("alerta",  pct <= 50 && pct > 20);
     elBarra.classList.toggle("critico", pct <= 20);

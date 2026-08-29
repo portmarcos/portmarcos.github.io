@@ -72,7 +72,7 @@
     var a = document.createElement('a');
     a.id = 'pm-atalho-prova';
     a.href = '/atividades/prova-3em-3tri-portugues.html';
-    a.textContent = '📝 Prova 3º EM — 3º Tri';
+    a.textContent = '📝 Prova 3º EM — 2º Tri';
     a.style.cssText = [
       'position:fixed', 'right:18px', 'bottom:18px', 'z-index:9999',
       'display:inline-flex', 'align-items:center', 'gap:8px',

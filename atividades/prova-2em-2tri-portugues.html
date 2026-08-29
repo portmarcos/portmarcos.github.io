@@ -72,6 +72,21 @@
     /* ── Modo prova: dificulta selecionar/copiar o texto das questões ── */
     #tela-questao, #tela-questao *{ user-select:none; -webkit-user-select:none; }
     #tela-questao textarea{ user-select:text; -webkit-user-select:text; } /* dissertativas continuam editáveis */
+
+    /* ── Glossário: só disponível ANTES de começar a prova (tela-inicio), de
+       propósito — várias questões pedem pra reconhecer um termo (ex.: "preterição")
+       entre as próprias alternativas, então deixar o glossário aberto DURANTE a
+       prova entregaria a resposta; como material de estudo prévio, não tem esse
+       problema. ── */
+    .glossario-overlay{ position:fixed; inset:0; z-index:10000; display:none; align-items:center; justify-content:center; background:rgba(12,10,21,.6); padding:20px; }
+    .glossario-overlay.on{ display:flex; }
+    .glossario-sheet{ background:var(--superficie); border:1px solid var(--linha); border-radius:var(--raio); max-width:540px; width:100%; max-height:80vh; overflow-y:auto; padding:clamp(20px,4vw,28px); box-shadow:var(--sombra); position:relative; }
+    .glossario-sheet h2{ margin:0 0 6px; font-family:'Cormorant Garamond',serif; font-weight:700; }
+    .glossario-sheet .fechar{ position:absolute; top:14px; right:16px; background:none; border:0; font-size:1.4rem; line-height:1; cursor:pointer; color:var(--tinta-suave); }
+    .glossario-item{ margin-bottom:14px; padding-bottom:14px; border-bottom:1px solid var(--linha); }
+    .glossario-item:last-child{ border-bottom:none; margin-bottom:0; padding-bottom:0; }
+    .glossario-item b{ color:var(--cor-materia); display:block; margin-bottom:3px; font-size:.95rem; }
+    .glossario-item span{ font-size:.88rem; color:var(--tinta-suave); line-height:1.5; }
   </style>
 </head>
 <body class="materia-bncc">
@@ -107,6 +122,7 @@
         <span class="tag" id="info-melhor" hidden>🏆</span>
       </div>
       <button id="btn-comecar" class="btn btn-primario btn-bloco">Começar a prova ▶</button>
+      <button id="btn-glossario" type="button" class="btn btn-secundario btn-bloco" style="margin-top:10px">📖 Consultar Glossário de termos</button>
       <div class="painel-sheets">
         <span aria-hidden="true">📤</span>
         <span><b>Resultado enviado automaticamente.</b> Ao concluir, nome, turma e nota vão direto para a planilha do professor — nenhuma ação extra é necessária.</span>
@@ -139,6 +155,16 @@
       <a class="btn btn-secundario btn-bloco" style="margin-top:8px" href="../portugues/index.html">Voltar ao Português</a>
     </section>
   </main>
+
+  <!-- Glossário: modal simples, só acessível na tela inicial (ver nota no CSS) -->
+  <div id="glossario-overlay" class="glossario-overlay nao-imprimir">
+    <div class="glossario-sheet" role="dialog" aria-modal="true" aria-labelledby="glossario-titulo">
+      <button class="fechar" id="btn-fechar-glossario" type="button" aria-label="Fechar glossário">×</button>
+      <h2 id="glossario-titulo">📖 Glossário</h2>
+      <p style="font-size:.85rem;color:var(--tinta-suave);margin:0 0 16px">Termos de gramática e literatura que podem aparecer nas questões desta prova.</p>
+      <div id="glossario-lista"></div>
+    </div>
+  </div>
 
   <footer class="rodape nao-imprimir"><div class="container">Portal Marcos Cruz · Prof. Marcos Cruz</div></footer>
 
@@ -285,6 +311,46 @@
           }
         });
       });
+    })();
+  </script>
+
+  <script>
+    /* ===== Glossário — termos de gramática/literatura desta prova =====
+       Só abre a partir da tela inicial (antes de "Começar a prova"), nunca
+       durante a prova em si: várias questões pedem pra reconhecer um termo
+       (ex.: "hipérbato") entre as próprias alternativas, e deixar o
+       glossário acessível durante o teste entregaria a resposta. Como
+       material de revisão prévia, isso não é um problema. */
+    (function () {
+      const GLOSSARIO = [
+        { termo: "Oração coordenada", def: "Oração independente, que não exerce função sintática dentro de outra oração." },
+        { termo: "Oração subordinada", def: "Oração que depende sintaticamente de outra (a oração principal), completando ou modificando seu sentido." },
+        { termo: "Conjunção adversativa", def: "Conjunção que liga duas ideias contrastantes, de oposição (ex.: mas, porém, todavia, contudo)." },
+        { termo: "Oração subordinada adverbial", def: "Oração que funciona como um advérbio da oração principal, indicando circunstância — tempo, causa, condição, concessão etc." },
+        { termo: "Sujeito oculto (desinencial)", def: "Sujeito que não aparece escrito na frase, mas é identificado pela desinência (terminação) do verbo." },
+        { termo: "Sujeito indeterminado", def: "Ocorre quando não se sabe — ou não importa — quem pratica a ação verbal." },
+        { termo: "Verbo impessoal", def: "Verbo que não tem sujeito algum, como \"haver\" (existência) e \"fazer\" (tempo decorrido)." },
+        { termo: "Vocativo", def: "Termo usado para chamar, invocar ou interpelar diretamente alguém; não exerce função sintática na oração." },
+        { termo: "Adjunto adverbial", def: "Termo que indica uma circunstância (tempo, modo, lugar, causa etc.) e costuma poder ser deslocado na frase." },
+        { termo: "Hipérbato", def: "Inversão da ordem direta das palavras numa frase ou verso, para efeito expressivo." },
+        { termo: "Sinestesia", def: "Mistura de sensações de sentidos diferentes numa mesma expressão (ex.: \"cor que se ouve\")." },
+        { termo: "Antítese", def: "Aproximação de ideias opostas na mesma frase ou trecho, para criar contraste expressivo." },
+        { termo: "Narrador defunto", def: "Narrador que já morreu e conta a própria história desse lugar — marca célebre de Memórias Póstumas de Brás Cubas, de Machado de Assis." }
+      ];
+      const lista = document.getElementById("glossario-lista");
+      GLOSSARIO.forEach(function (item) {
+        const div = document.createElement("div");
+        div.className = "glossario-item";
+        div.innerHTML = "<b>" + item.termo + "</b><span>" + item.def + "</span>";
+        lista.appendChild(div);
+      });
+      const overlay = document.getElementById("glossario-overlay");
+      const abrir = document.getElementById("btn-glossario");
+      const fechar = document.getElementById("btn-fechar-glossario");
+      if (abrir) abrir.addEventListener("click", function () { overlay.classList.add("on"); });
+      if (fechar) fechar.addEventListener("click", function () { overlay.classList.remove("on"); });
+      overlay.addEventListener("click", function (e) { if (e.target === overlay) overlay.classList.remove("on"); });
+      document.addEventListener("keydown", function (e) { if (e.key === "Escape") overlay.classList.remove("on"); });
     })();
   </script>
 <script defer src="/assets/lantern.js"></script></body>
