@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laboratório de Senhas e Hash · Prof. Marcos Cruz</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --p:#10b981;--pl:#34d399;--pll:#6ee7b7;--pbg:rgba(16,185,129,.14);
+  --r:#dc2626;--rl:#f87171;--rll:#fca5a5;--rbg:rgba(220,38,38,.14);
+  --bg:#020617;--card:rgba(15,23,42,.6);--border:rgba(51,65,85,.6);
+  --t:#f1f5f9;--t2:#94a3b8;--t3:#64748b;
+  --shadow:0 2px 10px rgba(0,0,0,.35);
+  --shadow2:0 16px 40px rgba(0,0,0,.5);
+  --radius:14px;
+  --mono:'JetBrains Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t);line-height:1.6;overflow-x:hidden}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(-45deg,#210b0b,#0c1a2e,#022c22,#210b0b);
+  background-size:400% 400%;animation:gbg 12s ease infinite;
+  padding:40px;position:relative;overflow:hidden}
+@keyframes gbg{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.shape{position:absolute;border-radius:50%;opacity:.22;filter:blur(2px)}
+.s1{width:300px;height:300px;background:#dc2626;top:-100px;right:-80px;animation:fl1 7s ease-in-out infinite}
+.s2{width:200px;height:200px;background:#10b981;bottom:-60px;left:-40px;animation:fl2 9s ease-in-out infinite}
+.s3{width:150px;height:150px;background:#0ea5e9;top:30%;right:20%;animation:fl1 6s ease-in-out infinite reverse}
+@keyframes fl1{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-25px) scale(1.05)}}
+@keyframes fl2{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-15px) rotate(10deg)}}
+.hero-inner{position:relative;z-index:1;max-width:900px;margin:0 auto}
+.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(220,38,38,.14);
+  border:1px solid rgba(220,38,38,.35);color:var(--rll);padding:5px 14px;border-radius:30px;
+  font-size:.72rem;font-weight:700;letter-spacing:.08em;margin-bottom:16px}
+.hero-title{font-size:clamp(1.8rem,5vw,3rem);font-weight:800;color:var(--t);
+  letter-spacing:-.03em;line-height:1.1;margin-bottom:6px}
+.hero-title span{background:linear-gradient(135deg,var(--pl),var(--rl));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{color:var(--t2);font-size:.9rem;margin-bottom:22px;max-width:640px}
+.privacy-note{display:flex;align-items:flex-start;gap:10px;background:var(--card);backdrop-filter:blur(10px);
+  border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow2);border:1.5px solid rgba(16,185,129,.4);
+  max-width:640px}
+.privacy-note .ic{font-size:1.3rem;line-height:1}
+.privacy-note p{font-size:.82rem;color:var(--t2)}
+.privacy-note b{color:var(--pll)}
+
+/* ── NAV ── */
+#nav{position:sticky;top:0;z-index:200;background:rgba(2,6,23,.9);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--border);
+  padding:0 40px;display:flex;align-items:center;gap:4px;flex-wrap:wrap;
+  min-height:52px;box-shadow:0 1px 8px rgba(0,0,0,.2);overflow-x:auto}
+.nl{padding:7px 14px;border:1px solid transparent;background:transparent;
+  color:var(--t3);font-size:.7rem;font-weight:600;letter-spacing:.04em;
+  cursor:pointer;border-radius:8px;transition:.2s;text-decoration:none;display:block;white-space:nowrap}
+.nl:hover{background:var(--rbg);border-color:rgba(220,38,38,.3);color:var(--rll)}
+
+/* ── SECTIONS ── */
+.page-sec{max-width:880px;margin:0 auto;padding:56px 40px}
+.sec-hdr{margin-bottom:24px}
+.sec-eyebrow{font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--r);margin-bottom:8px}
+.sec-title{font-size:clamp(1.3rem,2.6vw,1.9rem);font-weight:800;color:var(--t);letter-spacing:-.02em}
+.sec-desc{color:var(--t2);font-size:.9rem;margin-top:8px;max-width:640px}
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:0 40px}
+
+/* ── LAB CARD ── */
+.lab{background:var(--card);backdrop-filter:blur(8px);border-radius:var(--radius);
+  padding:24px;box-shadow:var(--shadow);border:1px solid var(--border);margin-top:6px}
+.lab-row{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end;margin-bottom:16px}
+.ff{display:flex;flex-direction:column;gap:5px;flex:1;min-width:200px}
+.fl{font-size:.7rem;font-weight:600;color:var(--t2);letter-spacing:.03em}
+.fi{background:rgba(255,255,255,.04);border:1.5px solid var(--border);color:var(--t);
+  padding:10px 13px;font-family:var(--mono);font-size:.86rem;
+  border-radius:8px;outline:none;transition:.2s;color-scheme:dark;width:100%}
+.fi::placeholder{color:var(--t3)}
+.fi:focus{border-color:var(--rl);background:rgba(255,255,255,.07);box-shadow:0 0 0 3px rgba(220,38,38,.15)}
+select.fi{font-family:'Inter',sans-serif;cursor:pointer}
+.eye-toggle{display:flex;align-items:center;gap:6px;font-size:.72rem;color:var(--t2);cursor:pointer;user-select:none;white-space:nowrap}
+.eye-toggle input{accent-color:var(--rl)}
+
+.outbox{background:#08101f;border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;
+  font-family:var(--mono);font-size:.86rem;word-break:break-all;color:var(--pll);min-height:20px}
+.outbox.empty{color:var(--t3)}
+.outmeta{font-size:.74rem;color:var(--t3);margin-top:8px;line-height:1.6}
+.outmeta b{color:var(--t2)}
+.lab-note-inline{font-size:.78rem;color:var(--t3);margin-top:12px;padding-top:12px;border-top:1px dashed var(--border);line-height:1.6}
+.lab-note-inline b{color:var(--t2)}
+
+.btn{padding:10px 18px;background:rgba(255,255,255,.03);color:var(--rll);
+  font-family:'Inter',sans-serif;font-size:.82rem;font-weight:700;
+  letter-spacing:.02em;border:1.5px solid var(--r);border-radius:9px;cursor:pointer;
+  transition:.2s;white-space:nowrap}
+.btn:hover{background:var(--rbg)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+
+/* diff highlight */
+.hexline{font-family:var(--mono);font-size:.82rem;word-break:break-all;line-height:1.8}
+.hexline .same{color:var(--pll)}
+.hexline .diff{color:var(--rll);background:rgba(220,38,38,.22);border-radius:2px}
+.diff-summary{margin-top:10px;font-size:.8rem;color:var(--t2)}
+.diff-summary b{color:var(--rll)}
+
+/* salt history */
+.salt-hist{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.salt-item{background:#08101f;border:1px solid var(--border);border-radius:8px;padding:10px 12px;
+  font-family:var(--mono);font-size:.74rem;color:var(--t2);display:flex;flex-wrap:wrap;gap:4px 10px}
+.salt-item .k{color:var(--t3)}
+.salt-item .v{color:var(--pll)}
+.salt-item.new{animation:pop .4s ease}
+@keyframes pop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+/* strength meter */
+.meter-wrap{margin-top:6px}
+.meter-bar{height:10px;background:rgba(255,255,255,.06);border-radius:6px;overflow:hidden;border:1px solid var(--border)}
+.meter-fill{height:100%;width:0%;border-radius:6px;transition:width .3s ease,background .3s ease}
+.meter-label{display:flex;justify-content:space-between;margin-top:6px;font-size:.76rem}
+.meter-label .lvl{font-weight:700}
+.checklist{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip{font-size:.72rem;padding:5px 11px;border-radius:20px;border:1.5px solid var(--border);color:var(--t3);
+  transition:.2s;font-weight:600}
+.chip.on{border-color:var(--pl);color:var(--pll);background:var(--pbg)}
+.crack-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.crack-box{background:#08101f;border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.crack-box .lb{font-size:.66rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--t3);margin-bottom:4px}
+.crack-box .val{font-family:var(--mono);font-size:.92rem;color:var(--rll);font-weight:700}
+@media(max-width:560px){.crack-grid{grid-template-columns:1fr}}
+
+/* dictionary result */
+.dict-result{margin-top:14px;padding:14px 16px;border-radius:10px;font-size:.86rem;border:1.5px solid var(--border);
+  background:#08101f;color:var(--t2);transition:.2s}
+.dict-result.found{border-color:var(--r);background:var(--rbg);color:var(--rll)}
+.dict-result.safe{border-color:var(--p);background:var(--pbg);color:var(--pll)}
+.dict-list-note{font-size:.74rem;color:var(--t3);margin-top:10px}
+
+/* theory mini cards */
+.tc-mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:6px}
+.tc-mini{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.tc-mini h3{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.05rem;font-weight:700;color:var(--rll);margin-bottom:6px}
+.tc-mini p{font-size:.82rem;color:var(--t2);line-height:1.6}
+@media(max-width:640px){.tc-mini-grid{grid-template-columns:1fr}}
+
+/* ── QUIZ (reaproveitado do padrão da apostila) ── */
+.student-card{background:var(--card);backdrop-filter:blur(10px);border-radius:var(--radius);padding:22px;
+  box-shadow:var(--shadow2);border:1px solid var(--border);max-width:600px}
+.sc-title{font-size:.75rem;font-weight:700;color:var(--rll);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.form-row{display:flex;gap:12px;flex-wrap:wrap}
+.qc{background:var(--card);backdrop-filter:blur(8px);border-radius:var(--radius);padding:20px;margin-bottom:12px;
+  border:1.5px solid var(--border);box-shadow:var(--shadow);border-left:4px solid var(--r)}
+.qh{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.qnum{font-size:.72rem;font-weight:700;color:var(--t3)}
+.qt{font-size:.88rem;color:var(--t);line-height:1.6;margin-bottom:12px}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;
+  background:rgba(255,255,255,.03);border:1.5px solid var(--border);border-radius:9px;
+  cursor:pointer;transition:all .2s;font-size:.84rem;color:var(--t2)}
+.opt:hover{background:var(--rbg);border-color:var(--rl);color:var(--t)}
+.opt input[type=radio]{accent-color:var(--rl);margin-top:3px;min-width:14px}
+.opt.certo{background:rgba(16,185,129,.16);border-color:#10b981;color:#6ee7b7;font-weight:600}
+.opt.errado{background:rgba(248,113,113,.14);border-color:#f87171;color:#fca5a5}
+.submit-card{border-radius:var(--radius);padding:32px;box-shadow:var(--shadow2);border:1px solid var(--border);
+  background:linear-gradient(135deg,rgba(220,38,38,.08),rgba(15,23,42,.6));max-width:600px;margin:0 auto}
+.sub-title{font-size:1.15rem;font-weight:800;color:var(--t);margin-bottom:6px}
+.sub-note{font-size:.85rem;color:var(--t2);margin-bottom:20px}
+.stats-row{display:flex;gap:12px;margin-bottom:22px;flex-wrap:wrap}
+.stat{background:var(--rbg);border:1.5px solid var(--rll);border-radius:10px;padding:12px 18px;flex:1;min-width:90px;text-align:center}
+.stat-n{font-size:1.4rem;font-weight:800;color:var(--t)}
+.stat-l{font-size:.6rem;font-weight:600;color:var(--t3);letter-spacing:.07em;margin-top:2px}
+.btn-check{width:100%;padding:12px;background:rgba(255,255,255,.03);color:var(--rll);
+  font-size:.88rem;font-weight:700;letter-spacing:.03em;border:1.5px solid var(--r);border-radius:10px;cursor:pointer;margin-bottom:12px}
+.btn-check:hover{background:var(--rbg)}
+.btn-submit{width:100%;padding:14px;background:linear-gradient(135deg,var(--r),#7c2d12);
+  color:white;font-size:.92rem;font-weight:700;letter-spacing:.04em;border:none;border-radius:10px;cursor:pointer;
+  transition:all .3s;box-shadow:0 4px 12px rgba(220,38,38,.3)}
+.btn-submit:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(220,38,38,.4)}
+.btn-submit:disabled{opacity:.5;cursor:not-allowed;transform:none}
+#smsg{display:none;margin-top:16px;padding:14px 18px;border-radius:10px;font-size:.86rem;border:1.5px solid}
+#smsg.ok{background:rgba(16,185,129,.14);border-color:#34d399;color:#6ee7b7}
+#smsg.err{background:rgba(248,113,113,.14);border-color:#f87171;color:#fca5a5}
+#smsg.loading{background:var(--rbg);border-color:var(--rll);color:var(--rll)}
+
+.animate-in{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.animate-in.visible{opacity:1;transform:none}
+
+footer{text-align:center;padding:24px 40px;border-top:1px solid var(--border);font-size:.72rem;color:var(--t3)}
+footer a{color:var(--r);text-decoration:none;font-weight:500}
+
+@media(max-width:600px){
+  .hero,.page-sec,#nav,footer{padding-left:16px;padding-right:16px}
+  .form-row{flex-direction:column}
+  .lab-row{flex-direction:column;align-items:stretch}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="shape s1"></div><div class="shape s2"></div><div class="shape s3"></div>
+  <div class="hero-inner">
+    <div class="badge">🧪 LABORATÓRIO INTERATIVO · INFORMÁTICA TÉCNICA</div>
+    <h1 class="hero-title">Senhas &amp; <span>Hash</span> ao vivo</h1>
+    <p class="hero-sub">Digite, teste e veja acontecer: como uma senha vira hash, por que 1 letra muda tudo, para que serve o sal (salt) e por que senha fraca cai em segundos — tudo calculado ao vivo no seu navegador.</p>
+    <div class="privacy-note">
+      <span class="ic">🔒</span>
+      <p><b>Nada sai do seu navegador.</b> Todo cálculo desta página roda localmente em JavaScript (Web Crypto API). Nenhuma senha digitada aqui é enviada, salva em planilha ou vista pelo professor — só o resultado do quiz final (que não contém sua senha) é enviado.</p>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="nl" href="#hash-vivo">#1 Hash ao vivo</a>
+  <a class="nl" href="#avalanche">#2 Efeito avalanche</a>
+  <a class="nl" href="#sal">#3 Salt</a>
+  <a class="nl" href="#forca">#4 Força da senha</a>
+  <a class="nl" href="#dicionario">#5 Ataque de dicionário</a>
+  <a class="nl" href="#quiz">📝 Quiz</a>
+</nav>
+
+<!-- ══ 1. HASH AO VIVO ══ -->
+<section class="page-sec" id="hash-vivo">
+  <div class="sec-hdr animate-in">
+    <div class="sec-eyebrow">🧬 Laboratório 1</div>
+    <h2 class="sec-title">Veja o hash da sua senha em tempo real</h2>
+    <p class="sec-desc">Digite qualquer texto abaixo. A cada tecla, o navegador recalcula o hash na hora — repare que a saída tem sempre o mesmo tamanho, não importa se você digitou 1 caractere ou um parágrafo inteiro.</p>
+  </div>
+  <div class="lab animate-in">
+    <div class="lab-row">
+      <div class="ff" style="flex:2">
+        <label class="fl">Texto de entrada (pode ser uma senha de teste, nunca a real)</label>
+        <input class="fi" id="hv-input" type="text" placeholder="Digite algo, ex: minhasenha123" autocomplete="off">
+      </div>
+      <div class="ff" style="flex:1;min-width:150px">
+        <label class="fl">Algoritmo</label>
+        <select class="fi" id="hv-algo">
+          <option value="SHA-256" selected>SHA-256 (o mais usado hoje)</option>
+          <option value="SHA-1">SHA-1 (antigo, já quebrado)</option>
+          <option value="SHA-512">SHA-512</option>
+        </select>
+      </div>
+    </div>
+    <div class="outbox empty" id="hv-output">Digite algo acima para ver o hash…</div>
+    <div class="outmeta" id="hv-meta"></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ 2. AVALANCHE ══ -->
+<section class="page-sec" id="avalanche">
+  <div class="sec-hdr animate-in">
+    <div class="sec-eyebrow">💥 Laboratório 2</div>
+    <h2 class="sec-title">Efeito avalanche: 1 letra muda tudo</h2>
+    <p class="sec-desc">Compare o SHA-256 de dois textos quase iguais (edite os campos se quiser). Os caracteres destacados em vermelho são os que mudaram entre um hash e o outro — normalmente cerca de metade deles.</p>
+  </div>
+  <div class="lab animate-in">
+    <div class="lab-row">
+      <div class="ff"><label class="fl">Texto A</label><input class="fi" id="av-a" type="text" value="senha123" autocomplete="off"></div>
+      <div class="ff"><label class="fl">Texto B</label><input class="fi" id="av-b" type="text" value="Senha123" autocomplete="off"></div>
+    </div>
+    <label class="fl" style="display:block;margin-bottom:6px">Hash A (SHA-256)</label>
+    <div class="hexline outbox" id="av-out-a"></div>
+    <label class="fl" style="display:block;margin:14px 0 6px">Hash B (SHA-256)</label>
+    <div class="hexline outbox" id="av-out-b"></div>
+    <div class="diff-summary" id="av-diff"></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ 3. SALT ══ -->
+<section class="page-sec" id="sal">
+  <div class="sec-hdr animate-in">
+    <div class="sec-eyebrow">🧂 Laboratório 3</div>
+    <h2 class="sec-title">Salt: por que a mesma senha não deveria gerar sempre o mesmo hash</h2>
+    <p class="sec-desc">Digite uma senha e clique no botão várias vezes: cada clique sorteia um "sal" (número aleatório) diferente e recalcula o hash colando o sal antes da senha. Repare que o hash muda a cada clique — mesmo sendo sempre a mesma senha.</p>
+  </div>
+  <div class="lab animate-in">
+    <div class="lab-row">
+      <div class="ff" style="flex:2">
+        <label class="fl">Senha de teste</label>
+        <input class="fi" id="salt-input" type="text" placeholder="Digite uma senha de teste" autocomplete="off">
+      </div>
+      <button class="btn" id="salt-btn" onclick="gerarSalt()">🎲 Gerar hash com novo salt</button>
+    </div>
+    <label class="fl" style="display:block;margin-bottom:6px">Hash SEM salt (sempre igual para a mesma senha)</label>
+    <div class="outbox empty" id="salt-unsalted">Digite uma senha acima…</div>
+    <label class="fl" style="display:block;margin:14px 0 6px">Histórico de hashes COM salt (clique no botão acima)</label>
+    <div class="salt-hist" id="salt-hist"></div>
+    <div class="lab-note-inline">É por isso que dois usuários com a senha "123456" em um banco de dados <b>com salt</b> têm hashes completamente diferentes armazenados — e é por isso que um ataque com tabela pré-calculada (rainbow table) não funciona contra hashes salteados: o atacante teria que refazer a tabela inteira para cada salt.</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ 4. FORÇA DA SENHA ══ -->
+<section class="page-sec" id="forca">
+  <div class="sec-hdr animate-in">
+    <div class="sec-eyebrow">💪 Laboratório 4</div>
+    <h2 class="sec-title">Força da senha e tempo estimado de força bruta</h2>
+    <p class="sec-desc">Digite uma senha (pode ser inventada) e veja, ao vivo, quantas combinações um atacante precisaria testar e quanto tempo isso levaria em dois cenários diferentes.</p>
+  </div>
+  <div class="lab animate-in">
+    <div class="lab-row">
+      <div class="ff" style="flex:2">
+        <label class="fl">Senha de teste</label>
+        <input class="fi" id="strength-input" type="password" placeholder="Digite uma senha de teste" autocomplete="off">
+      </div>
+      <label class="eye-toggle"><input type="checkbox" id="strength-eye" onchange="toggleEye()"> mostrar</label>
+    </div>
+    <div class="meter-wrap">
+      <div class="meter-bar"><div class="meter-fill" id="meter-fill"></div></div>
+      <div class="meter-label"><span class="lvl" id="meter-lvl">—</span><span id="meter-bits">0 bits de entropia</span></div>
+    </div>
+    <div class="checklist">
+      <span class="chip" id="chip-len">≥ 8 caracteres</span>
+      <span class="chip" id="chip-low">letra minúscula</span>
+      <span class="chip" id="chip-up">letra MAIÚSCULA</span>
+      <span class="chip" id="chip-num">número</span>
+      <span class="chip" id="chip-sym">símbolo (@#!$…)</span>
+    </div>
+    <div class="crack-grid">
+      <div class="crack-box"><div class="lb">Ataque online (10 tentativas/seg, com limite)</div><div class="val" id="crack-online">—</div></div>
+      <div class="crack-box"><div class="lb">Ataque offline (10 bi tentativas/seg, hash vazado)</div><div class="val" id="crack-offline">—</div></div>
+    </div>
+    <div class="lab-note-inline">⚠️ São <b>estimativas educacionais simplificadas</b> (entropia ≈ comprimento × log₂ do tamanho do alfabeto usado, tempo médio ≈ metade do total de combinações ÷ tentativas por segundo). O número real depende do algoritmo de hash usado pelo site (hashes lentos como bcrypt/Argon2 reduzem drasticamente a taxa de tentativas do atacante) e de quão "previsível" a senha é — uma senha longa mas óbvia (ex: "12345678901234") tem entropia calculada alta aqui, mas pode estar na lista de senhas comuns do Laboratório 5 e cair instantaneamente.</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ 5. DICIONÁRIO ══ -->
+<section class="page-sec" id="dicionario">
+  <div class="sec-hdr animate-in">
+    <div class="sec-eyebrow">📖 Laboratório 5</div>
+    <h2 class="sec-title">Ataque de dicionário: quando ninguém precisa "quebrar" o hash</h2>
+    <p class="sec-desc">O navegador já calculou, ao carregar a página, o hash SHA-256 de dezenas de senhas extremamente comuns (baseado em rankings públicos anuais das senhas mais usadas do mundo). Digite uma senha abaixo: se o hash dela bater com algum da lista, ela é considerada "quebrada" na hora — sem reverter matematicamente nada, só comparando.</p>
+  </div>
+  <div class="lab animate-in">
+    <div class="lab-row">
+      <div class="ff" style="flex:2">
+        <label class="fl">Teste uma senha (experimente "123456", depois algo inventado por você)</label>
+        <input class="fi" id="dict-input" type="text" placeholder="Digite uma senha de teste" autocomplete="off">
+      </div>
+    </div>
+    <div class="dict-result" id="dict-result">Digite algo acima para testar contra a lista.</div>
+    <div class="dict-list-note" id="dict-status">Carregando lista de senhas comuns…</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ TEORIA RÁPIDA ══ -->
+<section class="page-sec">
+  <div class="sec-hdr animate-in">
+    <div class="sec-eyebrow">📚 Resumo</div>
+    <h2 class="sec-title">O que os 5 laboratórios mostraram</h2>
+  </div>
+  <div class="tc-mini-grid animate-in">
+    <div class="tc-mini"><h3>Hash é mão única</h3><p>Fácil calcular o hash a partir da senha; matematicamente inviável fazer o caminho inverso (do hash de volta para a senha). É por isso que sites armazenam o hash, não a senha em texto puro.</p></div>
+    <div class="tc-mini"><h3>Efeito avalanche</h3><p>Uma diferença mínima na entrada (1 letra maiúscula) produz uma saída completamente diferente e imprevisível — não dá para "chutar" a senha original olhando padrões no hash.</p></div>
+    <div class="tc-mini"><h3>Salt evita hash repetido</h3><p>Sem salt, duas contas com a mesma senha têm o mesmo hash salvo — um vazamento expõe todo mundo que usa aquela senha de uma vez. Com salt, cada conta tem um hash único mesmo com senha igual.</p></div>
+    <div class="tc-mini"><h3>Senha fraca cai sem "quebrar" nada</h3><p>Um ataque de dicionário não reverte o hash: só compara com hashes de senhas já conhecidas. Comprimento + variedade de caracteres é o que encarece um ataque de força bruta de verdade.</p></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ QUIZ ══ -->
+<section class="page-sec" id="quiz">
+  <div class="sec-hdr animate-in">
+    <div class="sec-eyebrow">📝 Verifique o que aprendeu</div>
+    <h2 class="sec-title">Quiz — 7 questões sobre os laboratórios</h2>
+    <p class="sec-desc">Sem pegadinha: tudo aqui foi mostrado ao vivo nos laboratórios acima. Nenhuma senha que você digitou é usada ou enviada — só as respostas do quiz.</p>
+  </div>
+
+  <div class="student-card animate-in" style="margin-bottom:24px">
+    <div class="sc-title">✏️ IDENTIFICAÇÃO DO ALUNO</div>
+    <div class="form-row">
+      <div class="ff"><label class="fl">Nome completo</label><input class="fi" id="nome" type="text" placeholder="Seu nome" style="font-family:'Inter',sans-serif"></div>
+      <div class="ff"><label class="fl">Turma</label><input class="fi" id="turma" type="text" placeholder="Ex: 2º Ano A" style="font-family:'Inter',sans-serif"></div>
+    </div>
+  </div>
+
+  <div class="qc animate-in"><div class="qh"><span class="qnum">1</span></div>
+    <div class="qt">Por que uma função hash como o SHA-256 é chamada de "mão única" (one-way)?</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q1" value="A" onchange="upd()"> A) Porque só pode ser calculada uma vez por sessão do navegador.</label>
+      <label class="opt"><input type="radio" name="q1" value="B" onchange="upd()"> B) Porque é matematicamente inviável reconstruir a entrada original a partir do hash, mesmo conhecendo o algoritmo usado.</label>
+      <label class="opt"><input type="radio" name="q1" value="C" onchange="upd()"> C) Porque só aceita textos de até 256 caracteres como entrada.</label>
+      <label class="opt"><input type="radio" name="q1" value="D" onchange="upd()"> D) Porque o hash muda automaticamente a cada minuto, mesmo sem alterar a entrada.</label>
+    </div>
+  </div>
+
+  <div class="qc animate-in"><div class="qh"><span class="qnum">2</span></div>
+    <div class="qt">No Laboratório 2, o que é o "efeito avalanche" de uma função hash?</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q2" value="A" onchange="upd()"> A) O hash fica cada vez maior conforme a senha cresce.</label>
+      <label class="opt"><input type="radio" name="q2" value="B" onchange="upd()"> B) Uma pequena mudança na entrada (até 1 caractere) provoca uma mudança grande e imprevisível na saída.</label>
+      <label class="opt"><input type="radio" name="q2" value="C" onchange="upd()"> C) O navegador trava quando duas senhas geram o mesmo hash.</label>
+      <label class="opt"><input type="radio" name="q2" value="D" onchange="upd()"> D) Senhas longas demoram muito mais para gerar hash do que senhas curtas.</label>
+    </div>
+  </div>
+
+  <div class="qc animate-in"><div class="qh"><span class="qnum">3</span></div>
+    <div class="qt">No Laboratório 3, qual é a principal função do "sal" (salt) ao armazenar senhas com hash?</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q3" value="A" onchange="upd()"> A) Deixar o texto do hash mais longo visualmente.</label>
+      <label class="opt"><input type="radio" name="q3" value="B" onchange="upd()"> B) Acelerar o cálculo do hash pelo navegador.</label>
+      <label class="opt"><input type="radio" name="q3" value="C" onchange="upd()"> C) Fazer com que a mesma senha gere hashes diferentes em contas diferentes, dificultando ataques com tabelas pré-calculadas.</label>
+      <label class="opt"><input type="radio" name="q3" value="D" onchange="upd()"> D) Criptografar o hash com uma chave secreta guardada pelo banco de dados.</label>
+    </div>
+  </div>
+
+  <div class="qc animate-in"><div class="qh"><span class="qnum">4</span></div>
+    <div class="qt">No Laboratório 5, a senha "123456" foi identificada instantaneamente pelo simulador de ataque de dicionário. Isso acontece porque:</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q4" value="A" onchange="upd()"> A) O algoritmo SHA-256 é fraco e pode ser revertido matematicamente.</label>
+      <label class="opt"><input type="radio" name="q4" value="B" onchange="upd()"> B) O hash de senhas comuns já é conhecido de antemão (basta calcular a lista uma vez), então o ataque só compara hashes, sem reverter nada.</label>
+      <label class="opt"><input type="radio" name="q4" value="C" onchange="upd()"> C) Senhas com só números sempre geram um hash de tamanho menor.</label>
+      <label class="opt"><input type="radio" name="q4" value="D" onchange="upd()"> D) O navegador guarda em cache todas as senhas já digitadas em qualquer site.</label>
+    </div>
+  </div>
+
+  <div class="qc animate-in"><div class="qh"><span class="qnum">5</span></div>
+    <div class="qt">Duas contas diferentes usam a MESMA senha, e o sistema aplica salt (como no Laboratório 3). O que se espera ao comparar os hashes armazenados dessas duas contas?</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q5" value="A" onchange="upd()"> A) Os hashes serão idênticos, pois a senha digitada é igual.</label>
+      <label class="opt"><input type="radio" name="q5" value="B" onchange="upd()"> B) Os hashes serão diferentes, mesmo a senha sendo igual, porque cada conta recebeu um salt diferente.</label>
+      <label class="opt"><input type="radio" name="q5" value="C" onchange="upd()"> C) O sistema rejeita automaticamente a segunda conta por senha duplicada.</label>
+      <label class="opt"><input type="radio" name="q5" value="D" onchange="upd()"> D) Só é possível saber se as senhas são iguais comparando-as em texto puro, nunca pelos hashes.</label>
+    </div>
+  </div>
+
+  <div class="qc animate-in"><div class="qh"><span class="qnum">6</span></div>
+    <div class="qt">No Laboratório 4, por que aumentar o comprimento e a variedade de caracteres (maiúsculas, minúsculas, números, símbolos) de uma senha aumenta o tempo estimado de um ataque de força bruta?</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q6" value="A" onchange="upd()"> A) Porque isso reduz o tamanho do hash gerado pelo algoritmo.</label>
+      <label class="opt"><input type="radio" name="q6" value="B" onchange="upd()"> B) Porque cada caractere adicional e cada tipo de caractere multiplicam o número total de combinações possíveis que o atacante precisa testar.</label>
+      <label class="opt"><input type="radio" name="q6" value="C" onchange="upd()"> C) Porque o servidor do site passa a demorar mais para responder a cada tentativa de login.</label>
+      <label class="opt"><input type="radio" name="q6" value="D" onchange="upd()"> D) Porque senhas longas usam automaticamente um algoritmo de hash diferente e mais lento.</label>
+    </div>
+  </div>
+
+  <div class="qc animate-in"><div class="qh"><span class="qnum">7</span></div>
+    <div class="qt">É seguro reutilizar a mesma senha forte em vários sites diferentes, já que ela é longa e difícil de adivinhar?</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q7" value="A" onchange="upd()"> A) Sim, uma senha forte é suficiente em qualquer situação, mesmo repetida.</label>
+      <label class="opt"><input type="radio" name="q7" value="B" onchange="upd()"> B) Não é recomendado: se um dos sites vazar sua base de dados, essa mesma senha pode ser testada em outros serviços onde você a reutilizou (ataque de "credential stuffing").</label>
+      <label class="opt"><input type="radio" name="q7" value="C" onchange="upd()"> C) Sim, porque hash é irreversível, então o vazamento de um site nunca afeta outro site.</label>
+      <label class="opt"><input type="radio" name="q7" value="D" onchange="upd()"> D) Não existe nenhuma relação entre reutilizar senha e vazamento de hash.</label>
+    </div>
+  </div>
+
+  <div class="submit-card animate-in" style="margin-top:24px">
+    <div class="sub-title">📊 Resumo das Respostas</div>
+    <p class="sub-note">Verifique se respondeu todas as questões. Você pode corrigir antes de enviar.</p>
+    <div class="stats-row">
+      <div class="stat"><div class="stat-n" id="ct" style="color:var(--r)">0</div><div class="stat-l">RESPONDIDAS / 7</div></div>
+      <div class="stat"><div class="stat-n" id="cf" style="color:#059669">—</div><div class="stat-l">ACERTOS</div></div>
+      <div class="stat"><div class="stat-n" id="cp" style="color:#dc2626">—</div><div class="stat-l">% APROVEITAMENTO</div></div>
+    </div>
+    <button class="btn-check" onclick="corrigir()">✅ CORRIGIR RESPOSTAS</button>
+    <button class="btn-submit" id="bsend" onclick="send()">📤 ENVIAR RESULTADO PARA O PROFESSOR</button>
+    <div id="smsg"></div>
+  </div>
+</section>
+
+<footer>
+  Prof. <a href="#">Marcos Cruz</a> · Informática Técnica · E.E. Prefeito Odílio Fernandes Costa · Santo Antônio do Retiro/MG
+</footer>
+
+<script src="/assets/js/config-sheets.js"></script>
+<script>
+/* ══════════ util de hash ══════════ */
+function bufferToHex(buf){
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+async function digestHex(algo, text){
+  const data = new TextEncoder().encode(text);
+  const buf = await crypto.subtle.digest(algo, data);
+  return bufferToHex(buf);
+}
+async function sha256Hex(text){ return digestHex('SHA-256', text); }
+
+/* ══════════ 1. hash ao vivo ══════════ */
+let hvReq = 0;
+async function updateHashVivo(){
+  const myReq = ++hvReq;
+  const txt = document.getElementById('hv-input').value;
+  const algo = document.getElementById('hv-algo').value;
+  const out = document.getElementById('hv-output');
+  const meta = document.getElementById('hv-meta');
+  if(!txt){ out.textContent='Digite algo acima para ver o hash…'; out.classList.add('empty'); meta.textContent=''; return; }
+  const hex = await digestHex(algo, txt);
+  if(myReq !== hvReq) return;
+  out.textContent = hex;
+  out.classList.remove('empty');
+  const bits = hex.length*4;
+  meta.innerHTML = `<b>${hex.length} caracteres</b> hexadecimais = <b>${bits} bits</b> de saída — sempre esse tamanho fixo, não importa se a entrada tem ${txt.length} caractere${txt.length===1?'':'s'} ou 10.000.`;
+}
+document.getElementById('hv-input').addEventListener('input', updateHashVivo);
+document.getElementById('hv-algo').addEventListener('change', updateHashVivo);
+
+/* ══════════ 2. avalanche ══════════ */
+async function updateAvalanche(){
+  const a = document.getElementById('av-a').value;
+  const b = document.getElementById('av-b').value;
+  const [ha, hb] = await Promise.all([sha256Hex(a), sha256Hex(b)]);
+  renderDiff('av-out-a', ha, hb);
+  renderDiff('av-out-b', hb, ha);
+  let diffCount = 0;
+  for(let i=0;i<ha.length;i++){ if(ha[i]!==hb[i]) diffCount++; }
+  const pct = Math.round(diffCount/ha.length*100);
+  document.getElementById('av-diff').innerHTML =
+    a===b ? 'Os dois textos são idênticos — os hashes também serão idênticos.'
+    : `<b>${diffCount} de ${ha.length}</b> caracteres hexadecimais são diferentes entre os dois hashes (~<b>${pct}%</b>) — mesmo a entrada tendo mudado só um pouquinho.`;
+}
+function renderDiff(elId, hex, other){
+  const el = document.getElementById(elId);
+  let html = '';
+  for(let i=0;i<hex.length;i++){
+    const cls = hex[i]===other[i] ? 'same' : 'diff';
+    html += `<span class="${cls}">${hex[i]}</span>`;
+  }
+  el.innerHTML = html;
+}
+document.getElementById('av-a').addEventListener('input', updateAvalanche);
+document.getElementById('av-b').addEventListener('input', updateAvalanche);
+
+/* ══════════ 3. salt ══════════ */
+async function updateSaltUnsalted(){
+  const pass = document.getElementById('salt-input').value;
+  const out = document.getElementById('salt-unsalted');
+  if(!pass){ out.textContent='Digite uma senha acima…'; out.classList.add('empty'); return; }
+  out.classList.remove('empty');
+  out.textContent = await sha256Hex(pass);
+}
+document.getElementById('salt-input').addEventListener('input', updateSaltUnsalted);
+
+let saltHistCount = 0;
+async function gerarSalt(){
+  const pass = document.getElementById('salt-input').value;
+  if(!pass) return;
+  const saltBytes = crypto.getRandomValues(new Uint8Array(8));
+  const saltHex = Array.from(saltBytes).map(b=>b.toString(16).padStart(2,'0')).join('');
+  const hash = await sha256Hex(saltHex + pass);
+  saltHistCount++;
+  const hist = document.getElementById('salt-hist');
+  const row = document.createElement('div');
+  row.className = 'salt-item new';
+  row.innerHTML = `<span class="k">#${saltHistCount} salt=</span><span class="v">${saltHex}</span><span class="k">→ hash(salt+senha)=</span><span class="v">${hash}</span>`;
+  hist.prepend(row);
+  while(hist.children.length > 6){ hist.removeChild(hist.lastChild); }
+}
+
+/* ══════════ 4. força da senha ══════════ */
+function toggleEye(){
+  const eye = document.getElementById('strength-eye').checked;
+  document.getElementById('strength-input').type = eye ? 'text' : 'password';
+}
+function formatBigNumber(n){
+  if(n<1000) return Math.round(n).toLocaleString('pt-BR');
+  const units=[[1e12,'trilhões'],[1e9,'bilhões'],[1e6,'milhões'],[1e3,'mil']];
+  for(const [v,label] of units){ if(n>=v) return (n/v).toFixed(1).replace('.',',')+' '+label; }
+  return Math.round(n).toString();
+}
+function formatLog10Seconds(log10s){
+  if(log10s < 0) return 'menos de 1 segundo';
+  const SEC_PER_YEAR = 31557600;
+  const log10Years = log10s - Math.log10(SEC_PER_YEAR);
+  if(log10Years >= 12){
+    return `mais de 10^${Math.round(log10Years)} anos (astronomicamente maior que a idade do universo, ~1,4×10¹⁰ anos)`;
+  }
+  if(log10Years >= 0){
+    return formatBigNumber(Math.pow(10, log10Years)) + ' anos';
+  }
+  const seconds = Math.pow(10, log10s);
+  if(seconds < 60) return Math.max(1,Math.round(seconds)) + (seconds<2?' segundo':' segundos');
+  const minutes = seconds/60;
+  if(minutes < 60) return Math.round(minutes) + (minutes<2?' minuto':' minutos');
+  const hours = minutes/60;
+  if(hours < 24) return Math.round(hours) + (hours<2?' hora':' horas');
+  const days = hours/24;
+  return Math.round(days) + (days<2?' dia':' dias');
+}
+function crackTimeLabel(entropyBits, guessesPerSecond){
+  if(entropyBits<=0) return '—';
+  const log10Seconds = entropyBits*Math.log10(2) - Math.log10(guessesPerSecond) - Math.log10(2);
+  return formatLog10Seconds(log10Seconds);
+}
+function updateStrength(){
+  const v = document.getElementById('strength-input').value;
+  const hasLow = /[a-z]/.test(v), hasUp = /[A-Z]/.test(v), hasNum = /[0-9]/.test(v), hasSym = /[^A-Za-z0-9]/.test(v);
+  document.getElementById('chip-len').classList.toggle('on', v.length>=8);
+  document.getElementById('chip-low').classList.toggle('on', hasLow);
+  document.getElementById('chip-up').classList.toggle('on', hasUp);
+  document.getElementById('chip-num').classList.toggle('on', hasNum);
+  document.getElementById('chip-sym').classList.toggle('on', hasSym);
+
+  let charset = (hasLow?26:0)+(hasUp?26:0)+(hasNum?10:0)+(hasSym?32:0);
+  const bits = (v.length>0 && charset>0) ? v.length*Math.log2(charset) : 0;
+
+  const fill = document.getElementById('meter-fill');
+  const lvl = document.getElementById('meter-lvl');
+  const bitsLbl = document.getElementById('meter-bits');
+  const pct = Math.min(100, bits/100*100);
+  fill.style.width = pct+'%';
+  bitsLbl.textContent = Math.round(bits)+' bits de entropia (estimados)';
+
+  let color, label;
+  if(v.length===0){ color='#334155'; label='—'; }
+  else if(bits<28){ color='#dc2626'; label='Muito fraca'; }
+  else if(bits<36){ color='#f59e0b'; label='Fraca'; }
+  else if(bits<60){ color='#eab308'; label='Razoável'; }
+  else if(bits<80){ color='#84cc16'; label='Forte'; }
+  else { color='#10b981'; label='Muito forte'; }
+  fill.style.background = color;
+  lvl.textContent = label;
+  lvl.style.color = color;
+
+  document.getElementById('crack-online').textContent = v.length? crackTimeLabel(bits, 10) : '—';
+  document.getElementById('crack-offline').textContent = v.length? crackTimeLabel(bits, 1e10) : '—';
+}
+document.getElementById('strength-input').addEventListener('input', updateStrength);
+
+/* ══════════ 5. dicionário ══════════ */
+const SENHAS_COMUNS = ["123456","123456789","12345678","12345","1234567","1234567890","password",
+  "senha","senha123","qwerty","qwerty123","abc123","111111","123123","admin","iloveyou","1q2w3e4r",
+  "letmein","dragon","master","football","baseball","000000","zaq12wsx","brasil123","vitoria123",
+  "gabriel123","meuamor","987654321","asdf1234","batman","superman","teamo123","flamengo","corinthians",
+  "senha1234","102030","112233","555555","666666"];
+let DICT_MAP = {};
+(async function buildDict(){
+  const status = document.getElementById('dict-status');
+  const entries = await Promise.all(SENHAS_COMUNS.map(async p => [await sha256Hex(p), p]));
+  entries.forEach(([hash, plain]) => { DICT_MAP[hash] = plain; });
+  status.textContent = `Lista carregada: ${SENHAS_COMUNS.length} senhas comuns (hash SHA-256 de cada uma já calculado e pronto para comparação).`;
+})();
+async function updateDict(){
+  const v = document.getElementById('dict-input').value;
+  const box = document.getElementById('dict-result');
+  box.classList.remove('found','safe');
+  if(!v){ box.textContent = 'Digite algo acima para testar contra a lista.'; return; }
+  const hash = await sha256Hex(v);
+  const hit = DICT_MAP[hash];
+  if(hit){
+    box.classList.add('found');
+    box.innerHTML = `🔓 <b>Encontrada na lista!</b> O hash desta senha bate com uma senha comum já conhecida (<code>${hit}</code>). Um atacante identificaria essa senha instantaneamente, sem "quebrar" nada — só comparando hashes.`;
+  } else {
+    box.classList.add('safe');
+    box.innerHTML = `🔒 Não está nesta lista pequena de teste. <b>Isso não prova que a senha é forte</b> — listas reais de senhas vazadas têm centenas de milhões de entradas; use o Laboratório 4 para avaliar a força de verdade.`;
+  }
+}
+document.getElementById('dict-input').addEventListener('input', updateDict);
+
+/* ══════════ quiz (mesmo padrão da apostila) ══════════ */
+const CORRETAS = [null,"B","B","C","B","B","B","B"]; // 1-indexed, q1..q7
+const TOTAL = 7;
+function upd(){
+  let t=0;
+  for(let n=1;n<=TOTAL;n++){ if(document.querySelector(`input[name="q${n}"]:checked`)) t++; }
+  document.getElementById('ct').textContent=t+'/'+TOTAL;
+}
+function corrigir(){
+  let acertos=0;
+  for(let n=1;n<=TOTAL;n++){
+    const sel=document.querySelector(`input[name="q${n}"]:checked`);
+    const opts=document.querySelectorAll(`input[name="q${n}"]`);
+    opts.forEach(o=>{
+      const label=o.closest('.opt');
+      label.classList.remove('certo','errado');
+      if(o.value===CORRETAS[n]) label.classList.add('certo');
+      else if(sel && o===sel) label.classList.add('errado');
+    });
+    if(sel && sel.value===CORRETAS[n]) acertos++;
+  }
+  const pct=Math.round(acertos/TOTAL*100);
+  document.getElementById('cf').textContent=acertos+'/'+TOTAL;
+  document.getElementById('cp').textContent=pct+'%';
+}
+async function send(){
+  const nome=document.getElementById('nome').value.trim();
+  const turma=document.getElementById('turma').value.trim();
+  if(!nome||!turma){msg('err','Preencha nome e turma antes de enviar.');return;}
+  let acertos=0;
+  for(let n=1;n<=TOTAL;n++){
+    const sel=document.querySelector(`input[name="q${n}"]:checked`);
+    if(sel && sel.value===CORRETAS[n]) acertos++;
+  }
+  const pct=Math.round(acertos/TOTAL*100);
+  const btn=document.getElementById('bsend');
+  btn.disabled=true; msg('loading','⏳ Enviando resultado…');
+  try{
+    await fetch(SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:JSON.stringify({atividade:'Laboratório de Senhas e Hash',nome,turma,acertos,total:TOTAL,pct,abertas:''})});
+    msg('ok','✅ Resultado enviado com sucesso! O professor receberá na planilha.');
+  }catch(e){msg('err','❌ Erro ao enviar. Tente novamente.');btn.disabled=false;}
+}
+function msg(t,x){const e=document.getElementById('smsg');e.className=t;e.textContent=x;e.style.display='block';}
+
+/* ══════════ scroll animations ══════════ */
+const obs=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}
+}),{threshold:.08,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.animate-in').forEach((el,i)=>{
+  el.style.transitionDelay=(i%4)*70+'ms'; obs.observe(el);
+});
+
+/* estado inicial dos laboratórios pré-preenchidos */
+updateAvalanche();
+</script>
+</body>
+</html>
