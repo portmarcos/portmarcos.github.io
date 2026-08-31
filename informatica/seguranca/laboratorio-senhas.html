@@ -389,70 +389,70 @@ footer a{color:var(--r);text-decoration:none;font-weight:500}
   <div class="qc animate-in"><div class="qh"><span class="qnum">1</span></div>
     <div class="qt">Por que uma função hash como o SHA-256 é chamada de "mão única" (one-way)?</div>
     <div class="opts">
-      <label class="opt"><input type="radio" name="q1" value="A" onchange="upd()"> A) Porque só pode ser calculada uma vez por sessão do navegador.</label>
-      <label class="opt"><input type="radio" name="q1" value="B" onchange="upd()"> B) Porque é matematicamente inviável reconstruir a entrada original a partir do hash, mesmo conhecendo o algoritmo usado.</label>
-      <label class="opt"><input type="radio" name="q1" value="C" onchange="upd()"> C) Porque só aceita textos de até 256 caracteres como entrada.</label>
-      <label class="opt"><input type="radio" name="q1" value="D" onchange="upd()"> D) Porque o hash muda automaticamente a cada minuto, mesmo sem alterar a entrada.</label>
+      <label class="opt"><input type="radio" name="q1" value="A" onchange="upd()"> A) Porque o navegador apaga da memória a entrada digitada assim que o cálculo termina, tornando impossível recuperá-la depois.</label>
+      <label class="opt"><input type="radio" name="q1" value="B" onchange="upd()"> B) Porque o algoritmo só permite um cálculo por sessão do navegador, impedindo que a mesma entrada seja testada mais de uma vez.</label>
+      <label class="opt"><input type="radio" name="q1" value="C" onchange="upd()"> C) Porque é matematicamente inviável reconstruir a entrada original a partir do hash, mesmo conhecendo o algoritmo usado.</label>
+      <label class="opt"><input type="radio" name="q1" value="D" onchange="upd()"> D) Porque o resultado do hash é criptografado com uma chave secreta que somente o servidor conhece, escondendo a entrada original.</label>
     </div>
   </div>
 
   <div class="qc animate-in"><div class="qh"><span class="qnum">2</span></div>
     <div class="qt">No Laboratório 2, o que é o "efeito avalanche" de uma função hash?</div>
     <div class="opts">
-      <label class="opt"><input type="radio" name="q2" value="A" onchange="upd()"> A) O hash fica cada vez maior conforme a senha cresce.</label>
-      <label class="opt"><input type="radio" name="q2" value="B" onchange="upd()"> B) Uma pequena mudança na entrada (até 1 caractere) provoca uma mudança grande e imprevisível na saída.</label>
-      <label class="opt"><input type="radio" name="q2" value="C" onchange="upd()"> C) O navegador trava quando duas senhas geram o mesmo hash.</label>
-      <label class="opt"><input type="radio" name="q2" value="D" onchange="upd()"> D) Senhas longas demoram muito mais para gerar hash do que senhas curtas.</label>
+      <label class="opt"><input type="radio" name="q2" value="A" onchange="upd()"> A) Uma pequena mudança na entrada, mesmo de um único caractere, provoca uma alteração grande e imprevisível em todo o hash gerado.</label>
+      <label class="opt"><input type="radio" name="q2" value="B" onchange="upd()"> B) O tamanho do hash gerado cresce proporcionalmente ao tamanho da senha digitada, ficando maior conforme o texto aumenta.</label>
+      <label class="opt"><input type="radio" name="q2" value="C" onchange="upd()"> C) O navegador trava e exibe erro sempre que duas entradas diferentes acabam gerando exatamente o mesmo valor de hash.</label>
+      <label class="opt"><input type="radio" name="q2" value="D" onchange="upd()"> D) Senhas mais longas exigem um tempo de cálculo muito maior do que senhas curtas, mesmo usando o mesmo algoritmo de hash.</label>
     </div>
   </div>
 
   <div class="qc animate-in"><div class="qh"><span class="qnum">3</span></div>
     <div class="qt">No Laboratório 3, qual é a principal função do "sal" (salt) ao armazenar senhas com hash?</div>
     <div class="opts">
-      <label class="opt"><input type="radio" name="q3" value="A" onchange="upd()"> A) Deixar o texto do hash mais longo visualmente.</label>
-      <label class="opt"><input type="radio" name="q3" value="B" onchange="upd()"> B) Acelerar o cálculo do hash pelo navegador.</label>
-      <label class="opt"><input type="radio" name="q3" value="C" onchange="upd()"> C) Fazer com que a mesma senha gere hashes diferentes em contas diferentes, dificultando ataques com tabelas pré-calculadas.</label>
-      <label class="opt"><input type="radio" name="q3" value="D" onchange="upd()"> D) Criptografar o hash com uma chave secreta guardada pelo banco de dados.</label>
+      <label class="opt"><input type="radio" name="q3" value="A" onchange="upd()"> A) Deixar o texto do hash resultante visivelmente mais longo, dificultando a leitura por quem tenta adivinhar a senha.</label>
+      <label class="opt"><input type="radio" name="q3" value="B" onchange="upd()"> B) Acelerar o cálculo do hash pelo navegador, reduzindo o tempo de processamento necessário a cada tentativa de login.</label>
+      <label class="opt"><input type="radio" name="q3" value="C" onchange="upd()"> C) Criptografar o hash final com uma chave secreta que fica guardada apenas no banco de dados do servidor.</label>
+      <label class="opt"><input type="radio" name="q3" value="D" onchange="upd()"> D) Fazer com que a mesma senha gere hashes diferentes em contas diferentes, dificultando ataques com tabelas pré-calculadas.</label>
     </div>
   </div>
 
   <div class="qc animate-in"><div class="qh"><span class="qnum">4</span></div>
     <div class="qt">No Laboratório 5, a senha "123456" foi identificada instantaneamente pelo simulador de ataque de dicionário. Isso acontece porque:</div>
     <div class="opts">
-      <label class="opt"><input type="radio" name="q4" value="A" onchange="upd()"> A) O algoritmo SHA-256 é fraco e pode ser revertido matematicamente.</label>
-      <label class="opt"><input type="radio" name="q4" value="B" onchange="upd()"> B) O hash de senhas comuns já é conhecido de antemão (basta calcular a lista uma vez), então o ataque só compara hashes, sem reverter nada.</label>
-      <label class="opt"><input type="radio" name="q4" value="C" onchange="upd()"> C) Senhas com só números sempre geram um hash de tamanho menor.</label>
-      <label class="opt"><input type="radio" name="q4" value="D" onchange="upd()"> D) O navegador guarda em cache todas as senhas já digitadas em qualquer site.</label>
+      <label class="opt"><input type="radio" name="q4" value="A" onchange="upd()"> A) O algoritmo SHA-256 apresenta uma falha conhecida que permite reverter matematicamente o hash até a senha original.</label>
+      <label class="opt"><input type="radio" name="q4" value="B" onchange="upd()"> B) O hash de senhas comuns já é conhecido de antemão, então o ataque apenas compara hashes prontos, sem reverter nada.</label>
+      <label class="opt"><input type="radio" name="q4" value="C" onchange="upd()"> C) Senhas formadas só por números sempre geram, pelo algoritmo, um hash de tamanho final menor que o normal.</label>
+      <label class="opt"><input type="radio" name="q4" value="D" onchange="upd()"> D) O navegador mantém em cache local todas as senhas já digitadas anteriormente em qualquer site visitado.</label>
     </div>
   </div>
 
   <div class="qc animate-in"><div class="qh"><span class="qnum">5</span></div>
     <div class="qt">Duas contas diferentes usam a MESMA senha, e o sistema aplica salt (como no Laboratório 3). O que se espera ao comparar os hashes armazenados dessas duas contas?</div>
     <div class="opts">
-      <label class="opt"><input type="radio" name="q5" value="A" onchange="upd()"> A) Os hashes serão idênticos, pois a senha digitada é igual.</label>
-      <label class="opt"><input type="radio" name="q5" value="B" onchange="upd()"> B) Os hashes serão diferentes, mesmo a senha sendo igual, porque cada conta recebeu um salt diferente.</label>
-      <label class="opt"><input type="radio" name="q5" value="C" onchange="upd()"> C) O sistema rejeita automaticamente a segunda conta por senha duplicada.</label>
-      <label class="opt"><input type="radio" name="q5" value="D" onchange="upd()"> D) Só é possível saber se as senhas são iguais comparando-as em texto puro, nunca pelos hashes.</label>
+      <label class="opt"><input type="radio" name="q5" value="A" onchange="upd()"> A) Os hashes armazenados serão idênticos nas duas contas, já que a senha digitada pelos dois usuários é a mesma.</label>
+      <label class="opt"><input type="radio" name="q5" value="B" onchange="upd()"> B) O sistema identifica a senha repetida e rejeita automaticamente a criação da segunda conta por duplicidade.</label>
+      <label class="opt"><input type="radio" name="q5" value="C" onchange="upd()"> C) Os hashes serão diferentes entre si, mesmo a senha sendo igual, porque cada conta recebeu um salt diferente.</label>
+      <label class="opt"><input type="radio" name="q5" value="D" onchange="upd()"> D) Só é possível saber se as senhas são iguais comparando-as em texto puro, nunca observando os hashes armazenados.</label>
     </div>
   </div>
 
   <div class="qc animate-in"><div class="qh"><span class="qnum">6</span></div>
     <div class="qt">No Laboratório 4, por que aumentar o comprimento e a variedade de caracteres (maiúsculas, minúsculas, números, símbolos) de uma senha aumenta o tempo estimado de um ataque de força bruta?</div>
     <div class="opts">
-      <label class="opt"><input type="radio" name="q6" value="A" onchange="upd()"> A) Porque isso reduz o tamanho do hash gerado pelo algoritmo.</label>
-      <label class="opt"><input type="radio" name="q6" value="B" onchange="upd()"> B) Porque cada caractere adicional e cada tipo de caractere multiplicam o número total de combinações possíveis que o atacante precisa testar.</label>
-      <label class="opt"><input type="radio" name="q6" value="C" onchange="upd()"> C) Porque o servidor do site passa a demorar mais para responder a cada tentativa de login.</label>
-      <label class="opt"><input type="radio" name="q6" value="D" onchange="upd()"> D) Porque senhas longas usam automaticamente um algoritmo de hash diferente e mais lento.</label>
+      <label class="opt"><input type="radio" name="q6" value="A" onchange="upd()"> A) Porque cada caractere e cada tipo de caractere adicional multiplicam o número total de combinações que o atacante precisa testar.</label>
+      <label class="opt"><input type="radio" name="q6" value="B" onchange="upd()"> B) Porque o servidor do site passa a levar mais tempo para responder a cada tentativa de login com uma senha mais longa.</label>
+      <label class="opt"><input type="radio" name="q6" value="C" onchange="upd()"> C) Porque senhas mais longas fazem o algoritmo gerar automaticamente um hash de tamanho final maior que o padrão de 256 bits.</label>
+      <label class="opt"><input type="radio" name="q6" value="D" onchange="upd()"> D) Porque senhas com mais caracteres passam a usar, automaticamente, um algoritmo de hash diferente e mais lento que o SHA-256.</label>
     </div>
   </div>
 
   <div class="qc animate-in"><div class="qh"><span class="qnum">7</span></div>
     <div class="qt">É seguro reutilizar a mesma senha forte em vários sites diferentes, já que ela é longa e difícil de adivinhar?</div>
     <div class="opts">
-      <label class="opt"><input type="radio" name="q7" value="A" onchange="upd()"> A) Sim, uma senha forte é suficiente em qualquer situação, mesmo repetida.</label>
-      <label class="opt"><input type="radio" name="q7" value="B" onchange="upd()"> B) Não é recomendado: se um dos sites vazar sua base de dados, essa mesma senha pode ser testada em outros serviços onde você a reutilizou (ataque de "credential stuffing").</label>
-      <label class="opt"><input type="radio" name="q7" value="C" onchange="upd()"> C) Sim, porque hash é irreversível, então o vazamento de um site nunca afeta outro site.</label>
-      <label class="opt"><input type="radio" name="q7" value="D" onchange="upd()"> D) Não existe nenhuma relação entre reutilizar senha e vazamento de hash.</label>
+      <label class="opt"><input type="radio" name="q7" value="A" onchange="upd()"> A) Sim, uma senha forte é suficiente em qualquer situação, mesmo sendo repetida em vários sites diferentes.</label>
+      <label class="opt"><input type="radio" name="q7" value="B" onchange="upd()"> B) Sim, porque o hash é irreversível, então o vazamento do banco de dados de um site nunca afeta outro serviço.</label>
+      <label class="opt"><input type="radio" name="q7" value="C" onchange="upd()"> C) Não existe nenhuma relação real entre reutilizar a mesma senha e o risco de vazamento de hashes armazenados.</label>
+      <label class="opt"><input type="radio" name="q7" value="D" onchange="upd()"> D) Não é recomendado: se um dos sites vazar sua base de dados, a mesma senha pode ser testada em outros serviços (credential stuffing).</label>
     </div>
   </div>
 
@@ -659,7 +659,7 @@ async function updateDict(){
 document.getElementById('dict-input').addEventListener('input', updateDict);
 
 /* ══════════ quiz (mesmo padrão da apostila) ══════════ */
-const CORRETAS = [null,"B","B","C","B","B","B","B"]; // 1-indexed, q1..q7
+const CORRETAS = [null,"C","A","D","B","C","A","D"]; // 1-indexed, q1..q7
 const TOTAL = 7;
 function upd(){
   let t=0;
