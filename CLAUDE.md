@@ -1,5 +1,95 @@
 # Portal ENEM — portmarcos.github.io
 
+## Laboratório de Senhas e Hash + risco descoberto no pipeline Next.js (31/ago/2026)
+Pedido do professor: uma atividade em `informatica/` onde o aluno "verifica ao
+vivo" como funcionam senha e hash — inspirado numa explicação que ele viu no
+próprio chat do Claude. Criado `informatica/seguranca/laboratorio-senhas.html`
+(vanilla HTML/CSS/JS, sem framework, mesmo padrão visual do
+`seguranca/apostila.html`): 5 mini-laboratórios interativos com Web Crypto
+API (`crypto.subtle.digest`, 100% client-side, nada é enviado à rede) — hash
+ao vivo (SHA-1/256/512), efeito avalanche (diff caractere a caractere),
+salt (histórico de hashes com salt aleatório via `crypto.getRandomValues`
+vs. hash sem salt), força de senha (entropia estimada + tempo de força
+bruta em 2 cenários, com aritmética em log10 pra não estourar `Number` em
+senhas longas — testado com senha de 65 caracteres sem erro), e ataque de
+dicionário (lista de ~40 senhas comuns, hash de cada uma pré-calculado no
+load da página, comparação simples). Fecha com quiz de 7 questões
+pedagógicas (não precisa de fonte externa, mesmo critério do quiz de
+gramática) enviado ao Google Sheets via `config-sheets.js` — mas o quiz
+nunca envia o conteúdo de nenhuma senha digitada nos laboratórios, só a
+pontuação. Validado com Playwright headless (Chromium já vem instalado no
+ambiente remoto, ver `/opt/pw-browsers`; o pacote `playwright` do node
+global funciona apontando `executablePath` pra lá — não precisa
+`npx playwright install`) antes do commit: hash de tamanho correto,
+diff de avalanche ~92%, senha longa formatando "10^N anos" sem crash,
+detecção correta de "123456" vs. senha aleatória forte, quiz 7/7.
+
+**Descoberta importante — NÃO rodar `next build` neste repo achando que é
+seguro** (quase fiz isso pra adicionar um card em `informatica/index.html`):
+`website/pages/*.jsx` (fonte Next.js) está **stale e divergente** do HTML
+estático já publicado em vários pontos — `portugues/index.html` publicado
+é uma página totalmente bespoke (CSS/HTML próprio) que não tem NADA a ver
+com `website/pages/portugues/index.jsx` (que ainda usa o componente
+genérico `Layout`/`ContentCard`); rodar `next build` e copiar o `out/`
+por cima teria **destruído** a página de português de verdade. Além disso
+o logo (`pm-logo` dourado "MC" vs. um ícone novo tipo livro no jsx), o
+link de nav "Literatura" (existe no HTML publicado, não existe no
+`Layout.jsx`) e outros detalhes também divergem — o jsx não reflete mais
+o que está no ar em `index.html`/`informatica/index.html`/`jogos/index.html`
+há tempo. `next build` gera um `buildId` novo aleatório a cada build (não
+há `generateBuildId` fixo no `next.config.js`) e os hashes de TODOS os
+chunks de página mudam mesmo em páginas não tocadas (webpack não é
+determinístico aqui) — ou seja, não dá pra fazer build parcial: seria
+tudo ou nada, e "tudo" já provou ser destrutivo. **Conclusão: pra
+adicionar/editar qualquer coisa em `index.html`, `informatica/index.html`,
+`jogos/index.html` ou `portugues/index.html`, edite o HTML estático já
+publicado diretamente** (o mesmo padrão que o `enem.html` já exige) — não
+tente reconciliar via rebuild do Next a menos que o professor peça
+explicitamente pra sincronizar o site inteiro com o código-fonte React (o
+que exigiria antes auditar todas as divergências, não só a de português).
+
+**Essas 4 páginas (`index.html`, `informatica/index.html`, `jogos/index.html`,
+`portugues/index.html`, e também `404.html`) rodam React com hidratação no
+cliente** (o `_next/static/chunks/pages/<page>-<hash>.js` correspondente),
+não são HTML estático "morto" como `enem.html`/apostilas — isso importa
+demais: **editar só o HTML estático publicado NÃO basta** quando a edição
+muda a ESTRUTURA (adiciona/remove elemento, muda tipo de tag) em vez de só
+texto. Comprovado ao vivo com Playwright: adicionei um 8º card em
+`informatica/index.html` (pra "Laboratório — Senhas e Hash") editando só o
+HTML — o React hidratava, via que o array de dados embutido no chunk JS só
+tinha 7 itens, e **removia o 8º card da tela ~1 segundo depois do load**
+(reconciliação por índice do array). A correção certa foi editar TAMBÉM o
+array de dados minificado dentro do próprio chunk
+`_next/static/chunks/pages/informatica-d92fb8933c67ed4e.js` (mesmo arquivo,
+mesmo hash no nome — só o conteúdo interno, sem rebuild) pra incluir o 8º
+item — aí o React já nasce sabendo dos 8 e não remove nada. De quebra,
+descobri que esse mesmo chunk já estava com o card de "Apostila —
+Segurança da Informação" **dessincronizado havia tempo**: o HTML estático
+mostrava o card real (com link), mas o chunk JS ainda tinha um placeholder
+antigo "Segurança e Malware" / "Em produção" — ou seja, o site já rodava
+com ~14 erros de hidratação no console mesmo antes da minha mudança
+(bug pré-existente, não introduzido por mim). Aproveitei a mesma edição
+pra corrigir esse item também, já que ia mexer no arquivo de qualquer
+forma. **Padrão pra qualquer edição futura de card/dado nessas 4 páginas
+Next**: sempre editar os DOIS lugares em uníssono — o HTML estático
+(`<a class="spotlight"...>`, copiando a estrutura de um card existente) E
+o array de itens dentro do chunk JS da página correspondente (localizar
+com `grep -o` pelo título de um card vizinho) — e testar com Playwright
+headless (título dos cards antes/depois de ~1s de espera, pra pegar
+qualquer remoção pós-hidratação) antes de considerar pronto. Também
+reparei que o campo `badge` no array (ex.: `badge:"apostila"`) faz o
+componente renderizar uma pílula de texto visível — um commit anterior
+("Remove os badges de categoria...") tirou isso do HTML estático das
+outras 7 entradas, mas se eu tivesse deixado o campo `badge` nos itens
+novos, ele teria reaparecido nesses 2 cards (só neles, por serem os únicos
+recém-montados via client-render puro) — removido o campo `badge` dos
+itens novos pra manter visual consistente com o resto da grade.
+
+Adicionados 2 links pro laboratório dentro de `informatica/seguranca/apostila.html`
+(um botão CTA ao lado de "Ir para as Questões", e um link de texto na
+caixa "Prática de Laboratório" no fim) — esses são edições simples de HTML
+estático puro, sem risco de hidratação (apostila.html não é uma página Next).
+
 ## Guia de Gramática (16/ago/2026)
 `portugues/gramatica.html` — 20 tópicos em 5 níveis (Fundamentos, Morfologia,
 Sintaxe, Norma-padrão em ação, Semântica & estilo), cada um com explicação em
