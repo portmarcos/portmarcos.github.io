@@ -117,6 +117,42 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', adicionarAtalhoProva2Ano);
   window.addEventListener('load', adicionarAtalhoProva2Ano);
 
+  /* ============================================================
+   COLE este bloco em assets/portal-enhance.js, logo ABAIXO do
+   trecho que termina em:
+
+     window.addEventListener('load', adicionarAtalhoProva2Ano);
+
+   Ele cria o terceiro botão flutuante, empilhado ACIMA dos outros
+   dois (bottom:138px), apontando pra Prova 3º Reg. 3 (versão
+   simplificada). Mesmo padrão dos outros dois atalhos — não mexe
+   em nada que já existe.
+   ============================================================ */
+function adicionarAtalhoProvaReg3() {
+  var p = location.pathname;
+  if (p !== '/' && p !== '/index.html') return;
+  if (document.getElementById('pm-atalho-prova-reg3')) return;
+  var a = document.createElement('a');
+  a.id = 'pm-atalho-prova-reg3';
+  a.href = '/atividades/prova-3em-reg3-portugues.html';
+  a.textContent = '📝 Prova 3º Reg. 3 (fácil)';
+  a.style.cssText = [
+    'position:fixed', 'right:18px', 'bottom:138px', 'z-index:9999',
+    'display:inline-flex', 'align-items:center', 'gap:8px',
+    'padding:11px 18px', 'border-radius:999px',
+    'background:#34D399', 'color:#020617',
+    'font-family:Inter,system-ui,sans-serif', 'font-weight:700', 'font-size:13px',
+    'text-decoration:none', 'box-shadow:0 8px 24px rgba(52,211,153,0.35)',
+    'transition:transform .2s'
+  ].join(';');
+  a.addEventListener('mouseenter', function () { a.style.transform = 'translateY(-2px)'; });
+  a.addEventListener('mouseleave', function () { a.style.transform = 'none'; });
+  document.body.appendChild(a);
+}
+adicionarAtalhoProvaReg3();
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', adicionarAtalhoProvaReg3);
+window.addEventListener('load', adicionarAtalhoProvaReg3);
+
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
   else run();
   // reexecuta após hidratação do Next.js
