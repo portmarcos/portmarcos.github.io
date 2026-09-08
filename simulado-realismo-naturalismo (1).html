@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Portal Marcos Cruz">
+<meta name="application-name" content="Portal Marcos Cruz">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0A0A0F">
+<title>Simulado — Realismo e Naturalismo no Brasil | Portal Marcos Cruz</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230A0A0F'/%3E%3Cpath d='M8 8h9a3 3 0 0 1 3 3v13H11a3 3 0 0 1-3-3V8Z' fill='none' stroke='%23E3A83B' stroke-width='1.6'/%3E%3Cpath d='M20 8h-1a3 3 0 0 0-3 3' fill='none' stroke='%23E3A83B' stroke-width='1.6'/%3E%3Cline x1='11' y1='12' x2='16' y2='12' stroke='%23E3A83B' stroke-width='1.3'/%3E%3Cline x1='11' y1='16' x2='16' y2='16' stroke='%23E3A83B' stroke-width='1.3'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0A0F;
+    --bg-elev:#131319;
+    --surface:#1A1A23;
+    --surface-2:#20202B;
+    --border:rgba(255,255,255,.09);
+    --text:#F1EEE7;
+    --text-muted:#9C97A8;
+    --amber:#E3A83B;
+    --amber-soft:rgba(227,168,59,.14);
+    --green:#4FAE7C;
+    --green-soft:rgba(79,174,124,.14);
+    --red:#E1636F;
+    --red-soft:rgba(225,99,111,.14);
+    --serif:'Lora', Georgia, serif;
+    --sans:'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1000px 500px at 15% -10%, rgba(227,168,59,.07), transparent 60%),
+      radial-gradient(800px 500px at 100% 0%, rgba(227,168,59,.04), transparent 55%),
+      var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.55;
+    min-height:100vh;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--amber-soft); color:var(--text);}
+
+  /* header */
+  header.top{
+    display:flex; align-items:center; justify-content:space-between;
+    max-width:760px; margin:0 auto; padding:22px 24px 0;
+  }
+  .brand{display:flex; align-items:center; gap:10px; text-decoration:none; font-weight:600; font-size:.95rem; color:var(--text);}
+  .brand .mark{
+    width:30px; height:30px; border-radius:8px; display:grid; place-items:center;
+    background:var(--surface); border:1px solid var(--border); color:var(--amber); font-family:var(--serif); font-weight:600; font-size:.85rem;
+  }
+  .back{
+    font-size:.85rem; color:var(--text-muted); text-decoration:none; border:1px solid var(--border);
+    padding:7px 14px; border-radius:999px; transition:border-color .15s, color .15s;
+  }
+  .back:hover{border-color:var(--amber); color:var(--amber);}
+
+  main{max-width:760px; margin:0 auto; padding:28px 24px 80px;}
+
+  /* intro */
+  .eyebrow-line{display:flex; align-items:center; gap:10px; color:var(--amber); font-size:.82rem; margin-bottom:14px;}
+  .eyebrow-line .rule{height:1px; width:28px; background:var(--amber); opacity:.55;}
+  h1{
+    font-family:var(--serif); font-weight:600; font-size:2.1rem; line-height:1.18; margin:0 0 14px;
+    max-width:16ch;
+  }
+  .lede{color:var(--text-muted); font-size:1.02rem; max-width:60ch; margin:0 0 22px;}
+  .meta-row{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:28px;}
+  .pill{
+    font-size:.78rem; color:var(--text-muted); background:var(--surface); border:1px solid var(--border);
+    padding:6px 12px; border-radius:999px;
+  }
+  .pill b{color:var(--text); font-weight:600;}
+
+  .intro-card{
+    background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:24px 26px; margin-bottom:26px;
+  }
+  .intro-card p{margin:0 0 12px; color:var(--text-muted); font-size:.95rem;}
+  .intro-card p:last-child{margin-bottom:0;}
+  .intro-card strong{color:var(--text);}
+  .sources-line{font-size:.82rem; color:var(--text-muted); border-top:1px solid var(--border); margin-top:16px; padding-top:14px;}
+
+  .id-fields{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:20px;}
+  .id-field{flex:1; min-width:200px;}
+  .id-field label{display:block; font-size:.78rem; color:var(--text-muted); margin-bottom:6px;}
+  .id-field input{
+    width:100%; background:var(--surface); border:1px solid var(--border); border-radius:10px;
+    padding:11px 14px; color:var(--text); font-family:var(--sans); font-size:.92rem;
+  }
+  .id-field input::placeholder{color:var(--text-muted); opacity:.7;}
+  .id-field input:focus-visible{outline:2px solid var(--amber); outline-offset:1px; border-color:var(--amber);}
+  .id-note{font-size:.78rem; color:var(--text-muted); margin:-10px 0 22px;}
+
+  button.cta{
+    appearance:none; border:none; cursor:pointer; font-family:var(--sans); font-weight:600; font-size:.98rem;
+    background:var(--amber); color:#1A1305; padding:14px 26px; border-radius:12px; transition:transform .12s, box-shadow .12s;
+    box-shadow:0 8px 24px -8px rgba(227,168,59,.5);
+  }
+  button.cta:hover{transform:translateY(-1px);}
+  button.cta:active{transform:translateY(0);}
+  button.cta:focus-visible, a:focus-visible, .opt:focus-visible{outline:2px solid var(--amber); outline-offset:2px;}
+
+  /* progress */
+  .progress-wrap{display:flex; align-items:center; gap:14px; margin-bottom:22px;}
+  .progress-track{flex:1; display:flex; gap:4px;}
+  .seg{height:5px; flex:1; border-radius:3px; background:var(--surface-2); transition:background .2s;}
+  .seg.done-correct{background:var(--green);}
+  .seg.done-wrong{background:var(--red);}
+  .seg.current{background:var(--amber);}
+  .progress-label{font-size:.82rem; color:var(--text-muted); white-space:nowrap; font-variant-numeric:tabular-nums;}
+
+  /* question card */
+  .qcard{
+    background:var(--surface); border:1px solid var(--border); border-radius:18px; padding:30px 28px; animation:rise .35s ease both;
+  }
+  @keyframes rise{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+  .stamp{
+    display:inline-block; font-family:var(--sans); font-size:.72rem; letter-spacing:.02em; color:var(--amber);
+    border:1px dashed rgba(227,168,59,.5); padding:4px 11px; border-radius:7px; transform:rotate(-1.2deg);
+    margin-bottom:18px; background:var(--amber-soft);
+  }
+  blockquote.excerpt{
+    font-family:var(--serif); font-style:italic; font-size:1.05rem; line-height:1.6; color:var(--text);
+    border-left:2px solid var(--amber); margin:0 0 20px; padding:2px 0 2px 18px;
+  }
+  blockquote.excerpt cite{display:block; margin-top:10px; font-style:normal; font-size:.8rem; color:var(--text-muted); font-family:var(--sans);}
+  .prompt{font-size:1.08rem; margin:0 0 20px; font-weight:500;}
+
+  .opts{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px;}
+  .opt{
+    display:flex; align-items:flex-start; gap:14px; width:100%; text-align:left;
+    background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:14px 16px;
+    color:var(--text); font-family:var(--sans); font-size:.96rem; cursor:pointer; transition:border-color .12s, background .12s;
+  }
+  .opt:hover:not(:disabled){border-color:rgba(227,168,59,.45);}
+  .opt:disabled{cursor:default;}
+  .opt .letter{
+    flex:none; width:26px; height:26px; border-radius:8px; display:grid; place-items:center;
+    background:var(--bg-elev); border:1px solid var(--border); font-size:.8rem; font-weight:600; color:var(--text-muted);
+  }
+  .opt.is-correct{border-color:var(--green); background:var(--green-soft);}
+  .opt.is-correct .letter{background:var(--green); border-color:var(--green); color:#0A0A0F;}
+  .opt.is-wrong{border-color:var(--red); background:var(--red-soft);}
+  .opt.is-wrong .letter{background:var(--red); border-color:var(--red); color:#0A0A0F;}
+
+  .feedback{
+    margin-top:20px; padding:16px 18px; border-radius:12px; font-size:.92rem; line-height:1.55;
+    border:1px solid var(--border); background:var(--bg-elev); display:none;
+  }
+  .feedback.show{display:block; animation:rise .3s ease both;}
+  .feedback .tag{font-weight:700; font-size:.82rem; letter-spacing:.01em; display:block; margin-bottom:6px;}
+  .feedback.correct .tag{color:var(--green);}
+  .feedback.wrong .tag{color:var(--red);}
+  .feedback p{margin:0; color:var(--text-muted);}
+
+  .qcard-footer{display:flex; justify-content:flex-end; margin-top:24px;}
+  button.next{
+    appearance:none; border:1px solid var(--border); background:var(--surface-2); color:var(--text);
+    padding:11px 20px; border-radius:10px; font-family:var(--sans); font-weight:600; font-size:.9rem; cursor:pointer;
+    opacity:0; pointer-events:none; transition:opacity .2s, border-color .15s;
+  }
+  button.next.show{opacity:1; pointer-events:auto;}
+  button.next:hover{border-color:var(--amber); color:var(--amber);}
+
+  .hint{font-size:.78rem; color:var(--text-muted); margin-top:16px; text-align:center;}
+  .hint kbd{
+    font-family:var(--sans); font-size:.72rem; background:var(--surface-2); border:1px solid var(--border);
+    border-radius:5px; padding:1px 6px; color:var(--text);
+  }
+
+  /* results */
+  .result-hero{text-align:center; padding:8px 0 6px;}
+  .result-score{font-family:var(--serif); font-size:3.6rem; font-weight:600; color:var(--amber); line-height:1;}
+  .result-score span{font-size:1.6rem; color:var(--text-muted); font-family:var(--sans);}
+  .result-msg{font-size:1rem; color:var(--text-muted); margin:12px auto 0; max-width:44ch;}
+  .best-line{font-size:.8rem; color:var(--text-muted); margin-top:10px;}
+
+  .review-list{list-style:none; margin:30px 0 0; padding:0; display:flex; flex-direction:column; gap:10px;}
+  .review-item{
+    display:flex; align-items:center; gap:14px; background:var(--surface); border:1px solid var(--border);
+    border-radius:12px; padding:13px 16px;
+  }
+  .review-item .num{
+    flex:none; width:28px; height:28px; border-radius:8px; display:grid; place-items:center; font-size:.8rem; font-weight:700;
+  }
+  .review-item.ok .num{background:var(--green-soft); color:var(--green); border:1px solid var(--green);}
+  .review-item.bad .num{background:var(--red-soft); color:var(--red); border:1px solid var(--red);}
+  .review-item .rtext{flex:1; font-size:.86rem; color:var(--text-muted);}
+  .review-item .rtext b{color:var(--text); font-weight:500;}
+  .review-item .rsource{flex:none; font-size:.72rem; color:var(--text-muted); white-space:nowrap;}
+
+  .result-actions{display:flex; gap:12px; justify-content:center; margin-top:30px; flex-wrap:wrap;}
+  button.secondary{
+    appearance:none; border:1px solid var(--border); background:transparent; color:var(--text);
+    padding:13px 22px; border-radius:12px; font-family:var(--sans); font-weight:600; font-size:.92rem; cursor:pointer;
+  }
+  button.secondary:hover{border-color:var(--amber); color:var(--amber);}
+
+  footer.pagefoot{max-width:760px; margin:40px auto 0; padding:0 24px; text-align:center; color:var(--text-muted); font-size:.78rem;}
+
+  [hidden]{display:none !important;}
+
+  @media (max-width:520px){
+    h1{font-size:1.6rem;}
+    .qcard{padding:24px 18px;}
+    .result-score{font-size:2.8rem;}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="index.html"><span class="mark">MC</span> Portal Marcos Cruz</a>
+  <a class="back" href="literatura.html">← Literatura</a>
+</header>
+
+<main>
+
+  <!-- INTRO -->
+  <section id="screen-intro">
+    <div class="eyebrow-line"><span class="rule"></span> Banco de Literatura · Português</div>
+    <h1>Realismo e Naturalismo no Brasil</h1>
+    <p class="lede">Simulado com 15 questões reais de vestibulares e do Enem, nível intermediário — para revisar Machado de Assis, Aluísio Azevedo e Adolfo Caminha antes da prova.</p>
+
+    <div class="meta-row">
+      <span class="pill"><b>15</b> questões</span>
+      <span class="pill"><b>~15</b> min</span>
+      <span class="pill">Nível <b>intermediário</b></span>
+      <span class="pill">Correção <b>imediata</b></span>
+    </div>
+
+    <div class="intro-card">
+      <p><strong>Como funciona:</strong> a cada questão, escolha uma alternativa e veja na hora se acertou, com uma explicação curta. No fim, você recebe sua pontuação e pode revisar item a item.</p>
+      <p>As questões misturam teoria (características do Realismo e do Naturalismo) e interpretação de trechos originais de <em>O Cortiço</em>, <em>O Mulato</em>, <em>Bom-Crioulo</em>, <em>Memórias Póstumas de Brás Cubas</em> e <em>Quincas Borba</em>.</p>
+      <div class="sources-line">Fontes: Enem, Fuvest, Mackenzie, PUC-PR, CEFET-PR, UFPA, UFPR, FCC-BA, FEI-SP, FMTM, USF-SP, Unifesp, FAAP e EU-BA.</div>
+    </div>
+
+    <div class="id-fields">
+      <div class="id-field">
+        <label for="student-name">Nome</label>
+        <input type="text" id="student-name" placeholder="Como o professor deve te reconhecer" autocomplete="name">
+      </div>
+      <div class="id-field">
+        <label for="student-turma">Turma</label>
+        <input type="text" id="student-turma" placeholder="Ex.: 3º A" autocomplete="off">
+      </div>
+    </div>
+    <p class="id-note">Usados só para registrar seu resultado para o professor — pode deixar em branco.</p>
+
+    <button class="cta" id="btn-start">Começar simulado</button>
+    <p class="hint">Também dá para responder pelo teclado: teclas <kbd>1</kbd>–<kbd>5</kbd> ou <kbd>A</kbd>–<kbd>E</kbd>, e <kbd>Enter</kbd> para avançar.</p>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="screen-quiz" hidden>
+    <div class="progress-wrap">
+      <div class="progress-track" id="progress-track"></div>
+      <div class="progress-label" id="progress-label">1 / 15</div>
+    </div>
+
+    <div class="qcard" id="qcard">
+      <span class="stamp" id="q-source"></span>
+      <blockquote class="excerpt" id="q-excerpt" hidden></blockquote>
+      <p class="prompt" id="q-prompt"></p>
+      <ul class="opts" id="q-opts"></ul>
+
+      <div class="feedback" id="q-feedback">
+        <span class="tag" id="q-feedback-tag"></span>
+        <p id="q-feedback-text"></p>
+      </div>
+
+      <div class="qcard-footer">
+        <button class="next" id="btn-next">Próxima questão →</button>
+      </div>
+    </div>
+    <p class="hint">Atalhos: <kbd>1</kbd>–<kbd>5</kbd> / <kbd>A</kbd>–<kbd>E</kbd> para responder · <kbd>Enter</kbd> para avançar</p>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="screen-result" hidden>
+    <div class="result-hero">
+      <div class="eyebrow-line" style="justify-content:center;"><span class="rule"></span> Resultado <span class="rule"></span></div>
+      <div class="result-score"><span id="r-score">0</span><span>/15</span></div>
+      <p class="result-msg" id="r-msg"></p>
+      <p class="best-line" id="r-best" hidden></p>
+    </div>
+
+    <ul class="review-list" id="r-review"></ul>
+
+    <div class="result-actions">
+      <button class="cta" id="btn-retry">Refazer simulado</button>
+      <a class="back" style="padding:13px 22px;" href="literatura.html">Voltar ao Banco de Literatura</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="pagefoot">Portal Marcos Cruz · Banco de Literatura — Realismo e Naturalismo</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  const QUESTIONS = [
+    {
+      source: "PUC-PR — 2007",
+      prompt: "Assinale a alternativa que contém a afirmação correta sobre o Naturalismo no Brasil.",
+      options: [
+        "O Naturalismo, por seus princípios científicos, considerava as narrativas literárias exemplos de demonstração de teses e ideias sobre a sociedade e o homem.",
+        "O Naturalismo usou elementos da natureza selvagem do Brasil do século XIX para defender teses sobre os defeitos da cultura primitiva.",
+        "A valorização da natureza rude verificada nos poetas árcades se prolonga na visão naturalista do século XIX, que toma a natureza decadente dos cortiços para provar os malefícios da mestiçagem.",
+        "O Naturalismo no Brasil esteve sempre ligado à beleza das paisagens das cidades e do interior do Brasil.",
+        "O Naturalismo do século XIX no Brasil difundiu na literatura uma linguagem científica e hermética, fazendo com que os textos literários fossem lidos apenas por intelectuais."
+      ],
+      correct: 0,
+      explanation: "O romance naturalista funciona quase como um relatório científico: o narrador observa personagens e ambiente para \u201Ccomprovar\u201D teses sobre hereditariedade, meio e instinto. A literatura vira instrumento de demonstração, não de embelezamento da realidade."
+    },
+    {
+      source: "CEFET-PR",
+      prompt: "Assinale a alternativa que melhor caracteriza o Realismo:",
+      options: [
+        "Preocupação em justificar, à luz da razão, as reações das personagens, seus procedimentos e os problemas sentimentais e metafísicos apresentados.",
+        "A apresentação do homem como um ser dominado pelos instintos, taras, pela carga hereditária, em detrimento da razão.",
+        "A preocupação em retratar a realidade como ela é, sem transformá-la. O autor, ao relatar, deverá estar baseado na documentação e observação da realidade.",
+        "O amor é visto unicamente sob o aspecto da sexualidade e apresentado como uma mera satisfação de instintos animais.",
+        "Aspectos descritivos e minuciosos, sempre que possível, baseados na observação da realidade e do subjetivismo e sentimentalismo do autor."
+      ],
+      correct: 2,
+      explanation: "As alternativas B e D descrevem o Naturalismo, mais radical e biológico. A E mistura observação com \u201Csubjetivismo e sentimentalismo\u201D, que é justamente o que o Realismo recusa. A resposta certa fala em documentação e observação, sem idealizar nem denunciar pela via biológica."
+    },
+    {
+      source: "Fuvest",
+      excerpt: "E naquela terra encharcada e fumegante, naquela umidade quente e lodosa, começou a minhocar, e esfervilhar, a crescer, um mundo, uma coisa viva, uma geração, que parecia brotar espontânea, ali mesmo, daquele lameiro, a multiplicar-se como larvas no esterco.",
+      excerptSource: "Aluísio Azevedo, O Cortiço",
+      prompt: "O fragmento de O Cortiço apresenta uma característica fundamental do Naturalismo. Qual?",
+      options: [
+        "Uma compreensão psicológica do Homem.",
+        "Uma compreensão biológica do Mundo.",
+        "Uma concepção idealista do Universo.",
+        "Uma concepção religiosa da Vida.",
+        "Uma visão sentimental da Natureza."
+      ],
+      correct: 1,
+      explanation: "Palavras como \u201Cminhocar\u201D, \u201Cesfervilhar\u201D e \u201Clarvas no esterco\u201D tratam a comunidade humana do cortiço como um organismo que prolifera: ele \u201Cnasce\u201D e \u201Ccresce\u201D como matéria viva, reduzindo o social ao biológico."
+    },
+    {
+      source: "USF-SP",
+      prompt: "Pode-se entender o Naturalismo como uma particularização do Realismo que:",
+      options: [
+        "se volta para a Natureza a fim de analisar-lhe os processos cíclicos de renovação.",
+        "pretende expressar com naturalidade a vida simples dos homens rústicos nas comunidades primitivas.",
+        "defende a arte pela arte, isto é, desvinculada de compromissos com a realidade social.",
+        "analisa as perversões sexuais, condenando-as em nome da moral religiosa.",
+        "estabelece um nexo de causa e efeito entre alguns fatores sociológicos e biológicos e a conduta das personagens."
+      ],
+      correct: 4,
+      explanation: "É a definição clássica de determinismo naturalista: raça, meio e momento \u201Cexplicam\u201D o comportamento da personagem, como uma relação de causa e efeito quase científica."
+    },
+    {
+      source: "Enem — 2011",
+      excerpt: "Abatidos pelo fadinho harmonioso e nostálgico dos desterrados, iam todos, até mesmo os brasileiros, se concentrando e caindo em tristeza; mas, de repente, o cavaquinho de Porfiro, acompanhado pelo violão do Firmo, romperam vibrantemente com um chorado baiano. […] Já não eram dois instrumentos que soavam, eram lúbricos gemidos e suspiros soltos em torrente, a correrem serpenteando, como cobras numa floresta incendiada; eram ais convulsos, chorados em frenesi de amor.",
+      excerptSource: "Aluísio Azevedo, O Cortiço",
+      prompt: "As personagens de O Cortiço são observadas como elementos coletivos, condicionados por origem social, sexo e etnia. Na passagem transcrita, o confronto entre brasileiros e portugueses revela prevalência do elemento brasileiro, pois",
+      options: [
+        "destaca o nome de personagens brasileiras e omite o de personagens portuguesas.",
+        "exalta a força do cenário natural brasileiro e considera o do português inexpressivo.",
+        "mostra o poder envolvente da música brasileira, que cala o fado português.",
+        "destaca o sentimentalismo brasileiro, contrário à tristeza dos portugueses.",
+        "atribui aos brasileiros uma habilidade maior com instrumentos musicais."
+      ],
+      correct: 2,
+      explanation: "O fado português deixa todos tristes, mas é interrompido pelo chorado brasileiro, que contagia e domina a cena: a música popular brasileira vence, no plano simbólico, o fado dos portugueses."
+    },
+    {
+      source: "FMTM — 2003",
+      prompt: "Assinale a alternativa em que se encontram características da prosa do Realismo.",
+      options: [
+        "Objetivismo; subordinação dos sentimentos a interesses sociais; críticas às instituições decadentes da sociedade burguesa.",
+        "Idealização do herói; amor visto como redenção; oposição aos valores sociais.",
+        "Casamento visto como arranjo de conveniência; descrição objetiva; idealização da mulher.",
+        "Linguagem metafórica; protagonista tratado como anti-herói; sentimentalismo.",
+        "Espírito de aventura; narrativa lenta; impasse amoroso solucionado pelo final feliz."
+      ],
+      correct: 0,
+      explanation: "As demais alternativas reintroduzem traços românticos — herói idealizado, final feliz, idealização da mulher. O Realismo é justamente a reação a isso, com objetividade e crítica social."
+    },
+    {
+      source: "UFPA",
+      prompt: "Os personagens realistas-naturalistas têm seus destinos marcados pelo determinismo. Identifica-se esse determinismo:",
+      options: [
+        "pela preocupação dos autores em criar personagens perfeitos, sem defeitos físicos ou morais.",
+        "pelas forças atávicas e/ou sociais que condicionam a conduta dessas criaturas.",
+        "por ser fruto, especificamente, da imaginação e da fantasia dos autores.",
+        "por se notar a preocupação dos autores de voltarem para o passado ou para o futuro ao criarem seus personagens.",
+        "por representarem a tentativa dos autores nacionais de reabilitar uma faculdade perdida do homem: o senso do mistério."
+      ],
+      correct: 1,
+      explanation: "\u201CAtávico\u201D remete à herança genética e racial; somado às \u201Cforças sociais\u201D, é exatamente a fórmula do determinismo: raça, meio e momento condicionando o indivíduo."
+    },
+    {
+      source: "Enem",
+      excerpt: "Ana Rosa cresceu; aprendera de cor a gramática do Sotero dos Reis; lera alguma coisa; sabia rudimentos de francês e tocava modinhas sentimentais ao violão e ao piano. […] Uma só palavra boiava à superfície dos seus pensamentos: \u201CMulato\u201D. […] Esta só palavra explicava-lhe agora todos os mesquinhos escrúpulos que a sociedade do Maranhão usara para com ele.",
+      excerptSource: "Aluísio Azevedo, O Mulato",
+      prompt: "O texto de Aluísio Azevedo é representativo do Naturalismo, vigente no final do século XIX. Nesse fragmento, o narrador expressa fidelidade ao discurso naturalista, pois",
+      options: [
+        "relaciona a posição social a padrões de comportamento e à condição de raça.",
+        "apresenta os homens e as mulheres melhores do que eram no século XIX.",
+        "mostra a pouca cultura feminina e a distribuição de saberes entre homens e mulheres.",
+        "ilustra os diferentes modos que um indivíduo tinha de ascender socialmente.",
+        "critica a educação oferecida às mulheres e os maus-tratos dispensados aos negros."
+      ],
+      correct: 0,
+      explanation: "A palavra \u201Cmulato\u201D repetida funciona como estigma: o romance mostra como a origem racial determina o tratamento social do personagem — determinismo racial em ação."
+    },
+    {
+      source: "FEI-SP",
+      excerpt: "I. Segunda Revolução Industrial, o cientificismo, o progresso tecnológico, o socialismo utópico, a filosofia positivista de Auguste Comte, o evolucionismo formam o contexto sociopolítico-econômico-filosófico-científico em que se desenvolveu a estética realista.\nII. O escritor realista acerca-se dos objetos e das pessoas de um modo pessoal, apoiando-se na intuição e nos sentimentos.\nIII. Os maiores representantes da estética realista/naturalista no Brasil foram: Machado de Assis, Aluísio Azevedo e Raul Pompéia.\nIV. Poderíamos citar como característica da estética realista: o individualismo, a linguagem erudita e a visão fantasiosa da sociedade.",
+      prompt: "Verificamos que, em relação ao Realismo/Naturalismo, está(ão) correta(s):",
+      options: [
+        "apenas I e II.",
+        "apenas I e III.",
+        "apenas II e IV.",
+        "apenas II e III.",
+        "apenas III e IV."
+      ],
+      correct: 1,
+      explanation: "II e IV descrevem o oposto do Realismo: \u201Cintuição e sentimentos\u201D e \u201Cindividualismo\u201D são traços românticos. I (contexto histórico) e III (autores) estão corretas."
+    },
+    {
+      source: "Unifesp — 2003",
+      excerpt: "Fechou-se um entra-e-sai de marimbondos defronte daquelas cem casinhas ameaçadas pelo fogo. […] A Bruxa surgiu à janela da sua casa, como à boca de uma fornalha acesa. Estava horrível; nunca fora tão bruxa. […] E ela ria-se, ébria de satisfação, sem sentir as queimaduras e as feridas, vitoriosa no meio daquela orgia de fogo […] quando se ouviu estalar o madeiramento da casa incendiada, que abateu rapidamente, sepultando a louca num montão de brasas.",
+      excerptSource: "Aluísio Azevedo, O Cortiço",
+      prompt: "O caráter naturalista dessa obra de Aluísio Azevedo oferece, de maneira figurada, um retrato do país no final do século XIX. Aponte a alternativa em que as duas características do Naturalismo apresentadas no fragmento são corretas.",
+      options: [
+        "Exploração do comportamento anormal e dos instintos baixos; enfoque da vida e dos fatos sociais contemporâneos ao escritor.",
+        "Visão subjetivista dada pelo foco narrativo; tensão conflitiva entre o ser humano e o meio ambiente.",
+        "Preferência pelos temas do passado, propiciando uma visão objetiva dos fatos; crítica aos valores burgueses e predileção pelos mais pobres.",
+        "A onisciência do narrador imprime-lhe o papel de criador e se confunde com a ideia de Deus; utilização de preciosismos vocabulares, para enfatizar o distanciamento entre a enunciação e os fatos enunciados.",
+        "Exploração de um tema em que o ser humano é aviltado pelo mais forte; predominância de elementos anticientíficos, para ajustar a narração ao ambiente degradante dos personagens."
+      ],
+      correct: 0,
+      explanation: "A \u201CBruxa\u201D morrendo em êxtase no incêndio é comportamento anormal e patológico, e a cena retrata um fato social do cotidiano do cortiço — os dois pilares do Naturalismo citados na alternativa correta."
+    },
+    {
+      source: "Mackenzie",
+      prompt: "Assinale a alternativa incorreta sobre a prosa naturalista:",
+      options: [
+        "As personagens expressam a dependência do homem às leis naturais.",
+        "O estilo caracteriza-se por um descritivismo intenso, capaz de refletir a visualização pictórica dos ambientes.",
+        "Os tipos são muito bem delimitados, física e moralmente, compondo verdadeiras representações caricaturais.",
+        "Tem como objetivo maior aprofundar a dimensão psicológica das personagens.",
+        "Comportamento das personagens e sua movimentação no espaço determinam-lhe a condição narrativa."
+      ],
+      correct: 3,
+      explanation: "O aprofundamento psicológico é marca do Realismo machadiano, não do Naturalismo — este prioriza comportamento observável, tipos e ambiente em vez de introspecção."
+    },
+    {
+      source: "UFPR",
+      excerpt: "Marcas de lona suspensas em varais de ferro, umas sobre as outras, encardidas com panos de cozinha, oscilavam à luz moribunda e macilenta das lanternas. Imagine-se o porão do navio mercante carregado de miséria. […] Negros, de boca aberta, roncavam profundamente, contorcendo-se na inconsciência do sono.",
+      excerptSource: "Adolfo Caminha, Bom-Crioulo",
+      prompt: "Com relação a esse fragmento, é correto afirmar que apresenta a(s) seguinte(s) característica(s) naturalista(s): I. Tentativa de impessoalidade em relação à voz narrativa. II. Despreocupação com pormenores descritivos, o que torna o ritmo narrativo extremamente rápido. III. Subjetividade na descrição do espaço. IV. Valorização de ambientes exóticos, objetivando a recuperação estética das figuras marginalizadas socialmente. V. Preferência por espaços miseráveis e socialmente inferiores. Está correta a sequência:",
+      options: [
+        "I, II e V.",
+        "I, IV e V.",
+        "II, III e IV.",
+        "I, II, III, IV e V.",
+        "II, III e V."
+      ],
+      correct: 1,
+      explanation: "O narrador descreve com muito detalhe — o que já elimina a II — de forma relativamente impessoal (I), com certo exotismo do ambiente marginal (IV) e clara preferência por espaços miseráveis (V). Por isso, I, IV e V."
+    },
+    {
+      source: "FCC-BA",
+      prompt: "Memórias Póstumas de Brás Cubas é considerado romance divisor de águas da obra machadiana porque, a partir dele, o autor",
+      options: [
+        "assume de vez a visão romântica da realidade, apenas esboçada nos romances da chamada primeira fase.",
+        "se insere na estética naturalista, ao denunciar as mazelas sociais, os casos patológicos e os aspectos mais repugnantes da sociedade.",
+        "procede a uma retificação da própria obra, através da voz de personagens por meio das quais renega os valores da primeira fase.",
+        "antecede as conquistas modernistas, com uma postura crítica diante da civilização industrial e uma atitude de denúncia das misérias do mundo rural.",
+        "desmitifica as idealizações românticas e assume uma visão crítica que, despindo as aparências que encobrem a realidade, busca as razões últimas das ações humanas."
+      ],
+      correct: 4,
+      explanation: "Com Brás Cubas, Machado abandona o Romantismo de sua primeira fase (Ressurreição, A Mão e a Luva) e passa a usar ironia e digressão para expor, sem idealização, os verdadeiros motivos por trás das ações humanas."
+    },
+    {
+      source: "FAAP",
+      excerpt: "Queria dizer aqui o fim do Quincas Borba, que adoeceu também, ganiu infinitamente, fugiu desvairado em busca do dono, e amanheceu morto na rua, três dias depois. […] Eia! chora os dous recentes mortos, se tens lágrimas. Se só tens riso, ri-te! É a mesma cousa.",
+      excerptSource: "Machado de Assis",
+      prompt: "Machado de Assis, no trecho, filia-se ao estilo de época do:",
+      options: [
+        "arcadismo",
+        "romantismo",
+        "realismo",
+        "simbolismo",
+        "modernismo"
+      ],
+      correct: 2,
+      explanation: "A ironia fria diante da morte — \u201Cchora... se tens lágrimas; se só tens riso, ri-te\u201D — é marca do narrador realista machadiano, descompromissado com a comoção romântica e distante até diante da morte."
+    },
+    {
+      source: "EU-BA",
+      prompt: "A respeito da ficção de Machado de Assis, pode-se afirmar que",
+      options: [
+        "se desenvolveu do Romantismo para o Naturalismo, consagrando-se sobretudo nas crônicas políticas e nos contos satíricos.",
+        "amadureceu sob a influência de José de Alencar, de quem tomou os temas e o estilo, tal como se vê em Quincas Borba.",
+        "é exemplo típico da literatura naturalista, sendo apenas superada pela obra-prima O Cortiço, de seu mestre Aluísio Azevedo.",
+        "representa a conquista da maturidade da literatura nacional a partir de Memórias Póstumas de Brás Cubas.",
+        "atingiu com Ressurreição e A Mão e a Luva o plano mais alto de nossa literatura de expressão realista."
+      ],
+      correct: 3,
+      explanation: "É consenso da crítica que Machado atinge sua fase madura — e a maturidade da prosa brasileira — a partir de Memórias Póstumas de Brás Cubas (1881), não em suas obras de estreia."
+    }
+  ];
+
+  const LETTERS = ["A","B","C","D","E"];
+  const STORAGE_KEY = "portmarcos-simulado-realismo-naturalismo-best";
+  const SIMULADO_NOME = "Realismo e Naturalismo";
+
+  // Cole aqui a URL "/exec" gerada ao implantar o Apps Script como Web App.
+  // Enquanto ficar com este valor de exemplo, nada é enviado (a chamada é simplesmente pulada).
+  const SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxbeCQegyVf3mBGYKsRNgaFtq2qDOs-TTpfNa0sNu0bmpdNijTXK4nFq4dGT2EnnKnsJw/exec";
+
+  function sendResultToSheet(payload){
+    if(!SHEET_WEBHOOK_URL || SHEET_WEBHOOK_URL.indexOf("COLE_AQUI") === 0) return;
+    try{
+      fetch(SHEET_WEBHOOK_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+      // mode:'no-cors' sempre retorna uma resposta opaca — não dá pra confirmar
+      // sucesso a partir daqui. Isso é esperado; confira os dados direto na planilha.
+    }catch(e){ /* sem internet ou bloqueado — o simulado segue normalmente */ }
+  }
+
+  let current = 0;
+  let answered = new Array(QUESTIONS.length).fill(null); // stores chosen index or null
+  let locked = false;
+
+  const screenIntro = document.getElementById('screen-intro');
+  const screenQuiz = document.getElementById('screen-quiz');
+  const screenResult = document.getElementById('screen-result');
+
+  const progressTrack = document.getElementById('progress-track');
+  const progressLabel = document.getElementById('progress-label');
+  const qSource = document.getElementById('q-source');
+  const qExcerpt = document.getElementById('q-excerpt');
+  const qPrompt = document.getElementById('q-prompt');
+  const qOpts = document.getElementById('q-opts');
+  const qFeedback = document.getElementById('q-feedback');
+  const qFeedbackTag = document.getElementById('q-feedback-tag');
+  const qFeedbackText = document.getElementById('q-feedback-text');
+  const btnNext = document.getElementById('btn-next');
+
+  function buildProgress(){
+    progressTrack.innerHTML = "";
+    for(let i=0;i<QUESTIONS.length;i++){
+      const s = document.createElement('div');
+      s.className = 'seg';
+      s.title = 'Questão ' + (i+1);
+      progressTrack.appendChild(s);
+    }
+  }
+
+  function updateProgress(){
+    const segs = progressTrack.children;
+    for(let i=0;i<segs.length;i++){
+      segs[i].className = 'seg';
+      if(i === current && answered[i] === null){
+        segs[i].classList.add('current');
+      } else if(answered[i] !== null){
+        segs[i].classList.add(answered[i] === QUESTIONS[i].correct ? 'done-correct' : 'done-wrong');
+      }
+    }
+    progressLabel.textContent = (current+1) + ' / ' + QUESTIONS.length;
+  }
+
+  function renderQuestion(){
+    locked = false;
+    const q = QUESTIONS[current];
+    qSource.textContent = q.source;
+
+    if(q.excerpt){
+      qExcerpt.hidden = false;
+      qExcerpt.innerHTML = "";
+      const p = document.createElement('div');
+      p.textContent = q.excerpt;
+      p.style.whiteSpace = 'pre-line';
+      qExcerpt.appendChild(p);
+      if(q.excerptSource){
+        const cite = document.createElement('cite');
+        cite.textContent = q.excerptSource;
+        qExcerpt.appendChild(cite);
+      }
+    } else {
+      qExcerpt.hidden = true;
+    }
+
+    qPrompt.textContent = q.prompt;
+    qOpts.innerHTML = "";
+
+    q.options.forEach((optText, idx) => {
+      const li = document.createElement('li');
+      const btn = document.createElement('button');
+      btn.className = 'opt';
+      btn.type = 'button';
+      btn.setAttribute('data-idx', idx);
+      btn.innerHTML = '<span class="letter">' + LETTERS[idx] + '</span><span>' + optText + '</span>';
+      btn.addEventListener('click', () => selectAnswer(idx));
+      li.appendChild(btn);
+      qOpts.appendChild(li);
+    });
+
+    qFeedback.classList.remove('show','correct','wrong');
+    btnNext.classList.remove('show');
+
+    // if already answered (navigated back), show state
+    if(answered[current] !== null){
+      lockOptions();
+      revealFeedback(answered[current], false);
+    }
+
+    updateProgress();
+  }
+
+  function lockOptions(){
+    locked = true;
+    Array.from(qOpts.querySelectorAll('.opt')).forEach(b => b.disabled = true);
+  }
+
+  function revealFeedback(chosenIdx, animate){
+    const q = QUESTIONS[current];
+    const opts = Array.from(qOpts.querySelectorAll('.opt'));
+    opts.forEach((b, idx) => {
+      if(idx === q.correct) b.classList.add('is-correct');
+      if(idx === chosenIdx && chosenIdx !== q.correct) b.classList.add('is-wrong');
+    });
+
+    const isCorrect = chosenIdx === q.correct;
+    qFeedback.classList.add(animate === false ? '' : 'show');
+    qFeedback.classList.add(isCorrect ? 'correct' : 'wrong');
+    qFeedbackTag.textContent = isCorrect ? 'Certa!' : ('Não é essa — a certa é a ' + LETTERS[q.correct] + '.');
+    qFeedbackText.textContent = q.explanation;
+    if(animate !== false) qFeedback.classList.add('show');
+    else qFeedback.style.display = 'block';
+
+    btnNext.textContent = current === QUESTIONS.length - 1 ? 'Ver resultado →' : 'Próxima questão →';
+    btnNext.classList.add('show');
+  }
+
+  function selectAnswer(idx){
+    if(locked) return;
+    answered[current] = idx;
+    lockOptions();
+    revealFeedback(idx, true);
+    updateProgress();
+  }
+
+  function goNext(){
+    if(answered[current] === null) return;
+    if(current < QUESTIONS.length - 1){
+      current++;
+      renderQuestion();
+      screenQuiz.scrollIntoView({behavior:'smooth', block:'start'});
+    } else {
+      showResults();
+    }
+  }
+
+  function showResults(){
+    screenQuiz.hidden = true;
+    screenResult.hidden = false;
+
+    const score = answered.reduce((acc, a, i) => acc + (a === QUESTIONS[i].correct ? 1 : 0), 0);
+    document.getElementById('r-score').textContent = score;
+
+    sendResultToSheet({
+      simulado: SIMULADO_NOME,
+      nome: document.getElementById('student-name').value.trim(),
+      turma: document.getElementById('student-turma').value.trim(),
+      pontuacao: score,
+      total: QUESTIONS.length,
+      percentual: Math.round((score / QUESTIONS.length) * 100) + '%'
+    });
+
+    let msg;
+    const pct = score / QUESTIONS.length;
+    if(pct >= 0.8) msg = "Domínio sólido do Realismo e do Naturalismo — pronto para questões mais difíceis.";
+    else if(pct >= 0.6) msg = "Bom resultado. Vale revisar as questões erradas antes da prova.";
+    else msg = "Ainda vale revisar a teoria do Realismo/Naturalismo e refazer o simulado.";
+    document.getElementById('r-msg').textContent = msg;
+
+    // best score (per-browser, local)
+    try{
+      const prevBest = parseInt(localStorage.getItem(STORAGE_KEY) || '0', 10);
+      const bestEl = document.getElementById('r-best');
+      if(score > prevBest){
+        localStorage.setItem(STORAGE_KEY, String(score));
+        bestEl.textContent = "Novo recorde neste navegador: " + score + "/" + QUESTIONS.length + "!";
+        bestEl.hidden = false;
+      } else if(prevBest > 0){
+        bestEl.textContent = "Seu melhor resultado neste navegador: " + prevBest + "/" + QUESTIONS.length + ".";
+        bestEl.hidden = false;
+      }
+    }catch(e){ /* localStorage indisponível — segue sem recorde */ }
+
+    const reviewList = document.getElementById('r-review');
+    reviewList.innerHTML = "";
+    QUESTIONS.forEach((q, i) => {
+      const ok = answered[i] === q.correct;
+      const li = document.createElement('li');
+      li.className = 'review-item ' + (ok ? 'ok' : 'bad');
+      const num = document.createElement('div');
+      num.className = 'num';
+      num.textContent = ok ? '✓' : '✕';
+      const rtext = document.createElement('div');
+      rtext.className = 'rtext';
+      rtext.innerHTML = '<b>Questão ' + (i+1) + '</b> — ' +
+        (ok ? 'correta (' + LETTERS[q.correct] + ')' : 'sua resposta: ' + LETTERS[answered[i]] + ' · certa: ' + LETTERS[q.correct]);
+      const rsource = document.createElement('div');
+      rsource.className = 'rsource';
+      rsource.textContent = q.source;
+      li.appendChild(num);
+      li.appendChild(rtext);
+      li.appendChild(rsource);
+      reviewList.appendChild(li);
+    });
+  }
+
+  function resetQuiz(){
+    current = 0;
+    answered = new Array(QUESTIONS.length).fill(null);
+    screenResult.hidden = true;
+    screenQuiz.hidden = false;
+    renderQuestion();
+    screenQuiz.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  // events
+  document.getElementById('btn-start').addEventListener('click', () => {
+    screenIntro.hidden = true;
+    screenQuiz.hidden = false;
+    buildProgress();
+    renderQuestion();
+  });
+
+  btnNext.addEventListener('click', goNext);
+  document.getElementById('btn-retry').addEventListener('click', resetQuiz);
+
+  document.addEventListener('keydown', (e) => {
+    if(screenQuiz.hidden) return;
+    const key = e.key.toUpperCase();
+
+    if(key === 'ENTER'){
+      if(answered[current] !== null) goNext();
+      return;
+    }
+
+    if(locked) return;
+
+    let idx = -1;
+    if(['1','2','3','4','5'].includes(key)) idx = parseInt(key,10) - 1;
+    else if(['A','B','C','D','E'].includes(key)) idx = LETTERS.indexOf(key);
+
+    if(idx >= 0 && idx < QUESTIONS[current].options.length){
+      selectAnswer(idx);
+    }
+  });
+
+})();
+</script>
+</body>
+</html>
