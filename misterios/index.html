@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Arquivo de Mistérios — Prof. Marcos Cruz</title>
+<meta name="description" content="Jogos de mistério para aprender literatura: investigue cenas, interrogue personagens e resolva enigmas no estilo ENEM.">
+<meta property="og:title" content="Arquivo de Mistérios — Prof. Marcos Cruz">
+<meta property="og:description" content="Casos que só se resolvem lendo. Jogos de investigação sobre literatura brasileira.">
+<meta property="og:image" content="https://portmarcos.github.io/misterios/caso-originais/img/titulo.webp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:ital,wght@0,400;0,600;1,400&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0f0905; --bg2:#1a110a; --card:#22160d; --line:#4a3220; --line2:#6b4526;
+  --paper:#f1e2c2; --paper2:#e2cba0; --muted:#bfa883; --dim:#8c7556;
+  --amber:#f4a83c; --amber2:#ffcf7a; --rust:#a23d1c; --ok:#6aa253;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--paper);font-family:Lora,Georgia,serif;line-height:1.6;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.07;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+a{color:inherit}
+.wrap{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:0 20px}
+
+/* nav */
+nav{position:relative;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 0}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand .mc{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#0c0a15;border:2px solid #d8b36a;font-family:'Playfair Display';font-weight:700;font-size:.95rem;color:#f5f0e6}
+.brand span{font-family:'Playfair Display';font-weight:700;font-size:.95rem}
+.navlinks{display:flex;gap:18px;font-family:'Special Elite';font-size:.85rem}
+.navlinks a{text-decoration:none;color:var(--muted)}
+.navlinks a:hover{color:var(--amber2)}
+
+/* hero */
+.hero{position:relative;overflow:hidden;min-height:min(78vh,640px);display:flex;align-items:flex-end;border-bottom:1px solid var(--line)}
+.hero .bgimg{position:absolute;inset:0;background:url(caso-originais/img/titulo.webp) center 40%/cover no-repeat;animation:kb 26s ease-out forwards}
+@keyframes kb{from{transform:scale(1.08)}to{transform:scale(1)}}
+.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,9,5,.55) 0%,rgba(15,9,5,.25) 35%,rgba(15,9,5,.85) 75%,var(--bg) 100%),radial-gradient(ellipse at 20% 80%,rgba(244,168,60,.12),transparent 60%)}
+.hero .wrap{width:100%;padding-bottom:56px;z-index:2}
+.hero nav{position:absolute;top:0;left:20px;right:20px}
+.kicker{font-family:'Special Elite';letter-spacing:.18em;text-transform:uppercase;font-size:.8rem;color:var(--amber)}
+h1{font-family:'Playfair Display';font-weight:900;font-size:clamp(2.6rem,7.5vw,5.4rem);line-height:.95;margin:10px 0 14px;color:#ffe4ad;text-shadow:0 6px 40px rgba(0,0,0,.8)}
+h1 em{font-style:italic;color:var(--amber2)}
+.lead{max-width:620px;font-size:clamp(1rem,1.6vw,1.18rem);color:#ecdcbc;text-shadow:0 2px 12px #000}
+.cta{display:inline-flex;align-items:center;gap:10px;margin-top:24px;padding:14px 30px;border-radius:999px;text-decoration:none;font-family:'Playfair Display';font-weight:700;font-size:1.08rem;color:#1b120b;background:linear-gradient(180deg,#ffd58a,#e99a35);box-shadow:0 8px 30px rgba(244,168,60,.35);transition:transform .15s,box-shadow .2s}
+.cta:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(244,168,60,.5)}
+
+/* sections */
+section{position:relative;z-index:1;padding:64px 0}
+h2{font-family:'Playfair Display';font-weight:900;font-size:clamp(1.7rem,3.6vw,2.5rem);line-height:1.1;color:#ffe4ad}
+.sub{color:var(--muted);max-width:640px;margin-top:8px}
+
+/* how */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:28px}
+.step{background:linear-gradient(180deg,#24170e,#1a110a);border:1px solid var(--line);border-radius:14px;padding:20px 18px}
+.step img{height:56px;margin-bottom:10px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.6))}
+.step h3{font-family:'Playfair Display';font-size:1.12rem;color:var(--amber2);margin-bottom:4px}
+.step p{font-size:.93rem;color:#d9c7a4}
+
+/* dossiers */
+.files{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:30px}
+.file{position:relative;display:flex;flex-direction:column;text-decoration:none;color:var(--paper);background:var(--card);border:1px solid var(--line2);border-radius:4px 14px 14px 14px;overflow:hidden;box-shadow:0 14px 40px rgba(0,0,0,.45);transition:transform .2s,box-shadow .2s,border-color .2s}
+.file::before{content:'';position:absolute;left:-1px;top:-14px;width:42%;height:16px;background:var(--card);border:1px solid var(--line2);border-bottom:none;border-radius:8px 8px 0 0}
+.file{margin-top:14px;overflow:visible}
+.file:hover{transform:translateY(-4px) rotate(-.3deg);box-shadow:0 22px 50px rgba(0,0,0,.6);border-color:var(--amber)}
+.file .cover{position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:0 13px 0 0}
+.file .cover img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.file:hover .cover img{transform:scale(1.06)}
+.file .cover::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(34,22,13,.95))}
+.file .num{position:absolute;left:14px;top:12px;z-index:2;font-family:'Special Elite';font-size:.78rem;letter-spacing:.12em;background:rgba(15,9,5,.8);border:1px solid var(--line2);padding:3px 10px;border-radius:6px}
+.file .stamp{position:absolute;right:12px;top:12px;z-index:2;font-family:'Special Elite';font-size:.78rem;letter-spacing:.1em;padding:3px 10px;border:2px solid;border-radius:4px;transform:rotate(6deg);background:rgba(15,9,5,.75)}
+.stamp.novo{color:var(--amber2);border-color:var(--amber2)}
+.stamp.and{color:#8cc4ff;border-color:#8cc4ff}
+.stamp.fim{color:#9fd987;border-color:#9fd987}
+.file .body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
+.file h3{font-family:'Playfair Display';font-weight:900;font-size:1.32rem;line-height:1.15;color:#ffe4ad}
+.file p{font-size:.93rem;color:#d9c7a4}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:6px}
+.tag{font-family:'Special Elite';font-size:.74rem;padding:3px 9px;border-radius:999px;border:1px solid var(--line2);color:var(--muted)}
+.prog{height:6px;border-radius:3px;background:rgba(255,255,255,.08);overflow:hidden}
+.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--amber),var(--amber2))}
+.status{font-family:'Special Elite';font-size:.82rem;color:var(--amber2)}
+.file.locked{pointer-events:none;filter:saturate(.5)}
+.file.locked .cover{display:grid;place-items:center;background:repeating-linear-gradient(135deg,#1b120b 0 14px,#20150d 14px 28px)}
+.file.locked .cover::after{display:none}
+.seal{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 35%,#b5432a,#5e140a);box-shadow:0 6px 16px rgba(0,0,0,.6),inset 0 0 0 4px rgba(0,0,0,.15);font-family:'Playfair Display';font-weight:900;font-size:1.9rem;color:#f2c7a0}
+.file.locked h3{color:var(--dim)}
+.file.locked p{color:var(--dim)}
+
+/* teacher */
+.teach{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;margin-top:26px}
+.panel{background:linear-gradient(180deg,#24170e,#1a110a);border:1px solid var(--line);border-radius:14px;padding:22px}
+.panel h3{font-family:'Playfair Display';color:var(--amber2);font-size:1.15rem;margin-bottom:10px}
+.panel ul{list-style:none}
+.panel li{padding:7px 0 7px 22px;border-bottom:1px dashed rgba(107,69,38,.5);position:relative;font-size:.95rem;color:#e2d1af}
+.panel li:last-child{border-bottom:none}
+.panel li::before{content:'✦';position:absolute;left:0;color:var(--amber);font-size:.8rem;top:9px}
+.panel li b{color:#ffe4ad}
+
+footer{position:relative;z-index:1;border-top:1px solid var(--line);padding:26px 0 40px;color:var(--dim);font-size:.88rem}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+footer a{color:var(--muted)}
+
+@media (max-width:900px){.steps{grid-template-columns:repeat(2,1fr)}.files{grid-template-columns:1fr 1fr}.teach{grid-template-columns:1fr}}
+@media (max-width:600px){.steps,.files{grid-template-columns:1fr}.navlinks{display:none}section{padding:46px 0}.hero{min-height:560px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="bgimg" aria-hidden="true"></div>
+  <nav>
+    <a class="brand" href="/"><span class="mc">MC</span><span>Prof. Marcos Cruz</span></a>
+    <div class="navlinks"><a href="/">Início</a><a href="/portugues/index.html">Português</a><a href="/jogos/index.html">Jogos</a><a href="/literatura.html">Literatura</a></div>
+  </nav>
+  <div class="wrap">
+    <p class="kicker">Departamento de Investigações Literárias</p>
+    <h1>Arquivo de<br><em>Mistérios</em></h1>
+    <p class="lead">Casos que só se resolvem lendo. Investigue cenas, interrogue personagens dos livros e decifre enigmas no estilo do ENEM — antes que a última lamparina se apague.</p>
+    <a class="cta" href="#casos">Abrir os arquivos ▾</a>
+  </div>
+</header>
+
+<section id="como">
+  <div class="wrap">
+    <p class="kicker">Como funciona</p>
+    <h2>Todo caso segue o mesmo método</h2>
+    <div class="steps">
+      <div class="step"><img src="caso-originais/img/i-lupa.webp" alt=""><h3>Investigue</h3><p>Examine os pontos brilhantes de cada cena. Cada pista é anotada no seu caderno.</p></div>
+      <div class="step"><img src="caso-originais/img/i-carta.webp" alt=""><h3>Interrogue</h3><p>Converse com personagens das obras ou leia os telegramas do caso.</p></div>
+      <div class="step"><img src="caso-originais/img/i-cadeado.webp" alt=""><h3>Decifre</h3><p>Cadeados, anagramas, cifras e questões no estilo ENEM liberam a próxima pista.</p></div>
+      <div class="step"><img src="caso-originais/img/i-lamp-on.webp" alt=""><h3>Mantenha a luz</h3><p>Cada erro apaga uma lamparina. Sem luz, o caso volta para o início do capítulo.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="casos" style="padding-top:20px">
+  <div class="wrap">
+    <p class="kicker">Casos em aberto</p>
+    <h2>Escolha um dossiê</h2>
+    <p class="sub">Seu progresso fica salvo neste navegador. Você pode fechar a página e continuar depois.</p>
+    <div class="files" id="files"></div>
+  </div>
+</section>
+
+<section id="professor" style="padding-top:20px">
+  <div class="wrap">
+    <p class="kicker">Para o professor</p>
+    <h2>Como usar em sala</h2>
+    <div class="teach">
+      <div class="panel">
+        <h3>Sugestão de aula</h3>
+        <ul>
+          <li><b>Antes:</b> apresente o período literário e as obras do caso; o jogo funciona como revisão e fixação.</li>
+          <li><b>Durante:</b> individual ou em duplas, 40 a 50 minutos por caso. No celular, jogue com a tela deitada.</li>
+          <li><b>Depois:</b> o <b>caderno de anotações</b> do jogo reúne todas as pistas — peça que os alunos copiem as mais importantes.</li>
+          <li><b>Fechamento:</b> discuta as questões estilo ENEM e por que as alternativas erradas não servem.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>Habilidades trabalhadas</h3>
+        <ul>
+          <li>Reconhecer obras, autores e características de cada período literário.</li>
+          <li>Relacionar textos literários ao contexto histórico e social de produção.</li>
+          <li>Interpretar foco narrativo, personagens e recursos expressivos.</li>
+          <li>Resolver questões objetivas no modelo do ENEM.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Arquivo de Mistérios · Prof. Marcos Cruz</span>
+    <span><a href="/">Voltar ao portal</a> · <a href="/jogos/index.html">Jogos Educativos</a></span>
+  </div>
+</footer>
+
+<script>
+/* ===== Registro de casos — para adicionar um caso novo, acrescente um objeto aqui ===== */
+const CASOS = [
+  { num: 1, titulo: 'O Caso dos Originais Desaparecidos', url: 'caso-originais/',
+    capa: 'caso-originais/img/titulo.webp',
+    resumo: 'Rio de Janeiro, 1938. Um censor roubou os originais dos grandes romances da década. Siga as pistas do sertão à Bahia, de Alagoas a Itabira.',
+    tags: ['2ª fase do Modernismo', '3º ano EM', '6 capítulos', '18 enigmas', '~45 min'],
+    save: 'caso_originais_v1', capitulos: 6 },
+  { num: 2, bloqueado: true, titulo: 'Arquivo lacrado', resumo: 'Um novo caso está sendo investigado. Em breve, mais um dossiê neste arquivo.', tags: ['Em preparação'] },
+  { num: 3, bloqueado: true, titulo: 'Arquivo lacrado', resumo: 'Novas obras, novos suspeitos, novos enigmas.', tags: ['Em preparação'] }
+];
+
+function lerProgresso(c){
+  try{const s=JSON.parse(localStorage.getItem(c.save));if(!s)return null;return s}catch(e){return null}
+}
+function patente(sc){return sc>=2200?'Inspetor(a)-chefe':sc>=1700?'Detetive titular':sc>=1100?'Investigador(a)':'Aprendiz de detetive'}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const box=document.getElementById('files');
+CASOS.forEach(c=>{
+  const num='CASO Nº '+String(c.num).padStart(2,'0');
+  if(c.bloqueado){
+    box.insertAdjacentHTML('beforeend',`<div class="file locked" aria-disabled="true"><div class="cover"><span class="num">${num}</span><div class="seal">?</div></div>
+      <div class="body"><h3>${esc(c.titulo)}</h3><p>${esc(c.resumo)}</p><div class="tags">${c.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div></div></div>`);
+    return;
+  }
+  const s=lerProgresso(c);let stamp='<span class="stamp novo">NOVO</span>',status='';
+  if(s&&s.finished){stamp='<span class="stamp fim">ENCERRADO</span>';status=`<p class="status">✓ Caso resolvido · ${s.score} pontos · ${patente(s.score)}</p>`}
+  else if(s&&((s.done&&s.done.length)||Object.keys(s.found||{}).length)){
+    const d=(s.done||[]).length;stamp='<span class="stamp and">EM ANDAMENTO</span>';
+    status=`<p class="status">${d} de ${c.capitulos} capítulos · ${s.score} pontos</p><div class="prog"><i style="width:${Math.round(d/c.capitulos*100)}%"></i></div>`}
+  box.insertAdjacentHTML('beforeend',`<a class="file" href="${c.url}"><div class="cover"><img src="${c.capa}" alt="" loading="lazy"><span class="num">${num}</span>${stamp}</div>
+    <div class="body"><h3>${esc(c.titulo)}</h3><p>${esc(c.resumo)}</p>${status}<div class="tags">${c.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div></div></a>`);
+});
+</script>
+</body>
+</html>
