@@ -930,3 +930,17 @@ INTEIRO antes de adicionar.
 
 ## Provas ENEM disponíveis para consulta
 2004, 2006 a 2025 (faltam apenas os anos anteriores a 2004 e 2005/2009/2010)
+
+## Arquivo de Mistérios — seção nova (05/nov/2026)
+Seção independente `misterios/` (HTML estático puro, NÃO é página Next — sem
+risco de hidratação): `misterios/index.html` é o hub (dossiês, "como funciona",
+"para o professor") e lê o progresso de cada caso do `localStorage`. Para
+adicionar um caso novo: criar a pasta `misterios/<caso>/` e acrescentar um objeto
+no array `CASOS` do hub (campo `save` = chave de `localStorage` que o jogo usa).
+Caso nº 1: `misterios/caso-originais/` (2ª fase do Modernismo) — `index.html`
+(motor) + `dados.js` (todo o conteúdo: pistas, falas, desafios; editar só ali) +
+`img/` (arte gerada pelo professor no ChatGPT, convertida para WebP).
+Link na home: 7º card da grade `#areas`, editado nos DOIS lugares (HTML estático
++ array `z` dentro de `_next/static/chunks/pages/index-9975589dd259cdd2.js`),
+conforme o padrão de hidratação descrito acima. Os 10 erros de hidratação React
+(#418/#423/#425) que aparecem no console da home já existiam antes dessa mudança.
