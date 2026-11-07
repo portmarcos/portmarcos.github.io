@@ -120,6 +120,7 @@ button{font-family:inherit;cursor:pointer;color:inherit}
     <div class="hs">★ <b id="hScore">0</b></div>
     <div class="hs"><img src="img/q1/i-pagina1.webp" alt=""><b id="hPages">0</b>/<span id="hPagesT">0</span></div>
     <div class="hs">Pistas <span id="clues"></span></div>
+    <div class="hs hidden" id="hKey"><img src="img/q1/chave.webp" alt="">Chave</div>
     <div class="sp"></div>
     <button id="bMute" title="Som">🔊</button>
     <button id="bPause" title="Pausa (Esc)">⏸</button>
@@ -153,7 +154,7 @@ const KEY='caso_originais_v1';
 const store={get(){try{return JSON.parse(localStorage.getItem(KEY))}catch(e){return null}},set(v){try{localStorage.setItem(KEY,JSON.stringify(v))}catch(e){}}};
 
 /* ---------------- imagens ---------------- */
-const SRC={ceu:'q1/ceu',interior:'q1/vagao-interior',estacao:'q1/estacao',torre:'q1/caixa-dagua',banco:'q1/banco',loco:'q1/locomotiva',vag1:'q1/vagao1',vag2:'q1/vagao2',
+const SRC={ceu:'q1/ceu',interior:'q1/vagao-interior',casa:'q1/casa-interior',porta:'q1/porta-aberta',malaF:'q1/mala-trancada',malaAb:'q1/mala-aberta-pista',chave:'q1/chave',chaveB:'q1/chave-brilho',estacao:'q1/estacao',torre:'q1/caixa-dagua',banco:'q1/banco',loco:'q1/locomotiva',vag1:'q1/vagao1',vag2:'q1/vagao2',
   plat:'q1/k-plataforma',pedra:'q1/k-pedra',caixote:'q1/k-caixote',barril:'q1/k-barril',mala:'q1/k-mala',malaA:'q1/k-mala-aberta',trouxa:'q1/k-trouxa',chao:'q1/k-chao',viga:'q1/k-viga',telhado:'q1/k-telhado',
   pag1:'q1/i-pagina1',pag2:'q1/i-pagina2',lampada:'q1/i-lampada',tinta1:'q1/i-tinta1',tinta2:'q1/i-tinta2',tinta3:'q1/i-tinta3',poeira:'q1/i-poeira',vapor:'q1/i-vapor',brilho:'q1/i-brilho',
   det:'q1/detetive',cap:'q1/capanga',boss:'q1/chefe',con:'q1/conceicao',diario:'i-diario',lampOn:'i-lamp-on'};
@@ -210,7 +211,7 @@ addEventListener('resize',resize);
 /* ---------------- estado global ---------------- */
 let S=store.get();if(!S)S={name:'Detetive',ch:0,done:[],letters:[],items:[],notes:[],score:0,lamps:5,lupas:3,found:{},talked:{},err:{},stats:{acertos:0,erros:0},finished:false};
 const MAXL=5;
-let state='load',scene='main',T=0,score=0,lamps=Math.max(3,Math.min(MAXL,S.lamps||5)),pages=0,clues=[false,false,false,false],talked=false,gateOpen=false,checkpoint={x:80,y:G,scene:'main'},combo=0,comboT=0,shake=0,camX=0,camY=0,elapsed=0,bossActive=false,bossDone=false,errosFase=0;
+let state='load',scene='main',T=0,score=0,lamps=Math.max(3,Math.min(MAXL,S.lamps||5)),pages=0,clues=[false,false,false,false,false],hasKey=false,talked=false,gateOpen=false,checkpoint={x:80,y:G,scene:'main'},combo=0,comboT=0,shake=0,camX=0,camY=0,elapsed=0,bossActive=false,bossDone=false,errosFase=0;
 
 /* ================== NÍVEL ================== */
 const W={};
@@ -228,11 +229,14 @@ function buildMain(){
   L.props.push({img:'banco',x:560,y:G-36-80,w:137,h:80});L.oneway.push(seg(565,G-36-38,692,G-36-38));
   L.solids.push({x:420,y:G-55,w:62,h:55,img:'caixote'});L.solids.push({x:1190,y:G-55,w:62,h:55,img:'caixote'});
   L.hidden.push({x:628,y:G-52,kind:'lamp'});
+  L.casaDoor={x:sx+487*ss,y:st.y+335*ss,w:315*ss,h:345*ss,open:false};
+  L.inter.push({x:sx+545*ss,y:st.y+340*ss,w:195*ss,h:340*ss,label:'Entrar na casa da estação',use:enterCasa});
   L.hidden.push({x:sx+642*ss,y:fy-14,kind:'clue',j:3,need:p=>p.y<=fy+2});
   // --- caixa d'água ---
   const tx=1270,ts=.47,th=700*ts;L.props.push({img:'torre',x:tx,y:G-th,w:382*ts,h:th});
   const tankY=G-th+97*ts;L.oneway.push(seg(tx+22*ts,tankY,tx+335*ts,tankY));
   L.breakable={x:tx+150*ts,y:tankY,hp:3,open:false,hit:0};
+  L.key={x:tx+285*ts,y:tankY,got:false};
   L.oneway.push(seg(1190,G-150,1250,G-150));L.props.push({img:'viga',x:1185,y:G-152,w:70,h:12,raw:1});
   // --- torre das malas (homenagem ao Donkey Kong) ---
   L.tiers=[{y:355,x1:1720,x2:2660},{y:240,x1:1640,x2:2580},{y:125,x1:1720,x2:2660}];
@@ -266,6 +270,16 @@ function buildMain(){
   [[200,420],[300,400],[650,G-80],[720,250],[790,180],[900,250],[1000,230],[1270,140],[1310,140],[1660,G-40],[1900,330],[2100,330],[2300,215],[1900,215],[2200,100],[2400,100],[2800,G-60],[3035,G-200],[3450,320],[3520,290],[3750,300],[4050,300],[4500,G-60],[4840,G-60],[5055,G-110],[5120,G-180],[5300,G-60]].forEach(p=>L.pages.push({x:p[0],y:p[1],t:Math.random()*6}));
   // --- pontos de controle e dicas ---
   [[80,'Use ← → para andar e ESPAÇO para pular (aperte de novo no ar para o pulo duplo).'],[300,'X arremessa páginas datilografadas. Também dá para pular na cabeça dos capangas!'],[520,'Segure C para acender a lamparina: ela revela o que está escondido.'],[1540,'Ponto de controle.'],[1660,'Use ↑ e ↓ nas escadas. Cuidado com as malas!'],[3240,'Ponto de controle.'],[4600,'Ponto de controle. O chão rachado desmorona!'],[5320,'Ponto de controle.']].forEach(([x,msg])=>L.triggers.push({x,msg,cp:/controle/.test(msg)||x===80}));
+  return L;
+}
+function buildCasa(){
+  const L={w:VW,solids:[{x:-50,y:455,w:1100,h:200,ground:1,hide:1},{x:-40,y:0,w:40,h:600,hide:1},{x:VW,y:0,w:40,h:600,hide:1}],oneway:[],ladders:[{x:915,top:78,bot:455}],props:[],pages:[],lamps:[],enemies:[],inter:[],vents:[],crumble:[],hidden:[],triggers:[],grounds:[]};
+  [[157,337,348],[386,354,670],[620,276,681],[195,216,272],[195,158,344],[578,182,689],[689,163,832],[693,78,960]].forEach(([a,y,b])=>L.oneway.push(seg(a,y,b,y)));
+  L.inter.push({x:9,y:150,w:132,h:305,label:'Sair da casa',use:exitCasa});
+  L.inter.push({x:480,y:300,w:90,h:56,label:'Examinar a mala sobre a cama',use:openMala,cond:()=>!clues[4]});
+  L.enemies.push(mkCap(220,860,455));
+  L.hidden.push({x:820,y:60,kind:'lamp'});
+  [[250,190],[300,128],[630,150],[760,135],[880,48],[230,300]].forEach(p=>L.pages.push({x:p[0],y:p[1],t:Math.random()*6}));
   return L;
 }
 function buildWagon(){
@@ -400,6 +414,7 @@ function updPickups(dt){
   const pb=pbox();
   for(const p of Lv.pages){if(p.got)continue;p.t+=dt;if(Math.abs(P.x-p.x)<26&&Math.abs(P.y-40-p.y)<44){p.got=1;pages++;score+=10;SFX.page();floatTxt(p.x,p.y-20,'+10');updHud()}}
   for(const l of Lv.lamps){if(l.got)continue;if(Math.abs(P.x-l.x)<30&&Math.abs(P.y-40-l.y)<50){l.got=1;getLamp(l.x,l.y)}}
+  const ky=Lv.key;if(ky&&!ky.got&&Math.abs(P.x-ky.x)<36&&Math.abs(P.y-ky.y)<44){ky.got=true;hasKey=true;score+=50;SFX.clue();sparkle(ky.x,ky.y-20);floatTxt(ky.x,ky.y-40,'+50');$('#hKey').classList.remove('hidden');toast('Uma chave antiga com laço vermelho! De que mala será?');updHud()}
   const br=Lv.breakable;if(br&&br.open&&!clues[0]&&Math.abs(P.x-br.x)<40&&Math.abs(P.y-br.y)<40)foundClue(0);
   // escondidos (só com a lamparina)
   for(const h of Lv.hidden){if(h.got)continue;const d=Math.hypot(P.x-h.x,P.y-40-h.y);h.vis=K.lamp?clamp(1-d/190,0,1):Math.max(0,(h.vis||0)-dt*2);
@@ -454,20 +469,25 @@ function bossDefeat(){const b=boss;b.st='dead';b.t=0;bossDone=true;SFX.win();for
 
 /* ================== CENAS ================== */
 let saved=null;
+function enterCasa(){SFX.door();W.main.casaDoor.open=true;fade(()=>{saved={x:P.x,y:P.y};switchScene('casa');P.x=150;P.y=455;P.face=1;toast('A casa do chefe da estação. Tem uma mala sobre a cama…')})}
+function exitCasa(){SFX.door();fade(()=>{switchScene('main');P.x=saved?saved.x:800;P.y=saved?saved.y:G-36})}
+function openMala(){if(!hasKey){SFX.bad();toast('Trancada com cadeado. A chave deve estar num lugar bem alto da estação…');return}
+  if(W.casa.malaOpen)return;W.casa.malaOpen=true;SFX.door();sparkle(525,320);setTimeout(()=>foundClue(4),350)}
 function enterWagon(){SFX.door();fade(()=>{saved={x:P.x,y:P.y};switchScene('vagao');P.x=90;P.y=462;toast('Dentro do vagão. Algo no bagageiro?')})}
 function exitWagon(){SFX.door();fade(()=>{switchScene('main');P.x=saved?saved.x:4100;P.y=G})}
 function switchScene(s){scene=s;Lv=W[s];projs.length=0;camX=0}
 let fading=0,fadeCb=null;function fade(cb){fading=1;fadeCb=cb}
 
 /* ================== HISTÓRIA ================== */
+const PISTA5={nome:'Mala do chefe da estação',t:'Papéis do chefe da estação: listas de retirantes pedindo passagem de trem para Fortaleza em 1915. Junto, um rascunho do fim do romance: na capital, Conceição consegue passagens para que a família de Chico Bento siga para São Paulo — e fica com o afilhado, Duquinha.'};
 function foundClue(j){if(clues[j])return;clues[j]=true;SFX.clue();score+=150;sparkle(P.x,P.y-60);updHud();
-  const p=CH.pistas[j];S.notes=S.notes||[];if(!S.notes.some(n=>n.c===CHI&&n.t===p.t))S.notes.push({c:CHI,t:p.t});
+  const p=j<4?CH.pistas[j]:PISTA5;S.notes=S.notes||[];if(!S.notes.some(n=>n.c===CHI&&n.t===p.t))S.notes.push({c:CHI,t:p.t});
   const n=clues.filter(Boolean).length;
-  showOv(`<span class="kicker">Pista ${n} de 4</span><h2>${esc(p.nome)}</h2><div class="clue">${p.chave?'<img src="img/i-diario.webp" alt="">':''}<p>${esc(p.t)}</p></div>
+  showOv(`<span class="kicker">Pista ${n} de 5</span><h2>${esc(p.nome)}</h2><div class="clue">${j===0?'<img src="img/i-diario.webp" alt="">':j===4?'<img src="img/q1/mala-aberta-pista.webp" alt="">':''}<p>${esc(p.t)}</p></div>
     <div class="acts"><span class="kicker">+150 pontos · anotado no caderno</span><button class="pbtn" data-close>Continuar</button></div>`)}
 function talkConceicao(){const extra=[{q:'professora',t:'Mais uma coisa: no pátio, depois do portão, está o Agente Carimbo. Ele protege o que o Censor roubou. Para passar, você vai precisar de tudo o que descobriu aqui.'}];
-  say(talked?[{q:'professora',t:'O portão do pátio fica logo ali. Só abre para quem reuniu as quatro pistas.'}]:CH.fala.concat(extra)).then(()=>{if(!talked){talked=true;S.notes=S.notes||[];if(!S.notes.some(n=>n.t===CH.notaFala))S.notes.push({c:CHI,t:CH.notaFala});score+=50;updHud()}})}
-const HINTS=['No alto da caixa d’água há uma mala trancada.','Quem joga as malas lá do alto da torre esconde alguma coisa.','Um dos vagões tem a porta destrancada.','A placa da estação guarda um recado — só à luz da lamparina, de pé na viga da fachada.'];
+  say(talked?[{q:'professora',t:'O portão do pátio fica logo ali. Só abre para quem reuniu as cinco pistas.'}]:CH.fala.concat(extra)).then(()=>{if(!talked){talked=true;S.notes=S.notes||[];if(!S.notes.some(n=>n.t===CH.notaFala))S.notes.push({c:CHI,t:CH.notaFala});score+=50;updHud()}})}
+const HINTS=['No alto da caixa d’água há uma mala trancada.','Quem joga as malas lá do alto da torre esconde alguma coisa.','Um dos vagões tem a porta destrancada.','A placa da estação guarda um recado — só à luz da lamparina, de pé na viga da fachada.','Na casa da estação, a mala sobre a cama está trancada. Procure a chave num lugar bem alto.'];
 function tryGate(){const miss=clues.map((c,i)=>c?null:HINTS[i]).filter(Boolean);
   if(!talked)miss.push('Converse com Conceição, aqui perto.');
   if(miss.length){SFX.bad();showOv(`<span class="kicker">Portão trancado</span><h2>Ainda falta investigar</h2><p style="margin-top:8px">O cadeado só cede para quem reuniu todas as pistas. Suas anotações dizem:</p><ul style="margin:10px 0 0 20px;line-height:1.7">${miss.map(m=>`<li>${esc(m)}</li>`).join('')}</ul><div class="acts" style="justify-content:flex-end"><button class="pbtn" data-close>Voltar à investigação</button></div>`);return}
@@ -534,7 +554,7 @@ function gameOver(){if(state==='over')return;state='over';const ov=showOv(`<div 
   ov.querySelector('#rr').onclick=()=>location.reload()}
 function levelComplete(){
   state='end';const secs=Math.round(elapsed),tb=Math.max(0,(600-secs)*2),lb=lamps*100,total=score+tb+lb;
-  const medal=errosFase===0&&pages>=(W.main.pages.length+W.vagao.pages.length)*0.8?'Ouro':errosFase<=3?'Prata':'Bronze';
+  const medal=errosFase===0&&pages>=(W.main.pages.length+W.vagao.pages.length+W.casa.pages.length)*0.8?'Ouro':errosFase<=3?'Prata':'Bronze';
   // salvar no jogo principal
   S.found=S.found||{};S.found[CHI]=[0,1,2,3];S.talked=S.talked||{};S.talked[CHI]=true;S.items=S.items||[];if(!S.items.includes(CHI))S.items.push(CHI);
   S.done=S.done||[];const first=!S.done.includes(CHI);if(first)S.done.push(CHI);S.ch=Math.max(S.ch||0,CHI+1);S.lamps=Math.max(1,lamps);
@@ -545,7 +565,7 @@ function levelComplete(){
     <p style="margin-top:6px"><i>${esc(CH.obra)}</i> — ${esc(CH.autor)} (${CH.ano})</p><div class="bigletter">${CH.letra}</div>
     <p>Primeira letra da senha do cofre.</p><p class="medal" style="margin-top:8px">Medalha de ${medal}</p></div>
     <div class="stats"><div><b>${score}</b><span>pontos</span></div><div><b>+${tb}</b><span>bônus de tempo (${m}:${s})</span></div><div><b>+${lb}</b><span>lamparinas</span></div><div><b>${total}</b><span>total</span></div></div>
-    <p class="center" style="font-size:.92rem">Páginas recolhidas: ${pages}/${W.main.pages.length+W.vagao.pages.length} · Lamparinas perdidas: ${errosFase}</p>
+    <p class="center" style="font-size:.92rem">Páginas recolhidas: ${pages}/${W.main.pages.length+W.vagao.pages.length+W.casa.pages.length} · Lamparinas perdidas: ${errosFase}</p>
     <div class="acts" style="justify-content:center"><button class="pbtn ghost" onclick="location.reload()">Jogar de novo</button><a class="pbtn" href="index.html#mapa">Voltar ao mapa ▸</a></div>`);
 }
 
@@ -572,7 +592,7 @@ function tileH(k,x1,x2,y,h,tw){const i=IMG[k];if(!i)return;const w=tw||i.width*h
 function draw(){
   ctx.setTransform(SC,0,0,SC,0,0);
   const sx=(Math.random()-.5)*shake*16,sy=(Math.random()-.5)*shake*16;
-  if(scene==='main')drawMain(sx,sy);else drawWagon(sx,sy);
+  if(scene==='main')drawMain(sx,sy);else drawRoom(scene==='vagao'?'interior':'casa',sx,sy);
   // vinheta quente
   const g=ctx.createRadialGradient(VW/2,VH*.55,VH*.35,VW/2,VH*.55,VH*.95);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(20,8,2,.55)');ctx.fillStyle=g;ctx.fillRect(0,0,VW,VH);
   if(fading){ctx.fillStyle=`rgba(0,0,0,${Math.min(1,fading)})`;ctx.fillRect(0,0,VW,VH)}
@@ -604,6 +624,8 @@ function drawMain(sx,sy){
   // portão
   if(!gateOpen){const g=Lv.gate;ctx.fillStyle='#4a2810';ctx.fillRect(g.x,g.y,g.w,g.h);ctx.fillStyle='#7a4a22';for(let y=g.y+6;y<G;y+=22)ctx.fillRect(g.x-6,y,g.w+12,8);ctx.fillStyle='#2b1608';ctx.fillRect(g.x+g.w/2-6,G-100,12,16)}
   // mala da caixa d'água
+  const cd=Lv.casaDoor;if(cd&&(cd.open||Math.abs(P.x-(cd.x+cd.w/2))<90))img('porta',cd.x,cd.y,cd.w,cd.h);
+  const ky=Lv.key;if(ky&&!ky.got)img('chaveB',ky.x-26,ky.y-30-Math.sin(T*3)*3,52,24);
   const br=Lv.breakable;if(br){const j=br.hit>0?(Math.random()-.5)*6:0;img(br.open?'malaA':'mala',br.x-26+j,br.y-32,52,32);if(br.open&&!clues[0]){img('diario',br.x-14,br.y-52-Math.sin(T*4)*4,28,32)}br.hit-=1/60}
   // Conceição
   const co=Lv.con;sheet('con',SH.con,talked?1:0,co.x,co.y,P.x>co.x);
@@ -621,7 +643,7 @@ function drawMain(sx,sy){
   ctx.restore();
   drawLight();
 }
-function drawWagon(sx,sy){img('interior',sx,sy,VW,VH);ctx.save();ctx.translate(sx,sy);drawCommon();ctx.restore();drawLight()}
+function drawRoom(k,sx,sy){img(k,sx,sy,VW,VH);ctx.save();ctx.translate(sx,sy);if(k==='casa'){if(W.casa.malaOpen)img('malaAb',496,300,62,48);else{img('malaF',486,322,80,42);if(Math.sin(T*3)>.3){ctx.globalAlpha=.5;img('brilho',488,330,76,26);ctx.globalAlpha=1}}}drawCommon();ctx.restore();drawLight()}
 function drawCommon(){
   // inimigos
   for(const e of Lv.enemies){let f=Math.floor(e.an)%4;if(e.st==='atk')f=e.t<.28?4:5;else if(e.st==='stun')f=6;else if(e.st==='dead')f=7;sheet('cap',SH.cap,f,e.x,e.y,e.dir>0,e.st==='dead'?Math.max(0,1-e.t/.7):1)}
@@ -677,11 +699,11 @@ function frame(now){
 
 /* ================== INÍCIO ================== */
 async function start(){
-  resize();await loadAll();makeFar();W.main=buildMain();W.vagao=buildWagon();Lv=W.main;$('#hPagesT').textContent=W.main.pages.length+W.vagao.pages.length;
+  resize();await loadAll();makeFar();W.main=buildMain();W.vagao=buildWagon();W.casa=buildCasa();Lv=W.main;$('#hPagesT').textContent=W.main.pages.length+W.vagao.pages.length+W.casa.pages.length;
   hudLamps();updHud();$('#load').remove();state='intro';
-  const ov=showOv(`<span class="kicker">Capítulo 1 · Modo ação</span><h2>Estação de Quixadá</h2><p style="margin-top:8px">A Brigada da Censura tomou a estação. Quatro pistas estão <b>escondidas</b> — no alto, dentro de objetos, atrás de portas e no escuro. Sem elas, o portão do pátio não abre.</p>${controlsHTML()}
+  const ov=showOv(`<span class="kicker">Capítulo 1 · Modo ação</span><h2>Estação de Quixadá</h2><p style="margin-top:8px">A Brigada da Censura tomou a estação. Cinco pistas estão <b>escondidas</b> — no alto, dentro de objetos, atrás de portas e no escuro. Sem elas, o portão do pátio não abre.</p>${controlsHTML()}
     <div class="acts"><a class="pbtn ghost" href="index.html#mapa">Voltar ao mapa</a><button class="pbtn" id="go">Começar ▸</button></div>`);state='intro';
-  ov.querySelector('#go').onclick=async()=>{ov.remove();ac();state='play';await say([{q:'telegrama',t:'QUIXADÁ PT A BRIGADA DA CENSURA ESTÁ NA ESTAÇÃO PT QUATRO PISTAS ESCONDIDAS PT SEM ELAS O PORTÃO DO PÁTIO NÃO ABRE PT ANSELMO'},{q:'detetive',t:'Malas rolando, capangas de tinta... Vou precisar de agilidade — e da minha lamparina para enxergar o que está escondido.'}]);state='play';toast('Use ← → para andar e ESPAÇO para pular.')}
+  ov.querySelector('#go').onclick=async()=>{ov.remove();ac();state='play';await say([{q:'telegrama',t:'QUIXADÁ PT A BRIGADA DA CENSURA ESTÁ NA ESTAÇÃO PT CINCO PISTAS ESCONDIDAS PT SEM ELAS O PORTÃO DO PÁTIO NÃO ABRE PT ANSELMO'},{q:'detetive',t:'Malas rolando, capangas de tinta... Vou precisar de agilidade — e da minha lamparina para enxergar o que está escondido.'}]);state='play';toast('Use ← → para andar e ESPAÇO para pular.')}
 }
 requestAnimationFrame(frame);start();
 </script>

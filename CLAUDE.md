@@ -948,7 +948,7 @@ conforme o padrão de hidratação descrito acima. Os 10 erros de hidratação R
 capítulo 1 (O Quinze) por uma fase de plataforma em canvas (correr, pulo duplo, arremesso
 de páginas, escadas, malas rolando estilo Donkey Kong, vapor, chão que desmorona, cena
 interna do vagão, lamparina que revela itens escondidos, chefe "Agente Carimbo" que só leva
-dano depois de acertar os 3 desafios do capítulo em `dados.js`). Arte em `img/q1/` (sprites
+dano depois de acertar os 3 desafios do capítulo em `dados.js`). Desde 07/nov a fase tem 5 pistas: a 5ª é uma mala trancada sobre a cama na cena interna `casa` (porta da estação), que só abre com a chave guardada no topo da caixa d’água (`L.key`, `hasKey`); texto da 5ª pista em `PISTA5` dentro da própria fase. Arte em `img/q1/` (sprites
 recortados das folhas geradas pelo professor no ChatGPT; tamanho de quadro em `SH` no
 código). O mapa do `index.html` desvia para a fase via `FASES_ACAO` e a fase grava o
 progresso na mesma chave `caso_originais_v1` e volta com `index.html#mapa`. Próximos
