@@ -305,6 +305,8 @@ body.notop #hud,body.notop #inv{display:none}
 
 <script src="dados.js"></script>
 <script>
+/* Capítulos que já têm fase de ação (plataforma). Os demais usam a investigação clássica. */
+const FASES_ACAO={0:'fase-quixada.html'};
 /* ================== UTIL ================== */
 const $=s=>document.querySelector(s);
 const el=(tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e};
@@ -405,11 +407,11 @@ function showTitle(){
       <button class="wbtn" id="bNew">Novo caso</button>
       ${canCont?'<button class="wbtn" id="bCont">Continuar</button>':''}
     </div>
-    <a href="../">← Arquivo de Mistérios</a>
+    <a href="../">← Portal de Jogos</a>
   </div>`;
   ui.appendChild(t);
   $('#bNew').onclick=()=>{ac();const n=$('#nm').value.trim()||'Detetive';S=fresh(n);save();fadeTo(intro)};
-  if(canCont)$('#bCont').onclick=()=>{ac();S=sv;const n=$('#nm').value.trim();if(n)S.name=n;save();fadeTo(()=>S.ch>=CAPITULOS.length?showMap():enterChapter(S.ch))};
+  if(canCont)$('#bCont').onclick=()=>{ac();S=sv;const n=$('#nm').value.trim();if(n)S.name=n;save();fadeTo(()=>S.ch>=CAPITULOS.length||FASES_ACAO[S.ch]?showMap():enterChapter(S.ch))};
   $('#nm').addEventListener('keydown',e=>{if(e.key==='Enter')$('#bNew').click()});
 }
 
@@ -428,7 +430,7 @@ function showMap(){
     b.style.left=c.pin[0]+'%';b.style.top=c.pin[1]+'%';
     b.innerHTML=`<span class="lbl">${i+1}. ${esc(done?c.obra:c.lugar)}</span>${done?'<span class="ok">✓</span>':''}`;
     b.setAttribute('aria-label',`Capítulo ${i+1}: ${c.lugar}`);
-    b.onclick=()=>{if(lock){SFX.bad();b.classList.remove('shake');void b.offsetWidth;b.classList.add('shake');return}SFX.click();fadeTo(()=>enterChapter(i))};
+    b.onclick=()=>{if(lock){SFX.bad();b.classList.remove('shake');void b.offsetWidth;b.classList.add('shake');return}SFX.click();if(FASES_ACAO[i]){save();$('#fade').classList.add('on');setTimeout(()=>location.href=FASES_ACAO[i],550);return}fadeTo(()=>enterChapter(i))};
     layer.appendChild(b);
   });
   if(S.done.length===CAPITULOS.length){
@@ -612,7 +614,7 @@ function victory(){
       <p class="center" style="margin-top:12px">Sua patente:</p><p class="rank center">${rank(S.score)}</p>
       <div class="stats"><div><b>${S.score}</b><span>pontos</span></div><div><b>${S.stats.acertos}</b><span>enigmas resolvidos</span></div><div><b>${S.stats.erros}</b><span>lamparinas apagadas</span></div></div>
       <h3>Obras recuperadas</h3>${books}
-      <div class="acts"><button class="pbtn ghost" id="vNotes">Ver caderno</button><button class="pbtn ghost" id="vImg">Ver a cena</button><a class="pbtn ghost" href="../" style="text-decoration:none">Arquivo de Mistérios</a><button class="pbtn" id="vNew">Jogar de novo</button></div>`);
+      <div class="acts"><button class="pbtn ghost" id="vNotes">Ver caderno</button><button class="pbtn ghost" id="vImg">Ver a cena</button><button class="pbtn" id="vNew">Novo caso</button></div>`);
     m.querySelector('#vNotes').onclick=()=>notebook();
     m.querySelector('#vImg').onclick=()=>{m.remove();const b=el('button','wbtn sm solve','Ver resultado');b.onclick=()=>{b.remove();victory()};ui.appendChild(b)};
     m.querySelector('#vNew').onclick=()=>{store.del();m.remove();fadeTo(showTitle)};
@@ -655,7 +657,8 @@ rs();requestAnimationFrame(loop);
 // pré-carrega imagens
 ['img/sprites.webp','img/ui-pergaminho.webp','img/mapa.webp',...CAPITULOS.map(c=>c.bg),...Object.values(PERSONAGENS).map(p=>p.img)].forEach(s=>{const i=new Image();i.src=s});
 
-S=store.get()||fresh();hud();showTitle();
+S=store.get()||fresh();hud();
+if(location.hash==='#mapa'&&store.get()){history.replaceState(null,'',location.pathname);showMap()}else showTitle();
 </script>
 </body>
 </html>

@@ -944,3 +944,12 @@ Link na home: 7º card da grade `#areas`, editado nos DOIS lugares (HTML estáti
 + array `z` dentro de `_next/static/chunks/pages/index-9975589dd259cdd2.js`),
 conforme o padrão de hidratação descrito acima. Os 10 erros de hidratação React
 (#418/#423/#425) que aparecem no console da home já existiam antes dessa mudança.
+**Fase de ação (06/nov/2026)**: `misterios/caso-originais/fase-quixada.html` substitui o
+capítulo 1 (O Quinze) por uma fase de plataforma em canvas (correr, pulo duplo, arremesso
+de páginas, escadas, malas rolando estilo Donkey Kong, vapor, chão que desmorona, cena
+interna do vagão, lamparina que revela itens escondidos, chefe "Agente Carimbo" que só leva
+dano depois de acertar os 3 desafios do capítulo em `dados.js`). Arte em `img/q1/` (sprites
+recortados das folhas geradas pelo professor no ChatGPT; tamanho de quadro em `SH` no
+código). O mapa do `index.html` desvia para a fase via `FASES_ACAO` e a fase grava o
+progresso na mesma chave `caso_originais_v1` e volta com `index.html#mapa`. Próximos
+capítulos ganham fase de ação do mesmo jeito: novo `fase-<lugar>.html` + entrada em `FASES_ACAO`.
