@@ -139,6 +139,8 @@ button{font-family:inherit;cursor:pointer;color:inherit}
   <div id="hud">
     <div class="lamps" id="lamps"></div>
     <div class="hs hidden" id="hDupla"></div>
+    <div class="hs hidden" id="hFam" title="Força da família de Chico Bento"></div>
+    <div class="hs hidden" id="hMis" title="Missão no Alagadiço"></div>
     <div class="hs">★ <b id="hScore">0</b></div>
     <div class="hs"><img src="img/q1/i-pagina1.webp" alt=""><b id="hPages">0</b>/<span id="hPagesT">0</span></div>
     <div class="hs">Pistas <span id="clues"></span></div>
@@ -178,7 +180,7 @@ const KEY='caso_originais_v1';
 const store={get(){try{return JSON.parse(localStorage.getItem(KEY))}catch(e){return null}},set(v){try{localStorage.setItem(KEY,JSON.stringify(v))}catch(e){}}};
 
 /* ---------------- imagens ---------------- */
-const SRC={ceu:'q1/ceu',inacia:'q1/npc-inacia',chico:'q1/npc-chico',cordulina:'q1/npc-cordulina',mocinha:'q1/npc-mocinha',vicente:'q1/npc-vicente',cabra:'q1/npc-cabra',oratorio:'q1/oratorio',velaOff:'q1/vela-off',velaOn:'q1/vela-on',campoBg:'q1/alagadico',interior:'q1/vagao-interior',casa:'q1/casa-interior',porta:'q1/porta-aberta',malaF:'q1/mala-trancada',malaAb:'q1/mala-aberta-pista',chave:'q1/chave',chaveB:'q1/chave-brilho',estacao:'q1/estacao',torre:'q1/caixa-dagua',banco:'q1/banco',loco:'q1/locomotiva',vag1:'q1/vagao1',vag2:'q1/vagao2',
+const SRC={menino:'q1/npc-menino',ceu:'q1/ceu',inacia:'q1/npc-inacia',chico:'q1/npc-chico',cordulina:'q1/npc-cordulina',mocinha:'q1/npc-mocinha',vicente:'q1/npc-vicente',cabra:'q1/npc-cabra',oratorio:'q1/oratorio',velaOff:'q1/vela-off',velaOn:'q1/vela-on',campoBg:'q1/alagadico',interior:'q1/vagao-interior',casa:'q1/casa-interior',porta:'q1/porta-aberta',malaF:'q1/mala-trancada',malaAb:'q1/mala-aberta-pista',chave:'q1/chave',chaveB:'q1/chave-brilho',estacao:'q1/estacao',torre:'q1/caixa-dagua',banco:'q1/banco',loco:'q1/locomotiva',vag1:'q1/vagao1',vag2:'q1/vagao2',
   plat:'q1/k-plataforma',pedra:'q1/k-pedra',caixote:'q1/k-caixote',barril:'q1/k-barril',mala:'q1/k-mala',malaA:'q1/k-mala-aberta',trouxa:'q1/k-trouxa',chao:'q1/k-chao',viga:'q1/k-viga',telhado:'q1/k-telhado',
   pag1:'q1/i-pagina1',pag2:'q1/i-pagina2',lampada:'q1/i-lampada',tinta1:'q1/i-tinta1',tinta2:'q1/i-tinta2',tinta3:'q1/i-tinta3',poeira:'q1/i-poeira',vapor:'q1/i-vapor',brilho:'q1/i-brilho',
   det:'q1/detetive',cap:'q1/capanga',boss:'q1/chefe',con:'q1/conceicao',diario:'i-diario',lampOn:'i-lamp-on'};
@@ -241,7 +243,7 @@ addEventListener('resize',resize);
 /* ---------------- estado global ---------------- */
 let S=store.get();if(!S)S={name:'Detetive',ch:0,done:[],letters:[],items:[],notes:[],score:0,lamps:5,lupas:3,found:{},talked:{},err:{},stats:{acertos:0,erros:0},finished:false};
 const MAXL=5;
-let state='load',scene='main',T=0,score=0,lamps=Math.max(3,Math.min(MAXL,S.lamps||5)),pages=0,clues=[false,false,false,false,false],keys={vagao:false,casa:false},candles=0,cabraSeen=false,hasPass=false,delivered=false,timelineN=0,raining=false,talked=false,gateOpen=false,checkpoint={x:80,y:G,scene:'main'},combo=0,comboT=0,shake=0,camX=0,camY=0,elapsed=0,bossActive=false,bossDone=false,errosFase=0;
+let state='load',scene='main',T=0,score=0,lamps=Math.max(3,Math.min(MAXL,S.lamps||5)),pages=0,clues=[false,false,false,false,false],keys={vagao:false,casa:false},candles=0,cabraSeen=false,comida=[],FAM=null,mission=null,hasPass=false,delivered=false,timelineN=0,raining=false,talked=false,gateOpen=false,checkpoint={x:80,y:G,scene:'main'},combo=0,comboT=0,shake=0,camX=0,camY=0,elapsed=0,bossActive=false,bossDone=false,errosFase=0;
 
 /* ================== NÍVEL ================== */
 const W={};
@@ -303,14 +305,12 @@ function buildMain(){
   [[80,'Use ← → para andar e ESPAÇO para pular (aperte de novo no ar para o pulo duplo).'],[300,'X arremessa páginas datilografadas. Também dá para pular na cabeça dos capangas!'],[520,'Segure C para acender a lamparina: ela revela o que está escondido.'],[1540,'Ponto de controle.'],[1660,'Use ↑ e ↓ nas escadas. Cuidado com as malas!'],[3240,'Ponto de controle.'],[4600,'Ponto de controle. O chão rachado desmorona!'],[5320,'Ponto de controle.']].forEach(([x,msg])=>L.triggers.push({x,msg,cp:/controle/.test(msg)||x===80}));
   // personagens de O Quinze (falas parafraseadas, sem pausar o jogo)
   L.npcs=[
-    {k:'cordulina',x:170,y:G,lines:FALAS.cordulina,nome:'Cordulina'},
-    {k:'chico',x:232,y:G,lines:FALAS.chico,nome:'Chico Bento'},
-    {k:'cabra',x:1770,y:125,s:.32,lines:[],nome:'Cabra'},
     {k:'mocinha',x:3060,y:G,lines:FALAS.mocinha,nome:'Mocinha'},
     {k:'vicente',x:4930,y:G,lines:FALAS.vicente,nome:'Vicente'},
     {k:'inacia',x:5548,y:G,lines:()=>candles>=3?FALAS.inaciaFeliz:FALAS.inacia,nome:'Dona Inácia'}];
   L.oratorio={x:5498,y:G};
-  L.inter.push({x:1740,y:70,w:64,h:56,label:'Examinar a cabra',use:examineCabra,cond:()=>!cabraSeen});
+  // comida e água espalhadas (para a família)
+  L.food=[[380,G-80,'agua'],[760,180,'farinha'],[1240,140,'rapadura'],[1700,G-30,'agua'],[2150,215,'farinha'],[2480,100,'agua'],[2600,330,'rapadura'],[2900,G-30,'farinha'],[3035,G-230,'agua']].map(f=>({x:f[0],y:f[1],k:f[2]}));
   L.inter.push({x:5520,y:G-110,w:60,h:110,label:'Conversar com Dona Inácia',use:talkInacia});
   L.candles=[{x:2250,y:125}];
   return L;
@@ -336,6 +336,8 @@ function buildCampo(){
   L.hidden.push({x:1830,y:G-300,kind:'lamp'});
   L.con={x:200,y:G};
   L.jornal={x:430};
+  L.cestas={x:285};
+  L.ret=[{k:'menino',x:820,y:G},{k:'inacia',x:1050,y:G-120},{k:'mocinha',x:1600,y:G-150},{k:'chico',x:2180,y:G},{k:'menino',x:2440,y:G-120}].map(o=>Object.assign(o,{ok:false}));
   L.npcs=[{k:'cordulina',x:2820,y:G,lines:()=>delivered?['Deus lhe pague, moço!']:FALAS.cordulinaCampo,nome:'Cordulina'},{k:'chico',x:2885,y:G,lines:()=>delivered?['São Paulo… vida nova.']:FALAS.chicoCampo,nome:'Chico Bento'}];
   L.inter.push({x:170,y:G-110,w:70,h:110,label:'Conversar com Conceição',use:talkCampo});
   L.inter.push({x:400,y:G-120,w:70,h:120,label:'Ler o jornal de 1915',use:lerJornal});
@@ -418,6 +420,7 @@ function updatePlayer(dt){
 function damage(fall){
   if(!fall&&P.inv>0)return;
   lamps--;errosFase++;score=Math.max(0,score-50);combo=0;P.inv=1.4;P.hurt=.4;SFX.hurt();shake=.35;hudLamps(true);
+  if(P.cesta){P.cesta=false;toast('A Brigada confiscou a cesta! Volte até Conceição e pegue outra.')}
   if(fall){const o=COOP&&PLAYERS.find(q=>q!==P&&q.ground&&q.y<VH);if(o){P.x=o.x-o.face*30;P.y=o.y;P.vx=P.vy=0;P.climb=null;toast((P.nome||'Detetive')+' voltou para perto do parceiro.')}else respawn()}else{P.vy=-420;P.vx=-P.face*260}
   if(lamps<=0)setTimeout(gameOver,400);
   updHud();
@@ -430,9 +433,10 @@ function updEnemies(dt){
     e.an+=dt*8;
     if(e.st==='dead'){e.t+=dt;continue}
     if(e.st==='stun'){e.t-=dt;if(e.t<=0)e.st='walk';continue}
-    if(e.st==='atk'){e.t+=dt;if(e.t>.6){e.st='walk';e.cd=1.1}continue}
+    if(e.st==='atk'){e.t+=dt;if(e.tgt==='fam'&&!e.fhit&&e.t>.28&&famOn()&&Math.abs(FAM.x-(e.x+e.dir*35))<60){e.fhit=true;famHit(15,'Um capanga atacou a família!')}if(e.t>.6){e.st='walk';e.cd=1.1}continue}
     e.cd-=dt;e.x+=e.dir*62*dt;if(e.x<e.x1){e.x=e.x1;e.dir=1}if(e.x>e.x2){e.x=e.x2;e.dir=-1}
-    const tp=nearestP(e.x,e.y),dx=tp.x-e.x;if(e.cd<=0&&Math.abs(dx)<105&&Math.abs(tp.y-e.y)<40&&Math.sign(dx)===e.dir){e.st='atk';e.t=0}
+    const tp=nearestP(e.x,e.y),dx=tp.x-e.x;if(e.cd<=0&&Math.abs(dx)<105&&Math.abs(tp.y-e.y)<40&&Math.sign(dx)===e.dir){e.st='atk';e.t=0;e.tgt='p';e.fhit=false}
+    else if(e.cd<=0&&famOn()&&Math.abs(FAM.y-e.y)<40){const fx=FAM.x-e.x;if(Math.abs(fx)<95&&Math.sign(fx)===e.dir){e.st='atk';e.t=0;e.tgt='fam';e.fhit=false}}
   }
   Lv.enemies=Lv.enemies.filter(e=>!(e.st==='dead'&&e.t>.7));
 }
@@ -462,6 +466,7 @@ function updMalas(dt){
     let landed=false;for(const sg of Lv.oneway){if(sg.tag!=='tier')continue;if(m.x<sg.x1||m.x>sg.x2)continue;if(py<=sg.y1+2&&m.y>=sg.y1){m.y=sg.y1;landed=true}}
     if(m.y>=G&&m.x<4800){m.y=G;landed=true}
     if(landed){if(m.vy>250){m.vx=-m.vx;puff(m.x,m.y,.3);SFX.hit()}m.vy=0}}
+  if(famOn())for(const m of Lv.malas){if(!m.dead&&Math.abs(m.x-FAM.x)<40&&m.y>FAM.y-40){m.dead=true;puff(m.x,m.y,.4);famHit(10,'Uma mala acertou a família!')}}
   Lv.malas=Lv.malas.filter(m=>!m.dead&&m.life<16&&m.x>1300&&m.x<3000);
 }
 /* ---------------- vapor ---------------- */
@@ -489,10 +494,11 @@ function updPickups(dt){
   for(const l of Lv.lamps){if(l.got)continue;if(Math.abs(P.x-l.x)<30&&Math.abs(P.y-40-l.y)<50){l.got=1;getLamp(l.x,l.y)}}
   const ky=Lv.key;if(ky&&!ky.got&&Math.abs(P.x-ky.x)<36&&Math.abs(P.y-ky.y)<44){ky.got=true;keys[ky.id]=true;score+=50;SFX.clue();sparkle(ky.x,ky.y-20);floatTxt(ky.x,ky.y-40,'+50');const n=Object.values(keys).filter(Boolean).length;$('#hKey').classList.remove('hidden');$('#hKeyN').textContent=n;toast(ky.id==='vagao'?'Uma chave pequena, esquecida com a bagagem do trem. Que cadeado ela abre?':'Uma chave antiga com laço vermelho! De que mala será?');updHud()}
   const br=Lv.breakable;if(br&&br.open&&!clues[0]&&Math.abs(P.x-br.x)<40&&Math.abs(P.y-br.y)<40)foundClue(0);
+  for(const f of (Lv.food||[])){if(f.got)continue;if(Math.abs(P.x-f.x)<26&&Math.abs(P.y-40-f.y)<44){if(comida.length>=4){if(!f.warn){toast('Você já carrega 4 provisões. Leve até a família!');f.warn=1}continue}f.got=1;comida.push(f.k);SFX.page();floatTxt(f.x,f.y-20,FOOD[f.k].nome);updHud()}}
   for(const c of (Lv.candles||[])){if(c.lit)continue;if(K.lamp&&Math.hypot(P.x-c.x,P.y-40-c.y)<85){c.lit=true;candles++;score+=50;SFX.lampUp();sparkle(c.x,c.y-20);floatTxt(c.x,c.y-50,'Vela de São José '+candles+'/3');updHud();if(candles===3)allCandles();else toast('Uma vela de São José acesa ('+candles+'/3). Dona Inácia, perto do portão, vai querer saber.')}}
   // escondidos (só com a lamparina)
   for(const h of Lv.hidden){if(h.got)continue;const d=Math.hypot(P.x-h.x,P.y-40-h.y),v=K.lamp?clamp(1-d/190,0,1):0;h._v=Math.max(h._v||0,v);
-    if(v>.45&&d<60&&(!h.need||h.need(P))){if(h.kind==='lamp'){h.got=1;getLamp(h.x,h.y)}else if(h.kind==='clue'){h.ready=true;h.by=P.id}}else if(h.by===P.id)h.ready=false}
+    if(v>.45&&d<60&&(!h.need||h.need(P))){if(h.kind==='lamp'){h.got=1;getLamp(h.x,h.y)}else if(h.kind==='pedro')findPedro(h);else if(h.kind==='clue'){h.ready=true;h.by=P.id}}else if(h.by===P.id)h.ready=false}
   for(const tr of Lv.triggers){if(!tr.done&&P.x>tr.x){tr.done=1;toast(tr.msg);if(tr.cp){checkpoint={x:tr.x+10,y:G,scene};}}}
 }
 function getLamp(x,y){if(lamps<MAXL){lamps++;hudLamps()}else{score+=150}SFX.lampUp();floatTxt(x,y-20,lamps<MAXL?'+1 lamparina':'+150');sparkle(x,y);updHud()}
@@ -505,6 +511,7 @@ let near=null;
 function updInter(){near=null;
   for(const c of (Lv.candles||[])){if(!c.lit&&Math.abs(P.x-c.x)<40&&Math.abs(P.y-c.y)<70){const lk=isTouch?'LUZ':COOP?(P.id?'J':'G'):'C';near={label:'Vela apagada · segure '+lk,use:()=>toast('Segure '+lk+' perto da vela para acendê-la com a lamparina.'),x:c.x-20,y:c.y-40,w:40,h:30}}}
   for(const it of Lv.inter){if(it.cond&&!it.cond())continue;if(boxHit(pbox(),it)){near=it;break}}
+  if(!near&&famOn()&&comida.length&&Math.abs(P.x-FAM.x)<80&&Math.abs(P.y-FAM.y)<60)near={label:'Dar comida à família ('+comida.length+')',use:feedFamily,x:FAM.x-40,y:FAM.y-130,w:80,h:20};
   for(const h of Lv.hidden){if(h.kind==='clue'&&h.ready&&!clues[h.j]){near={label:'Ler o recado escondido',use:()=>foundClue(h.j),x:h.x-20,y:h.y-20,w:40,h:20}}}
   if(near&&(pressed('act')||(K.up&&pressed('up')&&!Lv.ladders.some(l=>Math.abs(P.x-l.x)<18))))near.use();
   else{pressed('act')}
@@ -589,13 +596,12 @@ function allCandles(){score+=200;getLamp(P.x,P.y-40);updHud();addNote('Dia de S�
   toast('As três velas de São José estão acesas! +200 pontos e uma lamparina. Conte a Dona Inácia.')}
 function talkInacia(){if(candles>=3){say([{q:'inacia',t:'As três velas acesas… Meu São José há de ouvir. Mesmo quando a chuva não vem, o sertanejo não perde a fé.'},{q:'inacia',t:'Minha neta Conceição diz que eu rezo demais. Ela prefere os livros. Cada um com a sua esperança, não é?'}]);return}
   say([{q:'inacia',t:'Hoje é 19 de março, dia de São José. Diz o sertanejo: se não chover até hoje, o inverno está perdido… e o céu continua limpo.'},{q:'inacia',t:'Faça um favor a esta velha: acenda as três velas de São José que ficaram pela estação — uma na casa, uma no trem e uma no alto da torre das malas.'},{q:'detetive',t:'Com a lamparina acesa eu consigo. Pode deixar, Dona Inácia.'}])}
-function examineCabra(){cabraSeen=true;score+=100;SFX.clue();updHud();addNote('A cabra: no romance, Chico Bento, desesperado de fome, mata uma cabra para alimentar os filhos; o dono aparece, o humilha e leva a carne, deixando para a família só as vísceras.');
-  showOv(`<span class="kicker">Episódio do romance</span><h2>A cabra magra</h2><div class="clue"><img src="img/q1/npc-cabra.webp" alt=""><p>No caminho para Fortaleza, desesperado de fome, Chico Bento mata uma cabra para alimentar os filhos. O dono aparece, chama-o de ladrão e leva a carne — deixa para a família só as vísceras. A cena mostra até onde a seca empurra a dignidade de um homem.</p></div><div class="acts"><span class="kicker">+100 pontos · anotado no caderno</span><button class="pbtn" data-close>Continuar</button></div>`)}
 async function toCampo(){bossActive=false;
   await say([{q:'telegrama',t:'FORTALEZA PT A FAMÍLIA DE CHICO BENTO CHEGOU A PÉ PT ESTÁ NO CAMPO DE CONCENTRAÇÃO DO ALAGADIÇO PT CONCEIÇÃO ESPERA VOCÊ LÁ PT ANSELMO'},{q:'detetive',t:'Os originais estão a salvo. Mas esta história ainda não acabou — próximo trem para Fortaleza!'}]);
   fade(()=>{switchScene('campo');P.x=90;P.y=G;P.vx=P.vy=0;P.face=1;camY=0;checkpoint={x:90,y:G,scene:'campo'};$('#hPagesT').textContent=totalPages()})}
 function talkCampo(){if(hasPass){say([{q:'professora',t:'Corra! A família de Chico Bento está lá no fundo do campo, perto das barracas.'}]);return}
-  say([{q:'professora',t:'Detetive! Este é o Campo de Concentração do Alagadiço. O governo juntou aqui milhares de retirantes, cercados, para que não entrassem na cidade.'},{q:'professora',t:'Trabalho aqui como voluntária, distribuindo comida e remédio. A família de Chico Bento chegou — magra, cansada, com menos filhos do que saiu do sertão.'},{q:'professora',t:'Consegui passagens para São Paulo. Leve até eles, lá no fundo do campo. Cuidado: a Brigada da Censura quer rasgar essas passagens!'}]).then(()=>{hasPass=true;SFX.clue();score+=50;updHud();toast('Você recebeu as passagens para São Paulo. Leve-as até a família de Chico Bento.')})}
+  if(mission&&mission.on){say([{q:'professora',t:'As cestas estão aqui na barraca. Leve uma de cada vez — rápido, antes que a Brigada apareça!'}]);return}
+  say([{q:'professora',t:'Detetive! Este é o Campo de Concentração do Alagadiço. O governo juntou aqui milhares de retirantes, cercados, para que não entrassem na cidade.'},{q:'professora',t:'Trabalho aqui como voluntária, distribuindo comida e remédio. A família de Chico Bento chegou — magra, cansada, com menos filhos do que saiu do sertão.'},{q:'professora',t:'Antes, me ajude: a Brigada quer confiscar a comida e o remédio. Leve estas cestas aos retirantes espalhados pelo campo — uma de cada vez. Você tem dois minutos!'}]).then(()=>{score+=50;startMission()})}
 function lerJornal(){addNote('Campo de Concentração do Alagadiço (Fortaleza, 1915): o governo reuniu milhares de retirantes da seca num campo cercado, para impedir que ocupassem a cidade. Faltavam comida, água e remédios.');
   showOv(`<span class="kicker">Jornal · abril de 1915</span><h2>O Campo de Concentração do Alagadiço</h2><p style="margin-top:10px">Para impedir que milhares de retirantes da seca ocupassem as ruas de Fortaleza, o governo do Ceará os reuniu num terreno cercado no bairro do Alagadiço: o <b>Campo de Concentração</b>. Faltavam comida, água e remédios, e muitos morreram de fome e de doenças.</p><p style="margin-top:8px">Em <i>O Quinze</i>, Rachel de Queiroz mostra esse lugar pelos olhos de Conceição, que trabalha ali como voluntária.</p><div class="acts" style="justify-content:flex-end"><button class="pbtn" data-close>Continuar</button></div>`)}
 function deliver(){if(!hasPass){SFX.bad();toast('Fale primeiro com Conceição, na entrada do campo.');return}if(delivered)return;delivered=true;score+=300;SFX.win();updHud();
@@ -606,6 +612,84 @@ function epilogue(){fade(()=>{switchScene('main');bossActive=false;W.main.enemie
   noise(7,.1,2600,.35);tone(55,1.6,'sine',.18,.4,35);setTimeout(()=>{if(cineEl)cineEl.remove();levelComplete()},7500)})}
 function drawRain(){ctx.save();ctx.fillStyle='rgba(30,40,60,.3)';ctx.fillRect(0,0,VW,VH);ctx.strokeStyle='rgba(215,228,245,.7)';ctx.lineWidth=1.5;ctx.beginPath();
   for(let i=0;i<220;i++){const sp=700+(i%7)*60,x=((i*137.5)+T*120)%(VW+60)-30,y=((i*71.3)+T*sp)%(VH+40)-20;ctx.moveTo(x,y);ctx.lineTo(x-6,y+18)}ctx.stroke();ctx.restore()}
+/* ================== A RETIRADA: família de Chico Bento ================== */
+const FOOD={agua:{nome:'cabaça d’água',t:'Na seca, a água vinha de cacimbas e açudes quase secos — cada gole valia ouro.'},farinha:{nome:'saco de farinha',t:'A farinha de mandioca era a base da comida do retirante.'},rapadura:{nome:'rapadura',t:'Rapadura: açúcar de cana em tijolo, que aguentava a longa caminhada.'}};
+function famOn(){return FAM&&scene==='main'&&FAM.state!=='gone'&&FAM.state!=='leaving'}
+function famInit(){FAM={x:180,y:G,forca:100,state:'follow',dir:1,an:0,moving:false,pedro:true,ep:{},josias:null,cabra:null,msgT:0}}
+function famGY(x){return x>=470&&x<=1190?G-36:G}
+function famHit(n,msg){if(!famOn())return;FAM.forca=Math.max(0,FAM.forca-n);SFX.hurt();floatTxt(FAM.x,FAM.y-120,'-'+n+' força');if(msg&&FAM.msgT<=0){toast(msg);FAM.msgT=3}
+  if(FAM.forca<=0){FAM.forca=50;lamps--;errosFase++;hudLamps(true);toast('A família desmaiou de fome e cansaço… uma lamparina se apagou. Traga comida e água!');if(lamps<=0)setTimeout(gameOver,400)}updHud()}
+function updFamily(dt){
+  if(!FAM||scene!=='main')return;const F=FAM;F.msgT-=dt;
+  if(F.state==='gone')return;
+  if(F.state==='leaving'){F.x+=60*dt;F.an+=dt*6;F.fade=(F.fade||1)-dt*.35;if(F.fade<=0){F.state='gone';updHud()}return}
+  if(state==='play')F.forca=Math.max(0,F.forca-dt*.45);if(F.forca<=0)famHit(0);
+  // episódios
+  if(F.pedro&&!F.ep.pedro&&F.x>1480){F.ep.pedro=true;F.pedro=false;F.state='wait';W.main.hidden.push({x:2050,y:232,kind:'pedro'});
+    toast('Pedro, o filho mais velho, sumiu! Procure-o com a lamparina — ele foi para os lados da torre das malas.')}
+  if(F.ep.pedro&&!F.ep.pedroOk&&F.state==='follow')F.state='wait';
+  if(!F.ep.cabra&&F.x>2650){F.ep.cabra=true;F.cabra={x:2880,y:G,dir:-1,t:0};F.state='wait';say([{q:'chico',t:'Olhe ali: uma cabra solta! Os meninos não comem faz dois dias…'},{q:'detetive',t:'Ela é ligeira. Vou tentar alcançá-la.'}])}
+  if(F.ep.cabraOk&&!F.ep.josias&&F.x>2930){F.ep.josias=true;F.josias={x:F.x-10,y:G,t:0};F.state='wait';toast('Josias, o menino, correu atrás de uma raiz de mandioca! Mandioca brava crua é venenosa — alcance-o antes que ele coma!')}
+  if(F.ep.josiasOk&&!F.ep.mocinha&&F.x>3120){F.ep.mocinha=true;F.state='wait';episodioTrem()}
+  // cabra fugindo
+  const c=F.cabra;if(c&&!c.done){c.t+=dt;const pl=nearestP(c.x,c.y);if(Math.abs(pl.x-c.x)<160){c.dir=pl.x<c.x?1:-1}c.x+=c.dir*(Math.abs(pl.x-c.x)<160?150:60)*dt;if(c.x<2700){c.x=2700;c.dir=1}if(c.x>3180){c.x=3180;c.dir=-1}
+    for(const q of PLAYERS)if(Math.abs(q.x-c.x)<30&&Math.abs(q.y-G)<50){c.done=true;escolhaCabra();break}}
+  // Josias correndo para a mandioca
+  const j=F.josias;if(j&&!j.done){j.t+=dt;j.x+=58*dt;for(const q of PLAYERS)if(Math.abs(q.x-j.x)<28&&Math.abs(q.y-G)<50){j.done=true;j.ok=true;score+=200;SFX.ok();updHud();
+      toast('Você alcançou Josias a tempo! +200. No romance não foi assim: Josias come mandioca crua e morre envenenado — um dos momentos mais tristes do livro.');addNote('Josias: no romance, o menino come mandioca brava crua e morre envenenado no caminho para Fortaleza.');F.ep.josiasOk=true;F.state='follow';break}
+    if(!j.done&&j.x>=3200){j.done=true;j.ok=false;famHit(30);toast('Josias comeu a mandioca crua… No romance, é assim que o menino morre envenenado. A família, abalada, perde as forças.');addNote('Josias: no romance, o menino come mandioca brava crua e morre envenenado no caminho para Fortaleza.');F.ep.josiasOk=true;F.state='follow'}}
+  // seguir o detetive
+  if(F.state==='follow'){const L=nearestP(F.x,F.y);let tx=L.x-80*Math.sign(L.x-F.x||1);tx=Math.min(tx,F.ep.mocinha?3150:F.ep.josias&&!F.ep.josiasOk?F.x:3150);
+    if(!F.ep.pedroOk&&F.ep.pedro)tx=F.x;
+    const blk=Lv.enemies.find(e=>e.st!=='dead'&&Math.abs(e.y-F.y)<45&&Math.sign(e.x-F.x)===Math.sign(tx-F.x)&&Math.abs(e.x-F.x)<150);
+    if(blk){tx=F.x;if(F.msgT<=0&&Math.abs(L.x-F.x)<500){toast('A família tem medo de passar pelo capanga. Afaste-o do caminho!');F.msgT=5}}
+    if(Math.abs(L.x-F.x)>650)tx=F.x;
+    const dx=tx-F.x;F.moving=Math.abs(dx)>6;if(F.moving){F.dir=Math.sign(dx);F.x+=F.dir*Math.min(135*dt,Math.abs(dx));F.an+=dt*7}}else F.moving=false;
+  F.y=famGY(F.x);
+}
+function escolhaCabra(){const ov=showOv(`<span class="kicker">Episódio do romance · a cabra</span><h2>Chico Bento e a cabra</h2><div class="clue"><img src="img/q1/npc-cabra.webp" alt=""><p>Você segurou a cabra. Chico Bento olha os filhos famintos. O animal tem dono — mas a fome não espera. O que fazer?</p></div>
+  <div class="acts" style="flex-direction:column;align-items:stretch"><button class="opt" id="cA"><b>A</b><span>Deixar Chico Bento levar a cabra para alimentar os filhos.</span></button><button class="opt" id="cB"><b>B</b><span>Soltar a cabra e procurar outra comida pelo caminho.</span></button></div>`,{noClose:1});
+  const fim=t=>{ov.querySelector('.acts').innerHTML=`<div class="fb ok" style="width:100%">${t}</div><button class="pbtn" id="cOk" style="align-self:flex-end;margin-top:8px">Continuar</button>`;ov.querySelector('#cOk').onclick=()=>{ov.remove();state='play';FAM.ep.cabraOk=true;FAM.state='follow';FAM.cabra.gone=true}};
+  addNote('A cabra: no romance, Chico Bento, desesperado de fome, mata uma cabra; o dono aparece, o humilha e leva a carne, deixando para a família só as vísceras.');
+  ov.querySelector('#cA').onclick=()=>{FAM.forca=Math.min(100,FAM.forca+15);score+=100;updHud();fim('No livro, foi o que Chico Bento fez: matou a cabra para os filhos. Mas o dono apareceu, chamou-o de ladrão e levou a carne — só deixou as vísceras. A família ganha um pouco de força (+15), e você entende como a seca empurra um homem honesto ao desespero.')};
+  ov.querySelector('#cB').onclick=()=>{score+=100;updHud();fim('Você escolheu outro caminho. No livro, porém, Chico Bento mata a cabra e o dono aparece, o humilha e só deixa as vísceras para a família. A cena mostra até onde a fome leva quem perdeu tudo.')}}
+function episodioTrem(){say([{q:'chico',t:'Moço da estação, uma passagem para Fortaleza… pelo amor de Deus.'},{q:'telegrama',t:'NÃO TEM MAIS PASSAGEM DE GRAÇA PARA RETIRANTE PT ORDEM DO GOVERNO PT'},{q:'cordulina',t:'Então vamos a pé, Chico. Como todo mundo.'},{q:'detetive',t:'Mocinha, a irmã de Cordulina, decidiu ficar por aqui, procurando trabalho. A família vai seguir sem ela.'}]).then(()=>{
+  const bonus=Math.round(FAM.forca*4);score+=bonus;FAM.state='leaving';FAM.fade=1;SFX.win();updHud();
+  addNote('A retirada: sem passagem de trem, a família de Chico Bento segue a pé para Fortaleza; Mocinha fica pelo caminho.');
+  toast('Você protegeu a família até a estação! +'+bonus+' pontos (pela força que ela ainda tinha). Agora eles seguem a pé para Fortaleza.')})}
+function feedFamily(){if(!comida.length)return;const k=comida.shift();FAM.forca=Math.min(100,FAM.forca+25);score+=40;SFX.lampUp();floatTxt(FAM.x,FAM.y-120,'+25 força');toast('Você deu '+FOOD[k].nome+' à família. '+FOOD[k].t);updHud()}
+/* ================== MISSÃO NO ALAGADIÇO ================== */
+function startMission(){mission={t:120,ok:0,total:W.campo.ret.length,on:true};updHud();toast('Leve uma cesta por vez da barraca de Conceição até cada retirante. Se um capanga te acertar, ele confisca a cesta!')}
+function endMission(porTempo){mission.on=false;PLAYERS.forEach(q=>q.cesta=false);const b=mission.ok*100;score+=b;updHud();
+  addNote('Conceição no Campo de Concentração: no romance, ela trabalha como voluntária, distribuindo comida e remédio aos retirantes.');
+  say([{q:'professora',t:porTempo?`O tempo acabou… você levou ${mission.ok} de ${mission.total} cestas. Ninguém consegue salvar todos aqui — e é isso que mais dói.`:`Todas as cestas entregues! Obrigada, detetive. É pouco diante de tanta fome, mas hoje ninguém daqui dormiu sem comer.`},
+    {q:'professora',t:'Agora o mais importante: consegui passagens para São Paulo. Leve até a família de Chico Bento, lá no fundo do campo.'}]).then(()=>{hasPass=true;SFX.clue();toast('Você recebeu as passagens para São Paulo.')})}
+function updMission(dt){if(!mission||!mission.on||scene!=='campo')return;mission.t-=dt;if(mission.t<=0){mission.t=0;endMission(true);return}
+  const L=W.campo;for(const q of PLAYERS){if(!q.cesta&&Math.abs(q.x-L.cestas.x)<45&&Math.abs(q.y-G)<40){q.cesta=true;SFX.page();toast('Cesta de comida e remédio na mão. Leve até um retirante!')}
+    if(q.cesta)for(const r of L.ret){if(!r.ok&&Math.abs(q.x-r.x)<36&&Math.abs(q.y-r.y)<50){r.ok=true;q.cesta=false;mission.ok++;SFX.ok();floatTxt(r.x,r.y-110,'Deus lhe pague!');if(mission.ok>=mission.total)endMission(false);break}}}
+  if(Math.floor(mission.t*10)%5===0)updHud()}
+function drawFood(k,x,y){ctx.save();ctx.translate(x,y);ctx.lineWidth=2;ctx.strokeStyle='#2b1a0d';
+  if(k==='agua'){ctx.fillStyle='#b8793a';ctx.beginPath();ctx.ellipse(0,4,11,12,0,0,6.29);ctx.fill();ctx.stroke();ctx.beginPath();ctx.ellipse(0,-11,6,7,0,0,6.29);ctx.fill();ctx.stroke();ctx.fillStyle='#5a3418';ctx.fillRect(-3,-21,6,5)}
+  else if(k==='farinha'){ctx.fillStyle='#ead6a8';ctx.beginPath();ctx.moveTo(-12,14);ctx.lineTo(-9,-8);ctx.lineTo(9,-8);ctx.lineTo(12,14);ctx.closePath();ctx.fill();ctx.stroke();ctx.beginPath();ctx.moveTo(-8,-8);ctx.lineTo(-4,-15);ctx.lineTo(4,-15);ctx.lineTo(8,-8);ctx.fill();ctx.stroke();ctx.fillStyle='#8e3418';ctx.fillRect(-9,-9,18,3)}
+  else{ctx.fillStyle='#7a3f1a';ctx.beginPath();ctx.roundRect(-13,-8,26,16,3);ctx.fill();ctx.stroke();ctx.strokeStyle='rgba(255,220,160,.5)';ctx.beginPath();ctx.moveTo(-9,-4);ctx.lineTo(9,-4);ctx.stroke()}
+  ctx.restore()}
+function drawCesta(x,y,s=1){ctx.save();ctx.translate(x,y);ctx.scale(s,s);ctx.fillStyle='#a8742f';ctx.strokeStyle='#2b1a0d';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-14,-10);ctx.lineTo(14,-10);ctx.lineTo(10,8);ctx.lineTo(-10,8);ctx.closePath();ctx.fill();ctx.stroke();
+  ctx.beginPath();ctx.arc(0,-10,11,Math.PI,0);ctx.stroke();ctx.fillStyle='#e9d4a0';ctx.beginPath();ctx.arc(-4,-11,4,0,6.29);ctx.arc(5,-12,4,0,6.29);ctx.fill();ctx.strokeStyle='rgba(43,26,13,.5)';for(let i=-8;i<=8;i+=5){ctx.beginPath();ctx.moveTo(i,-9);ctx.lineTo(i*.75,7);ctx.stroke()}ctx.restore()}
+function drawFamily(){const F=FAM;if(!F||F.state==='gone')return;ctx.save();if(F.state==='leaving')ctx.globalAlpha=Math.max(0,F.fade);
+  const bob=F.moving?Math.abs(Math.sin(F.an))*3:0,flip=F.dir<0;
+  const put=(k,dx,sc)=>{const im=IMG[k];if(!im)return;const w=im.width*sc,h=im.height*sc,x=F.x+(flip?-dx:dx);ctx.save();ctx.translate(x,F.y-bob+2);if(flip)ctx.scale(-1,1);ctx.drawImage(im,-w/2,-h,w,h);ctx.restore()};
+  if(F.pedro||F.ep.pedroOk)put('menino',-40,.37);put('cordulina',0,.37);put('chico',44,.37);
+  if(F.state!=='leaving'){const bw=74,bx=F.x-bw/2+4,by=F.y-128;ctx.fillStyle='rgba(20,8,2,.8)';ctx.fillRect(bx-2,by-2,bw+4,10);ctx.fillStyle=F.forca>50?'#7cb85a':F.forca>25?'#e0a63a':'#c0392b';ctx.fillRect(bx,by,bw*F.forca/100,6);
+    ctx.font='bold 10px "Special Elite",monospace';ctx.textAlign='center';ctx.fillStyle='#ffe6b5';ctx.fillText('FAMÍLIA',F.x+4,by-4)}
+  ctx.restore();
+  const c=F.cabra;if(c&&!c.gone){const im=IMG.cabra;if(im){const w=im.width*.3,h=im.height*.3;ctx.save();ctx.translate(c.x,c.y+2);if(c.dir>0)ctx.scale(-1,1);ctx.drawImage(im,-w/2,-h+Math.abs(Math.sin(c.t*12))*-3,w,h);ctx.restore()}}
+  const j=F.josias;if(j&&!(j.done&&j.ok)){const im=IMG.menino;if(im){const w=im.width*.34,h=im.height*.34;ctx.save();ctx.translate(j.x,j.y+2);ctx.scale(-1,1);ctx.drawImage(im,-w/2,-h,w,h);ctx.restore()}}
+  if(F.ep.josias){const mx=3210;ctx.save();ctx.strokeStyle='#4a6a2a';ctx.lineWidth=3;for(let i=-2;i<=2;i++){ctx.beginPath();ctx.moveTo(mx,G);ctx.quadraticCurveTo(mx+i*8,G-30,mx+i*16,G-48);ctx.stroke();ctx.fillStyle='#6f8f3a';ctx.beginPath();ctx.ellipse(mx+i*16,G-50,9,4,i*.4,0,6.29);ctx.fill()}
+    ctx.fillStyle='#8a5a2c';ctx.strokeStyle='#2b1a0d';ctx.lineWidth=1.5;ctx.beginPath();ctx.ellipse(mx-10,G-3,12,5,.3,0,6.29);ctx.fill();ctx.stroke();ctx.beginPath();ctx.ellipse(mx+10,G-3,12,5,-.3,0,6.29);ctx.fill();ctx.stroke();
+    ctx.font='bold 11px "Special Elite",monospace';ctx.textAlign='center';ctx.fillStyle='#ffe6b5';ctx.fillText('mandioca brava',mx,G-62);ctx.restore()}
+}
+function findPedro(h){h.got=1;FAM.pedro=true;FAM.ep.pedroOk=true;FAM.state='follow';score+=200;SFX.ok();updHud();
+      toast('Você achou Pedro! +200. No romance, Pedro some de vez no caminho, seguindo um grupo de tropeiros — a família nunca mais o vê.');addNote('Pedro: no romance, o filho de Chico Bento desaparece no caminho, seguindo um grupo de tropeiros.')}
 const PISTA5={nome:'Mala do chefe da estação',t:'Papéis do chefe da estação: listas de retirantes pedindo passagem de trem para Fortaleza em 1915. Junto, um rascunho do fim do romance: na capital, Conceição consegue passagens para que a família de Chico Bento siga para São Paulo — e fica com o afilhado, Duquinha.'};
 function foundClue(j){if(clues[j])return;clues[j]=true;SFX.clue();score+=150;sparkle(P.x,P.y-60);updHud();
   const p=j<4?CH.pistas[j]:PISTA5;S.notes=S.notes||[];if(!S.notes.some(n=>n.c===CHI&&n.t===p.t))S.notes.push({c:CHI,t:p.t});
@@ -617,6 +701,7 @@ function talkConceicao(){const extra=[{q:'professora',t:'Mais uma coisa: no pát
 const HINTS=['No alto da caixa d’água há uma mala trancada a cadeado — a chave ficou com a bagagem do trem.','Quem joga as malas lá do alto da torre esconde alguma coisa.','Um dos vagões tem a porta destrancada.','A placa da estação guarda um recado — só à luz da lamparina, de pé na viga da fachada.','Na casa da estação, a mala sobre a cama está trancada. Procure a chave num lugar bem alto.'];
 function tryGate(){const miss=clues.map((c,i)=>c?null:HINTS[i]).filter(Boolean);
   if(!talked)miss.push('Converse com Conceição, aqui perto.');
+  if(FAM&&FAM.state!=='gone')miss.push('Acompanhe a família de Chico Bento até o trem, protegendo-a pelo caminho.');
   if(miss.length){SFX.bad();showOv(`<span class="kicker">Portão trancado</span><h2>Ainda falta investigar</h2><p style="margin-top:8px">O cadeado só cede para quem reuniu todas as pistas. Suas anotações dizem:</p><ul style="margin:10px 0 0 20px;line-height:1.7">${miss.map(m=>`<li>${esc(m)}</li>`).join('')}</ul><div class="acts" style="justify-content:flex-end"><button class="pbtn" data-close>Voltar à investigação</button></div>`);return}
   gateOpen=true;SFX.door();Lv.solids=Lv.solids.filter(s=>s!==Lv.gate);checkpoint={x:5720,y:G,scene:'main'};toast('O portão se abriu…');}
 
@@ -664,7 +749,9 @@ let toastT=null;function toast(m){const t=$('#toast');t.textContent=m;t.classLis
 function hudLamps(lost){const L=$('#lamps');if(L.children.length!==MAXL){L.innerHTML='';for(let i=0;i<MAXL;i++)L.appendChild(document.createElement('img'))}
   [...L.children].forEach((im,i)=>{const on=i<lamps;const s='img/i-lamp-'+(on?'on':'off')+'.webp';if(!im.src.endsWith(s))im.src=s;im.className=on?'on':''});
   if(lost){const im=L.children[lamps];if(im){im.classList.remove('out');void im.offsetWidth;im.classList.add('out')}}}
-function updHud(){$('#hScore').textContent=score;$('#hVelas').textContent=candles;$('#hPages').textContent=pages;$('#clues').innerHTML=clues.map(c=>`<i class="${c?'ok':''}"></i>`).join('')}
+function updHud(){$('#hScore').textContent=score;
+  const hf=$('#hFam');if(FAM&&FAM.state!=='gone'&&scene==='main'){hf.classList.remove('hidden');hf.innerHTML='Família <b>'+Math.round(FAM.forca)+'%</b> · provisões <b>'+comida.length+'</b>/4'}else hf.classList.add('hidden');
+  const hm=$('#hMis');if(mission&&mission.on){hm.classList.remove('hidden');const t=Math.ceil(mission.t);hm.innerHTML='⏳ <b>'+Math.floor(t/60)+':'+String(t%60).padStart(2,'0')+'</b> · cestas <b>'+mission.ok+'</b>/'+mission.total}else hm.classList.add('hidden');$('#hVelas').textContent=candles;$('#hPages').textContent=pages;$('#clues').innerHTML=clues.map(c=>`<i class="${c?'ok':''}"></i>`).join('')}
 $('#bMute').onclick=()=>{muted=!muted;try{localStorage.setItem('caso_mute',muted?'1':'0')}catch(e){}$('#bMute').textContent=muted?'🔇':'🔊'};
 $('#bPause').onclick=()=>togglePause();
 function togglePause(){if(state==='play'){state='pause';const ov=showOv(`<span class="kicker">Pausa</span><h2>Estação de Quixadá</h2>${controlsHTML()}${timelineHTML()}
@@ -680,7 +767,7 @@ function controlsHTML(){if(COOP)return `<div class="keys">
 function gameOver(){if(state==='over')return;state='over';const ov=showOv(`<div class="center"><span class="kicker">As lamparinas se apagaram</span><h2>No escuro, a pista se perde</h2>
   <p style="margin-top:8px">Reacenda três lamparinas e volte ao último ponto de controle (−100 pontos), ou recomece a fase.</p>
   <div class="acts" style="justify-content:center"><button class="pbtn" id="rt">Reacender e continuar</button><button class="pbtn ghost" id="rr">Recomeçar a fase</button><a class="pbtn ghost" href="index.html#mapa">Mapa</a></div></div>`);state='over';
-  ov.querySelector('#rt').onclick=()=>{ov.remove();lamps=3;score=Math.max(0,score-100);hudLamps();updHud();respawn();P.inv=2;if(boss&&!bossDone){boss.st='walk';boss.t=0;boss.x=6420;boss.waves=[]}state='play'};
+  ov.querySelector('#rt').onclick=()=>{ov.remove();lamps=3;score=Math.max(0,score-100);hudLamps();updHud();respawn();P.inv=2;if(famOn()&&FAM.state==='follow'&&Math.abs(FAM.x-P.x)>500)FAM.x=Math.max(120,P.x-70);if(boss&&!bossDone){boss.st='walk';boss.t=0;boss.x=6420;boss.waves=[]}state='play'};
   ov.querySelector('#rr').onclick=()=>location.reload()}
 function levelComplete(){
   raining=false;if(cineEl){cineEl.remove();cineEl=null}state='end';const secs=Math.round(elapsed),tb=Math.max(0,(600-secs)*2),lb=lamps*100,total=score+tb+lb;
@@ -695,7 +782,7 @@ function levelComplete(){
     <p style="margin-top:6px"><i>${esc(CH.obra)}</i> — ${esc(CH.autor)} (${CH.ano})</p><div class="bigletter">${CH.letra}</div>
     <p>Primeira letra da senha do cofre.</p><p class="medal" style="margin-top:8px">Medalha de ${medal}</p></div>
     <div class="stats"><div><b>${score}</b><span>pontos</span></div><div><b>+${tb}</b><span>bônus de tempo (${m}:${s})</span></div><div><b>+${lb}</b><span>lamparinas</span></div><div><b>${total}</b><span>total</span></div></div>
-    <p class="center" style="font-size:.92rem">Páginas recolhidas: ${pages}/${totalPages()} · Velas de São José: ${candles}/3 · Lamparinas perdidas: ${errosFase}</p>${timelineHTML()}
+    <p class="center" style="font-size:.92rem">Páginas recolhidas: ${pages}/${totalPages()} · Velas de São José: ${candles}/3 · Família: ${FAM&&FAM.state==='gone'?'protegida até a estação':'—'} · Cestas no Alagadiço: ${mission?mission.ok+'/'+mission.total:'—'} · Lamparinas perdidas: ${errosFase}</p>${timelineHTML()}
     <div class="rk"><h3>Placar da turma</h3><p style="font-size:.88rem;color:#6b4526">Registre sua pontuação: ela entra no placar deste computador e é enviada ao professor.</p>
       <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:6px"><input id="rkTurma" placeholder="Turma (ex.: 3º A)" maxlength="20"><button class="pbtn" id="rkSend">Registrar no placar</button></div>
       <div id="rkMsg" style="font-size:.88rem;margin-top:6px"></div><div id="rkTab"></div></div>
@@ -811,6 +898,11 @@ function drawCampo(sx,sy){
 }
 function drawRoom(k,sx,sy){img(k,sx,sy,VW,VH);ctx.save();ctx.translate(sx,sy);if(k==='casa'){if(W.casa.malaOpen)img('malaAb',496,300,62,48);else{img('malaF',486,322,80,42);if(Math.sin(T*3)>.3){ctx.globalAlpha=.5;img('brilho',488,330,76,26);ctx.globalAlpha=1}}}drawCommon();ctx.restore();drawLight()}
 function drawCommon(){
+  // provisões, família e retirantes
+  for(const f of (Lv.food||[]))if(!f.got)drawFood(f.k,f.x,f.y+Math.sin(T*3+f.x)*3);
+  if(scene==='main')drawFamily();
+  if(Lv.ret){const L=Lv;for(let i=0;i<3;i++)drawCesta(L.cestas.x-14+i*14,G-8-(i%2)*10,.9);for(const r of L.ret){const im=IMG[r.k];if(!im)continue;const w=im.width*.33,h=im.height*.33;ctx.save();if(!r.ok)ctx.filter='brightness(.72) sepia(.35)';ctx.drawImage(im,r.x-w/2,r.y-h+2,w,h);ctx.restore();
+    if(!r.ok&&mission&&mission.on){ctx.fillStyle='#ffcf7a';ctx.font='bold 13px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText('▼ fome',r.x,r.y-h-4)}else if(r.ok)drawCesta(r.x+16,r.y-6,.6)}}
   // oratório, velas e personagens do romance
   const ot=Lv.oratorio;if(ot){if(candles>=3){const g=ctx.createRadialGradient(ot.x,ot.y-30,4,ot.x,ot.y-30,70);g.addColorStop(0,'rgba(255,200,110,.55)');g.addColorStop(1,'rgba(255,150,50,0)');ctx.fillStyle=g;ctx.fillRect(ot.x-70,ot.y-100,140,140)}img('oratorio',ot.x-28,ot.y-58,56,56)}
   for(const c of (Lv.candles||[])){if(c.lit){const g=ctx.createRadialGradient(c.x,c.y-30,2,c.x,c.y-30,46);g.addColorStop(0,'rgba(255,210,120,.6)');g.addColorStop(1,'rgba(255,160,60,0)');ctx.fillStyle=g;ctx.fillRect(c.x-46,c.y-76,92,92);img('velaOn',c.x-11,c.y-39,22,39)}else img('velaOff',c.x-11,c.y-33,22,33)}
@@ -824,7 +916,7 @@ function drawCommon(){
   // páginas e itens
   for(const p of Lv.pages){if(p.got)continue;const b=Math.sin(p.t*3)*5;ctx.save();ctx.translate(p.x,p.y+b);ctx.rotate(Math.sin(p.t*2)*.25);img(p.t%2>1?'pag2':'pag1',-14,-9,28,17);ctx.restore()}
   for(const l of Lv.lamps){if(!l.got)img('lampada',l.x-18,l.y-24+Math.sin(T*3)*3,36,26)}
-  for(const h of Lv.hidden){if(h.got||!(h.vis>0.02))continue;ctx.globalAlpha=h.vis;if(h.kind==='lamp')img('lampada',h.x-18,h.y-24,36,26);else{img('brilho',h.x-34,h.y-20,68,30);ctx.fillStyle='#3a1d0b';ctx.font='11px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText('recado a lápis',h.x,h.y+16)}ctx.globalAlpha=1}
+  for(const h of Lv.hidden){if(h.got||!(h.vis>0.02))continue;ctx.globalAlpha=h.vis;if(h.kind==='pedro'){const im=IMG.menino;if(im)ctx.drawImage(im,h.x-im.width*.17,h.y-im.height*.34+8,im.width*.34,im.height*.34)}else if(h.kind==='lamp')img('lampada',h.x-18,h.y-24,36,26);else{img('brilho',h.x-34,h.y-20,68,30);ctx.fillStyle='#3a1d0b';ctx.font='11px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText('recado a lápis',h.x,h.y+16)}ctx.globalAlpha=1}
   const ky=Lv.key;if(ky&&!ky.got)img('chaveB',ky.x-26,ky.y-30-Math.sin(T*3)*3,52,24);
   // projéteis
   for(const p of projs){ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);img('pag1',-12,-7,24,14);ctx.restore()}
@@ -849,6 +941,7 @@ function drawPlayer(){
   else if(P.hurt>0)f=12;else if(P.throwT>0)f=P.throwT>.18?10:11;
   else if(!P.ground)f=P.vy<-150?7:8;else if(P.land>0)f=9;else if(K.lamp&&!run)f=13;else if(run)f=Math.floor(P.an)%6;
   const al=P.inv>0&&Math.sin(T*30)>0?.35:1;
+  if(P.cesta)drawCesta(P.x,P.y-P.h-14,.8);
   const fem=P.gen==='f'&&IMG.detF,alt=COOP&&P.id===1&&!fem;
   if(alt)ctx.filter='hue-rotate(185deg) saturate(.85)';
   sheet(fem?'detF':'det',SH.det,f,P.x,P.y,P.face<0&&!P.climb,al);ctx.filter='none';
@@ -869,7 +962,7 @@ function frame(now){
   const dt=Math.min(.033,(now-last)/1000||0);last=now;
   if(state==='play'){T+=dt;elapsed+=dt;
     if(fading&&fadeCb){fading+=dt*4;if(fading>=1.5&&fadeCb){const cb=fadeCb;fadeCb=null;use(PLAYERS[0]);cb();gather();fading=1}}
-    if(!fading||fading<1){updEnemies(dt);updMalas(dt);updVents(dt);updBoss(dt);updProjs(dt);updCrumble(dt);
+    if(!fading||fading<1){updEnemies(dt);updMalas(dt);updVents(dt);updBoss(dt);updProjs(dt);updCrumble(dt);updFamily(dt);updMission(dt);if(FAM&&scene==='main'&&Math.floor(T*2)!==Math.floor((T-dt)*2))updHud();
       for(const q of PLAYERS){use(q);updatePlayer(dt);if(state!=='play')break;hazards();updPickups(dt);updInter();q.near=near;if(state!=='play'||fadeCb)break}
       use(PLAYERS[0]);for(const h of Lv.hidden){h.vis=h._v>0?h._v:Math.max(0,(h.vis||0)-dt*2);h._v=0}}
     if(fading&&!fadeCb){fading-=dt*3;if(fading<=0)fading=0}
@@ -901,10 +994,10 @@ function comic(){return new Promise(res=>{let i=0;const d=document.createElement
 
 /* ================== INÍCIO ================== */
 async function start(){
-  resize();await loadAll();makeFar();W.main=buildMain();W.vagao=buildWagon();W.casa=buildCasa();W.campo=buildCampo();Lv=W.main;$('#hPagesT').textContent=totalPages();
+  resize();await loadAll();makeFar();W.main=buildMain();W.vagao=buildWagon();W.casa=buildCasa();W.campo=buildCampo();Lv=W.main;famInit();$('#hPagesT').textContent=totalPages();
   hudLamps();updHud();$('#load').remove();state='intro';
   const nm0=S.name&&S.name!=='Detetive'?S.name:'';
-  const ov=showOv(`<span class="kicker">Capítulo 1 · Modo ação</span><h2>Estação de Quixadá</h2><p style="margin-top:8px">A Brigada da Censura tomou a estação. Cinco pistas estão <b>escondidas</b> — no alto, dentro de objetos, atrás de portas e no escuro. Sem elas, o portão do pátio não abre.</p><p style="margin-top:6px">Pelo caminho, converse com personagens de <i>O Quinze</i>, acenda as <b>três velas de São José</b> e recolha páginas para remontar a <b>linha do tempo do romance</b>.</p>
+  const ov=showOv(`<span class="kicker">Capítulo 1 · Modo ação</span><h2>Estação de Quixadá</h2><p style="margin-top:8px">A Brigada da Censura tomou a estação. Cinco pistas estão <b>escondidas</b> — no alto, dentro de objetos, atrás de portas e no escuro. Sem elas, o portão do pátio não abre.</p><p style="margin-top:6px">Proteja a <b>família de Chico Bento</b> na retirada: ela segue você, sente fome e sede e enfrenta os episódios do livro. Pelo caminho, acenda as <b>três velas de São José</b> e recolha páginas para remontar a <b>linha do tempo do romance</b>.</p>
     ${isTouch?'':`<h3>Quantos detetives?</h3><div class="pick" id="pkMode"><button data-v="1" class="on">🕵 1 jogador</button><button data-v="2">👥 2 jogadores (mesmo teclado)</button></div>`}
     <div class="pl"><h3 id="plT1">Detetive</h3><input id="nm1" maxlength="16" placeholder="Seu nome" value="${esc(nm0)}"><div class="pick" id="pkG1"><button data-v="m" class="${S.gen==='f'?'':'on'}">Detetive (ele)</button><button data-v="f" class="${S.gen==='f'?'on':''}">Detetive (ela)</button></div></div>
     <div class="pl hidden" id="pl2"><h3>Jogador 2</h3><input id="nm2" maxlength="16" placeholder="Nome do parceiro"><div class="pick" id="pkG2"><button data-v="m">Detetive (ele)</button><button data-v="f" class="on">Detetive (ela)</button></div></div>
