@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guia do Professor — Arquivo de Mistérios</title>
+<meta name="description" content="Guia do professor para a fase de Quixadá (O Quinze, Rachel de Queiroz) do jogo O Caso dos Originais Desaparecidos: habilidades da BNCC, plano de aula, perguntas de discussão e atividades.">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:ital,wght@0,400;0,600;1,400&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f0905;--card:#22160d;--line:#4a3220;--line2:#6b4526;--paper:#f1e2c2;--muted:#bfa883;--amber:#f4a83c;--amber2:#ffcf7a;--rust:#a23d1c}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--paper);font-family:Lora,Georgia,serif;line-height:1.65}
+a{color:var(--amber2)}
+.wrap{max-width:900px;margin:0 auto;padding:0 18px}
+nav{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 0;font-family:'Special Elite';font-size:.9rem;flex-wrap:wrap}
+nav a{color:var(--muted);text-decoration:none}nav a:hover{color:var(--amber2)}
+header{padding:26px 0 18px;border-bottom:1px solid var(--line)}
+.kicker{font-family:'Special Elite';color:var(--amber);letter-spacing:.08em;text-transform:uppercase;font-size:.8rem}
+h1{font-family:'Playfair Display';font-weight:900;font-size:clamp(1.8rem,4.5vw,2.7rem);line-height:1.15;margin:6px 0 10px}
+h2{font-family:'Playfair Display';font-size:clamp(1.3rem,3vw,1.7rem);margin:34px 0 10px;color:var(--amber2)}
+h3{font-family:'Playfair Display';font-size:1.1rem;margin:16px 0 6px}
+p,li{font-size:1rem}p+p{margin-top:8px}
+ul,ol{padding-left:22px}li{margin:4px 0}
+.lead{font-size:1.08rem;color:var(--paper)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{font-family:'Special Elite';font-size:.82rem;border:1px solid var(--line2);background:var(--card);border-radius:20px;padding:4px 12px;color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-top:10px}
+.card b.cod{font-family:'Special Elite';color:var(--amber)}
+.tw{overflow-x:auto;margin-top:10px}
+table{width:100%;border-collapse:collapse;font-size:.94rem;min-width:620px}
+th,td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{font-family:'Special Elite';font-weight:400;color:var(--amber);font-size:.84rem}
+.steps{counter-reset:s;list-style:none;padding:0}
+.steps li{counter-increment:s;position:relative;padding-left:44px;margin:12px 0}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--rust);color:#fff;font-family:'Special Elite'}
+.warn{border-left:4px solid var(--amber);background:rgba(244,168,60,.08);padding:10px 14px;border-radius:0 8px 8px 0;margin-top:10px}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.btn{font-family:'Special Elite';background:var(--rust);color:#fff;border:0;border-radius:8px;padding:10px 16px;text-decoration:none;cursor:pointer;font-size:.95rem}
+.btn.ghost{background:transparent;border:1px solid var(--line2);color:var(--paper)}
+footer{margin:40px 0 30px;padding-top:14px;border-top:1px solid var(--line);font-size:.85rem;color:var(--muted)}
+@media print{
+  body{background:#fff;color:#111}nav,.acts,footer .np{display:none}
+  h2,a{color:#111}.kicker{color:#7a2e12}.card,.chip{background:#fff;border-color:#bbb;color:#111}th{color:#7a2e12}
+  .warn{background:#fff;border-color:#7a2e12}h2{page-break-after:avoid}.card,tr{page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a href="/misterios/index.html">← Arquivo de Mistérios</a><a href="index.html">Abrir o jogo ▸</a></nav>
+
+<header>
+  <p class="kicker">Guia do professor · Caso nº 1 · Capítulo 1</p>
+  <h1>Estação de Quixadá: <i>O Quinze</i> em jogo</h1>
+  <p class="lead">Uma fase de ação em que os alunos protegem a família de Chico Bento na retirada de 1915, encontram pistas sobre o romance e enfrentam a censura. Ela serve para revisar <i>O Quinze</i> (1930), de Rachel de Queiroz, e o romance de 30 da 2ª fase do Modernismo.</p>
+  <div class="chips"><span class="chip">Ensino Médio (1º a 3º ano)</span><span class="chip">1 a 2 aulas de 50 min</span><span class="chip">Individual ou em dupla</span><span class="chip">Computador ou celular deitado</span><span class="chip">Gratuito, no navegador</span></div>
+  <div class="acts"><a class="btn" href="fase-quixada.html">Jogar a fase de Quixadá</a><button class="btn ghost" onclick="print()">Imprimir este guia</button></div>
+</header>
+
+<h2>Habilidades da BNCC</h2>
+<div class="card"><b class="cod">EM13LP48</b> — Identificar assimilações, rupturas e permanências no processo de constituição da literatura brasileira. <br><small>No jogo: o romance de 30 e sua denúncia social, em contraste com a idealização do sertanejo no Romantismo (desafio do chefe).</small></div>
+<div class="card"><b class="cod">EM13LP50</b> — Analisar relações intertextuais e interdiscursivas entre obras de diferentes autores e gêneros literários. <br><small>No jogo: <i>O Quinze</i> ao lado de <i>Vidas Secas</i>, <i>Os Sertões</i> e <i>Iracema</i> nas alternativas dos desafios.</small></div>
+<div class="card"><b class="cod">EM13LP52</b> — Analisar obras significativas das literaturas brasileiras e de outros países, considerando o contexto de produção e o diálogo com o presente. <br><small>No jogo: a seca de 1915, a migração e o Campo de Concentração do Alagadiço, contexto do romance.</small></div>
+<p style="margin-top:10px;font-size:.9rem;color:var(--muted)">Os enunciados acima resumem cada habilidade. Consulte o texto completo na <a href="https://basenacionalcomum.mec.gov.br/" target="_blank" rel="noopener">BNCC</a>. A fase também conversa com História (secas e migrações no Nordeste) e Geografia (o semiárido).</p>
+
+<h2>Plano de aula</h2>
+<h3>Aula 1 · Jogar (50 min)</h3>
+<ol class="steps">
+  <li><b>Antes (10 min).</b> Pergunte o que a turma sabe sobre secas no Nordeste e sobre migração. Apresente Rachel de Queiroz: publicou <i>O Quinze</i> em 1930, aos 19 anos, e foi a primeira mulher eleita para a Academia Brasileira de Letras (1977).</li>
+  <li><b>Durante (30 min).</b> Os alunos jogam a fase de Quixadá. Em dupla no mesmo computador, um aluno usa as teclas da esquerda e o outro as setas. No celular, a tela fica deitada. Peça que anotem três acontecimentos do romance que aparecerem na tela.</li>
+  <li><b>Fechamento (10 min).</b> Cada dupla diz a medalha e uma conquista que conseguiu, e conta um episódio do livro que descobriu jogando.</li>
+</ol>
+<h3>Aula 2 · Ler e discutir (50 min)</h3>
+<ol class="steps">
+  <li><b>Leitura (20 min).</b> Leia com a turma um trecho do romance: a partida da família de Chico Bento, a cabra ou a chegada ao Campo de Concentração.</li>
+  <li><b>Discussão (15 min).</b> Use as perguntas abaixo, comparando o livro com o que viram no jogo.</li>
+  <li><b>Escrita (15 min).</b> Uma das atividades escritas abaixo, que pode terminar em casa.</li>
+</ol>
+
+<h2>O livro dentro da fase</h2>
+<p>Em vários momentos o jogador pode "salvar" alguém que o romance não salva. Quando isso acontece, o jogo avisa o que acontece no livro e anota no caderno. Essa diferença é um ótimo ponto de partida para a discussão.</p>
+<div class="tw"><table>
+<tr><th>Momento do jogo</th><th>No romance</th><th>Para discutir</th></tr>
+<tr><td>Abertura em quadrinhos: Dona Inácia reza no dia de São José</td><td>Se não chove até 19 de março, o sertanejo dá o ano por perdido</td><td>Fé e esperança diante da seca</td></tr>
+<tr><td>Escoltar a família, que sente fome e sede</td><td>Sem trabalho, Chico Bento parte a pé com a família para Fortaleza</td><td>Por que a retirada era a única saída?</td></tr>
+<tr><td>Pedro some e é achado com a lamparina</td><td>Pedro desaparece de vez no caminho</td><td>O que o jogo muda e o que o livro quer mostrar</td></tr>
+<tr><td>A cabra: o jogador escolhe o que fazer</td><td>Chico Bento mata a cabra; o dono o humilha e leva a carne</td><td>Fome, dignidade e justiça</td></tr>
+<tr><td>Josias corre para a mandioca brava</td><td>Josias come mandioca crua e morre envenenado</td><td>A seca como tragédia que atinge as crianças</td></tr>
+<tr><td>Telegrama: não há mais passagem para retirante</td><td>A família segue a pé; Mocinha fica pelo caminho</td><td>O papel do governo e das ferrovias</td></tr>
+<tr><td>Missão das cestas no Alagadiço</td><td>Conceição trabalha como voluntária no Campo de Concentração</td><td>O que foram os campos de 1915?</td></tr>
+<tr><td>Passagens para São Paulo; Conceição fica com Duquinha</td><td>A família segue para São Paulo; o afilhado fica com Conceição</td><td>Partir para recomeçar: a migração Nordeste → Sudeste</td></tr>
+</table></div>
+
+<h2>Perguntas para discussão</h2>
+<ol>
+  <li>O romance alterna duas histórias: a de Chico Bento e a de Conceição. O que cada uma mostra sobre a seca?</li>
+  <li>Conceição recusa o casamento com Vicente e prefere os livros e o trabalho. Por que essa escolha era ousada em 1915 e em 1930?</li>
+  <li>No jogo você pôde salvar Josias e encontrar Pedro. Por que a autora não deu esse final a eles?</li>
+  <li>O governo cercou os retirantes no Campo do Alagadiço para que não entrassem em Fortaleza. Que outras situações da história ou de hoje lembram isso?</li>
+  <li>Compare o sertanejo de <i>O Quinze</i> com o herói idealizado do Romantismo. O que mudou na forma de olhar o Nordeste?</li>
+  <li>Na história do jogo, um "Censor" rouba os originais de livros que denunciam a realidade. Por que um governo teria interesse em calar esses livros?</li>
+</ol>
+
+<h2>Atividades escritas</h2>
+<div class="card"><b>1. Relato de retirante.</b> Escreva, em 1ª pessoa, um dia da caminhada da família de Chico Bento contado por Cordulina ou por Pedro. Use pelo menos dois acontecimentos do romance. (15 a 20 linhas)</div>
+<div class="card"><b>2. Carta de Conceição.</b> Do Campo do Alagadiço, Conceição escreve a Vicente contando o que viu e explicando por que escolheu esse trabalho. (gênero carta pessoal)</div>
+<div class="card"><b>3. Jogo × livro.</b> Escolha uma cena em que o jogo mudou o romance (Pedro, Josias ou a cabra). Explique a diferença e defenda qual versão comunica melhor a realidade da seca. (texto dissertativo-argumentativo curto)</div>
+
+<h2>Acompanhamento e avaliação</h2>
+<ul>
+  <li>No fim da fase, o aluno informa a turma e toca em <b>Registrar no placar</b>. O resultado chega à aba <b>Resultados</b> da sua planilha do Google, com a atividade "Arquivo de Mistérios · Quixadá". Lá aparecem a pontuação, a porcentagem de páginas recolhidas e o resumo (medalha, nível, conquistas, tempo e linha do tempo).</li>
+  <li>O placar com o top 10 fica salvo no computador usado, o que é bom para uma competição dentro da turma no laboratório.</li>
+  <li>Para nota, valorize mais a discussão e a atividade escrita do que a pontuação: quem joga melhor nem sempre é quem entendeu melhor o livro.</li>
+  <li>A <b>linha do tempo do romance</b> (12 acontecimentos, liberados pelas páginas recolhidas) e o <b>caderno de anotações</b> servem de resumo para revisão.</li>
+</ul>
+
+<h2>Dicas práticas</h2>
+<ul>
+  <li><b>Dificuldade:</b> escolha Fácil para turmas que jogam pouco e Difícil como desafio. O nível aparece no placar.</li>
+  <li><b>Som:</b> no laboratório, peça fones ou abaixe a música nas Opções (tela inicial ou pausa).</li>
+  <li><b>Celular:</b> funciona com a tela deitada e botões na tela. O modo dupla é só no teclado.</li>
+  <li><b>Internet:</b> a fase carrega cerca de 5 MB de imagens na primeira vez.</li>
+  <li><b>Tempo:</b> uma partida completa leva de 15 a 30 minutos.</li>
+</ul>
+<div class="warn"><b>Antes de jogar, prepare a turma.</b> O romance trata de fome, da morte de uma criança e dos campos de concentração de 1915. Avise os alunos e esteja atento a quem vive ou viveu situações parecidas.</div>
+<div class="warn"><b>O jogo não substitui a leitura.</b> As falas e cenas são paráfrases criadas para fins didáticos. Incentive a leitura do romance completo.</div>
+<div class="warn"><b>Privacidade.</b> Oriente os alunos a usar só o primeiro nome ou um apelido. O progresso fica no navegador; só o registro no placar envia apelido, turma e pontuação para a sua planilha.</div>
+
+<footer><span>Arquivo de Mistérios · Prof. Marcos Cruz</span> <span class="np">· <a href="/misterios/index.html">Voltar ao arquivo</a> · <a href="/">Portal</a></span></footer>
+</div>
+</body>
+</html>
