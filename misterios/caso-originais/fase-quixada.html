@@ -225,7 +225,7 @@ const KEY='caso_originais_v1';
 const store={get(){try{return JSON.parse(localStorage.getItem(KEY))}catch(e){return null}},set(v){try{localStorage.setItem(KEY,JSON.stringify(v))}catch(e){}}};
 
 /* ---------------- imagens ---------------- */
-const SRC={menino:'q1/npc-menino',ceu:'q1/ceu',inacia:'q1/npc-inacia',chico:'q1/npc-chico',cordulina:'q1/npc-cordulina',mocinha:'q1/npc-mocinha',vicente:'q1/npc-vicente',cabra:'q1/npc-cabra',oratorio:'q1/oratorio',velaOff:'q1/vela-off',velaOn:'q1/vela-on',campoBg:'q1/alagadico',interior:'q1/vagao-interior',casa:'q1/casa-interior',porta:'q1/porta-aberta',malaF:'q1/mala-trancada',malaAb:'q1/mala-aberta-pista',chave:'q1/chave',chaveB:'q1/chave-brilho',estacao:'q1/estacao',torre:'q1/caixa-dagua',banco:'q1/banco',loco:'q1/locomotiva',vag1:'q1/vagao1',vag2:'q1/vagao2',
+const SRC={detF:'q1/detetive-f',menino:'q1/npc-menino',ceu:'q1/ceu',inacia:'q1/npc-inacia',chico:'q1/npc-chico',cordulina:'q1/npc-cordulina',mocinha:'q1/npc-mocinha',vicente:'q1/npc-vicente',cabra:'q1/npc-cabra',oratorio:'q1/oratorio',velaOff:'q1/vela-off',velaOn:'q1/vela-on',campoBg:'q1/alagadico',interior:'q1/vagao-interior',casa:'q1/casa-interior',porta:'q1/porta-aberta',malaF:'q1/mala-trancada',malaAb:'q1/mala-aberta-pista',chave:'q1/chave',chaveB:'q1/chave-brilho',estacao:'q1/estacao',torre:'q1/caixa-dagua',banco:'q1/banco',loco:'q1/locomotiva',vag1:'q1/vagao1',vag2:'q1/vagao2',
   plat:'q1/k-plataforma',pedra:'q1/k-pedra',caixote:'q1/k-caixote',barril:'q1/k-barril',mala:'q1/k-mala',malaA:'q1/k-mala-aberta',trouxa:'q1/k-trouxa',chao:'q1/k-chao',viga:'q1/k-viga',telhado:'q1/k-telhado',
   pag1:'q1/i-pagina1',pag2:'q1/i-pagina2',lampada:'q1/i-lampada',tinta1:'q1/i-tinta1',tinta2:'q1/i-tinta2',tinta3:'q1/i-tinta3',poeira:'q1/i-poeira',vapor:'q1/i-vapor',brilho:'q1/i-brilho',
   det:'q1/detetive',cap:'q1/capanga',boss:'q1/chefe',con:'q1/conceicao',diario:'i-diario',lampOn:'i-lamp-on'};
@@ -860,7 +860,7 @@ function blip(V,ch,q,ex){if(muted||!ac()||!OUT)return;const vv=VV[ch],nw=perform
   g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(ex?.12:.08,t+.012);g.gain.exponentialRampToValueAtTime(.0001,t+.09);o.connect(bp).connect(g);o.connect(dry).connect(g);g.connect(OUT.sfx);o.start(t);o.stop(t+.11);return true}
 let lastQ=null;
 function say(lines){return new Promise(res=>{const prev=state;state='modal';clearInput();let i=0,typing=null,full='';lastQ=null;const d=document.createElement('div');d.id='dlg';document.body.appendChild(d);
-  function show(){const L=lines[i],Pp=PERSONAGENS[L.q];full=L.t.replace(/\{nome\}/g,S.name);
+  function show(){const L=lines[i],Pp=L.q==='detetive'&&S.gen==='f'?Object.assign({},PERSONAGENS.detetive,{img:'img/detetive-f.webp'}):PERSONAGENS[L.q];full=L.t.replace(/\{nome\}/g,S.name);
     d.innerHTML=(L.q!=='telegrama'?`<img class="por" src="${Pp.img}" alt="">`:'')+`<div class="box"><div class="nm">${esc(L.q==='detetive'?(S.name&&S.name!=='Detetive'?'Detetive '+S.name:'Detetive'):Pp.nome)}</div><p class="tx"></p><span class="nx">▸ clique ou ESPAÇO</span></div>`;
     const vk=L.q==='detetive'&&S.gen==='f'?'detetiveF':L.q,V=VOZ[vk]||{f:200,ty:'triangle'},por=d.querySelector('.por'),ex=/!/.test(full)&&!V.tele;
     if(por&&lastQ!==L.q)por.classList.add('in');lastQ=L.q;if(ex)d.querySelector('.box').classList.add('ex');
@@ -1072,7 +1072,7 @@ function drawPlayer(){
   else if(!P.ground)f=P.vy<-150?7:8;else if(P.land>0)f=9;else if(K.lamp&&!run)f=13;else if(run)f=Math.floor(P.an)%6;
   const al=P.inv>0&&Math.sin(T*30)>0?.35:1;
   if(P.cesta)drawCesta(P.x,P.y-P.h-14,.8);
-  const fem=P.gen==='f'&&IMG.detF,alt=COOP&&P.id===1&&!fem;
+  const fem=P.gen==='f'&&IMG.detF,alt=COOP&&P.id===1&&!fem;if(fem&&f===5&&!run)f=14;
   if(alt)ctx.filter='hue-rotate(185deg) saturate(.85)';
   sheet(fem?'detF':'det',SH.det,f,P.x,P.y,P.face<0&&!P.climb,al);ctx.filter='none';
   if(COOP){const c=P.id?'#5fd0c4':'#ffcf7a';ctx.save();ctx.font='bold 12px "Special Elite",monospace';ctx.textAlign='center';const t=(P.nome||'J'+(P.id+1)).slice(0,12),w=ctx.measureText(t).width+12;

@@ -274,6 +274,10 @@ body.notop #hud,body.notop #inv{display:none}
   .opt{padding:6px 10px;margin-bottom:5px;font-size:.88rem}
 }
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition:none!important}}
+#gpick{display:flex;gap:8px;justify-content:center;margin:10px 0 4px}
+#gpick button{display:flex;align-items:center;gap:6px;background:rgba(20,10,4,.55);color:#f1e2c2;border:1px solid #6b4526;border-radius:20px;padding:4px 12px 4px 4px;font-family:'Special Elite',monospace;font-size:.85rem;cursor:pointer}
+#gpick button img{width:30px;height:30px;border-radius:50%;object-fit:cover;object-position:50% 10%;background:#c9a46a}
+#gpick button.on{background:#a23d1c;border-color:#ffcf7a;color:#fff}
 </style>
 </head>
 <body class="notop">
@@ -304,6 +308,7 @@ body.notop #hud,body.notop #inv{display:none}
 </div>
 
 <script src="dados.js"></script>
+<script src="abertura.js"></script>
 <script>
 /* Capítulos que já têm fase de ação (plataforma). Os demais usam a investigação clássica. */
 const FASES_ACAO={0:'fase-quixada.html'};
@@ -373,7 +378,7 @@ function say(lines){
       const L=lines[i],P=PERSONAGENS[L.q];full=fill(L.t);
       d.className=L.q==='telegrama'?'tele':'';
       d.innerHTML=(L.q!=='telegrama'&&L.q!=='detetive'?`<img class="por" src="${P.img}" alt="">`:'')+
-        (L.q==='detetive'?`<img class="por" src="${P.img}" alt="">`:'')+
+        (L.q==='detetive'?`<img class="por" src="${S.gen==='f'?'img/detetive-f.webp':P.img}" alt="">`:'')+
         `<div class="box"><div class="nm">${esc(L.q==='detetive'?'Detetive '+S.name:P.nome)}</div><p class="tx"></p><span class="nx">▸ clique para continuar</span></div>`;
       const tx=d.querySelector('.tx');let k=0;
       clearInterval(typing);
@@ -402,22 +407,28 @@ function showTitle(){
   <p class="sub">Um mistério da Segunda Fase do Modernismo · Brasil, 1938</p>
   <div class="tbox">
     <label for="nm">Nome do(a) detetive</label>
-    <input id="nm" maxlength="20" placeholder="Seu nome" value="${esc(sv?.name&&sv.name!=='Detetive'?sv.name:'')}">
+    <input id="nm" maxlength="20" placeholder="Primeiro nome ou apelido" value="${esc(sv?.name&&sv.name!=='Detetive'?sv.name:'')}">
+    <div class="gpick" id="gpick"><button type="button" data-v="m" class="${sv?.gen==='f'?'':'on'}"><img src="img/detetive.webp" alt="">Detetive (ele)</button><button type="button" data-v="f" class="${sv?.gen==='f'?'on':''}"><img src="img/detetive-f.webp" alt="">Detetive (ela)</button></div>
     <div class="row">
       <button class="wbtn" id="bNew">Novo caso</button>
       ${canCont?'<button class="wbtn" id="bCont">Continuar</button>':''}
     </div>
-    <a href="../">← Portal de Jogos</a>
+    <a href="#" id="bAbre">▶ Ver a abertura animada</a> · <a href="../">← Portal de Jogos</a>
   </div>`;
   ui.appendChild(t);
-  $('#bNew').onclick=()=>{ac();const n=$('#nm').value.trim()||'Detetive';S=fresh(n);save();fadeTo(intro)};
-  if(canCont)$('#bCont').onclick=()=>{ac();S=sv;const n=$('#nm').value.trim();if(n)S.name=n;save();fadeTo(()=>S.ch>=CAPITULOS.length||FASES_ACAO[S.ch]?showMap():enterChapter(S.ch))};
+  let gen=sv?.gen==='f'?'f':'m';t.querySelectorAll('#gpick button').forEach(b=>b.onclick=()=>{gen=b.dataset.v;t.querySelectorAll('#gpick button').forEach(x=>x.classList.toggle('on',x===b))});
+  $('#bNew').onclick=()=>{ac();const n=$('#nm').value.trim()||'Detetive';S=fresh(n);S.gen=gen;save();fadeTo(intro)};
+  if(canCont)$('#bCont').onclick=()=>{ac();S=sv;S.gen=gen;const n=$('#nm').value.trim();if(n)S.name=n;save();fadeTo(()=>S.ch>=CAPITULOS.length||FASES_ACAO[S.ch]?showMap():enterChapter(S.ch))};
   $('#nm').addEventListener('keydown',e=>{if(e.key==='Enter')$('#bNew').click()});
+  $('#bAbre').onclick=e=>{e.preventDefault();ac();if(window.Abertura){const n=$('#nm').value.trim()||'Detetive';Abertura.play({nome:n,gen,lines:INTRO.map(l=>({q:l.q,t:l.t.replace(/\{nome\}/g,n)}))})}};
 }
 
 async function intro(){
   setLayout(true);hud();clearScene();setBg('img/titulo.webp');
-  await wait(400);await say(INTRO);showMap();
+  await wait(400);
+  if(window.Abertura){await Abertura.play({nome:S.name,gen:S.gen,lines:INTRO.map(l=>({q:l.q,t:fill(l.t)}))});}
+  else await say(INTRO);
+  showMap();
 }
 
 /* ================== MAPA ================== */
