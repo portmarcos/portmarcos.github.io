@@ -308,6 +308,7 @@ body.notop #hud,body.notop #inv{display:none}
 </div>
 
 <script src="dados.js"></script>
+<script src="abertura.js"></script>
 <script>
 /* Capítulos que já têm fase de ação (plataforma). Os demais usam a investigação clássica. */
 const FASES_ACAO={0:'fase-quixada.html'};
@@ -412,18 +413,22 @@ function showTitle(){
       <button class="wbtn" id="bNew">Novo caso</button>
       ${canCont?'<button class="wbtn" id="bCont">Continuar</button>':''}
     </div>
-    <a href="../">← Portal de Jogos</a>
+    <a href="#" id="bAbre">▶ Ver a abertura animada</a> · <a href="../">← Portal de Jogos</a>
   </div>`;
   ui.appendChild(t);
   let gen=sv?.gen==='f'?'f':'m';t.querySelectorAll('#gpick button').forEach(b=>b.onclick=()=>{gen=b.dataset.v;t.querySelectorAll('#gpick button').forEach(x=>x.classList.toggle('on',x===b))});
   $('#bNew').onclick=()=>{ac();const n=$('#nm').value.trim()||'Detetive';S=fresh(n);S.gen=gen;save();fadeTo(intro)};
   if(canCont)$('#bCont').onclick=()=>{ac();S=sv;S.gen=gen;const n=$('#nm').value.trim();if(n)S.name=n;save();fadeTo(()=>S.ch>=CAPITULOS.length||FASES_ACAO[S.ch]?showMap():enterChapter(S.ch))};
   $('#nm').addEventListener('keydown',e=>{if(e.key==='Enter')$('#bNew').click()});
+  $('#bAbre').onclick=e=>{e.preventDefault();ac();if(window.Abertura){const n=$('#nm').value.trim()||'Detetive';Abertura.play({nome:n,gen,lines:INTRO.map(l=>({q:l.q,t:l.t.replace(/\{nome\}/g,n)}))})}};
 }
 
 async function intro(){
   setLayout(true);hud();clearScene();setBg('img/titulo.webp');
-  await wait(400);await say(INTRO);showMap();
+  await wait(400);
+  if(window.Abertura){await Abertura.play({nome:S.name,gen:S.gen,lines:INTRO.map(l=>({q:l.q,t:fill(l.t)}))});}
+  else await say(INTRO);
+  showMap();
 }
 
 /* ================== MAPA ================== */
