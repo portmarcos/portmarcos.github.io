@@ -132,7 +132,7 @@ button{font-family:inherit;cursor:pointer;color:inherit}
 .rk tr.me td{background:rgba(244,168,60,.25);font-weight:600}
 #load{position:fixed;inset:0;z-index:60;display:grid;place-items:center;background:#0b0603;font-family:'Special Elite';color:var(--muted)}
 @media (max-height:520px){#dlg .box{min-height:84px;padding:16px 6% 12px}#dlg .por{height:56vh;bottom:auto;top:4vh}.paper{padding:18px}}
-#dlg .por{transform-origin:50% 100%}
+#dlg .por{transform-origin:50% 100%;transition:transform .16s ease-out}
 #dlg .por.in{animation:porIn .35s ease-out}
 #dlg .por.bob{animation:porBob .17s ease-out}
 #dlg .por.idle{animation:porIdle 3.2s ease-in-out infinite}
@@ -894,7 +894,7 @@ function say(lines){return new Promise(res=>{const prev=state;state='modal';clea
     if(por&&lastQ!==L.q)por.classList.add('in');lastQ=L.q;if(ex)d.querySelector('.box').classList.add('ex');
     const tx=d.querySelector('.tx');let k=0;clearTimeout(typing);
     const step=()=>{k++;tx.textContent=full.slice(0,k);const c=(full[k-1]||'').toLowerCase();
-      if(V.tele){if(c.trim()&&k%2)noise(.018,.1,2600,2)}else if(VV[c]){const rest=full.slice(k),qi=rest.search(/[?]/),q=qi>=0&&qi<10&&rest.slice(0,qi).search(/[.!]/)<0;if(blip(V,c,q,ex)&&por){por.classList.remove('in','bob','idle');void por.offsetWidth;por.classList.add('bob')}}
+      if(V.tele){if(c.trim()&&k%2)noise(.018,.1,2600,2)}else if(VV[c]){const rest=full.slice(k),qi=rest.search(/[?]/),q=qi>=0&&qi<10&&rest.slice(0,qi).search(/[.!]/)<0;if(blip(V,c,q,ex)){if(window.talkPulse)talkPulse(L.q,ex);if(por){por.classList.remove('in','bob','idle');por.style.transform='translateY('+(-2-Math.random()*4).toFixed(1)+'px) rotate('+((Math.random()-.5)*2.6).toFixed(2)+'deg) scale('+(1.008+Math.random()*.01).toFixed(3)+')';clearTimeout(por._t);por._t=setTimeout(()=>{por.style.transform=''},120)}}}
       if(k>=full.length){typing=null;if(V.tele)tone(2100,.6,'sine',.05);if(por){por.classList.remove('bob');por.classList.add('idle')}return}
       let w=V.sp||22;if(/[,;:]/.test(c))w=150;else if(/[.!?…]/.test(c))w=280;typing=setTimeout(step,w)};
     step()}
@@ -1065,8 +1065,9 @@ function drawCommon(){
   const ot=Lv.oratorio;if(ot){if(candles>=3){const g=ctx.createRadialGradient(ot.x,ot.y-30,4,ot.x,ot.y-30,70);g.addColorStop(0,'rgba(255,200,110,.55)');g.addColorStop(1,'rgba(255,150,50,0)');ctx.fillStyle=g;ctx.fillRect(ot.x-70,ot.y-100,140,140)}img('oratorio',ot.x-28,ot.y-58,56,56)}
   for(const c of (Lv.candles||[])){if(c.lit){const g=ctx.createRadialGradient(c.x,c.y-30,2,c.x,c.y-30,46);g.addColorStop(0,'rgba(255,210,120,.6)');g.addColorStop(1,'rgba(255,160,60,0)');ctx.fillStyle=g;ctx.fillRect(c.x-46,c.y-76,92,92);img('velaOn',c.x-11,c.y-39,22,39)}else img('velaOff',c.x-11,c.y-33,22,33)}
   let bn=null,bd=1e9;
-  for(const n of (Lv.npcs||[])){const im=IMG[n.k];if(!im)continue;const sc=n.s||.37,w=im.width*sc,h=im.height*sc;ctx.drawImage(im,n.x-w/2,n.y-h+2,w,h);n.h=h;
+  for(const n of (Lv.npcs||[])){const im=IMG[n.k];if(!im)continue;const sc=n.s||.37,w=im.width*sc,h=im.height*sc,tk=n===window.__lastBn?Math.abs(Math.sin(performance.now()/105+n.x)):0,sy=1+.016*Math.sin(performance.now()/450+n.x)+tk*.04;ctx.save();ctx.translate(n.x,n.y+2-tk*2);ctx.rotate(Math.sin(performance.now()/380+n.x)*.025*(tk?1:.3));ctx.scale(1/Math.sqrt(sy),sy);ctx.drawImage(im,-w/2,-h,w,h);ctx.restore();n.h=h;
     const d=Math.abs(P.x-n.x);if(d<170&&Math.abs(P.y-n.y)<170&&d<bd){bd=d;bn=n}}
+  window.__lastBn=bn&&state==='play'&&!PLAYERS.some(q=>q.near)?bn:null;
   if(bn&&state==='play'&&!PLAYERS.some(q=>q.near)){const L=typeof bn.lines==='function'?bn.lines():bn.lines;if(L.length)bubble(bn.x,bn.y-bn.h-6,bn.nome,L[Math.floor(T/4.5)%L.length])}
   // inimigos
   for(const e of Lv.enemies){let f=Math.floor(e.an)%4;if(e.st==='atk')f=e.t<.28?4:5;else if(e.st==='stun')f=6;else if(e.st==='dead')f=7;sheet('cap',SH.cap,f,e.x,e.y,e.dir>0,e.st==='dead'?Math.max(0,1-e.t/.7):1)}
