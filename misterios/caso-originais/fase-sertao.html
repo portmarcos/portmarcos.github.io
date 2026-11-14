@@ -46,6 +46,7 @@ button{font-family:inherit;cursor:pointer;color:inherit}
 #tT{right:15%;bottom:4%;width:9.5%;aspect-ratio:1}
 #tA{right:4.5%;bottom:28%;width:9.5%;aspect-ratio:1}
 #tLa{right:16%;bottom:24%;width:9.5%;aspect-ratio:1}
+#tW{right:27%;bottom:24%;width:9.5%;aspect-ratio:1}
 #tU{left:9%;bottom:28%;width:9%;aspect-ratio:1}
 #tD{left:9%;bottom:-1%;width:0;aspect-ratio:1;display:none}
 
@@ -166,6 +167,7 @@ body.touch #tD{display:grid;left:calc(max(2.5%,env(safe-area-inset-left)) + var(
 body.touch #tJ{right:max(2.5%,env(safe-area-inset-right));bottom:6%;width:calc(var(--S)*1.15);height:calc(var(--S)*1.15)}
 body.touch #tT{right:calc(max(2.5%,env(safe-area-inset-right)) + var(--S)*1.15 + 12px);bottom:6%;width:calc(var(--S)*.8);height:calc(var(--S)*.8)}
 body.touch #tLa{right:calc(max(2.5%,env(safe-area-inset-right)) + var(--S)*1.15 + 12px);bottom:calc(6% + var(--S)*.8 + 12px);width:calc(var(--S)*.8);height:calc(var(--S)*.8)}
+body.touch #tW{right:calc(max(2.5%,env(safe-area-inset-right)) + var(--S)*1.95 + 24px);bottom:calc(6% + var(--S)*.8 + 12px);width:calc(var(--S)*.8);height:calc(var(--S)*.8)}
 body.touch #tA{right:max(2.5%,env(safe-area-inset-right));bottom:calc(6% + var(--S)*1.15 + 12px);width:calc(var(--S)*.9);height:calc(var(--S)*.9);text-align:center;line-height:1.05}
 body.touch #tA.hint{background:rgba(244,168,60,.55);border-color:#ffd38a;animation:pulse 1.1s infinite}
 body.touch #tA small{font-size:.62rem;padding:0 4px}
@@ -192,6 +194,7 @@ body.touch .lbl{display:none}
     <div class="hs hidden" id="hDupla"></div>
     <div class="hs hidden" id="hMis" title="Aves de arribação na cacimba"></div>
     <div class="hs">★ <b id="hScore">0</b></div>
+    <div class="hs" id="hArma" title="Arma (Q troca, X usa)"></div>
     <div class="hs"><img src="img/q1/i-pagina1.webp" alt=""><b id="hPages">0</b>/<span id="hPagesT">0</span></div>
     <div class="hs"><span class="lbl">Pistas </span><span id="clues"></span></div>
     <div class="hs" id="hSedeW" title="Sede: sobe no sol, baixa na sombra"><span class="lbl">Sede </span>💧<span class="sedeb"><i id="hSede"></i></span></div>
@@ -211,6 +214,7 @@ body.touch .lbl{display:none}
     <div class="tb" id="tT" data-k="throw">PAPEL</div>
     <div class="tb" id="tA" data-k="act">AÇÃO</div>
     <div class="tb" id="tLa" data-k="lamp">LUZ</div>
+    <div class="tb" id="tW" data-k="arma">ARMA</div>
   </div>
 </div></div>
 
@@ -343,12 +347,12 @@ function ambTick(dt){if(!AMB)return;const now=AC.currentTime,set=(g,v)=>g.gain.s
   }
 
 /* ---------------- entrada ---------------- */
-const mkK=()=>({left:0,right:0,up:0,down:0,jump:0,throw:0,act:0,lamp:0});
+const mkK=()=>({left:0,right:0,up:0,down:0,jump:0,throw:0,act:0,lamp:0,arma:0});
 let K=mkK(),PR={},COOP=false,PLAYERS=[];
-const KM={ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right',ArrowUp:'up',KeyW:'up',ArrowDown:'down',KeyS:'down',Space:'jump',KeyZ:'jump',KeyK:'jump',KeyX:'throw',KeyJ:'throw',KeyE:'act',Enter:'act',KeyC:'lamp',KeyL:'lamp',ShiftLeft:'lamp'};
+const KM={KeyQ:'arma',ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right',ArrowUp:'up',KeyW:'up',ArrowDown:'down',KeyS:'down',Space:'jump',KeyZ:'jump',KeyK:'jump',KeyX:'throw',KeyJ:'throw',KeyE:'act',Enter:'act',KeyC:'lamp',KeyL:'lamp',ShiftLeft:'lamp'};
 /* modo dupla (mesmo teclado): jogador 1 à esquerda, jogador 2 à direita */
-const KM1={KeyA:'left',KeyD:'right',KeyW:'up',KeyS:'down',Space:'jump',KeyF:'throw',KeyG:'lamp',KeyE:'act'};
-const KM2={ArrowLeft:'left',ArrowRight:'right',ArrowUp:'up',ArrowDown:'down',Numpad0:'jump',KeyL:'jump',Numpad1:'throw',KeyK:'throw',Numpad2:'lamp',KeyJ:'lamp',Numpad3:'act',KeyI:'act',Enter:'act',NumpadEnter:'act'};
+const KM1={KeyQ:'arma',KeyA:'left',KeyD:'right',KeyW:'up',KeyS:'down',Space:'jump',KeyF:'throw',KeyG:'lamp',KeyE:'act'};
+const KM2={KeyU:'arma',ArrowLeft:'left',ArrowRight:'right',ArrowUp:'up',ArrowDown:'down',Numpad0:'jump',KeyL:'jump',Numpad1:'throw',KeyK:'throw',Numpad2:'lamp',KeyJ:'lamp',Numpad3:'act',KeyI:'act',Enter:'act',NumpadEnter:'act'};
 function route(code){if(!COOP)return KM[code]?[PLAYERS[0],KM[code]]:null;if(KM1[code])return[PLAYERS[0],KM1[code]];if(KM2[code]&&PLAYERS[1])return[PLAYERS[1],KM2[code]];return null}
 function clearInput(){for(const pl of PLAYERS){for(const k in pl.K)pl.K[k]=0;for(const k in pl.PR)pl.PR[k]=0}}
 addEventListener('keydown',e=>{if(document.querySelector('.ov input:focus'))return;if(e.code==='Escape'||(e.code==='KeyP'&&!COOP)){togglePause();return}const rt=route(e.code);
@@ -393,6 +397,7 @@ function buildMain(){
   L.solids.push({x:560,y:G-55,w:62,h:55,img:'caixote'});
   plat(660,800,G-100);
   L.hidden.push({x:730,y:G-140,kind:'lamp'});
+  L.armas=[{k:'lapis',x:590,y:G-95},{k:'regador',x:5255,y:G-165}];
   // --- caatinga ---
   [1150,2060,2780].forEach(x=>{const w=255*1.5,h=204*1.5;L.trees.push({x,w,h});L.oneway.push(seg(x-w*.4,G-h+26,x+w*.42,G-h+26,'copa'))});
   L.carc.push({x:1300});L.oneway.push(seg(1215,G-58,1385,G-58));
@@ -497,12 +502,13 @@ function updatePlayer(dt){
   P.an+=dt*(Math.abs(P.vx)>20?Math.abs(P.vx)/22:0);
   if(P.inv>0)P.inv-=dt;if(P.hurt>0)P.hurt-=dt;if(P.throwT>0)P.throwT-=dt;if(P.land>0)P.land-=dt;
   // arremesso
-  if(pressed('throw')&&P.throwT<=0&&projs.length<3){P.throwT=.28;SFX.throw();projs.push({x:P.x+P.face*24,y:P.y-58,vx:P.face*620+P.vx*.3,life:.7,rot:0,dir:P.face})}
+  weaponTick(dt);
   // queda em buraco
   if(P.y>VH+160)damage(true);
 }
 function damage(fall){
   if(!fall&&P.inv>0)return;
+  if(!fall&&P.shield>0){SFX.hit();floatTxt(P.x,P.y-110,'Bloqueado!');P.inv=Math.max(P.inv,.25);return}
   lamps--;errosFase++;score=Math.max(0,score-50);combo=0;P.inv=DF().inv;P.hurt=.4;SFX.hurt();shake=.35;hudLamps(true);
   if(P.cesta){P.cesta=false;toast('A Brigada confiscou a cesta! Volte até Conceição e pegue outra.')}
   if(fall){const o=COOP&&PLAYERS.find(q=>q!==P&&q.ground&&q.y<VH);if(o){P.x=o.x-o.face*30;P.y=o.y;P.vx=P.vy=0;P.climb=null;toast((P.nome||'Detetive')+' voltou para perto do parceiro.')}else respawn()}else{P.vy=-420;P.vx=-P.face*260}
@@ -535,7 +541,7 @@ function hazards(){
     if(!k.jumped&&!P.ground&&Math.abs(P.x-k.x)<24&&P.y<k.y-38&&k.y-P.y<140){k.jumped=true;score+=25;floatTxt(k.x,k.y-60,'+25');updHud()}}
   for(const u of Lv.urubus){if(u.st==='dead')continue;if(boxHit(pb,{x:u.x-26,y:u.y-22,w:52,h:34})){if(P.vy>80&&P.y<u.y+6){killUrubu(u);P.vy=(K.jump||K.up)?-700:-480;P.jumps=1}else damage()}}
   if(boss&&bossActive){const b=boss;
-    for(const s of b.spines)if(!s.dead&&boxHit(pb,{x:s.x-9,y:s.y-9,w:18,h:18})){s.dead=1;damage()}
+    for(const s of b.spines)if(!s.dead&&!s.refl&&boxHit(pb,{x:s.x-9,y:s.y-9,w:18,h:18})){if(P.shield>0){s.refl=1;s.vx=-s.vx*1.15;s.vy=-380;SFX.hit();floatTxt(P.x,P.y-110,'Devolvido!')}else{s.dead=1;damage()}}
     for(const w of b.waves)if(boxHit(pb,{x:w.x-24,y:G-26,w:48,h:26}))damage();
     if(b.slamAt!=null&&Math.abs(P.x-b.slamAt)<90&&P.y>G-60)damage();
     for(const s of b.sprouts)if(s.st==='up'&&s.t>.05&&boxHit(pb,{x:s.x-16,y:G-62,w:32,h:62}))damage();
@@ -553,7 +559,7 @@ function updVents(dt){for(const v of Lv.vents){const t=(T+v.ph)%v.per;const was=
 
 /* ---------------- projéteis ---------------- */
 function updProjs(dt){
-  for(const p of projs){p.x+=p.vx*dt;p.life-=dt;p.rot+=dt*14;const pb={x:p.x-12,y:p.y-8,w:24,h:16};
+  for(const p of projs){if(p.kind==='lapis'){updLapis(p,dt);continue}if(p.kind==='bomba'){updBomba(p,dt);continue}p.x+=p.vx*dt;p.life-=dt;p.rot+=dt*14;const pb={x:p.x-12,y:p.y-8,w:24,h:16};
     for(const e of Lv.enemies){if(e.st==='dead')continue;if(boxHit(pb,{x:e.x-e.w/2,y:e.y-e.h,w:e.w,h:e.h})){p.life=0;e.hp--;SFX.hit();ink(p.x,p.y,4);if(e.hp<=0)killEnemy(e);else{e.st='stun';e.t=.35;e.x+=p.dir*10}break}}
     if(p.life>0)for(const u of Lv.urubus){if(u.st!=='dead'&&boxHit(pb,{x:u.x-28,y:u.y-24,w:56,h:38})){p.life=0;killUrubu(u);break}}
     if(p.life>0&&arrib)for(const b of arrib.birds){if(b.st!=='flee'&&boxHit(pb,{x:b.x-20,y:b.y-30,w:40,h:34})){p.life=0;scareBird(b);break}}
@@ -570,7 +576,8 @@ function updProjs(dt){
 function updPickups(dt){
   for(const p of Lv.pages){if(p.got)continue;p.t+=dt;if(Math.abs(P.x-p.x)<26&&Math.abs(P.y-40-p.y)<44){p.got=1;pages++;score+=10;SFX.page();floatTxt(p.x,p.y-20,'+10');updHud();checkTimeline()}}
   for(const l of Lv.lamps){if(l.got)continue;if(Math.abs(P.x-l.x)<30&&Math.abs(P.y-40-l.y)<50){l.got=1;getLamp(l.x,l.y)}}
-  for(const c of Lv.cabacas){if(c.got)continue;if(Math.abs(P.x-c.x)<28&&Math.abs(P.y-40-c.y)<46){c.got=1;sede=Math.max(0,sede-45);score+=30;SFX.lampUp();floatTxt(c.x,c.y-24,'Água! +30');updHud();if(!updPickups.tip){updPickups.tip=1;toast('Uma cabaça d’água. No sertão, cada gole vale ouro.')}}}
+  for(const a of (Lv.armas||[])){if(a.got||ARMAS[a.k])continue;if(Math.abs(P.x-a.x)<30&&Math.abs(P.y-40-a.y)<50){a.got=1;ganharArma(a.k)}}
+  for(const c of Lv.cabacas){if(c.got)continue;if(Math.abs(P.x-c.x)<28&&Math.abs(P.y-40-c.y)<46){c.got=1;PLAYERS.forEach(q=>q.water=100);sede=Math.max(0,sede-45);score+=30;SFX.lampUp();floatTxt(c.x,c.y-24,'Água! +30');updHud();if(!updPickups.tip){updPickups.tip=1;toast('Uma cabaça d’água. No sertão, cada gole vale ouro.')}}}
   for(const h of Lv.hidden){if(h.got)continue;const d=Math.hypot(P.x-h.x,P.y-40-h.y),v=h.kind==='pegadas'?(h.barked?1:0):K.lamp?clamp(1-d/190,0,1):0;h._v=Math.max(h._v||0,v);
     if(v>.45&&d<75&&(!h.need||h.need(P))){if(h.kind==='lamp'){h.got=1;getLamp(h.x,h.y)}else{h.ready=true;h.by=P.id}}else if(h.by===P.id)h.ready=false}
   for(const tr of Lv.triggers){if(!tr.done&&P.x>tr.x){tr.done=1;toast(tr.msg);if(tr.cp)checkpoint={x:tr.x+10,y:G,scene};if(tr.fn)tr.fn()}}
@@ -616,8 +623,8 @@ const inShade=q=>Lv.trees.some(t=>Math.abs(q.x-t.x)<t.w*.36&&q.y>=G-4);
 const sunAt=x=>(x>900&&x<3300)||(x>5000&&x<6450);
 function updSede(dt){if(bossActive||bossDone||scene!=='main')return;const ld=PLAYERS[0];
   if(PLAYERS.some(inShade))sede=Math.max(0,sede-22*dt);else if(sunAt(ld.x))sede+=2.6*DF().fam*dt;else sede=Math.max(0,sede-5*dt);
-  if(sede>=100){sede=45;sedeLost++;if(ld.x<3300)sedeCaa++;use(ld);P.inv=0;damage();toast('A sede venceu e uma lamparina se apagou. Procure a sombra de um juazeiro ou uma cabaça d’água.')}}
-function beber(){sede=0;agua=Math.max(0,agua-8);SFX.lampUp();toast('Água barrenta da cacimba… mas mata a sede. Cada gole faz falta: a seca vai voltar.');updHud()}
+  if(sede>=100){sede=45;sedeLost++;if(ld.x<3300)sedeCaa++;use(ld);P.inv=0;P.shield=0;damage();toast('A sede venceu e uma lamparina se apagou. Procure a sombra de um juazeiro ou uma cabaça d’água.')}}
+function beber(){sede=0;PLAYERS.forEach(q=>q.water=100);agua=Math.max(0,agua-8);SFX.lampUp();toast('Água barrenta da cacimba… mas mata a sede. Cada gole faz falta: a seca vai voltar.');updHud()}
 /* ---------------- o Soldado Amarelo ---------------- */
 function isHidden(q){return Lv.barracas.some(b=>Math.abs(q.x-b.x)<58)&&q.ground&&q.y>=G-2&&Math.abs(q.vx)<60}
 function updSoldier(dt){const s=Lv.sold;if(!s||s.gone)return;s.t+=dt;
@@ -704,7 +711,7 @@ function openBook(){const b=boss;b.cyc=0;b.t=0;b.hy=0;const D=b.Q[5-b.hp];
   else{b.st='open';toast('O Mandacaru abriu o livro-caixa! Encoste nele para responder.')}}
 function contaHit(it){const D=boss.plac.D;it.hit=.4;contaResult(it.k===D.k,false)}
 function contaResult(ok,timeout){const b=boss,D=b.plac.D;b.plac=null;
-  if(ok){S.stats.acertos++;SFX.ok();contasOK++;b.hp--;b.flash=1;b.st='hurt';b.t=0;score+=300;floatTxt(b.x,b.y-260,'+300');ink(b.x,b.y-120,16);shake=.5;toast('Certo! '+D.e);bossSay('Ai! Minha conta…');if(b.hp<=0)bossDefeat()}
+  if(ok){S.stats.acertos++;SFX.ok();contasOK++;chargeConta(D);b.hp--;b.flash=1;b.st='hurt';b.t=0;score+=300;floatTxt(b.x,b.y-260,'+300');ink(b.x,b.y-120,16);shake=.5;toast('Certo! '+D.e);bossSay('Ai! Minha conta…');if(b.hp<=0)bossDefeat()}
   else{S.stats.erros++;S.err=S.err||{};S.err[CHI]=(S.err[CHI]||0)+1;SFX.bad();contasErr++;b.Q[5-b.hp]=b.cs[b.ci++%b.cs.length];
     toast((timeout?'O livro-caixa fechou! ':'Conta errada! ')+D.e);bossSay('Errou! Mais juros!');b.st='idle';b.t=0;b.spd=Math.min(1.9,b.spd*1.1);if(!timeout)spineVolley(nearestP(b.x,b.y))}
   updHud()}
@@ -726,7 +733,7 @@ function baleiaBite(){if(!BAL||BAL.st==='stay')return;BAL.st='bite';BAL.t=0;bark
 function updBoss(dt){
   if(!boss)return;const b=boss;b.t+=dt;b.slamAt=null;if(b.flash>0)b.flash-=dt;if(b.title>0)b.title-=dt;if(b.said){b.said.life-=dt;if(b.said.life<=0)b.said=null}const tp=nearestP(b.x,b.y);
   for(const w of b.waves){w.x+=w.dir*330*b.spd*dt;w.life-=dt}b.waves=b.waves.filter(w=>w.life>0);
-  for(const s of b.spines){s.x+=s.vx*dt;s.vy+=900*dt;s.y+=s.vy*dt;s.rot=Math.atan2(s.vy,s.vx)}b.spines=b.spines.filter(s=>!s.dead&&s.y<G&&s.x>6400&&s.x<7700);
+  for(const s of b.spines){s.x+=s.vx*dt;s.vy+=900*dt;s.y+=s.vy*dt;s.rot=Math.atan2(s.vy,s.vx);if(s.refl&&!s.dead&&boxHit({x:s.x-9,y:s.y-9,w:18,h:18},bossBox())){s.dead=1;bossPress(14);ink(s.x,s.y,4);floatTxt(b.x,b.y-260,'+pressão')}}b.spines=b.spines.filter(s=>!s.dead&&s.y<G&&s.x>6400&&s.x<7700);
   for(const s of b.sprouts){s.t+=dt;if(s.st==='warn'&&s.t>.75){s.st='up';s.t=0;puff(s.x,G,.5);SFX.hit()}else if(s.st==='up'&&s.t>1.6){s.st='down';s.t=0}}b.sprouts=b.sprouts.filter(s=>!(s.st==='down'&&s.t>.3));
   if(b.plac)for(const it of b.plac.items)if(it.hit>0)it.hit-=dt;
   if(b.st==='rise'){b.rise=Math.min(1,b.t/2);if(Math.random()<dt*16)puff(b.x+(Math.random()-.5)*170,G,.7);shake=Math.max(shake,.22);if(b.t>2.6){b.st='intro';b.t=0;bossIntro()}return}
@@ -746,10 +753,10 @@ function updBoss(dt){
   else if(b.st==='stun'){if(b.t>2.2){b.t=0;if(b.cyc>=3)openBook();else b.st='idle'}}
   else if(b.st==='hurt'){if(b.t>1.1){b.st='idle';b.t=0}}
 }
-function bossHitBy(){const b=boss;if(b.st!=='open'){SFX.hit();floatTxt(b.x,b.y-260,b.st==='conta'?'Acerte a placa certa!':'Sem efeito!');return}
+function bossHitBy(){const b=boss;if(b.st!=='open'){SFX.hit();if(b.st==='conta')floatTxt(b.x,b.y-260,'Acerte a placa certa!');else if(['idle','spines','hop','slam'].includes(b.st)){bossPress(6);floatTxt(b.x,b.y-260,'+pressão')}else floatTxt(b.x,b.y-260,'Sem efeito!');return}
   b.st='quiz';const idx=5-b.hp,D=b.Q[idx];
   openChallenge(D,b,ok=>{
-    if(ok){if(D.conta)contasOK++;b.hp--;b.flash=1;b.st='hurt';b.t=0;score+=300;floatTxt(b.x,b.y-260,'+300');ink(b.x,b.y-120,16);shake=.5;P.x+=(P.x<b.x?-50:50);bossSay('Ai! Essa doeu…');if(b.hp<=0)bossDefeat()}
+    if(ok){if(D.conta)contasOK++;chargeConta(D);b.hp--;b.flash=1;b.st='hurt';b.t=0;score+=300;floatTxt(b.x,b.y-260,'+300');ink(b.x,b.y-120,16);shake=.5;P.x+=(P.x<b.x?-50:50);bossSay('Ai! Essa doeu…');if(b.hp<=0)bossDefeat()}
     else{if(D.conta){contasErr++;b.Q[idx]=b.cs[b.ci++%b.cs.length]}b.st='idle';b.t=0;b.spd=Math.min(1.8,b.spd*1.15);toast('O Mandacaru se enfureceu: a dívida cresce como juros!');bossSay('Errou! Mais juros!')}
     updHud()})}
 function bossDefeat(){const b=boss;b.st='dead';b.t=0;b.hy=0;bossDone=true;b.spines=[];b.waves=[];b.sprouts=[];b.plac=null;b.said=null;fanfare();shake=.8;if(contasErr===0)ach('contas');
@@ -778,7 +785,7 @@ function drawBoss(){if(!boss)return;const b=boss;
       ctx.fillStyle='#2b1a0d';ctx.fillText(it.txt,it.x,y+4)}ctx.restore()}
   if(b.said&&state==='play'&&!b.plac)bubble(b.x,b.y-(b.st==='rise'?40:298)+(b.hy||0),'Mandacaru',b.said.t);
   if(bossActive&&!bossDone&&b.st!=='rise'){ctx.save();ctx.fillStyle='rgba(20,8,2,.85)';ctx.fillRect(b.x-74,b.y-292,148,24);ctx.fillStyle='#e9d3a0';ctx.font='bold 11px "Special Elite",monospace';ctx.textAlign='left';ctx.fillText('DÍVIDA '+b.hp+'$000',b.x-70,b.y-276);
-    for(let i=0;i<5;i++){ctx.fillStyle=i<b.hp?'#b8321a':'#3a2414';ctx.fillRect(b.x+10+i*12,b.y-286,10,12)}ctx.restore()}}
+    for(let i=0;i<5;i++){ctx.fillStyle=i<b.hp?'#b8321a':'#3a2414';ctx.fillRect(b.x+10+i*12,b.y-286,10,12)}ctx.fillStyle='#3a2414';ctx.fillRect(b.x-74,b.y-266,148,5);ctx.fillStyle='#e8c040';ctx.fillRect(b.x-74,b.y-266,148*Math.min(1,(b.press||0)/100),5);ctx.restore()}}
 /* elementos de tela do chefe: título de entrada, pergunta da conta e tom vermelho da fase 3 */
 function drawBossHud(){if(!boss)return;const b=boss;
   if(bossActive&&!bossDone&&bossPhase()===3&&b.st!=='rise'){ctx.fillStyle=`rgba(170,25,10,${.1+.05*Math.sin(T*6)})`;ctx.fillRect(0,0,VW,VH)}
@@ -818,7 +825,8 @@ function talkFabiano(){const extra=[{q:'vaqueiro',t:'Leve a Baleia. Ela fareja o
 async function talkVitoria(){await say([{q:'vitoria',t:'Esta cama de varas me machuca as costas. Seu Tomás da bolandeira dormia numa cama de couro…'},{q:'vitoria',t:'Um dia a gente vai ter uma cama de gente. Fabiano diz que é luxo. Não é.'},{q:'detetive',t:'O sonho de sinhá Vitória é tão simples… e mesmo assim parece impossível.'}]);
   if(!trechos.cama){score+=50;updHud();await trechoOv('cama',{pre:'Uma cama de verdade é o grande sonho de sinhá Vitória, que se repete ao longo do livro:'})}}
 async function talkMenino(){await say([{q:'meninoV',t:'Moço, o que é inferno? Sinhá Terta falou essa palavra e eu achei bonita…'},{q:'meninoV',t:'Perguntei para a mãe e levei um cascudo. Ninguém me explica nada.'},{q:'detetive',t:'Para quem quase não tem palavras, uma palavra nova é um mundo inteiro.'}]);
-  if(!trechos.inferno){score+=50;updHud();await trechoOv('inferno',{pre:'No capítulo “O menino mais velho”, uma única palavra desperta a curiosidade do menino:'})}}
+  if(!trechos.inferno){score+=50;updHud();await trechoOv('inferno',{pre:'No capítulo “O menino mais velho”, uma única palavra desperta a curiosidade do menino:'})}
+  if(!ARMAS.dic){await say([{q:'meninoV',t:'Moço, leva este dicionário. Quem sabe o senhor descobre o que é inferno… e me conta depois.'}]);ganharArma('dic')}}
 /* 5ª pista: o cacto ciano, xodó do Mandacaru (não fere; quebra com papel; depois H, AÇÃO ou clique) */
 const CACTO={nome:'Cacto quebrado',t:'Um cacto diferente, de um azul que não existe na caatinga, agora em pedaços. Era o cacto favorito do Mandacaru, e é velho: ele o ganhou em 1930, o ano em que O Quinze, de Rachel de Queiroz, abriu o chamado romance de 30. Agora que você o quebrou, cuidado: se o Mandacaru descobrir, ele vem atrás de você. Melhor guardar segredo… e se preparar para a briga.'};
 const HINTS=['Na fazenda, perto da casa, há algo pendurado no alto. Acenda a lamparina lá em cima.','A Baleia fareja o que a gente não vê: deixe a cachorra andar com você pela caatinga.','Na cacimba do rio seco, depois que as arribações passarem.','No alto do juazeiro do meio da caatinga.','Um cacto de cor estranha, azul-ciano, na caatinga. Ele não machuca: arremesse um papel nele.'];
@@ -921,12 +929,12 @@ function togglePause(){if(state==='play'){state='pause';const ov=showOv(`<span c
   <div class="acts stick"><a class="pbtn ghost" href="index.html#mapa">Voltar ao mapa</a><button class="pbtn ghost" id="rs">Recomeçar a fase</button><button class="pbtn" data-close>Continuar</button></div>`);state='pause';bindOpt(ov);ov.querySelector('#rs').onclick=()=>location.reload();
   ov.querySelector('[data-close]').onclick=()=>{ov.remove();state='play'}}}
 function controlsHTML(){if(COOP)return `<div class="keys">
-  <kbd>Jogador 1</kbd><span><b>W A S D</b> andar (W pula) · <b>ESPAÇO</b> pular · <b>F</b> papel · <b>G</b> lamparina · <b>E</b> ação</span>
-  <kbd>Jogador 2</kbd><span><b>setas</b> andar (↑ pula) · <b>L</b> ou <b>0</b> do teclado numérico pular · <b>K</b> ou <b>1</b> papel · <b>J</b> ou <b>2</b> lamparina · <b>I</b>, <b>3</b> ou <b>ENTER</b> ação</span>
+  <kbd>Jogador 1</kbd><span><b>W A S D</b> andar (W pula) · <b>ESPAÇO</b> pular · <b>F</b> papel · <b>G</b> lamparina · <b>E</b> ação · <b>Q</b> trocar arma</span>
+  <kbd>Jogador 2</kbd><span><b>setas</b> andar (↑ pula) · <b>L</b> ou <b>0</b> do teclado numérico pular · <b>K</b> ou <b>1</b> papel · <b>J</b> ou <b>2</b> lamparina · <b>I</b>, <b>3</b> ou <b>ENTER</b> ação · <b>U</b> trocar arma</span>
   <kbd>Juntos</kbd><span>As lamparinas e os pontos são da dupla. Um pode <b>subir na cabeça do outro</b> para alcançar lugares altos, e quem cai num buraco volta para perto do parceiro. <b>ESC</b> pausa.</span></div>`;return `<div class="keys">
   <kbd>← →</kbd><span>andar e correr</span><kbd>ESPAÇO</kbd><span>pular — no ar, de novo para o pulo duplo · ↓ + ESPAÇO desce de plataformas</span>
   <kbd>X</kbd><span>arremessar páginas (ou pule na cabeça do capanga)</span><kbd>C</kbd><span>segurar a lamparina — revela pistas e itens escondidos</span>
-  <kbd>E</kbd><span>examinar, conversar, abrir portas</span><kbd>↑ ↓</kbd><span>subir e descer escadas</span><kbd>ESC</kbd><span>pausa</span></div>${isTouch?'<p style="font-size:.9rem">No celular, use os botões na tela (com o aparelho deitado).</p>':''}`}
+  <kbd>E</kbd><span>examinar, conversar, abrir portas</span><kbd>Q</kbd><span>trocar de arma: papel, lápis-bumerangue, regador (segure X), dicionário-escudo e conta certa</span><kbd>↑ ↓</kbd><span>subir e descer escadas</span><kbd>ESC</kbd><span>pausa</span></div>${isTouch?'<p style="font-size:.9rem">No celular, use os botões na tela (com o aparelho deitado).</p>':''}`}
 function gameOver(){if(state==='over')return;state='over';const ov=showOv(`<div class="center"><span class="kicker">As lamparinas se apagaram</span><h2>No escuro, a pista se perde</h2>
   <p style="margin-top:8px">Reacenda três lamparinas e volte ao último ponto de controle (−100 pontos), ou recomece a fase.</p>
   <div class="acts stick" style="justify-content:center"><button class="pbtn" id="rt">Reacender e continuar</button><button class="pbtn ghost" id="rr">Recomeçar a fase</button><a class="pbtn ghost" href="index.html#mapa">Mapa</a></div></div>`);state='over';
@@ -1063,6 +1071,7 @@ function drawCommon(){
   for(const h of Lv.hidden){if(h.got||!(h.vis>0.02))continue;ctx.globalAlpha=h.vis;if(h.kind==='lamp')img('lampada',h.x-18,h.y-24,36,26);else if(h.kind==='pegadas')drawPaws(h.x,h.y);else if(h.j===0)img('gaiola',h.x-24,h.y-30,48,54);else img('brilho',h.x-34,h.y-20,68,30);ctx.globalAlpha=1}
   for(const p of projs){ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);img('pag1',-12,-7,24,14);ctx.restore()}
   {const p0=P,k0=K;for(const q of PLAYERS.slice().reverse()){P=q;K=q.K;drawPlayer()}P=p0;K=k0}
+  drawArmas();
   for(const b of Lv.barracas)drawBarraca(b,true);
   for(const p of parts){const i=IMG[p.img];if(!i)continue;ctx.save();ctx.globalAlpha=p.fade?Math.max(0,p.life*2):Math.min(1,p.life*2);ctx.translate(p.x,p.y);ctx.rotate(p.rot);const w=i.width*p.s,h=i.height*p.s;ctx.drawImage(i,-w/2,-h/2,w,h);ctx.restore()}
   ctx.textAlign='center';ctx.font='bold 18px "Special Elite",monospace';
@@ -1095,6 +1104,81 @@ function drawLight1(){
   if(!K.lamp||state!=='play')return;const x=P.x+P.face*22-camX,y=P.y-46-camY;
   ctx.save();ctx.globalCompositeOperation='lighter';const g=ctx.createRadialGradient(x,y,4,x,y,200);g.addColorStop(0,'rgba(255,200,110,.45)');g.addColorStop(.5,'rgba(255,150,50,.15)');g.addColorStop(1,'rgba(255,120,30,0)');ctx.fillStyle=g;ctx.fillRect(x-200,y-200,400,400);ctx.restore();
 }
+
+/* ================== ARMAS DO DETETIVE ==================
+   papel (padrão) · lápis-bumerangue · regador de cabaça · dicionário-escudo · conta certa (carrega acertando contas do Mandacaru).
+   Q (ou ARMA no celular) troca; X (ou PAPEL) usa. Contra o Mandacaru, golpes enchem a "pressão": cheia, ele cambaleia
+   e o livro-caixa abre mais cedo. A conta-bomba abre o livro na hora. */
+const ARMAS={papel:true,lapis:false,regador:false,dic:false,conta:false};
+const ARMA_INFO={papel:{n:'Papel',ic:'📄'},lapis:{n:'Lápis-bumerangue',ic:'✏️'},regador:{n:'Regador de cabaça',ic:'💧'},dic:{n:'Dicionário-escudo',ic:'📕'},conta:{n:'Conta certa',ic:'🧮'}};
+const ARMA_TXT={lapis:'Lápis-bumerangue! Vai e volta, como Vidas Secas, que começa em “Mudança” e termina em “Fuga”: acerta na ida e na volta. Troque de arma com Q.',
+  regador:'Regador de cabaça! Segure X para molhar: empurra inimigos, espanta bichos e murcha os xique-xiques. A água acaba: encha nas cabaças e na cacimba.',
+  dic:'Dicionário-escudo! Aperte X para erguer o livro: ele bloqueia golpes e devolve os espinhos. Fabiano sofria por não ter palavras; quem tem, se defende.'};
+let contaCarga=0,lastConta='24 mil-réis';
+function armaToast(k){const t=ARMA_TXT[k];if(t)toast((isTouch?t.replace('Troque de arma com Q','Troque de arma no botão ARMA').replace('Segure X','Segure PAPEL').replace('Aperte X','Aperte PAPEL'):t))}
+function ganharArma(k){if(ARMAS[k])return;ARMAS[k]=true;P.arma=k;SFX.clue();sparkle(P.x,P.y-70);score+=50;armaToast(k);updHud()}
+function cycleArma(){const L=['papel','lapis','regador','dic','conta'].filter(k=>ARMAS[k]);if(L.length<2){toast('Por enquanto você só tem o papel. Procure outras armas pelo caminho.');return}
+  P.arma=L[(L.indexOf(P.arma)+1)%L.length];P.spray=false;SFX.key();floatTxt(P.x,P.y-110,ARMA_INFO[P.arma].n);updHud()}
+function chargeConta(D){lastConta=D.o[D.k];const was=contaCarga>=100;contaCarga=Math.min(100,contaCarga+50);
+  if(contaCarga>=100&&!was){ARMAS.conta=true;setTimeout(()=>toast(isTouch?'Conta certa carregada! Escolha a arma no botão ARMA e lance com PAPEL.':'Conta certa carregada! Aperte Q até a conta certa e lance com X.'),3200)}updHud()}
+function weaponTick(dt){if(!P.arma)P.arma='papel';if(P.water==null)P.water=100;
+  if(pressed('arma'))cycleArma();
+  if(P.shield>0)P.shield-=dt;if(P.shieldCd>0)P.shieldCd-=dt;
+  if(P.arma==='regador'){P.spray=K.throw&&P.water>0;pressed('throw');if(P.spray){P.water=Math.max(0,P.water-22*dt);sprayEffects(dt);if(Math.random()<dt*10)noise(.08,.03,4200,1);if(P.water<=0)toast('Regador vazio! Encha nas cabaças ou na cacimba.')}return}
+  P.spray=false;if(!pressed('throw')||P.throwT>0)return;
+  if(P.arma==='papel'){if(projs.length<3){P.throwT=.28;SFX.throw();projs.push({x:P.x+P.face*24,y:P.y-58,vx:P.face*620+P.vx*.3,life:.7,rot:0,dir:P.face})}}
+  else if(P.arma==='lapis'){if(projs.some(p=>p.kind==='lapis'&&p.owner===P))return;P.throwT=.3;SFX.throw();projs.push({kind:'lapis',owner:P,x:P.x+P.face*20,y:P.y-56,vx:P.face*600,dir:P.face,life:3,rot:0,hits:new Set(),leg:0})}
+  else if(P.arma==='dic'){if(P.shieldCd>0)return;P.shield=1.3;P.shieldCd=2.2;P.throwT=.2;SFX.door()}
+  else if(P.arma==='conta'){P.throwT=.4;tone(660,.3,'triangle',.06,0,1320);projs.push({kind:'bomba',owner:P,x:P.x+P.face*20,y:P.y-72,vx:P.face*440,vy:-430,life:3,rot:0,dir:P.face,txt:lastConta});contaCarga=0;ARMAS.conta=false;PLAYERS.forEach(q=>{if(q.arma==='conta')q.arma='papel'});updHud()}}
+function bossPress(n){const b=boss;if(!b||!bossActive||bossDone||!['idle','spines','hop','slam'].includes(b.st))return;b.press=(b.press||0)+n;
+  if(b.press>=100){b.press=0;b.st='stun';b.t=0;b.hy=0;b.cyc++;b.spines=[];toast('Pressão máxima! O Mandacaru cambaleou: o livro-caixa vai abrir mais cedo.');bossSay('Ei! Assim não vale!');SFX.stomp();shake=.4}}
+function sprayRect(){return{x:P.face>0?P.x+12:P.x-182,y:P.y-96,w:170,h:90}}
+function sprayEffects(dt){const r=sprayRect();
+  for(const e of Lv.enemies){if(e.st==='dead')continue;if(boxHit(r,{x:e.x-e.w/2,y:e.y-e.h,w:e.w,h:e.h})){e.st='stun';e.t=.25;e.x=clamp(e.x+P.face*110*dt,e.x1,e.x2)}}
+  for(const u of Lv.urubus){if((u.st==='fly'||u.st==='dive')&&boxHit(r,{x:u.x-26,y:u.y-22,w:52,h:34})){u.st='up';u.t=0;u.cd=2.5}}
+  if(arrib)for(const b of arrib.birds)if(b.st!=='flee'&&boxHit(r,{x:b.x-20,y:b.y-30,w:40,h:34}))scareBird(b);
+  const s=Lv.sold;if(s&&!s.fin&&!s.gone&&boxHit(r,{x:s.x-20,y:s.y-110,w:40,h:110}))s.alert=Math.min(.95,s.alert+dt);
+  if(boss&&bossActive){for(const sp of boss.sprouts)if(sp.st==='up'&&sp.x>r.x&&sp.x<r.x+r.w){sp.st='down';sp.t=0;puff(sp.x,G,.4)}
+    if(boxHit(r,bossBox())){bossPress(24*dt);if(boss.st!=='hop')boss.x=clamp(boss.x+P.face*35*dt,6650,7470)}}}
+function updLapis(p,dt){p.life-=dt;p.rot+=dt*22;const o=p.owner;
+  if(p.leg===0){p.vx-=p.dir*950*dt;p.x+=p.vx*dt;if(p.vx*p.dir<=0){p.leg=1;p.hits.clear()}}
+  else{const dx=o.x-p.x,dy=(o.y-56)-p.y;p.vx+=Math.sign(dx)*1500*dt;p.vx=clamp(p.vx,-700,700);p.x+=p.vx*dt;p.y+=dy*Math.min(1,dt*5);if(Math.abs(dx)<26&&Math.abs(dy)<50){p.life=0;SFX.key()}}
+  const pb={x:p.x-15,y:p.y-8,w:30,h:16},once=o2=>{if(p.hits.has(o2))return false;p.hits.add(o2);return true};
+  for(const e of Lv.enemies){if(e.st==='dead')continue;if(boxHit(pb,{x:e.x-e.w/2,y:e.y-e.h,w:e.w,h:e.h})&&once(e)){e.hp--;SFX.hit();ink(p.x,p.y,4);if(e.hp<=0)killEnemy(e);else{e.st='stun';e.t=.35}}}
+  for(const u of Lv.urubus){if(u.st!=='dead'&&boxHit(pb,{x:u.x-28,y:u.y-24,w:56,h:38})&&once(u))killUrubu(u)}
+  if(arrib)for(const b of arrib.birds)if(b.st!=='flee'&&boxHit(pb,{x:b.x-20,y:b.y-30,w:40,h:34}))scareBird(b);
+  const ct=Lv.cacto;if(ct&&!ct.broken&&boxHit(pb,{x:ct.x-22,y:G-70,w:44,h:70}))breakCacto();
+  if(boss&&boss.plac)for(const it of boss.plac.items)if(boxHit(pb,{x:it.x-(it.w||92)/2,y:it.y-24,w:it.w||92,h:44})&&once(it)){p.life=0;contaHit(it);return}
+  if(boss&&bossActive&&!bossDone&&boxHit(pb,bossBox())&&once(boss)){if(boss.st==='open'){p.life=0;bossHitBy()}else if(boss.st!=='conta'){SFX.hit();bossPress(10);floatTxt(boss.x,boss.y-260,'+pressão')}}
+  if(p.life<=0&&p.leg===0)p.life=0}
+function updBomba(p,dt){p.life-=dt;p.x+=p.vx*dt;p.vy+=900*dt;p.y+=p.vy*dt;p.rot+=dt*5;
+  const hitB=boss&&bossActive&&!bossDone&&boxHit({x:p.x-16,y:p.y-16,w:32,h:32},bossBox());if(hitB||p.y>=G-10||p.life<=0){p.life=0;explodeConta(p,hitB)}}
+function explodeConta(p,hitB){SFX.slam();SFX.win();shake=.7;floatTxt(p.x,p.y-60,'CONTA CERTA!');ink(p.x,p.y,24);
+  for(let i=0;i<24;i++)parts.push({img:Math.random()<.5?'pag1':'pag2',x:p.x,y:p.y,vx:(Math.random()-.5)*700,vy:-Math.random()*600,life:1.8,rot:Math.random()*6,vr:(Math.random()-.5)*10,s:.05+Math.random()*.04,g:900});
+  for(const e of Lv.enemies)if(e.st!=='dead'&&Math.abs(e.x-p.x)<170)killEnemy(e);
+  for(const u of Lv.urubus)if(u.st!=='dead'&&Math.hypot(u.x-p.x,u.y-p.y)<220)killUrubu(u);
+  const b=boss;if(hitB&&b&&!['dead','quiz','rise','intro','conta','open'].includes(b.st)){b.hy=0;b.spines=[];b.flash=.6;toast('A conta certa explodiu no livro-caixa! Ele abriu na marra.');bossSay('Minha contabilidade!!');openBook()}}
+function drawArmaIco(k,x,y,s=1){ctx.save();ctx.translate(x,y);ctx.scale(s,s);ctx.lineWidth=2;ctx.strokeStyle='#2b1a0d';
+  if(k==='lapis'){ctx.rotate(-.5);ctx.fillStyle='#f2c230';ctx.fillRect(-22,-5,36,10);ctx.strokeRect(-22,-5,36,10);ctx.fillStyle='#e48a9a';ctx.fillRect(-28,-5,6,10);ctx.strokeRect(-28,-5,6,10);ctx.fillStyle='#f0d9b0';ctx.beginPath();ctx.moveTo(14,-5);ctx.lineTo(24,0);ctx.lineTo(14,5);ctx.closePath();ctx.fill();ctx.stroke();ctx.fillStyle='#2b1a0d';ctx.beginPath();ctx.moveTo(21,-1.5);ctx.lineTo(24,0);ctx.lineTo(21,1.5);ctx.fill()}
+  else if(k==='regador'){const im=IMG.cabaca;if(im)ctx.drawImage(im,-15,-20,31,35);ctx.strokeStyle='#6b4526';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(10,0);ctx.lineTo(28,-12);ctx.stroke();ctx.fillStyle='#8a6a48';ctx.beginPath();ctx.ellipse(29,-13,5,3,-.6,0,7);ctx.fill()}
+  else if(k==='dic'){ctx.fillStyle='#7a2a1a';ctx.fillRect(-16,-20,32,40);ctx.strokeRect(-16,-20,32,40);ctx.fillStyle='#f1e2c2';ctx.fillRect(12,-18,4,36);ctx.fillStyle='#e9c46a';ctx.font='bold 7px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText('DICIO',-1,-4);ctx.fillText('NÁRIO',-1,5)}
+  else if(k==='conta'){ctx.fillStyle='#fbf3df';ctx.beginPath();ctx.roundRect(-18,-12,36,24,4);ctx.fill();ctx.stroke();ctx.fillStyle='#8e3418';ctx.font='bold 9px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText('= ✓',0,4)}
+  ctx.restore()}
+function drawArmas(){
+  for(const a of (Lv.armas||[]))if(!a.got&&!ARMAS[a.k]){const y=a.y+Math.sin(T*3+a.x)*4;ctx.save();ctx.globalAlpha=.55+.35*Math.sin(T*5);img('brilho',a.x-34,y-14,68,28);ctx.restore();drawArmaIco(a.k,a.x,y,1.1)}
+  for(const p of projs){if(p.kind==='lapis'){ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);drawArmaIco('lapis',0,0,.9);ctx.restore()}
+    else if(p.kind==='bomba'){ctx.save();const g=ctx.createRadialGradient(p.x,p.y,4,p.x,p.y,40);g.addColorStop(0,'rgba(255,230,140,.8)');g.addColorStop(1,'rgba(255,180,60,0)');ctx.fillStyle=g;ctx.fillRect(p.x-40,p.y-40,80,80);ctx.translate(p.x,p.y);ctx.rotate(Math.sin(p.rot)*.3);
+      ctx.fillStyle='#fbf3df';ctx.strokeStyle='#2b1a0d';ctx.lineWidth=2;ctx.font='bold 13px "Special Elite",monospace';const w=ctx.measureText(p.txt).width+20;ctx.beginPath();ctx.roundRect(-w/2,-13,w,26,6);ctx.fill();ctx.stroke();ctx.fillStyle='#8e3418';ctx.textAlign='center';ctx.fillText(p.txt,0,5);ctx.restore()}}
+  for(const q of PLAYERS){
+    if(q.spray){const r={x:q.face>0?q.x+12:q.x-182};ctx.save();ctx.strokeStyle='rgba(140,200,240,.75)';ctx.fillStyle='rgba(180,225,255,.85)';ctx.lineWidth=3;
+      for(let i=0;i<16;i++){const k=((T*3+i/16)%1),x=q.x+q.face*(18+k*165),y=q.y-60+k*k*60+Math.sin(i*7.1)*8;ctx.beginPath();ctx.ellipse(x,y,3.5,2.5,0,0,7);ctx.fill()}
+      ctx.beginPath();ctx.moveTo(q.x+q.face*16,q.y-60);ctx.quadraticCurveTo(q.x+q.face*90,q.y-80,q.x+q.face*180,q.y-4);ctx.stroke();ctx.restore();drawArmaIco('regador',q.x+q.face*10,q.y-52,.7)}
+    if(q.shield>0){ctx.save();ctx.globalAlpha=Math.min(1,q.shield*3);ctx.translate(q.x+q.face*26,q.y-56);ctx.scale(q.face,1);ctx.fillStyle='#7a2a1a';ctx.strokeStyle='#2b1a0d';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,-34);ctx.lineTo(14,-38);ctx.lineTo(14,30);ctx.lineTo(0,34);ctx.closePath();ctx.fill();ctx.stroke();
+      ctx.fillStyle='#f1e2c2';ctx.fillRect(-4,-32,4,64);const g=ctx.createRadialGradient(6,0,4,6,0,50);g.addColorStop(0,'rgba(255,230,160,.45)');g.addColorStop(1,'rgba(255,200,100,0)');ctx.fillStyle=g;ctx.fillRect(-44,-50,100,100);ctx.restore()}}}
+let lastArmaH='';function hudArma(){const q=PLAYERS[0];if(!q)return;const a=q.arma||'papel',I=ARMA_INFO[a];let h=I.ic+' <b>'+I.n+'</b>';
+  if(a==='regador')h+=' <span class="sedeb" style="width:46px"><i style="width:'+Math.round(q.water==null?100:q.water)+'%;background:#6fb3e0"></i></span>';
+  if(contaCarga>0&&!ARMAS.conta||ARMAS.conta)h+=' · 🧮 <b>'+(ARMAS.conta?'pronta!':contaCarga+'%')+'</b>';
+  if(h!==lastArmaH){lastArmaH=h;$('#hArma').innerHTML=h}}
 
 /* ================== CROSSOVER: O SONHO — ONDE AS SECAS SE ENCONTRAM ==================
    Cena secreta aberta pela rachadura azul do cacto quebrado. O Quinze (1930) encontra Vidas Secas (1938):
@@ -1251,7 +1335,7 @@ function frame(now){
     if(!bossActive&&!bossDone&&gateOpen&&PLAYERS.some(q=>q.x>6560)){startBoss();PLAYERS.forEach(q=>{if(q.x<6530){q.x=6540;q.y=G;q.vx=q.vy=0}});if(BAL)BAL.x=Math.max(BAL.x,6540)}
   }else if(state==='cine'){T+=dt;updParts(dt);updBaleia(dt);if(FUGA)FUGA.forEach(o=>{o.x+=52*dt;o.an+=dt*7});{const cx=scene==='sonho'?clamp(2560-VW*.3,0,Lv.w-VW):clamp(6560-VW*.3,6480,Lv.w-VW);camX+=(cx-camX)*Math.min(1,dt*2)}if(fading&&!fadeCb){fading-=dt*3;if(fading<=0)fading=0}}
   else if(state==='pause'||state==='modal'){for(const q of PLAYERS)for(const k in q.PR)q.PR[k]=0}
-  hudSede();
+  hudSede();hudArma();
   if(AC&&OUT){musicTick(dt);ambTick(dt)}
   if(isTouch&&PLAYERS[0]){const nl=state==='play'?PLAYERS[0].near:null,lb=nl?nl.label:'';if(lb!==lastNearLb){lastNearLb=lb;const tA=$('#tA');tA.classList.toggle('hint',!!lb);tA.innerHTML=lb?'<small>'+esc(lb.length>22?lb.slice(0,21)+'…':lb)+'</small>':'AÇÃO'}}
   try{draw()}catch(e){console.error(e)}
