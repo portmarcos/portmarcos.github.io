@@ -312,6 +312,8 @@ body.notop #hud,body.notop #inv{display:none}
 <script>
 /* Capítulos que já têm fase de ação (plataforma). Os demais usam a investigação clássica. */
 const FASES_ACAO={0:'fase-quixada.html',1:'fase-sertao.html'};
+/* modo de teste do professor: true = todos os capítulos abertos no mapa; false = cada um só abre depois do anterior */
+const LIBERAR_TUDO=true;
 /* ================== UTIL ================== */
 const $=s=>document.querySelector(s);
 const el=(tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e};
@@ -436,7 +438,7 @@ function showMap(){
   setLayout(true);hud();clearScene();setBg('img/mapa.webp',false);
   const pl=el('div','placa left anim','<small>Brasil · 1938</small><b>Mapa da investigação</b>');ui.appendChild(pl);
   CAPITULOS.forEach((c,i)=>{
-    const done=S.done.includes(i),cur=i===S.ch,lock=i>S.ch;
+    const done=S.done.includes(i),cur=i===S.ch,lock=!LIBERAR_TUDO&&i>S.ch;
     const b=el('button','pin'+(done?' done':'')+(cur?' cur':'')+(lock?' lock':'')+(c.pin[1]<15?' below':''));b.title=`${i+1}. ${done?c.obra+' — '+c.autor:c.lugar}`;
     b.style.left=c.pin[0]+'%';b.style.top=c.pin[1]+'%';
     b.innerHTML=`<span class="lbl">${i+1}. ${esc(done?c.obra:c.lugar)}</span>${done?'<span class="ok">✓</span>':''}`;
