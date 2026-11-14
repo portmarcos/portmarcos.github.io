@@ -254,7 +254,7 @@ function optHTML(atStart){const rg=(k,t)=>`<label>${t} <input type="range" min="
   ${atStart?`<div><b style="font-size:.92rem">Dificuldade</b><div class="pick" id="pkDif">${Object.entries(DIF).map(([k,v])=>`<button data-v="${k}" class="${OPT.dif===k?'on':''}">${v.nome}</button>`).join('')}</div><p class="mini">Fácil: a família resiste mais e os capangas são lentos (pontos ×0,8). Difícil: tudo mais rápido e menos tempo no Alagadiço (pontos ×1,3).</p></div>`:`<p class="mini">Dificuldade: <b>${DF().nome}</b> (escolhida no início da fase).</p>`}</div>`}
 function bindOpt(root){root.querySelectorAll('[data-o]').forEach(el=>{el.oninput=el.onchange=()=>{OPT[el.dataset.o]=el.type==='checkbox'?el.checked:+el.value;saveOpt();if(el.dataset.o==='sfx')SFX.page()}})}
 /* ---------------- conquistas ---------------- */
-const ACH=SERTAO.ACH.concat([['pistas','Olho de detetive','Achou as quatro pistas'],['paginas','Nenhuma página perdida','Recolheu todas as páginas'],['linha','Romance desmontável','Completou a linha do tempo do romance'],['intocavel','Lamparina acesa','Terminou a fase sem perder lamparina'],['rapido','Travessia ligeira','Terminou a fase em menos de 10 minutos'],['dupla','Dupla de detetives','Terminou a fase em dupla'],['dificil','Sertão bravo','Terminou a fase no Difícil']]);
+const ACH=SERTAO.ACH.concat([['pistas','Olho de detetive','Achou as cinco pistas'],['paginas','Nenhuma página perdida','Recolheu todas as páginas'],['linha','Romance desmontável','Completou a linha do tempo do romance'],['intocavel','Lamparina acesa','Terminou a fase sem perder lamparina'],['rapido','Travessia ligeira','Terminou a fase em menos de 10 minutos'],['dupla','Dupla de detetives','Terminou a fase em dupla'],['dificil','Sertão bravo','Terminou a fase no Difícil']]);
 let ACHS={};try{ACHS=JSON.parse(localStorage.getItem('caso_conquistas_q2'))||{}}catch(e){}
 
 function ach(id){if(ACHS[id])return;const a=ACH.find(x=>x[0]===id);if(!a)return;ACHS[id]=new Date().toISOString().slice(0,10);try{localStorage.setItem('caso_conquistas_q2',JSON.stringify(ACHS))}catch(e){}
@@ -373,7 +373,7 @@ addEventListener('resize',resize);
 let S=store.get();if(!S)S={name:'Detetive',ch:0,done:[],letters:[],items:[],notes:[],score:0,lamps:5,lupas:3,found:{},talked:{},err:{},stats:{acertos:0,erros:0},finished:false};
 S.stats=S.stats||{acertos:0,erros:0};
 const MAXL=5;
-let state='load',scene='main',T=0,score=0,lamps=Math.max(3,Math.min(MAXL,S.lamps||5)),pages=0,clues=[false,false,false,false],sede=0,sedeLost=0,sedeCaa=0,preas=0,BAL=null,caught=0,arrib=null,agua=100,contasOK=0,contasErr=0,trechos={},FUGA=null,cineEl=null,raining=false,timelineN=0,talked=false,gateOpen=false,checkpoint={x:80,y:G,scene:'main'},combo=0,comboT=0,shake=0,camX=0,camY=0,elapsed=0,bossActive=false,bossDone=false,errosFase=0,FAM=null;
+let state='load',scene='main',T=0,score=0,lamps=Math.max(3,Math.min(MAXL,S.lamps||5)),pages=0,clues=[false,false,false,false,false],sede=0,sedeLost=0,sedeCaa=0,preas=0,BAL=null,caught=0,arrib=null,agua=100,contasOK=0,contasErr=0,trechos={},FUGA=null,cineEl=null,raining=false,timelineN=0,talked=false,gateOpen=false,checkpoint={x:80,y:G,scene:'main'},combo=0,comboT=0,shake=0,camX=0,camY=0,elapsed=0,bossActive=false,bossDone=false,errosFase=0,FAM=null;
 const famOn=()=>false;
 
 /* ================== NÍVEL ================== */
@@ -404,6 +404,8 @@ function buildMain(){
   L.roller={x:3290,t:1.5};
   L.hidden.push({x:1790,y:G-10,kind:'pegadas',j:1,label:'Examinar as pegadas'});
   L.clue3={x:2060,y:G-306+26};
+  L.cacto={x:2200,broken:false,t:0};
+  L.inter.push({x:2165,y:G-80,w:70,h:80,label:'Examinar o cacto quebrado (H)',use:()=>foundClue(4),cond:()=>Lv.cacto.broken&&!clues[4]});
   L.inter.push({x:2030,y:G-306+26-80,w:60,h:80,label:'Examinar o alto do juazeiro',use:()=>foundClue(3),cond:()=>!clues[3]});
   // --- cidade (feira) ---
   L.npcs.push({k:'vit',sh:'vit',x:3390,y:G,lines:SERTAO.FALAS.vitoria,nome:'Sinhá Vitória'});
@@ -555,6 +557,7 @@ function updProjs(dt){
     if(p.life>0)for(const u of Lv.urubus){if(u.st!=='dead'&&boxHit(pb,{x:u.x-28,y:u.y-24,w:56,h:38})){p.life=0;killUrubu(u);break}}
     if(p.life>0&&arrib)for(const b of arrib.birds){if(b.st!=='flee'&&boxHit(pb,{x:b.x-20,y:b.y-30,w:40,h:34})){p.life=0;scareBird(b);break}}
     const s=Lv.sold;if(p.life>0&&s&&!s.fin&&!s.gone&&boxHit(pb,{x:s.x-20,y:s.y-110,w:40,h:110})){p.life=0;s.alert=Math.min(.95,s.alert+.5);floatTxt(s.x,s.y-130,'Desafasta!');if(!updProjs.tip){updProjs.tip=1;toast('O papel bate na farda e cai. Contra o governo, papel não adianta: melhor não ser visto.')}}
+    const ct=Lv.cacto;if(ct&&!ct.broken&&p.life>0&&boxHit(pb,{x:ct.x-22,y:G-70,w:44,h:70})){p.life=0;breakCacto()}
     if(p.life>0)for(const k of Lv.rocks)if(boxHit(pb,{x:k.x-24,y:k.y-40,w:48,h:40})){p.life=0;puff(p.x,p.y,.3);SFX.hit();break}
     if(boss&&boss.plac&&p.life>0)for(const it of boss.plac.items)if(boxHit(pb,{x:it.x-(it.w||92)/2,y:it.y-24,w:it.w||92,h:44})){p.life=0;ink(p.x,p.y,5);contaHit(it);break}
     if(boss&&p.life>0&&bossActive&&boxHit(pb,bossBox())){p.life=0;bossHitBy()}
@@ -683,10 +686,10 @@ function startBoss(){bossActive=true;Lv.solids.push({x:6500,y:G-320,w:20,h:320,h
     Q:[cs[0],CH.desafios[0],cs[1],CH.desafios[1],CH.desafios[2]],mult:1,slamN:0,ph:1,said:null,tauntT:5};
   shake=1;rumble()}
 function bossIntro(){
-  say([{q:'mandacaru',t:'Ora, ora… um leitor. Eu sou o Mandacaru, o Senhor das Contas. Aqui, quem não sabe fazer conta paga juros!'},{q:'mandacaru',t:'Fabiano nunca entendeu as minhas contas. Será que você entende?'}])
+  say((clues[4]?[{q:'mandacaru',t:'Espere… cadê o meu cacto azul? O meu cacto de 1930?! Foi VOCÊ!'},{q:'mandacaru',t:'Agora a conta é pessoal: vou cobrar com juros em dobro!'}]:[]).concat([{q:'mandacaru',t:'Ora, ora… um leitor. Eu sou o Mandacaru, o Senhor das Contas. Aqui, quem não sabe fazer conta paga juros!'},{q:'mandacaru',t:'Fabiano nunca entendeu as minhas contas. Será que você entende?'}]))
     .then(()=>trechoOv('juros',{pre:'Em “Contas”, Fabiano desconfia de que o patrão o rouba, mas não sabe fazer as contas para provar. O narrador conta assim:'}))
     .then(()=>say([{q:'detetive',t:'Depois de três ataques ele abre o livro-caixa. Se for uma conta, as respostas aparecem em placas: acerto a certa com um papel. Se for leitura, encosto nele.'},{q:'detetive',t:'E a Baleia vai me ajudar: quando ele bater no chão, ela morde a raiz!'}]))
-    .then(()=>{boss.st='idle';boss.t=0;bossSay('Vamos às contas!')})}
+    .then(()=>{boss.st='idle';boss.t=0;if(clues[4]){boss.spd=Math.min(1.9,boss.spd*1.1);bossSay('Meu cacto! Você me paga!')}else bossSay('Vamos às contas!')})}
 function spineVolley(tp){const b=boss,ph=bossPhase(),y0=b.y-170+(b.hy||0),tt=.95;let n=4+Math.min(3,5-b.hp);
   if(ph===3){n=Math.min(11,Math.round(n*b.mult));b.mult*=1.25;floatTxt(b.x,b.y-280,'×'+b.mult.toFixed(2).replace('.',','))}
   SFX.throw();for(let i=0;i<n;i++){const tx=tp.x+(i-(n-1)/2)*(ph===3?62:80),x0=b.x+b.face*40;b.spines.push({x:x0,y:y0,vx:(tx-x0)/tt,vy:(G-12-y0-.5*900*tt*tt)/tt,rot:0})}}
@@ -704,6 +707,20 @@ function contaResult(ok,timeout){const b=boss,D=b.plac.D;b.plac=null;
   else{S.stats.erros++;S.err=S.err||{};S.err[CHI]=(S.err[CHI]||0)+1;SFX.bad();contasErr++;b.Q[5-b.hp]=b.cs[b.ci++%b.cs.length];
     toast((timeout?'O livro-caixa fechou! ':'Conta errada! ')+D.e);bossSay('Errou! Mais juros!');b.st='idle';b.t=0;b.spd=Math.min(1.9,b.spd*1.1);if(!timeout)spineVolley(nearestP(b.x,b.y))}
   updHud()}
+function breakCacto(){const ct=Lv.cacto;ct.broken=true;ct.t=0;SFX.crack();SFX.hit();shake=.25;score+=50;floatTxt(ct.x,G-90,'+50');
+  for(let i=0;i<10;i++)parts.push({img:'brilho',x:ct.x+(Math.random()-.5)*30,y:G-40-Math.random()*30,vx:(Math.random()-.5)*300,vy:-Math.random()*350,life:.8,rot:0,vr:0,s:.08,g:900,fade:1});
+  updHud();toast(isTouch?'O cacto azul quebrou! Toque no cacto ou em AÇÃO para examinar.':'O cacto azul quebrou! Aperte H (ou clique no cacto) para examinar.')}
+function cactoPerto(){const ct=Lv&&Lv.cacto;return ct&&ct.broken&&!clues[4]&&PLAYERS.some(q=>Math.abs(q.x-ct.x)<260&&q.y>G-200)}
+addEventListener('keydown',e=>{if(e.code==='KeyH'&&state==='play'&&cactoPerto()){e.preventDefault();foundClue(4)}});
+cv.addEventListener('pointerdown',e=>{if(state!=='play'||!cactoPerto())return;const r=cv.getBoundingClientRect(),wx=(e.clientX-r.left)/r.width*VW+camX,wy=(e.clientY-r.top)/r.height*VH+camY,ct=Lv.cacto;
+  if(Math.abs(wx-ct.x)<70&&wy>G-130&&wy<G+30)foundClue(4)});
+let cactoCv=null;function cactoImg(){if(cactoCv||!IMG.xique)return cactoCv;const i=IMG.xique,c=document.createElement('canvas');c.width=i.width;c.height=i.height;const x=c.getContext('2d');x.drawImage(i,0,0);x.globalCompositeOperation='source-atop';x.fillStyle='rgba(0,215,235,.6)';x.fillRect(0,0,c.width,c.height);cactoCv=c;return c}
+function drawCacto(){const ct=Lv.cacto;if(!ct||ct.x<camX-80||ct.x>camX+VW+80)return;const c=cactoImg();if(!c)return;
+  if(!ct.broken){const g=ctx.createRadialGradient(ct.x,G-36,4,ct.x,G-36,60);g.addColorStop(0,'rgba(80,240,255,.25)');g.addColorStop(1,'rgba(80,240,255,0)');ctx.fillStyle=g;ctx.fillRect(ct.x-60,G-96,120,120);ctx.drawImage(c,ct.x-26,G-74,52,74);return}
+  ctx.save();ctx.beginPath();ctx.rect(ct.x-40,G-30,80,30);ctx.clip();ctx.drawImage(c,ct.x-26,G-74,52,74);ctx.restore();
+  ctx.save();ctx.translate(ct.x+24,G-6);ctx.rotate(1.35);ctx.drawImage(c,0,0,c.width,c.height*.55,-20,-30,40,32);ctx.restore();
+  ctx.save();ctx.translate(ct.x-28,G-4);ctx.rotate(-1.1);ctx.drawImage(c,0,c.height*.1,c.width*.5,c.height*.3,-10,-14,20,16);ctx.restore();
+  if(!clues[4]){ctx.save();ctx.font='bold 15px "Special Elite",monospace';ctx.textAlign='center';const t=isTouch?'toque aqui':'H',y=G-60+Math.sin(T*4)*4;ctx.lineWidth=4;ctx.strokeStyle='#123';ctx.strokeText(t,ct.x,y);ctx.fillStyle='#8ff4ff';ctx.fillText(t,ct.x,y);ctx.restore()}}
 function baleiaBite(){if(!BAL||BAL.st==='stay')return;BAL.st='bite';BAL.t=0;bark()}
 function updBoss(dt){
   if(!boss)return;const b=boss;b.t+=dt;b.slamAt=null;if(b.flash>0)b.flash-=dt;if(b.title>0)b.title-=dt;if(b.said){b.said.life-=dt;if(b.said.life<=0)b.said=null}const tp=nearestP(b.x,b.y);
@@ -801,10 +818,12 @@ async function talkVitoria(){await say([{q:'vitoria',t:'Esta cama de varas me ma
   if(!trechos.cama){score+=50;updHud();await trechoOv('cama',{pre:'Uma cama de verdade é o grande sonho de sinhá Vitória, que se repete ao longo do livro:'})}}
 async function talkMenino(){await say([{q:'meninoV',t:'Moço, o que é inferno? Sinhá Terta falou essa palavra e eu achei bonita…'},{q:'meninoV',t:'Perguntei para a mãe e levei um cascudo. Ninguém me explica nada.'},{q:'detetive',t:'Para quem quase não tem palavras, uma palavra nova é um mundo inteiro.'}]);
   if(!trechos.inferno){score+=50;updHud();await trechoOv('inferno',{pre:'No capítulo “O menino mais velho”, uma única palavra desperta a curiosidade do menino:'})}}
-const HINTS=['Na fazenda, perto da casa, há algo pendurado no alto. Acenda a lamparina lá em cima.','A Baleia fareja o que a gente não vê: deixe a cachorra andar com você pela caatinga.','Na cacimba do rio seco, depois que as arribações passarem.','No alto do juazeiro do meio da caatinga.'];
+/* 5ª pista: o cacto ciano, xodó do Mandacaru (não fere; quebra com papel; depois H, AÇÃO ou clique) */
+const CACTO={nome:'Cacto quebrado',t:'Um cacto diferente, de um azul que não existe na caatinga, agora em pedaços. Era o cacto favorito do Mandacaru, e é velho: ele o ganhou em 1930, o ano em que O Quinze, de Rachel de Queiroz, abriu o chamado romance de 30. Agora que você o quebrou, cuidado: se o Mandacaru descobrir, ele vem atrás de você. Melhor guardar segredo… e se preparar para a briga.'};
+const HINTS=['Na fazenda, perto da casa, há algo pendurado no alto. Acenda a lamparina lá em cima.','A Baleia fareja o que a gente não vê: deixe a cachorra andar com você pela caatinga.','Na cacimba do rio seco, depois que as arribações passarem.','No alto do juazeiro do meio da caatinga.','Um cacto de cor estranha, azul-ciano, na caatinga. Ele não machuca: arremesse um papel nele.'];
 function foundClue(j){if(clues[j])return;clues[j]=true;Lv.hidden.forEach(h=>{if(h.j===j)h.got=1});if(clues.every(Boolean))ach('pistas');SFX.clue();score+=150;sparkle(P.x,P.y-60);updHud();
-  const p=CH.pistas[j];addNote(p.t);const n=clues.filter(Boolean).length;
-  showOv(`<span class="kicker">Pista ${n} de 4</span><h2>${esc(p.nome)}</h2><div class="clue">${j===0?'<img src="img/i-gaiola.webp" alt="">':j===3?'<img src="img/q2/juazeiro.webp" alt="">':''}<p>${esc(p.t)}</p></div>
+  const p=j<4?CH.pistas[j]:CACTO;addNote(p.t);const n=clues.filter(Boolean).length;
+  showOv(`<span class="kicker">Pista ${n} de ${clues.length}</span><h2>${esc(p.nome)}</h2><div class="clue">${j===0?'<img src="img/i-gaiola.webp" alt="">':j===3?'<img src="img/q2/juazeiro.webp" alt="">':j===4&&cactoImg()?'<img src="'+cactoImg().toDataURL()+'" alt="">':''}<p>${esc(p.t)}</p></div>
     <div class="acts stick"><span class="kicker">+150 pontos · anotado no caderno</span><button class="pbtn" data-close>Continuar</button></div>`)}
 function tryGate(){const miss=clues.map((c,i)=>c?null:HINTS[i]).filter(Boolean);
   if(!talked)miss.push('Converse com Fabiano, na fazenda.');
@@ -1031,6 +1050,7 @@ function drawCommon(){
   if(FUGA)for(const o of FUGA)sheet(o.k,SH[o.sh],1+Math.floor(o.an)%o.n,o.x,G,false,clamp((7380-o.x)/260,0,1));
   for(const p of Lv.preas){if(p.st==='hid'||p.st==='caught')continue;const bob=p.st==='run'?Math.abs(Math.sin(T*18))*4:0;ctx.save();ctx.translate(p.x,G-bob);if(p.face<0)ctx.scale(-1,1);img('prea',-22,-25,44,25);ctx.restore()}
   for(const s of Lv.spikes)img('xique',s.x-24,G-68,49,70);
+  drawCacto();
   drawBaleia();
   for(const e of Lv.enemies){let f=Math.floor(e.an)%4;if(e.st==='atk')f=e.t<.28?4:5;else if(e.st==='stun')f=6;else if(e.st==='dead')f=7;sheet('cap',SH.cap,f,e.x,e.y,e.dir>0,e.st==='dead'?Math.max(0,1-e.t/.7):1)}
   for(const u of Lv.urubus){const k=u.st==='dive'?'uru3':['uru1','uru2'][Math.floor(u.an)%2],im=IMG[k];if(!im)continue;const w=im.width*.36,h=im.height*.36;ctx.save();ctx.translate(u.x,u.y);if(u.dir<0)ctx.scale(-1,1);if(u.st==='dead')ctx.rotate(.7);ctx.drawImage(im,-w/2,-h/2,w,h);ctx.restore()}
