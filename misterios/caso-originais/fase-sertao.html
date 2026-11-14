@@ -1222,11 +1222,12 @@ function buildSonho(){
     {k:'con',sh:'con',x:2050,y:G,face:-1,fixed:1,lines:['Que sonho estranho…'],nome:'Conceição'},
     {img:'cabra',x:2160,y:G,face:-1,fixed:1,s:.3,lines:['Méééé!'],nome:'A cabra de O Quinze'});
   L.mesa={x:2500};
+  L.inter.push({x:5,y:G-140,w:75,h:140,label:'Voltar ao sertão pela rachadura',use:()=>sairSonho()});
   L.inter.push({x:880,y:G-110,w:90,h:110,label:'Ouvir os dois vaqueiros',use:talkVaqueiros},
     {x:1490,y:G-110,w:100,h:110,label:'Ouvir as duas mães',use:talkMaes},
     {x:2020,y:G-110,w:60,h:110,label:'Conversar com Conceição',use:talkConSonho},
     {x:2450,y:G-110,w:110,h:110,label:'Espiar a mesa dos vilões',use:talkViloes});
-  [[60,'Onde as secas se encontram: um sonho dentro dos livros. Aqui a gravidade é leve… e a chuva sobe.',1],[1300,'Ponto de controle. Dois livros, duas famílias, a mesma estrada.',1],[2560,'A chuva de páginas! Pegue cada página que cai e guarde no livro certo (AÇÃO perto do livro).',1]].forEach(([x,msg,cp])=>L.triggers.push({x,msg,cp:!!cp}));
+  [[60,'Onde as secas se encontram: um sonho dentro dos livros. Aqui a gravidade é leve… e a chuva sobe. Para voltar, use a rachadura azul logo atrás de você.',1],[1300,'Ponto de controle. Dois livros, duas famílias, a mesma estrada.',1],[2560,'A chuva de páginas! Pegue cada página que cai e guarde no livro certo (AÇÃO perto do livro).',1]].forEach(([x,msg,cp])=>L.triggers.push({x,msg,cp:!!cp}));
   for(const k in LIVROS){const b=LIVROS[k];L.inter.push({x:b.x-55,y:G-120,w:110,h:120,label:'Guardar no livro '+b.t,use:()=>depositar(k),cond:()=>!!P.carry})}
   L.chuva={on:false,done:false,order:[],i:0,page:null,ok:0,err:0,carrier:null};
   return L}
@@ -1303,13 +1304,17 @@ function drawSonho(sx,sy){const L=Lv;
   for(const k in LIVROS){const b=LIVROS[k];ctx.save();ctx.translate(b.x,G);ctx.fillStyle=b.c;ctx.strokeStyle='#1b0d05';ctx.lineWidth=3;ctx.beginPath();ctx.roundRect(-52,-118,104,118,6);ctx.fill();ctx.stroke();ctx.fillStyle='rgba(255,240,210,.9)';ctx.fillRect(-44,-110,6,102);
     ctx.fillStyle='#f6e7c4';ctx.textAlign='center';ctx.font='bold 14px "Playfair Display",Georgia,serif';ctx.fillText(b.t,4,-74);ctx.font='9px "Special Elite",monospace';ctx.fillText(b.s,4,-58);ctx.restore()}
   const C=L.chuva;if(C&&C.page&&C.page.st!=='carried'){const p=C.page;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(Math.sin(p.t*2)*.25);img('pag2',-20,-12,40,24);ctx.restore();ctx.save();ctx.globalAlpha=.6+.4*Math.sin(T*6);img('brilho',p.x-30,p.y-14,60,26);ctx.restore()}
-  drawCommon();
+  drawPortal();drawCommon();
   for(const q of PLAYERS)if(q.carry){ctx.save();ctx.translate(q.x,q.y-q.h-26);ctx.rotate(Math.sin(T*4)*.1);img('pag2',-20,-12,40,24);ctx.restore()}
   ctx.restore();drawLight();
   // nome da página carregada
   const pg=C&&C.page;if(pg&&C.on){const F=FATOS[pg.f];ctx.save();ctx.font='17px Lora, Georgia, serif';const tx=pg.st==='carried'?'Você leva: “'+F[0]+'”. De qual livro é?':'Uma página cai do céu: “'+F[0]+'”',w=Math.min(820,ctx.measureText(tx).width+40);
     ctx.fillStyle='rgba(251,243,223,.95)';ctx.strokeStyle='#5a4a8a';ctx.lineWidth=2;ctx.beginPath();ctx.roundRect(VW/2-w/2,VH-46,w,36,10);ctx.fill();ctx.stroke();ctx.fillStyle='#2b1a0d';ctx.textAlign='center';ctx.fillText(tx,VW/2,VH-22);ctx.restore()}}
-function drawPortal(){if(scene!=='main'||!clues[4]||sonhoDone||!Lv.cacto)return;const x=Lv.cacto.x,y=G-70;if(x<camX-120||x>camX+VW+120)return;ctx.save();
+function sairSonho(){if(scene!=='sonho'||state!=='play')return;const C=W.sonho.chuva;Object.assign(C,{on:false,page:null,i:0});PLAYERS.forEach(q=>q.carry=null);SFX.door();
+  fade(()=>{switchScene('main');PLAYERS.forEach((q,i)=>{q.x=(sonhoBack?sonhoBack.x:2200)-120-i*34;q.y=G;q.vx=q.vy=0});if(BAL)BAL.x=2040;camY=0;checkpoint={x:2080,y:G,scene:'main'};updHud();
+    toast('De volta ao sertão. A rachadura continua aberta: dá para voltar ao sonho quando quiser.')})}
+function drawPortal(){if(scene==='sonho'){drawPortalAt(40);return}if(scene!=='main'||!clues[4]||sonhoDone||!Lv.cacto)return;drawPortalAt(Lv.cacto.x)}
+function drawPortalAt(x){const y=G-70;if(x<camX-120||x>camX+VW+120)return;ctx.save();
   for(let i=0;i<4;i++){const r=1-i*.2;ctx.strokeStyle=`rgba(${120+i*30},240,255,${.55-i*.1})`;ctx.lineWidth=4-i*.6;ctx.beginPath();ctx.ellipse(x,y,26*r+Math.sin(T*4+i)*3,60*r+Math.cos(T*3+i)*4,Math.sin(T+i)*.15,0,7);ctx.stroke()}
   const g=ctx.createRadialGradient(x,y,4,x,y,60);g.addColorStop(0,'rgba(200,255,255,.55)');g.addColorStop(1,'rgba(80,200,255,0)');ctx.fillStyle=g;ctx.fillRect(x-60,y-70,120,140);
   for(let i=0;i<6;i++){const a=T*2+i,rr=30+Math.sin(T*3+i)*10;ctx.fillStyle='rgba(200,255,255,.8)';ctx.beginPath();ctx.arc(x+Math.cos(a)*rr*.5,y+Math.sin(a)*rr,2,0,7);ctx.fill()}ctx.restore()}
