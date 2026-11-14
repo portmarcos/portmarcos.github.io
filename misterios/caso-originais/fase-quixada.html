@@ -732,10 +732,10 @@ const FOOD={agua:{nome:'cabaça d’água',t:'Na seca, a água vinha de cacimbas
 function famOn(){return FAM&&scene==='main'&&FAM.state!=='gone'&&FAM.state!=='leaving'}
 function famInit(){FAM={x:180,y:G,forca:100,state:'follow',dir:1,an:0,moving:false,pedro:true,ep:{},josias:null,cabra:null,msgT:0}}
 function famGY(x){return x>=470&&x<=1190?G-36:G}
-function famHit(n,msg){if(!famOn())return;n=Math.round(n*DF().fam);FAM.forca=Math.max(0,FAM.forca-n);SFX.hurt();floatTxt(FAM.x,FAM.y-120,'-'+n+' força');if(msg&&FAM.msgT<=0){toast(msg);FAM.msgT=3}
+function famHit(n,msg){if(!famOn())return;FAM.hurtT=.45;n=Math.round(n*DF().fam);FAM.forca=Math.max(0,FAM.forca-n);SFX.hurt();floatTxt(FAM.x,FAM.y-120,'-'+n+' força');if(msg&&FAM.msgT<=0){toast(msg);FAM.msgT=3}
   if(FAM.forca<=0){FAM.forca=50;lamps--;errosFase++;hudLamps(true);toast('A família desmaiou de fome e cansaço… uma lamparina se apagou. Traga comida e água!');if(lamps<=0)setTimeout(gameOver,400)}updHud()}
 function updFamily(dt){
-  if(!FAM||scene!=='main')return;const F=FAM;F.msgT-=dt;
+  if(!FAM||scene!=='main')return;const F=FAM;F.msgT-=dt;famAnim(dt);
   if(F.state==='gone')return;
   if(F.state==='leaving'){F.x+=60*dt;F.an+=dt*6;F.fade=(F.fade||1)-dt*.35;if(F.fade<=0){F.state='gone';updHud()}return}
   if(state==='play')F.forca=Math.max(0,F.forca-dt*DF().drain);if(F.forca<=0)famHit(0);
@@ -772,7 +772,7 @@ function episodioTrem(){say([{q:'chico',t:'Moço da estação, uma passagem para
   if(FAM.forca>=70)ach('familia');const bonus=Math.round(FAM.forca*4);score+=bonus;FAM.state='leaving';FAM.fade=1;SFX.win();updHud();
   addNote('A retirada: sem passagem de trem, a família de Chico Bento segue a pé para Fortaleza; Mocinha fica pelo caminho.');
   toast('Você protegeu a família até a estação! +'+bonus+' pontos (pela força que ela ainda tinha). Agora eles seguem a pé para Fortaleza.')})}
-function feedFamily(){if(!comida.length)return;const k=comida.shift();FAM.forca=Math.min(100,FAM.forca+25);score+=40;SFX.lampUp();floatTxt(FAM.x,FAM.y-120,'+25 força');toast('Você deu '+FOOD[k].nome+' à família. '+FOOD[k].t);updHud()}
+function feedFamily(){if(!comida.length)return;FAM.joy=1.3;const k=comida.shift();FAM.forca=Math.min(100,FAM.forca+25);score+=40;SFX.lampUp();floatTxt(FAM.x,FAM.y-120,'+25 força');toast('Você deu '+FOOD[k].nome+' à família. '+FOOD[k].t);updHud()}
 /* ================== MISSÃO NO ALAGADIÇO ================== */
 function startMission(){mission={t:DF().mis,ok:0,total:W.campo.ret.length,on:true};updHud();toast('Leve uma cesta por vez da barraca de Conceição até cada retirante. Se um capanga te acertar, ele confisca a cesta!')}
 function endMission(porTempo){mission.on=false;if(!porTempo)ach('cestas');PLAYERS.forEach(q=>q.cesta=false);const b=mission.ok*100;score+=b;updHud();
@@ -790,15 +790,41 @@ function drawFood(k,x,y){ctx.save();ctx.translate(x,y);ctx.lineWidth=2;ctx.strok
   ctx.restore()}
 function drawCesta(x,y,s=1){ctx.save();ctx.translate(x,y);ctx.scale(s,s);ctx.fillStyle='#a8742f';ctx.strokeStyle='#2b1a0d';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-14,-10);ctx.lineTo(14,-10);ctx.lineTo(10,8);ctx.lineTo(-10,8);ctx.closePath();ctx.fill();ctx.stroke();
   ctx.beginPath();ctx.arc(0,-10,11,Math.PI,0);ctx.stroke();ctx.fillStyle='#e9d4a0';ctx.beginPath();ctx.arc(-4,-11,4,0,6.29);ctx.arc(5,-12,4,0,6.29);ctx.fill();ctx.strokeStyle='rgba(43,26,13,.5)';for(let i=-8;i<=8;i+=5){ctx.beginPath();ctx.moveTo(i,-9);ctx.lineTo(i*.75,7);ctx.stroke()}ctx.restore()}
-function drawFamily(){const F=FAM;if(!F||F.state==='gone')return;ctx.save();if(F.state==='leaving')ctx.globalAlpha=Math.max(0,F.fade);
-  const bob=F.moving?Math.abs(Math.sin(F.an))*3:0,flip=F.dir<0;
-  const put=(k,dx,sc)=>{const im=IMG[k];if(!im)return;const w=im.width*sc,h=im.height*sc,x=F.x+(flip?-dx:dx);ctx.save();ctx.translate(x,F.y-bob+2);if(flip)ctx.scale(-1,1);ctx.drawImage(im,-w/2,-h,w,h);ctx.restore()};
-  if(F.pedro||F.ep.pedroOk)put('menino',-40,.37);put('cordulina',0,.37);put('chico',44,.37);
+/* ---------- família em estilo desenho animado: cada um com sua mola, pulinho, achatamento, olhares e reações ---------- */
+function famMembers(F){if(!F.mem)F.mem=[{k:'chico',off:44,stiff:16,damp:6.5,amp:5,seed:0},{k:'cordulina',off:0,stiff:12,damp:5.6,amp:4,seed:1.7},{k:'menino',off:-42,stiff:24,damp:4.6,amp:10,seed:3.1,kid:1}].map(m=>Object.assign(m,{x:F.x+m.off,v:0,ph:0,face:1,lookT:1+Math.random()*2,look:0,fid:0,fidT:2+Math.random()*4}));return F.mem}
+function famAnim(dt){const F=FAM,M=famMembers(F);
+  const near=Lv.enemies.some(e=>e.st!=='dead'&&Math.abs(e.x-F.x)<170&&Math.abs(e.y-F.y)<60);if(near&&!F.scared)F.startle=.55;F.scared=near;
+  if(F.startle>0)F.startle-=dt;if(F.joy>0)F.joy-=dt;if(F.hurtT>0)F.hurtT-=dt;
+  for(const m of M){const lead=F.state==='leaving'?1:F.dir;const tgt=F.x+m.off*lead;if(Math.abs(tgt-m.x)>400){m.x=tgt;m.v=0}const a=(tgt-m.x)*m.stiff-m.v*m.damp;m.v+=a*dt;m.x+=m.v*dt;
+    const sp=Math.abs(m.v);if(sp>14){m.ph+=dt*(8+sp*.05)*(m.kid?1.25:1);m.face=Math.sign(m.v)}else{m.ph+=(Math.round(m.ph/Math.PI)*Math.PI-m.ph)*Math.min(1,dt*10);
+      m.lookT-=dt;if(m.lookT<=0){m.lookT=1.6+Math.random()*3;const pl=nearestP(m.x,F.y);m.face=Math.random()<.65?(pl.x<m.x?-1:1):-m.face}
+      m.fidT-=dt;if(m.fidT<=0){m.fidT=3+Math.random()*5;m.fid=.6}}
+    if(m.fid>0)m.fid-=dt}}
+function drawFamily(){const F=FAM;if(!F||F.state==='gone')return;const M=famMembers(F);ctx.save();if(F.state==='leaving')ctx.globalAlpha=Math.max(0,F.fade);
+  const tired=F.forca<30;
+  M.forEach((m,i)=>{if(m.k==='menino'&&!(F.pedro||F.ep.pedroOk))return;const im=IMG[m.k];if(!im)return;
+    const sp=Math.abs(m.v),walk=sp>14,s=Math.abs(Math.sin(m.ph)),gy=famGY(m.x);
+    let hop=walk?s*m.amp*(tired?.5:1):0,sy=1,rot=0,jx=0;
+    if(walk){if(s<.25)sy=1-(.25-s)*.5;else sy=1+s*.04;rot=clamp(m.v/700,-.13,.13)}
+    else{sy=1+.02*Math.sin(T*2.3+m.seed);rot=(m.k==='cordulina'?.03*Math.sin(T*1.3+m.seed):0)}
+    if(m.fid>0){const f=Math.sin((.6-m.fid)/.6*Math.PI);if(m.kid)hop+=f*14;else if(m.k==='chico')rot-=f*.12*m.face;else sy+=f*.05}
+    if(tired){rot+=.07*m.face;sy*=.97}
+    if(F.scared){jx=Math.sin(T*55+m.seed)*1.4}
+    if(F.startle>0){const k=Math.sin((.55-F.startle)/.55*Math.PI);hop+=k*(16+i*4);sy*=1+k*.08}
+    if(F.joy>0){const k=Math.abs(Math.sin((1.3-F.joy)*9+i*.9));hop+=k*14;sy*=1+k*.06}
+    if(F.hurtT>0){sy*=.82;jx+=Math.sin(T*70)*3}
+    const sx=1/Math.sqrt(sy),w=im.width*.37,h=im.height*.37;
+    ctx.save();ctx.globalAlpha*=.28*(1-Math.min(.6,hop/40));ctx.fillStyle='#1b0d05';ctx.beginPath();ctx.ellipse(m.x,gy+1,w*.42*(1-hop/80),5,0,0,7);ctx.fill();ctx.restore();
+    ctx.save();ctx.translate(m.x+jx,gy+2-hop);ctx.rotate(rot);ctx.scale((m.face<0?-1:1)*sx,sy);ctx.drawImage(im,-w/2,-h,w,h);ctx.restore();
+    if(walk&&s<.12&&Math.random()<.35)puff(m.x-m.face*8,gy,.18);
+    if(F.joy>0&&Math.sin(T*8+i)>.6){ctx.save();ctx.font='bold 16px serif';ctx.fillStyle='#e0503a';ctx.textAlign='center';ctx.fillText('♥',m.x+(i-1)*6,gy-h-14-hop-(1.3-F.joy)*20);ctx.restore()}
+    if(tired&&!walk&&Math.sin(T*3+m.seed)>.7){ctx.save();ctx.fillStyle='#9fd0f0';ctx.beginPath();ctx.ellipse(m.x+m.face*10,gy-h+18+((T*30)%14),2.5,4,0,0,7);ctx.fill();ctx.restore()}});
+  if(F.startle>0){ctx.save();ctx.font='bold 26px "Special Elite",monospace';ctx.textAlign='center';ctx.lineWidth=4;ctx.strokeStyle='#2b1a0d';const y=F.y-150-Math.sin((.55-F.startle)/.55*Math.PI)*10;ctx.strokeText('!',F.x,y);ctx.fillStyle='#ffcf5a';ctx.fillText('!',F.x,y);ctx.restore()}
   if(F.state!=='leaving'){const bw=74,bx=F.x-bw/2+4,by=F.y-128;ctx.fillStyle='rgba(20,8,2,.8)';ctx.fillRect(bx-2,by-2,bw+4,10);ctx.fillStyle=F.forca>50?'#7cb85a':F.forca>25?'#e0a63a':'#c0392b';ctx.fillRect(bx,by,bw*F.forca/100,6);
     ctx.font='bold 10px "Special Elite",monospace';ctx.textAlign='center';ctx.fillStyle='#ffe6b5';ctx.fillText('FAMÍLIA',F.x+4,by-4)}
   ctx.restore();
-  const c=F.cabra;if(c&&!c.gone){const im=IMG.cabra;if(im){const w=im.width*.3,h=im.height*.3;ctx.save();ctx.translate(c.x,c.y+2);if(c.dir>0)ctx.scale(-1,1);ctx.drawImage(im,-w/2,-h+Math.abs(Math.sin(c.t*12))*-3,w,h);ctx.restore()}}
-  const j=F.josias;if(j&&!(j.done&&j.ok)){const im=IMG.menino;if(im){const w=im.width*.34,h=im.height*.34;ctx.save();ctx.translate(j.x,j.y+2);ctx.scale(-1,1);ctx.drawImage(im,-w/2,-h,w,h);ctx.restore()}}
+  const c=F.cabra;if(c&&!c.gone){const im=IMG.cabra;if(im){const w=im.width*.3,h=im.height*.3,s=Math.abs(Math.sin(c.t*12)),sy=s<.2?.9:1.04;ctx.save();ctx.translate(c.x,c.y+2-s*8);ctx.rotate(c.dir*-.08);ctx.scale((c.dir>0?-1:1)/Math.sqrt(sy),sy);ctx.drawImage(im,-w/2,-h,w,h);ctx.restore()}}
+  const j=F.josias;if(j&&!(j.done&&j.ok)){const im=IMG.menino;if(im){const w=im.width*.34,h=im.height*.34,s=Math.abs(Math.sin(j.t*14)),sy=s<.2?.9:1.04;ctx.save();ctx.translate(j.x,j.y+2-s*9);ctx.rotate(.12);ctx.scale(-1/Math.sqrt(sy),sy);ctx.drawImage(im,-w/2,-h,w,h);ctx.restore()}}
   if(F.ep.josias){const mx=3210;ctx.save();ctx.strokeStyle='#4a6a2a';ctx.lineWidth=3;for(let i=-2;i<=2;i++){ctx.beginPath();ctx.moveTo(mx,G);ctx.quadraticCurveTo(mx+i*8,G-30,mx+i*16,G-48);ctx.stroke();ctx.fillStyle='#6f8f3a';ctx.beginPath();ctx.ellipse(mx+i*16,G-50,9,4,i*.4,0,6.29);ctx.fill()}
     ctx.fillStyle='#8a5a2c';ctx.strokeStyle='#2b1a0d';ctx.lineWidth=1.5;ctx.beginPath();ctx.ellipse(mx-10,G-3,12,5,.3,0,6.29);ctx.fill();ctx.stroke();ctx.beginPath();ctx.ellipse(mx+10,G-3,12,5,-.3,0,6.29);ctx.fill();ctx.stroke();
     ctx.font='bold 11px "Special Elite",monospace';ctx.textAlign='center';ctx.fillStyle='#ffe6b5';ctx.fillText('mandioca brava',mx,G-62);ctx.restore()}
