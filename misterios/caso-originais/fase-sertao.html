@@ -633,7 +633,7 @@ function updSoldier(dt){const s=Lv.sold;if(!s||s.gone)return;s.t+=dt;
   if(s.fin){if(s.st==='walk'){s.x+=s.dir*70*dt;s.an+=dt*8;if(s.x>Lv.w+80)s.gone=true}return}
   PLAYERS.forEach(q=>q.hidden=isHidden(q));
   if(s.st==='shout')return;
-  if(s.st==='walk'){s.an+=dt*7.5;s.x+=s.dir*58*DF().spd*dt;if(s.x>=s.x2||s.x<=s.x1){s.x=clamp(s.x,s.x1,s.x2);s.st='look';s.t=0}else if(s.t>3&&Math.random()<dt*.25){s.st='back';s.t=0}}
+  if(s.st==='walk'){s.an+=dt*58*DF().spd/7.7;s.x+=s.dir*58*DF().spd*dt;if(s.x>=s.x2||s.x<=s.x1){s.x=clamp(s.x,s.x1,s.x2);s.st='look';s.t=0}else if(s.t>3&&Math.random()<dt*.25){s.st='back';s.t=0}}
   else if(s.st==='look'){if(s.t>1.6){s.dir*=-1;s.st='walk';s.t=0}}
   else if(s.st==='back'){if(s.t>1.4){s.st='walk';s.t=0}}
   else if(s.st==='distraido'){if(s.t>3.6){s.st='walk';s.t=0}}
@@ -774,7 +774,7 @@ function drawBoss(){if(!boss)return;const b=boss;
     else{const k=s.st==='up'?Math.min(1,s.t/.15):Math.max(0,1-s.t/.3);ctx.save();ctx.beginPath();ctx.rect(s.x-40,G-90,80,90);ctx.clip();img('xique',s.x-24,G-68+70*(1-k),49,70);ctx.restore()}}
   const f={rise:0,idle:0,intro:0,spines:1,hop:0,slam:2,open:0,quiz:0,conta:0,hurt:3,stun:3,dead:4}[b.st]||0,al=b.flash>0&&Math.sin(T*40)>0?.4:1;
   if(b.st==='rise'){ctx.save();ctx.beginPath();ctx.rect(b.x-220,-400,440,G+402);ctx.clip();sheet('mand',SH.mand,0,b.x+(Math.random()-.5)*4,b.y+(1-b.rise)*270,b.face<0);ctx.restore()}
-  else{const jx=!bossDone&&bossPhase()===3?(Math.random()-.5)*3:0,g=TALK.q==='mandacaru'?Math.max(.35,TALK.amp):0,pul=Math.abs(Math.sin(RT*8)),sy=1+.04*g*pul+.01*Math.sin(RT*2);sheetT('mand',SH.mand,g&&TALK.ex&&f===0?1:f,b.x+jx,b.y+(b.hy||0),b.face<0?-1:1,al,Math.sin(RT*2.2)*.03*g,1/Math.sqrt(sy),sy)}
+  else{const jx=!bossDone&&bossPhase()===3?(Math.random()-.5)*3:0,g=TALK.q==='mandacaru'?Math.max(.35,TALK.amp):0,GS=gest(b,g),sy=GS.sy;sheetT('mand',SH.mand,g>.3&&TALK.ex&&f===0?1:f,b.x+jx,b.y+(b.hy||0)+GS.dy,b.face<0?-1:1,al,GS.rot,1/Math.sqrt(sy),sy)}
   if(['open','quiz','conta'].includes(b.st)){const x=b.x+b.face*60,y=b.y-130;ctx.save();ctx.translate(x,y);ctx.rotate(b.face*.08);ctx.fillStyle='#f4e6c4';ctx.strokeStyle='#2b1a0d';ctx.lineWidth=2;ctx.fillRect(-40,-26,40,46);ctx.fillRect(0,-26,40,46);ctx.strokeRect(-40,-26,40,46);ctx.strokeRect(0,-26,40,46);
     ctx.fillStyle='#3a1d0b';ctx.font='9px "Special Elite",monospace';ctx.textAlign='left';['1$000','2$500','5$000','juros'].forEach((t,i)=>{ctx.fillText(t,-36,-12+i*10);ctx.fillText(['+ 20%','+ 10%','= ?','= ?'][i],4,-12+i*10)});ctx.restore();
     if(b.st==='open'){ctx.fillStyle='#ffd27a';ctx.font='bold 20px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText('★ livro-caixa aberto: encoste nele ★',b.x,b.y-302)}}
@@ -859,7 +859,7 @@ function escolhaGoverno(){return new Promise(res=>{const ov=showOv(`<span class=
   ov.querySelectorAll('.pick button').forEach(b=>b.onclick=()=>{const a=b.dataset.v==='a';ov.remove();state='play';ach('governo');
     trechoOv('governo',{kicker:'O soldado amarelo · capítulo 11',title:a?'No livro, não foi assim':'Foi isso que aconteceu no livro',pre:a?'Fabiano pensa em vingança, mas a raiva se desfaz diante da farda. Ele se curva:':'Mesmo podendo se vingar, Fabiano se curva diante da farda:',D:SERTAO.DESAFIOS[0]}).then(res)})})}
 function fuga(){state='cine';Lv.npcs=Lv.npcs.filter(n=>n.k!=='fab');Lv.sold.gone=true;
-  FUGA=[{k:'fab',sh:'fab',x:6760,n:6},{k:'vit',sh:'vit',x:6700,n:5},{k:'men1',sh:'men1',x:6650,n:5},{k:'men2',sh:'men2',x:6610,n:5}].map(o=>Object.assign(o,{an:Math.random()*3}));
+  FUGA=fugaInit([{k:'fab',sh:'fab',n:6},{k:'vit',sh:'vit',n:5},{k:'men1',sh:'men1',n:5},{k:'men2',sh:'men2',n:5}],6760);
   if(BAL)Object.assign(BAL,{st:'stay',x:6600,face:1,vx:0});PLAYERS.forEach((q,i)=>{q.x=6560-i*36;q.y=G;q.vx=q.vy=0;q.face=1});
   trechos.fuga=1;addNote('Trecho de Vidas Secas (“Fuga”): '+SERTAO.TRECHOS.fuga.t);
   cineEl=document.createElement('div');cineEl.className='cine';cineEl.style.cssText='top:9%;bottom:auto';cineEl.innerHTML='<b>Fuga · o último capítulo</b>“'+esc(SERTAO.TRECHOS.fuga.t)+'” <i style="font-size:.8em">— Graciliano Ramos, Vidas Secas (1938)</i>';document.body.appendChild(cineEl);
@@ -1054,8 +1054,8 @@ function drawSoldier(){const s=Lv.sold;if(!s||s.gone)return;if(s.x<camX-120||s.x
   if(!s.fin&&s.st!=='shout'&&s.st!=='distraido'){const ex=s.x+face*12,ey=s.y-95,fx=s.x+face*280;ctx.save();ctx.beginPath();ctx.moveTo(ex,ey);ctx.lineTo(fx,ey-45-280*.32);ctx.lineTo(fx,Math.min(G,ey+45+280*.32));ctx.closePath();
     const a=.1+s.alert*.3;ctx.fillStyle=s.alert>.05?`rgba(220,60,30,${a})`:`rgba(255,235,150,${a})`;ctx.fill();ctx.restore()}
   let f;if(s.fin)f=s.st==='scared'?8:1+Math.floor(s.an)%5;else f={walk:1+Math.floor(s.an)%5,look:6,back:0,shout:7,distraido:6}[s.st]||0;
-  const g=TALK.q==='soldado'?Math.max(.35,TALK.amp):0,pul=Math.abs(Math.sin(RT*9.5));if(g&&!s.fin)f=TALK.ex?7:(f===0?6:f);const sy=(1+.05*g*pul)*(s.st==='walk'?1:1+.012*Math.sin(RT*2.4));
-  sheetT('sold',SH.sold,f,s.x,s.y-g*pul*2,face,1,Math.sin(RT*2.6)*.03*g,Math.max(.12,Math.abs(s.fx))/Math.sqrt(sy),sy);
+  const g=TALK.q==='soldado'?Math.max(.35,TALK.amp):0,GS=gest(s,g);if(g>.3&&!s.fin)f=TALK.ex?7:(f===0?6:f);const sy=s.st==='walk'?1+.01*GS.e:GS.sy;
+  sheetT('sold',SH.sold,f,s.x,s.y+GS.dy,face,1,GS.rot,Math.max(.12,Math.abs(s.fx))/Math.sqrt(sy),sy);
   if(s.st==='distraido'){ctx.save();ctx.font='bold 20px "Special Elite",monospace';ctx.textAlign='center';ctx.fillStyle='#ffe6b5';ctx.lineWidth=4;ctx.strokeStyle='#2b1a0d';const y=s.y-124+Math.sin(RT*4)*3;ctx.strokeText('♪ ?',s.x,y);ctx.fillText('♪ ?',s.x,y);ctx.restore()}
   if(!s.fin&&s.alert>.05){ctx.save();ctx.font=`bold ${20+s.alert*16}px "Special Elite",monospace`;ctx.textAlign='center';ctx.lineWidth=4;ctx.strokeStyle='#2b1a0d';ctx.strokeText('!',s.x,s.y-122);ctx.fillStyle='#e0402a';ctx.fillText('!',s.x,s.y-122);ctx.restore()}}
 function drawPaws(x,y){ctx.save();ctx.fillStyle='rgba(60,30,10,.85)';for(let i=0;i<6;i++){const px=x-70+i*28,py=y+(i%2?4:-2);ctx.beginPath();ctx.ellipse(px,py,6,4,0,0,7);ctx.fill();for(let k=0;k<3;k++){ctx.beginPath();ctx.arc(px-5+k*5,py-6,2,0,7);ctx.fill()}}ctx.restore()}
@@ -1067,13 +1067,13 @@ function drawBaleia(){const B=BAL;if(!B||B.hide)return;let f;
 function drawCommon(){
   let bn=null,bd=1e9;
   for(const n of Lv.npcs){const px=PLAYERS[0].x,tgt=n.fixed?n.face:(Math.abs(px-n.x)<22?(n.tf||1):(px<n.x?-1:1));n.tf=tgt;if(n.fx==null)n.fx=tgt;n.fx+=(tgt-n.fx)*Math.min(1,FDT*9);
-    const g=npcTalk(n),pul=Math.abs(Math.sin(RT*9.5+n.x)),sy=(1+.016*Math.sin(RT*2.2+n.x*.01))*(1+.05*g*pul),sx=Math.max(.12,Math.abs(n.fx))/Math.sqrt(sy),rot=Math.sin(RT*2.6+n.x)*.03*g+Math.sin(RT*1.1+n.x)*.008,dir=n.fx<0?-1:1;
-    if(n.img){const im=IMG[n.img];if(!im)continue;const sc=n.s||.37,w=im.width*sc,h=im.height*sc;ctx.save();ctx.translate(n.x,n.y+2-g*pul*2);ctx.rotate(rot);ctx.scale(dir*sx,sy);ctx.drawImage(im,-w/2,-h,w,h);ctx.restore();n.h=h}
-    else{const m=SH[n.sh];let f=n.f||0;if(g>.3&&TALK.ex&&n.k==='fab'&&!n.f)f=7;sheetT(n.k,m,f,n.x,n.y-g*pul*2,dir,1,rot,sx,sy);n.h=m.h*m.s}
+    const g=npcTalk(n),GS=gest(n,g),sy=GS.sy,sx=Math.max(.12,Math.abs(n.fx))/Math.sqrt(sy),rot=GS.rot,dir=n.fx<0?-1:1,ty=GS.dy;
+    if(n.img){const im=IMG[n.img];if(!im)continue;const sc=n.s||.37,w=im.width*sc,h=im.height*sc;ctx.save();ctx.translate(n.x,n.y+2+ty);ctx.rotate(rot);ctx.scale(dir*sx,sy);ctx.drawImage(im,-w/2,-h,w,h);ctx.restore();n.h=h}
+    else{const m=SH[n.sh];let f=n.f||0;if(g>.3&&TALK.ex&&n.k==='fab'&&!n.f)f=7;sheetT(n.k,m,f,n.x,n.y+ty,dir,1,rot,sx,sy);n.h=m.h*m.s}
     const d=Math.abs(P.x-n.x);if(d<170&&Math.abs(P.y-n.y)<170&&d<bd){bd=d;bn=n}}
   LASTBN=bn&&state==='play'&&!PLAYERS.some(q=>q.near)?bn:null;
   if(bn&&state==='play'&&!PLAYERS.some(q=>q.near)){const L=typeof bn.lines==='function'?bn.lines():bn.lines;if(L&&L.length)bubble(bn.x,bn.y-bn.h-6,bn.nome,L[Math.floor(T/4.5)%L.length])}
-  if(FUGA)for(const o of FUGA){const al=scene==='sonho'?1:clamp((7380-o.x)/260,0,1);if(o.img){const im=IMG[o.img];if(!im)continue;const sc=o.img==='menino'?.35:.37,w=im.width*sc,h=im.height*sc,s=Math.abs(Math.sin(o.an*1.2)),sy=s<.2?.93:1.03;ctx.save();ctx.globalAlpha=al;ctx.translate(o.x,G+2-s*5);ctx.rotate(.05);ctx.scale(1/Math.sqrt(sy),sy);ctx.drawImage(im,-w/2,-h,w,h);ctx.restore()}else sheet(o.k,SH[o.sh],1+Math.floor(o.an)%o.n,o.x,G,false,al)}
+  if(FUGA)drawFuga();
   for(const p of Lv.preas){if(p.st==='hid'||p.st==='caught')continue;const bob=p.st==='run'?Math.abs(Math.sin(T*18))*4:0;ctx.save();ctx.translate(p.x,G-bob);if(p.face<0)ctx.scale(-1,1);img('prea',-22,-25,44,25);ctx.restore()}
   for(const s of Lv.spikes)img('xique',s.x-24,G-68,49,70);
   drawCacto();
@@ -1129,6 +1129,29 @@ function drawLight1(){
 let RT=0,FDT=.016,LASTBN=null;
 const TALK={q:null,amp:0,ex:0,last:0};
 const Q2NPC={vaqueiro:'fab',vitoria:'vit',meninoV:'men1',chico:'chico',cordulina:'cordulina',professora:'con'};
+/* Caminhada realista do cortejo: cada um segue o da frente com distância própria,
+   acelera e freia suave, e o passo da folha anda conforme a distância percorrida (pé não escorrega). */
+function fugaW(o){return o.img?(o.img==='menino'?38:52):o.bal?44:SH[o.sh].w*SH[o.sh].s*.62}
+function fugaInit(arr,x){let px=x,prev=null;return arr.map((o,i)=>{if(prev)px-=(fugaW(prev)+fugaW(o))/2+10+Math.random()*8;prev=o;
+  return Object.assign(o,{x:px,v:0,an:Math.random()*4,ph:Math.random()*6,lane:i%2?1:0,spd:o.bal?50:(o.img==='menino'||o.k==='men2'?47:44)+Math.random()*3,dl:i*.28+Math.random()*.15})})}
+function fugaUpd(dt){for(let i=0;i<FUGA.length;i++){const o=FUGA[i],pr=FUGA[i-1];o.dl-=dt;let want=0;
+  if(o.dl<=0){if(!pr)want=o.spd;else{const gap=(fugaW(pr)+fugaW(o))/2+8,d=pr.x-o.x-gap;want=clamp(pr.v+d*1.6,0,o.spd*1.35)}}
+  o.v+=(want-o.v)*Math.min(1,dt*(want>o.v?1.8:3.2));o.x+=o.v*dt;
+  const stride=o.bal?7:(o.k==='men2'||o.img==='menino'?6.5:8.5);o.an+=o.v*dt/stride;o.ph+=o.v*dt/(o.bal?22:34)*Math.PI}}
+function drawFuga(){const al0=o=>scene==='sonho'?1:clamp((7380-o.x)/260,0,1);
+  const ord=FUGA.slice().sort((a,b)=>b.lane-a.lane);
+  for(const o of ord){const al=al0(o),mv=clamp(o.v/30,0,1),ly=o.lane?-7:0,ls=o.lane?.96:1;
+    if(o.img){const im=IMG[o.img];if(!im)continue;const sc=(o.img==='menino'?.35:.37)*ls,w=im.width*sc,h=im.height*sc,
+      bob=Math.abs(Math.sin(o.ph))*2.4*mv,sway=Math.sin(o.ph*.5)*.014*mv,lean=.03*mv,br=1+.006*Math.sin(RT*2+o.x);
+      ctx.save();ctx.globalAlpha=al;ctx.fillStyle='rgba(30,15,5,.25)';ctx.beginPath();ctx.ellipse(o.x,G+ly+2,w*.32,4,0,0,7);ctx.fill();
+      ctx.translate(o.x,G+ly+2-bob);ctx.rotate(lean+sway);ctx.scale(1,br);ctx.drawImage(im,-w/2,-h,w,h);ctx.restore()}
+    else{const f=o.v<6?0:1+Math.floor(o.an)%o.n,bob=o.bal?0:Math.abs(Math.sin(o.ph))*1.2*mv;
+      ctx.save();ctx.globalAlpha=al*.25;ctx.fillStyle='#1e0f05';ctx.beginPath();ctx.ellipse(o.x,G+ly+2,SH[o.sh].w*SH[o.sh].s*.3,4,0,0,7);ctx.fill();ctx.restore();
+      sheetT(o.k,SH[o.sh],f,o.x,G+ly-bob,1,al,mv*.02,ls,ls)}}}
+/* Gesto de fala suave: envelope por personagem (sobe rápido, desce devagar), aceno lento de cabeça,
+   sem tremor de alta frequência. */
+function gest(o,g){o.ge=(o.ge||0)+(g-(o.ge||0))*Math.min(1,FDT*(g>(o.ge||0)?6:2.5));const e=o.ge,k=o.x*.013||0;
+  return{e,rot:Math.sin(RT*3.1+k)*.022*e+Math.sin(RT*1.1+k)*.006,sy:1+.014*e*(.5+.5*Math.sin(RT*5.2+k))+.008*Math.sin(RT*2+k),dy:-1.2*e*(.5+.5*Math.sin(RT*5.2+k))}}
 function talkPulse(q,ex){TALK.q=q;TALK.amp=1;TALK.ex=ex?1:0;TALK.last=RT}
 function talkTick(){TALK.amp=Math.max(0,TALK.amp-FDT*2.4);if(RT-TALK.last>.8)TALK.q=null}
 function npcTalk(n){if(TALK.q&&(Q2NPC[TALK.q]===n.k||Q2NPC[TALK.q]===n.img))return Math.max(.35,TALK.amp);return n===LASTBN?.5:0}
@@ -1154,7 +1177,7 @@ function ringBell(){const F=Lv.feira;F.dem=2.6;if(AC&&OUT&&!muted){[0,.9].forEac
   for(let i=0;i<3;i++)F.fogos.push({x:4380+i*190+(Math.random()-.5)*60,y:G-20,vy:-470-Math.random()*60,t:-.25-i*.55,st:'up',word:FEIRA_WORDS[Math.floor(Math.random()*FEIRA_WORDS.length)],col:['#ffd27a','#8ff4ff','#ff9a8a'][i%3],parts:[],bt:0})
   if(!F.bellTip){F.bellTip=1;toast('O sino da igreja! O Soldado Amarelo se distraiu com a festa: aproveite para passar.')}}
 function updFeira(dt){const F=Lv.feira;if(!F||scene!=='main')return;const c=F.carro;c.x+=c.dir*38*dt;c.an+=dt*3;if(c.x>4820){c.x=4820;c.dir=-1}if(c.x<3480){c.x=3480;c.dir=1}
-  for(const p of F.crowd){p.x+=p.dir*p.spd*dt;p.an+=dt*p.spd/7;if(p.x<3360||p.x>4960||Math.random()<dt*.05)p.dir*=-1}
+  for(const p of F.crowd){p.x+=p.dir*p.spd*dt;p.an+=dt*p.spd/8;if(p.x<3360||p.x>4960||Math.random()<dt*.05)p.dir*=-1}
   const inF=PLAYERS.some(q=>q.x>3300&&q.x<5000);if(inF&&state==='play'){F.bell-=dt;if(F.bell<=0){F.bell=15+Math.random()*6;ringBell()}}
   if(F.dem>0)F.dem-=dt;
   for(const f of F.fogos){f.t+=dt;if(f.t<0)continue;
@@ -1370,7 +1393,7 @@ function depositar(k){const C=W.sonho.chuva,pg=P.carry;if(!pg)return;const F=FAT
   else{C.err++;SFX.bad();shake=.2;toast('Não é desse livro. '+F[2]);pg.st='fall';pg.y=-40;pg.x=2620+Math.random()*260}
   updHud()}
 function sonhoFinale(){if(state!=='play')return;state='cine';const x0=2700;
-  FUGA=[{k:'fab',sh:'fab',x:x0+60,n:6},{img:'chico',x:x0+10},{k:'vit',sh:'vit',x:x0-40,n:5},{img:'cordulina',x:x0-90},{k:'men1',sh:'men1',x:x0-130,n:5},{img:'menino',x:x0-165},{k:'men2',sh:'men2',x:x0-195,n:5},{k:'baleia',sh:'bal',x:x0-240,n:5,bal:1}].map(o=>Object.assign(o,{an:Math.random()*3}));
+  FUGA=fugaInit([{img:'chico'},{k:'fab',sh:'fab',n:6},{img:'cordulina'},{k:'vit',sh:'vit',n:5},{img:'menino'},{k:'men1',sh:'men1',n:5},{k:'men2',sh:'men2',n:5},{k:'baleia',sh:'bal',n:5,bal:1}],x0+90);
   Lv.npcs=Lv.npcs.filter(n=>!['fab','vit','men1','men2'].includes(n.k)&&!['chico','cordulina','menino'].includes(n.img));if(BAL)BAL.hide=true;
   PLAYERS.forEach((q,i)=>{q.x=2620-i*36;q.y=G;q.vx=q.vy=0;q.face=1;q.carry=null});W.sonho.rainDown=true;noise(2.5,.25,120,.5,.2);tone(55,1.6,'sine',.16,.4,35);
   cineEl=document.createElement('div');cineEl.className='cine';cineEl.style.cssText='top:9%;bottom:auto';
@@ -1407,7 +1430,7 @@ function drawSonho(sx,sy){const L=Lv;
     sheet('carimbo',SH.carimbo,0,m.x-110,G+Math.sin(T*2)*1.5,false);sheet('mand',SH.mand,0,m.x+150,G,true,1);
     const ct=cactoImg();if(ct){ctx.save();ctx.fillStyle='#8a5a2c';ctx.fillRect(m.x+6,G-74,18,12);ctx.drawImage(ct,m.x+3,G-110,24,36);ctx.restore()}}
   // os três livros da chuva de páginas
-  for(const k in LIVROS){const b=LIVROS[k];ctx.save();ctx.translate(b.x,G);ctx.fillStyle=b.c;ctx.strokeStyle='#1b0d05';ctx.lineWidth=3;ctx.beginPath();ctx.roundRect(-52,-118,104,118,6);ctx.fill();ctx.stroke();ctx.fillStyle='rgba(255,240,210,.9)';ctx.fillRect(-44,-110,6,102);
+  if(!W.sonho.rainDown)for(const k in LIVROS){const b=LIVROS[k];ctx.save();ctx.translate(b.x,G);ctx.fillStyle=b.c;ctx.strokeStyle='#1b0d05';ctx.lineWidth=3;ctx.beginPath();ctx.roundRect(-52,-118,104,118,6);ctx.fill();ctx.stroke();ctx.fillStyle='rgba(255,240,210,.9)';ctx.fillRect(-44,-110,6,102);
     ctx.fillStyle='#f6e7c4';ctx.textAlign='center';ctx.font='bold 14px "Playfair Display",Georgia,serif';ctx.fillText(b.t,4,-74);ctx.font='9px "Special Elite",monospace';ctx.fillText(b.s,4,-58);ctx.restore()}
   const C=L.chuva;if(C&&C.page&&C.page.st!=='carried'){const p=C.page;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(Math.sin(p.t*2)*.25);img('pag2',-20,-12,40,24);ctx.restore();ctx.save();ctx.globalAlpha=.6+.4*Math.sin(T*6);img('brilho',p.x-30,p.y-14,60,26);ctx.restore()}
   drawPortal();drawCommon();
@@ -1444,7 +1467,7 @@ function frame(now){
     {const mx=PLAYERS.reduce((a,q)=>a+q.x,0)/PLAYERS.length,my=Math.min(...PLAYERS.map(q=>q.y));let tx=COOP?mx-VW*.5:P.x-VW*.42+P.face*40;let minX=0,maxX=Lv.w-VW;if(bossActive){minX=6480;maxX=Lv.w-VW}camX+=(clamp(tx,minX,maxX)-camX)*Math.min(1,dt*5);
       const ty=Math.min(0,(COOP?my:P.y)-330);camY+=(clamp(ty,-280,0)-camY)*Math.min(1,dt*4)}
     if(!bossActive&&!bossDone&&gateOpen&&PLAYERS.some(q=>q.x>6560)){startBoss();PLAYERS.forEach(q=>{if(q.x<6530){q.x=6540;q.y=G;q.vx=q.vy=0}});if(BAL)BAL.x=Math.max(BAL.x,6540)}
-  }else if(state==='cine'){T+=dt;updParts(dt);updBaleia(dt);if(FUGA)FUGA.forEach(o=>{o.x+=52*dt;o.an+=dt*7});{const cx=scene==='sonho'?clamp(2560-VW*.3,0,Lv.w-VW):clamp(6560-VW*.3,6480,Lv.w-VW);camX+=(cx-camX)*Math.min(1,dt*2)}if(fading&&!fadeCb){fading-=dt*3;if(fading<=0)fading=0}}
+  }else if(state==='cine'){T+=dt;updParts(dt);updBaleia(dt);if(FUGA)fugaUpd(dt);{const cx=scene==='sonho'?clamp(2560-VW*.3,0,Lv.w-VW):clamp(6560-VW*.3,6480,Lv.w-VW);camX+=(cx-camX)*Math.min(1,dt*2)}if(fading&&!fadeCb){fading-=dt*3;if(fading<=0)fading=0}}
   else if(state==='pause'||state==='modal'){for(const q of PLAYERS)for(const k in q.PR)q.PR[k]=0}
   hudSede();hudArma();
   if(AC&&OUT){musicTick(dt);ambTick(dt)}
