@@ -966,7 +966,7 @@ let lastSede=-1;function hudSede(){const v=Math.round(Math.min(100,sede));if(v==
 
 $('#bMute').onclick=()=>{muted=!muted;try{localStorage.setItem('caso_mute',muted?'1':'0')}catch(e){}$('#bMute').textContent=muted?'🔇':'🔊'};
 $('#bPause').onclick=()=>togglePause();
-function togglePause(){if(state==='play'){state='pause';const ov=showOv(`<span class="kicker">Pausa</span><h2>Engenho Santa Rosa</h2>${controlsHTML()}<details class="optbox"><summary>⚙ Opções</summary>${optHTML(false)}</details><details class="optbox"><summary>🏅 Conquistas (${achN()}/${ACH.length})</summary>${achHTML()}</details><details class="optbox"><summary>Créditos</summary>${creditsHTML()}</details>${timelineHTML()}
+function togglePause(){if(state==='play'){state='pause';const ov=showOv(`<span class="kicker">Pausa</span><h2>Fazenda São Bernardo</h2>${controlsHTML()}<details class="optbox"><summary>⚙ Opções</summary>${optHTML(false)}</details><details class="optbox"><summary>🏅 Conquistas (${achN()}/${ACH.length})</summary>${achHTML()}</details><details class="optbox"><summary>Créditos</summary>${creditsHTML()}</details>${timelineHTML()}
   <div class="acts stick"><a class="pbtn ghost" href="index.html#mapa">Voltar ao mapa</a><button class="pbtn ghost" id="rs">Recomeçar a fase</button><button class="pbtn" data-close>Continuar</button></div>`);state='pause';bindOpt(ov);ov.querySelector('#rs').onclick=()=>location.reload();
   ov.querySelector('[data-close]').onclick=()=>{ov.remove();state='play'}}}
 function controlsHTML(){if(COOP)return `<div class="keys">
