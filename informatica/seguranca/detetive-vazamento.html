@@ -123,7 +123,7 @@ button{font-family:inherit;cursor:pointer;color:inherit}
 "use strict";
 const SALAS=[
  {id:'sec',nome:'Secretaria',ic:'🗂️',cor:'#0c4a6e',fala:'A secretaria guarda as notas e recebe visitas. Veja como as informações são tratadas.',
-  hot:[{x:20,y:62,ic:'🖥️'},{x:50,y:45,ic:'💾'},{x:80,y:60,ic:'📒'}],
+  hot:[{x:25,y:40,ic:'🖥️'},{x:52,y:60,ic:'💾'},{x:82,y:60,ic:'📒'}],
   pistas:[
    {t:'Senha à vista',tx:'Um post-it amarelo colado no monitor da secretária diz: “Diário@2024”. Qualquer pessoa que passe pelo balcão consegue ler.',c:'Mesa e tela limpas · Autenticação'},
    {t:'Notas no pen drive',tx:'As notas de todos os 3º anos estão num pen drive sem senha e sem criptografia, esquecido sobre o balcão.',c:'Classificação da informação · Proteção de mídias'},
@@ -131,7 +131,7 @@ const SALAS=[
   q:{p:'O pen drive sem senha e a senha no post-it ameaçam, principalmente, qual pilar da tríade CID?',o:['Confidencialidade','Integridade','Disponibilidade','Nenhum: nada foi apagado'],c:0,
      e:'Confidencialidade é garantir que a informação só chegue a quem tem autorização. Nada foi alterado (integridade) nem tirado do ar (disponibilidade): o problema é quem pôde ver.'}},
  {id:'pro',nome:'Sala dos Professores',ic:'👩‍🏫',cor:'#4c1d95',fala:'A prova foi preparada aqui. Veja o que aconteceu com os acessos dos professores.',
-  hot:[{x:20,y:60,ic:'📧'},{x:50,y:48,ic:'☁️'},{x:80,y:58,ic:'🗣️'}],
+  hot:[{x:21,y:48,ic:'📧'},{x:54,y:48,ic:'☁️'},{x:88,y:42,ic:'🗣️'}],
   pistas:[
    {t:'O e-mail suspeito',tx:'Na caixa de entrada da profa. Helena: “URGENTE: seu acesso ao Diário Online expira hoje. Confirme sua senha”. O remetente é suporte@diario-escola-online.xyz, um endereço que a escola não usa.',c:'Phishing · Engenharia social'},
    {t:'Prova com link aberto',tx:'O arquivo prova-3bim.pdf está no Drive com o compartilhamento “qualquer pessoa com o link pode ver”. Bastava ter o link.',c:'Privilégio mínimo · Permissões'},
@@ -139,7 +139,7 @@ const SALAS=[
   q:{p:'O e-mail “confirme sua senha” enviado por um falso suporte é um exemplo de…',o:['Ransomware','Phishing (engenharia social)','Negação de serviço (DoS)','Falha de hardware'],c:1,
      e:'Phishing engana a pessoa para que ela mesma entregue a senha. Não envolve “invadir” o computador: o alvo é o ser humano, o elo mais explorado da segurança.'}},
  {id:'lab',nome:'Laboratório de Informática',ic:'💻',cor:'#064e3b',fala:'Os alunos usam estes computadores todos os dias. Será que há riscos aqui também?',
-  hot:[{x:20,y:58,ic:'👤'},{x:50,y:62,ic:'🔌'},{x:80,y:46,ic:'🔄'}],
+  hot:[{x:18,y:50,ic:'👤'},{x:48,y:72,ic:'🔌'},{x:85,y:50,ic:'🔄'}],
   pistas:[
    {t:'Login compartilhado',tx:'Todos os computadores usam o usuário “aluno” e a senha “aluno”. Qualquer turma entra como a mesma pessoa.',c:'Identificação individual · Responsabilização'},
    {t:'Pen drives sem dono',tx:'Dez pen drives estão soltos sobre a bancada. Ninguém sabe de quem são, e os computadores abrem qualquer um automaticamente.',c:'Mídias removíveis · Malware'},
@@ -147,7 +147,7 @@ const SALAS=[
   q:{p:'Todos usarem o login “aluno/aluno” impede principalmente…',o:['Que o computador fique lento','Saber quem realizou cada ação (responsabilização)','Que o vírus exista','Que haja backup'],c:1,
      e:'Sem usuário individual, o log até registra a ação, mas não prova quem foi. Identificação única é a base da rastreabilidade (não repúdio).'}},
  {id:'ti',nome:'Sala da TI',ic:'🗄️',cor:'#7c2d12',fala:'O técnico saiu em horário de almoço, mas deixou o servidor ligado. Vamos olhar o que ele registra.',
-  hot:[{x:20,y:56,ic:'💽'},{x:50,y:46,ic:'📜'},{x:80,y:60,ic:'👥'}],
+  hot:[{x:17,y:50,ic:'💽'},{x:55,y:46,ic:'📜'},{x:88,y:62,ic:'👥'}],
   pistas:[
    {t:'Backup no mesmo lugar',tx:'O HD de backup está espetado dentro do próprio servidor. Um incêndio, um ransomware ou um raio levaria os dois juntos.',c:'Disponibilidade · Backup 3-2-1'},
    {t:'O log do servidor',tx:'21:47 – login “prof_historia” vindo de IP externo\n21:52 – download de prova-3bim.pdf\n22:03 – 40 tentativas falhas na conta “admin”.\nA conta usada é a da profa. Helena (História).',c:'Registro de eventos (logs) · Detecção'},
@@ -155,7 +155,7 @@ const SALAS=[
   q:{p:'O log registrou um login às 21:47 de um IP externo. Para que serve esse registro?',o:['Para fazer o backup automático','Para investigar, detectar e provar o que aconteceu','Para bloquear todos os vírus','Para acelerar a internet'],c:1,
      e:'Logs são o “diário de bordo” dos sistemas: permitem detectar comportamento estranho, reconstruir a linha do tempo e sustentar uma investigação.'}},
  {id:'dir',nome:'Sala da Direção',ic:'🏛️',cor:'#713f12',fala:'Por fim, como a escola reagiu quando o vazamento foi descoberto?',
-  hot:[{x:20,y:56,ic:'📁'},{x:50,y:48,ic:'☎️'},{x:80,y:58,ic:'🧑‍💼'}],
+  hot:[{x:16,y:66,ic:'📁'},{x:56,y:70,ic:'☎️'},{x:82,y:38,ic:'🧑‍💼'}],
   pistas:[
    {t:'Política de segurança vazia',tx:'Na prateleira há uma pasta etiquetada “Política de Segurança da Informação”. Está vazia: nunca foi escrita.',c:'Política · Governança (ISO 27001)'},
    {t:'Ninguém sabia a quem avisar',tx:'A aluna ligou ao diretor às 22h. O técnico de TI só soube na manhã seguinte. No telefone, um post-it: “TI? (ninguém atende)”.',c:'Gestão de incidentes'},
