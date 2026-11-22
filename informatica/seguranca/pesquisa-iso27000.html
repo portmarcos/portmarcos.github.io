@@ -57,6 +57,11 @@
   .guia{background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.22);border-radius:10px;padding:10px 14px;margin:12px 0;font-size:.9rem;color:#a7f3d0}
   .guia strong{display:block;margin-bottom:2px;color:#6ee7b7}
   .guia ul{margin:4px 0 0;padding-left:20px}
+  .links{margin:10px 0 4px;font-size:.88rem;color:var(--suave)}
+  .links strong{color:#93c5fd;display:block;margin-bottom:2px}
+  .links a{color:#7dd3fc;text-decoration:underline;text-underline-offset:2px}
+  .links ul{margin:4px 0 0;padding-left:20px}
+  .links a:hover{color:#bae6fd}
   textarea{min-height:170px;resize:vertical;line-height:1.5}
   .contador{display:flex;justify-content:space-between;font-size:.78rem;color:#64748b;margin-top:4px}
   .contador .curto{color:var(--aviso)}
@@ -79,7 +84,7 @@
   footer{text-align:center;color:#64748b;font-size:.85rem;padding:20px}
 
   @media print{
-    .barra,.enviar,.btn-sec,.voltar,.guia,.contador,.instrucoes,.comprovante{display:none!important}
+    .barra,.enviar,.btn-sec,.voltar,.guia,.links,.contador,.instrucoes,.comprovante{display:none!important}
     header{background:none;color:#000;padding:0;animation:none}
     header p,.meta{color:#000}
     body{background:#fff;color:#000}
@@ -123,6 +128,7 @@
       <li>Pesquise em fontes confiáveis e <strong>escreva com suas palavras</strong>. Respostas copiadas e coladas não demonstram aprendizagem.</li>
       <li>Suas respostas ficam <strong>salvas automaticamente neste navegador</strong>. Você pode fechar a página e continuar depois, no mesmo computador ou celular.</li>
       <li>O quadro azul de cada questão mostra o que sua resposta precisa abordar.</li>
+      <li>Cada questão tem links de <strong>onde pesquisar</strong>. Eles são pontos de partida: as páginas da ISO mostram o que cada norma é, mas o texto completo é pago. Para entender, leia também os resumos indicados e outras fontes confiáveis, e escreva sempre com suas palavras.</li>
       <li>Ao terminar, clique em <strong>Enviar respostas</strong>. Envie apenas uma vez.</li>
     </ul>
   </section>
@@ -181,6 +187,8 @@ const BLOCOS = [
   { titulo: "Parte 2 — Relacionando normas e lei", de: 9, ate: 11 },
   { titulo: "Parte 3 — Aplicando em situações reais", de: 12, ate: 20 }
 ];
+
+const LINKS = {1: [["ISO/IEC 27001 — catálogo da ISO", "https://www.iso.org/standard/27001"], ["A família ISO/IEC 27001 (página oficial da ISO)", "https://www.iso.org/isoiec-27001-information-security.html"]], 2: [["ISO/IEC 27002:2022 — catálogo da ISO", "https://www.iso.org/standard/75652.html"]], 3: [["ISO/IEC 27003 — resumo no ISO27k Forum", "https://www.iso27001security.com/html/27003"], ["A família ISO/IEC 27001 (página oficial da ISO)", "https://www.iso.org/isoiec-27001-information-security.html"]], 4: [["ISO/IEC 27004 — catálogo da ISO", "https://www.iso.org/standard/64120.html"], ["ISO/IEC 27004 — resumo no ISO27k Forum", "https://www.iso27001security.com/html/27004"], ["ISO: como medir a eficácia da segurança da informação", "https://www.iso.org/news/2016/12/Ref2151.html"]], 5: [["ISO/IEC 27005:2022 — catálogo da ISO", "https://www.iso.org/standard/80585.html"]], 6: [["ISO/IEC 27017 — catálogo da ISO", "https://www.iso.org/standard/27017"]], 7: [["ISO/IEC 27018 — catálogo da ISO", "https://www.iso.org/standard/27018"], ["ISO/IEC 27018 — resumo no ISO27k Forum", "https://www.iso27001security.com/html/27018"]], 8: [["ISO/IEC 27701 — catálogo da ISO", "https://www.iso.org/standard/27701"]], 9: [["A família ISO/IEC 27001 (página oficial da ISO)", "https://www.iso.org/isoiec-27001-information-security.html"]], 10: [["LGPD — Lei 13.709/2018 (Planalto)", "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm"], ["ANPD — comunicação de incidente de segurança", "https://www.gov.br/anpd/pt-br/assuntos/incidente-de-seguranca"]], 11: [["A família ISO/IEC 27001 (página oficial da ISO)", "https://www.iso.org/isoiec-27001-information-security.html"], ["LGPD — Lei 13.709/2018 (Planalto)", "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm"]], 12: [["A família ISO/IEC 27001 (página oficial da ISO)", "https://www.iso.org/isoiec-27001-information-security.html"]], 13: [["ISO/IEC 27002:2022 — catálogo da ISO", "https://www.iso.org/standard/75652.html"]], 14: [["A família ISO/IEC 27001 (página oficial da ISO)", "https://www.iso.org/isoiec-27001-information-security.html"], ["ISO/IEC 27001 — catálogo da ISO", "https://www.iso.org/standard/27001"]], 15: [["ISO/IEC 27005:2022 — catálogo da ISO", "https://www.iso.org/standard/80585.html"]], 16: [["ISO/IEC 27004 — resumo no ISO27k Forum", "https://www.iso27001security.com/html/27004"], ["ISO: como medir a eficácia da segurança da informação", "https://www.iso.org/news/2016/12/Ref2151.html"]], 17: [["ISO/IEC 27017 — catálogo da ISO", "https://www.iso.org/standard/27017"]], 18: [["ISO/IEC 27018 — catálogo da ISO", "https://www.iso.org/standard/27018"], ["ISO/IEC 27701 — catálogo da ISO", "https://www.iso.org/standard/27701"], ["LGPD — Lei 13.709/2018 (Planalto)", "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm"]], 19: [["ISO/IEC 27701 — catálogo da ISO", "https://www.iso.org/standard/27701"], ["LGPD — Lei 13.709/2018 (Planalto)", "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm"]], 20: [["ANPD — comunicação de incidente de segurança", "https://www.gov.br/anpd/pt-br/assuntos/incidente-de-seguranca"], ["LGPD — Lei 13.709/2018 (Planalto)", "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm"], ["ISO/IEC 27002:2022 — catálogo da ISO", "https://www.iso.org/standard/75652.html"]]};
 
 const QUESTOES = [
   { p: "ISO/IEC 27001: o que é um SGSI e o que essa norma exige de uma organização?",
@@ -243,6 +251,9 @@ BLOCOS.forEach(b => {
       <div class="cab"><span class="num">${i}</span><h3>${q.p}</h3></div>
       <div class="guia"><strong>Sua resposta deve abordar:</strong>
         <ul>${q.g.map(x => `<li>${x}</li>`).join("")}</ul>
+      </div>
+      <div class="links"><strong>🔎 Onde pesquisar (links para abrir em outra aba):</strong>
+        <ul>${(LINKS[i]||[]).map(l => `<li><a href="${l[1]}" target="_blank" rel="noopener noreferrer">${l[0]}</a></li>`).join("")}</ul>
       </div>
       <label class="campo" for="q${i}">Sua resposta</label>
       <textarea id="q${i}" data-n="${i}" placeholder="Escreva aqui com suas palavras…"></textarea>
