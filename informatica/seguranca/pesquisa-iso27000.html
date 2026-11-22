@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pesquisa: A Família ISO 27000 | Segurança de Sistemas</title>
+<meta name="description" content="Pesquisa e explicação com 20 questões sobre a família ISO 27000 e a LGPD — Curso Técnico em Informática, Prof. Marcos Cruz.">
+<meta property="og:title" content="Pesquisa: A Família ISO 27000">
+<meta property="og:description" content="20 questões sobre ISO 27001, 27002, 27005, nuvem, privacidade e LGPD.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" href="/favicon.ico">
+<style>
+  :root{
+    --azul:#10b981; --azul-esc:#059669; --azul-claro:rgba(16,185,129,.14);
+    --fundo:#020617; --card:rgba(15,23,42,.6); --texto:#f1f5f9; --suave:#94a3b8;
+    --borda:rgba(51,65,85,.6); --ok:#34d399; --erro:#f87171; --aviso:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Inter",system-ui,sans-serif;background:var(--fundo);color:var(--texto);line-height:1.6}
+  header{background:linear-gradient(-45deg,#022c22,#0c1a2e,#1a0a05,#022c22);background-size:400% 400%;animation:gbg 12s ease infinite;color:#fff;padding:32px 18px 26px}
+  @keyframes gbg{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+  .wrap{max-width:860px;margin:0 auto;padding:0 16px}
+  header .tag{display:inline-block;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.3);color:#34d399;padding:4px 12px;border-radius:999px;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+  header h1{margin:12px 0 4px;font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(2rem,5vw,2.8rem);line-height:1.1}
+  header p{margin:0;color:var(--suave)}
+  .meta{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:14px;font-size:.9rem;color:#cbd5e1}
+  .voltar{color:#34d399;font-size:.9rem;text-decoration:none}
+  .voltar:hover{text-decoration:underline}
+
+  .barra{position:sticky;top:0;z-index:10;background:rgba(2,6,23,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--borda)}
+  .barra .wrap{display:flex;align-items:center;gap:12px;padding:10px 16px}
+  .progresso{flex:1;height:8px;background:rgba(51,65,85,.6);border-radius:999px;overflow:hidden}
+  .progresso span{display:block;height:100%;width:0;background:linear-gradient(90deg,#10b981,#34d399);transition:width .3s}
+  .barra small{color:var(--suave);white-space:nowrap;font-weight:600}
+  .salvo{font-size:.8rem;color:var(--ok);min-width:70px;text-align:right}
+
+  main{padding:22px 0 60px}
+  .card{background:var(--card);border:1px solid var(--borda);border-radius:14px;padding:20px;margin-bottom:18px}
+  .card h2{margin:0 0 10px;font-size:1.1rem}
+  .instrucoes ul{margin:6px 0 0;padding-left:20px;color:var(--suave)}
+  .instrucoes strong{color:var(--texto)}
+  .ident{display:grid;grid-template-columns:2fr 1fr;gap:14px}
+  @media(max-width:600px){.ident{grid-template-columns:1fr}}
+  label.campo{display:block;font-weight:600;font-size:.85rem;color:var(--suave);margin-bottom:5px}
+  input[type=text],select,textarea{width:100%;font:inherit;padding:10px 12px;border:1.5px solid var(--borda);border-radius:10px;background:rgba(255,255,255,.04);color:var(--texto);color-scheme:dark}
+  select option{background:#0f172a}
+  input::placeholder,textarea::placeholder{color:#64748b}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:#34d399;background:rgba(255,255,255,.07);box-shadow:0 0 0 3px rgba(16,185,129,.15)}
+
+  .bloco-titulo{margin:30px 0 12px;font-size:.78rem;font-weight:700;color:#34d399;text-transform:uppercase;letter-spacing:.1em}
+  .questao{border-left:4px solid var(--borda);transition:border-color .2s}
+  .questao.respondida{border-left-color:#10b981}
+  .questao .num{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:var(--azul-claro);color:#34d399;font-weight:700;margin-right:10px;flex-shrink:0}
+  .questao.respondida .num{background:#10b981;color:#022c22}
+  .questao .cab{display:flex;align-items:flex-start}
+  .questao h3{margin:4px 0 0;font-size:1rem;line-height:1.45}
+  .guia{background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.22);border-radius:10px;padding:10px 14px;margin:12px 0;font-size:.9rem;color:#a7f3d0}
+  .guia strong{display:block;margin-bottom:2px;color:#6ee7b7}
+  .guia ul{margin:4px 0 0;padding-left:20px}
+  .links{margin:10px 0 4px;font-size:.88rem;color:var(--suave)}
+  .links strong{color:#93c5fd;display:block;margin-bottom:2px}
+  .links a{color:#7dd3fc;text-decoration:underline;text-underline-offset:2px}
+  .links ul{margin:4px 0 0;padding-left:20px}
+  .links a:hover{color:#bae6fd}
+  textarea{min-height:170px;resize:vertical;line-height:1.5}
+  .contador{display:flex;justify-content:space-between;font-size:.78rem;color:#64748b;margin-top:4px}
+  .contador .curto{color:var(--aviso)}
+
+  .enviar{text-align:center}
+  button{font:inherit;font-weight:700;border:none;border-radius:12px;padding:14px 28px;cursor:pointer}
+  .btn-enviar{background:#10b981;color:#022c22;font-size:1.05rem}
+  .btn-enviar:hover{background:#34d399}
+  .btn-enviar:disabled{background:#475569;color:#cbd5e1;cursor:wait}
+  .btn-sec{background:rgba(255,255,255,.08);color:var(--texto);border:1px solid var(--borda);padding:10px 18px;font-size:.9rem}
+  .btn-sec:hover{background:rgba(255,255,255,.14)}
+  .msg{margin-top:14px;padding:12px 14px;border-radius:10px;font-weight:600;display:none;text-align:left}
+  .msg.erro{display:block;background:rgba(220,38,38,.14);border:1px solid rgba(248,113,113,.4);color:#fca5a5}
+  .msg.aviso{display:block;background:rgba(217,119,6,.14);border:1px solid rgba(251,191,36,.4);color:#fde68a}
+  .msg.ok{display:block;background:rgba(16,185,129,.14);border:1px solid rgba(52,211,153,.4);color:#6ee7b7}
+  .acoes-aviso{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+
+  .comprovante{display:none;text-align:center}
+  .comprovante.mostrar{display:block}
+  footer{text-align:center;color:#64748b;font-size:.85rem;padding:20px}
+
+  @media print{
+    .barra,.enviar,.btn-sec,.voltar,.guia,.links,.contador,.instrucoes,.comprovante{display:none!important}
+    header{background:none;color:#000;padding:0;animation:none}
+    header p,.meta{color:#000}
+    body{background:#fff;color:#000}
+    .card{background:#fff;color:#000;break-inside:avoid;border:1px solid #999}
+    .questao .num{background:#eee!important;color:#000!important}
+    input,select,textarea{color:#000;background:#fff;border:none}
+    textarea{min-height:auto}
+    label.campo{color:#000}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="voltar" href="/informatica/index.html">← Voltar para Informática</a><br><br>
+    <span class="tag">Segurança de Sistemas</span>
+    <h1>A Família ISO 27000</h1>
+    <p>Pesquisa e explicação: 20 questões</p>
+    <div class="meta">
+      <span>👨‍🏫 Prof. Marcos Cruz</span>
+      <span>🎓 Curso Técnico em Informática</span>
+      <span>⭐ Valor: 30 pontos</span>
+    </div>
+  </div>
+</header>
+
+<div class="barra">
+  <div class="wrap">
+    <div class="progresso" aria-hidden="true"><span id="barraProg"></span></div>
+    <small id="txtProg">0 de 20 respondidas</small>
+    <span class="salvo" id="salvo"></span>
+  </div>
+</div>
+
+<main class="wrap">
+
+  <section class="card instrucoes">
+    <h2>📋 Antes de começar</h2>
+    <ul>
+      <li>Pesquise em fontes confiáveis e <strong>escreva com suas palavras</strong>. Respostas copiadas e coladas não demonstram aprendizagem.</li>
+      <li>Suas respostas ficam <strong>salvas automaticamente neste navegador</strong>. Você pode fechar a página e continuar depois, no mesmo computador ou celular.</li>
+      <li>O quadro azul de cada questão mostra o que sua resposta precisa abordar.</li>
+      <li>Cada questão tem links de <strong>onde pesquisar</strong>. Eles são pontos de partida: as páginas da ISO mostram o que cada norma é, mas o texto completo é pago. Para entender, leia também os resumos indicados e outras fontes confiáveis, e escreva sempre com suas palavras.</li>
+      <li>Ao terminar, clique em <strong>Enviar respostas</strong>. Envie apenas uma vez.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>🙋 Identificação</h2>
+    <div class="ident">
+      <div>
+        <label class="campo" for="nome">Nome completo</label>
+        <input type="text" id="nome" autocomplete="name" placeholder="Digite seu nome completo">
+      </div>
+      <div>
+        <label class="campo" for="turma">Turma</label>
+        <select id="turma">
+          <option value="">Selecione…</option>
+          <option>2º Informática EP PRO 1</option>
+          <option>Outra</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <div id="questoes"></div>
+
+  <section class="card enviar">
+    <button class="btn-enviar" id="btnEnviar" type="button">📨 Enviar respostas</button>
+    <div class="msg" id="msg"></div>
+  </section>
+
+  <section class="card comprovante" id="comprovante">
+    <h2>✅ Respostas enviadas!</h2>
+    <p id="txtComprovante"></p>
+    <div class="acoes-aviso">
+      <button class="btn-sec" type="button" onclick="window.print()">🖨️ Imprimir / salvar PDF das minhas respostas</button>
+      <button class="btn-sec" type="button" id="btnLimpar">🧹 Limpar respostas deste aparelho</button>
+    </div>
+  </section>
+
+</main>
+
+<footer>Portal do Prof. Marcos Cruz · Segurança de Sistemas</footer>
+
+<script src="/assets/js/config-sheets.js"></script>
+<script>
+/* ======================================================================
+   CONFIGURAÇÃO — usa a mesma planilha do portal (assets/js/config-sheets.js).
+   O Apps Script grava na aba "Pesquisa ISO 27000" (tipo: "pesquisa").
+   ====================================================================== */
+const URL_APPS_SCRIPT = (typeof SHEETS_URL !== "undefined") ? SHEETS_URL : "";
+const ID_ATIVIDADE   = "Pesquisa ISO 27000";
+const CHAVE_LOCAL    = "pesquisa_iso27000_v1";
+const MINIMO_CARACTERES = 150; // abaixo disso, o contador fica laranja
+
+const BLOCOS = [
+  { titulo: "Parte 1 — Conhecendo as normas", de: 1, ate: 8 },
+  { titulo: "Parte 2 — Relacionando normas e lei", de: 9, ate: 11 },
+  { titulo: "Parte 3 — Aplicando em situações reais", de: 12, ate: 20 }
+];
+
+const LINKS = {1: [["ISO/IEC 27001 — catálogo da ISO", "https://www.iso.org/standard/27001"], ["A família ISO/IEC 27001 (página oficial da ISO)", "https://www.iso.org/isoiec-27001-information-security.html"]], 2: [["ISO/IEC 27002:2022 — catálogo da ISO", "https://www.iso.org/standard/75652.html"]], 3: [["ISO/IEC 27003 — resumo no ISO27k Forum", "https://www.iso27001security.com/html/27003"], ["A família ISO/IEC 27001 (página oficial da ISO)", "https://www.iso.org/isoiec-27001-information-security.html"]], 4: [["ISO/IEC 27004 — catálogo da ISO", "https://www.iso.org/standard/64120.html"], ["ISO/IEC 27004 — resumo no ISO27k Forum", "https://www.iso27001security.com/html/27004"], ["ISO: como medir a eficácia da segurança da informação", "https://www.iso.org/news/2016/12/Ref2151.html"]], 5: [["ISO/IEC 27005:2022 — catálogo da ISO", "https://www.iso.org/standard/80585.html"]], 6: [["ISO/IEC 27017 — catálogo da ISO", "https://www.iso.org/standard/27017"]], 7: [["ISO/IEC 27018 — catálogo da ISO", "https://www.iso.org/standard/27018"], ["ISO/IEC 27018 — resumo no ISO27k Forum", "https://www.iso27001security.com/html/27018"]], 8: [["ISO/IEC 27701 — catálogo da ISO", "https://www.iso.org/standard/27701"]], 9: [["A família ISO/IEC 27001 (página oficial da ISO)", "https://www.iso.org/isoiec-27001-information-security.html"]], 10: [["LGPD — Lei 13.709/2018 (Planalto)", "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm"], ["ANPD — comunicação de incidente de segurança", "https://www.gov.br/anpd/pt-br/assuntos/incidente-de-seguranca"]], 11: [["A família ISO/IEC 27001 (página oficial da ISO)", "https://www.iso.org/isoiec-27001-information-security.html"], ["LGPD — Lei 13.709/2018 (Planalto)", "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm"]], 12: [["A família ISO/IEC 27001 (página oficial da ISO)", "https://www.iso.org/isoiec-27001-information-security.html"]], 13: [["ISO/IEC 27002:2022 — catálogo da ISO", "https://www.iso.org/standard/75652.html"]], 14: [["A família ISO/IEC 27001 (página oficial da ISO)", "https://www.iso.org/isoiec-27001-information-security.html"], ["ISO/IEC 27001 — catálogo da ISO", "https://www.iso.org/standard/27001"]], 15: [["ISO/IEC 27005:2022 — catálogo da ISO", "https://www.iso.org/standard/80585.html"]], 16: [["ISO/IEC 27004 — resumo no ISO27k Forum", "https://www.iso27001security.com/html/27004"], ["ISO: como medir a eficácia da segurança da informação", "https://www.iso.org/news/2016/12/Ref2151.html"]], 17: [["ISO/IEC 27017 — catálogo da ISO", "https://www.iso.org/standard/27017"]], 18: [["ISO/IEC 27018 — catálogo da ISO", "https://www.iso.org/standard/27018"], ["ISO/IEC 27701 — catálogo da ISO", "https://www.iso.org/standard/27701"], ["LGPD — Lei 13.709/2018 (Planalto)", "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm"]], 19: [["ISO/IEC 27701 — catálogo da ISO", "https://www.iso.org/standard/27701"], ["LGPD — Lei 13.709/2018 (Planalto)", "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm"]], 20: [["ANPD — comunicação de incidente de segurança", "https://www.gov.br/anpd/pt-br/assuntos/incidente-de-seguranca"], ["LGPD — Lei 13.709/2018 (Planalto)", "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm"], ["ISO/IEC 27002:2022 — catálogo da ISO", "https://www.iso.org/standard/75652.html"]]};
+
+const QUESTOES = [
+  { p: "ISO/IEC 27001: o que é um SGSI e o que essa norma exige de uma organização?",
+    g: ["Norma de requisitos e certificável", "A tríade confidencialidade, integridade e disponibilidade", "O ciclo PDCA"] },
+  { p: "ISO/IEC 27002: o que são controles de segurança e como essa norma os organiza?",
+    g: ["Guia de boas práticas, que não gera certificado (de forma resumida)", "Os 93 controles em 4 temas", "Um exemplo de cada tema", "Os tipos preventivo, detectivo e corretivo", "A origem na NBR ISO/IEC 17799"] },
+  { p: "ISO/IEC 27003: para que serve uma norma que “explica” outra norma?",
+    g: ["As diretrizes para implantar o SGSI", "Quem usa e quando", "O que ela deixa para a 27004 e a 27005"] },
+  { p: "ISO/IEC 27004: como saber se a segurança da informação está funcionando?",
+    g: ["A diferença entre desempenho e eficácia", "Dois exemplos de indicadores"] },
+  { p: "ISO/IEC 27005: o que é risco de segurança da informação e como essa norma orienta sua gestão?",
+    g: ["Ativo, ameaça e vulnerabilidade", "Identificar, analisar, avaliar e tratar", "As quatro formas de tratamento (mitigar, evitar, transferir, aceitar)", "O risco residual", "As abordagens baseadas em eventos e em ativos"] },
+  { p: "ISO/IEC 27017: o que muda na segurança quando os dados vão para a nuvem?",
+    g: ["Os controles da 27002 aplicados à nuvem", "Orientação para cliente e provedor", "Responsabilidade compartilhada", "A edição de 2026, válida para nuvem pública, privada e híbrida"] },
+  { p: "ISO/IEC 27018: como essa norma protege os dados pessoais guardados em nuvens públicas?",
+    g: ["O que é PII (dado pessoal)", "O provedor como operador", "A proibição de uso para propaganda sem consentimento", "O aviso ao cliente quando autoridades pedem dados", "O apagamento seguro"] },
+  { p: "ISO/IEC 27701: o que é um PIMS e qual é a diferença entre gerir segurança e gerir privacidade?",
+    g: ["O Sistema de Gestão de Informações de Privacidade", "Proteção das pessoas, e não só da informação", "Direitos do titular"] },
+  { p: "Como as normas da família ISO 27000 se relacionam entre si?",
+    g: ["A 27001 como centro", "As normas de apoio (27002, 27003, 27004 e 27005)", "As extensões para nuvem e privacidade (27017, 27018 e 27701)", "Faça um mapa ou esquema — aqui você pode descrevê-lo em texto, usando setas (→) e tópicos"] },
+  { p: "Qual é a relação entre as normas ISO 27000 e a LGPD?",
+    g: ["Lei obrigatória × norma voluntária", "O Art. 46 (medidas de segurança)", "Controlador, operador e titular", "A comunicação de incidentes à ANPD em 3 dias úteis", "Como as normas ajudam a cumprir a lei"] },
+  { p: "Por que uma empresa adotaria uma norma que a lei não obriga?",
+    g: ["Pelo menos três motivos", "Como a norma ajuda a cumprir leis como a LGPD"] },
+  { p: "Um site anuncia: “Somos certificados na ISO 27002”. O que está errado nessa frase?",
+    g: ["Como a empresa deveria se apresentar", "Por que essa diferença importa para quem vai contratá-la"] },
+  { p: "O diretor de uma empresa diz: “Comprei o melhor firewall do mundo, estamos seguros”. Por que ele está enganado?",
+    g: ["Use os quatro temas de controles da ISO 27002", "Cite um ataque que começa por falha humana"] },
+  { p: "Uma escola pequena, sem dinheiro para certificação, pode usar as ideias da ISO 27001?",
+    g: ["Proponha três ações simples e baratas", "Explique de qual norma veio cada ideia"] },
+  { p: "Se nenhum risco chega a zero, por que gastar com segurança?",
+    g: ["Use os conceitos de risco residual e de tratamento de riscos da ISO 27005", "Dê um exemplo de cada forma de tratamento"] },
+  { p: "A coordenação diz: “Fizemos dez palestras sobre golpes digitais, então os alunos estão protegidos”. Esse é um bom indicador?",
+    g: ["Explique com a ISO 27004", "Crie um indicador melhor para a escola"] },
+  { p: "Os dados de uma empresa vazaram de um serviço de nuvem. A empresa culpa o provedor; o provedor culpa a empresa. Como saber quem tinha razão?",
+    g: ["Compare os modelos IaaS e SaaS", "Use a ISO 27017"] },
+  { p: "Você vai instalar um aplicativo gratuito de edição de fotos que pede acesso à localização, aos contatos e à câmera. Que perguntas você deveria fazer antes de aceitar?",
+    g: ["Baseie-se na ISO 27018, na ISO 27701 e na LGPD", "Por que “gratuito” merece atenção?"] },
+  { p: "Um sistema pode ser muito seguro e, mesmo assim, desrespeitar a privacidade das pessoas?",
+    g: ["Explique a diferença entre segurança e privacidade", "Dê um exemplo"] },
+  { p: "A planilha com notas e CPFs dos alunos da escola vazou em um grupo de mensagens. Monte um plano de ação em etapas.",
+    g: ["O que fazer nas primeiras horas", "A quem comunicar e em que prazo", "O que mudar para não acontecer de novo", "Indique as normas e a lei que embasam cada etapa"] }
+];
+
+/* ======================================================================
+   MONTAGEM DA PÁGINA
+   ====================================================================== */
+const area = document.getElementById("questoes");
+BLOCOS.forEach(b => {
+  const t = document.createElement("div");
+  t.className = "bloco-titulo";
+  t.textContent = b.titulo;
+  area.appendChild(t);
+  for (let i = b.de; i <= b.ate; i++) {
+    const q = QUESTOES[i - 1];
+    const sec = document.createElement("section");
+    sec.className = "card questao";
+    sec.id = "card" + i;
+    sec.innerHTML = `
+      <div class="cab"><span class="num">${i}</span><h3>${q.p}</h3></div>
+      <div class="guia"><strong>Sua resposta deve abordar:</strong>
+        <ul>${q.g.map(x => `<li>${x}</li>`).join("")}</ul>
+      </div>
+      <div class="links"><strong>🔎 Onde pesquisar (links para abrir em outra aba):</strong>
+        <ul>${(LINKS[i]||[]).map(l => `<li><a href="${l[1]}" target="_blank" rel="noopener noreferrer">${l[0]}</a></li>`).join("")}</ul>
+      </div>
+      <label class="campo" for="q${i}">Sua resposta</label>
+      <textarea id="q${i}" data-n="${i}" placeholder="Escreva aqui com suas palavras…"></textarea>
+      <div class="contador"><span id="c${i}">0 caracteres</span><span></span></div>`;
+    area.appendChild(sec);
+  }
+});
+
+/* ======================================================================
+   SALVAMENTO AUTOMÁTICO
+   ====================================================================== */
+function lerLocal(){ try { return JSON.parse(localStorage.getItem(CHAVE_LOCAL)) || {}; } catch(e){ return {}; } }
+function gravarLocal(d){ try { localStorage.setItem(CHAVE_LOCAL, JSON.stringify(d)); return true; } catch(e){ return false; } }
+
+let timer;
+function salvar(){
+  const d = lerLocal();
+  d.nome = document.getElementById("nome").value;
+  d.turma = document.getElementById("turma").value;
+  d.r = {};
+  for (let i = 1; i <= 20; i++) d.r[i] = document.getElementById("q"+i).value;
+  if (gravarLocal(d)) {
+    const s = document.getElementById("salvo");
+    s.textContent = "✓ salvo";
+    clearTimeout(timer);
+    timer = setTimeout(() => s.textContent = "", 1500);
+  }
+}
+
+function atualizar(i){
+  const v = document.getElementById("q"+i).value.trim();
+  const c = document.getElementById("c"+i);
+  c.textContent = v.length + " caracteres";
+  c.className = (v.length > 0 && v.length < MINIMO_CARACTERES) ? "curto" : "";
+  document.getElementById("card"+i).classList.toggle("respondida", v.length > 0);
+}
+
+function progresso(){
+  let n = 0;
+  for (let i = 1; i <= 20; i++) if (document.getElementById("q"+i).value.trim()) n++;
+  document.getElementById("barraProg").style.width = (n/20*100) + "%";
+  document.getElementById("txtProg").textContent = n + " de 20 respondidas";
+  return n;
+}
+
+// Restaurar
+(function(){
+  const d = lerLocal();
+  if (d.nome) document.getElementById("nome").value = d.nome;
+  if (d.turma) document.getElementById("turma").value = d.turma;
+  for (let i = 1; i <= 20; i++) {
+    if (d.r && d.r[i]) document.getElementById("q"+i).value = d.r[i];
+    atualizar(i);
+  }
+  progresso();
+  if (d.enviadoEm) mostrarComprovante(d.enviadoEm, true);
+})();
+
+document.addEventListener("input", e => {
+  if (e.target.matches("textarea")) { atualizar(+e.target.dataset.n); progresso(); }
+  salvar();
+});
+document.getElementById("turma").addEventListener("change", salvar);
+
+/* ======================================================================
+   ENVIO
+   ====================================================================== */
+const msg = document.getElementById("msg");
+function mostrarMsg(tipo, html){ msg.className = "msg " + tipo; msg.innerHTML = html; }
+
+function mostrarComprovante(quando, antigo){
+  const c = document.getElementById("comprovante");
+  c.classList.add("mostrar");
+  document.getElementById("txtComprovante").textContent =
+    (antigo ? "Este aparelho já enviou esta pesquisa em " : "Enviado em ") + quando +
+    ". Guarde uma cópia: use o botão abaixo para imprimir ou salvar em PDF.";
+  if (antigo) {
+    document.getElementById("btnEnviar").textContent = "📨 Enviar novamente (correção)";
+  }
+}
+
+document.getElementById("btnEnviar").addEventListener("click", () => tentarEnviar(false));
+
+function tentarEnviar(confirmado){
+  const nome = document.getElementById("nome").value.trim();
+  const turma = document.getElementById("turma").value;
+  if (nome.split(/\s+/).length < 2) {
+    mostrarMsg("erro", "Digite seu <u>nome completo</u> (nome e sobrenome) na Identificação.");
+    document.getElementById("nome").focus(); return;
+  }
+  if (!turma) {
+    mostrarMsg("erro", "Selecione sua <u>turma</u> na Identificação.");
+    document.getElementById("turma").focus(); return;
+  }
+  const vazias = [];
+  for (let i = 1; i <= 20; i++) if (!document.getElementById("q"+i).value.trim()) vazias.push(i);
+  if (vazias.length && !confirmado) {
+    mostrarMsg("aviso", `Faltam ${vazias.length} questão(ões): ${vazias.join(", ")}. Deseja enviar mesmo assim?
+      <div class="acoes-aviso">
+        <button class="btn-sec" type="button" onclick="tentarEnviar(true)">Enviar assim mesmo</button>
+        <button class="btn-sec" type="button" onclick="document.getElementById('q${vazias[0]}').focus()">Voltar e responder</button>
+      </div>`);
+    return;
+  }
+  enviar(nome, turma);
+}
+
+async function enviar(nome, turma){
+  if (URL_APPS_SCRIPT.indexOf("script.google.com") === -1) {
+    mostrarMsg("erro", "Não foi possível carregar a configuração de envio. Recarregue a página; suas respostas estão salvas neste aparelho.");
+    return;
+  }
+  const btn = document.getElementById("btnEnviar");
+  btn.disabled = true; btn.textContent = "Enviando…";
+  const respostas = [];
+  for (let i = 1; i <= 20; i++) respostas.push(document.getElementById("q"+i).value.trim());
+  const dados = { tipo: "pesquisa", atividade: ID_ATIVIDADE, nome, turma, respostas };
+  try {
+    await fetch(URL_APPS_SCRIPT, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(dados)
+    });
+    const quando = new Date().toLocaleString("pt-BR");
+    const d = lerLocal(); d.enviadoEm = quando; gravarLocal(d);
+    mostrarMsg("ok", "Respostas enviadas com sucesso para o professor! 🎉");
+    mostrarComprovante(quando, false);
+    btn.textContent = "📨 Enviar novamente (correção)";
+    document.getElementById("comprovante").scrollIntoView({behavior:"smooth"});
+  } catch (e) {
+    mostrarMsg("erro", "Não foi possível enviar. Verifique sua internet e tente de novo. Suas respostas continuam salvas neste aparelho.");
+    btn.textContent = "📨 Enviar respostas";
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+document.getElementById("btnLimpar").addEventListener("click", function(){
+  if (this.dataset.ok !== "1") {
+    this.dataset.ok = "1";
+    this.textContent = "⚠️ Clique de novo para confirmar";
+    return;
+  }
+  try { localStorage.removeItem(CHAVE_LOCAL); } catch(e){}
+  location.reload();
+});
+</script>
+</body>
+</html>
