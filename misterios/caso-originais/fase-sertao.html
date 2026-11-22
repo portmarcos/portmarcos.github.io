@@ -240,12 +240,12 @@ const store={get(){try{return JSON.parse(localStorage.getItem(KEY))}catch(e){ret
 const SRC={detF:'q1/detetive-f',det:'q1/detetive',cap:'q1/capanga',plat:'q1/k-plataforma',caixote:'q1/k-caixote',chao:'q1/k-chao',
   pag1:'q1/i-pagina1',pag2:'q1/i-pagina2',lampada:'q1/i-lampada',tinta1:'q1/i-tinta1',tinta2:'q1/i-tinta2',tinta3:'q1/i-tinta3',poeira:'q1/i-poeira',brilho:'q1/i-brilho',gaiola:'i-gaiola',
   bgFaz:'q2/fazenda1',bgFaz2:'q2/fazenda2',bgCaa:'q2/caatinga',bgCid:'q2/cidade',bgRio:'q2/rio',
-  baleia:'q2/baleia',fab:'q2/fabiano',sold:'q2/soldado',mand:'q2/mandacaru',vit:'q2/vitoria',men1:'q2/menino1',men2:'q2/menino2',
+  baleia:'q2/baleia',fab:'q2/fabiano',sold:'q2/soldado',mand:'q2/mandacaru',vit:'q2/vitoria',men1:'q2/menino1',men2:'q2/menino2',sorr:'q2/menino-sorr',brav:'q2/menina-brav',
   prea:'q2/prea',uru1:'q2/urubu1',uru2:'q2/urubu2',uru3:'q2/urubu3',arr1:'q2/arrib1',arr2:'q2/arrib2',arr3:'q2/arrib3',cabaca:'q2/cabaca',rocha:'q2/pedra',xique:'q2/xique',juaz:'q2/juazeiro',carcaca:'q2/carcaca'};
 const IMG={};
 let ldN=0;function ldShow(){const el=document.getElementById('load');if(el)el.textContent='Carregando o sertão… '+Math.round(ldN/Object.keys(SRC).length*100)+'%'}
 function loadAll(){return Promise.all(Object.entries(SRC).map(([k,v])=>new Promise(r=>{const i=new Image();i.onload=()=>{IMG[k]=i;ldN++;ldShow();r()};i.onerror=()=>{IMG[k]=null;ldN++;ldShow();r()};i.src='img/'+v+'.webp'})))}
-const SH={det:{w:269,h:232,s:.47},cap:{w:214,h:242,s:.46},bal:{w:195,h:154,s:.31},fab:{w:181,h:304,s:.37},sold:{w:177,h:304,s:.37},mand:{w:356,h:424,s:.62},vit:{w:165,h:295,s:.37},men1:{w:144,h:220,s:.37},men2:{w:107,h:165,s:.37}};
+const SH={det:{w:269,h:232,s:.47},cap:{w:214,h:242,s:.46},bal:{w:195,h:154,s:.31},fab:{w:181,h:304,s:.37},sold:{w:177,h:304,s:.37},mand:{w:356,h:424,s:.62},vit:{w:165,h:295,s:.37},men1:{w:144,h:220,s:.37},men2:{w:107,h:165,s:.37},sorr:{w:156,h:300,s:.29},brav:{w:162,h:300,s:.29}};
 
 /* ---------------- opções e dificuldade ---------------- */
 const OPT=Object.assign({mus:.7,sfx:.8,amb:.6,shake:true,big:false,dif:'normal'},(()=>{try{return JSON.parse(localStorage.getItem('caso_opcoes'))||{}}catch(e){return{}}})());
@@ -430,6 +430,10 @@ function buildMain(){
   // --- porteira e arena ---
   L.gate={x:6460,y:G-170,w:28,h:170};L.solids.push(L.gate);
   L.inter.push({x:6400,y:G-120,w:60,h:120,label:'Examinar a porteira',use:tryGate,cond:()=>!gateOpen});
+  // --- as crianças que fugiram do Mandacaru ---
+  L.npcs.push({k:'sorr',sh:'sorr',x:6300,y:G,face:1,fixed:1,lines:['Moça! Moço! Venha cá!','Eu sorrio até com medo!'],nome:'Menino Sorridente'},
+    {k:'brav',sh:'brav',x:6352,y:G,face:-1,fixed:1,lines:['Ele não me assusta.','Escute antes de entrar.'],nome:'Menina Bravura'});
+  L.inter.push({x:6268,y:G-110,w:116,h:110,label:'Conversar com as crianças',use:talkCriancas});
   plat(6660,6810,G-130);plat(7300,7450,G-130);
   // --- capangas da Censura ---
   [[1690,1850],[2380,2560],[5150,5400],[6000,6300]].forEach(e=>L.enemies.push(mkCap(e[0],e[1],G)));
@@ -810,6 +814,8 @@ PERSONAGENS.vitoria={nome:'Sinhá Vitória',img:'img/q2/ret-vitoria.webp'};
 PERSONAGENS.soldado={nome:'Soldado Amarelo',img:'img/q2/ret-soldado.webp'};
 PERSONAGENS.meninoV={nome:'Menino mais velho',img:'img/q2/ret-menino.webp'};
 PERSONAGENS.mandacaru={nome:'Mandacaru',img:'img/q2/ret-mandacaru.webp'};
+PERSONAGENS.sorr={nome:'Menino Sorridente',img:'img/q2/ret-menino-sorr.webp'};
+PERSONAGENS.brav={nome:'Menina Bravura',img:'img/q2/ret-menina-brav.webp'};
 const TIMELINE=SERTAO.TIMELINE.map(([c,t])=>'“'+c+'”: '+t);
 function addNote(t){S.notes=S.notes||[];if(!S.notes.some(n=>n.t===t))S.notes.push({c:CHI,t})}
 function checkTimeline(){const n=Math.min(TIMELINE.length,Math.floor(pages/3));while(timelineN<n){const t=TIMELINE[timelineN];timelineN++;toast('📜 Linha do tempo '+timelineN+'/'+TIMELINE.length+': '+t);addNote('Linha do tempo — '+t)}}
@@ -832,6 +838,16 @@ async function talkVitoria(){const sh=Lv.feira&&Lv.feira.shop;
   await say([{q:'vitoria',t:'Esta cama de varas me machuca as costas. Seu Tomás da bolandeira dormia numa cama de couro…'},{q:'vitoria',t:'Um dia a gente vai ter uma cama de gente. Fabiano diz que é luxo. Não é.'},{q:'detetive',t:'O sonho de sinhá Vitória é tão simples… e mesmo assim parece impossível.'}]);
   if(!trechos.cama){score+=50;updHud();await trechoOv('cama',{pre:'Uma cama de verdade é o grande sonho de sinhá Vitória, que se repete ao longo do livro:'})}
   if(Lv.feira&&!Lv.feira.shop)await startShop()}
+let criancasOk=false;
+async function talkCriancas(){
+  const first=!criancasOk;
+  await say([{q:'sorr',t:'Oi, oi, oi! Eu sou o Menino Sorridente! E essa aí, de cara amarrada, é a Menina Bravura.'},
+    {q:'brav',t:'Eu não estou de cara amarrada. Estou prestando atenção. Tem um mandacaru gigante lá dentro cobrando dívida de todo mundo.'},
+    {q:'sorr',t:'A gente fugiu da seca até aqui. Se ele aparecer, eu dou risada para disfarçar o medo!'},
+    {q:'brav',t:'Presta atenção, detetive: depois de três ataques ele abre uma brecha. Aparecem placas com as respostas: acerte a certa com a folha. Errou, ele fica mais bravo.'},
+    {q:'sorr',t:'E a Baleia sabe morder a raiz dele, hein! Vá com ela por perto.'},
+    {q:'brav',t:first?'Toma. Coragem a gente divide: ganhe uma lamparina a mais.':'Já dei minha coragem. Agora vai lá e acaba com ele!'}]);
+  if(first){criancasOk=true;const cheia=lamps>=MAXL;if(!cheia){lamps++;hudLamps()}score+=cheia?250:100;updHud();SFX.lampUp();toast(cheia?'A Menina Bravura dividiu a coragem com você: +250 pontos (suas lamparinas já estão cheias).':'A Menina Bravura dividiu a coragem com você: +1 lamparina e +100 pontos.')}}
 async function talkMenino(){await say([{q:'meninoV',t:'Moço, o que é inferno? Sinhá Terta falou essa palavra e eu achei bonita…'},{q:'meninoV',t:'Perguntei para a mãe e levei um cascudo. Ninguém me explica nada.'},{q:'detetive',t:'Para quem quase não tem palavras, uma palavra nova é um mundo inteiro.'}]);
   if(!trechos.inferno){score+=50;updHud();await trechoOv('inferno',{pre:'No capítulo “O menino mais velho”, uma única palavra desperta a curiosidade do menino:'})}
   if(!ARMAS.dic){await say([{q:'meninoV',t:'Moço, leva este dicionário. Quem sabe o senhor descobre o que é inferno… e me conta depois.'}]);ganharArma('dic')}}
@@ -1069,7 +1085,7 @@ function drawCommon(){
   for(const n of Lv.npcs){const px=PLAYERS[0].x,tgt=n.fixed?n.face:(Math.abs(px-n.x)<22?(n.tf||1):(px<n.x?-1:1));n.tf=tgt;if(n.fx==null)n.fx=tgt;n.fx+=(tgt-n.fx)*Math.min(1,FDT*9);
     const g=npcTalk(n),GS=gest(n,g),sy=GS.sy,sx=Math.max(.12,Math.abs(n.fx))/Math.sqrt(sy),rot=GS.rot,dir=n.fx<0?-1:1,ty=GS.dy;
     if(n.img){const im=IMG[n.img];if(!im)continue;const sc=n.s||.37,w=im.width*sc,h=im.height*sc;ctx.save();ctx.translate(n.x,n.y+2+ty);ctx.rotate(rot);ctx.scale(dir*sx,sy);ctx.drawImage(im,-w/2,-h,w,h);ctx.restore();n.h=h}
-    else{const m=SH[n.sh];let f=n.f||0;if(g>.3&&TALK.ex&&n.k==='fab'&&!n.f)f=7;sheetT(n.k,m,f,n.x,n.y+ty,dir,1,rot,sx,sy);n.h=m.h*m.s}
+    else{const m=SH[n.sh];let f=n.f||0;if(g>.3&&TALK.ex&&n.k==='fab'&&!n.f)f=7;if(g>.3&&TALK.ex&&n.k==='sorr')f=6;if(g>.3&&TALK.ex&&n.k==='brav')f=5;sheetT(n.k,m,f,n.x,n.y+ty,dir,1,rot,sx,sy);n.h=m.h*m.s}
     const d=Math.abs(P.x-n.x);if(d<170&&Math.abs(P.y-n.y)<170&&d<bd){bd=d;bn=n}}
   LASTBN=bn&&state==='play'&&!PLAYERS.some(q=>q.near)?bn:null;
   if(bn&&state==='play'&&!PLAYERS.some(q=>q.near)){const L=typeof bn.lines==='function'?bn.lines():bn.lines;if(L&&L.length)bubble(bn.x,bn.y-bn.h-6,bn.nome,L[Math.floor(T/4.5)%L.length])}
@@ -1128,7 +1144,7 @@ function drawLight1(){
    que estão falando balançam, inclinam e "respiram" no ritmo da fala; viram de lado suavemente. */
 let RT=0,FDT=.016,LASTBN=null;
 const TALK={q:null,amp:0,ex:0,last:0};
-const Q2NPC={vaqueiro:'fab',vitoria:'vit',meninoV:'men1',chico:'chico',cordulina:'cordulina',professora:'con'};
+const Q2NPC={sorr:'sorr',brav:'brav',vaqueiro:'fab',vitoria:'vit',meninoV:'men1',chico:'chico',cordulina:'cordulina',professora:'con'};
 /* Caminhada realista do cortejo: cada um segue o da frente com distância própria,
    acelera e freia suave, e o passo da folha anda conforme a distância percorrida (pé não escorrega). */
 function fugaW(o){return o.img?(o.img==='menino'?38:52):o.bal?44:SH[o.sh].w*SH[o.sh].s*.62}
