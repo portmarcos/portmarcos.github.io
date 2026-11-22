@@ -169,6 +169,7 @@ body.touch .hs{padding:2px 6px;font-size:clamp(.62rem,2.4vmin,.85rem)}
 body.touch .hs img{height:1.1em}
 body.touch #hud .lamps img{height:clamp(18px,5vmin,30px)}
 body.touch .lbl{display:none}
+#bFam{font-family:'Special Elite',monospace;font-size:.8rem;background:rgba(20,10,4,.75);color:#ffe6b5;border:1px solid #6b4526;border-radius:8px;padding:4px 10px;cursor:pointer}#bFam.hidden{display:none}#bFam.lost{border-color:#ffcf5a;color:#ffcf5a;animation:famP 1s ease-in-out infinite}@keyframes famP{50%{box-shadow:0 0 12px #ffcf5a}}
 #bFull{display:none}body.touch.canfs #bFull{display:inline-block}
 #rot{display:none}
 @media (orientation:portrait){body.touch #rot{display:flex;position:fixed;inset:0;z-index:200;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px;text-align:center;background:#1a0d05;color:#ffe6b5;font-family:'Special Elite'}
@@ -192,6 +193,7 @@ body.touch .lbl{display:none}
     <div class="hs" title="Velas de São José"><img src="img/q1/vela-on.webp" alt=""><b id="hVelas">0</b>/3</div>
     <div class="hs hidden" id="hKey"><img src="img/q1/chave.webp" alt=""><b id="hKeyN">1</b></div>
     <div class="sp"></div>
+    <button id="bFam" class="hidden" title="Chamar a família de Chico Bento para perto (tecla V)">👪 Chamar família</button>
     <button id="bFull" title="Tela cheia">⛶</button>
     <button id="bMute" title="Som">🔊</button>
     <button id="bPause" title="Pausa (Esc)">⏸</button>
@@ -337,7 +339,7 @@ const KM1={KeyA:'left',KeyD:'right',KeyW:'up',KeyS:'down',Space:'jump',KeyF:'thr
 const KM2={ArrowLeft:'left',ArrowRight:'right',ArrowUp:'up',ArrowDown:'down',Numpad0:'jump',KeyL:'jump',Numpad1:'throw',KeyK:'throw',Numpad2:'lamp',KeyJ:'lamp',Numpad3:'act',KeyI:'act',Enter:'act',NumpadEnter:'act'};
 function route(code){if(!COOP)return KM[code]?[PLAYERS[0],KM[code]]:null;if(KM1[code])return[PLAYERS[0],KM1[code]];if(KM2[code]&&PLAYERS[1])return[PLAYERS[1],KM2[code]];return null}
 function clearInput(){for(const pl of PLAYERS){for(const k in pl.K)pl.K[k]=0;for(const k in pl.PR)pl.PR[k]=0}}
-addEventListener('keydown',e=>{if(document.querySelector('.ov input:focus'))return;if(e.code==='Escape'||(e.code==='KeyP'&&!COOP)){togglePause();return}const rt=route(e.code);
+addEventListener('keydown',e=>{if(document.querySelector('.ov input:focus'))return;if(e.code==='Escape'||(e.code==='KeyP'&&!COOP)){togglePause();return}if(e.code==='KeyV'&&state==='play'){callFam();return}const rt=route(e.code);
   if(rt){const [pl,k]=rt;if(!pl.K[k])pl.PR[k]=1;pl.K[k]=1;if(state==='play')e.preventDefault()}ac()});
 addEventListener('keyup',e=>{const rt=route(e.code);if(rt)rt[0].K[rt[1]]=0});
 const isTouch=('ontouchstart' in window)||navigator.maxTouchPoints>0;
@@ -731,11 +733,16 @@ function drawRain(){ctx.save();ctx.fillStyle='rgba(30,40,60,.3)';ctx.fillRect(0,
 const FOOD={agua:{nome:'cabaça d’água',t:'Na seca, a água vinha de cacimbas e açudes quase secos — cada gole valia ouro.'},farinha:{nome:'saco de farinha',t:'A farinha de mandioca era a base da comida do retirante.'},rapadura:{nome:'rapadura',t:'Rapadura: açúcar de cana em tijolo, que aguentava a longa caminhada.'}};
 function famOn(){return FAM&&scene==='main'&&FAM.state!=='gone'&&FAM.state!=='leaving'}
 function famInit(){FAM={x:180,y:G,forca:100,state:'follow',dir:1,an:0,moving:false,pedro:true,ep:{},josias:null,cabra:null,msgT:0}}
+function callFam(){if(!famOn()||state!=='play')return;const F=FAM,L=nearestP(F.x,F.y);
+  if(F.state==='wait'){let m='A família está esperando: resolva o que aconteceu primeiro.';if(F.ep.pedro&&!F.ep.pedroOk)m='A família não sai do lugar sem Pedro! Procure o menino com a lamparina (segure C).';else if(F.cabra&&!F.cabra.done)m='A família espera: alcance a cabra solta!';else if(F.josias&&!F.josias.done)m='Corra! Alcance Josias antes que ele coma a mandioca crua!';toast(m);return}
+  F.callT=6;if(Math.abs(L.x-F.x)>900){F.x=L.x-80*(L.face||1);F.y=famGY(F.x);const M=famMembers(F);M.forEach(q=>{q.x=F.x+q.off;q.v=0})}
+  F.joy=.8;SFX.ok();toast('Chico Bento: “Já vamos, moço!” A família volta a seguir você.')}
+$('#bFam').onclick=e=>{e.stopPropagation();callFam();e.currentTarget.blur()};
 function famGY(x){return x>=470&&x<=1190?G-36:G}
 function famHit(n,msg){if(!famOn())return;FAM.hurtT=.45;n=Math.round(n*DF().fam);FAM.forca=Math.max(0,FAM.forca-n);SFX.hurt();floatTxt(FAM.x,FAM.y-120,'-'+n+' força');if(msg&&FAM.msgT<=0){toast(msg);FAM.msgT=3}
   if(FAM.forca<=0){FAM.forca=50;lamps--;errosFase++;hudLamps(true);toast('A família desmaiou de fome e cansaço… uma lamparina se apagou. Traga comida e água!');if(lamps<=0)setTimeout(gameOver,400)}updHud()}
 function updFamily(dt){
-  if(!FAM||scene!=='main')return;const F=FAM;F.msgT-=dt;famAnim(dt);
+  if(!FAM||scene!=='main')return;const F=FAM;F.msgT-=dt;F.callT=Math.max(0,(F.callT||0)-dt);famAnim(dt);{const b=$('#bFam');if(b){const on=famOn();b.classList.toggle('hidden',!on);if(on){const Lp=nearestP(F.x,F.y);b.classList.toggle('lost',F.state==='follow'&&Math.abs(Lp.x-F.x)>420&&!(F.callT>0))}}}
   if(F.state==='gone')return;
   if(F.state==='leaving'){F.x+=60*dt;F.an+=dt*6;F.fade=(F.fade||1)-dt*.35;if(F.fade<=0){F.state='gone';updHud()}return}
   if(state==='play')F.forca=Math.max(0,F.forca-dt*DF().drain);if(F.forca<=0)famHit(0);
@@ -756,10 +763,10 @@ function updFamily(dt){
   // seguir o detetive
   if(F.state==='follow'){const L=nearestP(F.x,F.y);let tx=L.x-80*Math.sign(L.x-F.x||1);tx=Math.min(tx,F.ep.mocinha?3150:F.ep.josias&&!F.ep.josiasOk?F.x:3150);
     if(!F.ep.pedroOk&&F.ep.pedro)tx=F.x;
-    const blk=Lv.enemies.find(e=>e.st!=='dead'&&Math.abs(e.y-F.y)<45&&Math.sign(e.x-F.x)===Math.sign(tx-F.x)&&Math.abs(e.x-F.x)<150);
+    const blk=F.callT>0?null:Lv.enemies.find(e=>e.st!=='dead'&&Math.abs(e.y-F.y)<45&&Math.sign(e.x-F.x)===Math.sign(tx-F.x)&&Math.abs(e.x-F.x)<150);
     if(blk){tx=F.x;if(F.msgT<=0&&Math.abs(L.x-F.x)<500){toast('A família tem medo de passar pelo capanga. Afaste-o do caminho!');F.msgT=5}}
-    if(Math.abs(L.x-F.x)>650)tx=F.x;
-    const dx=tx-F.x;F.moving=Math.abs(dx)>6;if(F.moving){F.dir=Math.sign(dx);F.x+=F.dir*Math.min(135*dt,Math.abs(dx));F.an+=dt*7}}else F.moving=false;
+    if(Math.abs(L.x-F.x)>650&&!(F.callT>0))tx=F.x;
+    const dx=tx-F.x;F.moving=Math.abs(dx)>6;if(F.moving){F.dir=Math.sign(dx);F.x+=F.dir*Math.min((F.callT>0?270:135)*dt,Math.abs(dx));F.an+=dt*7}}else F.moving=false;
   F.y=famGY(F.x);
 }
 function escolhaCabra(){const ov=showOv(`<span class="kicker">Episódio do romance · a cabra</span><h2>Chico Bento e a cabra</h2><div class="clue"><img src="img/q1/npc-cabra.webp" alt=""><p>Você segurou a cabra. Chico Bento olha os filhos famintos. O animal tem dono — mas a fome não espera. O que fazer?</p></div>
@@ -793,12 +800,14 @@ function drawCesta(x,y,s=1){ctx.save();ctx.translate(x,y);ctx.scale(s,s);ctx.fil
 /* ---------- família em estilo desenho animado: cada um com sua mola, pulinho, achatamento, olhares e reações ---------- */
 function famMembers(F){if(!F.mem)F.mem=[{k:'chico',off:44,stiff:16,damp:6.5,amp:5,seed:0},{k:'cordulina',off:0,stiff:12,damp:5.6,amp:4,seed:1.7},{k:'menino',off:-42,stiff:24,damp:4.6,amp:10,seed:3.1,kid:1}].map(m=>Object.assign(m,{x:F.x+m.off,v:0,ph:0,face:1,lookT:1+Math.random()*2,look:0,fid:0,fidT:2+Math.random()*4}));return F.mem}
 function famAnim(dt){const F=FAM,M=famMembers(F);
+  for(const q of PLAYERS){const pv=q._pvy||0;if(q.vy<-450&&pv>=-450&&Math.abs(q.x-F.x)<650&&F.state!=='leaving'&&F.state!=='gone'){M.forEach((m,i)=>{m.jw=i*.09+.01;m.jt=0})}q._pvy=q.vy}
   const near=Lv.enemies.some(e=>e.st!=='dead'&&Math.abs(e.x-F.x)<170&&Math.abs(e.y-F.y)<60);if(near&&!F.scared)F.startle=.55;F.scared=near;
   if(F.startle>0)F.startle-=dt;if(F.joy>0)F.joy-=dt;if(F.hurtT>0)F.hurtT-=dt;
   for(const m of M){const lead=F.state==='leaving'?1:F.dir;const tgt=F.x+m.off*lead;if(Math.abs(tgt-m.x)>400){m.x=tgt;m.v=0}const a=(tgt-m.x)*m.stiff-m.v*m.damp;m.v+=a*dt;m.x+=m.v*dt;
     const sp=Math.abs(m.v);if(sp>14){m.ph+=dt*(8+sp*.05)*(m.kid?1.25:1);m.face=Math.sign(m.v)}else{m.ph+=(Math.round(m.ph/Math.PI)*Math.PI-m.ph)*Math.min(1,dt*10);
       m.lookT-=dt;if(m.lookT<=0){m.lookT=1.6+Math.random()*3;const pl=nearestP(m.x,F.y);m.face=Math.random()<.65?(pl.x<m.x?-1:1):-m.face}
       m.fidT-=dt;if(m.fidT<=0){m.fidT=3+Math.random()*5;m.fid=.6}}
+    if(m.jw>0){m.jw-=dt;if(m.jw<=0)m.jt=.55}else if(m.jt>0)m.jt-=dt;
     if(m.fid>0)m.fid-=dt}}
 function drawFamily(){const F=FAM;if(!F||F.state==='gone')return;const M=famMembers(F);ctx.save();if(F.state==='leaving')ctx.globalAlpha=Math.max(0,F.fade);
   const tired=F.forca<30;
@@ -808,13 +817,14 @@ function drawFamily(){const F=FAM;if(!F||F.state==='gone')return;const M=famMemb
     if(walk){if(s<.25)sy=1-(.25-s)*.5;else sy=1+s*.04;rot=clamp(m.v/700,-.13,.13)}
     else{sy=1+.02*Math.sin(T*2.3+m.seed);rot=(m.k==='cordulina'?.03*Math.sin(T*1.3+m.seed):0)}
     if(m.fid>0){const f=Math.sin((.6-m.fid)/.6*Math.PI);if(m.kid)hop+=f*14;else if(m.k==='chico')rot-=f*.12*m.face;else sy+=f*.05}
+    if(m.jt>0){const k=Math.sin((1-m.jt/.55)*Math.PI);hop+=k*(m.kid?74:54);sy*=1+k*.06;rot+=k*.05*m.face}
     if(tired){rot+=.07*m.face;sy*=.97}
     if(F.scared){jx=Math.sin(T*55+m.seed)*1.4}
     if(F.startle>0){const k=Math.sin((.55-F.startle)/.55*Math.PI);hop+=k*(16+i*4);sy*=1+k*.08}
     if(F.joy>0){const k=Math.abs(Math.sin((1.3-F.joy)*9+i*.9));hop+=k*14;sy*=1+k*.06}
     if(F.hurtT>0){sy*=.82;jx+=Math.sin(T*70)*3}
     const sx=1/Math.sqrt(sy),w=im.width*.37,h=im.height*.37;
-    ctx.save();ctx.globalAlpha*=.28*(1-Math.min(.6,hop/40));ctx.fillStyle='#1b0d05';ctx.beginPath();ctx.ellipse(m.x,gy+1,w*.42*(1-hop/80),5,0,0,7);ctx.fill();ctx.restore();
+    ctx.save();ctx.globalAlpha*=.28*(1-Math.min(.6,hop/40));ctx.fillStyle='#1b0d05';ctx.beginPath();ctx.ellipse(m.x,gy+1,w*.42*Math.max(.25,1-hop/110),5,0,0,7);ctx.fill();ctx.restore();
     ctx.save();ctx.translate(m.x+jx,gy+2-hop);ctx.rotate(rot);ctx.scale((m.face<0?-1:1)*sx,sy);ctx.drawImage(im,-w/2,-h,w,h);ctx.restore();
     if(walk&&s<.12&&Math.random()<.35)puff(m.x-m.face*8,gy,.18);
     if(F.joy>0&&Math.sin(T*8+i)>.6){ctx.save();ctx.font='bold 16px serif';ctx.fillStyle='#e0503a';ctx.textAlign='center';ctx.fillText('♥',m.x+(i-1)*6,gy-h-14-hop-(1.3-F.joy)*20);ctx.restore()}
