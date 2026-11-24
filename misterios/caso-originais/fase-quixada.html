@@ -68,6 +68,7 @@ button{font-family:inherit;cursor:pointer;color:inherit}
 .opt b{font-family:'Playfair Display';font-weight:900;color:var(--rust);min-width:18px}
 .opt.right{background:rgba(120,180,90,.35);border-color:var(--ok)}
 .opt.wrong,.opt.gone{opacity:.4;text-decoration:line-through}
+.trecho{margin:12px 0 6px;padding:12px 16px;border-left:4px solid #8e3418;background:rgba(255,250,235,.6);line-height:1.65;font-size:1.02rem;border-radius:0 8px 8px 0}.cita{font-size:.8rem;color:#6b4526}.refl{margin-top:14px;padding-top:10px;border-top:1px dashed rgba(110,70,30,.4)}.refl .q{font-weight:600;margin:6px 0 10px}
 .fb{margin-top:10px;padding:11px 14px;border-radius:8px;line-height:1.5;font-size:.96rem;border-left:5px solid}
 .fb.ok{background:rgba(110,170,80,.2);border-color:var(--ok)}
 .fb.bad{background:rgba(190,60,40,.14);border-color:var(--bad)}
@@ -360,7 +361,7 @@ addEventListener('resize',resize);
 /* ---------------- estado global ---------------- */
 let S=store.get();if(!S)S={name:'Detetive',ch:0,done:[],letters:[],items:[],notes:[],score:0,lamps:5,lupas:3,found:{},talked:{},err:{},stats:{acertos:0,erros:0},finished:false};
 const MAXL=5;
-let state='load',scene='main',T=0,score=0,lamps=Math.max(3,Math.min(MAXL,S.lamps||5)),pages=0,clues=[false,false,false,false,false],keys={vagao:false,casa:false},candles=0,cabraSeen=false,comida=[],FAM=null,mission=null,hasPass=false,delivered=false,timelineN=0,raining=false,talked=false,gateOpen=false,checkpoint={x:80,y:G,scene:'main'},combo=0,comboT=0,shake=0,camX=0,camY=0,elapsed=0,bossActive=false,bossDone=false,errosFase=0;
+let _lseca=0,state='load',scene='main',T=0,score=0,lamps=Math.max(3,Math.min(MAXL,S.lamps||5)),pages=0,clues=[false,false,false,false,false],keys={vagao:false,casa:false},candles=0,cabraSeen=false,comida=[],FAM=null,mission=null,hasPass=false,delivered=false,timelineN=0,raining=false,talked=false,gateOpen=false,checkpoint={x:80,y:G,scene:'main'},combo=0,comboT=0,shake=0,camX=0,camY=0,elapsed=0,bossActive=false,bossDone=false,errosFase=0;
 
 /* ================== NÍVEL ================== */
 const W={};
@@ -706,7 +707,30 @@ const TIMELINE=[
   'Conceição consegue passagens para São Paulo para a família de Chico Bento e fica com o afilhado, Duquinha.',
   'As chuvas voltam ao sertão. Conceição decide não se casar: segue sozinha, com seus livros, seu trabalho e o afilhado.'];
 function addNote(t){S.notes=S.notes||[];if(!S.notes.some(n=>n.t===t))S.notes.push({c:CHI,t})}
-function checkTimeline(){const n=Math.min(TIMELINE.length,Math.floor(pages/3));while(timelineN<n){const t=TIMELINE[timelineN];timelineN++;toast('📜 Linha do tempo '+timelineN+'/'+TIMELINE.length+': '+t);addNote('Linha do tempo — '+t)}}
+/* ================== LEITURA GUIADA: o aluno para e lê (resumo comentado; a obra não é de domínio público) ================== */
+const LEITURAS={
+ seca:{cap:'Abertura · 1915, o ano da grande seca',t:['Em 1915, o Ceará viveu uma das secas mais duras de sua história. O “inverno” — como o sertanejo chama a estação das chuvas — não veio, e o gado morria nos pastos.','Rachel de Queiroz era ainda uma criança nessa época. Aos 19 anos, ela escreveu <i>O Quinze</i>, publicado em 1930 e considerado um dos marcos do romance regionalista daquela década. O título lembra o ano da seca.','No livro, a seca atinge dois mundos: o de Vicente, fazendeiro que vê o gado definhar, e o de Chico Bento, vaqueiro que perde o trabalho e parte com a família na retirada. Entre eles está Conceição, professora e leitora de livros, que observa tudo de perto.'],
+  D:{t:'Por que o romance se chama <i>O Quinze</i>?',o:['Porque tem quinze capítulos.','Porque se passa durante a grande seca de 1915.','Porque Conceição tinha quinze anos.','Porque Vicente tinha quinze cabeças de gado.'],k:1,e:'O título é o ano da seca que serve de pano de fundo para a história. O Quinze mostra, ao mesmo tempo, o drama dos retirantes e o dos fazendeiros.'}},
+ tropeiros:{cap:'A retirada: quem sai, quem fica pelo caminho',t:['Sem chuva, sem trabalho e sem comida, Chico Bento junta a família e parte a pé em direção a Fortaleza. É a chamada <b>retirada</b>, o caminho de muitos sertanejos em 1915.','Pelo caminho, a família enfrenta fome, sede e cansaço — e vai se desfazendo. Pedro, o filho mais velho, acaba seguindo um grupo de <b>tropeiros</b>, homens que conduzem tropas de animais de carga, e a família nunca mais o vê.','Costuma-se destacar, no livro, a linguagem direta com que essas perdas aparecem: sem exagero sentimental, o que torna a cena ainda mais forte.'],
+  D:{t:'No texto, quem são os <b>tropeiros</b>?',o:['Soldados do governo que vigiam os retirantes.','Homens que conduzem tropas de animais de carga.','Vaqueiros da fazenda de Vicente.','Retirantes do Alagadiço.'],k:1,e:'Tropeiros são condutores de tropas de burros e cavalos, que transportam mercadorias pelo sertão. Pedro some seguindo um desses grupos.'}},
+ cabra:{cap:'A fome e a cabra',t:['Desesperado de fome, Chico Bento mata uma cabra que encontra solta pelo caminho. Pouco depois aparece o dono do animal, chama-o de ladrão, humilha-o e leva a carne, deixando para a família apenas as vísceras.','A cena mostra como a seca empurra um homem honesto para um ato de desespero, e como a lei da propriedade pesa mais sobre o pobre do que a fome.','É um dos momentos em que o romance denuncia a desigualdade, e não apenas a falta de chuva.'],
+  D:{t:'O que a cena da cabra revela?',o:['Que Chico Bento sempre foi ladrão.','Que a cabra pertencia à família.','Que a fome leva um homem honesto ao desespero e que a desigualdade pesa sobre o retirante.','Que o dono dividiu a carne com a família.'],k:2,e:'A cena não trata Chico Bento como bandido: mostra um pai faminto diante de uma lei que protege a propriedade, mas não protege quem passa fome.'}},
+ josias:{cap:'Josias e a mandioca brava',t:['No caminho, o menino Josias, faminto, come raiz de <b>mandioca brava</b> sem prepará-la. Crua, essa raiz é venenosa: contém uma substância que libera ácido cianídrico. Ela só fica segura depois de ralada, espremida e cozida.','Josias morre envenenado. É um dos momentos mais tristes do livro e mostra que a seca mata não apenas pela sede, mas também pelo desespero de comer o que não se pode.'],
+  D:{t:'Por que a mandioca brava faz mal se for comida crua?',o:['Porque está sempre podre.','Porque cresce só em terra seca.','Porque contém uma substância tóxica, que só some com o preparo.','Porque é amarga demais para engolir.'],k:2,e:'O veneno da mandioca brava é eliminado quando ela é ralada, espremida e cozida. Faminto, Josias não teve tempo nem meios de prepará-la.'}},
+ conceicao:{cap:'Conceição no Campo do Alagadiço',t:['Em 1915, o governo do Ceará reuniu milhares de retirantes famintos em <b>campos de concentração</b>, como o do Alagadiço, para controlá-los e impedir que ocupassem as ruas de Fortaleza.','No romance, Conceição trabalha ali como voluntária, distribuindo comida e remédio. É ela quem consegue as passagens para a família de Chico Bento seguir para São Paulo e fica com o afilhado, Duquinha.','Conceição é uma personagem à frente de seu tempo: lê, trabalha, pensa por conta própria e não se encaixa no papel que a sociedade espera de uma moça. No fim, segue com a própria vida.'],
+  D:{t:'Qual era a função dos campos de concentração de 1915?',o:['Abrigar presos políticos.','Armazenar a produção de algodão.','Isolar e controlar os retirantes famintos, longe do centro de Fortaleza.','Treinar soldados para a guerra.'],k:2,e:'Esses campos reuniram retirantes em condições precárias, com falta de comida, água e remédios. Conceição é voluntária num deles.'}}
+};
+function leitura(key){return new Promise(res=>{const L=LEITURAS[key];if(!L){res();return}const run=()=>{S.leituras=S.leituras||{};
+  const pal=L.t.join(' ').replace(/<[^>]+>/g,'').split(/\s+/).length,secs=Math.max(8,Math.ceil(pal/5));let left=secs;
+  addNote('Leitura — '+L.cap+': '+L.t.join(' ').replace(/<[^>]+>/g,''));
+  const pv=state;const ov=showOv(`<span class="kicker">Leitura guiada · parada obrigatória</span><h2>${L.cap}</h2><blockquote class="trecho">${L.t.map(x=>'<p style="margin:0 0 8px">'+x+'</p>').join('')}</blockquote><p class="cita">Resumo comentado, escrito para fins didáticos. <i>O Quinze</i> (Rachel de Queiroz, 1930) ainda é protegido por direitos autorais: para ler o texto original, procure o livro na biblioteca da escola.</p><p class="cita" id="lt" style="margin-top:6px"></p><div class="refl" id="lq" style="display:none"><span class="kicker">Pergunta de leitura · +100</span><p class="q">${L.D.t}</p><div id="ro"></div><div id="rfb"></div></div><div class="acts stick"><span></span><button class="pbtn" id="rc" disabled>Continuar ▸</button></div>`);
+  const bc=ov.querySelector('#rc'),lt=ov.querySelector('#lt');bc.onclick=()=>{ov.remove();state=pv==='modal'?'play':pv;clearInput();res()};
+  const tick=()=>{if(!document.body.contains(ov))return;lt.textContent='⏳ Leia com atenção… a pergunta aparece em '+left+' s';if(left<=0){lt.textContent='';ov.querySelector('#lq').style.display='block';ov.querySelector('#lq').scrollIntoView({behavior:'smooth',block:'nearest'});return}left--;setTimeout(tick,1000)};tick();
+  const box=ov.querySelector('#ro');L.D.o.forEach((t,k)=>{const b=document.createElement('button');b.className='opt';b.innerHTML=`<b>${'ABCDE'[k]}</b><span>${t}</span>`;box.appendChild(b);
+    b.onclick=()=>{box.querySelectorAll('button').forEach(x=>x.disabled=true);const ok=k===L.D.k;b.classList.add(ok?'right':'wrong');if(!ok)box.children[L.D.k].classList.add('right');
+      if(ok){score+=100;S.stats.acertos++;SFX.ok()}else{S.stats.erros++;SFX.bad()}S.leituras[key]=ok?2:1;store.set(S);
+      ov.querySelector('#rfb').innerHTML=`<div class="fb ${ok?'ok':'bad'}"><b>${ok?'Isso! +100.':'Não foi bem assim.'}</b> ${L.D.e}</div>`;bc.disabled=false;updHud()}})};const wait=()=>{if(state!=='play'){setTimeout(wait,400);return}run()};wait()})}
+function checkTimeline(){const n=Math.min(TIMELINE.length,Math.floor(pages/3));while(timelineN<n){const t=TIMELINE[timelineN];timelineN++;toast('📜 Linha do tempo '+timelineN+'/'+TIMELINE.length+': '+t);addNote('Linha do tempo — '+t)}if(timelineN>=1&&!(S.leituras&&S.leituras.seca)&&!_lseca){_lseca=1;setTimeout(()=>leitura('seca'),900)}}
 function timelineHTML(){return `<h3>Linha do tempo do romance · ${timelineN}/${TIMELINE.length}</h3><p style="font-size:.85rem;color:#6b4526">A cada 3 páginas recolhidas, um acontecimento de <i>O Quinze</i> volta para o caderno.</p><ol class="tl">${TIMELINE.map((t,i)=>i<timelineN?`<li>${esc(t)}</li>`:`<li class="lock">${i+1}. — página ainda perdida —</li>`).join('')}</ol>`}
 function totalPages(){return ['main','vagao','casa','campo'].reduce((a,k)=>a+(W[k]?W[k].pages.length:0),0)}
 function allCandles(){ach('velas');score+=200;getLamp(P.x,P.y-40);updHud();addNote('Dia de São José (19 de março): para o sertanejo, se não chove até essa data, o inverno está perdido. Em O Quinze, Dona Inácia reza ao santo pela chuva — e ela não vem.');
@@ -718,7 +742,7 @@ async function toCampo(){bossActive=false;
   fade(()=>{switchScene('campo');P.x=90;P.y=G;P.vx=P.vy=0;P.face=1;camY=0;checkpoint={x:90,y:G,scene:'campo'};$('#hPagesT').textContent=totalPages()})}
 function talkCampo(){if(hasPass){say([{q:'professora',t:'Corra! A família de Chico Bento está lá no fundo do campo, perto das barracas.'}]);return}
   if(mission&&mission.on){say([{q:'professora',t:'As cestas estão aqui na barraca. Leve uma de cada vez — rápido, antes que a Brigada apareça!'}]);return}
-  say([{q:'professora',t:'Detetive! Este é o Campo de Concentração do Alagadiço. O governo juntou aqui milhares de retirantes, cercados, para que não entrassem na cidade.'},{q:'professora',t:'Trabalho aqui como voluntária, distribuindo comida e remédio. A família de Chico Bento chegou — magra, cansada, com menos filhos do que saiu do sertão.'},{q:'professora',t:'Antes, me ajude: a Brigada quer confiscar a comida e o remédio. Leve estas cestas aos retirantes espalhados pelo campo — uma de cada vez. Você tem '+({180:'três minutos',120:'dois minutos',90:'um minuto e meio'}[DF().mis])+'!'}]).then(()=>{score+=50;startMission()})}
+  say([{q:'professora',t:'Detetive! Este é o Campo de Concentração do Alagadiço. O governo juntou aqui milhares de retirantes, cercados, para que não entrassem na cidade.'},{q:'professora',t:'Trabalho aqui como voluntária, distribuindo comida e remédio. A família de Chico Bento chegou — magra, cansada, com menos filhos do que saiu do sertão.'},{q:'professora',t:'Antes, me ajude: a Brigada quer confiscar a comida e o remédio. Leve estas cestas aos retirantes espalhados pelo campo — uma de cada vez. Você tem '+({180:'três minutos',120:'dois minutos',90:'um minuto e meio'}[DF().mis])+'!'}]).then(async()=>{score+=50;await leitura('conceicao');startMission()})}
 function lerJornal(){ach('jornal');addNote('Campo de Concentração do Alagadiço (Fortaleza, 1915): o governo reuniu milhares de retirantes da seca num campo cercado, para impedir que ocupassem a cidade. Faltavam comida, água e remédios.');
   showOv(`<span class="kicker">Jornal · abril de 1915</span><h2>O Campo de Concentração do Alagadiço</h2><p style="margin-top:10px">Para impedir que milhares de retirantes da seca ocupassem as ruas de Fortaleza, o governo do Ceará os reuniu num terreno cercado no bairro do Alagadiço: o <b>Campo de Concentração</b>. Faltavam comida, água e remédios, e muitos morreram de fome e de doenças.</p><p style="margin-top:8px">Em <i>O Quinze</i>, Rachel de Queiroz mostra esse lugar pelos olhos de Conceição, que trabalha ali como voluntária.</p><div class="acts" style="justify-content:flex-end"><button class="pbtn" data-close>Continuar</button></div>`)}
 function deliver(){if(!hasPass){SFX.bad();toast('Fale primeiro com Conceição, na entrada do campo.');return}if(delivered)return;delivered=true;score+=300;SFX.win();updHud();
@@ -758,8 +782,8 @@ function updFamily(dt){
     for(const q of PLAYERS)if(Math.abs(q.x-c.x)<30&&Math.abs(q.y-G)<50){c.done=true;escolhaCabra();break}}
   // Josias correndo para a mandioca
   const j=F.josias;if(j&&!j.done){j.t+=dt;j.x+=58*dt;for(const q of PLAYERS)if(Math.abs(q.x-j.x)<28&&Math.abs(q.y-G)<50){j.done=true;j.ok=true;score+=200;ach('josias');SFX.ok();updHud();
-      toast('Você alcançou Josias a tempo! +200. No romance não foi assim: Josias come mandioca crua e morre envenenado — um dos momentos mais tristes do livro.');addNote('Josias: no romance, o menino come mandioca brava crua e morre envenenado no caminho para Fortaleza.');F.ep.josiasOk=true;F.state='follow';break}
-    if(!j.done&&j.x>=3200){j.done=true;j.ok=false;famHit(30);toast('Josias comeu a mandioca crua… No romance, é assim que o menino morre envenenado. A família, abalada, perde as forças.');addNote('Josias: no romance, o menino come mandioca brava crua e morre envenenado no caminho para Fortaleza.');F.ep.josiasOk=true;F.state='follow'}}
+      toast('Você alcançou Josias a tempo! +200. No romance não foi assim: Josias come mandioca crua e morre envenenado — um dos momentos mais tristes do livro.');addNote('Josias: no romance, o menino come mandioca brava crua e morre envenenado no caminho para Fortaleza.');F.ep.josiasOk=true;F.state='follow';setTimeout(()=>leitura('josias'),1500);break}
+    if(!j.done&&j.x>=3200){j.done=true;j.ok=false;famHit(30);toast('Josias comeu a mandioca crua… No romance, é assim que o menino morre envenenado. A família, abalada, perde as forças.');addNote('Josias: no romance, o menino come mandioca brava crua e morre envenenado no caminho para Fortaleza.');F.ep.josiasOk=true;F.state='follow';setTimeout(()=>leitura('josias'),1500)}}
   // seguir o detetive
   if(F.state==='follow'){const L=nearestP(F.x,F.y);let tx=L.x-80*Math.sign(L.x-F.x||1);tx=Math.min(tx,F.ep.mocinha?3150:F.ep.josias&&!F.ep.josiasOk?F.x:3150);
     if(!F.ep.pedroOk&&F.ep.pedro)tx=F.x;
@@ -771,7 +795,7 @@ function updFamily(dt){
 }
 function escolhaCabra(){const ov=showOv(`<span class="kicker">Episódio do romance · a cabra</span><h2>Chico Bento e a cabra</h2><div class="clue"><img src="img/q1/npc-cabra.webp" alt=""><p>Você segurou a cabra. Chico Bento olha os filhos famintos. O animal tem dono — mas a fome não espera. O que fazer?</p></div>
   <div class="acts" style="flex-direction:column;align-items:stretch"><button class="opt" id="cA"><b>A</b><span>Deixar Chico Bento levar a cabra para alimentar os filhos.</span></button><button class="opt" id="cB"><b>B</b><span>Soltar a cabra e procurar outra comida pelo caminho.</span></button></div>`,{noClose:1});
-  const fim=t=>{ov.querySelector('.acts').innerHTML=`<div class="fb ok" style="width:100%">${t}</div><button class="pbtn" id="cOk" style="align-self:flex-end;margin-top:8px">Continuar</button>`;ov.querySelector('#cOk').onclick=()=>{ov.remove();state='play';FAM.ep.cabraOk=true;FAM.state='follow';FAM.cabra.gone=true}};
+  const fim=t=>{ov.querySelector('.acts').innerHTML=`<div class="fb ok" style="width:100%">${t}</div><button class="pbtn" id="cOk" style="align-self:flex-end;margin-top:8px">Continuar</button>`;ov.querySelector('#cOk').onclick=()=>{ov.remove();state='play';FAM.ep.cabraOk=true;FAM.state='follow';FAM.cabra.gone=true;leitura('cabra')}};
   addNote('A cabra: no romance, Chico Bento, desesperado de fome, mata uma cabra; o dono aparece, o humilha e leva a carne, deixando para a família só as vísceras.');
   ov.querySelector('#cA').onclick=()=>{FAM.forca=Math.min(100,FAM.forca+15);score+=100;updHud();fim('No livro, foi o que Chico Bento fez: matou a cabra para os filhos. Mas o dono apareceu, chamou-o de ladrão e levou a carne — só deixou as vísceras. A família ganha um pouco de força (+15), e você entende como a seca empurra um homem honesto ao desespero.')};
   ov.querySelector('#cB').onclick=()=>{score+=100;updHud();fim('Você escolheu outro caminho. No livro, porém, Chico Bento mata a cabra e o dono aparece, o humilha e só deixa as vísceras para a família. A cena mostra até onde a fome leva quem perdeu tudo.')}}
@@ -798,13 +822,13 @@ function drawFood(k,x,y){ctx.save();ctx.translate(x,y);ctx.lineWidth=2;ctx.strok
 function drawCesta(x,y,s=1){ctx.save();ctx.translate(x,y);ctx.scale(s,s);ctx.fillStyle='#a8742f';ctx.strokeStyle='#2b1a0d';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-14,-10);ctx.lineTo(14,-10);ctx.lineTo(10,8);ctx.lineTo(-10,8);ctx.closePath();ctx.fill();ctx.stroke();
   ctx.beginPath();ctx.arc(0,-10,11,Math.PI,0);ctx.stroke();ctx.fillStyle='#e9d4a0';ctx.beginPath();ctx.arc(-4,-11,4,0,6.29);ctx.arc(5,-12,4,0,6.29);ctx.fill();ctx.strokeStyle='rgba(43,26,13,.5)';for(let i=-8;i<=8;i+=5){ctx.beginPath();ctx.moveTo(i,-9);ctx.lineTo(i*.75,7);ctx.stroke()}ctx.restore()}
 /* ---------- família em estilo desenho animado: cada um com sua mola, pulinho, achatamento, olhares e reações ---------- */
-function famMembers(F){if(!F.mem)F.mem=[{k:'chico',off:44,stiff:16,damp:6.5,amp:5,seed:0},{k:'cordulina',off:0,stiff:12,damp:5.6,amp:4,seed:1.7},{k:'menino',off:-42,stiff:24,damp:4.6,amp:10,seed:3.1,kid:1}].map(m=>Object.assign(m,{x:F.x+m.off,v:0,ph:0,face:1,lookT:1+Math.random()*2,look:0,fid:0,fidT:2+Math.random()*4}));return F.mem}
+function famMembers(F){if(!F.mem)F.mem=[{k:'chico',off:44,stiff:14,damp:8,amp:2.4,seed:0,stride:46},{k:'cordulina',off:0,stiff:11,damp:7.2,amp:2,seed:1.7,stride:40},{k:'menino',off:-42,stiff:20,damp:6.4,amp:3.6,seed:3.1,kid:1,stride:30}].map(m=>Object.assign(m,{x:F.x+m.off,v:0,ph:0,face:1,lookT:1+Math.random()*2,look:0,fid:0,fidT:2+Math.random()*4}));return F.mem}
 function famAnim(dt){const F=FAM,M=famMembers(F);
   for(const q of PLAYERS){const pv=q._pvy||0;if(q.vy<-450&&pv>=-450&&Math.abs(q.x-F.x)<650&&F.state!=='leaving'&&F.state!=='gone'){M.forEach((m,i)=>{m.jw=i*.09+.01;m.jt=0})}q._pvy=q.vy}
   const near=Lv.enemies.some(e=>e.st!=='dead'&&Math.abs(e.x-F.x)<170&&Math.abs(e.y-F.y)<60);if(near&&!F.scared)F.startle=.55;F.scared=near;
   if(F.startle>0)F.startle-=dt;if(F.joy>0)F.joy-=dt;if(F.hurtT>0)F.hurtT-=dt;
   for(const m of M){const lead=F.state==='leaving'?1:F.dir;const tgt=F.x+m.off*lead;if(Math.abs(tgt-m.x)>400){m.x=tgt;m.v=0}const a=(tgt-m.x)*m.stiff-m.v*m.damp;m.v+=a*dt;m.x+=m.v*dt;
-    const sp=Math.abs(m.v);if(sp>14){m.ph+=dt*(8+sp*.05)*(m.kid?1.25:1);m.face=Math.sign(m.v)}else{m.ph+=(Math.round(m.ph/Math.PI)*Math.PI-m.ph)*Math.min(1,dt*10);
+    const sp=Math.abs(m.v);if(sp>14){m.ph+=sp*dt/m.stride*Math.PI;m.face=Math.sign(m.v)}else{m.ph+=(Math.round(m.ph/Math.PI)*Math.PI-m.ph)*Math.min(1,dt*10);
       m.lookT-=dt;if(m.lookT<=0){m.lookT=1.6+Math.random()*3;const pl=nearestP(m.x,F.y);m.face=Math.random()<.65?(pl.x<m.x?-1:1):-m.face}
       m.fidT-=dt;if(m.fidT<=0){m.fidT=3+Math.random()*5;m.fid=.6}}
     if(m.jw>0){m.jw-=dt;if(m.jw<=0)m.jt=.55}else if(m.jt>0)m.jt-=dt;
@@ -814,10 +838,10 @@ function drawFamily(){const F=FAM;if(!F||F.state==='gone')return;const M=famMemb
   M.forEach((m,i)=>{if(m.k==='menino'&&!(F.pedro||F.ep.pedroOk))return;const im=IMG[m.k];if(!im)return;
     const sp=Math.abs(m.v),walk=sp>14,s=Math.abs(Math.sin(m.ph)),gy=famGY(m.x);
     let hop=walk?s*m.amp*(tired?.5:1):0,sy=1,rot=0,jx=0;
-    if(walk){if(s<.25)sy=1-(.25-s)*.5;else sy=1+s*.04;rot=clamp(m.v/700,-.13,.13)}
+    if(walk){sy=1-(1-s)*.018;rot=clamp(m.v/900,-.09,.09)+Math.sin(m.ph)*(m.kid?.045:.03)}
     else{sy=1+.02*Math.sin(T*2.3+m.seed);rot=(m.k==='cordulina'?.03*Math.sin(T*1.3+m.seed):0)}
-    if(m.fid>0){const f=Math.sin((.6-m.fid)/.6*Math.PI);if(m.kid)hop+=f*14;else if(m.k==='chico')rot-=f*.12*m.face;else sy+=f*.05}
-    if(m.jt>0){const k=Math.sin((1-m.jt/.55)*Math.PI);hop+=k*(m.kid?74:54);sy*=1+k*.06;rot+=k*.05*m.face}
+    if(m.fid>0){const f=Math.sin((.6-m.fid)/.6*Math.PI);if(m.kid)hop+=f*6;else if(m.k==='chico')rot-=f*.12*m.face;else sy+=f*.05}
+    if(m.jt>0){const u=1-m.jt/.55,k=Math.sin(Math.pow(u,.85)*Math.PI);hop+=k*(m.kid?46:34);sy*=1+k*.035;if(m.jt<.07)sy*=.93;rot+=k*.03*m.face}
     if(tired){rot+=.07*m.face;sy*=.97}
     if(F.scared){jx=Math.sin(T*55+m.seed)*1.4}
     if(F.startle>0){const k=Math.sin((.55-F.startle)/.55*Math.PI);hop+=k*(16+i*4);sy*=1+k*.08}
@@ -839,7 +863,7 @@ function drawFamily(){const F=FAM;if(!F||F.state==='gone')return;const M=famMemb
     ctx.fillStyle='#8a5a2c';ctx.strokeStyle='#2b1a0d';ctx.lineWidth=1.5;ctx.beginPath();ctx.ellipse(mx-10,G-3,12,5,.3,0,6.29);ctx.fill();ctx.stroke();ctx.beginPath();ctx.ellipse(mx+10,G-3,12,5,-.3,0,6.29);ctx.fill();ctx.stroke();
     ctx.font='bold 11px "Special Elite",monospace';ctx.textAlign='center';ctx.fillStyle='#ffe6b5';ctx.fillText('mandioca brava',mx,G-62);ctx.restore()}
 }
-function findPedro(h){ach('pedro');h.got=1;FAM.pedro=true;FAM.ep.pedroOk=true;FAM.state='follow';score+=200;SFX.ok();updHud();
+function findPedro(h){ach('pedro');h.got=1;FAM.pedro=true;FAM.ep.pedroOk=true;FAM.state='follow';score+=200;SFX.ok();updHud();setTimeout(()=>leitura('tropeiros'),1200);
       toast('Você achou Pedro! +200. No romance, Pedro some de vez no caminho, seguindo um grupo de tropeiros — a família nunca mais o vê.');addNote('Pedro: no romance, o filho de Chico Bento desaparece no caminho, seguindo um grupo de tropeiros.')}
 const PISTA5={nome:'Mala do chefe da estação',t:'Papéis do chefe da estação: listas de retirantes pedindo passagem de trem para Fortaleza em 1915. Junto, um rascunho do fim do romance: na capital, Conceição consegue passagens para que a família de Chico Bento siga para São Paulo — e fica com o afilhado, Duquinha.'};
 function foundClue(j){if(clues[j])return;clues[j]=true;if(clues.every(Boolean))ach('pistas');SFX.clue();score+=150;sparkle(P.x,P.y-60);updHud();
@@ -973,7 +997,7 @@ function registrar(f,turma){const id=Date.now()+'-'+Math.random().toString(36).s
   const url=(typeof SHEETS_URL==='string'?SHEETS_URL:'').trim();
   if(url.startsWith('https://')){fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({
       atividade:'Arquivo de Mistérios · Quixadá'+(COOP?' (dupla)':''),nome:nomesDupla(),turma,acertos:f.total,total:'pontos',pct:Math.round(pages/totalPages()*100),
-      abertas:`Medalha ${f.medal} · nível ${f.dif} · conquistas ${achN()}/${ACH.length} · tempo ${f.tempo} · páginas ${pages}/${totalPages()} · velas ${candles}/3 · lamparinas perdidas ${errosFase} · linha do tempo ${timelineN}/${TIMELINE.length}`})})
+      abertas:`Medalha ${f.medal} · nível ${f.dif} · conquistas ${achN()}/${ACH.length} · tempo ${f.tempo} · páginas ${pages}/${totalPages()} · velas ${candles}/3 · lamparinas perdidas ${errosFase} · linha do tempo ${timelineN}/${TIMELINE.length} · leituras ${Object.values(S.leituras||{}).filter(v=>v===2).length}/${Object.keys(LEITURAS).length}`})})
     .then(()=>{}).catch(()=>{});msg+=' A pontuação também foi enviada ao professor.'}
   document.getElementById('rkMsg').innerHTML=msg}
 
