@@ -96,7 +96,7 @@ const SRC={det:'../caso-originais/img/q1/detetive.webp',detF:'../caso-originais/
  bgi:'img/q1/bg-infancia.webp',prud:'img/q1/prudencio.webp',retPrud:'img/q1/ret-prud-menino.webp',retQuincas:'img/q1/ret-quincas.webp',eul:'img/q1/eulalia.webp'};
 const OPCIONAL=['hq2','hq3','amigos','caixao','padre'];
 const IMG={};
-const SH={det:{w:269,h:232,s:.47},bras:{w:137,h:340,s:.37},hipo:{w:303,h:230,s:.6},prud:{w:164,h:340,s:.4}};
+const SH={det:{w:269,h:232,s:.47},bras:{w:137,h:340,s:.37},hipo:{w:303,h:230,s:.6},prud:{w:164,h:340,s:.5}};
 function loadAll(cb){
   const keys=Object.keys(SRC);let n=0;
   keys.forEach(k=>{const im=new Image();im.onload=()=>{IMG[k]=im;if(++n===keys.length)cb()};im.onerror=()=>{if(++n===keys.length)cb()};im.src=SRC[k]});
@@ -206,7 +206,7 @@ const INTER=[
      fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 11 (domínio público).',
      q:{t:'O que o episódio mostra sobre o menino e sobre a sociedade em que ele vive?',o:['Que o menino fazia apenas uma travessura inocente, como toda criança.','Que o menino agride, mente e ainda culpa a escrava, e nada lhe acontece: a escravidão dá a ele um poder que ninguém questiona.','Que a escrava merecia o castigo por ter estragado o doce.','Que a mãe do menino percebeu a mentira e o castigou.'],k:1,e:'Brás machuca a escrava, estraga o doce e a acusa de "pirraça". A crueldade é contada sem remorso, e o menino não sofre consequência alguma. Machado mostra, pela frieza do narrador, a violência naturalizada da sociedade escravista.'}});
    F.tacho=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
- {id:'cavalo',x:1950,r:130,txt:'AÇÃO · Falar com Prudêncio',done:()=>F.cavalo,act:async()=>{
+ {id:'cavalo',x:1860,r:110,txt:'AÇÃO · Falar com Prudêncio',done:()=>F.cavalo,act:async()=>{
    await say([['prud','Nhonhô mandou eu ser cavalo outra vez. Dizem que hoje o dia é de festa lá em cima.'],['det','Você não precisa fazer isso. Ninguém deveria montar em ninguém.'],['prud','O sinhozinho manda, e a gente obedece. É assim que é.'],['bras','Veja, leitor, como eu era um cavalo bem montado. Prudêncio, o meu, nunca reclamou. Leia, e depois me diga o que achou.']]);
    await leitura({titulo:'Capítulo 11 · O Menino É Pai do Homem',cita:CITA11,fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 11 (domínio público).',
      q:{t:'Por que a cena é tão forte, mesmo contada com um tom tranquilo pelo narrador?',o:['Porque o narrador demonstra arrependimento e pede perdão a Prudêncio.','Porque Brás narra a violência com naturalidade, e é a frieza dele que revela a crueldade da escravidão.','Porque Prudêncio reage e derruba o menino.','Porque a cena é um sonho de Brás, sem relação com a realidade.'],k:1,e:'Brás não vê nada de errado em montar num menino escravizado e chamá-lo de "besta". O narrador não julga; é o leitor quem percebe o horror. Esse é o efeito da ironia machadiana.'}});
@@ -221,7 +221,7 @@ const INTER=[
      fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 12 (domínio público).',
      q:{t:'O que o "espadim" representa nessa passagem?',o:['A coragem do menino diante da guerra.','O interesse pessoal e mesquinho de cada um, que pesa mais para a pessoa do que os grandes acontecimentos do mundo.','Um presente do pai que Brás odiava.','A admiração do menino por Napoleão.'],k:1,e:'Para o menino, o espadim novo é mais importante que a queda de Napoleão. Machado usa a imagem para falar do egoísmo: cada um olha para o próprio "espadim". A frase final vira uma lição irônica sobre a vaidade humana.'}});
    F.espadim=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
- {id:'escola',x:3180,r:130,txt:'AÇÃO · Entrar na sala do mestre',done:()=>F.escola,act:async()=>{
+ {id:'escola',x:3170,r:110,txt:'AÇÃO · Entrar na sala do mestre',done:()=>F.escola,act:async()=>{
    await say([['ludg','Silêncio, sevandijas! Quem pôs outra barata na minha gaveta?'],['quincas','Não fui eu, mestre. Eu estava aqui, olhando o teto, quieto como uma flor.'],['bras','Esse é Quincas Borba. Já naquele tempo, a gente via que ele daria o que falar.']]);
    await leitura({titulo:'Capítulo 13 · Um Salto',cita:'Chamava-se Ludgero o mestre; quero escrever-lhe o nome todo nesta página: Ludgero Barata, &mdash; um nome funesto, que servia aos meninos de eterno mote a chufas. [&hellip;] E fizeste isto durante vinte e três anos, calado, obscuro, pontual, metido numa casinha da rua do Piolho, sem enfadar o mundo com a tua mediocridade, até que um dia deste o grande mergulho nas trevas, e ninguém te chorou, salvo um preto velho, &mdash; ninguém, nem eu, que te devo os rudimentos da escrita.',
      fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 13 (domínio público).',
@@ -288,9 +288,12 @@ function drawBG(){
     ctx.fillStyle='rgba(255,236,190,.9)';ctx.beginPath();ctx.arc(760-camX*.03,120,46,0,7);ctx.fill();
     const hill=(k,c,a,b)=>{ctx.fillStyle=c;ctx.beginPath();ctx.moveTo(0,G);for(let x=0;x<=CW;x+=20){const wx=x+camX*k;ctx.lineTo(x,G-a-Math.sin(wx*.004)*b-Math.sin(wx*.011)*b*.4)}ctx.lineTo(CW,G);ctx.closePath();ctx.fill()};
     hill(.1,'#8b5b45',150,50);hill(.2,'#6a4332',90,38);
-    for(let i=0;i<8;i++){const wx=i*620+80-(camX*.5%4960),x=((wx%4960)+4960)%4960-300;if(x<-260||x>CW+60)continue;
-      ctx.fillStyle='#d9b88a';ctx.fillRect(x,G-190,220,130);ctx.fillStyle='#8f3d27';ctx.beginPath();ctx.moveTo(x-14,G-190);ctx.lineTo(x+110,G-250);ctx.lineTo(x+234,G-190);ctx.closePath();ctx.fill();
-      ctx.fillStyle='#4a2e20';for(let k=0;k<3;k++){ctx.fillRect(x+24+k*68,G-160,32,50)}ctx.fillStyle='rgba(255,225,150,.8)';for(let k=0;k<3;k++)ctx.fillRect(x+30+k*68,G-154,20,20)}
+    const CORES=['#d9b88a','#e7cfa0','#c9a273','#dcc3a0'],TELH=['#8f3d27','#7a3322','#a0472c'];
+    for(let i=0;i<8;i++){const wx=i*620+80-(camX*.5%4960),x=((wx%4960)+4960)%4960-300;if(x<-300||x>CW+60)continue;
+      const w=170+(i*53)%90,h=100+(i*37)%50,jn=2+(i%3);
+      if(i%4===3){ctx.fillStyle='#e9dcc0';ctx.fillRect(x,G-250,90,190);ctx.fillStyle='#8f3d27';ctx.beginPath();ctx.moveTo(x-8,G-250);ctx.lineTo(x+45,G-310);ctx.lineTo(x+98,G-250);ctx.closePath();ctx.fill();ctx.fillStyle='#4a2e20';ctx.fillRect(x+30,G-225,30,50);ctx.fillRect(x+36,G-150,18,90);continue}
+      ctx.fillStyle=CORES[i%4];ctx.fillRect(x,G-60-h,w,h);ctx.fillStyle=TELH[i%3];ctx.beginPath();ctx.moveTo(x-14,G-60-h);ctx.lineTo(x+w/2,G-120-h);ctx.lineTo(x+w+14,G-60-h);ctx.closePath();ctx.fill();
+      ctx.fillStyle='#4a2e20';for(let k=0;k<jn;k++){const wx2=x+18+k*(w-40)/jn;ctx.fillRect(wx2,G-30-h+10,28,44)}ctx.fillStyle='rgba(255,225,150,.8)';for(let k=0;k<jn;k++)ctx.fillRect(x+22+k*(w-40)/jn,G-30-h+16,20,20)}
     for(let i=0;i<6;i++){const wx=i*900+300-(camX*.7%5400),x=((wx%5400)+5400)%5400-200;if(x<-80||x>CW+80)continue;
       ctx.strokeStyle='#3d2a1a';ctx.lineWidth=7;ctx.beginPath();ctx.moveTo(x,G);ctx.quadraticCurveTo(x+14,G-110,x+4,G-190);ctx.stroke();ctx.strokeStyle='#355c34';ctx.lineWidth=5;
       for(let k=0;k<6;k++){const a=-Math.PI/2+(k-2.5)*.55;ctx.beginPath();ctx.moveTo(x+4,G-190);ctx.quadraticCurveTo(x+4+Math.cos(a)*40,G-190+Math.sin(a)*30,x+4+Math.cos(a)*70,G-190+Math.sin(a)*50+24);ctx.stroke()}}
@@ -315,6 +318,7 @@ function drawPlat(){
     ctx.fillStyle='#3b2412';ctx.fillRect(p.x+p.w/2-2,p.y,4,h)}
   ctx.restore();
 }
+function glow(x,y,r){const g=ctx.createRadialGradient(x,y,6,x,y,r);g.addColorStop(0,'rgba(255,238,190,.55)');g.addColorStop(1,'rgba(255,238,190,0)');ctx.fillStyle=g;ctx.fillRect(x-r,y-r,2*r,2*r)}
 function drawFigures(){
   ctx.save();ctx.translate(-camX,0);
   /* tacho de doce de coco */
@@ -327,9 +331,9 @@ function drawFigures(){
   const ex=2700;ctx.fillStyle='#6b3a22';ctx.fillRect(ex-24,G-34,48,34);ctx.fillStyle='#9c2f2f';ctx.fillRect(ex-24,G-38,48,6);
   ctx.save();ctx.translate(ex,G-40);ctx.rotate(-.25);ctx.shadowColor='#ffd98a';ctx.shadowBlur=F.espadim?4:16;ctx.fillStyle='#d9dde2';ctx.fillRect(-2,-62,4,62);ctx.fillStyle='#e3a84a';ctx.fillRect(-14,-2,28,5);ctx.fillRect(-3,2,6,14);ctx.restore();
   /* mestre Ludgero e Quincas na escola */
-  const lx=3180;ctx.fillStyle='#8d5b34';ctx.fillRect(lx-120,G-60,100,60);ctx.fillStyle='#5e3b1d';ctx.fillRect(lx-124,G-66,108,8);
+  const lx=3290;glow(lx+20,G-90,110);ctx.fillStyle='#8d5b34';ctx.fillRect(lx-120,G-60,100,60);ctx.fillStyle='#5e3b1d';ctx.fillRect(lx-124,G-66,108,8);
   ctx.fillStyle='#e9e2d0';ctx.fillRect(lx-100,G-100,56,34);ctx.fillStyle='#2a1c14';for(let i=0;i<4;i++)ctx.fillRect(lx-94,G-94+i*7,44,2);
-  ctx.save();ctx.translate(lx+20,G);const b=Math.sin(T*2)*1.5;
+  ctx.save();ctx.translate(lx+20,G);ctx.scale(1.3,1.3);const b=Math.sin(T*2)*1.5;ctx.strokeStyle='#120a06';ctx.lineWidth=2;ctx.strokeRect(-18,-92+b,36,70);
   ctx.fillStyle='#2e2a30';ctx.fillRect(-18,-92+b,36,70);ctx.fillStyle='#e8c9a4';ctx.beginPath();ctx.arc(0,-104+b,14,0,7);ctx.fill();ctx.fillStyle='#e8c9a4';ctx.fillRect(-14,-110+b,28,6);
   ctx.fillStyle='#d8d4c8';ctx.fillRect(-12,-22,10,22);ctx.fillRect(2,-22,10,22);
   ctx.strokeStyle='#6b4a2a';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(14,-70+b);ctx.lineTo(44,-96+b);ctx.stroke();ctx.fillStyle='#9a6a38';ctx.beginPath();ctx.arc(46,-98+b,8,0,7);ctx.fill();
@@ -343,12 +347,13 @@ function drawFigures(){
 function drawBras(){
   const bob=Math.sin(T*2)*1.5;ctx.save();ctx.translate(-camX,0);
   /* Prudêncio menino, de quatro? sem cena de tortura: de pé, com cordel solto ou preso */
-  const x=1950;let f=F.solto?3:0;
+  const x=2010;let f=F.solto?3:0;
+  glow(x,G-80,95);glow(x+130,G-80,80);
   if(dq&&dq.lines[dq.i-1]&&dq.lines[dq.i-1][0]==='prud'&&typing)f=[0,3][Math.floor(T*4)%2];
   sheet('prud',SH.prud,f,x,G+bob*.4,true);
-  if(!F.solto){ctx.strokeStyle='#8a6a3a';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x-8,G-66);ctx.quadraticCurveTo(x-40,G-50,x-60,G-20);ctx.stroke()}
+  if(!F.solto){ctx.strokeStyle='#8a6a3a';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x-10,G-82);ctx.quadraticCurveTo(x-48,G-62,x-72,G-22);ctx.stroke()}
   /* Brás narrador, ao lado */
-  sheet('bras',SH.bras,(dq&&dq.lines[dq.i-1]&&dq.lines[dq.i-1][0]==='bras'&&typing)?[3,3,4,3,5][Math.floor(T*5)%5]:0,x+90,G+bob,true,.8);
+  sheet('bras',SH.bras,(dq&&dq.lines[dq.i-1]&&dq.lines[dq.i-1][0]==='bras'&&typing)?[3,3,4,3,5][Math.floor(T*5)%5]:0,x+130,G+bob,true,.8);
   ctx.restore();
 }
 function drawHipo(){}
