@@ -425,7 +425,7 @@ function fim(){
   state='end';$('hud').classList.add('hidden');
   const pct=Math.round((Z.leit/Z.tot)*100);
   try{const o=JSON.parse(localStorage.getItem(SAVE)||'{}');o.zonas=o.zonas||{};o.found=o.found||{};o.done=o.done||[];
-    if(!o.zonas[8]||o.zonas[8]<Z.pts)o.zonas[8]=Z.pts;o.found.z8=1;if(o.done.indexOf(1)<0)o.done.push(1);o.score=Object.values(o.zonas).reduce((a,b)=>a+b,0);localStorage.setItem(SAVE,JSON.stringify(o))}catch(e){}
+    if(!o.zonas[10]||o.zonas[10]<Z.pts)o.zonas[10]=Z.pts;o.found.z10=1;if(o.done.indexOf(1)<0)o.done.push(1);o.score=Object.values(o.zonas).reduce((a,b)=>a+b,0);localStorage.setItem(SAVE,JSON.stringify(o))}catch(e){}
   enviar(pct);
   ov('<h2>Fase 1 concluída: Memórias Póstumas</h2><p>Pontos do chefe: <b>'+Z.pts+'</b> · Leituras certas de primeira: <b>'+Z.leit+'/'+Z.tot+'</b></p>'+
    '<p>Você enfrentou a Natureza de Pandora, "mãe e inimiga", e viu o pessimismo de Machado fechar o romance com uma negativa: "não transmiti a nenhuma criatura o legado da nossa miséria".</p>'+

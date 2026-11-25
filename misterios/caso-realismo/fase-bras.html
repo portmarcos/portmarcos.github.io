@@ -93,8 +93,8 @@ const $=id=>document.getElementById(id);
 const SAVE='caso_realismo_v1';
 const SRC={det:'../caso-originais/img/q1/detetive.webp',detF:'../caso-originais/img/q1/detetive-f.webp',bras:'img/q1/bras.webp',hipo:'img/q1/hipopotamo.webp',
  bg:'img/q1/bg-velorio.webp',bgd:'img/q1/bg-delirio.webp',retBras:'img/q1/ret-bras.webp',retDet:'../caso-originais/img/detetive.webp',retDetF:'../caso-originais/img/detetive-f.webp',
- hq2:'img/q1/hq2.webp',hq3:'img/q1/hq3.webp',amigos:'img/q1/amigos.webp',caixao:'img/q1/caixao.webp',padre:'img/q1/padre.webp'};
-const OPCIONAL=['hq2','hq3','amigos','caixao','padre'];
+ hq1:'img/q1/hq1.webp',hq2:'img/q1/hq2.webp',hq3:'img/q1/hq3.webp',amigos:'img/q1/amigos.webp',caixao:'img/q1/caixao.webp',padre:'img/q1/padre.webp'};
+const OPCIONAL=['hq1','hq2','hq3','amigos','caixao','padre'];
 const IMG={};
 const SH={det:{w:269,h:232,s:.47},bras:{w:137,h:340,s:.37},hipo:{w:303,h:230,s:.6}};
 function loadAll(cb){
@@ -428,6 +428,7 @@ function iniciar(){
 function abertura(){
   state='comic';let p=0;const hq2=IMG.hq2,hq3=IMG.hq3;
   const paineis=[
+   ()=>{if(!IMG.hq1){p++;return paineis[p]()}ov('<h2>O narrador</h2><img class="panelImg" src="'+SRC.hq1+'"><button class="btn" id="nx">Continuar</button>');$('nx').onclick=()=>{p++;paineis[p]()}},
    ()=>{ov('<h2>1. A dedicatória</h2><p>O Carimbo passou por cima da primeira página do livro. Raspe o carimbo com o dedo ou o mouse para ler.</p><div style="position:relative"><div class="card"><small>MEMÓRIAS PÓSTUMAS DE BRÁS CUBAS</small>AO VERME<br>QUE PRIMEIRO ROEU<br>AS FRIAS CARNES<br>DO MEU CADÁVER<br>DEDICO COMO SAUDOSA LEMBRANÇA<br>ESTAS MEMÓRIAS PÓSTUMAS</div><canvas id="scr"></canvas></div><div id="sm"></div><button class="btn sec" id="pul">Pular</button>');
      scratch();$('pul').onclick=()=>{p++;paineis[p]()}},
    ()=>{ov('<h2>2. Agosto de 1869</h2>'+(hq2?'<img class="panelImg" src="'+SRC.hq2+'">':'<div class="card" style="font-size:clamp(.85rem,2vw,1.3rem)"><small>CATUMBI, RIO DE JANEIRO</small>Onze homens de casaca, uma chuvinha miúda e um defunto que não parou de falar.</div>')+'<p>Brás Cubas morreu aos 64 anos. Foi ao cemitério acompanhado por onze amigos e escreveu, depois, a própria história.</p><button class="btn" id="nx">Continuar</button>');$('nx').onclick=()=>{p++;paineis[p]()}},
