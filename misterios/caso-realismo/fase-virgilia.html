@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<title>Fase 1 · Zona 6 · Virgília e a águia</title>
+<meta name="description" content="O Caso dos Narradores Trocados — Fase 1, zona 6: Virgília, a águia e o pavão (Memórias Póstumas, Machado de Assis).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:ital,wght@0,400;0,600;1,400&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#14100f;--paper:#efe3cf;--amber:#e3a84a;--amber2:#ffd98a;--rust:#8a2d1c;--ok:#4c8a4a;--bad:#b0301f;--muted:#bba98a;--violet:#6e5aa8}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#07050a;color:var(--paper);font-family:Lora,Georgia,serif;overflow:hidden;touch-action:none;-webkit-user-select:none;user-select:none}
+button{font-family:inherit;cursor:pointer;color:inherit}
+.hidden{display:none!important}
+#wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#game{position:relative;width:min(100vw,calc(100dvh*16/9));aspect-ratio:16/9;background:#000;box-shadow:0 0 60px #000;overflow:hidden}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+#hud{position:absolute;left:0;right:0;top:0;display:flex;align-items:center;gap:8px;padding:8px 10px;pointer-events:none;z-index:5;background:linear-gradient(180deg,rgba(10,6,12,.8),transparent)}
+.hs{font-family:'Special Elite',monospace;font-size:clamp(.7rem,1.4vw,1rem);background:rgba(18,10,20,.72);border:1px solid #5d4a7a;border-radius:8px;padding:3px 9px;white-space:nowrap}
+.hs b{color:var(--amber2)}
+.lamp{display:inline-block;width:.8em;height:1.1em;margin-left:3px;border-radius:50% 50% 45% 45%;background:radial-gradient(circle at 50% 70%,#fff3b0,#f2a83b 60%,#a45a12);box-shadow:0 0 7px rgba(255,180,70,.9);vertical-align:-.15em}
+.lamp.off{background:#2a2230;box-shadow:none}
+#hud .sp{flex:1}
+#hud button{pointer-events:auto;background:rgba(18,10,20,.72);border:1px solid #5d4a7a;border-radius:8px;height:clamp(28px,4vw,38px);min-width:clamp(28px,4vw,38px);font-size:clamp(.8rem,1.4vw,1rem)}
+#toast{position:absolute;left:50%;top:14%;transform:translateX(-50%);z-index:6;font-family:'Special Elite',monospace;font-size:clamp(.8rem,1.6vw,1.1rem);background:rgba(18,10,24,.88);border:1px solid #8b73bd;border-radius:10px;padding:8px 14px;max-width:80%;text-align:center;opacity:0;transition:opacity .3s;pointer-events:none}
+#toast.on{opacity:1}
+#prompt{position:absolute;left:50%;bottom:22%;transform:translateX(-50%);z-index:5;font-family:'Special Elite',monospace;background:rgba(18,10,24,.85);border:1px solid var(--amber);color:var(--amber2);border-radius:20px;padding:5px 14px;font-size:clamp(.75rem,1.5vw,1rem);pointer-events:none}
+#dlg{position:absolute;left:3%;right:3%;bottom:3%;z-index:7;display:flex;gap:12px;align-items:stretch;background:rgba(14,8,18,.94);border:2px solid #8b73bd;border-radius:14px;padding:10px 14px;min-height:20%}
+#dlg img{height:clamp(70px,16vw,150px);width:auto;border-radius:8px;border:1px solid #5d4a7a;object-fit:cover;aspect-ratio:3/4;background:#201428}
+#dlg .t{flex:1;display:flex;flex-direction:column;justify-content:center}
+#dlg .n{font-family:'Special Elite',monospace;color:var(--amber2);font-size:clamp(.8rem,1.5vw,1.05rem);margin-bottom:4px}
+#dlg .x{font-size:clamp(.85rem,1.8vw,1.2rem);line-height:1.45}
+#dlg .k{align-self:flex-end;font-size:.75rem;color:var(--muted);animation:bl 1s infinite}
+@keyframes bl{50%{opacity:.3}}
+.ov{position:absolute;inset:0;z-index:20;background:rgba(7,4,10,.93);display:flex;align-items:center;justify-content:center;padding:3%;overflow:auto}
+.panel{background:linear-gradient(180deg,#201630,#150e20);border:2px solid #8b73bd;border-radius:16px;padding:clamp(12px,2.4vw,26px);max-width:min(860px,100%);width:100%;box-shadow:0 12px 50px #000}
+.panel h2{font-family:'Playfair Display',serif;color:var(--amber2);font-size:clamp(1.1rem,2.8vw,1.8rem);margin-bottom:8px}
+.panel p{line-height:1.5;margin:6px 0;font-size:clamp(.85rem,1.7vw,1.1rem)}
+.cita{border-left:3px solid var(--amber);padding:8px 12px;margin:10px 0;font-style:italic;background:rgba(255,255,255,.04);font-size:clamp(.85rem,1.7vw,1.1rem);line-height:1.55}
+.src{font-size:.78rem;color:var(--muted);margin-top:-4px}
+.btn{background:linear-gradient(180deg,#e3a84a,#b0701f);color:#1a0f08;font-weight:700;border:none;border-radius:10px;padding:9px 18px;margin:6px 6px 0 0;font-size:clamp(.85rem,1.6vw,1.05rem)}
+.btn.sec{background:#2b1f3d;color:var(--paper);border:1px solid #6b55a0}
+.btn:disabled{opacity:.4;cursor:default}
+.opt{display:block;width:100%;text-align:left;background:#2b1f3d;border:1px solid #6b55a0;border-radius:10px;padding:9px 12px;margin:7px 0;font-size:clamp(.82rem,1.6vw,1.05rem);line-height:1.4}
+.opt:hover:not(:disabled){background:#3a2b52}
+.opt.ok{background:#1f4a28;border-color:#5fb36a}
+.opt.bad{background:#552018;border-color:#c0523a}
+.bar{height:6px;background:#2b1f3d;border-radius:4px;overflow:hidden;margin:8px 0}
+.bar i{display:block;height:100%;background:var(--amber);width:0}
+input[type=text]{width:100%;padding:9px 12px;border-radius:8px;border:1px solid #6b55a0;background:#120b1c;color:var(--paper);font:inherit;margin:4px 0 8px;-webkit-user-select:text;user-select:text}
+.gpick{display:flex;gap:8px;margin:6px 0 10px}
+.gpick button{flex:1;background:#2b1f3d;border:2px solid #6b55a0;border-radius:10px;padding:8px}
+.gpick button.on{border-color:var(--amber);background:#3d2b57}
+/* abertura */
+.card{position:relative;background:#e9dcc0;color:#2a1a10;border-radius:6px;padding:clamp(18px,4vw,48px);text-align:center;font-family:'Playfair Display',serif;font-weight:700;letter-spacing:.04em;line-height:1.7;box-shadow:inset 0 0 40px rgba(90,50,10,.35);font-size:clamp(.95rem,2.6vw,1.7rem)}
+.card small{display:block;font-family:'Special Elite',monospace;font-size:.5em;letter-spacing:.1em;margin-bottom:10px;opacity:.7}
+#scr{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair}
+.panelImg{width:100%;border-radius:8px;border:1px solid #5d4a7a}
+/* touch */
+#touch{position:absolute;inset:0;z-index:4;pointer-events:none}
+#touch button{pointer-events:auto;position:absolute;border-radius:50%;border:2px solid rgba(255,255,255,.35);background:rgba(20,12,30,.55);color:#fff;font-size:1.3rem;width:clamp(48px,11vw,72px);height:clamp(48px,11vw,72px);touch-action:none}
+#tL{left:2%;bottom:6%}#tR{left:calc(2% + clamp(56px,13vw,84px));bottom:6%}
+#tJ{right:2%;bottom:6%}#tA{right:calc(2% + clamp(56px,13vw,84px));bottom:6%;font-size:.8rem}#tC{right:calc(2% + clamp(28px,6.5vw,42px));bottom:calc(6% + clamp(56px,13vw,84px))}
+body:not(.touch) #touch{display:none}
+#rot{position:fixed;inset:0;z-index:99;background:#07050a;display:none;align-items:center;justify-content:center;text-align:center;padding:20px;font-size:1.2rem}
+@media (orientation:portrait) and (pointer:coarse){#rot{display:flex}}
+</style>
+</head>
+<body>
+<div id="rot">Gire o celular para jogar na horizontal.</div>
+<div id="wrap"><div id="game">
+<canvas id="cv"></canvas>
+<div id="hud" class="hidden">
+  <span class="hs" id="hLamp"></span><span class="hs">Bilhetes <b id="hPag">0/11</b></span><span class="hs">Pontos <b id="hPts">0</b></span>
+  <span class="hs" id="hTask"></span><span class="sp"></span>
+  <button id="bMute" title="Som (M)">♪</button><button id="bPause" title="Pausa (Esc)">II</button>
+</div>
+<div id="toast"></div><div id="prompt" class="hidden"></div>
+<div id="dlg" class="hidden"><img id="dImg" alt=""><div class="t"><div class="n" id="dNome"></div><div class="x" id="dTxt"></div></div><div class="k">Espaço ▶</div></div>
+<div id="touch"><button id="tL">◀</button><button id="tR">▶</button><button id="tJ">PULO</button><button id="tA">AÇÃO</button><button id="tC">✦</button></div>
+<div id="ov" class="ov"></div>
+</div></div>
+<script src="/assets/js/config-sheets.js"></script>
+<script>
+"use strict";
+/* ============ Constantes ============ */
+const CW=960,CH=540,G=480,WW=3700;
+const DPR=Math.min(window.devicePixelRatio||1,1.5);
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');cv.width=CW*DPR;cv.height=CH*DPR;
+const $=id=>document.getElementById(id);
+const SAVE='caso_realismo_v1';
+const SRC={det:'../caso-originais/img/q1/detetive.webp',detF:'../caso-originais/img/q1/detetive-f.webp',bras:'img/q1/bras.webp',hipo:'img/q1/hipopotamo.webp',
+ bg:'img/q1/bg-velorio.webp',bgd:'img/q1/bg-delirio.webp',retBras:'img/q1/ret-bras.webp',retDet:'../caso-originais/img/detetive.webp',retDetF:'../caso-originais/img/detetive-f.webp',
+ bgi:'img/q1/bg-infancia.webp',vir:'img/q1/virgilia.webp',retVir:'img/q1/ret-virgilia.webp',lobo:'img/q1/lobo.webp',retLobo:'img/q1/ret-lobo.webp'};
+const OPCIONAL=['hq2','hq3','amigos','caixao','padre'];
+const IMG={};
+const SH={det:{w:269,h:232,s:.47},bras:{w:137,h:340,s:.37},hipo:{w:303,h:230,s:.6},vir:{w:196,h:340,s:.37},lobo:{w:186,h:340,s:.37}};
+function loadAll(cb){
+  const keys=Object.keys(SRC);let n=0;
+  keys.forEach(k=>{const im=new Image();im.onload=()=>{IMG[k]=im;if(++n===keys.length)cb()};im.onerror=()=>{if(++n===keys.length)cb()};im.src=SRC[k]});
+}
+function sheet(k,sh,f,x,y,flip,alpha,sc){
+  const im=IMG[k];if(!im)return;const s=sh.s*(sc||1),w=sh.w*s,h=sh.h*s;
+  ctx.save();ctx.globalAlpha=alpha==null?1:alpha;ctx.translate(x,y+3);if(flip)ctx.scale(-1,1);
+  ctx.drawImage(im,f*sh.w,0,sh.w,sh.h,-w/2,-h,w,h);ctx.restore();
+}
+/* ============ Estado ============ */
+let state='start',T=0,camX=0,shake=0,flash=0;
+const S={nome:'',turma:'',gen:'m'};
+const Z={pts:0,pages:0,lamps:3,leit:0,tot:5,enviou:false};
+const F={ped:false,retrato:false,aguia:false,nariz:false,pontos:false,porta:false};
+const LOBO={x:2450,dir:1,pause:0,on:true,seen:0};const BUSH=[{x:2480},{x:2800},{x:3080}];let hidden=false;
+const K={left:0,right:0,jump:0,lamp:0,act:0};
+const P={x:110,y:G,vx:0,vy:0,face:1,ground:true,jumps:2,inv:0,an:0,land:0,hurt:0};
+let cpX=110,lastStep=0;
+const PITS=[{x:700,w:110},{x:1250,w:130},{x:2300,w:140},{x:2900,w:120}];
+const PLAT=[{x:420,y:G-60,w:70},{x:560,y:G-110,w:70},{x:850,y:G-70,w:64},{x:1180,y:G-80,w:70},{x:1300,y:G-130,w:70},{x:1500,y:G-70,w:64},{x:1700,y:G-110,w:70},
+ {x:2140,y:G-70,w:64},{x:2260,y:G-125,w:70},{x:2420,y:G-70,w:64},{x:2760,y:G-80,w:64},{x:2880,y:G-130,w:70},{x:3040,y:G-70,w:64},{x:3380,y:G-70,w:64}];
+const PAGES=[[455,G-125,'o'],[595,G-175,'o'],[885,G-135,'c'],[1335,G-195,'c'],[1730,G-175,'o'],[2295,G-190,'c'],[2915,G-195,'o'],[3415,G-135,'o'],[250,G-40,'c'],[1600,G-40,'c'],[2650,G-40,'o']].map(a=>({x:a[0],y:a[1],k:a[2],got:false}));
+let stamps=[],stampT=3,rain=[],bolt=0,boltT=8,hint=0,hipo={on:false,x:0,y:0,t:0},cine=null,paused=false,floaters=[],marks=[];
+for(let i=0;i<240;i++)rain.push({x:Math.random()*CW*1.3,y:Math.random()*CH,v:520+Math.random()*320,l:10+Math.random()*14});
+/* ============ Áudio ============ */
+let AC=null,rainG=null,muted=false;
+function audio(){
+  if(AC)return;try{AC=new (window.AudioContext||window.webkitAudioContext)();}catch(e){return}
+  const n=AC.sampleRate*2,b=AC.createBuffer(1,n,AC.sampleRate),d=b.getChannelData(0);for(let i=0;i<n;i++)d[i]=Math.random()*2-1;
+  const s=AC.createBufferSource();s.buffer=b;s.loop=true;const f=AC.createBiquadFilter();f.type='bandpass';f.frequency.value=2600;f.Q.value=.5;
+  rainG=AC.createGain();rainG.gain.value=muted?0:.012;s.connect(f).connect(rainG).connect(AC.destination);s.start();
+}
+function noiseBurst(dur,freq,vol){if(!AC||muted)return;const n=AC.sampleRate*dur,b=AC.createBuffer(1,n,AC.sampleRate),d=b.getChannelData(0);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,2);
+  const s=AC.createBufferSource();s.buffer=b;const f=AC.createBiquadFilter();f.type='lowpass';f.frequency.value=freq;const g=AC.createGain();g.gain.value=vol;s.connect(f).connect(g).connect(AC.destination);s.start()}
+function tone(fr,dur,vol,type){if(!AC||muted)return;const o=AC.createOscillator(),g=AC.createGain();o.type=type||'square';o.frequency.value=fr;g.gain.value=vol||.04;g.gain.exponentialRampToValueAtTime(.0001,AC.currentTime+dur);o.connect(g).connect(AC.destination);o.start();o.stop(AC.currentTime+dur)}
+const thunder=()=>noiseBurst(1.8,320,.5),thud=()=>noiseBurst(.4,200,.7),blip=v=>tone(180+v*40,.05,.025,'triangle');
+function setMute(m){muted=m;if(rainG)rainG.gain.value=m?0:.012;$('bMute').textContent=m?'×':'♪'}
+/* ============ Utilidades de UI ============ */
+let toastT=0;
+function toast(t,ms){const e=$('toast');e.textContent=t;e.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove('on'),ms||3200)}
+const NARR={queda:['Até a rua da Gamboa tem as suas covas, leitor.','Caí. O pavão que me perdoe.','Uma sarjeta é só um capítulo mais fundo.'],
+ carimbo:['O Carimbo carimbou o pavão. A águia está salva.','O Carimbo carimbou o leitor. Que falta de educação com quem lê.','Corrigido! Foi o que ele pensou. O Carimbo é pior que um marido ciumento.'],
+ pag:['Um bilhete dobrado. O adultério precisa de papel e de tinta.','Bilhete guardado. O vizinho não viu, leitor.']};
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+function addPts(n,x,y){Z.pts+=n;floaters.push({x,y,t:0,s:'+'+n});hud()}
+const NP=5;
+function hud(){
+  let l='';for(let i=0;i<3;i++)l+='<span class="lamp'+(i<Z.lamps?'':' off')+'"></span>';$('hLamp').innerHTML='Lamparinas '+l;
+  $('hPag').textContent=Z.pages+'/11';$('hPts').textContent=Z.pts;
+  $('hTask').innerHTML='Provas <b>'+provas()+'/'+NP+'</b>';
+}
+/* ============ Diálogo ============ */
+let dq=null,dI=0,typing=null,dFull='';
+function say(lines){return new Promise(res=>{
+  const prev=state;state='dialog';dq={lines,i:0,res,prev};$('dlg').classList.remove('hidden');$('prompt').classList.add('hidden');next();});}
+const WHO={vir:['Virgília','retVir'],lobo:['Lobo Neves','retLobo'],bras:['Brás Cubas','retBras'],det:['Detetive',null],narr:['Narrador (o defunto)','retBras'],prud:['Prudêncio (menino)','retPrud'],quincas:['Quincas Borba','retQuincas'],ludg:['Mestre Ludgero',null]};
+function next(){
+  if(typing&&dI<dFull.length){dI=dFull.length;$('dTxt').textContent=dFull;clearInterval(typing);typing=null;return}
+  if(dq.i>=dq.lines.length){$('dlg').classList.add('hidden');state=dq.prev==='dialog'?'play':dq.prev;const r=dq.res;dq=null;r();return}
+  const [w,t]=dq.lines[dq.i++];const info=WHO[w];$('dNome').textContent=w==='det'?(S.nome||'Detetive'):info[0];
+  const ik=w==='det'?(S.gen==='f'?'retDetF':'retDet'):info[1];if(ik){$('dImg').src=SRC[ik];$('dImg').style.display=''}else $('dImg').style.display='none';
+  dFull=t;dI=0;$('dTxt').textContent='';clearInterval(typing);
+  typing=setInterval(()=>{dI++;$('dTxt').textContent=dFull.slice(0,dI);if(dI%2===0)blip(w==='det'?1:3);if(dI>=dFull.length){clearInterval(typing);typing=null}},24);
+}
+/* ============ Modais ============ */
+function ov(html){const o=$('ov');o.innerHTML='<div class="panel">'+html+'</div>';o.classList.remove('hidden')}
+function ovClose(){$('ov').classList.add('hidden');$('ov').innerHTML=''}
+function leitura(cfg){
+  return new Promise(res=>{
+    const prev=state;state='modal';const words=cfg.cita.split(/\s+/).length,secs=Math.max(8,Math.ceil(words/5));
+    ov('<h2>'+cfg.titulo+'</h2><p>Leia com calma. A pergunta aparece quando o tempo acabar.</p><div class="cita">'+cfg.cita+'</div><div class="src">'+cfg.fonte+'</div><div class="bar"><i id="lb"></i></div><div id="lq"></div>');
+    const b=$('lb');let t0=performance.now();const iv=setInterval(()=>{const p=Math.min(1,(performance.now()-t0)/(secs*1000));b.style.width=(p*100)+'%';if(p>=1){clearInterval(iv);perg()}},100);
+    function perg(){
+      const q=cfg.q;let h='<p><b>'+q.t+'</b></p>';q.o.forEach((o,i)=>h+='<button class="opt" data-i="'+i+'">'+o+'</button>');$('lq').innerHTML=h;
+      let tries=0;$('lq').querySelectorAll('.opt').forEach(bt=>bt.onclick=()=>{
+        const i=+bt.dataset.i;if(i===q.k){bt.classList.add('ok');$('lq').querySelectorAll('.opt').forEach(x=>x.disabled=true);
+          $('lq').insertAdjacentHTML('beforeend','<p>'+q.e+'</p><button class="btn" id="lok">Continuar</button>');
+          const first=tries===0;if(first){Z.leit++;addPts(100,P.x-camX,P.y-120)}else addPts(40,P.x-camX,P.y-120);
+          $('lok').onclick=()=>{ovClose();state=prev;res(first)}}
+        else{tries++;bt.classList.add('bad');bt.disabled=true;blip(-3);toast('Releia o trecho e tente de novo.',1800)}});
+    }
+  });
+}
+function restaurarFrase(){
+  return new Promise(res=>{
+    const prev=state;state='modal';
+    const frag=['Virgília comparou a águia e o pavão,','e elegeu a águia,','deixando o pavão com o seu espanto.'];
+    let ordem=frag.map((t,i)=>({t,i})).sort(()=>Math.random()-.5),prox=0,erros=0;
+    ov('<h2>A página do capítulo 43</h2><p>O Carimbo rasgou a frase em que Virgília decide, em três pedaços. Toque nos pedaços na ordem certa.</p><div class="card" id="dd" style="min-height:5em"><small>CAPÍTULO XLIII</small><span id="ddt"></span></div><div id="fr"></div>');
+    const draw=()=>{$('ddt').innerHTML=frag.slice(0,prox).join(' ');
+      $('fr').innerHTML=ordem.filter(o=>o.i>=prox).map(o=>'<button class="opt" data-i="'+o.i+'" style="display:inline-block;width:auto;margin:5px">'+o.t+'</button>').join('');
+      $('fr').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(+b.dataset.i===prox){prox++;tone(520+prox*60,.12,.05,'triangle');draw()}else{erros++;b.classList.add('bad');tone(110,.2,.05);setTimeout(()=>b.classList.remove('bad'),500)}});
+      if(prox>=frag.length){$('fr').innerHTML='<p>Restaurada: Virgília troca Brás (o "pavão") por Lobo Neves (a "águia"), porque ele promete ser marquês. A comparação com aves faz da escolha amorosa uma escolha de status.</p><button class="btn" id="dok">Guardar a página</button>';
+        $('dok').onclick=()=>{ovClose();state=prev;addPts(erros===0?200:120,CW/2,200);res()}}};
+    draw();
+  });
+}
+/* ============ Interações ============ */
+const FONTE='Machado de Assis, Memórias Póstumas de Brás Cubas, cap. ';
+const INTER=[
+ {id:'ped',x:1050,r:90,need:'lamp',txt:'AÇÃO · Pegar a página rasgada',done:()=>F.ped,act:async()=>{
+   await say([['det','Outra página rasgada. Fala de uma águia e de um pavão.']]);await restaurarFrase();F.ped=true;hud();
+   toast('Capítulo 43 restaurado. Provas '+provas()+'/'+NP,3500)}},
+ {id:'retrato',x:900,r:140,txt:'AÇÃO · Conhecer Virgília',done:()=>F.retrato,act:async()=>{
+   await say([['bras','Virgília. A mesma senhora que, em 1869, devia assistir aos meus últimos dias. Mas então ela tinha uns quinze ou dezesseis anos.'],['vir','Pois não, doutor. Meu pai disse que o senhor viria jantar.']]);
+   await leitura({titulo:'Capítulo 27 · Virgília?',cita:'Não digo que já lhe coubesse a primazia da beleza, entre as mocinhas do tempo, porque isto não é romance, em que o autor sobredoura a realidade e fecha os olhos às sardas e espinhas; mas também não digo que lhe maculasse o rosto nenhuma sarda ou espinha, não. Era bonita, fresca, saída das mãos da natureza.',
+     fonte:FONTE+'27 (domínio público).',
+     q:{t:'O que significa dizer que "isto não é romance, em que o autor sobredoura a realidade e fecha os olhos às sardas e espinhas"?',o:['Que o narrador pretende escrever um romance romântico, idealizando as personagens.','Que o narrador se distancia do romance idealizador: ele diz que não vai "sobredourar" a realidade, característica do Realismo.','Que Virgília tinha muitas sardas e espinhas.','Que o livro é um tratado científico sobre a pele.'],k:1,e:'Machado faz uma declaração de método: o romance romântico idealiza e "sobredoura" a realidade, mas as Memórias Póstumas pretendem mostrar a vida com as suas "sardas e espinhas". É o Realismo falando de si mesmo, com humor.'}});
+   F.retrato=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
+ {id:'aguia',x:1750,r:140,txt:'AÇÃO · Lobo Neves aparece',done:()=>F.aguia,act:async()=>{
+   await say([['bras','E então apareceu Lobo Neves, um homem que não era mais esbelto que eu, nem mais elegante, nem mais lido. Mas me arrebatou Virgília e a candidatura.'],['vir','Promete que algum dia me fará baronesa?'],['lobo','Marquesa, porque eu serei marquês.']]);
+   await leitura({titulo:'Capítulo 43 · Marquesa, Porque Eu Serei Marquês',cita:'Virgília perguntou ao Lobo Neves, a sorrir, quando seria ele ministro. &mdash; Pela minha vontade, já; pela dos outros, daqui a um ano. Virgília replicou: &mdash; Promete que algum dia me fará baronesa? &mdash; Marquesa, porque eu serei marquês. Desde então fiquei perdido. Virgília comparou a águia e o pavão, e elegeu a águia, deixando o pavão com o seu espanto.',
+     fonte:FONTE+'43 (domínio público).',
+     q:{t:'O que a escolha de Virgília entre a "águia" e o "pavão" revela?',o:['Que ela decidiu pelo amor sincero.','Que a escolha amorosa foi uma escolha de ambição social: ela prefere quem promete ser marquês, o que reforça o interesse como motor das relações.','Que Brás era mais rico que Lobo Neves.','Que Virgília não sabia diferenciar aves.'],k:1,e:'As aves são comparação irônica: a águia (poderosa, ascendente) vence o pavão (vaidoso). A pergunta sobre o título nobre mostra que o casamento é negócio de poder. É o Realismo desmontando o romance idealizado.'}});
+   F.aguia=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
+ {id:'nariz',x:2600,r:140,txt:'AÇÃO · A ponta do nariz',done:()=>F.nariz,act:async()=>{
+   await say([['bras','Preste atenção, leitor: este capítulo trata de narizes, e de uma filosofia que me valeu muito na vida.']]);
+   await leitura({titulo:'Capítulo 49 · A Ponta do Nariz',cita:'Bastou-me atentar no costume do faquir. Sabe o leitor que o faquir gasta longas horas a olhar para a ponta do nariz, com o fim único de ver a luz celeste. [&hellip;] Cada homem tem necessidade e poder de contemplar o seu próprio nariz, para o fim de ver a luz celeste, e tal contemplação, cujo efeito é a subordinação do universo a um nariz somente, constitui o equilíbrio das sociedades.',
+     fonte:FONTE+'49 (domínio público).',
+     q:{t:'O que Machado ironiza com a "contemplação do próprio nariz"?',o:['A busca espiritual dos faquires, que ele elogia.','O egocentrismo: cada pessoa vê o mundo a partir de si mesma, e o narrador transforma isso em lei universal, com humor.','A anatomia humana.','A ciência europeia.'],k:1,e:'"Subordinação do universo a um nariz somente" é a síntese do egoísmo. O narrador faz do egocentrismo uma filosofia que "equilibra as sociedades". É a ironia machadiana que expõe, em tom sério, uma verdade incômoda.'}});
+   F.nariz=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
+ {id:'pontos',x:3200,r:140,txt:'AÇÃO · O beijo e os pontinhos',done:()=>F.pontos,act:async()=>{
+   await say([['bras','Foi ao portão da chácara, à vista das estrelas. O primeiro beijo de Virgília, trêmula de medo.'],['vir','Shh. Lobo Neves pode estar na janela.']]);
+   await leitura({titulo:'Capítulo 53',cita:'Em certa noite, abotoou-se a flor, ou o beijo, se assim lhe quiserem chamar, um beijo que ela me deu, trêmula, &mdash; coitadinha, &mdash; trêmula de medo, porque era ao portão da chácara, à vista das estrelas [&hellip;] &mdash; uma hipocrisia paciente e sistemática, único freio de uma paixão sem freio.',
+     fonte:FONTE+'53 (domínio público).',
+     q:{t:'O que significa "uma hipocrisia paciente e sistemática, único freio de uma paixão sem freio"?',o:['Que os amantes agem com cuidado para não serem descobertos: a única regra é fingir.','Que o amor deles era moderado e discreto.','Que Virgília não sentia nada por Brás.','Que a paixão era controlada pela religião.'],k:0,e:'Os amantes só se contêm pelo fingimento: a hipocrisia "sistemática" é o que mantém o adultério escondido, e a paixão corre sem outro freio. O narrador descreve a relação sem moralizar: o julgamento fica por conta do leitor.'}});
+   await say([['bras','E há o capítulo 55, "O Velho Diálogo de Adão e Eva". Quando o amor chega ao ponto máximo, a linguagem emudece.']]);
+   await leitura({titulo:'Capítulo 55 · O Velho Diálogo de Adão e Eva',cita:'Brás Cubas<br>.......?<br>Virgília<br>.......<br>Brás Cubas<br>....................<br>..........<br>Virgília<br>..................!<br>Brás Cubas<br>...............',
+     fonte:FONTE+'55 (domínio público). O capítulo é feito só de pontinhos, falas sem palavras.',
+     q:{t:'Por que Machado substitui as falas dos amantes por pontinhos?',o:['Por um erro de impressão.','Porque o diálogo entre os amantes, que repete o de Adão e Eva, dispensa palavras: o leitor completa, e o narrador evita descrever o que a sociedade considerava indecoroso.','Porque o capítulo ficou inacabado.','Porque Brás e Virgília estavam em silêncio por brigarem.'],k:1,e:'O capítulo é um recurso metalinguístico e irônico: a ausência de texto é o texto. Machado joga com o leitor, deixando a imaginação preencher o que o decoro não permitia dizer. O "velho diálogo de Adão e Eva" mostra que o amor é sempre o mesmo, em qualquer época.'}});
+   F.pontos=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
+ {id:'porta',x:3500,r:140,txt:'AÇÃO · Voltar para casa de madrugada',cond:()=>provas()===NP,act:async()=>{
+   await say([['bras','Saí dali a saborear o beijo. Não pude dormir. Ouvi as horas todas da noite.']]);startCine()}}
+];
+const provas=()=>[F.ped,F.retrato,F.aguia,F.nariz,F.pontos].filter(Boolean).length;
+function nearInter(){
+  let best=null,bd=1e9;
+  for(const it of INTER){
+    if(it.done&&it.done())continue;if(it.cond&&!it.cond())continue;if(it.need==='lamp'&&!K.lamp)continue;
+    const d=Math.abs(P.x-it.x);if(d<it.r&&d<bd){best=it;bd=d}}
+  return best;
+}
+/* ============ Movimento ============ */
+function onGround(x){for(const p of PITS)if(x>p.x+10&&x<p.x+p.w-10)return false;return true}
+function updatePlayer(dt){
+  const ax=K.right-K.left,sp=210;
+  P.vx+=((ax*sp)-P.vx)*Math.min(1,dt*10);if(ax)P.face=ax;
+  const py=P.y;P.x+=P.vx*dt;P.x=Math.max(30,Math.min(WW-30,P.x));
+  P.vy+=1750*dt;P.y+=P.vy*dt;
+  let land=null;
+  if(P.vy>=0){
+    if(onGround(P.x)&&py<=G+1&&P.y>=G)land=G;
+    for(const p of PLAT){if(P.x>p.x-10&&P.x<p.x+p.w+10&&py<=p.y+1&&P.y>=p.y){if(land==null||p.y<land)land=p.y}}
+  }
+  if(land!=null){if(!P.ground&&P.vy>300){P.land=.12;thud2()}P.y=land;P.vy=0;P.ground=true;P.jumps=2}else P.ground=false;
+  if(K.jump&&!P._j){P._j=1;if(P.ground||P.jumps>0){P.vy=-640;if(!P.ground)P.jumps=Math.max(0,P.jumps-1);else P.jumps=1;P.ground=false;tone(300,.08,.03,'triangle')}}
+  if(!K.jump)P._j=0;
+  P.an+=Math.abs(P.vx)*dt/38;P.inv=Math.max(0,P.inv-dt);P.land=Math.max(0,P.land-dt);
+  if(P.y>G+170)fall();
+  for(const c of [1300,2250])if(P.x>c&&cpX<c)cpX=c;
+}
+function thud2(){if(AC)tone(90,.07,.05,'sine')}
+function fall(){
+  toast(pick(NARR.queda),3200);Z.lamps--;shake=.4;
+  if(Z.lamps<=0){Z.lamps=3;Z.pts=Math.max(0,Z.pts-50);toast('Sem lamparinas. O narrador recomeça o capítulo.',3200)}
+  P.x=cpX;P.y=G-200;P.vy=0;P.inv=1.6;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));hud();
+}
+function hit(){
+  if(P.inv>0)return;Z.lamps--;P.inv=1.8;shake=.5;P.hurt=.4;thud();toast(pick(NARR.carimbo),3000);
+  if(Z.lamps<=0){Z.lamps=3;Z.pts=Math.max(0,Z.pts-50);P.x=cpX;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));toast('Sem lamparinas. O narrador recomeça o capítulo.',3200)}hud();
+}
+/* ============ Mundo ============ */
+function updateWorld(dt){
+  stampT-=dt;
+  hidden=false;for(const bh of BUSH){if(Math.abs(P.x-bh.x)<42&&P.ground&&Math.abs(P.vx)<25)hidden=true}
+  if(LOBO.on&&state==='play'){
+    if(LOBO.pause>0){LOBO.pause-=dt}else{LOBO.x+=LOBO.dir*70*dt;if(LOBO.x>3450){LOBO.x=3450;LOBO.dir=-1;LOBO.pause=2.2}if(LOBO.x<2350){LOBO.x=2350;LOBO.dir=1;LOBO.pause=2.2}}
+    const reading=LOBO.pause>0;const dx=P.x-LOBO.x;
+    if(!reading&&!hidden&&dx*LOBO.dir>0&&Math.abs(dx)<300&&Math.abs(P.y-G)<120&&P.inv<=0){LOBO.seen=1.2;hit();toast('Lobo Neves viu você! Esconda-se quieto atrás de uma moita.',3000);P.x=Math.min(P.x,cpX>2300?cpX:2250);P.x=Math.max(P.x,30);LOBO.dir=1;LOBO.x=2400}}
+  LOBO.seen=Math.max(0,LOBO.seen-dt);
+  if(stampT<=0&&P.x>650&&P.x<3350){stamps.push({x:P.x+P.vx*.55+(Math.random()-.5)*60,t:0});stampT=6+Math.random()*2.5}
+  for(const s of stamps){s.t+=dt;if(s.t>.9&&s.t<1.12&&!s.d){s.d=1;shake=.35;thud();marks.push({x:s.x,t:5});if(Math.abs(P.x-s.x)<52&&!(P.y<G-210))hit()}}
+  stamps=stamps.filter(s=>s.t<1.9);marks=marks.filter(m=>(m.t-=dt)>0);
+  for(const g of PAGES){if(!g.got&&Math.abs(P.x-g.x)<34&&Math.abs((P.y-46)-g.y)<52){g.got=true;Z.pages++;addPts(g.k==='o'?40:15,g.x-camX,g.y);tone(880,.06,.05,'square');tone(1320,.12,.04,'square');if(Z.pages===1)toast(pick(NARR.pag),3000);if(Z.pages===11)toast('Onze bilhetes. Virgília guarda todos num lenço.',3500);hud()}}
+  if(provas()===NP&&!F.porta){F.porta=true;toast('A madrugada chegou. Hora de voltar para casa.',4000)}
+  floaters.forEach(f=>f.t+=dt);floaters=floaters.filter(f=>f.t<1.2);
+  shake=Math.max(0,shake-dt);
+}
+/* ============ Desenho ============ */
+function drawBG(){
+  const sg=ctx.createLinearGradient(0,0,0,G);sg.addColorStop(0,'#1a1738');sg.addColorStop(.6,'#3d2a58');sg.addColorStop(1,'#7a4a60');ctx.fillStyle=sg;ctx.fillRect(0,0,CW,CH);
+  for(let i=0;i<70;i++){ctx.fillStyle='rgba(255,240,210,'+(.3+.3*Math.sin(T*2+i))+')';ctx.fillRect((i*173)%CW,(i*79)%250,2,2)}
+  ctx.fillStyle='rgba(255,245,215,.92)';ctx.beginPath();ctx.arc(200-camX*.02,120,36,0,7);ctx.fill();
+  for(let i=0;i<10;i++){const wx=i*430+50-(camX*.45%4300),x=((wx%4300)+4300)%4300-300;if(x<-260||x>CW+60)continue;
+    ctx.fillStyle='#3a2a48';ctx.fillRect(x,G-210,220,150);ctx.fillStyle='#241830';ctx.beginPath();ctx.moveTo(x-14,G-210);ctx.lineTo(x+110,G-262);ctx.lineTo(x+234,G-210);ctx.closePath();ctx.fill();
+    for(let k=0;k<3;k++){ctx.fillStyle='rgba(255,205,120,'+(.55+.25*Math.sin(T*2+i+k))+')';ctx.fillRect(x+22+k*68,G-180,32,46);ctx.fillStyle='#1c1228';ctx.fillRect(x+16+k*68,G-132,44,8)}}
+  /* lampiões */
+  for(let i=0;i<8;i++){const wx=i*560+260-(camX*.7%4480),x=((wx%4480)+4480)%4480-300;if(x<-40||x>CW+40)continue;
+    ctx.fillStyle='#1a1018';ctx.fillRect(x-3,G-150,6,150);ctx.save();ctx.globalCompositeOperation='lighter';const g=ctx.createRadialGradient(x,G-156,4,x,G-156,100);g.addColorStop(0,'rgba(255,200,110,.55)');g.addColorStop(1,'rgba(255,160,60,0)');ctx.fillStyle=g;ctx.fillRect(x-100,G-256,200,200);ctx.restore();ctx.fillStyle='#ffd88a';ctx.fillRect(x-8,G-168,16,22)}
+  ctx.save();ctx.translate(-camX,0);
+  const gg=ctx.createLinearGradient(0,G,0,CH);gg.addColorStop(0,'#4a3a48');gg.addColorStop(.25,'#2e2234');gg.addColorStop(1,'#140e18');
+  ctx.fillStyle=gg;let x0=Math.max(0,camX-20),x1=Math.min(WW,camX+CW+20);
+  let cur=x0;const pits=PITS.slice().sort((a,b)=>a.x-b.x);
+  for(const p of pits){if(p.x>cur){ctx.fillRect(cur,G,Math.min(p.x,x1)-cur,CH-G+20)}cur=Math.max(cur,p.x+p.w)}if(cur<x1)ctx.fillRect(cur,G,x1-cur,CH-G+20);
+  ctx.fillStyle='#6a5a6a';for(let x=Math.floor(x0/36)*36;x<x1;x+=36){if(!onGround(x))continue;ctx.fillRect(x,G-3,26,4)}
+  for(const p of PITS){ctx.fillStyle='#08040c';ctx.fillRect(p.x,G,p.w,CH-G+20);ctx.fillStyle='#46364a';ctx.fillRect(p.x-6,G,6,CH-G);ctx.fillRect(p.x+p.w,G,6,CH-G)}
+  for(const m of marks){ctx.fillStyle='rgba(180,30,20,'+Math.min(.5,m.t/5)+')';ctx.fillRect(m.x-44,G-4,88,6)}
+  ctx.restore();
+}
+function drawPlat(){
+  ctx.save();ctx.translate(-camX,0);
+  for(const p of PLAT){const h=G-p.y;
+    const g=ctx.createLinearGradient(p.x,p.y,p.x+p.w,p.y);g.addColorStop(0,'#8a5a30');g.addColorStop(1,'#5e3b1d');ctx.fillStyle=g;ctx.fillRect(p.x,p.y,p.w,h);
+    ctx.strokeStyle='#2e1b0b';ctx.lineWidth=2;ctx.strokeRect(p.x,p.y,p.w,h);
+    ctx.fillStyle='#a97a46';ctx.fillRect(p.x,p.y,p.w,6);ctx.strokeStyle='rgba(30,16,6,.5)';ctx.lineWidth=2;
+    for(let y=p.y+22;y<G;y+=22){ctx.beginPath();ctx.moveTo(p.x,y);ctx.lineTo(p.x+p.w,y);ctx.stroke()}
+    ctx.fillStyle='#3b2412';ctx.fillRect(p.x+p.w/2-2,p.y,4,h)}
+  ctx.restore();
+}
+function drawFigures(){
+  ctx.save();ctx.translate(-camX,0);
+  /* casa do Conselheiro Dutra */
+  const hx=900;ctx.fillStyle='#d8c8a0';ctx.fillRect(hx-110,G-170,200,170);ctx.fillStyle='#7a3a2a';ctx.beginPath();ctx.moveTo(hx-126,G-170);ctx.lineTo(hx-10,G-232);ctx.lineTo(hx+106,G-170);ctx.closePath();ctx.fill();
+  ctx.fillStyle='#4a3020';ctx.fillRect(hx-20,G-96,40,96);ctx.fillStyle='rgba(255,215,130,.85)';ctx.fillRect(hx-86,G-126,34,44);ctx.fillRect(hx+32,G-126,34,44);
+  /* salão: dois pássaros (águia e pavão) */
+  const sx=1750;ctx.fillStyle='#5a3a52';ctx.fillRect(sx-80,G-150,160,150);ctx.fillStyle='#2a1c30';ctx.fillRect(sx-70,G-140,140,60);
+  ctx.fillStyle='#e8c85a';ctx.beginPath();ctx.moveTo(sx-40,G-100);ctx.lineTo(sx-20,G-124);ctx.lineTo(sx,G-100);ctx.closePath();ctx.fill();ctx.fillStyle='#4a9a8a';ctx.beginPath();ctx.ellipse(sx+36,G-104,18,12,0,0,7);ctx.fill();for(let k=0;k<5;k++){ctx.strokeStyle='#4a9a8a';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(sx+44,G-106);ctx.lineTo(sx+60+k*4,G-136+k*6);ctx.stroke()}
+  /* nariz de pedra (estátua do faquir) */
+  const nx=2600;ctx.fillStyle='#8a8478';ctx.fillRect(nx-20,G-70,40,70);ctx.beginPath();ctx.arc(nx,G-82,22,0,7);ctx.fill();ctx.fillStyle='#6a665c';ctx.beginPath();ctx.moveTo(nx,G-82);ctx.lineTo(nx+14,G-76);ctx.lineTo(nx,G-72);ctx.closePath();ctx.fill();
+  /* portão da chácara */
+  const gx=3200;ctx.fillStyle='#2a1c30';ctx.fillRect(gx-70,G-110,14,110);ctx.fillRect(gx+56,G-110,14,110);ctx.strokeStyle='#1a1018';ctx.lineWidth=4;for(let k=0;k<8;k++){ctx.beginPath();ctx.moveTo(gx-48+k*14,G);ctx.lineTo(gx-48+k*14,G-96);ctx.stroke()}
+  ctx.fillStyle='#ffd88a';ctx.beginPath();ctx.arc(gx,G-126,6,0,7);ctx.fill();
+  /* casa de volta */
+  const dx=3500;ctx.fillStyle='#4a3a28';ctx.fillRect(dx-60,G-130,120,130);ctx.fillStyle='#2a1c14';ctx.beginPath();ctx.moveTo(dx-72,G-130);ctx.lineTo(dx,G-172);ctx.lineTo(dx+72,G-130);ctx.closePath();ctx.fill();ctx.fillStyle=F.porta?'#ffe7a8':'#1a1018';ctx.fillRect(dx-14,G-80,28,80);
+  ctx.fillStyle='#e9e2d0';ctx.fillRect(dx-34,G-158,68,18);ctx.fillStyle='#2a1c14';ctx.font='bold 11px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText('CASA',dx,G-145);
+  /* Lobo Neves e cone de visão */
+  if(LOBO.on){
+    if(state==='play'||state==='dialog'){const reading=LOBO.pause>0;const a=reading?.06:.22;const g=ctx.createLinearGradient(LOBO.x,0,LOBO.x+LOBO.dir*300,0);g.addColorStop(0,'rgba(255,220,120,'+a+')');g.addColorStop(1,'rgba(255,220,120,0)');
+      ctx.fillStyle=g;ctx.beginPath();ctx.moveTo(LOBO.x,G-70);ctx.lineTo(LOBO.x+LOBO.dir*300,G-170);ctx.lineTo(LOBO.x+LOBO.dir*300,G+8);ctx.closePath();ctx.fill()}
+    const f=LOBO.pause>0?3:(Math.floor(T*4)%2?1:0);sheet('lobo',SH.lobo,f,LOBO.x,G,LOBO.dir<0)}
+  ctx.restore();
+}
+function drawBras(){
+  const bob=Math.sin(T*2)*1.5;ctx.save();ctx.translate(-camX,0);
+  const sp=dq&&dq.lines[dq.i-1]?dq.lines[dq.i-1][0]:'';const sh=(w)=>sp===w&&typing;
+  sheet('vir',SH.vir,F.retrato?0:(sh('vir')?4:3),980,G+bob*.3,true);
+  sheet('vir',SH.vir,2,1820,G+bob*.3,true);
+  sheet('vir',SH.vir,sh('vir')?4:5,3260,G+bob*.3,true);
+  sheet('bras',SH.bras,sh('bras')?[3,3,4,3,5][Math.floor(T*5)%5]:0,3130,G+bob,false,.8);
+  ctx.restore();
+}
+function drawHipo(){}
+function drawPages(){
+  ctx.save();ctx.translate(-camX,0);
+  for(const g of PAGES){if(g.got)continue;const y=g.y+Math.sin(T*2+g.x)*4;ctx.save();ctx.translate(g.x,y);ctx.rotate(Math.sin(T*1.5+g.x)*.2);
+    ctx.shadowColor='#ffe8f0';ctx.shadowBlur=10;ctx.fillStyle='#f4ead4';ctx.fillRect(-13,-9,26,18);ctx.shadowBlur=0;ctx.strokeStyle='#8a5a30';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(-13,-9);ctx.lineTo(0,2);ctx.lineTo(13,-9);ctx.stroke();ctx.fillStyle='#b0303a';ctx.beginPath();ctx.arc(0,2,3.5,0,7);ctx.fill();ctx.restore()}
+  ctx.restore();
+}
+function drawClue(){
+  const it=INTER[0];if(F.ded)return;ctx.save();ctx.translate(-camX,0);
+  const near=Math.abs(P.x-it.x);const a=K.lamp?Math.max(0,1-near/260):0;
+  if(a>0){ctx.globalAlpha=a;ctx.fillStyle='#efe0bd';ctx.save();ctx.translate(it.x,G-18);ctx.rotate(-.12);ctx.fillRect(-18,-12,36,24);ctx.fillStyle='#b32818';ctx.fillRect(-14,-3,28,5);ctx.restore()}
+  ctx.restore();
+}
+function drawBushes(){
+  ctx.save();ctx.translate(-camX,0);
+  for(const b of BUSH){const on=hidden&&Math.abs(P.x-b.x)<42;ctx.globalAlpha=on?.95:.82;
+    ctx.fillStyle='#233a2a';for(let k=0;k<7;k++){ctx.beginPath();ctx.ellipse(b.x-40+k*13,G-30+Math.sin(T*1.5+k)*2,22,30,0,0,7);ctx.fill()}
+    ctx.fillStyle='#2f5236';for(let k=0;k<6;k++){ctx.beginPath();ctx.ellipse(b.x-34+k*13,G-42,18,24,0,0,7);ctx.fill()}ctx.globalAlpha=1}
+  if(hidden){ctx.fillStyle='#ffd98a';ctx.font='bold 13px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText('escondido',P.x,P.y-120)}
+  ctx.restore();
+}
+function drawPlayer(){
+  let f=5;const run=Math.abs(P.vx)>25;
+  if(P.hurt>0)f=12;else if(!P.ground)f=P.vy<-150?7:8;else if(P.land>0)f=9;else if(K.lamp&&!run)f=13;else if(run)f=Math.floor(P.an)%6;
+  else if(S.gen==='f'&&IMG.detF)f=14;
+  const al=P.inv>0&&Math.sin(T*30)>0?.35:1;const fem=S.gen==='f'&&IMG.detF;
+  ctx.save();ctx.translate(-camX,0);sheet(fem?'detF':'det',SH.det,f,P.x,P.y,P.face<0,al);ctx.restore();
+}
+function drawLight(){
+  if(!K.lamp||state!=='play')return;const x=P.x+P.face*22-camX,y=P.y-46;
+  ctx.save();ctx.globalCompositeOperation='lighter';const g=ctx.createRadialGradient(x,y,4,x,y,210);g.addColorStop(0,'rgba(255,200,110,.45)');g.addColorStop(.5,'rgba(255,150,50,.14)');g.addColorStop(1,'rgba(255,120,30,0)');ctx.fillStyle=g;ctx.fillRect(x-210,y-210,420,420);ctx.restore();
+}
+function drawStamps(){
+  ctx.save();ctx.translate(-camX,0);
+  for(const s of stamps){
+    if(s.t<.9){const a=.25+.35*Math.sin(s.t*14)**2;ctx.fillStyle='rgba(200,30,20,'+a+')';ctx.beginPath();ctx.ellipse(s.x,G,54,10,0,0,7);ctx.fill();
+      ctx.strokeStyle='rgba(255,80,60,'+a+')';ctx.lineWidth=2;ctx.setLineDash([6,6]);ctx.beginPath();ctx.moveTo(s.x-50,60);ctx.lineTo(s.x-50,G);ctx.moveTo(s.x+50,60);ctx.lineTo(s.x+50,G);ctx.stroke();ctx.setLineDash([])}
+    else if(s.t<1.2){const p=Math.min(1,(s.t-.9)/.1);const y=-200+(G-6+200)*p;ctx.fillStyle='#b8261a';ctx.fillRect(s.x-52,y-60,104,60);ctx.fillStyle='#7c1710';ctx.fillRect(s.x-12,y-140,24,82);
+      ctx.fillStyle='#f4d9c8';ctx.font='bold 14px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText('CORRIGIDO',s.x,y-24)}
+  }
+  ctx.restore();
+}
+function drawRain(dt){
+  ctx.save();ctx.globalCompositeOperation='lighter';
+  for(let i=0;i<30;i++){const x=((i*113+T*10*(1+i%3))%(CW+40)),y=(i*61+Math.sin(T*.7+i)*30)%(G-40)+20;ctx.fillStyle='rgba(255,200,120,'+(.12+.12*Math.sin(T*1.3+i))+')';ctx.beginPath();ctx.arc(x,y,1.5+i%3,0,7);ctx.fill()}
+  ctx.restore();
+}
+function drawFloaters(){
+  ctx.save();ctx.font='bold 22px "Special Elite",monospace';ctx.textAlign='center';
+  for(const f of floaters){ctx.globalAlpha=1-f.t/1.2;ctx.fillStyle='#ffd98a';ctx.strokeStyle='#000';ctx.lineWidth=3;ctx.strokeText(f.s,f.x,f.y-f.t*40);ctx.fillText(f.s,f.x,f.y-f.t*40)}ctx.restore();
+}
+function render(dt){
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+  const sx=shake>0?(Math.random()-.5)*shake*16:0,sy=shake>0?(Math.random()-.5)*shake*10:0;ctx.save();ctx.translate(sx,sy);
+  if(state==='cine'){drawCine(dt);ctx.restore();return}
+  drawBG();drawFigures();drawBras();drawPlat();drawClue();drawPages();drawStamps();drawPlayer();drawBushes();drawLight();drawRain(dt);drawFloaters();
+  /* vinheta */
+  const v=ctx.createRadialGradient(CW/2,CH/2,CH*.4,CW/2,CH/2,CH*.95);v.addColorStop(0,'rgba(0,0,0,0)');v.addColorStop(1,'rgba(0,0,0,.55)');ctx.fillStyle=v;ctx.fillRect(0,0,CW,CH);
+  ctx.restore();
+}
+/* ============ Cena do cais ============ */
+function startCine(){
+  state='cine';cine={t:0,lines:[[.6,'Saí dali a saborear o beijo. Não pude dormir; ouvi as horas todas da noite.'],[3.4,'O meu pensamento, ardiloso e traquinas, saltou pela janela fora e bateu as asas na direção da casa de Virgília.'],[6.2,'E os dois vadios ali postos, a repetirem o velho diálogo de Adão e Eva.']]};
+  $('prompt').classList.add('hidden');$('hud').classList.add('hidden');
+}
+function drawCine(dt){
+  cine.t+=dt;const t=cine.t;
+  const sg=ctx.createLinearGradient(0,0,0,CH);sg.addColorStop(0,'#150f2e');sg.addColorStop(.6,'#4a2a5a');sg.addColorStop(1,'#d08a6a');ctx.fillStyle=sg;ctx.fillRect(0,0,CW,CH);
+  for(let i=0;i<50;i++){ctx.fillStyle='rgba(255,240,200,'+(.35+.3*Math.sin(t*2+i))+')';ctx.fillRect((i*173)%CW,(i*89)%250,2,2)}
+  ctx.fillStyle='#10223a';ctx.fillRect(0,G-60,CW,CH-(G-60));
+  for(let i=0;i<20;i++){ctx.fillStyle='rgba(180,210,255,.2)';ctx.fillRect(((i*97-t*40)%CW+CW)%CW,G-40+(i*13)%60,50,2)}
+  const sx=200+t*60;ctx.fillStyle='#3a2616';ctx.beginPath();ctx.moveTo(sx,G-30);ctx.lineTo(sx+260,G-30);ctx.lineTo(sx+230,G+10);ctx.lineTo(sx+30,G+10);ctx.closePath();ctx.fill();
+  ctx.fillStyle='#2a1c14';ctx.fillRect(sx+120,G-200,6,170);ctx.fillStyle='#efe0c0';ctx.beginPath();ctx.moveTo(sx+126,G-195);ctx.lineTo(sx+210,G-110);ctx.lineTo(sx+126,G-60);ctx.closePath();ctx.fill();
+  const fem=S.gen==='f'&&IMG.detF;sheet(fem?'detF':'det',SH.det,fem?14:5,sx+70,G-26,false,1,.9);
+  const l=cine.lines.filter(x=>t>=x[0]).pop();
+  if(l){ctx.save();ctx.fillStyle='rgba(10,5,16,.78)';ctx.fillRect(60,CH-110,CW-120,74);ctx.fillStyle='#ffd98a';ctx.font='italic 20px Lora,serif';ctx.textAlign='center';
+    const words=l[1].split(' ');let ln='',lines=[];words.forEach(w=>{if((ln+w).length>70){lines.push(ln);ln=''}ln+=w+' '});lines.push(ln);
+    lines.forEach((s,i)=>ctx.fillText(s.trim(),CW/2,CH-80+i*26));ctx.restore()}
+  const fade=Math.max(0,(t-8)/1.5);if(fade>0){ctx.fillStyle='rgba(255,250,240,'+Math.min(1,fade)+')';ctx.fillRect(0,0,CW,CH)}
+  if(t>9.6&&state==='cine')fim();
+}
+
+/* ============ Início, HQ, fim ============ */
+function iniciar(){
+  ov('<h2>O Caso dos Narradores Trocados</h2><p><b>Fase 1 · Zona 6: Virgília, a águia e o pavão</b> (Memórias Póstumas de Brás Cubas, Machado de Assis).</p><p>A Gamboa, uma casa de sobrado e uma paixão proibida. O Agente Carimbo rasgou os capítulos de Virgília. Passe sem ser visto por Lobo Neves (fique quieto atrás de uma moita), recolha os bilhetes e descubra quem venceu: a águia ou o pavão.</p>'+
+   '<p>Seu primeiro nome ou apelido:</p><input type="text" id="iN" maxlength="16" placeholder="Nome"><input type="text" id="iT" maxlength="12" placeholder="Turma (ex.: 3º A)"><p>Detetive:</p><div class="gpick"><button id="gM" class="on">Ele</button><button id="gF">Ela</button></div>'+
+   '<p style="font-size:.85em;color:var(--muted)">Setas ou A/D: andar · Espaço: pular (duplo) · C: lamparina · E: ação · Esc: pausa. No celular, use os botões na tela.</p><button class="btn" id="go">Começar</button><button class="btn sec" id="back">Voltar ao Arquivo</button>');
+  $('gM').onclick=()=>{S.gen='m';$('gM').classList.add('on');$('gF').classList.remove('on')};$('gF').onclick=()=>{S.gen='f';$('gF').classList.add('on');$('gM').classList.remove('on')};
+  $('back').onclick=()=>{location.href='../index.html'};
+  $('go').onclick=()=>{S.nome=($('iN').value||'').trim()||'Detetive';S.turma=($('iT').value||'').trim();audio();setMute(muted);comecar()};
+}
+
+
+
+function comecar(){
+  ovClose();state='play';$('hud').classList.remove('hidden');hud();
+  say([['narr','Conheci Virgília em casa do Conselheiro Dutra, leitor, e perdi-a para um homem que prometia ser marquês. Procure a página rasgada com a lamparina (segure C). Mais adiante, Lobo Neves faz a ronda: fique parado atrás de uma moita quando ele olhar para o seu lado.']]);
+}
+function fim(){
+  state='end';$('hud').classList.add('hidden');
+  const pct=Math.round((Z.leit/Z.tot)*100);
+  try{const o=JSON.parse(localStorage.getItem(SAVE)||'{}');o.zonas=o.zonas||{};o.found=o.found||{};o.done=o.done||[];
+    if(!o.zonas[6]||o.zonas[6]<Z.pts)o.zonas[6]=Z.pts;o.found.z6=1;o.score=Object.values(o.zonas).reduce((a,b)=>a+b,0);localStorage.setItem(SAVE,JSON.stringify(o))}catch(e){}
+  enviar(pct);
+  ov('<h2>Zona 6 concluída: Virgília, a águia e o pavão</h2><p>Pontos: <b>'+Z.pts+'</b> · Bilhetes: <b>'+Z.pages+'/11</b> · Leituras certas de primeira: <b>'+Z.leit+'/'+Z.tot+'</b></p>'+
+   '<p>Você viu Virgília escolher a águia (Lobo Neves) pelo título de marquesa, leu a filosofia do egoísmo ("a ponta do nariz") e o capítulo feito só de pontinhos, uma das invenções mais ousadas da literatura brasileira.</p>'+
+   '<p><b>Próxima zona: Quincas Borba e o Humanitismo, e depois o chefe Pandora.</b> Em construção.</p><button class="btn" id="ba">Voltar ao Arquivo</button><button class="btn sec" id="rj">Jogar de novo</button>');
+  $('ba').onclick=()=>{location.href='../index.html'};$('rj').onclick=()=>location.reload();
+}
+function enviar(pct){
+  if(Z.enviou)return;Z.enviou=true;
+  try{if(typeof SHEETS_URL==='undefined'||!SHEETS_URL)return;
+    fetch(SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({atividade:'Caso 2 · Fase 1 · Zona 6 · Virgília, a águia e o pavão',nome:S.nome,turma:S.turma,acertos:Z.leit,total:Z.tot,pct:pct,abertas:'Pontos: '+Z.pts+' · Bilhetes: '+Z.pages+'/11'})}).catch(()=>{});}catch(e){}
+}
+/* ============ Entrada ============ */
+const KM={ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right',ArrowUp:'jump',KeyW:'jump',Space:'jump',KeyC:'lamp',KeyE:'act',Enter:'act'};
+addEventListener('keydown',e=>{
+  const k=KM[e.code];
+  if(e.code==='Escape'||e.code==='KeyP'){if(state==='play')pause(true);else if(paused)pause(false);return}
+  if(e.code==='KeyM'){setMute(!muted);return}
+  if(state==='dialog'&&(e.code==='Space'||e.code==='Enter'||e.code==='KeyE')){e.preventDefault();next();return}
+  if(!k)return;if(e.code.startsWith('Arrow')||e.code==='Space')e.preventDefault();
+  if(k==='act'){if(!K.act&&state==='play')doAct();K.act=1;return}K[k]=1;
+});
+addEventListener('keyup',e=>{const k=KM[e.code];if(k)K[k]=0});
+function doAct(){const it=nearInter();if(it)it.act()}
+function pause(on){paused=on;if(on){state='pause';ov('<h2>Pausa</h2><button class="btn" id="rs">Continuar</button><button class="btn sec" id="bk">Voltar ao Arquivo</button>');$('rs').onclick=()=>pause(false);$('bk').onclick=()=>location.href='../index.html'}else{ovClose();state='play'}}
+$('bPause').onclick=()=>{if(state==='play')pause(true)};$('bMute').onclick=()=>setMute(!muted);
+$('dlg').addEventListener('pointerdown',e=>{e.preventDefault();if(state==='dialog')next()});
+function bindT(id,k,act){const b=$(id);const on=e=>{e.preventDefault();if(act){if(state==='dialog'){next();return}if(state==='play')doAct()}else K[k]=1};const off=e=>{e.preventDefault();if(!act)K[k]=0};
+  b.addEventListener('pointerdown',on);b.addEventListener('pointerup',off);b.addEventListener('pointercancel',off);b.addEventListener('pointerleave',off)}
+bindT('tL','left');bindT('tR','right');bindT('tJ','jump');bindT('tC','lamp');bindT('tA',null,true);
+if('ontouchstart' in window||navigator.maxTouchPoints>0)document.body.classList.add('touch');
+/* ============ Laço ============ */
+let last=0;
+function loop(ts){
+  requestAnimationFrame(loop);const dt=Math.min(.05,(ts-last)/1000||.016);last=ts;T+=dt;
+  if(state==='play'){updatePlayer(dt);updateWorld(dt);
+    camX+=((P.x-CW*.42)-camX)*Math.min(1,dt*5);camX=Math.max(0,Math.min(WW-CW,camX));
+    const it=nearInter();const pr=$('prompt');if(it){pr.textContent=it.txt;pr.classList.remove('hidden')}else pr.classList.add('hidden');
+    if(K.lamp&&!K._l){K._l=1;}if(!K.lamp)K._l=0;
+  }else if(state==='dialog'){updateWorld(dt);P.vx=0}
+  render(dt);
+}
+window.__t={LOBO,P,F,Z,PAGES,INTER,get state(){return state},set state(v){state=v},get camX(){return camX},set camX(v){camX=v},provas,startCine,fim,K};
+loadAll(()=>{requestAnimationFrame(loop);iniciar();hud()});
+</script>
+</body>
+</html>
