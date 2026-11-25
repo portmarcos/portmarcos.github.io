@@ -141,7 +141,7 @@ function setMute(m){muted=m;if(rainG)rainG.gain.value=m?0:.07;$('bMute').textCon
 let toastT=0;
 function toast(t,ms){const e=$('toast');e.textContent=t;e.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove('on'),ms||3200)}
 const NARR={queda:['Caro leitor, até os defuntos tropeçam em covas abertas.','Caí. Com a prática, o leitor aprende a cair com dignidade.','Uma cova aberta é só uma página em branco muito funda.'],
- carimbo:['O Carimbo carimbou o leitor. Que falta de educação com quem lê.','Corrigido! Foi o que ele pensou. Eu, que fui corrigido pelo verme, discordo.'],
+ carimbo:['O Carimbo riscou o leitor. Que falta de educação com quem lê.','Rasurado! Foi o que ele pensou. Eu, que fui corrigido pelo verme, discordo.'],
  pag:['Uma página a mais. Há quem colecione selos; o leitor coleciona capítulos.','Página recolhida. O verme agradece a ordem.']};
 const pick=a=>a[Math.floor(Math.random()*a.length)];
 function addPts(n,x,y){Z.pts+=n;floaters.push({x,y,t:0,s:'+'+n});hud()}
@@ -234,6 +234,43 @@ const INTER=[
  {id:'hipo',x:3440,r:140,txt:'AÇÃO · Montar o hipopótamo',cond:()=>hipo.on&&hipo.landed,act:async()=>{
    await say([['bras','Aí está meu amigo de asas. Segure-se bem, caro leitor: o delírio começa onde a razão cansa.']]);startCine()}}
 ];
+/* ===== Trechos do livro (opcionais): citações nas páginas + painéis rasurados ===== */
+const FRAGS=[[1, "Moisés, que também contou a sua morte, não a pôs no intróito, mas no cabo; diferença radical entre este livro e o Pentateuco."], [1, "Contentem-se de saber que essa anônima, ainda que não parenta, padeceu mais do que as parentas."], [7, "Que me conste, ainda ninguém relatou o seu próprio delírio; faço-o eu, e a ciência mo agradecerá."], [1, "Tenham paciência! daqui a pouco lhes direi quem era a terceira senhora."], [1, "Não digo que se carpisse, não digo que se deixasse rolar pelo chão, epiléptica."]];
+const RASURAS=[{"cap": 1, "a": "Dito isto, expirei às duas horas da tarde de uma sexta-feira do mês de agosto de", "k": "1869", "b": ", na minha bela chácara de Catumbi.", "o": ["1822", "1869", "1889"]}, {"cap": 1, "a": "Moisés, que também contou a sua morte, não a pôs no intróito, mas no", "k": "cabo", "b": ": diferença radical entre este livro e o Pentateuco.", "o": ["centro", "prefácio", "cabo"]}];
+function pageQuote(n){if(n<2)return;const q=FRAGS[n-2];if(q)toast('\u201c'+q[1]+'\u201d  \u2014 Machado de Assis, cap. '+q[0],Math.min(9500,3800+q[1].length*38))}
+function rasura(c){return new Promise(res=>{
+  const prev=state;state='modal';
+  ov('<h2>Trecho rasurado \u00b7 cap. '+c.cap+'</h2><p>O Carimbo riscou uma palavra do livro. Qual delas completa a frase?</p><div class="cita">'+c.a+' <span id="rs" style="background:#1a0f0a;color:#1a0f0a;border-radius:3px;padding:0 .5em;letter-spacing:.1em;border:1px solid #8b73bd">\u2588\u2588\u2588\u2588\u2588\u2588</span>'+c.b+'</div><div id="lq"></div>');
+  let h='';c.o.slice().sort(()=>Math.random()-.5).forEach(x=>h+='<button class="opt">'+x+'</button>');$('lq').innerHTML=h;let tries=0;
+  $('lq').querySelectorAll('.opt').forEach(bt=>bt.onclick=()=>{
+    if(bt.textContent===c.k){bt.classList.add('ok');$('lq').querySelectorAll('.opt').forEach(x=>x.disabled=true);
+      const r=$('rs');r.textContent=c.k;r.style.cssText='color:#ffd98a;font-weight:bold;border-bottom:2px solid #ffd98a';
+      $('lq').insertAdjacentHTML('beforeend','<p>Frase restaurada. Machado de Assis, <i>Memórias Póstumas de Brás Cubas</i>, cap. '+c.cap+' (domínio público).</p><button class="btn" id="lok">Continuar</button>');
+      addPts(tries===0?60:20,P.x-camX,P.y-120);tone(660,.1,.05,'triangle');tone(990,.14,.04,'triangle');
+      $('lok').onclick=()=>{ovClose();state=prev;res(true)}}
+    else{tries++;bt.classList.add('bad');bt.disabled=true;blip(-3);toast('Releia a frase: qual palavra faz sentido aqui?',1800)}});
+})}
+const RAS_BOARDS=[];
+(function rasInit(){
+  const fr=[.27,.56];
+  RASURAS.forEach((c,i)=>{
+    let x=null,bd=1e9;for(const [pm,im] of [[75,150],[60,120],[45,95]]){for(let t=450;t<WW-350;t+=10){if(!onGround(t-70)||!onGround(t)||!onGround(t+70))continue;if(PLAT.some(p=>t>p.x-pm&&t<p.x+p.w+pm))continue;if(INTER.some(n=>Math.abs(n.x-t)<im))continue;if(RAS_BOARDS.some(r=>Math.abs(r.x-t)<650))continue;const d=Math.abs(t-WW*fr[i]);if(d<bd){bd=d;x=t}}if(x!=null)break}
+    if(x==null)return;const b={x,c,done:false};RAS_BOARDS.push(b);
+    INTER.push({id:'ras'+i,x,r:100,txt:'AÇÃO \u00b7 Ler o trecho rasurado (opcional)',done:()=>b.done,act:async()=>{await rasura(c);b.done=true;Z.ras=(Z.ras||0)+1;toast('Trecho restaurado e anotado no seu caderno.',2500)}});
+  });
+})();
+function drawRasuras(){
+  ctx.save();ctx.translate(-camX,0);
+  for(const b of RAS_BOARDS){if(b.x<camX-120||b.x>camX+CW+120)continue;const x=b.x,pulse=.5+.5*Math.sin(T*3+x);
+    ctx.fillStyle='#3a2616';ctx.fillRect(x-4,G-76,8,76);
+    ctx.save();ctx.translate(x,G-112);ctx.rotate(-.04);ctx.fillStyle='#efe0bd';ctx.fillRect(-52,-34,104,68);ctx.strokeStyle='#7a5a30';ctx.lineWidth=2;ctx.strokeRect(-52,-34,104,68);
+    ctx.fillStyle='#7a5a30';for(let i=0;i<4;i++)ctx.fillRect(-42,-24+i*14,84-(i%2)*18,3);
+    if(!b.done){ctx.fillStyle='#1a0f0a';ctx.fillRect(-18,-10,44,14);ctx.fillStyle='rgba(255,80,60,'+(.25+.35*pulse)+')';ctx.fillRect(-18,-10,44,14)}
+    else{ctx.fillStyle='#2f7a43';ctx.font='bold 24px sans-serif';ctx.textAlign='center';ctx.fillText('\u2713',0,9)}
+    ctx.restore();
+    if(!b.done){const g=ctx.createRadialGradient(x,G-112,6,x,G-112,90);g.addColorStop(0,'rgba(255,200,110,'+(.25*pulse)+')');g.addColorStop(1,'rgba(255,200,110,0)');ctx.fillStyle=g;ctx.fillRect(x-90,G-202,180,180)}}
+  ctx.restore();
+}
 const provas=()=>[F.ded,F.amigos,F.fala,F.disc].filter(Boolean).length;
 function nearInter(){
   let best=null,bd=1e9;
@@ -275,14 +312,13 @@ function hit(){
 function updateWorld(dt){
   /* carimbos */
   stampT-=dt;
-  if(stampT<=0&&P.x>650&&P.x<3350){
-    stamps.push({x:P.x+P.vx*.55+(Math.random()-.5)*60,t:0});stampT=3.4+Math.random()*2.2;
-  }
-  for(const s of stamps){s.t+=dt;if(s.t>.9&&s.t<1.12&&!s.d){s.d=1;shake=.35;thud();marks.push({x:s.x,t:5});
-      if(Math.abs(P.x-s.x)<52&&!(P.y<G-210))hit()}}
-  stamps=stamps.filter(s=>s.t<1.9);marks=marks.filter(m=>(m.t-=dt)>0);
+  if(stampT<=0&&P.x>650&&P.x<3350&&!stamps.length){stamps.push({dir:Math.random()<.5?1:-1,t:0,x:0,sx:0});stampT=3.4+Math.random()*2.2;
+    if(!window.__pen){window.__pen=1;toast('O Carimbo riscou o chão com o lápis vermelho: PULE a rasura!',3600)}}
+  for(const s of stamps){s.t+=dt;if(s.t>1.1){if(!s.go){s.go=1;s.sx=s.dir>0?camX-80:camX+CW+80;s.x=s.sx;thud()}s.x+=s.dir*540*dt;
+      if(!s.d&&Math.abs(P.x-s.x)<40&&P.y>G-34){s.d=1;shake=.3;hit()}}}
+  stamps=stamps.filter(s=>!s.go||(s.dir>0?s.x<camX+CW+160:s.x>camX-160));marks=[];
   /* páginas */
-  for(const g of PAGES){if(!g.got&&Math.abs(P.x-g.x)<34&&Math.abs((P.y-46)-g.y)<52){g.got=true;Z.pages++;addPts(50,g.x-camX,g.y);tone(660,.1,.05,'triangle');tone(880,.14,.04,'triangle');if(Z.pages===1)toast(pick(NARR.pag),3000);hud()}}
+  for(const g of PAGES){if(!g.got&&Math.abs(P.x-g.x)<34&&Math.abs((P.y-46)-g.y)<52){g.got=true;Z.pages++;pageQuote(Z.pages);addPts(50,g.x-camX,g.y);tone(660,.1,.05,'triangle');tone(880,.14,.04,'triangle');if(Z.pages===1)toast(pick(NARR.pag),3000);hud()}}
   /* trovão */
   boltT-=dt;if(boltT<=0){bolt=.35;boltT=9+Math.random()*7;flash=1;setTimeout(thunder,350)}
   bolt=Math.max(0,bolt-dt);flash=Math.max(0,flash-dt*2.2);
@@ -342,7 +378,7 @@ function drawHipo(){
   const flying=!hipo.landed;const f=flying?Math.floor(T*10)%6:(Math.floor(T*.7)%2?8:9);
   sheet('hipo',SH.hipo,f,hipo.x,hipo.y+(flying?Math.sin(T*4)*6:0),true);ctx.restore();
 }
-function drawPages(){
+function drawPages(){drawRasuras();
   ctx.save();ctx.translate(-camX,0);
   for(const g of PAGES){if(g.got)continue;const y=g.y+Math.sin(T*2+g.x)*5;ctx.save();ctx.translate(g.x,y);ctx.rotate(Math.sin(T*1.5+g.x)*.15);
     ctx.shadowColor='#ffd98a';ctx.shadowBlur=14;ctx.fillStyle='#efe0bd';ctx.fillRect(-11,-15,22,30);ctx.shadowBlur=0;ctx.fillStyle='#7a5a30';for(let i=0;i<4;i++)ctx.fillRect(-7,-9+i*6,14,2);ctx.restore()}
@@ -366,14 +402,18 @@ function drawLight(){
   ctx.save();ctx.globalCompositeOperation='lighter';const g=ctx.createRadialGradient(x,y,4,x,y,210);g.addColorStop(0,'rgba(255,200,110,.45)');g.addColorStop(.5,'rgba(255,150,50,.14)');g.addColorStop(1,'rgba(255,120,30,0)');ctx.fillStyle=g;ctx.fillRect(x-210,y-210,420,420);ctx.restore();
 }
 function drawStamps(){
-  ctx.save();ctx.translate(-camX,0);
   for(const s of stamps){
-    if(s.t<.9){const a=.25+.35*Math.sin(s.t*14)**2;ctx.fillStyle='rgba(200,30,20,'+a+')';ctx.beginPath();ctx.ellipse(s.x,G,54,10,0,0,7);ctx.fill();
-      ctx.strokeStyle='rgba(255,80,60,'+a+')';ctx.lineWidth=2;ctx.setLineDash([6,6]);ctx.beginPath();ctx.moveTo(s.x-50,60);ctx.lineTo(s.x-50,G);ctx.moveTo(s.x+50,60);ctx.lineTo(s.x+50,G);ctx.stroke();ctx.setLineDash([])}
-    else if(s.t<1.2){const p=Math.min(1,(s.t-.9)/.1);const y=-200+(G-6+200)*p;ctx.fillStyle='#b8261a';ctx.fillRect(s.x-52,y-60,104,60);ctx.fillStyle='#7c1710';ctx.fillRect(s.x-12,y-140,24,82);
-      ctx.fillStyle='#f4d9c8';ctx.font='bold 14px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText('CORRIGIDO',s.x,y-24)}
+    if(!s.go){const a=.3+.5*Math.sin(s.t*16)**2,ex=s.dir>0?30:CW-30;
+      ctx.save();ctx.fillStyle='rgba(200,30,20,'+a+')';ctx.fillRect(s.dir>0?0:CW-60,G-34,60,30);ctx.fillStyle='#fff3e0';ctx.font='bold 22px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText(s.dir>0?'\u00bb!':'!\u00ab',ex,G-12);
+      ctx.fillStyle='rgba(255,70,50,'+a*.55+')';ctx.fillRect(0,G-5,CW,3);ctx.restore()}
+    else{ctx.save();ctx.translate(-camX,0);
+      const n=Math.floor(Math.abs(s.x-s.sx)/12);ctx.strokeStyle='#c4271a';ctx.lineWidth=5;ctx.lineJoin='round';ctx.beginPath();
+      for(let i=0;i<=n;i++){const x=s.sx+s.dir*i*12,y=G-14+((i%2)?-11:11)+Math.sin(T*30+i)*2;if(i)ctx.lineTo(x,y);else ctx.moveTo(x,y)}ctx.stroke();
+      ctx.translate(s.x,G-24);ctx.scale(s.dir,1);ctx.rotate(.55);
+      ctx.fillStyle='#e8b830';ctx.fillRect(-58,-6,50,12);ctx.fillStyle='#b8261a';ctx.fillRect(-66,-6,8,12);ctx.fillStyle='#d8b890';ctx.beginPath();ctx.moveTo(-8,-6);ctx.lineTo(14,0);ctx.lineTo(-8,6);ctx.closePath();ctx.fill();
+      ctx.fillStyle='#c4271a';ctx.beginPath();ctx.moveTo(6,-2.5);ctx.lineTo(14,0);ctx.lineTo(6,2.5);ctx.closePath();ctx.fill();
+      ctx.restore()}
   }
-  ctx.restore();
 }
 function drawRain(dt){
   ctx.strokeStyle='rgba(190,205,225,.35)';ctx.lineWidth=1;ctx.beginPath();
