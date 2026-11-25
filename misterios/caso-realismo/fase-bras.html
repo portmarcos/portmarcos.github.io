@@ -232,7 +232,11 @@ const INTER=[
      q:{t:'O que o comentário "Não me arrependo das vinte apólices que lhe deixei" revela sobre o elogio?',o:['Que o amigo foi sincero e merecia a herança.','Que o elogio foi pago: o "fiel amigo" de última hora fala bem do morto por interesse.','Que Brás pretende desfazer o testamento.','Que a natureza realmente chorava pelo defunto.'],k:1,e:'O narrador mostra que o discurso emocionado tem preço (as apólices). A chuva, que o orador chama de "natureza chorando", é só chuva. É a ironia como crítica da hipocrisia social.'}});
    F.disc=true;hud();toast('Provas '+provas()+'/4',3000)}},
  {id:'hipo',x:3440,r:140,txt:'AÇÃO · Montar o hipopótamo',cond:()=>hipo.on&&hipo.landed,act:async()=>{
-   await say([['bras','Aí está meu amigo de asas. Segure-se bem, caro leitor: o delírio começa onde a razão cansa.']]);startCine()}}
+   await say([['bras','Aí está meu amigo de asas. Segure-se bem, caro leitor: o delírio começa onde a razão cansa.']]);
+   await leitura({titulo:'Capítulo 7 · O Delírio (leitura obrigatória para partir)',cita:'Ultimamente, restituído à forma humana, vi chegar um hipopótamo, que me arrebatou. Deixei-me ir, calado, não sei se por medo ou confiança; mas, dentro em pouco, a carreira de tal modo se tornou vertiginosa, que me atrevi a interrogá-lo, e com alguma arte lhe disse que a viagem me parecia sem destino. — Engana-se, replicou o animal, nós vamos à origem dos séculos.',
+     fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 7 (domínio público).',
+     q:{t:'Para onde o hipopótamo diz que levará Brás Cubas?',o:['Ao cemitério de São João Batista, para o enterro.','À casa de Virgília, para o último encontro.','À origem dos séculos: o delírio é uma viagem pelo tempo.','Ao Hospício, onde Brás ficará internado.'],k:2,e:'O animal corrige o narrador: não é um passeio comum, é uma viagem "à origem dos séculos", o início do delírio.'}});
+   startCine()}}
 ];
 const provas=()=>[F.ded,F.amigos,F.fala,F.disc].filter(Boolean).length;
 function nearInter(){
@@ -287,7 +291,7 @@ function updateWorld(dt){
   boltT-=dt;if(boltT<=0){bolt=.35;boltT=9+Math.random()*7;flash=1;setTimeout(thunder,350)}
   bolt=Math.max(0,bolt-dt);flash=Math.max(0,flash-dt*2.2);
   /* chegada do hipopótamo */
-  if(provas()===4&&!F.hipo){F.hipo=true;hipo.on=true;hipo.x=P.x+700;hipo.y=60;hipo.t=0;toast('Algo bate asas por cima das lápides...',3500)}
+  if(provas()===4&&!F.hipo){F.hipo=true;hipo.on=true;hipo.x=P.x+700;hipo.y=60;hipo.t=0;toast('Algo bate asas por cima das lápides... O caminho de saída é o hipopótamo, no fim do cemitério.',4500)}
   if(hipo.on){hipo.t+=dt;const tx=3440,ty=G-64;if(!hipo.landed){hipo.x+=(tx-hipo.x)*Math.min(1,dt*1.6);hipo.y+=(ty-hipo.y)*Math.min(1,dt*1.8);
       if(Math.abs(hipo.x-tx)<8&&Math.abs(hipo.y-ty)<8){hipo.landed=true;toast('O hipopótamo pousou. Vá até ele e aperte AÇÃO.',4000)}}}
   floaters.forEach(f=>f.t+=dt);floaters=floaters.filter(f=>f.t<1.2);
