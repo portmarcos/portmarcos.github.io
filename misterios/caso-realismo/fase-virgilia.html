@@ -254,7 +254,7 @@ function updatePlayer(dt){
   if(land!=null){if(!P.ground&&P.vy>300){P.land=.12;thud2()}P.y=land;P.vy=0;P.ground=true;P.jumps=2}else P.ground=false;
   if(K.jump&&!P._j){P._j=1;if(P.ground||P.jumps>0){P.vy=-640;if(!P.ground)P.jumps=Math.max(0,P.jumps-1);else P.jumps=1;P.ground=false;tone(300,.08,.03,'triangle')}}
   if(!K.jump)P._j=0;
-  P.an+=Math.abs(P.vx)*dt/38;P.inv=Math.max(0,P.inv-dt);P.land=Math.max(0,P.land-dt);
+  P.an+=Math.abs(P.vx)*dt/38;P.inv=Math.max(0,P.inv-dt);P.land=Math.max(0,P.land-dt);P.hurt=Math.max(0,(P.hurt||0)-dt);
   if(P.y>G+170)fall();
   for(const c of [1300,2250])if(P.x>c&&cpX<c)cpX=c;
 }
