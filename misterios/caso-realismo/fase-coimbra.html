@@ -93,7 +93,7 @@ const $=id=>document.getElementById(id);
 const SAVE='caso_realismo_v1';
 const SRC={det:'../caso-originais/img/q1/detetive.webp',detF:'../caso-originais/img/q1/detetive-f.webp',bras:'img/q1/bras.webp',hipo:'img/q1/hipopotamo.webp',
  bg:'img/q1/bg-velorio.webp',bgd:'img/q1/bg-delirio.webp',retBras:'img/q1/ret-bras.webp',retDet:'../caso-originais/img/detetive.webp',retDetF:'../caso-originais/img/detetive-f.webp',
- bgi:'img/q1/bg-infancia.webp',marc:'img/q1/marcela.webp',retMarc:'img/q1/ret-marcela.webp'};
+ bgi:'img/q1/bg-estrada-coimbra.webp',marc:'img/q1/marcela.webp',retMarc:'img/q1/ret-marcela.webp',almo:'img/q1/almocreve.webp'};
 const OPCIONAL=['hq2','hq3','amigos','caixao','padre'];
 const IMG={};
 const SH={det:{w:269,h:232,s:.47},bras:{w:137,h:340,s:.37},hipo:{w:303,h:230,s:.6},marc:{w:242,h:340,s:.37}};
@@ -331,7 +331,14 @@ function updateWorld(dt){autoCP();
   shake=Math.max(0,shake-dt);
 }
 /* ============ Desenho ============ */
-function drawBG(){
+function drawBGImg(){
+  const im=IMG.bgi;if(!im)return;
+  const h=Math.round(CH*1.08),w=Math.round(im.width*h/im.height),off=Math.max(0,w-CW)*Math.min(1,Math.max(0,camX/Math.max(1,WW-CW)));
+  ctx.save();ctx.beginPath();ctx.rect(0,0,CW,G);ctx.clip();ctx.drawImage(im,-off,CH-h,w,h);
+  const v=ctx.createLinearGradient(0,0,0,G);v.addColorStop(0,'rgba(20,10,5,.18)');v.addColorStop(1,'rgba(20,10,5,0)');ctx.fillStyle=v;ctx.fillRect(0,0,CW,G);ctx.restore();
+}
+function drawBG(){drawBGproc();drawBGImg()}
+function drawBGproc(){
   const sg=ctx.createLinearGradient(0,0,0,G);sg.addColorStop(0,'#6fb0e8');sg.addColorStop(.7,'#bfe0f0');sg.addColorStop(1,'#f4e6c0');ctx.fillStyle=sg;ctx.fillRect(0,0,CW,CH);
   ctx.fillStyle='rgba(255,255,255,.85)';for(let i=0;i<6;i++){const x=((i*260-camX*.08+T*6)%(CW+300)+CW+300)%(CW+300)-150,y=60+(i*47)%110;ctx.beginPath();ctx.ellipse(x,y,70,16,0,0,7);ctx.ellipse(x+40,y-8,50,14,0,0,7);ctx.ellipse(x-40,y-4,42,12,0,0,7);ctx.fill()}
   const hill=(k,c,a,b)=>{ctx.fillStyle=c;ctx.beginPath();ctx.moveTo(0,G);for(let x=0;x<=CW;x+=20){const wx=x+camX*k;ctx.lineTo(x,G-a-Math.sin(wx*.004)*b-Math.sin(wx*.011)*b*.4)}ctx.lineTo(CW,G);ctx.closePath();ctx.fill()};
@@ -372,8 +379,10 @@ function drawFigures(){
   const ax=2600,b=Math.sin(T*2)*1.5;
   ctx.fillStyle='#8a8478';ctx.beginPath();ctx.ellipse(ax+40,G-48,40,22,0,0,7);ctx.fill();ctx.beginPath();ctx.ellipse(ax+82,G-70,14,18,.4,0,7);ctx.fill();ctx.fillRect(ax+76,G-100,6,22);ctx.fillRect(ax+86,G-98,6,22);
   ctx.fillStyle='#6a665c';for(const lx of [ax+14,ax+26,ax+56,ax+68])ctx.fillRect(lx,G-32,7,32);ctx.fillStyle='#222';ctx.beginPath();ctx.arc(ax+88,G-72,2,0,7);ctx.fill();
+  if(IMG.almo){const k=IMG.almo,s2=128/k.height;ctx.drawImage(k,ax-14-k.width*s2/2,G-126+b,k.width*s2,128)}else{
   ctx.fillStyle='#5a3a22';ctx.fillRect(ax-28,G-98+b,34,70);ctx.fillStyle='#e8c9a4';ctx.beginPath();ctx.arc(ax-11,G-110+b,12,0,7);ctx.fill();ctx.fillStyle='#8a6a3a';ctx.fillRect(ax-26,G-124+b,30,6);ctx.fillRect(ax-18,G-132+b,14,10);
   ctx.fillStyle='#3a2a1a';ctx.fillRect(ax-26,G-30,12,30);ctx.fillRect(ax-10,G-30,12,30);
+  }
   /* estalagem em Veneza */
   const vx=3200;ctx.fillStyle='#d0a070';ctx.fillRect(vx-70,G-130,140,130);ctx.fillStyle='#8f3d27';ctx.beginPath();ctx.moveTo(vx-82,G-130);ctx.lineTo(vx,G-176);ctx.lineTo(vx+82,G-130);ctx.closePath();ctx.fill();
   ctx.fillStyle='#4a3a28';ctx.fillRect(vx-18,G-76,36,76);ctx.fillStyle='rgba(255,215,130,.85)';ctx.fillRect(vx-56,G-100,26,30);ctx.fillRect(vx+30,G-100,26,30);

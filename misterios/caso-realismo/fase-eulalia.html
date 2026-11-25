@@ -93,7 +93,7 @@ const $=id=>document.getElementById(id);
 const SAVE='caso_realismo_v1';
 const SRC={det:'../caso-originais/img/q1/detetive.webp',detF:'../caso-originais/img/q1/detetive-f.webp',bras:'img/q1/bras.webp',hipo:'img/q1/hipopotamo.webp',
  bg:'img/q1/bg-velorio.webp',bgd:'img/q1/bg-delirio.webp',retBras:'img/q1/ret-bras.webp',retDet:'../caso-originais/img/detetive.webp',retDetF:'../caso-originais/img/detetive-f.webp',
- bgi:'img/q1/bg-infancia.webp',eul:'img/q1/eulalia.webp',retEul:'img/q1/ret-eulalia.webp',eud:'img/q1/eulalia-doente.webp',bgz:'img/q1/bg-salao.webp'};
+ bgi:'img/q1/bg-tijuca.webp',eul:'img/q1/eulalia.webp',retEul:'img/q1/ret-eulalia.webp',eud:'img/q1/eulalia-doente.webp',bgz:'img/q1/bg-salao.webp'};
 const OPCIONAL=['hq2','hq3','amigos','caixao','padre'];
 const IMG={};
 const SH={det:{w:269,h:232,s:.47},bras:{w:137,h:340,s:.37},hipo:{w:303,h:230,s:.6},eul:{w:211,h:340,s:.37},eud:{w:294,h:340,s:.37}};
@@ -334,7 +334,14 @@ function updateWorld(dt){autoCP();
   shake=Math.max(0,shake-dt);
 }
 /* ============ Desenho ============ */
-function drawBG(){
+function drawBGImg(){
+  const im=IMG.bgi;if(!im)return;
+  const h=Math.round(CH*1.08),w=Math.round(im.width*h/im.height),off=Math.max(0,w-CW)*Math.min(1,Math.max(0,camX/Math.max(1,WW-CW)));
+  ctx.save();ctx.beginPath();ctx.rect(0,0,CW,G);ctx.clip();ctx.drawImage(im,-off,CH-h,w,h);
+  const v=ctx.createLinearGradient(0,0,0,G);v.addColorStop(0,'rgba(20,10,5,.18)');v.addColorStop(1,'rgba(20,10,5,0)');ctx.fillStyle=v;ctx.fillRect(0,0,CW,G);ctx.restore();
+}
+function drawBG(){drawBGproc();drawBGImg()}
+function drawBGproc(){
   const im=IMG.bgz;
   if(im){const W=Math.round(CH*im.width/im.height);const o=-(camX/Math.max(1,WW-CW))*(W-CW);ctx.drawImage(im,o,0,W,CH);
     ctx.fillStyle='rgba(20,10,0,.12)';ctx.fillRect(0,0,CW,CH)}

@@ -93,7 +93,7 @@ const $=id=>document.getElementById(id);
 const SAVE='caso_realismo_v1';
 const SRC={det:'../caso-originais/img/q1/detetive.webp',detF:'../caso-originais/img/q1/detetive-f.webp',bras:'img/q1/bras.webp',hipo:'img/q1/hipopotamo.webp',
  bg:'img/q1/bg-velorio.webp',bgd:'img/q1/bg-delirio.webp',retBras:'img/q1/ret-bras.webp',retDet:'../caso-originais/img/detetive.webp',retDetF:'../caso-originais/img/detetive-f.webp',
- bgi:'img/q1/bg-infancia.webp',qui:'img/q1/quincas.webp',retQui:'img/q1/ret-quincas.webp',pan:'img/q1/pandora.webp',retPan:'img/q1/ret-pandora.webp'};
+ bgi:'img/q1/bg-arena.webp',qui:'img/q1/quincas.webp',retQui:'img/q1/ret-quincas.webp',pan:'img/q1/pandora.webp',retPan:'img/q1/ret-pandora.webp'};
 const OPCIONAL=['hq2','hq3','amigos','caixao','padre'];
 const IMG={};
 const SH={det:{w:269,h:232,s:.47},bras:{w:137,h:340,s:.37},hipo:{w:303,h:230,s:.6},qui:{w:194,h:340,s:.37},pan:{w:223,h:330,s:1.1}};
@@ -291,7 +291,14 @@ async function perguntar(){
   B.r++;B.ph='fight';B.t=0;B.sp=1;B.sp2=2;B.sp3=3;toast(['','A Natureza se enfurece: rajadas de frio.','Última rodada: as vinhas da Natureza.'][B.r],3200);hud();
 }
 /* ============ Desenho ============ */
-function drawBG(){
+function drawBGImg(){
+  const im=IMG.bgi;if(!im)return;
+  const h=Math.round(CH*1.08),w=Math.round(im.width*h/im.height),off=Math.max(0,w-CW)*Math.min(1,Math.max(0,camX/Math.max(1,WW-CW)));
+  ctx.save();ctx.beginPath();ctx.rect(0,0,CW,G);ctx.clip();ctx.drawImage(im,-off,CH-h,w,h);
+  const v=ctx.createLinearGradient(0,0,0,G);v.addColorStop(0,'rgba(20,10,5,.18)');v.addColorStop(1,'rgba(20,10,5,0)');ctx.fillStyle=v;ctx.fillRect(0,0,CW,G);ctx.restore();
+}
+function drawBG(){drawBGproc();drawBGImg()}
+function drawBGproc(){
   const sg=ctx.createLinearGradient(0,0,0,G);sg.addColorStop(0,'#1a1f33');sg.addColorStop(.55,'#6a7896');sg.addColorStop(1,'#d8dfe8');ctx.fillStyle=sg;ctx.fillRect(0,0,CW,CH);
   ctx.fillStyle='#fff6d8';ctx.beginPath();ctx.arc(150,110,44,0,7);ctx.fill();ctx.fillStyle='rgba(255,246,216,.12)';ctx.beginPath();ctx.arc(150,110,80,0,7);ctx.fill();
   ctx.fillStyle='#9aa8c0';ctx.beginPath();ctx.moveTo(0,G-60);for(let x=0;x<=CW;x+=60)ctx.lineTo(x,G-110-Math.abs(Math.sin(x*.013))*110);ctx.lineTo(CW,G-60);ctx.fill();

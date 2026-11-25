@@ -334,7 +334,14 @@ function updateWorld(dt){autoCP();
   shake=Math.max(0,shake-dt);
 }
 /* ============ Desenho ============ */
-function drawBG(){
+function drawBGImg(){
+  const im=IMG.bgi;if(!im)return;
+  const h=Math.round(CH*1.08),w=Math.round(im.width*h/im.height),off=Math.max(0,w-CW)*Math.min(1,Math.max(0,camX/Math.max(1,WW-CW)));
+  ctx.save();ctx.beginPath();ctx.rect(0,0,CW,G);ctx.clip();ctx.drawImage(im,-off,CH-h,w,h);
+  const v=ctx.createLinearGradient(0,0,0,G);v.addColorStop(0,'rgba(20,10,5,.18)');v.addColorStop(1,'rgba(20,10,5,0)');ctx.fillStyle=v;ctx.fillRect(0,0,CW,G);ctx.restore();
+}
+function drawBG(){drawBGproc();drawBGImg()}
+function drawBGproc(){
   const sg=ctx.createLinearGradient(0,0,0,G);sg.addColorStop(0,'#1a1738');sg.addColorStop(.6,'#3d2a58');sg.addColorStop(1,'#7a4a60');ctx.fillStyle=sg;ctx.fillRect(0,0,CW,CH);
   for(let i=0;i<70;i++){ctx.fillStyle='rgba(255,240,210,'+(.3+.3*Math.sin(T*2+i))+')';ctx.fillRect((i*173)%CW,(i*79)%250,2,2)}
   ctx.fillStyle='rgba(255,245,215,.92)';ctx.beginPath();ctx.arc(200-camX*.02,120,36,0,7);ctx.fill();

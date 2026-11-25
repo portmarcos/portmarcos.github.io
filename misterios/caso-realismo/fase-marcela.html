@@ -327,7 +327,14 @@ function updateWorld(dt){autoCP();
   shake=Math.max(0,shake-dt);
 }
 /* ============ Desenho ============ */
-function drawBG(){
+function drawBGImg(){
+  const im=IMG.bgi;if(!im)return;
+  const h=Math.round(CH*1.08),w=Math.round(im.width*h/im.height),off=Math.max(0,w-CW)*Math.min(1,Math.max(0,camX/Math.max(1,WW-CW)));
+  ctx.save();ctx.beginPath();ctx.rect(0,0,CW,G);ctx.clip();ctx.drawImage(im,-off,CH-h,w,h);
+  const v=ctx.createLinearGradient(0,0,0,G);v.addColorStop(0,'rgba(20,10,5,.18)');v.addColorStop(1,'rgba(20,10,5,0)');ctx.fillStyle=v;ctx.fillRect(0,0,CW,G);ctx.restore();
+}
+function drawBG(){drawBGproc();drawBGImg()}
+function drawBGproc(){
   const sg=ctx.createLinearGradient(0,0,0,G);sg.addColorStop(0,'#150f2e');sg.addColorStop(.6,'#3a2250');sg.addColorStop(1,'#8a4a5a');ctx.fillStyle=sg;ctx.fillRect(0,0,CW,CH);
   for(let i=0;i<60;i++){const x=(i*173)%CW,y=(i*89)%260;ctx.fillStyle='rgba(255,240,200,'+(.35+.3*Math.sin(T*2+i))+')';ctx.fillRect(x,y,2,2)}
   ctx.fillStyle='rgba(255,245,210,.95)';ctx.beginPath();ctx.arc(780-camX*.02,110,34,0,7);ctx.fill();
