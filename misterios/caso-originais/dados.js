@@ -110,7 +110,7 @@ const CAPITULOS = [
     letra: 'S', item: 'chave', itemNome: 'Chave do engenho',
     informante: 'telegrama',
     fala: [
-      { q: 'telegrama', t: 'CENSOR VISTO NA PARAÍBA PT DEIXOU UM GLOSSÁRIO RASGADO COM PALAVRAS DO ENGENHO SEM SIGNIFICADO PT RECONSTITUA PT ANSELMO' }
+      { q: 'telegrama', t: 'CENSOR VISTO NA PARAÍBA. DEIXOU UM GLOSSÁRIO RASGADO COM PALAVRAS DO ENGENHO SEM SIGNIFICADO. RECONSTITUA. ANSELMO' }
     ],
     notaFala: 'Telegrama: o Censor rasgou um glossário com o vocabulário do engenho.',
     pistas: [
@@ -153,7 +153,7 @@ const CAPITULOS = [
     letra: 'A', item: 'carta', itemNome: 'Carta rasgada',
     informante: 'telegrama',
     fala: [
-      { q: 'telegrama', t: 'CENSOR USOU CÓDIGO PT CADA LETRA FOI TROCADA PELA SEGUINTE DO ALFABETO PT O NOME ESCONDIDO É A CHAVE PT ANSELMO' }
+      { q: 'telegrama', t: 'CENSOR USOU CÓDIGO. CADA LETRA FOI TROCADA PELA SEGUINTE DO ALFABETO. O NOME ESCONDIDO É A CHAVE. ANSELMO' }
     ],
     notaFala: 'Telegrama: o Censor cifrou um nome trocando cada letra pela seguinte do alfabeto.',
     pistas: [
@@ -238,7 +238,7 @@ const CAPITULOS = [
     letra: 'O', item: 'pena', itemNome: 'Pena e tinteiro',
     informante: 'telegrama',
     fala: [
-      { q: 'telegrama', t: 'ÚLTIMA PISTA PT CENSOR DETESTA POESIA PT MISTUROU OS POETAS E SEUS TEMAS PT DEPOIS VOLTE AO RIO PT O COFRE ESPERA PT ANSELMO' }
+      { q: 'telegrama', t: 'ÚLTIMA PISTA. CENSOR DETESTA POESIA. MISTUROU OS POETAS E SEUS TEMAS. DEPOIS VOLTE AO RIO. O COFRE ESPERA. ANSELMO' }
     ],
     notaFala: 'Telegrama: o Censor misturou os poetas da geração de 30 e seus temas.',
     pistas: [
