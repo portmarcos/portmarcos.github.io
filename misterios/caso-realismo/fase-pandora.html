@@ -93,7 +93,7 @@ const $=id=>document.getElementById(id);
 const SAVE='caso_realismo_v1';
 const SRC={det:'../caso-originais/img/q1/detetive.webp',detF:'../caso-originais/img/q1/detetive-f.webp',bras:'img/q1/bras.webp',hipo:'img/q1/hipopotamo.webp',
  bg:'img/q1/bg-velorio.webp',bgd:'img/q1/bg-delirio.webp',retBras:'img/q1/ret-bras.webp',retDet:'../caso-originais/img/detetive.webp',retDetF:'../caso-originais/img/detetive-f.webp',
- bgi:'img/q1/bg-infancia.webp',qui:'img/q1/quincas.webp',retQui:'img/q1/ret-quincas.webp',pan:'img/q1/pandora.webp',retPan:'img/q1/ret-pandora.webp'};
+ bgi:'img/q1/bg-arena.webp',qui:'img/q1/quincas.webp',retQui:'img/q1/ret-quincas.webp',pan:'img/q1/pandora.webp',retPan:'img/q1/ret-pandora.webp'};
 const OPCIONAL=['hq2','hq3','amigos','caixao','padre'];
 const IMG={};
 const SH={det:{w:269,h:232,s:.47},bras:{w:137,h:340,s:.37},hipo:{w:303,h:230,s:.6},qui:{w:194,h:340,s:.37},pan:{w:223,h:330,s:1.1}};
@@ -214,13 +214,13 @@ const INTER=[];
 const RODADAS=[
  {dur:16,fala:[['pan','Chama-me Natureza ou Pandora; sou tua mãe e tua inimiga.'],['bras','Mãe e inimiga? Mas isto é um delírio, leitor.'],['pan','Não te assustes, minha inimizade não mata; é sobretudo pela vida que se afirma. Vives: não quero outro flagelo.']],
   titulo:'Capítulo 7 · O Delírio',cita:'&mdash; Chama-me Natureza ou Pandora; sou tua mãe e tua inimiga. [&hellip;] &mdash; Não te assustes, disse ela, minha inimizade não mata; é sobretudo pela vida que se afirma. Vives: não quero outro flagelo.',fonte:FONTE+'7 (domínio público).',
-  q:{t:'Por que Pandora se apresenta ao mesmo tempo como "mãe" e "inimiga" de Brás?',o:['Porque pretende matá-lo e depois ressuscitá-lo.','Porque a Natureza dá a vida, mas a vida é feita de dor e de miséria: gera o homem e o faz sofrer.','Porque é uma deusa religiosa que ama os fiéis.','Porque Brás a ofendeu quando era criança.'],k:1,e:'Pandora gera a vida e, com ela, o sofrimento. Por isso o "flagelo" que ela quer é que Brás viva. É a visão pessimista do romance: viver é a pena.'}},
+  q:{t:'Por que Pandora se apresenta ao mesmo tempo como "mãe" e "inimiga" de Brás?',o:['Porque pretende matá-lo agora e depois ressuscitá-lo, para que viva mais uma vez.','Porque é uma deusa religiosa, que ama os fiéis e castiga os que duvidam dela.','Porque Brás a ofendeu quando era criança e ela jurou vingar-se dele um dia.','Porque a Natureza dá a vida, mas a vida é dor: gera o homem e o faz sofrer.'],k:3,e:'Pandora gera a vida e, com ela, o sofrimento. Por isso o "flagelo" que ela quer é que Brás viva. É a visão pessimista do romance: viver é a pena.'}},
  {dur:18,fala:[['pan','Sim, verme, tu vives. Provarás ainda, por algumas horas, o pão da dor e o vinho da miséria.'],['bras','A Natureza que eu conheço é só mãe e não inimiga!']],
   titulo:'Capítulo 7 · O Delírio',cita:'Nada mais quieto; nenhuma contorção violenta, nenhuma expressão de ódio ou ferocidade; a feição única, geral, completa, era a da impassibilidade egoísta, a da eterna surdez, a da vontade imóvel. [&hellip;] Natureza, tu? a Natureza que eu conheço é só mãe e não inimiga; não faz da vida um flagelo, nem, como tu, traz esse rosto indiferente, como o sepulcro.',fonte:FONTE+'7 (domínio público).',
-  q:{t:'Que visão de Natureza Machado contrapõe à da "Natureza que eu conheço é só mãe"?',o:['A Natureza romântica, sempre bondosa e acolhedora, contra uma natureza indiferente ao sofrimento humano ("impassibilidade egoísta", "eterna surdez").','Uma natureza que ama e protege os seres humanos.','Uma natureza vingativa, que odeia o homem.','Uma natureza que só existe nos sonhos.'],k:0,e:'Brás carrega a imagem romântica da natureza-mãe. Pandora mostra outra: surda, imóvel, indiferente à dor. É um traço do pessimismo e do determinismo do Realismo, que desfaz a natureza consoladora dos românticos.'}},
+  q:{t:'Que visão de Natureza Machado contrapõe à da "Natureza que eu conheço é só mãe"?',o:['Uma natureza que ama e protege os seres humanos, como faria uma mãe muito cuidadosa.','Uma natureza vingativa, que odeia o homem e o persegue por toda a sua vida terrena.','A Natureza romântica e bondosa, contra outra, indiferente ao sofrimento humano.','Uma natureza que só existe nos sonhos de Brás e que desaparece quando ele acorda.'],k:2,e:'Brás carrega a imagem romântica da natureza-mãe. Pandora mostra outra: surda, imóvel, indiferente à dor. É um traço do pessimismo e do determinismo do Realismo, que desfaz a natureza consoladora dos românticos.'}},
  {dur:20,fala:[['pan','Deixa de teimar. O que tens a dizer do que foste?'],['bras','Este último capítulo é todo de negativas, Pandora.']],
   titulo:'Capítulo 160 · Das Negativas',cita:'Este último capítulo é todo de negativas. Não alcancei a celebridade do emplasto, não fui ministro, não fui califa, não conheci o casamento. [&hellip;] Somadas umas coisas e outras, qualquer pessoa imaginará que não houve míngua nem sobra, e conseguintemente que sai quite com a vida. E imaginará mal; porque ao chegar a este outro lado do mistério, achei-me com um pequeno saldo, que é a derradeira negativa deste capítulo de negativas: &mdash; Não tive filhos, não transmiti a nenhuma criatura o legado da nossa miséria.',fonte:FONTE+'160 (domínio público).',
-  q:{t:'O que revela o "pequeno saldo" com que Brás encerra o livro?',o:['Que ele morreu satisfeito, orgulhoso das conquistas.','Que o balanço da vida é irônico e pessimista: não teve glória nem descendência, e o único "saldo" é não ter passado adiante "o legado da nossa miséria".','Que ele deixou uma grande herança aos sobrinhos.','Que Brás se arrepende de não ter inventado o emplasto.'],k:1,e:'Brás "contabiliza" a vida como quem fecha um livro-caixa e termina com uma negativa. A ironia amarga resume o pessimismo do romance: sem grandeza e sem esperança, a melhor coisa é não transmitir a miséria humana.'}}
+  q:{t:'O que revela o "pequeno saldo" com que Brás encerra o livro?',o:['Que ele morreu satisfeito e orgulhoso das conquistas que alcançou durante a vida inteira.','Que o balanço é irônico: sem glória nem filhos, o “saldo” é não ter transmitido a miséria.','Que ele deixou uma grande herança aos sobrinhos e à irmã, garantindo o futuro de todos.','Que Brás se arrepende de não ter inventado o emplasto que o tornaria famoso.'],k:1,e:'Brás "contabiliza" a vida como quem fecha um livro-caixa e termina com uma negativa. A ironia amarga resume o pessimismo do romance: sem grandeza e sem esperança, a melhor coisa é não transmitir a miséria humana.'}}
 ];
 const provas=()=>3-B.hp;
 function nearInter(){
@@ -252,12 +252,12 @@ function updatePlayer(dt){
 function thud2(){if(AC)tone(90,.07,.05,'sine')}
 function fall(){
   toast(pick(NARR.queda),3200);Z.lamps--;shake=.4;
-  if(Z.lamps<=0){Z.lamps=3;Z.pts=Math.max(0,Z.pts-50);toast('Sem lamparinas. O narrador recomeça o capítulo.',3200)}
+  if(Z.lamps<=0){Z.lamps=3;toast('Sem lamparinas. Você volta ao último ponto salvo, sem perder o que já conquistou.',3200)}
   P.x=cpX;P.y=G-200;P.vy=0;P.inv=1.6;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));hud();
 }
 function hit(){
   if(P.inv>0)return;Z.lamps--;P.inv=1.8;shake=.5;P.hurt=.4;thud();toast(pick(NARR.carimbo),3000);
-  if(Z.lamps<=0){Z.lamps=3;Z.pts=Math.max(0,Z.pts-50);P.x=cpX;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));toast('Sem lamparinas. O narrador recomeça o capítulo.',3200)}hud();
+  if(Z.lamps<=0){Z.lamps=3;P.x=cpX;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));toast('Sem lamparinas. Você volta ao último ponto salvo, sem perder o que já conquistou.',3200)}hud();
 }
 /* ============ Mundo ============ */
 function spawnAtk(r){
@@ -291,7 +291,14 @@ async function perguntar(){
   B.r++;B.ph='fight';B.t=0;B.sp=1;B.sp2=2;B.sp3=3;toast(['','A Natureza se enfurece: rajadas de frio.','Última rodada: as vinhas da Natureza.'][B.r],3200);hud();
 }
 /* ============ Desenho ============ */
-function drawBG(){
+function drawBGImg(){
+  const im=IMG.bgi;if(!im)return;
+  const h=Math.round(CH*1.08),w=Math.round(im.width*h/im.height),off=Math.max(0,w-CW)*Math.min(1,Math.max(0,camX/Math.max(1,WW-CW)));
+  ctx.save();ctx.beginPath();ctx.rect(0,0,CW,G);ctx.clip();ctx.drawImage(im,-off,CH-h,w,h);
+  const v=ctx.createLinearGradient(0,0,0,G);v.addColorStop(0,'rgba(20,10,5,.18)');v.addColorStop(1,'rgba(20,10,5,0)');ctx.fillStyle=v;ctx.fillRect(0,0,CW,G);ctx.restore();
+}
+function drawBG(){drawBGproc();drawBGImg()}
+function drawBGproc(){
   const sg=ctx.createLinearGradient(0,0,0,G);sg.addColorStop(0,'#1a1f33');sg.addColorStop(.55,'#6a7896');sg.addColorStop(1,'#d8dfe8');ctx.fillStyle=sg;ctx.fillRect(0,0,CW,CH);
   ctx.fillStyle='#fff6d8';ctx.beginPath();ctx.arc(150,110,44,0,7);ctx.fill();ctx.fillStyle='rgba(255,246,216,.12)';ctx.beginPath();ctx.arc(150,110,80,0,7);ctx.fill();
   ctx.fillStyle='#9aa8c0';ctx.beginPath();ctx.moveTo(0,G-60);for(let x=0;x<=CW;x+=60)ctx.lineTo(x,G-110-Math.abs(Math.sin(x*.013))*110);ctx.lineTo(CW,G-60);ctx.fill();

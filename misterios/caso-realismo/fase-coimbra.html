@@ -93,7 +93,7 @@ const $=id=>document.getElementById(id);
 const SAVE='caso_realismo_v1';
 const SRC={det:'../caso-originais/img/q1/detetive.webp',detF:'../caso-originais/img/q1/detetive-f.webp',bras:'img/q1/bras.webp',hipo:'img/q1/hipopotamo.webp',
  bg:'img/q1/bg-velorio.webp',bgd:'img/q1/bg-delirio.webp',retBras:'img/q1/ret-bras.webp',retDet:'../caso-originais/img/detetive.webp',retDetF:'../caso-originais/img/detetive-f.webp',
- bgi:'img/q1/bg-infancia.webp',marc:'img/q1/marcela.webp',retMarc:'img/q1/ret-marcela.webp'};
+ bgi:'img/q1/bg-estrada-coimbra.webp',marc:'img/q1/marcela.webp',retMarc:'img/q1/ret-marcela.webp',almo:'img/q1/almocreve.webp'};
 const OPCIONAL=['hq2','hq3','amigos','caixao','padre'];
 const IMG={};
 const SH={det:{w:269,h:232,s:.47},bras:{w:137,h:340,s:.37},hipo:{w:303,h:230,s:.6},marc:{w:242,h:340,s:.37}};
@@ -138,7 +138,7 @@ function setMute(m){muted=m;if(rainG)rainG.gain.value=m?0:.012;$('bMute').textCo
 let toastT=0;
 function toast(t,ms){const e=$('toast');e.textContent=t;e.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove('on'),ms||3200)}
 const NARR={queda:['Até a estrada de Coimbra tem as suas covas, leitor.','Caí. O jumento que me perdoe.','Um buraco na estrada é só um capítulo mais fundo.'],
- carimbo:['O jumento deu dois corcovos, depois mais três. O leitor, nenhum.','O Carimbo carimbou o leitor. Que falta de educação com quem lê.','Corrigido! Foi o que ele pensou. Foi o jumento ou foi o Carimbo? Pouca diferença faz.'],
+ carimbo:['O jumento deu dois corcovos, depois mais três. O leitor, nenhum.','O Carimbo riscou o leitor. Que falta de educação com quem lê.','Rasurado! Foi o que ele pensou. Foi o jumento ou foi o Carimbo? Pouca diferença faz.'],
  pag:['Uma moeda. Em breve o leitor vai decidir quanto vale a gratidão.','Moeda guardada. O almocreve ainda não sabe.']};
 const pick=a=>a[Math.floor(Math.random()*a.length)];
 function addPts(n,x,y){Z.pts+=n;floaters.push({x,y,t:0,s:'+'+n});hud()}
@@ -204,13 +204,13 @@ const INTER=[
    await say([['bras','Quinze meses de Marcela, e bastou a palavra "futuro" para ela desaparecer da minha cabeça. Veja como a ambição me arrumou.']]);
    await leitura({titulo:'Capítulo 20 · Bacharelo-me',cita:'Um grande futuro! Enquanto esta palavra me batia no ouvido, devolvia eu os olhos, ao longe, no horizonte misterioso e vago. Uma idéia expelia outra, a ambição desmontava Marcela. [&hellip;] Adeus, amores! adeus, Marcela; dias de delírio, jóias sem preço, vida sem regime, adeus. Cá me vou às fadigas e à glória.',
      fonte:FONTE+'20 (domínio público).',
-     q:{t:'O que a passagem mostra sobre o caráter de Brás?',o:['Que ele é um homem constante e fiel aos sentimentos.','Que seus sentimentos mudam rápido: a ambição de um "grande futuro" apaga o amor por Marcela quase de imediato.','Que ele nunca teve ambição.','Que Marcela era a responsável por seu sucesso.'],k:1,e:'"Uma ideia expelia outra, a ambição desmontava Marcela": o amor some assim que surge outro interesse. Machado desenha um narrador volúvel e egoísta, que troca a paixão pela ambição sem cerimônia.'}});
+     q:{t:'O que a passagem mostra sobre o caráter de Brás?',o:['Que ele é um homem constante, fiel aos sentimentos mesmo quando ambiciona.','Que ele nunca teve ambição e vivia apenas para os prazeres do momento.','Que seus sentimentos mudam depressa: a ambição apaga o amor por Marcela.','Que Marcela foi a única responsável pelo sucesso que ele teve depois.'],k:2,e:'"Uma ideia expelia outra, a ambição desmontava Marcela": o amor some assim que surge outro interesse. Machado desenha um narrador volúvel e egoísta, que troca a paixão pela ambição sem cerimônia.'}});
    F.ambicao=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'coimbra',x:1750,r:130,txt:'AÇÃO · Entrar na Universidade',done:()=>F.coimbra,act:async()=>{
    await say([['bras','Coimbra me esperava com as matérias árduas. Eu esperava a festa.']]);
    await leitura({titulo:'Capítulo 20 · Bacharelo-me',cita:'A Universidade esperava-me com as suas matérias árduas, e não sei se profundas; estudei-as muito mediocremente, e nem por isso perdi o grau de bacharel [&hellip;] Era um acadêmico estróina, superficial, tumultuário e petulante, dado às aventuras, fazendo romantismo prático e liberalismo teórico, vivendo na pura fé dos olhos pretos e das constituições escritas.',
      fonte:FONTE+'20 (domínio público).',
-     q:{t:'O que significa dizer que Brás fazia "romantismo prático e liberalismo teórico"?',o:['Que ele conciliava com maestria teoria e prática.','Que vivia o romantismo nas aventuras (na prática), mas o liberalismo só no discurso (na teoria): defendia ideias que não praticava.','Que estudava duas matérias ao mesmo tempo.','Que era um político liberal famoso em Coimbra.'],k:1,e:'Machado satiriza a incoerência da elite: liberal só nas palavras ("constituições escritas"), na prática vive de aventuras e privilégios. O diploma sai sem mérito, e o narrador sabe disso.'}});
+     q:{t:'O que significa dizer que Brás fazia "romantismo prático e liberalismo teórico"?',o:['Que ele conciliava com maestria a teoria e a prática em tudo o que fazia na faculdade.','Que ele era um político liberal famoso nas ruas e nas aulas de Coimbra.','Que ele estudava Direito de dia e se dedicava à literatura romântica à noite.','Era romântico na prática e liberal só na teoria: defendia o que não vivia.'],k:3,e:'Machado satiriza a incoerência da elite: liberal só nas palavras ("constituições escritas"), na prática vive de aventuras e privilégios. O diploma sai sem mérito, e o narrador sabe disso.'}});
    F.coimbra=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'almo',x:2600,r:140,txt:'AÇÃO · Falar com o almocreve',done:()=>F.almo,act:async()=>{
    await say([['alm','Olhe do que vosmecê escapou!'],['bras','O jumento empacou, corcoveou e me atirou ao chão. Este homem segurou a rédea e, talvez, tenha salvo a minha vida.'],['det','Quanto o senhor pagaria por isso?']]);
@@ -220,17 +220,54 @@ const INTER=[
    await say([['alm','Deus lhe pague, doutor.'],['narr',pago>=2?'Foi generoso, leitor. Eu comecei por três moedas e fui diminuindo, como você vai ver.':'Moderado, leitor. Eu comecei por três moedas de ouro e fui diminuindo, como você vai ver.']]);
    await leitura({titulo:'Capítulo 21 · O Almocreve',cita:'Resolvi dar-lhe três moedas de ouro das cinco que trazia comigo. [&hellip;] Examinei-lhe a roupa; era um pobre-diabo, que nunca jamais vira uma moeda de ouro. Portanto, uma moeda. [&hellip;] meti-lhe na mão um cruzado em prata [&hellip;] Meti os dedos no bolso do colete e senti umas moedas de cobre; eram os vinténs que eu devera ter dado ao almocreve, em lugar do cruzado em prata.',
      fonte:FONTE+'21 (domínio público).',
-     q:{t:'O que a cena revela sobre a gratidão de Brás?',o:['Que ele é generoso e não se arrepende de nada.','Que ele vai racionalizando e reduzindo a recompensa até se arrepender de ter dado até a prata: o interesse pessoal vence a gratidão.','Que o almocreve recusou o dinheiro.','Que Brás perdeu as moedas no caminho.'],k:1,e:'Brás parte de três moedas de ouro e vai se convencendo de que o almocreve não merece tanto, até chegar aos vinténs de cobre. Depois, no fim do capítulo, ainda tem "remorsos" por ter dado a prata. É uma sátira da avareza disfarçada de raciocínio.'}});
+     q:{t:'O que a cena revela sobre a gratidão de Brás?',o:['Que ele racionaliza e diminui a recompensa até se arrepender de ter dado a prata.','Que ele é generoso e não se arrepende de ter dado a recompensa ao almocreve.','Que o almocreve recusou o dinheiro, e Brás ficou sem entender a recusa.','Que Brás perdeu as moedas durante o caminho e culpou o almocreve pelo prejuízo.'],k:0,e:'Brás parte de três moedas de ouro e vai se convencendo de que o almocreve não merece tanto, até chegar aos vinténs de cobre. Depois, no fim do capítulo, ainda tem "remorsos" por ter dado a prata. É uma sátira da avareza disfarçada de raciocínio.'}});
    F.almo=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'volta',x:3200,r:140,txt:'AÇÃO · O locandeiro de Veneza',done:()=>F.volta,act:async()=>{
    await say([['bras','Passei alguns anos pela Europa. Não vou contar um diário de viagem, só a substância da vida. Mas um episódio eu conto.']]);
    await leitura({titulo:'Capítulo 22 · Volta ao Rio',cita:'Note-se que eu estava em Veneza, ainda recendente aos versos de lord Byron; lá estava, mergulhado em pleno sonho, revivendo o pretérito, crendo-me na Sereníssima República. É verdade; uma vez aconteceu-me perguntar ao locandeiro se o doge ia a passeio nesse dia. &mdash; Que doge, signor mio? Caí em mim, mas não confessei a ilusão.',
      fonte:FONTE+'22 (domínio público).',
-     q:{t:'O que a pergunta sobre o "doge" mostra?',o:['Que Brás era historiador especialista em Veneza.','Que o jovem, embriagado de Romantismo, vivia mais nos livros e versos do que na realidade, e é ridicularizado pelo próprio narrador.','Que o locandeiro era o doge disfarçado.','Que Brás queria ficar para sempre na Itália.'],k:1,e:'O doge já não existia: Brás vivia no passado dos versos de Byron. Machado ri do sentimentalismo romântico, e o narrador ri de si mesmo, o que reforça o Realismo irônico do livro.'}});
+     q:{t:'O que a pergunta sobre o "doge" mostra?',o:['Que Brás era historiador, especialista em Veneza e na história dos doges.','Que o jovem, embriagado de Romantismo, vive mais nos livros que na vida.','Que o locandeiro era o próprio doge, disfarçado para testar o viajante.','Que Brás queria ficar para sempre na Itália, longe da família e do Brasil.'],k:1,e:'O doge já não existia: Brás vivia no passado dos versos de Byron. Machado ri do sentimentalismo romântico, e o narrador ri de si mesmo, o que reforça o Realismo irônico do livro.'}});
    F.volta=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'porta',x:3500,r:140,txt:'AÇÃO · Embarcar de volta ao Rio',cond:()=>provas()===NP,act:async()=>{
    await say([['bras','"Vem; se não vieres depressa acharás tua mãe morta!", escrevia meu pai. Disparei como uma bala na direção do Rio de Janeiro.']]);startCine()}}
 ];
+/* ===== Trechos do livro (opcionais): citações nas páginas + painéis rasurados ===== */
+const FRAGS=[[20, "A ambição, dado que fosse águia, quebrou nessa ocasião o ovo, e desvendou a pupila fulva e penetrante."], [20, "Adeus, amores! adeus, Marcela; dias de delírio, joias sem preço, vida sem regime, adeus."], [22, "Teria de escrever um diário de viagem e não umas memórias, como estas são, nas quais só entra a substância da vida."], [22, "Jumento de uma figa, cortaste-me o fio às reflexões."], [21, "O almocreve salvara-me talvez a vida; era positivo; eu sentia-o no sangue que me agitava o coração."], [20, "E foi assim que desembarquei em Lisboa e segui para Coimbra."]];
+const RASURAS=[{"cap": 20, "a": "Uma ideia expelia outra, a ambição desmontava", "k": "Marcela", "b": ".", "o": ["Lisboa", "Coimbra", "Marcela"]}, {"cap": 20, "a": "Explico-me: o diploma era uma carta de", "k": "alforria", "b": "; se me dava a liberdade, dava-me a responsabilidade.", "o": ["recomendação", "alforria", "apresentação"]}];
+function pageQuote(n){if(n<2)return;const q=FRAGS[n-2];if(q)toast('\u201c'+q[1]+'\u201d  \u2014 Machado de Assis, cap. '+q[0],Math.min(9500,3800+q[1].length*38))}
+function rasura(c){return new Promise(res=>{
+  const prev=state;state='modal';
+  ov('<h2>Trecho rasurado \u00b7 cap. '+c.cap+'</h2><p>O Carimbo riscou uma palavra do livro. Qual delas completa a frase?</p><div class="cita">'+c.a+' <span id="rs" style="background:#1a0f0a;color:#1a0f0a;border-radius:3px;padding:0 .5em;letter-spacing:.1em;border:1px solid #8b73bd">\u2588\u2588\u2588\u2588\u2588\u2588</span>'+c.b+'</div><div id="lq"></div>');
+  let h='';c.o.slice().sort(()=>Math.random()-.5).forEach(x=>h+='<button class="opt">'+x+'</button>');$('lq').innerHTML=h;let tries=0;
+  $('lq').querySelectorAll('.opt').forEach(bt=>bt.onclick=()=>{
+    if(bt.textContent===c.k){bt.classList.add('ok');$('lq').querySelectorAll('.opt').forEach(x=>x.disabled=true);
+      const r=$('rs');r.textContent=c.k;r.style.cssText='color:#ffd98a;font-weight:bold;border-bottom:2px solid #ffd98a';
+      $('lq').insertAdjacentHTML('beforeend','<p>Frase restaurada. Machado de Assis, <i>Memórias Póstumas de Brás Cubas</i>, cap. '+c.cap+' (domínio público).</p><button class="btn" id="lok">Continuar</button>');
+      addPts(tries===0?60:20,P.x-camX,P.y-120);tone(660,.1,.05,'triangle');tone(990,.14,.04,'triangle');
+      $('lok').onclick=()=>{ovClose();state=prev;res(true)}}
+    else{tries++;bt.classList.add('bad');bt.disabled=true;blip(-3);toast('Releia a frase: qual palavra faz sentido aqui?',1800)}});
+})}
+const RAS_BOARDS=[];
+(function rasInit(){
+  const fr=[.27,.56];
+  RASURAS.forEach((c,i)=>{
+    let x=null,bd=1e9;for(const [pm,im] of [[75,150],[60,120],[45,95]]){for(let t=450;t<WW-350;t+=10){if(!onGround(t-70)||!onGround(t)||!onGround(t+70))continue;if(PLAT.some(p=>t>p.x-pm&&t<p.x+p.w+pm))continue;if(INTER.some(n=>Math.abs(n.x-t)<im))continue;if(RAS_BOARDS.some(r=>Math.abs(r.x-t)<650))continue;const d=Math.abs(t-WW*fr[i]);if(d<bd){bd=d;x=t}}if(x!=null)break}
+    if(x==null)return;const b={x,c,done:false};RAS_BOARDS.push(b);
+    INTER.push({id:'ras'+i,x,r:100,txt:'AÇÃO \u00b7 Ler o trecho rasurado (opcional)',done:()=>b.done,act:async()=>{await rasura(c);b.done=true;Z.ras=(Z.ras||0)+1;toast('Trecho restaurado e anotado no seu caderno.',2500)}});
+  });
+})();
+function drawRasuras(){
+  ctx.save();ctx.translate(-camX,0);
+  for(const b of RAS_BOARDS){if(b.x<camX-120||b.x>camX+CW+120)continue;const x=b.x,pulse=.5+.5*Math.sin(T*3+x);
+    ctx.fillStyle='#3a2616';ctx.fillRect(x-4,G-76,8,76);
+    ctx.save();ctx.translate(x,G-112);ctx.rotate(-.04);ctx.fillStyle='#efe0bd';ctx.fillRect(-52,-34,104,68);ctx.strokeStyle='#7a5a30';ctx.lineWidth=2;ctx.strokeRect(-52,-34,104,68);
+    ctx.fillStyle='#7a5a30';for(let i=0;i<4;i++)ctx.fillRect(-42,-24+i*14,84-(i%2)*18,3);
+    if(!b.done){ctx.fillStyle='#1a0f0a';ctx.fillRect(-18,-10,44,14);ctx.fillStyle='rgba(255,80,60,'+(.25+.35*pulse)+')';ctx.fillRect(-18,-10,44,14)}
+    else{ctx.fillStyle='#2f7a43';ctx.font='bold 24px sans-serif';ctx.textAlign='center';ctx.fillText('\u2713',0,9)}
+    ctx.restore();
+    if(!b.done){const g=ctx.createRadialGradient(x,G-112,6,x,G-112,90);g.addColorStop(0,'rgba(255,200,110,'+(.25*pulse)+')');g.addColorStop(1,'rgba(255,200,110,0)');ctx.fillStyle=g;ctx.fillRect(x-90,G-202,180,180)}}
+  ctx.restore();
+}
 const provas=()=>[F.ped,F.ambicao,F.coimbra,F.almo,F.volta].filter(Boolean).length;
 function nearInter(){
   let best=null,bd=1e9;
@@ -261,29 +298,47 @@ function updatePlayer(dt){
 function thud2(){if(AC)tone(90,.07,.05,'sine')}
 function fall(){
   toast(pick(NARR.queda),3200);Z.lamps--;shake=.4;
-  if(Z.lamps<=0){Z.lamps=3;Z.pts=Math.max(0,Z.pts-50);toast('Sem lamparinas. O narrador recomeça o capítulo.',3200)}
+  if(Z.lamps<=0){Z.lamps=3;toast('Sem lamparinas. Você volta ao último ponto salvo, sem perder o que já conquistou.',3200)}
   P.x=cpX;P.y=G-200;P.vy=0;P.inv=1.6;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));hud();
 }
 function hit(){
   if(P.inv>0)return;Z.lamps--;P.inv=1.8;shake=.5;P.hurt=.4;thud();toast(pick(NARR.carimbo),3000);
-  if(Z.lamps<=0){Z.lamps=3;Z.pts=Math.max(0,Z.pts-50);P.x=cpX;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));toast('Sem lamparinas. O narrador recomeça o capítulo.',3200)}hud();
+  if(Z.lamps<=0){Z.lamps=3;P.x=cpX;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));toast('Sem lamparinas. Você volta ao último ponto salvo, sem perder o que já conquistou.',3200)}hud();
 }
 /* ============ Mundo ============ */
-function updateWorld(dt){
+/* ===== Progresso salvo no meio da zona (perder não volta ao início) ===== */
+const PROGKEY='caso_realismo_prog_'+(location.pathname.split('/').pop()||'zona');let lastSave=0;
+function saveCP(){try{localStorage.setItem(PROGKEY,JSON.stringify({cp:cpX,Z:{pts:Z.pts,pages:Z.pages,leit:Z.leit,ras:Z.ras||0},F,pg:PAGES.map(g=>g.got?1:0),rb:RAS_BOARDS.map(b=>b.done?1:0)}))}catch(e){}}
+function autoCP(){
+  if(state!=='play')return;
+  if(P.y>=G-2&&P.inv<=0&&P.x>cpX+300&&onGround(P.x-40)&&onGround(P.x+40)){
+    cpX=P.x-60;saveCP();if(!window.__cpT){window.__cpT=1;toast('Ponto salvo: se perder, você volta daqui, não do início.',3500)}}
+  else if(T-lastSave>1){lastSave=T;saveCP()}
+}
+function updateWorld(dt){autoCP();
   stampT-=dt;
   jumT-=dt;if(jumT<=0&&P.x>600&&P.x<3350){jumentos.push({x:camX+CW+120,v:-(330+Math.random()*80),t:0,d:0});jumT=5.5+Math.random()*3}
   for(const j of jumentos){j.x+=j.v*dt;j.t+=dt;if(!j.d&&Math.abs(P.x-j.x)<46&&P.y>G-46){j.d=1;hit()}}
   jumentos=jumentos.filter(j=>j.x>camX-200);
-  if(stampT<=0&&P.x>650&&P.x<3350){stamps.push({x:P.x+P.vx*.55+(Math.random()-.5)*60,t:0});stampT=5+Math.random()*2.5}
-  for(const s of stamps){s.t+=dt;if(s.t>.9&&s.t<1.12&&!s.d){s.d=1;shake=.35;thud();marks.push({x:s.x,t:5});if(Math.abs(P.x-s.x)<52&&!(P.y<G-210))hit()}}
-  stamps=stamps.filter(s=>s.t<1.9);marks=marks.filter(m=>(m.t-=dt)>0);
-  for(const g of PAGES){if(!g.got&&Math.abs(P.x-g.x)<34&&Math.abs((P.y-46)-g.y)<52){g.got=true;Z.pages++;addPts(g.k==='o'?40:15,g.x-camX,g.y);tone(880,.06,.05,'square');tone(1320,.12,.04,'square');if(Z.pages===1)toast(pick(NARR.pag),3000);if(Z.pages===11)toast('Onze moedas. O almocreve vai ficar rico, ou não.',3500);hud()}}
+  if(stampT<=0&&P.x>650&&P.x<3350&&!stamps.length){stamps.push({dir:Math.random()<.5?1:-1,t:0,x:0,sx:0});stampT=5+Math.random()*2.5;
+    if(!window.__pen){window.__pen=1;toast('O Carimbo riscou o chão com o lápis vermelho: PULE a rasura!',3600)}}
+  for(const s of stamps){s.t+=dt;if(s.t>1.1){if(!s.go){s.go=1;s.sx=s.dir>0?camX-80:camX+CW+80;s.x=s.sx;thud()}s.x+=s.dir*540*dt;
+      if(!s.d&&Math.abs(P.x-s.x)<40&&P.y>G-34){s.d=1;shake=.3;hit()}}}
+  stamps=stamps.filter(s=>!s.go||(s.dir>0?s.x<camX+CW+160:s.x>camX-160));marks=[];
+  for(const g of PAGES){if(!g.got&&Math.abs(P.x-g.x)<34&&Math.abs((P.y-46)-g.y)<52){g.got=true;Z.pages++;pageQuote(Z.pages);addPts(g.k==='o'?40:15,g.x-camX,g.y);tone(880,.06,.05,'square');tone(1320,.12,.04,'square');if(Z.pages===1)toast(pick(NARR.pag),3000);if(Z.pages===11)toast('Onze moedas. O almocreve vai ficar rico, ou não.',3500);hud()}}
   if(provas()===NP&&!F.porta){F.porta=true;toast('O cais está aberto. Hora de voltar ao Rio.',4000)}
   floaters.forEach(f=>f.t+=dt);floaters=floaters.filter(f=>f.t<1.2);
   shake=Math.max(0,shake-dt);
 }
 /* ============ Desenho ============ */
-function drawBG(){
+function drawBGImg(){
+  const im=IMG.bgi;if(!im)return;
+  const h=Math.round(CH*1.08),w=Math.round(im.width*h/im.height),off=Math.max(0,w-CW)*Math.min(1,Math.max(0,camX/Math.max(1,WW-CW)));
+  ctx.save();ctx.beginPath();ctx.rect(0,0,CW,G);ctx.clip();ctx.drawImage(im,-off,CH-h,w,h);
+  const v=ctx.createLinearGradient(0,0,0,G);v.addColorStop(0,'rgba(20,10,5,.18)');v.addColorStop(1,'rgba(20,10,5,0)');ctx.fillStyle=v;ctx.fillRect(0,0,CW,G);ctx.restore();
+}
+function drawBG(){drawBGproc();drawBGImg()}
+function drawBGproc(){
   const sg=ctx.createLinearGradient(0,0,0,G);sg.addColorStop(0,'#6fb0e8');sg.addColorStop(.7,'#bfe0f0');sg.addColorStop(1,'#f4e6c0');ctx.fillStyle=sg;ctx.fillRect(0,0,CW,CH);
   ctx.fillStyle='rgba(255,255,255,.85)';for(let i=0;i<6;i++){const x=((i*260-camX*.08+T*6)%(CW+300)+CW+300)%(CW+300)-150,y=60+(i*47)%110;ctx.beginPath();ctx.ellipse(x,y,70,16,0,0,7);ctx.ellipse(x+40,y-8,50,14,0,0,7);ctx.ellipse(x-40,y-4,42,12,0,0,7);ctx.fill()}
   const hill=(k,c,a,b)=>{ctx.fillStyle=c;ctx.beginPath();ctx.moveTo(0,G);for(let x=0;x<=CW;x+=20){const wx=x+camX*k;ctx.lineTo(x,G-a-Math.sin(wx*.004)*b-Math.sin(wx*.011)*b*.4)}ctx.lineTo(CW,G);ctx.closePath();ctx.fill()};
@@ -324,8 +379,10 @@ function drawFigures(){
   const ax=2600,b=Math.sin(T*2)*1.5;
   ctx.fillStyle='#8a8478';ctx.beginPath();ctx.ellipse(ax+40,G-48,40,22,0,0,7);ctx.fill();ctx.beginPath();ctx.ellipse(ax+82,G-70,14,18,.4,0,7);ctx.fill();ctx.fillRect(ax+76,G-100,6,22);ctx.fillRect(ax+86,G-98,6,22);
   ctx.fillStyle='#6a665c';for(const lx of [ax+14,ax+26,ax+56,ax+68])ctx.fillRect(lx,G-32,7,32);ctx.fillStyle='#222';ctx.beginPath();ctx.arc(ax+88,G-72,2,0,7);ctx.fill();
+  if(IMG.almo){const k=IMG.almo,s2=128/k.height;ctx.drawImage(k,ax-14-k.width*s2/2,G-126+b,k.width*s2,128)}else{
   ctx.fillStyle='#5a3a22';ctx.fillRect(ax-28,G-98+b,34,70);ctx.fillStyle='#e8c9a4';ctx.beginPath();ctx.arc(ax-11,G-110+b,12,0,7);ctx.fill();ctx.fillStyle='#8a6a3a';ctx.fillRect(ax-26,G-124+b,30,6);ctx.fillRect(ax-18,G-132+b,14,10);
   ctx.fillStyle='#3a2a1a';ctx.fillRect(ax-26,G-30,12,30);ctx.fillRect(ax-10,G-30,12,30);
+  }
   /* estalagem em Veneza */
   const vx=3200;ctx.fillStyle='#d0a070';ctx.fillRect(vx-70,G-130,140,130);ctx.fillStyle='#8f3d27';ctx.beginPath();ctx.moveTo(vx-82,G-130);ctx.lineTo(vx,G-176);ctx.lineTo(vx+82,G-130);ctx.closePath();ctx.fill();
   ctx.fillStyle='#4a3a28';ctx.fillRect(vx-18,G-76,36,76);ctx.fillStyle='rgba(255,215,130,.85)';ctx.fillRect(vx-56,G-100,26,30);ctx.fillRect(vx+30,G-100,26,30);
@@ -347,7 +404,7 @@ function drawBras(){
   ctx.restore();
 }
 function drawHipo(){}
-function drawPages(){
+function drawPages(){drawRasuras();
   ctx.save();ctx.translate(-camX,0);
   for(const g of PAGES){if(g.got)continue;const y=g.y+Math.sin(T*2+g.x)*4,w=Math.abs(Math.cos(T*2.4+g.x*.01)),o=g.k==='o';ctx.save();ctx.translate(g.x,y);
     ctx.shadowColor=o?'#ffd98a':'#d08a50';ctx.shadowBlur=12;ctx.fillStyle=o?'#e3a84a':'#b0703a';ctx.beginPath();ctx.ellipse(0,0,(o?13:10)*Math.max(.25,w),o?13:10,0,0,7);ctx.fill();ctx.shadowBlur=0;
@@ -372,14 +429,18 @@ function drawLight(){
   ctx.save();ctx.globalCompositeOperation='lighter';const g=ctx.createRadialGradient(x,y,4,x,y,210);g.addColorStop(0,'rgba(255,200,110,.45)');g.addColorStop(.5,'rgba(255,150,50,.14)');g.addColorStop(1,'rgba(255,120,30,0)');ctx.fillStyle=g;ctx.fillRect(x-210,y-210,420,420);ctx.restore();
 }
 function drawStamps(){
-  ctx.save();ctx.translate(-camX,0);
   for(const s of stamps){
-    if(s.t<.9){const a=.25+.35*Math.sin(s.t*14)**2;ctx.fillStyle='rgba(200,30,20,'+a+')';ctx.beginPath();ctx.ellipse(s.x,G,54,10,0,0,7);ctx.fill();
-      ctx.strokeStyle='rgba(255,80,60,'+a+')';ctx.lineWidth=2;ctx.setLineDash([6,6]);ctx.beginPath();ctx.moveTo(s.x-50,60);ctx.lineTo(s.x-50,G);ctx.moveTo(s.x+50,60);ctx.lineTo(s.x+50,G);ctx.stroke();ctx.setLineDash([])}
-    else if(s.t<1.2){const p=Math.min(1,(s.t-.9)/.1);const y=-200+(G-6+200)*p;ctx.fillStyle='#b8261a';ctx.fillRect(s.x-52,y-60,104,60);ctx.fillStyle='#7c1710';ctx.fillRect(s.x-12,y-140,24,82);
-      ctx.fillStyle='#f4d9c8';ctx.font='bold 14px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText('CORRIGIDO',s.x,y-24)}
+    if(!s.go){const a=.3+.5*Math.sin(s.t*16)**2,ex=s.dir>0?30:CW-30;
+      ctx.save();ctx.fillStyle='rgba(200,30,20,'+a+')';ctx.fillRect(s.dir>0?0:CW-60,G-34,60,30);ctx.fillStyle='#fff3e0';ctx.font='bold 22px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText(s.dir>0?'\u00bb!':'!\u00ab',ex,G-12);
+      ctx.fillStyle='rgba(255,70,50,'+a*.55+')';ctx.fillRect(0,G-5,CW,3);ctx.restore()}
+    else{ctx.save();ctx.translate(-camX,0);
+      const n=Math.floor(Math.abs(s.x-s.sx)/12);ctx.strokeStyle='#c4271a';ctx.lineWidth=5;ctx.lineJoin='round';ctx.beginPath();
+      for(let i=0;i<=n;i++){const x=s.sx+s.dir*i*12,y=G-14+((i%2)?-11:11)+Math.sin(T*30+i)*2;if(i)ctx.lineTo(x,y);else ctx.moveTo(x,y)}ctx.stroke();
+      ctx.translate(s.x,G-24);ctx.scale(s.dir,1);ctx.rotate(.55);
+      ctx.fillStyle='#e8b830';ctx.fillRect(-58,-6,50,12);ctx.fillStyle='#b8261a';ctx.fillRect(-66,-6,8,12);ctx.fillStyle='#d8b890';ctx.beginPath();ctx.moveTo(-8,-6);ctx.lineTo(14,0);ctx.lineTo(-8,6);ctx.closePath();ctx.fill();
+      ctx.fillStyle='#c4271a';ctx.beginPath();ctx.moveTo(6,-2.5);ctx.lineTo(14,0);ctx.lineTo(6,2.5);ctx.closePath();ctx.fill();
+      ctx.restore()}
   }
-  ctx.restore();
 }
 function drawRain(dt){
   ctx.save();ctx.globalCompositeOperation='lighter';
@@ -428,7 +489,8 @@ function iniciar(){
    '<p style="font-size:.85em;color:var(--muted)">Setas ou A/D: andar · Espaço: pular (duplo) · C: lamparina · E: ação · Esc: pausa. No celular, use os botões na tela.</p><button class="btn" id="go">Começar</button><button class="btn sec" id="back">Voltar ao Arquivo</button>');
   $('gM').onclick=()=>{S.gen='m';$('gM').classList.add('on');$('gF').classList.remove('on')};$('gF').onclick=()=>{S.gen='f';$('gF').classList.add('on');$('gM').classList.remove('on')};
   $('back').onclick=()=>{location.href='../index.html'};
-  $('go').onclick=()=>{S.nome=($('iN').value||'').trim()||'Detetive';S.turma=($('iT').value||'').trim();audio();setMute(muted);comecar()};
+  $('go').onclick=()=>{S.nome=($('iN').value||'').trim()||'Detetive';S.turma=($('iT').value||'').trim();audio();setMute(muted);comecar();if(window.__restored)toast('Progresso restaurado: você continua de onde parou.',5000)};
+  if(window.__restored){$('go').insertAdjacentHTML('afterend','<button class="btn sec" id="zero">Recomeçar do início</button>');$('zero').onclick=()=>{try{localStorage.removeItem(PROGKEY)}catch(e){}location.reload()}}
 }
 
 
@@ -437,7 +499,7 @@ function comecar(){
   ovClose();state='play';$('hud').classList.remove('hidden');hud();
   say([['narr','Desembarquei em Lisboa e segui para Coimbra, leitor, com cinco moedas de ouro no colete. Procure a página rasgada com a lamparina (segure C), pule os jumentos desembestados e leia o que me aconteceu. Depois, o cais.']]);
 }
-function fim(){
+function fim(){try{localStorage.removeItem(PROGKEY)}catch(e){}
   state='end';$('hud').classList.add('hidden');
   const pct=Math.round((Z.leit/Z.tot)*100);
   try{const o=JSON.parse(localStorage.getItem(SAVE)||'{}');o.zonas=o.zonas||{};o.found=o.found||{};o.done=o.done||[];
@@ -484,6 +546,11 @@ function loop(ts){
   render(dt);
 }
 window.__t={P,F,Z,PAGES,INTER,get state(){return state},set state(v){state=v},get camX(){return camX},set camX(v){camX=v},provas,startCine,fim,K};
+(function restaurarProg(){try{const r=JSON.parse(localStorage.getItem(PROGKEY)||'null');if(!r||!(r.cp>0))return;
+  cpX=r.cp;P.x=r.cp;camX=Math.max(0,Math.min(WW-CW,P.x-CW*.42));Object.assign(Z,r.Z||{});Object.assign(F,r.F||{});
+  (r.pg||[]).forEach((v,i)=>{if(v&&PAGES[i])PAGES[i].got=true});(r.rb||[]).forEach((v,i)=>{if(v&&RAS_BOARDS[i])RAS_BOARDS[i].done=true});
+  if(typeof hipo!=='undefined'&&F.hipo){hipo.on=true;hipo.landed=true;hipo.x=3440;hipo.y=G-64}
+  window.__restored=1}catch(e){}})();
 loadAll(()=>{requestAnimationFrame(loop);iniciar();hud()});
 </script>
 </body>

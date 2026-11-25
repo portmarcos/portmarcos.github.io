@@ -137,7 +137,7 @@ function setMute(m){muted=m;if(rainG)rainG.gain.value=m?0:.012;$('bMute').textCo
 let toastT=0;
 function toast(t,ms){const e=$('toast');e.textContent=t;e.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove('on'),ms||3200)}
 const NARR={queda:['Quem corre atrás do amor cai em muita cova, leitor.','Caí. Os onze contos que me perdoem.','Uma cova na rua é só um capítulo mais fundo.'],
- carimbo:['O Carimbo carimbou o leitor. Que falta de educação com quem lê.','Corrigido! Foi o que ele pensou. O Carimbo é a palmatória da crítica.'],
+ carimbo:['O Carimbo riscou o leitor. Que falta de educação com quem lê.','Rasurado! Foi o que ele pensou. O Carimbo é a palmatória da crítica.'],
  pag:['Um conto de réis. Em breve ele não será mais seu.','Moeda guardada. Marcela já sabe quanto você tem.']};
 const pick=a=>a[Math.floor(Math.random()*a.length)];
 function addPts(n,x,y){Z.pts+=n;floaters.push({x,y,t:0,s:'+'+n});hud()}
@@ -203,25 +203,25 @@ const INTER=[
    await say([['bras','Dezessete anos, botas, esporas e chicote. Eu era um corcel de balada, leitor. Foi na noite das luminárias que vi Marcela.']]);
    await leitura({titulo:'Capítulo 14 · O Primeiro Beijo',cita:'Ao cabo, era um lindo garção, lindo e audaz, que entrava na vida de botas e esporas, chicote na mão e sangue nas veias, cavalgando um corcel nervoso, rijo, veloz, como o corcel das antigas baladas, que o romantismo foi buscar ao castelo medieval [&hellip;] O pior é que o estafaram a tal ponto, que foi preciso deitá-lo à margem, onde o realismo o veio achar, comido de lazeira e vermes, e, por compaixão, o transportou para os seus livros.',
      fonte:FONTE+'14 (domínio público).',
-     q:{t:'O que Machado ironiza ao dizer que o realismo achou o "corcel" do romantismo "comido de lazeira e vermes"?',o:['Que o Romantismo foi bem-sucedido e ainda tinha muito a oferecer.','Que as convenções românticas (o herói de balada, o amor idealizado) se desgastaram de tanto uso, e o Realismo as recebe já esgotadas.','Que Brás Cubas era um autêntico cavaleiro medieval.','Que o Realismo nunca usou cavalos em seus livros.'],k:1,e:'O "corcel das antigas baladas" é o amor idealizado do Romantismo. Machado diz que ele foi tão usado que o Realismo o encontrou arruinado e o recolheu "por compaixão". É uma brincadeira que também funciona como crítica literária dentro do romance.'}});
+     q:{t:'O que Machado ironiza ao dizer que o realismo achou o "corcel" do romantismo "comido de lazeira e vermes"?',o:['Que o Romantismo foi bem-sucedido e ainda tinha muito a oferecer aos escritores.','Que as convenções românticas se desgastaram de tanto uso e chegam esgotadas ao Realismo.','Que Brás Cubas era um autêntico cavaleiro medieval e montava um corcel de verdade.','Que o Realismo nunca usou cavalos nos seus livros por preferir cenas urbanas.'],k:1,e:'O "corcel das antigas baladas" é o amor idealizado do Romantismo. Machado diz que ele foi tão usado que o Realismo o encontrou arruinado e o recolheu "por compaixão". É uma brincadeira que também funciona como crítica literária dentro do romance.'}});
    F.rossio=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'asno',x:1750,r:130,txt:'AÇÃO · Ler sobre o asno da paciência',done:()=>F.asno,act:async()=>{
    await say([['bras','Do corcel passei ao asno. Gastei trinta dias para chegar ao coração dela, e muito mais para chegar ao fim da herança de meu pai.']]);
    await leitura({titulo:'Capítulo 15 · Marcela',cita:'Gastei trinta dias para ir do Rossio Grande ao coração de Marcela, não já cavalgando o corcel do cego desejo, mas o asno da paciência, a um tempo manhoso e teimoso. [&hellip;] Era meu universo; mas, ai triste! não o era de graça. Foi-me preciso coligir dinheiro, multiplicá-lo, inventá-lo.',
      fonte:FONTE+'15 (domínio público).',
-     q:{t:'O que a troca do "corcel" pelo "asno" indica sobre essa paixão?',o:['Que a conquista foi rápida e exigiu coragem física.','Que o amor deixou de ser arrebatamento romântico e passou a exigir paciência e, principalmente, dinheiro.','Que Marcela preferia animais a rapazes.','Que Brás desistiu de Marcela logo no início.'],k:1,e:'O cavalo (arrebatamento) dá lugar ao asno (paciência e teimosia). E logo a seguir o narrador confessa que o amor "não era de graça": foi preciso arranjar dinheiro. O Realismo mostra o interesse por trás do sentimento.'}});
+     q:{t:'O que a troca do "corcel" pelo "asno" indica sobre essa paixão?',o:['Que a conquista foi rápida e exigiu muita coragem física do jovem apaixonado.','Que Marcela preferia a companhia de animais à de rapazes, e por isso o dispensou.','Que Brás desistiu de Marcela logo no início, por falta de dinheiro e de ânimo.','Que o amor deixou de ser arrebatamento e passou a exigir paciência e dinheiro.'],k:3,e:'O cavalo (arrebatamento) dá lugar ao asno (paciência e teimosia). E logo a seguir o narrador confessa que o amor "não era de graça": foi preciso arranjar dinheiro. O Realismo mostra o interesse por trás do sentimento.'}});
    F.asno=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'reflex',x:2600,r:130,txt:'AÇÃO · Uma reflexão imoral',done:()=>F.reflex,act:async()=>{
    await say([['bras','Cuidado, leitor: o próximo capítulo é uma "reflexão imoral". Eu mesmo confesso que ela é mais obscura do que imoral.']]);
    await leitura({titulo:'Capítulo 16 · Uma Reflexão Imoral',cita:'Cuido haver dito, no capítulo 13, que Marcela morria de amores pelo Xavier. Não morria, vivia. Viver não é a mesma coisa que morrer; assim o afirmam todos os joalheiros desse mundo, gente muito vista na gramática. Bons joalheiros, que seria do amor se não fossem os vossos dixes e fiados?',
      fonte:FONTE+'16 (domínio público).',
-     q:{t:'O que Brás quer dizer com "Não morria, vivia" e com a referência aos joalheiros?',o:['Que Marcela era saudável e não corria perigo de vida.','Que o amor de Marcela vivia de joias e presentes, e os joalheiros sabem disso melhor do que ninguém.','Que Xavier morreu pouco depois.','Que Marcela odiava joias.'],k:1,e:'O jogo de palavras (morrer de amores / viver) leva ao comércio: o "amor" de Marcela se sustenta pelos presentes que ganha. Os joalheiros, que vendem os "dixes e fiados", são a testemunha irônica. É a crítica ao interesse econômico por trás do sentimento.'}});
+     q:{t:'O que Brás quer dizer com "Não morria, vivia" e com a referência aos joalheiros?',o:['Que o amor de Marcela vivia de joias e presentes, como bem sabem os joalheiros.','Que Marcela era muito saudável e não corria perigo de vida, apesar das aparências.','Que Xavier morreu pouco depois e deixou a fortuna inteira para Marcela, a viúva.','Que Marcela odiava joias e preferia receber dinheiro em espécie dos amantes.'],k:0,e:'O jogo de palavras (morrer de amores / viver) leva ao comércio: o "amor" de Marcela se sustenta pelos presentes que ganha. Os joalheiros, que vendem os "dixes e fiados", são a testemunha irônica. É a crítica ao interesse econômico por trás do sentimento.'}});
    F.reflex=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'contos',x:3200,r:140,txt:'AÇÃO · Falar com Marcela',done:()=>F.contos,act:async()=>{
    await say([['marc','Ah, é você. Trouxe a joia que prometeu, ou veio de novo me falar de amor?'],['bras','Foi nesse ponto que meu pai descobriu os meus onze contos de réis, leitor. A salva de prata em que o refresco me foi servido fazia parte da conta.'],['marc','Seu pai quer mandá-lo para a Europa? Que pena. Não posso ir: meu pobre pai morreu por Napoleão.'],['det','Qual pai, o hortelão ou o advogado?'],['marc','Não me aborreça.']]);
    await leitura({titulo:'Capítulo 17 · Do Trapézio e Outras Coisas',cita:'Marcela amou-me durante quinze meses e onze contos de réis; nada menos. [&hellip;] Trouxe-lho a mucama, numa salva de prata, que fazia parte dos meus onze contos.',
      fonte:FONTE+'17 (domínio público).',
-     q:{t:'Qual é o efeito de medir o amor em "quinze meses e onze contos de réis"?',o:['Mostra que o narrador era exato e econômico em tudo.','Trata o amor como negócio: ele é contado em tempo e dinheiro, e o "nada menos" reforça a ironia.','Revela que Marcela devolveu o dinheiro ao final.','Indica que Brás ainda tinha esperança de ser correspondido.'],k:1,e:'A precisão contábil ("nada menos") é o humor ácido de Machado: o romance de Brás vira uma conta. A ironia atinge a ideia de amor romântico, mostrando que, para Marcela, o afeto tinha preço.'}});
+     q:{t:'Qual é o efeito de medir o amor em "quinze meses e onze contos de réis"?',o:['Mostra que o narrador era exato, econômico e muito organizado em tudo o que fazia na vida.','Revela que Marcela devolveu o dinheiro ao final, arrependida de tudo o que havia feito.','Trata o amor como negócio, contado em tempo e dinheiro; o “nada menos” reforça a ironia.','Indica que Brás ainda tinha esperança de ser correspondido e de reatar a relação.'],k:2,e:'A precisão contábil ("nada menos") é o humor ácido de Machado: o romance de Brás vira uma conta. A ironia atinge a ideia de amor romântico, mostrando que, para Marcela, o afeto tinha preço.'}});
    await new Promise(r=>{const pv=state;state='modal';ov('<h2>"Não me aborreça."</h2><p>Marcela acaba de dizer isso e vai para a alcova. Como você reage?</p><button class="opt" id="c1">Sair com dignidade, sem implorar e sem gritar.</button><button class="opt" id="c2">Implorar, como o Brás do livro: "não hás de entrar".</button>');
      $('c1').onclick=()=>{F.digno=true;addPts(100,CW/2,200);ovClose();state=pv;r()};$('c2').onclick=()=>{ovClose();state=pv;r()}});
    if(F.digno)await say([['narr','Você saiu com dignidade, leitor, o que eu não fiz. Eu gastei duas mortais horas a vaguear pelas ruas, desatinado. Em compensação, você ficou com o resto dos contos.']]);
@@ -230,6 +230,43 @@ const INTER=[
  {id:'porta',x:3500,r:140,txt:'AÇÃO · Embarcar para a Europa',cond:()=>provas()===NP,act:async()=>{
    await say([['bras','"Desta vez vais para a Europa", disse meu pai. Coimbra me esperava, e eu fui, deixando atrás os onze contos e a linda Marcela.']]);startCine()}}
 ];
+/* ===== Trechos do livro (opcionais): citações nas páginas + painéis rasurados ===== */
+const FRAGS=[[15, "Imagina tu esse efeito do primeiro sol, a bater de chapa na face de um mundo em flor."], [15, "Vendera muita vez as aparências, mas a realidade, guardava-a para poucos."], [14, "Marcela, a “linda Marcela”, como lhe chamavam os rapazes do tempo. E tinham razão os rapazes."], [14, "Tinha dezessete anos; pungia-me um buçozinho que eu forcejava por trazer a bigode."], [17, "Marcela deixara-se estar sentada, a estalar as unhas nos dentes, fria como um pedaço de mármore."], [14, "Este livro é casto, ao menos na intenção; na intenção é castíssimo."]];
+const RASURAS=[{"cap": 17, "a": "Marcela amou-me durante quinze meses e onze contos de réis; nada", "k": "menos", "b": ".", "o": ["mais", "menos", "além"]}, {"cap": 15, "a": "Era meu universo; mas, ai triste! não o era de", "k": "graça", "b": ".", "o": ["ouro", "amor", "graça"]}];
+function pageQuote(n){if(n<2)return;const q=FRAGS[n-2];if(q)toast('\u201c'+q[1]+'\u201d  \u2014 Machado de Assis, cap. '+q[0],Math.min(9500,3800+q[1].length*38))}
+function rasura(c){return new Promise(res=>{
+  const prev=state;state='modal';
+  ov('<h2>Trecho rasurado \u00b7 cap. '+c.cap+'</h2><p>O Carimbo riscou uma palavra do livro. Qual delas completa a frase?</p><div class="cita">'+c.a+' <span id="rs" style="background:#1a0f0a;color:#1a0f0a;border-radius:3px;padding:0 .5em;letter-spacing:.1em;border:1px solid #8b73bd">\u2588\u2588\u2588\u2588\u2588\u2588</span>'+c.b+'</div><div id="lq"></div>');
+  let h='';c.o.slice().sort(()=>Math.random()-.5).forEach(x=>h+='<button class="opt">'+x+'</button>');$('lq').innerHTML=h;let tries=0;
+  $('lq').querySelectorAll('.opt').forEach(bt=>bt.onclick=()=>{
+    if(bt.textContent===c.k){bt.classList.add('ok');$('lq').querySelectorAll('.opt').forEach(x=>x.disabled=true);
+      const r=$('rs');r.textContent=c.k;r.style.cssText='color:#ffd98a;font-weight:bold;border-bottom:2px solid #ffd98a';
+      $('lq').insertAdjacentHTML('beforeend','<p>Frase restaurada. Machado de Assis, <i>Memórias Póstumas de Brás Cubas</i>, cap. '+c.cap+' (domínio público).</p><button class="btn" id="lok">Continuar</button>');
+      addPts(tries===0?60:20,P.x-camX,P.y-120);tone(660,.1,.05,'triangle');tone(990,.14,.04,'triangle');
+      $('lok').onclick=()=>{ovClose();state=prev;res(true)}}
+    else{tries++;bt.classList.add('bad');bt.disabled=true;blip(-3);toast('Releia a frase: qual palavra faz sentido aqui?',1800)}});
+})}
+const RAS_BOARDS=[];
+(function rasInit(){
+  const fr=[.27,.56];
+  RASURAS.forEach((c,i)=>{
+    let x=null,bd=1e9;for(const [pm,im] of [[75,150],[60,120],[45,95]]){for(let t=450;t<WW-350;t+=10){if(!onGround(t-70)||!onGround(t)||!onGround(t+70))continue;if(PLAT.some(p=>t>p.x-pm&&t<p.x+p.w+pm))continue;if(INTER.some(n=>Math.abs(n.x-t)<im))continue;if(RAS_BOARDS.some(r=>Math.abs(r.x-t)<650))continue;const d=Math.abs(t-WW*fr[i]);if(d<bd){bd=d;x=t}}if(x!=null)break}
+    if(x==null)return;const b={x,c,done:false};RAS_BOARDS.push(b);
+    INTER.push({id:'ras'+i,x,r:100,txt:'AÇÃO \u00b7 Ler o trecho rasurado (opcional)',done:()=>b.done,act:async()=>{await rasura(c);b.done=true;Z.ras=(Z.ras||0)+1;toast('Trecho restaurado e anotado no seu caderno.',2500)}});
+  });
+})();
+function drawRasuras(){
+  ctx.save();ctx.translate(-camX,0);
+  for(const b of RAS_BOARDS){if(b.x<camX-120||b.x>camX+CW+120)continue;const x=b.x,pulse=.5+.5*Math.sin(T*3+x);
+    ctx.fillStyle='#3a2616';ctx.fillRect(x-4,G-76,8,76);
+    ctx.save();ctx.translate(x,G-112);ctx.rotate(-.04);ctx.fillStyle='#efe0bd';ctx.fillRect(-52,-34,104,68);ctx.strokeStyle='#7a5a30';ctx.lineWidth=2;ctx.strokeRect(-52,-34,104,68);
+    ctx.fillStyle='#7a5a30';for(let i=0;i<4;i++)ctx.fillRect(-42,-24+i*14,84-(i%2)*18,3);
+    if(!b.done){ctx.fillStyle='#1a0f0a';ctx.fillRect(-18,-10,44,14);ctx.fillStyle='rgba(255,80,60,'+(.25+.35*pulse)+')';ctx.fillRect(-18,-10,44,14)}
+    else{ctx.fillStyle='#2f7a43';ctx.font='bold 24px sans-serif';ctx.textAlign='center';ctx.fillText('\u2713',0,9)}
+    ctx.restore();
+    if(!b.done){const g=ctx.createRadialGradient(x,G-112,6,x,G-112,90);g.addColorStop(0,'rgba(255,200,110,'+(.25*pulse)+')');g.addColorStop(1,'rgba(255,200,110,0)');ctx.fillStyle=g;ctx.fillRect(x-90,G-202,180,180)}}
+  ctx.restore();
+}
 const provas=()=>[F.ped,F.rossio,F.asno,F.reflex,F.contos].filter(Boolean).length;
 function nearInter(){
   let best=null,bd=1e9;
@@ -260,26 +297,44 @@ function updatePlayer(dt){
 function thud2(){if(AC)tone(90,.07,.05,'sine')}
 function fall(){
   toast(pick(NARR.queda),3200);Z.lamps--;shake=.4;
-  if(Z.lamps<=0){Z.lamps=3;Z.pts=Math.max(0,Z.pts-50);toast('Sem lamparinas. O narrador recomeça o capítulo.',3200)}
+  if(Z.lamps<=0){Z.lamps=3;toast('Sem lamparinas. Você volta ao último ponto salvo, sem perder o que já conquistou.',3200)}
   P.x=cpX;P.y=G-200;P.vy=0;P.inv=1.6;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));hud();
 }
 function hit(){
   if(P.inv>0)return;Z.lamps--;P.inv=1.8;shake=.5;P.hurt=.4;thud();toast(pick(NARR.carimbo),3000);
-  if(Z.lamps<=0){Z.lamps=3;Z.pts=Math.max(0,Z.pts-50);P.x=cpX;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));toast('Sem lamparinas. O narrador recomeça o capítulo.',3200)}hud();
+  if(Z.lamps<=0){Z.lamps=3;P.x=cpX;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));toast('Sem lamparinas. Você volta ao último ponto salvo, sem perder o que já conquistou.',3200)}hud();
 }
 /* ============ Mundo ============ */
-function updateWorld(dt){
+/* ===== Progresso salvo no meio da zona (perder não volta ao início) ===== */
+const PROGKEY='caso_realismo_prog_'+(location.pathname.split('/').pop()||'zona');let lastSave=0;
+function saveCP(){try{localStorage.setItem(PROGKEY,JSON.stringify({cp:cpX,Z:{pts:Z.pts,pages:Z.pages,leit:Z.leit,ras:Z.ras||0},F,pg:PAGES.map(g=>g.got?1:0),rb:RAS_BOARDS.map(b=>b.done?1:0)}))}catch(e){}}
+function autoCP(){
+  if(state!=='play')return;
+  if(P.y>=G-2&&P.inv<=0&&P.x>cpX+300&&onGround(P.x-40)&&onGround(P.x+40)){
+    cpX=P.x-60;saveCP();if(!window.__cpT){window.__cpT=1;toast('Ponto salvo: se perder, você volta daqui, não do início.',3500)}}
+  else if(T-lastSave>1){lastSave=T;saveCP()}
+}
+function updateWorld(dt){autoCP();
   stampT-=dt;
-  if(stampT<=0&&P.x>650&&P.x<3350){stamps.push({x:P.x+P.vx*.55+(Math.random()-.5)*60,t:0});stampT=3.6+Math.random()*2.2}
-  for(const s of stamps){s.t+=dt;if(s.t>.9&&s.t<1.12&&!s.d){s.d=1;shake=.35;thud();marks.push({x:s.x,t:5});if(Math.abs(P.x-s.x)<52&&!(P.y<G-210))hit()}}
-  stamps=stamps.filter(s=>s.t<1.9);marks=marks.filter(m=>(m.t-=dt)>0);
-  for(const g of PAGES){if(!g.got&&Math.abs(P.x-g.x)<34&&Math.abs((P.y-46)-g.y)<52){g.got=true;Z.pages++;addPts(30,g.x-camX,g.y);tone(880,.06,.05,'square');tone(1320,.12,.04,'square');if(Z.pages===1)toast(pick(NARR.pag),3000);if(Z.pages===11)toast('Onze contos, nem um a menos. O leitor está pronto para pagar a conta de Marcela.',3500);hud()}}
+  if(stampT<=0&&P.x>650&&P.x<3350&&!stamps.length){stamps.push({dir:Math.random()<.5?1:-1,t:0,x:0,sx:0});stampT=3.6+Math.random()*2.2;
+    if(!window.__pen){window.__pen=1;toast('O Carimbo riscou o chão com o lápis vermelho: PULE a rasura!',3600)}}
+  for(const s of stamps){s.t+=dt;if(s.t>1.1){if(!s.go){s.go=1;s.sx=s.dir>0?camX-80:camX+CW+80;s.x=s.sx;thud()}s.x+=s.dir*540*dt;
+      if(!s.d&&Math.abs(P.x-s.x)<40&&P.y>G-34){s.d=1;shake=.3;hit()}}}
+  stamps=stamps.filter(s=>!s.go||(s.dir>0?s.x<camX+CW+160:s.x>camX-160));marks=[];
+  for(const g of PAGES){if(!g.got&&Math.abs(P.x-g.x)<34&&Math.abs((P.y-46)-g.y)<52){g.got=true;Z.pages++;pageQuote(Z.pages);addPts(30,g.x-camX,g.y);tone(880,.06,.05,'square');tone(1320,.12,.04,'square');if(Z.pages===1)toast(pick(NARR.pag),3000);if(Z.pages===11)toast('Onze contos, nem um a menos. O leitor está pronto para pagar a conta de Marcela.',3500);hud()}}
   if(provas()===NP&&!F.porta){F.porta=true;toast('O cais está aberto. Seu pai manda você para a Europa.',4000)}
   floaters.forEach(f=>f.t+=dt);floaters=floaters.filter(f=>f.t<1.2);
   shake=Math.max(0,shake-dt);
 }
 /* ============ Desenho ============ */
-function drawBG(){
+function drawBGImg(){
+  const im=IMG.bgi;if(!im)return;
+  const h=Math.round(CH*1.08),w=Math.round(im.width*h/im.height),off=Math.max(0,w-CW)*Math.min(1,Math.max(0,camX/Math.max(1,WW-CW)));
+  ctx.save();ctx.beginPath();ctx.rect(0,0,CW,G);ctx.clip();ctx.drawImage(im,-off,CH-h,w,h);
+  const v=ctx.createLinearGradient(0,0,0,G);v.addColorStop(0,'rgba(20,10,5,.18)');v.addColorStop(1,'rgba(20,10,5,0)');ctx.fillStyle=v;ctx.fillRect(0,0,CW,G);ctx.restore();
+}
+function drawBG(){drawBGproc();drawBGImg()}
+function drawBGproc(){
   const sg=ctx.createLinearGradient(0,0,0,G);sg.addColorStop(0,'#150f2e');sg.addColorStop(.6,'#3a2250');sg.addColorStop(1,'#8a4a5a');ctx.fillStyle=sg;ctx.fillRect(0,0,CW,CH);
   for(let i=0;i<60;i++){const x=(i*173)%CW,y=(i*89)%260;ctx.fillStyle='rgba(255,240,200,'+(.35+.3*Math.sin(T*2+i))+')';ctx.fillRect(x,y,2,2)}
   ctx.fillStyle='rgba(255,245,210,.95)';ctx.beginPath();ctx.arc(780-camX*.02,110,34,0,7);ctx.fill();
@@ -339,7 +394,7 @@ function drawBras(){
   ctx.restore();
 }
 function drawHipo(){}
-function drawPages(){
+function drawPages(){drawRasuras();
   ctx.save();ctx.translate(-camX,0);
   for(const g of PAGES){if(g.got)continue;const y=g.y+Math.sin(T*2+g.x)*4,w=Math.abs(Math.cos(T*2.4+g.x*.01));ctx.save();ctx.translate(g.x,y);
     ctx.shadowColor='#ffd98a';ctx.shadowBlur=12;ctx.fillStyle='#e3a84a';ctx.beginPath();ctx.ellipse(0,0,13*Math.max(.25,w),13,0,0,7);ctx.fill();ctx.shadowBlur=0;
@@ -364,14 +419,18 @@ function drawLight(){
   ctx.save();ctx.globalCompositeOperation='lighter';const g=ctx.createRadialGradient(x,y,4,x,y,210);g.addColorStop(0,'rgba(255,200,110,.45)');g.addColorStop(.5,'rgba(255,150,50,.14)');g.addColorStop(1,'rgba(255,120,30,0)');ctx.fillStyle=g;ctx.fillRect(x-210,y-210,420,420);ctx.restore();
 }
 function drawStamps(){
-  ctx.save();ctx.translate(-camX,0);
   for(const s of stamps){
-    if(s.t<.9){const a=.25+.35*Math.sin(s.t*14)**2;ctx.fillStyle='rgba(200,30,20,'+a+')';ctx.beginPath();ctx.ellipse(s.x,G,54,10,0,0,7);ctx.fill();
-      ctx.strokeStyle='rgba(255,80,60,'+a+')';ctx.lineWidth=2;ctx.setLineDash([6,6]);ctx.beginPath();ctx.moveTo(s.x-50,60);ctx.lineTo(s.x-50,G);ctx.moveTo(s.x+50,60);ctx.lineTo(s.x+50,G);ctx.stroke();ctx.setLineDash([])}
-    else if(s.t<1.2){const p=Math.min(1,(s.t-.9)/.1);const y=-200+(G-6+200)*p;ctx.fillStyle='#b8261a';ctx.fillRect(s.x-52,y-60,104,60);ctx.fillStyle='#7c1710';ctx.fillRect(s.x-12,y-140,24,82);
-      ctx.fillStyle='#f4d9c8';ctx.font='bold 14px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText('CORRIGIDO',s.x,y-24)}
+    if(!s.go){const a=.3+.5*Math.sin(s.t*16)**2,ex=s.dir>0?30:CW-30;
+      ctx.save();ctx.fillStyle='rgba(200,30,20,'+a+')';ctx.fillRect(s.dir>0?0:CW-60,G-34,60,30);ctx.fillStyle='#fff3e0';ctx.font='bold 22px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText(s.dir>0?'\u00bb!':'!\u00ab',ex,G-12);
+      ctx.fillStyle='rgba(255,70,50,'+a*.55+')';ctx.fillRect(0,G-5,CW,3);ctx.restore()}
+    else{ctx.save();ctx.translate(-camX,0);
+      const n=Math.floor(Math.abs(s.x-s.sx)/12);ctx.strokeStyle='#c4271a';ctx.lineWidth=5;ctx.lineJoin='round';ctx.beginPath();
+      for(let i=0;i<=n;i++){const x=s.sx+s.dir*i*12,y=G-14+((i%2)?-11:11)+Math.sin(T*30+i)*2;if(i)ctx.lineTo(x,y);else ctx.moveTo(x,y)}ctx.stroke();
+      ctx.translate(s.x,G-24);ctx.scale(s.dir,1);ctx.rotate(.55);
+      ctx.fillStyle='#e8b830';ctx.fillRect(-58,-6,50,12);ctx.fillStyle='#b8261a';ctx.fillRect(-66,-6,8,12);ctx.fillStyle='#d8b890';ctx.beginPath();ctx.moveTo(-8,-6);ctx.lineTo(14,0);ctx.lineTo(-8,6);ctx.closePath();ctx.fill();
+      ctx.fillStyle='#c4271a';ctx.beginPath();ctx.moveTo(6,-2.5);ctx.lineTo(14,0);ctx.lineTo(6,2.5);ctx.closePath();ctx.fill();
+      ctx.restore()}
   }
-  ctx.restore();
 }
 function drawRain(dt){
   ctx.save();ctx.globalCompositeOperation='lighter';
@@ -420,7 +479,8 @@ function iniciar(){
    '<p style="font-size:.85em;color:var(--muted)">Setas ou A/D: andar · Espaço: pular (duplo) · C: lamparina · E: ação · Esc: pausa. No celular, use os botões na tela.</p><button class="btn" id="go">Começar</button><button class="btn sec" id="back">Voltar ao Arquivo</button>');
   $('gM').onclick=()=>{S.gen='m';$('gM').classList.add('on');$('gF').classList.remove('on')};$('gF').onclick=()=>{S.gen='f';$('gF').classList.add('on');$('gM').classList.remove('on')};
   $('back').onclick=()=>{location.href='../index.html'};
-  $('go').onclick=()=>{S.nome=($('iN').value||'').trim()||'Detetive';S.turma=($('iT').value||'').trim();audio();setMute(muted);comecar()};
+  $('go').onclick=()=>{S.nome=($('iN').value||'').trim()||'Detetive';S.turma=($('iT').value||'').trim();audio();setMute(muted);comecar();if(window.__restored)toast('Progresso restaurado: você continua de onde parou.',5000)};
+  if(window.__restored){$('go').insertAdjacentHTML('afterend','<button class="btn sec" id="zero">Recomeçar do início</button>');$('zero').onclick=()=>{try{localStorage.removeItem(PROGKEY)}catch(e){}location.reload()}}
 }
 
 
@@ -429,7 +489,7 @@ function comecar(){
   ovClose();state='play';$('hud').classList.remove('hidden');hud();
   say([['narr','Tinha dezessete anos, botas e esporas, leitor, e fui parar nas mãos de Marcela. Procure a página rasgada com a lamparina (segure C), recolha as moedas, leia os capítulos e fale com ela. Depois, o cais.']]);
 }
-function fim(){
+function fim(){try{localStorage.removeItem(PROGKEY)}catch(e){}
   state='end';$('hud').classList.add('hidden');
   const pct=Math.round((Z.leit/Z.tot)*100);
   try{const o=JSON.parse(localStorage.getItem(SAVE)||'{}');o.zonas=o.zonas||{};o.found=o.found||{};o.done=o.done||[];
@@ -476,6 +536,11 @@ function loop(ts){
   render(dt);
 }
 window.__t={P,F,Z,PAGES,INTER,get state(){return state},set state(v){state=v},get camX(){return camX},set camX(v){camX=v},provas,startCine,fim,K};
+(function restaurarProg(){try{const r=JSON.parse(localStorage.getItem(PROGKEY)||'null');if(!r||!(r.cp>0))return;
+  cpX=r.cp;P.x=r.cp;camX=Math.max(0,Math.min(WW-CW,P.x-CW*.42));Object.assign(Z,r.Z||{});Object.assign(F,r.F||{});
+  (r.pg||[]).forEach((v,i)=>{if(v&&PAGES[i])PAGES[i].got=true});(r.rb||[]).forEach((v,i)=>{if(v&&RAS_BOARDS[i])RAS_BOARDS[i].done=true});
+  if(typeof hipo!=='undefined'&&F.hipo){hipo.on=true;hipo.landed=true;hipo.x=3440;hipo.y=G-64}
+  window.__restored=1}catch(e){}})();
 loadAll(()=>{requestAnimationFrame(loop);iniciar();hud()});
 </script>
 </body>

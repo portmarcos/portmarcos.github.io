@@ -138,7 +138,7 @@ function setMute(m){muted=m;if(rainG)rainG.gain.value=m?0:.012;$('bMute').textCo
 let toastT=0;
 function toast(t,ms){const e=$('toast');e.textContent=t;e.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove('on'),ms||3200)}
 const NARR={queda:['Até a rua da Gamboa tem as suas covas, leitor.','Caí. O pavão que me perdoe.','Uma sarjeta é só um capítulo mais fundo.'],
- carimbo:['O Carimbo carimbou o pavão. A águia está salva.','O Carimbo carimbou o leitor. Que falta de educação com quem lê.','Corrigido! Foi o que ele pensou. O Carimbo é pior que um marido ciumento.'],
+ carimbo:['O Carimbo carimbou o pavão. A águia está salva.','O Carimbo riscou o leitor. Que falta de educação com quem lê.','Rasurado! Foi o que ele pensou. O Carimbo é pior que um marido ciumento.'],
  pag:['Um bilhete dobrado. O adultério precisa de papel e de tinta.','Bilhete guardado. O vizinho não viu, leitor.']};
 const pick=a=>a[Math.floor(Math.random()*a.length)];
 function addPts(n,x,y){Z.pts+=n;floaters.push({x,y,t:0,s:'+'+n});hud()}
@@ -204,33 +204,70 @@ const INTER=[
    await say([['bras','Virgília. A mesma senhora que, em 1869, devia assistir aos meus últimos dias. Mas então ela tinha uns quinze ou dezesseis anos.'],['vir','Pois não, doutor. Meu pai disse que o senhor viria jantar.']]);
    await leitura({titulo:'Capítulo 27 · Virgília?',cita:'Não digo que já lhe coubesse a primazia da beleza, entre as mocinhas do tempo, porque isto não é romance, em que o autor sobredoura a realidade e fecha os olhos às sardas e espinhas; mas também não digo que lhe maculasse o rosto nenhuma sarda ou espinha, não. Era bonita, fresca, saída das mãos da natureza.',
      fonte:FONTE+'27 (domínio público).',
-     q:{t:'O que significa dizer que "isto não é romance, em que o autor sobredoura a realidade e fecha os olhos às sardas e espinhas"?',o:['Que o narrador pretende escrever um romance romântico, idealizando as personagens.','Que o narrador se distancia do romance idealizador: ele diz que não vai "sobredourar" a realidade, característica do Realismo.','Que Virgília tinha muitas sardas e espinhas.','Que o livro é um tratado científico sobre a pele.'],k:1,e:'Machado faz uma declaração de método: o romance romântico idealiza e "sobredoura" a realidade, mas as Memórias Póstumas pretendem mostrar a vida com as suas "sardas e espinhas". É o Realismo falando de si mesmo, com humor.'}});
+     q:{t:'O que significa dizer que "isto não é romance, em que o autor sobredoura a realidade e fecha os olhos às sardas e espinhas"?',o:['Que o narrador pretende escrever um romance romântico, idealizando as personagens.','Que o narrador não vai “sobredourar” a realidade, ao contrário do romance idealista.','Que Virgília tinha muitas sardas e espinhas, que o narrador descreve em detalhes.','Que o livro é um tratado científico sobre doenças da pele, escrito por um médico.'],k:1,e:'Machado faz uma declaração de método: o romance romântico idealiza e "sobredoura" a realidade, mas as Memórias Póstumas pretendem mostrar a vida com as suas "sardas e espinhas". É o Realismo falando de si mesmo, com humor.'}});
    F.retrato=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'aguia',x:1750,r:140,txt:'AÇÃO · Lobo Neves aparece',done:()=>F.aguia,act:async()=>{
    await say([['bras','E então apareceu Lobo Neves, um homem que não era mais esbelto que eu, nem mais elegante, nem mais lido. Mas me arrebatou Virgília e a candidatura.'],['vir','Promete que algum dia me fará baronesa?'],['lobo','Marquesa, porque eu serei marquês.']]);
    await leitura({titulo:'Capítulo 43 · Marquesa, Porque Eu Serei Marquês',cita:'Virgília perguntou ao Lobo Neves, a sorrir, quando seria ele ministro. &mdash; Pela minha vontade, já; pela dos outros, daqui a um ano. Virgília replicou: &mdash; Promete que algum dia me fará baronesa? &mdash; Marquesa, porque eu serei marquês. Desde então fiquei perdido. Virgília comparou a águia e o pavão, e elegeu a águia, deixando o pavão com o seu espanto.',
      fonte:FONTE+'43 (domínio público).',
-     q:{t:'O que a escolha de Virgília entre a "águia" e o "pavão" revela?',o:['Que ela decidiu pelo amor sincero.','Que a escolha amorosa foi uma escolha de ambição social: ela prefere quem promete ser marquês, o que reforça o interesse como motor das relações.','Que Brás era mais rico que Lobo Neves.','Que Virgília não sabia diferenciar aves.'],k:1,e:'As aves são comparação irônica: a águia (poderosa, ascendente) vence o pavão (vaidoso). A pergunta sobre o título nobre mostra que o casamento é negócio de poder. É o Realismo desmontando o romance idealizado.'}});
+     q:{t:'O que a escolha de Virgília entre a "águia" e o "pavão" revela?',o:['Que a escolha foi pela ambição social: ela prefere quem promete ser marquês.','Que ela decidiu pelo amor sincero, mesmo sabendo do risco de perder a posição.','Que Brás era bem mais rico do que Lobo Neves, e por isso Virgília o preferiu.','Que Virgília não sabia diferenciar aves e escolheu ao acaso, sem refletir.'],k:0,e:'As aves são comparação irônica: a águia (poderosa, ascendente) vence o pavão (vaidoso). A pergunta sobre o título nobre mostra que o casamento é negócio de poder. É o Realismo desmontando o romance idealizado.'}});
    F.aguia=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'nariz',x:2600,r:140,txt:'AÇÃO · A ponta do nariz',done:()=>F.nariz,act:async()=>{
    await say([['bras','Preste atenção, leitor: este capítulo trata de narizes, e de uma filosofia que me valeu muito na vida.']]);
    await leitura({titulo:'Capítulo 49 · A Ponta do Nariz',cita:'Bastou-me atentar no costume do faquir. Sabe o leitor que o faquir gasta longas horas a olhar para a ponta do nariz, com o fim único de ver a luz celeste. [&hellip;] Cada homem tem necessidade e poder de contemplar o seu próprio nariz, para o fim de ver a luz celeste, e tal contemplação, cujo efeito é a subordinação do universo a um nariz somente, constitui o equilíbrio das sociedades.',
      fonte:FONTE+'49 (domínio público).',
-     q:{t:'O que Machado ironiza com a "contemplação do próprio nariz"?',o:['A busca espiritual dos faquires, que ele elogia.','O egocentrismo: cada pessoa vê o mundo a partir de si mesma, e o narrador transforma isso em lei universal, com humor.','A anatomia humana.','A ciência europeia.'],k:1,e:'"Subordinação do universo a um nariz somente" é a síntese do egoísmo. O narrador faz do egocentrismo uma filosofia que "equilibra as sociedades". É a ironia machadiana que expõe, em tom sério, uma verdade incômoda.'}});
+     q:{t:'O que Machado ironiza com a "contemplação do próprio nariz"?',o:['A busca espiritual dos faquires indianos, que ele elogia como modelo de vida.','A anatomia humana e o estudo do rosto, feito pelos médicos e cientistas da época.','A ciência europeia, que tentava explicar o comportamento pela forma do nariz.','O egocentrismo: cada um vê o mundo a partir de si, e o narrador faz disso uma lei.'],k:3,e:'"Subordinação do universo a um nariz somente" é a síntese do egoísmo. O narrador faz do egocentrismo uma filosofia que "equilibra as sociedades". É a ironia machadiana que expõe, em tom sério, uma verdade incômoda.'}});
    F.nariz=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'pontos',x:3200,r:140,txt:'AÇÃO · O beijo e os pontinhos',done:()=>F.pontos,act:async()=>{
    await say([['bras','Foi ao portão da chácara, à vista das estrelas. O primeiro beijo de Virgília, trêmula de medo.'],['vir','Shh. Lobo Neves pode estar na janela.']]);
    await leitura({titulo:'Capítulo 53',cita:'Em certa noite, abotoou-se a flor, ou o beijo, se assim lhe quiserem chamar, um beijo que ela me deu, trêmula, &mdash; coitadinha, &mdash; trêmula de medo, porque era ao portão da chácara, à vista das estrelas [&hellip;] &mdash; uma hipocrisia paciente e sistemática, único freio de uma paixão sem freio.',
      fonte:FONTE+'53 (domínio público).',
-     q:{t:'O que significa "uma hipocrisia paciente e sistemática, único freio de uma paixão sem freio"?',o:['Que os amantes agem com cuidado para não serem descobertos: a única regra é fingir.','Que o amor deles era moderado e discreto.','Que Virgília não sentia nada por Brás.','Que a paixão era controlada pela religião.'],k:0,e:'Os amantes só se contêm pelo fingimento: a hipocrisia "sistemática" é o que mantém o adultério escondido, e a paixão corre sem outro freio. O narrador descreve a relação sem moralizar: o julgamento fica por conta do leitor.'}});
+     q:{t:'O que significa "uma hipocrisia paciente e sistemática, único freio de uma paixão sem freio"?',o:['Que o amor deles era moderado e discreto, o que explica por que durou tanto tempo.','Que Virgília não sentia nada por Brás e apenas fingia amor para obter vantagens.','Que os amantes agem com cuidado para não serem descobertos: a única regra é fingir.','Que a paixão deles era controlada pela religião e pelo medo do pecado e do inferno.'],k:2,e:'Os amantes só se contêm pelo fingimento: a hipocrisia "sistemática" é o que mantém o adultério escondido, e a paixão corre sem outro freio. O narrador descreve a relação sem moralizar: o julgamento fica por conta do leitor.'}});
    await say([['bras','E há o capítulo 55, "O Velho Diálogo de Adão e Eva". Quando o amor chega ao ponto máximo, a linguagem emudece.']]);
    await leitura({titulo:'Capítulo 55 · O Velho Diálogo de Adão e Eva',cita:'Brás Cubas<br>.......?<br>Virgília<br>.......<br>Brás Cubas<br>....................<br>..........<br>Virgília<br>..................!<br>Brás Cubas<br>...............',
      fonte:FONTE+'55 (domínio público). O capítulo é feito só de pontinhos, falas sem palavras.',
-     q:{t:'Por que Machado substitui as falas dos amantes por pontinhos?',o:['Por um erro de impressão.','Porque o diálogo entre os amantes, que repete o de Adão e Eva, dispensa palavras: o leitor completa, e o narrador evita descrever o que a sociedade considerava indecoroso.','Porque o capítulo ficou inacabado.','Porque Brás e Virgília estavam em silêncio por brigarem.'],k:1,e:'O capítulo é um recurso metalinguístico e irônico: a ausência de texto é o texto. Machado joga com o leitor, deixando a imaginação preencher o que o decoro não permitia dizer. O "velho diálogo de Adão e Eva" mostra que o amor é sempre o mesmo, em qualquer época.'}});
+     q:{t:'Por que Machado substitui as falas dos amantes por pontinhos?',o:['Porque o diálogo dos amantes repete o de Adão e Eva: o leitor completa o que o narrador cala.','Por um erro de impressão que a editora nunca corrigiu nas edições seguintes do livro.','Porque o capítulo ficou inacabado e o autor não teve tempo de reescrevê-lo antes de morrer.','Porque Brás e Virgília estavam brigados e, por isso, não trocaram palavra alguma entre si.'],k:0,e:'O capítulo é um recurso metalinguístico e irônico: a ausência de texto é o texto. Machado joga com o leitor, deixando a imaginação preencher o que o decoro não permitia dizer. O "velho diálogo de Adão e Eva" mostra que o amor é sempre o mesmo, em qualquer época.'}});
    F.pontos=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'porta',x:3500,r:140,txt:'AÇÃO · Voltar para casa de madrugada',cond:()=>provas()===NP,act:async()=>{
    await say([['bras','Saí dali a saborear o beijo. Não pude dormir. Ouvi as horas todas da noite.']]);startCine()}}
 ];
+/* ===== Trechos do livro (opcionais): citações nas páginas + painéis rasurados ===== */
+const FRAGS=[[27, "Aí tem o leitor, em poucas linhas, o retrato físico e moral da pessoa que devia influir mais tarde na minha vida; era aquilo com dezesseis anos."], [27, "Deixa lá dizer o Pascal que o homem é um caniço pensante."], [43, "Talvez cinco beijos; mas dez que fossem não queria dizer coisa nenhuma."], [49, "Já meditaste alguma vez no destino do nariz, amado leitor?"], [53, "Há umas plantas que nascem e crescem depressa; outras são tardias e pecas."], [53, "O nosso amor era daquelas; brotou com tal ímpeto e tanta seiva, que, dentro em pouco, era a mais vasta, folhuda e exuberante criatura dos bosques."]];
+const RASURAS=[{"cap": 27, "a": "Cada estação da vida é uma edição, que corrige a anterior, e que será corrigida também, até a edição definitiva, que o editor dá de graça aos", "k": "vermes", "b": ".", "o": ["leitores", "vermes", "amigos"]}, {"cap": 49, "a": "Leitor obtuso, isso prova que nunca entraste no cérebro de um", "k": "chapeleiro", "b": ".", "o": ["ferreiro", "médico", "chapeleiro"]}];
+function pageQuote(n){if(n<2)return;const q=FRAGS[n-2];if(q)toast('\u201c'+q[1]+'\u201d  \u2014 Machado de Assis, cap. '+q[0],Math.min(9500,3800+q[1].length*38))}
+function rasura(c){return new Promise(res=>{
+  const prev=state;state='modal';
+  ov('<h2>Trecho rasurado \u00b7 cap. '+c.cap+'</h2><p>O Carimbo riscou uma palavra do livro. Qual delas completa a frase?</p><div class="cita">'+c.a+' <span id="rs" style="background:#1a0f0a;color:#1a0f0a;border-radius:3px;padding:0 .5em;letter-spacing:.1em;border:1px solid #8b73bd">\u2588\u2588\u2588\u2588\u2588\u2588</span>'+c.b+'</div><div id="lq"></div>');
+  let h='';c.o.slice().sort(()=>Math.random()-.5).forEach(x=>h+='<button class="opt">'+x+'</button>');$('lq').innerHTML=h;let tries=0;
+  $('lq').querySelectorAll('.opt').forEach(bt=>bt.onclick=()=>{
+    if(bt.textContent===c.k){bt.classList.add('ok');$('lq').querySelectorAll('.opt').forEach(x=>x.disabled=true);
+      const r=$('rs');r.textContent=c.k;r.style.cssText='color:#ffd98a;font-weight:bold;border-bottom:2px solid #ffd98a';
+      $('lq').insertAdjacentHTML('beforeend','<p>Frase restaurada. Machado de Assis, <i>Memórias Póstumas de Brás Cubas</i>, cap. '+c.cap+' (domínio público).</p><button class="btn" id="lok">Continuar</button>');
+      addPts(tries===0?60:20,P.x-camX,P.y-120);tone(660,.1,.05,'triangle');tone(990,.14,.04,'triangle');
+      $('lok').onclick=()=>{ovClose();state=prev;res(true)}}
+    else{tries++;bt.classList.add('bad');bt.disabled=true;blip(-3);toast('Releia a frase: qual palavra faz sentido aqui?',1800)}});
+})}
+const RAS_BOARDS=[];
+(function rasInit(){
+  const fr=[.27,.56];
+  RASURAS.forEach((c,i)=>{
+    let x=null,bd=1e9;for(const [pm,im] of [[75,150],[60,120],[45,95]]){for(let t=450;t<WW-350;t+=10){if(!onGround(t-70)||!onGround(t)||!onGround(t+70))continue;if(PLAT.some(p=>t>p.x-pm&&t<p.x+p.w+pm))continue;if(INTER.some(n=>Math.abs(n.x-t)<im))continue;if(RAS_BOARDS.some(r=>Math.abs(r.x-t)<650))continue;const d=Math.abs(t-WW*fr[i]);if(d<bd){bd=d;x=t}}if(x!=null)break}
+    if(x==null)return;const b={x,c,done:false};RAS_BOARDS.push(b);
+    INTER.push({id:'ras'+i,x,r:100,txt:'AÇÃO \u00b7 Ler o trecho rasurado (opcional)',done:()=>b.done,act:async()=>{await rasura(c);b.done=true;Z.ras=(Z.ras||0)+1;toast('Trecho restaurado e anotado no seu caderno.',2500)}});
+  });
+})();
+function drawRasuras(){
+  ctx.save();ctx.translate(-camX,0);
+  for(const b of RAS_BOARDS){if(b.x<camX-120||b.x>camX+CW+120)continue;const x=b.x,pulse=.5+.5*Math.sin(T*3+x);
+    ctx.fillStyle='#3a2616';ctx.fillRect(x-4,G-76,8,76);
+    ctx.save();ctx.translate(x,G-112);ctx.rotate(-.04);ctx.fillStyle='#efe0bd';ctx.fillRect(-52,-34,104,68);ctx.strokeStyle='#7a5a30';ctx.lineWidth=2;ctx.strokeRect(-52,-34,104,68);
+    ctx.fillStyle='#7a5a30';for(let i=0;i<4;i++)ctx.fillRect(-42,-24+i*14,84-(i%2)*18,3);
+    if(!b.done){ctx.fillStyle='#1a0f0a';ctx.fillRect(-18,-10,44,14);ctx.fillStyle='rgba(255,80,60,'+(.25+.35*pulse)+')';ctx.fillRect(-18,-10,44,14)}
+    else{ctx.fillStyle='#2f7a43';ctx.font='bold 24px sans-serif';ctx.textAlign='center';ctx.fillText('\u2713',0,9)}
+    ctx.restore();
+    if(!b.done){const g=ctx.createRadialGradient(x,G-112,6,x,G-112,90);g.addColorStop(0,'rgba(255,200,110,'+(.25*pulse)+')');g.addColorStop(1,'rgba(255,200,110,0)');ctx.fillStyle=g;ctx.fillRect(x-90,G-202,180,180)}}
+  ctx.restore();
+}
 const provas=()=>[F.ped,F.retrato,F.aguia,F.nariz,F.pontos].filter(Boolean).length;
 function nearInter(){
   let best=null,bd=1e9;
@@ -261,15 +298,24 @@ function updatePlayer(dt){
 function thud2(){if(AC)tone(90,.07,.05,'sine')}
 function fall(){
   toast(pick(NARR.queda),3200);Z.lamps--;shake=.4;
-  if(Z.lamps<=0){Z.lamps=3;Z.pts=Math.max(0,Z.pts-50);toast('Sem lamparinas. O narrador recomeça o capítulo.',3200)}
+  if(Z.lamps<=0){Z.lamps=3;toast('Sem lamparinas. Você volta ao último ponto salvo, sem perder o que já conquistou.',3200)}
   P.x=cpX;P.y=G-200;P.vy=0;P.inv=1.6;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));hud();
 }
 function hit(){
   if(P.inv>0)return;Z.lamps--;P.inv=1.8;shake=.5;P.hurt=.4;thud();toast(pick(NARR.carimbo),3000);
-  if(Z.lamps<=0){Z.lamps=3;Z.pts=Math.max(0,Z.pts-50);P.x=cpX;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));toast('Sem lamparinas. O narrador recomeça o capítulo.',3200)}hud();
+  if(Z.lamps<=0){Z.lamps=3;P.x=cpX;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));toast('Sem lamparinas. Você volta ao último ponto salvo, sem perder o que já conquistou.',3200)}hud();
 }
 /* ============ Mundo ============ */
-function updateWorld(dt){
+/* ===== Progresso salvo no meio da zona (perder não volta ao início) ===== */
+const PROGKEY='caso_realismo_prog_'+(location.pathname.split('/').pop()||'zona');let lastSave=0;
+function saveCP(){try{localStorage.setItem(PROGKEY,JSON.stringify({cp:cpX,Z:{pts:Z.pts,pages:Z.pages,leit:Z.leit,ras:Z.ras||0},F,pg:PAGES.map(g=>g.got?1:0),rb:RAS_BOARDS.map(b=>b.done?1:0)}))}catch(e){}}
+function autoCP(){
+  if(state!=='play')return;
+  if(P.y>=G-2&&P.inv<=0&&P.x>cpX+300&&onGround(P.x-40)&&onGround(P.x+40)){
+    cpX=P.x-60;saveCP();if(!window.__cpT){window.__cpT=1;toast('Ponto salvo: se perder, você volta daqui, não do início.',3500)}}
+  else if(T-lastSave>1){lastSave=T;saveCP()}
+}
+function updateWorld(dt){autoCP();
   stampT-=dt;
   hidden=false;for(const bh of BUSH){if(Math.abs(P.x-bh.x)<42&&P.ground&&Math.abs(P.vx)<25)hidden=true}
   if(LOBO.on&&state==='play'){
@@ -277,16 +323,25 @@ function updateWorld(dt){
     const reading=LOBO.pause>0;const dx=P.x-LOBO.x;
     if(!reading&&!hidden&&dx*LOBO.dir>0&&Math.abs(dx)<300&&Math.abs(P.y-G)<120&&P.inv<=0){LOBO.seen=1.2;hit();toast('Lobo Neves viu você! Esconda-se quieto atrás de uma moita.',3000);P.x=Math.min(P.x,cpX>2300?cpX:2250);P.x=Math.max(P.x,30);LOBO.dir=1;LOBO.x=2400}}
   LOBO.seen=Math.max(0,LOBO.seen-dt);
-  if(stampT<=0&&P.x>650&&P.x<3350){stamps.push({x:P.x+P.vx*.55+(Math.random()-.5)*60,t:0});stampT=6+Math.random()*2.5}
-  for(const s of stamps){s.t+=dt;if(s.t>.9&&s.t<1.12&&!s.d){s.d=1;shake=.35;thud();marks.push({x:s.x,t:5});if(Math.abs(P.x-s.x)<52&&!(P.y<G-210))hit()}}
-  stamps=stamps.filter(s=>s.t<1.9);marks=marks.filter(m=>(m.t-=dt)>0);
-  for(const g of PAGES){if(!g.got&&Math.abs(P.x-g.x)<34&&Math.abs((P.y-46)-g.y)<52){g.got=true;Z.pages++;addPts(g.k==='o'?40:15,g.x-camX,g.y);tone(880,.06,.05,'square');tone(1320,.12,.04,'square');if(Z.pages===1)toast(pick(NARR.pag),3000);if(Z.pages===11)toast('Onze bilhetes. Virgília guarda todos num lenço.',3500);hud()}}
+  if(stampT<=0&&P.x>650&&P.x<3350&&!stamps.length){stamps.push({dir:Math.random()<.5?1:-1,t:0,x:0,sx:0});stampT=6+Math.random()*2.5;
+    if(!window.__pen){window.__pen=1;toast('O Carimbo riscou o chão com o lápis vermelho: PULE a rasura!',3600)}}
+  for(const s of stamps){s.t+=dt;if(s.t>1.1){if(!s.go){s.go=1;s.sx=s.dir>0?camX-80:camX+CW+80;s.x=s.sx;thud()}s.x+=s.dir*540*dt;
+      if(!s.d&&Math.abs(P.x-s.x)<40&&P.y>G-34){s.d=1;shake=.3;hit()}}}
+  stamps=stamps.filter(s=>!s.go||(s.dir>0?s.x<camX+CW+160:s.x>camX-160));marks=[];
+  for(const g of PAGES){if(!g.got&&Math.abs(P.x-g.x)<34&&Math.abs((P.y-46)-g.y)<52){g.got=true;Z.pages++;pageQuote(Z.pages);addPts(g.k==='o'?40:15,g.x-camX,g.y);tone(880,.06,.05,'square');tone(1320,.12,.04,'square');if(Z.pages===1)toast(pick(NARR.pag),3000);if(Z.pages===11)toast('Onze bilhetes. Virgília guarda todos num lenço.',3500);hud()}}
   if(provas()===NP&&!F.porta){F.porta=true;toast('A madrugada chegou. Hora de voltar para casa.',4000)}
   floaters.forEach(f=>f.t+=dt);floaters=floaters.filter(f=>f.t<1.2);
   shake=Math.max(0,shake-dt);
 }
 /* ============ Desenho ============ */
-function drawBG(){
+function drawBGImg(){
+  const im=IMG.bgi;if(!im)return;
+  const h=Math.round(CH*1.08),w=Math.round(im.width*h/im.height),off=Math.max(0,w-CW)*Math.min(1,Math.max(0,camX/Math.max(1,WW-CW)));
+  ctx.save();ctx.beginPath();ctx.rect(0,0,CW,G);ctx.clip();ctx.drawImage(im,-off,CH-h,w,h);
+  const v=ctx.createLinearGradient(0,0,0,G);v.addColorStop(0,'rgba(20,10,5,.18)');v.addColorStop(1,'rgba(20,10,5,0)');ctx.fillStyle=v;ctx.fillRect(0,0,CW,G);ctx.restore();
+}
+function drawBG(){drawBGproc();drawBGImg()}
+function drawBGproc(){
   const sg=ctx.createLinearGradient(0,0,0,G);sg.addColorStop(0,'#1a1738');sg.addColorStop(.6,'#3d2a58');sg.addColorStop(1,'#7a4a60');ctx.fillStyle=sg;ctx.fillRect(0,0,CW,CH);
   for(let i=0;i<70;i++){ctx.fillStyle='rgba(255,240,210,'+(.3+.3*Math.sin(T*2+i))+')';ctx.fillRect((i*173)%CW,(i*79)%250,2,2)}
   ctx.fillStyle='rgba(255,245,215,.92)';ctx.beginPath();ctx.arc(200-camX*.02,120,36,0,7);ctx.fill();
@@ -349,7 +404,7 @@ function drawBras(){
   ctx.restore();
 }
 function drawHipo(){}
-function drawPages(){
+function drawPages(){drawRasuras();
   ctx.save();ctx.translate(-camX,0);
   for(const g of PAGES){if(g.got)continue;const y=g.y+Math.sin(T*2+g.x)*4;ctx.save();ctx.translate(g.x,y);ctx.rotate(Math.sin(T*1.5+g.x)*.2);
     ctx.shadowColor='#ffe8f0';ctx.shadowBlur=10;ctx.fillStyle='#f4ead4';ctx.fillRect(-13,-9,26,18);ctx.shadowBlur=0;ctx.strokeStyle='#8a5a30';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(-13,-9);ctx.lineTo(0,2);ctx.lineTo(13,-9);ctx.stroke();ctx.fillStyle='#b0303a';ctx.beginPath();ctx.arc(0,2,3.5,0,7);ctx.fill();ctx.restore()}
@@ -381,14 +436,18 @@ function drawLight(){
   ctx.save();ctx.globalCompositeOperation='lighter';const g=ctx.createRadialGradient(x,y,4,x,y,210);g.addColorStop(0,'rgba(255,200,110,.45)');g.addColorStop(.5,'rgba(255,150,50,.14)');g.addColorStop(1,'rgba(255,120,30,0)');ctx.fillStyle=g;ctx.fillRect(x-210,y-210,420,420);ctx.restore();
 }
 function drawStamps(){
-  ctx.save();ctx.translate(-camX,0);
   for(const s of stamps){
-    if(s.t<.9){const a=.25+.35*Math.sin(s.t*14)**2;ctx.fillStyle='rgba(200,30,20,'+a+')';ctx.beginPath();ctx.ellipse(s.x,G,54,10,0,0,7);ctx.fill();
-      ctx.strokeStyle='rgba(255,80,60,'+a+')';ctx.lineWidth=2;ctx.setLineDash([6,6]);ctx.beginPath();ctx.moveTo(s.x-50,60);ctx.lineTo(s.x-50,G);ctx.moveTo(s.x+50,60);ctx.lineTo(s.x+50,G);ctx.stroke();ctx.setLineDash([])}
-    else if(s.t<1.2){const p=Math.min(1,(s.t-.9)/.1);const y=-200+(G-6+200)*p;ctx.fillStyle='#b8261a';ctx.fillRect(s.x-52,y-60,104,60);ctx.fillStyle='#7c1710';ctx.fillRect(s.x-12,y-140,24,82);
-      ctx.fillStyle='#f4d9c8';ctx.font='bold 14px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText('CORRIGIDO',s.x,y-24)}
+    if(!s.go){const a=.3+.5*Math.sin(s.t*16)**2,ex=s.dir>0?30:CW-30;
+      ctx.save();ctx.fillStyle='rgba(200,30,20,'+a+')';ctx.fillRect(s.dir>0?0:CW-60,G-34,60,30);ctx.fillStyle='#fff3e0';ctx.font='bold 22px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText(s.dir>0?'\u00bb!':'!\u00ab',ex,G-12);
+      ctx.fillStyle='rgba(255,70,50,'+a*.55+')';ctx.fillRect(0,G-5,CW,3);ctx.restore()}
+    else{ctx.save();ctx.translate(-camX,0);
+      const n=Math.floor(Math.abs(s.x-s.sx)/12);ctx.strokeStyle='#c4271a';ctx.lineWidth=5;ctx.lineJoin='round';ctx.beginPath();
+      for(let i=0;i<=n;i++){const x=s.sx+s.dir*i*12,y=G-14+((i%2)?-11:11)+Math.sin(T*30+i)*2;if(i)ctx.lineTo(x,y);else ctx.moveTo(x,y)}ctx.stroke();
+      ctx.translate(s.x,G-24);ctx.scale(s.dir,1);ctx.rotate(.55);
+      ctx.fillStyle='#e8b830';ctx.fillRect(-58,-6,50,12);ctx.fillStyle='#b8261a';ctx.fillRect(-66,-6,8,12);ctx.fillStyle='#d8b890';ctx.beginPath();ctx.moveTo(-8,-6);ctx.lineTo(14,0);ctx.lineTo(-8,6);ctx.closePath();ctx.fill();
+      ctx.fillStyle='#c4271a';ctx.beginPath();ctx.moveTo(6,-2.5);ctx.lineTo(14,0);ctx.lineTo(6,2.5);ctx.closePath();ctx.fill();
+      ctx.restore()}
   }
-  ctx.restore();
 }
 function drawRain(dt){
   ctx.save();ctx.globalCompositeOperation='lighter';
@@ -437,7 +496,8 @@ function iniciar(){
    '<p style="font-size:.85em;color:var(--muted)">Setas ou A/D: andar · Espaço: pular (duplo) · C: lamparina · E: ação · Esc: pausa. No celular, use os botões na tela.</p><button class="btn" id="go">Começar</button><button class="btn sec" id="back">Voltar ao Arquivo</button>');
   $('gM').onclick=()=>{S.gen='m';$('gM').classList.add('on');$('gF').classList.remove('on')};$('gF').onclick=()=>{S.gen='f';$('gF').classList.add('on');$('gM').classList.remove('on')};
   $('back').onclick=()=>{location.href='../index.html'};
-  $('go').onclick=()=>{S.nome=($('iN').value||'').trim()||'Detetive';S.turma=($('iT').value||'').trim();audio();setMute(muted);comecar()};
+  $('go').onclick=()=>{S.nome=($('iN').value||'').trim()||'Detetive';S.turma=($('iT').value||'').trim();audio();setMute(muted);comecar();if(window.__restored)toast('Progresso restaurado: você continua de onde parou.',5000)};
+  if(window.__restored){$('go').insertAdjacentHTML('afterend','<button class="btn sec" id="zero">Recomeçar do início</button>');$('zero').onclick=()=>{try{localStorage.removeItem(PROGKEY)}catch(e){}location.reload()}}
 }
 
 
@@ -446,7 +506,7 @@ function comecar(){
   ovClose();state='play';$('hud').classList.remove('hidden');hud();
   say([['narr','Conheci Virgília em casa do Conselheiro Dutra, leitor, e perdi-a para um homem que prometia ser marquês. Procure a página rasgada com a lamparina (segure C). Mais adiante, Lobo Neves faz a ronda: fique parado atrás de uma moita quando ele olhar para o seu lado.']]);
 }
-function fim(){
+function fim(){try{localStorage.removeItem(PROGKEY)}catch(e){}
   state='end';$('hud').classList.add('hidden');
   const pct=Math.round((Z.leit/Z.tot)*100);
   try{const o=JSON.parse(localStorage.getItem(SAVE)||'{}');o.zonas=o.zonas||{};o.found=o.found||{};o.done=o.done||[];
@@ -493,6 +553,11 @@ function loop(ts){
   render(dt);
 }
 window.__t={LOBO,P,F,Z,PAGES,INTER,get state(){return state},set state(v){state=v},get camX(){return camX},set camX(v){camX=v},provas,startCine,fim,K};
+(function restaurarProg(){try{const r=JSON.parse(localStorage.getItem(PROGKEY)||'null');if(!r||!(r.cp>0))return;
+  cpX=r.cp;P.x=r.cp;camX=Math.max(0,Math.min(WW-CW,P.x-CW*.42));Object.assign(Z,r.Z||{});Object.assign(F,r.F||{});
+  (r.pg||[]).forEach((v,i)=>{if(v&&PAGES[i])PAGES[i].got=true});(r.rb||[]).forEach((v,i)=>{if(v&&RAS_BOARDS[i])RAS_BOARDS[i].done=true});
+  if(typeof hipo!=='undefined'&&F.hipo){hipo.on=true;hipo.landed=true;hipo.x=3440;hipo.y=G-64}
+  window.__restored=1}catch(e){}})();
 loadAll(()=>{requestAnimationFrame(loop);iniciar();hud()});
 </script>
 </body>

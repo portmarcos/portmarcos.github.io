@@ -93,7 +93,7 @@ const $=id=>document.getElementById(id);
 const SAVE='caso_realismo_v1';
 const SRC={det:'../caso-originais/img/q1/detetive.webp',detF:'../caso-originais/img/q1/detetive-f.webp',bras:'img/q1/bras.webp',hipo:'img/q1/hipopotamo.webp',
  bg:'img/q1/bg-velorio.webp',bgd:'img/q1/bg-delirio.webp',retBras:'img/q1/ret-bras.webp',retDet:'../caso-originais/img/detetive.webp',retDetF:'../caso-originais/img/detetive-f.webp',
- bgi:'img/q1/bg-infancia.webp',eul:'img/q1/eulalia.webp',retEul:'img/q1/ret-eulalia.webp',eud:'img/q1/eulalia-doente.webp',bgz:'img/q1/bg-salao.webp'};
+ bgi:'img/q1/bg-tijuca.webp',eul:'img/q1/eulalia.webp',retEul:'img/q1/ret-eulalia.webp',eud:'img/q1/eulalia-doente.webp',bgz:'img/q1/bg-salao.webp'};
 const OPCIONAL=['hq2','hq3','amigos','caixao','padre'];
 const IMG={};
 const SH={det:{w:269,h:232,s:.47},bras:{w:137,h:340,s:.37},hipo:{w:303,h:230,s:.6},eul:{w:211,h:340,s:.37},eud:{w:294,h:340,s:.37}};
@@ -208,13 +208,13 @@ const INTER=[
    await say([['bras','Que suplício foi o jantar! Sabina me sentou ao pé da filha do Damasceno.'],['eul','Boa noite.']]);
    await leitura({titulo:'Capítulo 93 · O Jantar',cita:'&mdash; Muito simpática, não é? acudiu ela; falta-lhe um pouco mais de corte. Mas que coração! é uma pérola. Bem boa noiva para você. &mdash; Não gosto de pérolas. &mdash; Casmurro! Para quando é que você se guarda? [&hellip;] Pois, meu rico, quer você queira quer não, há de casar com Nhá-loló.',
      fonte:FONTE+'93 (domínio público; trecho abreviado).',
-     q:{t:'Como o capítulo mostra o casamento na sociedade da época?',o:['Como uma decisão que depende só do amor dos noivos.','Como um arranjo social: a família escolhe a "boa noiva" e pressiona o rapaz, e as qualidades da moça são avaliadas como mercadoria (coração, "corte", elegância).','Como um assunto de que ninguém fala.','Como um evento religioso.'],k:1,e:'Sabina trata Nhá-loló como "boa noiva" e insiste: "quer você queira quer não, há de casar". Machado critica a sociedade que transforma casamento em negócio e convenção, em que o gosto individual conta pouco.'}});
+     q:{t:'Como o capítulo mostra o casamento na sociedade da época?',o:['Como uma decisão livre dos noivos, que dependia apenas do amor sincero entre os dois.','Como um assunto privado, sobre o qual a família e os vizinhos preferiam não opinar.','Como um evento sobretudo religioso, sem relação com interesses sociais ou de dinheiro.','Como um arranjo: a família escolhe a “boa noiva” e a avalia como mercadoria.'],k:3,e:'Sabina trata Nhá-loló como "boa noiva" e insiste: "quer você queira quer não, há de casar". Machado critica a sociedade que transforma casamento em negócio e convenção, em que o gosto individual conta pouco.'}});
    F.fases=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'inveja',x:1750,r:140,txt:'AÇÃO · Morro abaixo',done:()=>F.inveja,act:async()=>{
    await say([['bras','Foi assim que os anos me vieram caindo pelo morro abaixo.']]);
    await leitura({titulo:'Capítulo 121 · Morro Abaixo',cita:'Pois um domingo, ao descer com Nhá-loló pelo braço, não sei que fenômeno se deu que fui deixando aqui dois anos, ali quatro, logo adiante cinco, de maneira que, quando cheguei abaixo, estava com vinte anos apenas, tão lépidos como tinham sido.',
      fonte:FONTE+'121 (domínio público).',
-     q:{t:'O que a imagem dos anos "caindo pelo morro abaixo" revela sobre Brás?',o:['Que ele realmente rejuvenesceu.','Que, ao lado de uma moça, ele se sente rejuvenescido: é a ilusão da juventude que o amor novo traz, narrada com humor e fantasia.','Que ele sofreu um acidente.','Que subiu o morro rápido demais.'],k:1,e:'Machado usa o recurso fantástico (os anos que caem) como metáfora do autoengano: a nova paixão faz Brás se sentir jovem. A ironia está em tratar como "fenômeno" o que é só ilusão.'}});
+     q:{t:'O que a imagem dos anos "caindo pelo morro abaixo" revela sobre Brás?',o:['Que, ao lado da moça, ele se sente mais jovem: é a ilusão que o amor novo traz.','Que ele realmente rejuvenesceu, por causa de um remédio ou de uma poção.','Que ele sofreu um acidente ao descer o morro e perdeu a memória dos anos.','Que ele subiu o morro depressa demais e passou mal, lembrando-se da infância.'],k:0,e:'Machado usa o recurso fantástico (os anos que caem) como metáfora do autoengano: a nova paixão faz Brás se sentir jovem. A ironia está em tratar como "fenômeno" o que é só ilusão.'}});
    F.inveja=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'frango',x:2600,r:140,txt:'AÇÃO · A vergonha de Nhã-loló',done:()=>F.frango,act:async()=>{
    await say([['bras','O que vexava a Nhã-loló era o pai, que se metera com os apostadores.'],['eul','Estudava-se e estudava-me; queria imitar a vida elegante.']]);
@@ -223,17 +223,54 @@ const INTER=[
    await say([['narr',ok?'Foi mais fundo que eu, leitor. Eu apenas achei "grande elevação" na vergonha dela e fui arrancar a flor do pântano.':'Foi quase o que eu fiz: achei a vergonha dela de "grande elevação" e quis tirar a flor do pântano, sem perguntar quem fez o pântano.']]);
    await leitura({titulo:'Capítulo 122 · Uma Intenção Mui Fina',cita:'Nhã-loló observava, imitava, adivinhava; ao mesmo tempo dava-se ao esforço de mascarar a inferioridade da família. [&hellip;] &mdash; Não há remédio, disse eu comigo, vou arrancar esta flor a este pântano.',
      fonte:FONTE+'122 (domínio público; trechos abreviados).',
-     q:{t:'O que a imagem de "arrancar esta flor a este pântano" revela sobre Brás?',o:['Que ele se preocupa com jardinagem.','Que Brás se vê como salvador condescendente: acha a família de Nhã-loló inferior e se acha generoso em tirá-la de lá, o que denuncia preconceito de classe.','Que Nhã-loló vivia num pântano de verdade.','Que Brás quer casar com o pai dela.'],k:1,e:'Brás trata a família de Eulália como um "pântano" e Eulália como uma "flor" a resgatar. Machado expõe o preconceito social do narrador, disfarçado de nobreza.'}});
+     q:{t:'O que a imagem de "arrancar esta flor a este pântano" revela sobre Brás?',o:['Que Brás se preocupa com jardinagem e quer cuidar da chácara da família.','Que Nhã-loló vivia, de fato, num pântano e precisava ser resgatada.','Que ele se acha um salvador e despreza a família dela: preconceito de classe.','Que Brás quer casar com o pai dela para ficar com a fortuna da família.'],k:2,e:'Brás trata a família de Eulália como um "pântano" e Eulália como uma "flor" a resgatar. Machado expõe o preconceito social do narrador, disfarçado de nobreza.'}});
    F.frango=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'placida',x:3200,r:140,txt:'AÇÃO · Desconsolação',done:()=>F.placida,act:async()=>{
    await say([['narr','O epitáfio diz tudo. Vale mais do que se lhes narrasse a moléstia de Nhã-loló, a morte, o desespero da família, o enterro.']]);
    await leitura({titulo:'Capítulo 126 · Desconsolação',cita:'Doze pessoas apenas, e três quartas partes amigos do Cotrim, acompanharam à cova o cadáver de sua querida filha. E ele fizera expedir oitenta convites. [&hellip;] &mdash; Qual! gemia ele, desampararam-me. [&hellip;] &mdash; Mas viessem!',
      fonte:FONTE+'126 (domínio público; trecho abreviado).',
-     q:{t:'O que o lamento de Damasceno ("Mas viessem!") revela?',o:['Que o enterro estava mal organizado.','Que, mesmo diante da morte da filha, ele se preocupa com a aparência social: o número de convidados importa mais que o consolo, o que critica a vaidade e as convenções.','Que Damasceno não amava a filha.','Que o enterro foi um grande sucesso.'],k:1,e:'A dor do pai vira queixa de aparência: oitenta convites, doze presentes. Machado critica a sociedade das formalidades, em que até o luto é medido pelo público. Em seguida, o narrador conclui que "talvez não a amasse deveras".'}});
+     q:{t:'O que o lamento de Damasceno ("Mas viessem!") revela?',o:['Que o enterro estava mal organizado e Damasceno se queixava da falta de cuidado.','Que ele se preocupa com a aparência: os convidados importam mais que o consolo.','Que Damasceno não amava a filha e tratava a morte como assunto de negócios.','Que a família não queria convidados, preferindo um enterro silencioso e íntimo.'],k:1,e:'A dor do pai vira queixa de aparência: oitenta convites, doze presentes. Machado critica a sociedade das formalidades, em que até o luto é medido pelo público. Em seguida, o narrador conclui que "talvez não a amasse deveras".'}});
    F.placida=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'porta',x:3500,r:140,txt:'AÇÃO · Ler o epitáfio',cond:()=>provas()===NP,act:async()=>{
    await say([['narr','Aqui jaz Dona Eulália Damascena de Brito, morta aos dezenove anos de idade. Orai por ela!']]);startCine()}}
 ];
+/* ===== Trechos do livro (opcionais): citações nas páginas + painéis rasurados ===== */
+const FRAGS=[[121, "Em vão lhe disse que era tempo de descer: ele não respondia, não ouvia, concentrara-se no duelo."], [121, "Ambos agitavam as cristas em sangue; o peito de um e de outro estava desplumado e rubro; invadia-os o cansaço."], [126, "Ficam sabendo que morreu; acrescentarei que foi por ocasião da primeira entrada da febre amarela."], [126, "Creio até que esta me pareceu ainda mais absurda que todas as outras mortes."], [126, "A tristeza de Damasceno era profunda; esse pobre homem parecia uma ruína."], [121, "Como o Damasceno morava nos Cajueiros, eu acompanhava-os muitas vezes à missa."]];
+const RASURAS=[{"cap": 121, "a": "No fim de três meses, ia tudo à", "k": "maravilha", "b": ".", "o": ["perfeição", "calma", "maravilha"]}, {"cap": 126, "a": "Se não contei a morte, não conto igualmente a missa do", "k": "sétimo", "b": " dia.", "o": ["terceiro", "primeiro", "sétimo"]}];
+function pageQuote(n){if(n<2)return;const q=FRAGS[n-2];if(q)toast('\u201c'+q[1]+'\u201d  \u2014 Machado de Assis, cap. '+q[0],Math.min(9500,3800+q[1].length*38))}
+function rasura(c){return new Promise(res=>{
+  const prev=state;state='modal';
+  ov('<h2>Trecho rasurado \u00b7 cap. '+c.cap+'</h2><p>O Carimbo riscou uma palavra do livro. Qual delas completa a frase?</p><div class="cita">'+c.a+' <span id="rs" style="background:#1a0f0a;color:#1a0f0a;border-radius:3px;padding:0 .5em;letter-spacing:.1em;border:1px solid #8b73bd">\u2588\u2588\u2588\u2588\u2588\u2588</span>'+c.b+'</div><div id="lq"></div>');
+  let h='';c.o.slice().sort(()=>Math.random()-.5).forEach(x=>h+='<button class="opt">'+x+'</button>');$('lq').innerHTML=h;let tries=0;
+  $('lq').querySelectorAll('.opt').forEach(bt=>bt.onclick=()=>{
+    if(bt.textContent===c.k){bt.classList.add('ok');$('lq').querySelectorAll('.opt').forEach(x=>x.disabled=true);
+      const r=$('rs');r.textContent=c.k;r.style.cssText='color:#ffd98a;font-weight:bold;border-bottom:2px solid #ffd98a';
+      $('lq').insertAdjacentHTML('beforeend','<p>Frase restaurada. Machado de Assis, <i>Memórias Póstumas de Brás Cubas</i>, cap. '+c.cap+' (domínio público).</p><button class="btn" id="lok">Continuar</button>');
+      addPts(tries===0?60:20,P.x-camX,P.y-120);tone(660,.1,.05,'triangle');tone(990,.14,.04,'triangle');
+      $('lok').onclick=()=>{ovClose();state=prev;res(true)}}
+    else{tries++;bt.classList.add('bad');bt.disabled=true;blip(-3);toast('Releia a frase: qual palavra faz sentido aqui?',1800)}});
+})}
+const RAS_BOARDS=[];
+(function rasInit(){
+  const fr=[.27,.56];
+  RASURAS.forEach((c,i)=>{
+    let x=null,bd=1e9;for(const [pm,im] of [[75,150],[60,120],[45,95]]){for(let t=450;t<WW-350;t+=10){if(!onGround(t-70)||!onGround(t)||!onGround(t+70))continue;if(PLAT.some(p=>t>p.x-pm&&t<p.x+p.w+pm))continue;if(INTER.some(n=>Math.abs(n.x-t)<im))continue;if(RAS_BOARDS.some(r=>Math.abs(r.x-t)<650))continue;const d=Math.abs(t-WW*fr[i]);if(d<bd){bd=d;x=t}}if(x!=null)break}
+    if(x==null)return;const b={x,c,done:false};RAS_BOARDS.push(b);
+    INTER.push({id:'ras'+i,x,r:100,txt:'AÇÃO \u00b7 Ler o trecho rasurado (opcional)',done:()=>b.done,act:async()=>{await rasura(c);b.done=true;Z.ras=(Z.ras||0)+1;toast('Trecho restaurado e anotado no seu caderno.',2500)}});
+  });
+})();
+function drawRasuras(){
+  ctx.save();ctx.translate(-camX,0);
+  for(const b of RAS_BOARDS){if(b.x<camX-120||b.x>camX+CW+120)continue;const x=b.x,pulse=.5+.5*Math.sin(T*3+x);
+    ctx.fillStyle='#3a2616';ctx.fillRect(x-4,G-76,8,76);
+    ctx.save();ctx.translate(x,G-112);ctx.rotate(-.04);ctx.fillStyle='#efe0bd';ctx.fillRect(-52,-34,104,68);ctx.strokeStyle='#7a5a30';ctx.lineWidth=2;ctx.strokeRect(-52,-34,104,68);
+    ctx.fillStyle='#7a5a30';for(let i=0;i<4;i++)ctx.fillRect(-42,-24+i*14,84-(i%2)*18,3);
+    if(!b.done){ctx.fillStyle='#1a0f0a';ctx.fillRect(-18,-10,44,14);ctx.fillStyle='rgba(255,80,60,'+(.25+.35*pulse)+')';ctx.fillRect(-18,-10,44,14)}
+    else{ctx.fillStyle='#2f7a43';ctx.font='bold 24px sans-serif';ctx.textAlign='center';ctx.fillText('\u2713',0,9)}
+    ctx.restore();
+    if(!b.done){const g=ctx.createRadialGradient(x,G-112,6,x,G-112,90);g.addColorStop(0,'rgba(255,200,110,'+(.25*pulse)+')');g.addColorStop(1,'rgba(255,200,110,0)');ctx.fillStyle=g;ctx.fillRect(x-90,G-202,180,180)}}
+  ctx.restore();
+}
 const provas=()=>[F.ped,F.fases,F.inveja,F.frango,F.placida].filter(Boolean).length;
 function nearInter(){
   let best=null,bd=1e9;
@@ -264,29 +301,47 @@ function updatePlayer(dt){
 function thud2(){if(AC)tone(90,.07,.05,'sine')}
 function fall(){
   toast(pick(NARR.queda),3200);Z.lamps--;shake=.4;
-  if(Z.lamps<=0){Z.lamps=3;Z.pts=Math.max(0,Z.pts-50);toast('Sem lamparinas. O narrador recomeça o capítulo.',3200)}
+  if(Z.lamps<=0){Z.lamps=3;toast('Sem lamparinas. Você volta ao último ponto salvo, sem perder o que já conquistou.',3200)}
   P.x=cpX;P.y=G-200;P.vy=0;P.inv=1.6;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));hud();
 }
 function hit(){
   if(P.inv>0)return;Z.lamps--;P.inv=1.8;shake=.5;P.hurt=.4;thud();toast(pick(NARR.carimbo),3000);
-  if(Z.lamps<=0){Z.lamps=3;Z.pts=Math.max(0,Z.pts-50);P.x=cpX;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));toast('Sem lamparinas. O narrador recomeça o capítulo.',3200)}hud();
+  if(Z.lamps<=0){Z.lamps=3;P.x=cpX;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));toast('Sem lamparinas. Você volta ao último ponto salvo, sem perder o que já conquistou.',3200)}hud();
 }
 /* ============ Mundo ============ */
-function updateWorld(dt){
+/* ===== Progresso salvo no meio da zona (perder não volta ao início) ===== */
+const PROGKEY='caso_realismo_prog_'+(location.pathname.split('/').pop()||'zona');let lastSave=0;
+function saveCP(){try{localStorage.setItem(PROGKEY,JSON.stringify({cp:cpX,Z:{pts:Z.pts,pages:Z.pages,leit:Z.leit,ras:Z.ras||0},F,pg:PAGES.map(g=>g.got?1:0),rb:RAS_BOARDS.map(b=>b.done?1:0)}))}catch(e){}}
+function autoCP(){
+  if(state!=='play')return;
+  if(P.y>=G-2&&P.inv<=0&&P.x>cpX+300&&onGround(P.x-40)&&onGround(P.x+40)){
+    cpX=P.x-60;saveCP();if(!window.__cpT){window.__cpT=1;toast('Ponto salvo: se perder, você volta daqui, não do início.',3500)}}
+  else if(T-lastSave>1){lastSave=T;saveCP()}
+}
+function updateWorld(dt){autoCP();
   stampT-=dt;
   crowdT-=dt;if(crowdT<=0&&P.x>600&&P.x<3350){const n=2+Math.floor(Math.random()*2);for(let k=0;k<n;k++)crowd.push({x:camX+CW+60+k*58,v:-(135+Math.random()*30),t:Math.random()*5,h:96+Math.random()*26,u:Math.random()<.4,d:0});crowdT=5+Math.random()*2.5}
   for(const c of crowd){c.x+=c.v*dt;c.t+=dt;if(!c.d&&Math.abs(P.x-c.x)<26&&P.y>G-70&&P.inv<=0&&state==='play'){c.d=1;hit();P.vx=-120}}
   crowd=crowd.filter(c=>c.x>camX-120);
-  if(stampT<=0&&P.x>650&&P.x<3350){stamps.push({x:P.x+P.vx*.55+(Math.random()-.5)*60,t:0});stampT=6+Math.random()*2.5}
-  for(const s of stamps){s.t+=dt;if(s.t>.9&&s.t<1.12&&!s.d){s.d=1;shake=.35;thud();marks.push({x:s.x,t:5});if(Math.abs(P.x-s.x)<52&&!(P.y<G-210))hit()}}
-  stamps=stamps.filter(s=>s.t<1.9);marks=marks.filter(m=>(m.t-=dt)>0);
-  for(const g of PAGES){if(!g.got&&Math.abs(P.x-g.x)<34&&Math.abs((P.y-46)-g.y)<52){g.got=true;Z.pages++;addPts(g.k==='o'?40:15,g.x-camX,g.y);tone(880,.06,.05,'square');tone(1320,.12,.04,'square');if(Z.pages===1)toast(pick(NARR.pag),3000);if(Z.pages===11)toast('Onze folhas. O capítulo está quase inteiro.',3500);hud()}}
+  if(stampT<=0&&P.x>650&&P.x<3350&&!stamps.length){stamps.push({dir:Math.random()<.5?1:-1,t:0,x:0,sx:0});stampT=6+Math.random()*2.5;
+    if(!window.__pen){window.__pen=1;toast('O Carimbo riscou o chão com o lápis vermelho: PULE a rasura!',3600)}}
+  for(const s of stamps){s.t+=dt;if(s.t>1.1){if(!s.go){s.go=1;s.sx=s.dir>0?camX-80:camX+CW+80;s.x=s.sx;thud()}s.x+=s.dir*540*dt;
+      if(!s.d&&Math.abs(P.x-s.x)<40&&P.y>G-34){s.d=1;shake=.3;hit()}}}
+  stamps=stamps.filter(s=>!s.go||(s.dir>0?s.x<camX+CW+160:s.x>camX-160));marks=[];
+  for(const g of PAGES){if(!g.got&&Math.abs(P.x-g.x)<34&&Math.abs((P.y-46)-g.y)<52){g.got=true;Z.pages++;pageQuote(Z.pages);addPts(g.k==='o'?40:15,g.x-camX,g.y);tone(880,.06,.05,'square');tone(1320,.12,.04,'square');if(Z.pages===1)toast(pick(NARR.pag),3000);if(Z.pages===11)toast('Onze folhas. O capítulo está quase inteiro.',3500);hud()}}
   if(provas()===NP&&!F.porta){F.porta=true;toast('A porta do último delírio está aberta.',4000)}
   floaters.forEach(f=>f.t+=dt);floaters=floaters.filter(f=>f.t<1.2);
   shake=Math.max(0,shake-dt);
 }
 /* ============ Desenho ============ */
-function drawBG(){
+function drawBGImg(){
+  const im=IMG.bgi;if(!im)return;
+  const h=Math.round(CH*1.08),w=Math.round(im.width*h/im.height),off=Math.max(0,w-CW)*Math.min(1,Math.max(0,camX/Math.max(1,WW-CW)));
+  ctx.save();ctx.beginPath();ctx.rect(0,0,CW,G);ctx.clip();ctx.drawImage(im,-off,CH-h,w,h);
+  const v=ctx.createLinearGradient(0,0,0,G);v.addColorStop(0,'rgba(20,10,5,.18)');v.addColorStop(1,'rgba(20,10,5,0)');ctx.fillStyle=v;ctx.fillRect(0,0,CW,G);ctx.restore();
+}
+function drawBG(){drawBGproc();drawBGImg()}
+function drawBGproc(){
   const im=IMG.bgz;
   if(im){const W=Math.round(CH*im.width/im.height);const o=-(camX/Math.max(1,WW-CW))*(W-CW);ctx.drawImage(im,o,0,W,CH);
     ctx.fillStyle='rgba(20,10,0,.12)';ctx.fillRect(0,0,CW,CH)}
@@ -333,7 +388,7 @@ function drawBras(){
   ctx.restore();
 }
 function drawHipo(){}
-function drawPages(){
+function drawPages(){drawRasuras();
   ctx.save();ctx.translate(-camX,0);
   for(const g of PAGES){if(g.got)continue;const y=g.y+Math.sin(T*2+g.x)*4;ctx.save();ctx.translate(g.x,y);ctx.rotate(Math.sin(T*1.5+g.x)*.2);
     ctx.shadowColor='#ffd98a';ctx.shadowBlur=10;ctx.fillStyle='#efe0bd';ctx.fillRect(-10,-14,20,28);ctx.shadowBlur=0;ctx.strokeStyle='#7a5a30';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(0,0,6,0,7);ctx.moveTo(0,-6);ctx.lineTo(0,6);ctx.moveTo(-6,0);ctx.lineTo(6,0);ctx.stroke();ctx.restore()}
@@ -365,14 +420,18 @@ function drawLight(){
   ctx.save();ctx.globalCompositeOperation='lighter';const g=ctx.createRadialGradient(x,y,4,x,y,210);g.addColorStop(0,'rgba(255,200,110,.45)');g.addColorStop(.5,'rgba(255,150,50,.14)');g.addColorStop(1,'rgba(255,120,30,0)');ctx.fillStyle=g;ctx.fillRect(x-210,y-210,420,420);ctx.restore();
 }
 function drawStamps(){
-  ctx.save();ctx.translate(-camX,0);
   for(const s of stamps){
-    if(s.t<.9){const a=.25+.35*Math.sin(s.t*14)**2;ctx.fillStyle='rgba(200,30,20,'+a+')';ctx.beginPath();ctx.ellipse(s.x,G,54,10,0,0,7);ctx.fill();
-      ctx.strokeStyle='rgba(255,80,60,'+a+')';ctx.lineWidth=2;ctx.setLineDash([6,6]);ctx.beginPath();ctx.moveTo(s.x-50,60);ctx.lineTo(s.x-50,G);ctx.moveTo(s.x+50,60);ctx.lineTo(s.x+50,G);ctx.stroke();ctx.setLineDash([])}
-    else if(s.t<1.2){const p=Math.min(1,(s.t-.9)/.1);const y=-200+(G-6+200)*p;ctx.fillStyle='#b8261a';ctx.fillRect(s.x-52,y-60,104,60);ctx.fillStyle='#7c1710';ctx.fillRect(s.x-12,y-140,24,82);
-      ctx.fillStyle='#f4d9c8';ctx.font='bold 14px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText('CORRIGIDO',s.x,y-24)}
+    if(!s.go){const a=.3+.5*Math.sin(s.t*16)**2,ex=s.dir>0?30:CW-30;
+      ctx.save();ctx.fillStyle='rgba(200,30,20,'+a+')';ctx.fillRect(s.dir>0?0:CW-60,G-34,60,30);ctx.fillStyle='#fff3e0';ctx.font='bold 22px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText(s.dir>0?'\u00bb!':'!\u00ab',ex,G-12);
+      ctx.fillStyle='rgba(255,70,50,'+a*.55+')';ctx.fillRect(0,G-5,CW,3);ctx.restore()}
+    else{ctx.save();ctx.translate(-camX,0);
+      const n=Math.floor(Math.abs(s.x-s.sx)/12);ctx.strokeStyle='#c4271a';ctx.lineWidth=5;ctx.lineJoin='round';ctx.beginPath();
+      for(let i=0;i<=n;i++){const x=s.sx+s.dir*i*12,y=G-14+((i%2)?-11:11)+Math.sin(T*30+i)*2;if(i)ctx.lineTo(x,y);else ctx.moveTo(x,y)}ctx.stroke();
+      ctx.translate(s.x,G-24);ctx.scale(s.dir,1);ctx.rotate(.55);
+      ctx.fillStyle='#e8b830';ctx.fillRect(-58,-6,50,12);ctx.fillStyle='#b8261a';ctx.fillRect(-66,-6,8,12);ctx.fillStyle='#d8b890';ctx.beginPath();ctx.moveTo(-8,-6);ctx.lineTo(14,0);ctx.lineTo(-8,6);ctx.closePath();ctx.fill();
+      ctx.fillStyle='#c4271a';ctx.beginPath();ctx.moveTo(6,-2.5);ctx.lineTo(14,0);ctx.lineTo(6,2.5);ctx.closePath();ctx.fill();
+      ctx.restore()}
   }
-  ctx.restore();
 }
 function drawRain(dt){
   ctx.save();ctx.globalCompositeOperation='lighter';
@@ -417,7 +476,8 @@ function iniciar(){
    '<p style="font-size:.85em;color:var(--muted)">Setas ou A/D: andar · Espaço: pular (duplo) · C: lamparina · E: ação · Esc: pausa. No celular, use os botões na tela.</p><button class="btn" id="go">Começar</button><button class="btn sec" id="back">Voltar ao Arquivo</button>');
   $('gM').onclick=()=>{S.gen='m';$('gM').classList.add('on');$('gF').classList.remove('on')};$('gF').onclick=()=>{S.gen='f';$('gF').classList.add('on');$('gM').classList.remove('on')};
   $('back').onclick=()=>{location.href='../index.html'};
-  $('go').onclick=()=>{S.nome=($('iN').value||'').trim()||'Detetive';S.turma=($('iT').value||'').trim();audio();setMute(muted);comecar()};
+  $('go').onclick=()=>{S.nome=($('iN').value||'').trim()||'Detetive';S.turma=($('iT').value||'').trim();audio();setMute(muted);comecar();if(window.__restored)toast('Progresso restaurado: você continua de onde parou.',5000)};
+  if(window.__restored){$('go').insertAdjacentHTML('afterend','<button class="btn sec" id="zero">Recomeçar do início</button>');$('zero').onclick=()=>{try{localStorage.removeItem(PROGKEY)}catch(e){}location.reload()}}
 }
 
 
@@ -426,7 +486,7 @@ function comecar(){
   ovClose();state='play';$('hud').classList.remove('hidden');hud();
   say([['narr','O salão do Damasceno, leitor. Havia um piano, havia a Sabina e havia uma moça graciosa e acanhada, a Nhã-loló. Procure a página rasgada com a lamparina (segure C).']]);
 }
-function fim(){
+function fim(){try{localStorage.removeItem(PROGKEY)}catch(e){}
   state='end';$('hud').classList.add('hidden');
   const pct=Math.round((Z.leit/Z.tot)*100);
   try{const o=JSON.parse(localStorage.getItem(SAVE)||'{}');o.zonas=o.zonas||{};o.found=o.found||{};o.done=o.done||[];
@@ -473,6 +533,11 @@ function loop(ts){
   render(dt);
 }
 window.__t={LOBO,P,F,Z,PAGES,INTER,get state(){return state},set state(v){state=v},get camX(){return camX},set camX(v){camX=v},provas,startCine,fim,K};
+(function restaurarProg(){try{const r=JSON.parse(localStorage.getItem(PROGKEY)||'null');if(!r||!(r.cp>0))return;
+  cpX=r.cp;P.x=r.cp;camX=Math.max(0,Math.min(WW-CW,P.x-CW*.42));Object.assign(Z,r.Z||{});Object.assign(F,r.F||{});
+  (r.pg||[]).forEach((v,i)=>{if(v&&PAGES[i])PAGES[i].got=true});(r.rb||[]).forEach((v,i)=>{if(v&&RAS_BOARDS[i])RAS_BOARDS[i].done=true});
+  if(typeof hipo!=='undefined'&&F.hipo){hipo.on=true;hipo.landed=true;hipo.x=3440;hipo.y=G-64}
+  window.__restored=1}catch(e){}})();
 loadAll(()=>{requestAnimationFrame(loop);iniciar();hud()});
 </script>
 </body>

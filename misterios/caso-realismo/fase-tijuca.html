@@ -93,7 +93,7 @@ const $=id=>document.getElementById(id);
 const SAVE='caso_realismo_v1';
 const SRC={det:'../caso-originais/img/q1/detetive.webp',detF:'../caso-originais/img/q1/detetive-f.webp',bras:'img/q1/bras.webp',hipo:'img/q1/hipopotamo.webp',
  bg:'img/q1/bg-velorio.webp',bgd:'img/q1/bg-delirio.webp',retBras:'img/q1/ret-bras.webp',retDet:'../caso-originais/img/detetive.webp',retDetF:'../caso-originais/img/detetive-f.webp',
- bgi:'img/q1/bg-infancia.webp',eug:'img/q1/eugenia.webp',retEug:'img/q1/ret-eugenia.webp',borb:'img/q1/borboleta.webp'};
+ bgi:'img/q1/bg-tijuca.webp',eug:'img/q1/eugenia.webp',retEug:'img/q1/ret-eugenia.webp',borb:'img/q1/borboleta.webp'};
 const OPCIONAL=['hq2','hq3','amigos','caixao','padre'];
 const IMG={};
 const SH={det:{w:269,h:232,s:.47},bras:{w:137,h:340,s:.37},hipo:{w:303,h:230,s:.6},eug:{w:179,h:340,s:.37},borb:{w:507,h:340,s:.2}};
@@ -138,7 +138,7 @@ function setMute(m){muted=m;if(rainG)rainG.gain.value=m?0:.012;$('bMute').textCo
 let toastT=0;
 function toast(t,ms){const e=$('toast');e.textContent=t;e.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove('on'),ms||3200)}
 const NARR={queda:['Até a Tijuca tem as suas ravinas, leitor.','Caí. A montanha que me perdoe.','Uma ravina é só um capítulo mais fundo.'],
- carimbo:['A borboleta bateu asas; o Carimbo bate com mais força.','O Carimbo carimbou o leitor. Que falta de educação com quem lê.','Corrigido! Foi o que ele pensou. Uma borboleta teria sido mais gentil.'],
+ carimbo:['A borboleta bateu asas; o Carimbo bate com mais força.','O Carimbo riscou o leitor. Que falta de educação com quem lê.','Rasurado! Foi o que ele pensou. Uma borboleta teria sido mais gentil.'],
  pag:['Uma florzinha da moita. Há quem as chame de erva daninha.','Flor guardada. Tijuca nunca soube ser só cenário.']};
 const pick=a=>a[Math.floor(Math.random()*a.length)];
 function addPts(n,x,y){Z.pts+=n;floaters.push({x,y,t:0,s:'+'+n});hud()}
@@ -204,7 +204,7 @@ const INTER=[
    await say([['eus','Vem cá, Eugênia, cumprimenta o Doutor Brás Cubas, filho do Senhor Cubas. Veio da Europa.'],['eug','Boa tarde, doutor.'],['bras','Eugênia, a "flor da moita". Dezesseis anos, olhos fúlgidos. E uma borboleta preta entrou pela varanda.']]);
    await leitura({titulo:'Capítulo 30 · A Flor da Moita',cita:'Dona Eusébia deu um grito, levantou-se, praguejou umas palavras soltas: &mdash; T\'esconjuro!... sai, diabo!... Virgem Nossa Senhora! &mdash; Não tenha medo, disse eu; e, tirando o lenço, expeli a borboleta. [&hellip;] Apertei-lhes a mão e saí, a rir comigo da superstição das duas mulheres, um rir filosófico, desinteressante, superior.',
      fonte:FONTE+'30 (domínio público).',
-     q:{t:'O que revela o "rir filosófico, desinteressante, superior" de Brás?',o:['Que ele é humilde e compreensivo com as crenças alheias.','Que ele se julga acima da "superstição" das duas mulheres: o narrador mostra a própria vaidade e preconceito de classe.','Que ele também tem medo de borboletas.','Que a borboleta preta era mesmo sinal de azar.'],k:1,e:'O adjetivo "superior" denuncia a vaidade: Brás olha de cima a crença das mulheres. Mas, no capítulo seguinte, a borboleta preta volta e ele também se perturba. Machado mostra o narrador contradizendo a própria superioridade.'}});
+     q:{t:'O que revela o "rir filosófico, desinteressante, superior" de Brás?',o:['Que ele é humilde e compreensivo diante das crenças e dos medos das duas mulheres.','Que ele também tem medo de borboletas pretas e disfarça esse medo com o riso.','Que ele se julga acima da superstição das mulheres: vaidade e preconceito de classe.','Que a borboleta preta era, de fato, um sinal de azar para toda a família de Brás.'],k:2,e:'O adjetivo "superior" denuncia a vaidade: Brás olha de cima a crença das mulheres. Mas, no capítulo seguinte, a borboleta preta volta e ele também se perturba. Machado mostra o narrador contradizendo a própria superioridade.'}});
    F.flor=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'borb',x:1750,r:140,txt:'AÇÃO · A borboleta no quarto',done:()=>F.borb,act:async()=>{
    await say([['bras','No dia seguinte, outra borboleta preta, bem maior, entrou no meu quarto e pousou no retrato de meu pai.']]);
@@ -214,7 +214,7 @@ const INTER=[
    await say([['narr',poup?'Você a deixou sair, leitor. Eu, não. Eu bati nela com uma toalha, e olhe só como me justifiquei depois.':'Foi o que eu fiz: bati com a toalha. E olhe só como me justifiquei depois.']]);
    await leitura({titulo:'Capítulo 31 · A Borboleta Preta',cita:'Senti um repelão dos nervos, lancei mão de uma toalha, bati-lhe e ela caiu. [&hellip;] &mdash; Também por que diabo não era ela azul? disse eu comigo. E esta reflexão, &mdash; uma das mais profundas que se tem feito desde a invenção das borboletas, &mdash; me consolou do malefício, e me reconciliou comigo mesmo.',
      fonte:FONTE+'31 (domínio público).',
-     q:{t:'Como Brás se livra do remorso por ter matado a borboleta?',o:['Pedindo desculpas à borboleta e ao retrato do pai.','Com uma "reflexão profunda" absurda ("por que não era ela azul?"): ele inventa uma desculpa para se reconciliar consigo mesmo.','Contando o fato a Dona Eusébia.','Não sente nenhum remorso, nem finge.'],k:1,e:'A "reflexão profundíssima" é ironia pura: ele transforma uma crueldade gratuita numa piada para ficar de bem com a própria consciência. É o mesmo mecanismo do almocreve e do menino-diabo: racionalizar para não se sentir culpado.'}});
+     q:{t:'Como Brás se livra do remorso por ter matado a borboleta?',o:['Com uma “reflexão profunda” absurda: inventa uma desculpa para se reconciliar consigo.','Pedindo desculpas à borboleta e ao retrato do pai, diante de Dona Eusébia e de Eugênia.','Contando o fato a Dona Eusébia e pedindo a ela que o perdoasse pelo ato impensado.','Não sentindo remorso algum, nem sequer fingindo sentir, e esquecendo logo o caso.'],k:0,e:'A "reflexão profundíssima" é ironia pura: ele transforma uma crueldade gratuita numa piada para ficar de bem com a própria consciência. É o mesmo mecanismo do almocreve e do menino-diabo: racionalizar para não se sentir culpado.'}});
    F.borb=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'coxa',x:2600,r:140,txt:'AÇÃO · Eugênia na chácara',done:()=>F.coxa,act:async()=>{
    await say([['bras','Vimos a chácara toda, as árvores, as flores, o tanque de patos. Foi então que notei: Eugênia coxeava um pouco, e eu lhe perguntei se machucara o pé.'],['eug','Não, senhor, sou coxa de nascença.']]);
@@ -224,17 +224,54 @@ const INTER=[
    await say([['narr',gen?'Muito bem, leitor. Eu me mandei a todos os diabos, chamei-me desastrado, e depois fiz pior: passei a noite a me perguntar por que a natureza era "um imenso escárnio".':'Esse foi o pensamento exato que eu tive, leitor, e escrevi sem corar. Agora leia o que eu pensei ao voltar para casa.']]);
    await leitura({titulo:'Capítulo 33 · Bem-Aventurados os que Não Descem',cita:'O pior é que era coxa. Uns olhos tão lúcidos, uma boca tão fresca, uma compostura tão senhoril; e coxa! Esse contraste faria suspeitar que a natureza é às vezes um imenso escárnio. Por que bonita, se coxa? por que coxa, se bonita? [&hellip;] ao pé dessa criatura tão singela, filha espúria e coxa, feita de amor e desprezo, ao pé dela sentia-me bem.',
      fonte:FONTE+'33 (domínio público).',
-     q:{t:'O que a pergunta "Por que bonita, se coxa? por que coxa, se bonita?" mostra sobre o narrador?',o:['Que ele valoriza a deficiência de Eugênia como uma qualidade.','Que ele trata a deficiência como um defeito que contradiz a beleza, e ainda a chama de "filha espúria": o preconceito físico e social dele aparece sem filtro.','Que Eugênia se envergonha de si mesma.','Que ele queria se casar com ela imediatamente.'],k:1,e:'Brás vê a deficiência como um "enigma" e como "escárnio da natureza", e acrescenta "filha espúria", que era o preconceito de nascimento. O problema não está em Eugênia, que responde com franqueza e dignidade, mas no olhar do narrador e da sociedade dele.'}});
+     q:{t:'O que a pergunta "Por que bonita, se coxa? por que coxa, se bonita?" mostra sobre o narrador?',o:['Que ele valoriza a deficiência de Eugênia como se fosse uma qualidade rara e especial.','Que ele vê a deficiência como defeito contra a beleza, e o preconceito surge sem filtro.','Que Eugênia se envergonha tanto de si mesma que procura esconder o defeito de todos.','Que ele queria se casar com ela imediatamente, apesar da oposição de toda a família.'],k:1,e:'Brás vê a deficiência como um "enigma" e como "escárnio da natureza", e acrescenta "filha espúria", que era o preconceito de nascimento. O problema não está em Eugênia, que responde com franqueza e dignidade, mas no olhar do narrador e da sociedade dele.'}});
    F.coxa=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'adeus',x:3200,r:140,txt:'AÇÃO · A despedida na varanda',done:()=>F.adeus,act:async()=>{
    await say([['bras','Segunda-feira à tarde. Anunciei a Eugênia que desceria na manhã seguinte.'],['eug','Adeus. Faz bem.'],['eug','Faz bem em fugir ao ridículo de casar comigo.'],['bras','Jurei-lhe por todos os santos do céu que a queria muito. Hipérboles frias, que ela escutou sem dizer nada.'],['bras','Acredita-me?'],['eug','Não, e digo-lhe que faz bem.']]);
    await leitura({titulo:'Capítulo 35 · O Caminho de Damasco',cita:'&mdash; Adeus, suspirou ela estendendo-me a mão com simplicidade; faz bem. &mdash; E como eu nada dissesse, continuou: &mdash; Faz bem em fugir ao ridículo de casar comigo. [&hellip;] &mdash; Acredita-me? perguntei eu no fim. &mdash; Não, e digo-lhe que faz bem.',
      fonte:FONTE+'35 (domínio público).',
-     q:{t:'O que a fala "Faz bem em fugir ao ridículo de casar comigo" revela?',o:['Que Eugênia está feliz com a decisão de Brás.','Que Eugênia percebe, com lucidez e dignidade, que o abandono vem do medo do ridículo social (casar com uma moça coxa e de nascimento irregular).','Que Eugênia nunca amou Brás.','Que Brás pediu perdão e ela o aceitou de volta.'],k:1,e:'Eugênia nomeia o que Brás não admite: o medo do "ridículo", isto é, o juízo da sociedade. Ela é a personagem mais digna da cena, enquanto o narrador, mesmo "um pouco amargurado, outro pouco satisfeito", desce a montanha para a carreira política.'}});
+     q:{t:'O que a fala "Faz bem em fugir ao ridículo de casar comigo" revela?',o:['Que Eugênia está muito feliz com a decisão de Brás e deseja a ele toda a sorte do mundo.','Que Eugênia nunca amou Brás e só se aproveitou da hospitalidade dele durante a doença.','Que Brás pediu perdão a ela e Eugênia o aceitou de volta, com alegria no coração.','Que Eugênia percebe, com dignidade, que o abandono vem do medo do ridículo social.'],k:3,e:'Eugênia nomeia o que Brás não admite: o medo do "ridículo", isto é, o juízo da sociedade. Ela é a personagem mais digna da cena, enquanto o narrador, mesmo "um pouco amargurado, outro pouco satisfeito", desce a montanha para a carreira política.'}});
    F.adeus=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'porta',x:3500,r:140,txt:'AÇÃO · Descer da Tijuca',cond:()=>provas()===NP,act:async()=>{
    await say([['bras','Eu desci da Tijuca, na manhã seguinte, um pouco amargurado, outro pouco satisfeito.']]);startCine()}}
 ];
+/* ===== Trechos do livro (opcionais): citações nas páginas + painéis rasurados ===== */
+const FRAGS=[[30, "Em verdade, ela parecia ainda mais mulher do que era; seria criança nos seus folgares de moça; mas assim quieta, impassível, tinha a compostura da mulher casada."], [31, "Era tarde; a infeliz expirou dentro de alguns segundos."], [31, "Apiedei-me; tomei-a na palma da mão e fui depô-la no peitoril da janela."], [33, "Uns olhos tão lúcidos, uma boca tão fresca, uma compostura tão senhoril; e coxa!"], [33, "Esse contraste faria suspeitar que a natureza é às vezes um imenso escárnio."], [35, "Quis retê-la, mas o olhar que me lançou não foi já de súplica, senão de império."], [35, "Ia dizer-lhe que não; ela retirou-se lentamente, engolindo as lágrimas."]];
+const RASURAS=[{"cap": 31, "a": "Também por que diabo não era ela", "k": "azul", "b": "? disse eu comigo.", "o": ["branca", "preta", "azul"]}, {"cap": 33, "a": "Por que bonita, se", "k": "coxa", "b": "? por que coxa, se bonita?", "o": ["pobre", "coxa", "jovem"]}];
+function pageQuote(n){if(n<2)return;const q=FRAGS[n-2];if(q)toast('\u201c'+q[1]+'\u201d  \u2014 Machado de Assis, cap. '+q[0],Math.min(9500,3800+q[1].length*38))}
+function rasura(c){return new Promise(res=>{
+  const prev=state;state='modal';
+  ov('<h2>Trecho rasurado \u00b7 cap. '+c.cap+'</h2><p>O Carimbo riscou uma palavra do livro. Qual delas completa a frase?</p><div class="cita">'+c.a+' <span id="rs" style="background:#1a0f0a;color:#1a0f0a;border-radius:3px;padding:0 .5em;letter-spacing:.1em;border:1px solid #8b73bd">\u2588\u2588\u2588\u2588\u2588\u2588</span>'+c.b+'</div><div id="lq"></div>');
+  let h='';c.o.slice().sort(()=>Math.random()-.5).forEach(x=>h+='<button class="opt">'+x+'</button>');$('lq').innerHTML=h;let tries=0;
+  $('lq').querySelectorAll('.opt').forEach(bt=>bt.onclick=()=>{
+    if(bt.textContent===c.k){bt.classList.add('ok');$('lq').querySelectorAll('.opt').forEach(x=>x.disabled=true);
+      const r=$('rs');r.textContent=c.k;r.style.cssText='color:#ffd98a;font-weight:bold;border-bottom:2px solid #ffd98a';
+      $('lq').insertAdjacentHTML('beforeend','<p>Frase restaurada. Machado de Assis, <i>Memórias Póstumas de Brás Cubas</i>, cap. '+c.cap+' (domínio público).</p><button class="btn" id="lok">Continuar</button>');
+      addPts(tries===0?60:20,P.x-camX,P.y-120);tone(660,.1,.05,'triangle');tone(990,.14,.04,'triangle');
+      $('lok').onclick=()=>{ovClose();state=prev;res(true)}}
+    else{tries++;bt.classList.add('bad');bt.disabled=true;blip(-3);toast('Releia a frase: qual palavra faz sentido aqui?',1800)}});
+})}
+const RAS_BOARDS=[];
+(function rasInit(){
+  const fr=[.27,.56];
+  RASURAS.forEach((c,i)=>{
+    let x=null,bd=1e9;for(const [pm,im] of [[75,150],[60,120],[45,95]]){for(let t=450;t<WW-350;t+=10){if(!onGround(t-70)||!onGround(t)||!onGround(t+70))continue;if(PLAT.some(p=>t>p.x-pm&&t<p.x+p.w+pm))continue;if(INTER.some(n=>Math.abs(n.x-t)<im))continue;if(RAS_BOARDS.some(r=>Math.abs(r.x-t)<650))continue;const d=Math.abs(t-WW*fr[i]);if(d<bd){bd=d;x=t}}if(x!=null)break}
+    if(x==null)return;const b={x,c,done:false};RAS_BOARDS.push(b);
+    INTER.push({id:'ras'+i,x,r:100,txt:'AÇÃO \u00b7 Ler o trecho rasurado (opcional)',done:()=>b.done,act:async()=>{await rasura(c);b.done=true;Z.ras=(Z.ras||0)+1;toast('Trecho restaurado e anotado no seu caderno.',2500)}});
+  });
+})();
+function drawRasuras(){
+  ctx.save();ctx.translate(-camX,0);
+  for(const b of RAS_BOARDS){if(b.x<camX-120||b.x>camX+CW+120)continue;const x=b.x,pulse=.5+.5*Math.sin(T*3+x);
+    ctx.fillStyle='#3a2616';ctx.fillRect(x-4,G-76,8,76);
+    ctx.save();ctx.translate(x,G-112);ctx.rotate(-.04);ctx.fillStyle='#efe0bd';ctx.fillRect(-52,-34,104,68);ctx.strokeStyle='#7a5a30';ctx.lineWidth=2;ctx.strokeRect(-52,-34,104,68);
+    ctx.fillStyle='#7a5a30';for(let i=0;i<4;i++)ctx.fillRect(-42,-24+i*14,84-(i%2)*18,3);
+    if(!b.done){ctx.fillStyle='#1a0f0a';ctx.fillRect(-18,-10,44,14);ctx.fillStyle='rgba(255,80,60,'+(.25+.35*pulse)+')';ctx.fillRect(-18,-10,44,14)}
+    else{ctx.fillStyle='#2f7a43';ctx.font='bold 24px sans-serif';ctx.textAlign='center';ctx.fillText('\u2713',0,9)}
+    ctx.restore();
+    if(!b.done){const g=ctx.createRadialGradient(x,G-112,6,x,G-112,90);g.addColorStop(0,'rgba(255,200,110,'+(.25*pulse)+')');g.addColorStop(1,'rgba(255,200,110,0)');ctx.fillStyle=g;ctx.fillRect(x-90,G-202,180,180)}}
+  ctx.restore();
+}
 const provas=()=>[F.ped,F.flor,F.borb,F.coxa,F.adeus].filter(Boolean).length;
 function nearInter(){
   let best=null,bd=1e9;
@@ -265,15 +302,24 @@ function updatePlayer(dt){
 function thud2(){if(AC)tone(90,.07,.05,'sine')}
 function fall(){
   toast(pick(NARR.queda),3200);Z.lamps--;shake=.4;
-  if(Z.lamps<=0){Z.lamps=3;Z.pts=Math.max(0,Z.pts-50);toast('Sem lamparinas. O narrador recomeça o capítulo.',3200)}
+  if(Z.lamps<=0){Z.lamps=3;toast('Sem lamparinas. Você volta ao último ponto salvo, sem perder o que já conquistou.',3200)}
   P.x=cpX;P.y=G-200;P.vy=0;P.inv=1.6;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));hud();
 }
 function hit(){
   if(P.inv>0)return;Z.lamps--;P.inv=1.8;shake=.5;P.hurt=.4;thud();toast(pick(NARR.carimbo),3000);
-  if(Z.lamps<=0){Z.lamps=3;Z.pts=Math.max(0,Z.pts-50);P.x=cpX;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));toast('Sem lamparinas. O narrador recomeça o capítulo.',3200)}hud();
+  if(Z.lamps<=0){Z.lamps=3;P.x=cpX;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));toast('Sem lamparinas. Você volta ao último ponto salvo, sem perder o que já conquistou.',3200)}hud();
 }
 /* ============ Mundo ============ */
-function updateWorld(dt){
+/* ===== Progresso salvo no meio da zona (perder não volta ao início) ===== */
+const PROGKEY='caso_realismo_prog_'+(location.pathname.split('/').pop()||'zona');let lastSave=0;
+function saveCP(){try{localStorage.setItem(PROGKEY,JSON.stringify({cp:cpX,Z:{pts:Z.pts,pages:Z.pages,leit:Z.leit,ras:Z.ras||0},F,pg:PAGES.map(g=>g.got?1:0),rb:RAS_BOARDS.map(b=>b.done?1:0)}))}catch(e){}}
+function autoCP(){
+  if(state!=='play')return;
+  if(P.y>=G-2&&P.inv<=0&&P.x>cpX+300&&onGround(P.x-40)&&onGround(P.x+40)){
+    cpX=P.x-60;saveCP();if(!window.__cpT){window.__cpT=1;toast('Ponto salvo: se perder, você volta daqui, não do início.',3500)}}
+  else if(T-lastSave>1){lastSave=T;saveCP()}
+}
+function updateWorld(dt){autoCP();
   stampT-=dt;
   borbT-=dt;if(borbT<=0&&P.x>600&&P.x<3350){borbs.push({x:camX+CW+80,y:G-90-Math.random()*130,y0:0,v:-(120+Math.random()*60),t:Math.random()*6,d:0,fl:0});borbs[borbs.length-1].y0=borbs[borbs.length-1].y;borbT=2.8+Math.random()*2}
   for(const b of borbs){b.t+=dt;b.x+=b.v*dt;const dxl=b.x-P.x,dyl=b.y-(P.y-50);const near=Math.hypot(dxl,dyl);
@@ -282,16 +328,25 @@ function updateWorld(dt){
     b.y=b.y0+Math.sin(b.t*3.2)*38;
     if(!b.d&&!b.fl&&Math.abs(dxl)<34&&Math.abs(dyl)<44){b.d=1;hit()}}
   borbs=borbs.filter(b=>b.x>camX-200&&b.x<camX+CW+400&&b.y0>-60);
-  if(stampT<=0&&P.x>650&&P.x<3350){stamps.push({x:P.x+P.vx*.55+(Math.random()-.5)*60,t:0});stampT=6+Math.random()*2.5}
-  for(const s of stamps){s.t+=dt;if(s.t>.9&&s.t<1.12&&!s.d){s.d=1;shake=.35;thud();marks.push({x:s.x,t:5});if(Math.abs(P.x-s.x)<52&&!(P.y<G-210))hit()}}
-  stamps=stamps.filter(s=>s.t<1.9);marks=marks.filter(m=>(m.t-=dt)>0);
-  for(const g of PAGES){if(!g.got&&Math.abs(P.x-g.x)<34&&Math.abs((P.y-46)-g.y)<52){g.got=true;Z.pages++;addPts(g.k==='o'?40:15,g.x-camX,g.y);tone(880,.06,.05,'square');tone(1320,.12,.04,'square');if(Z.pages===1)toast(pick(NARR.pag),3000);if(Z.pages===11)toast('Onze flores da moita. Eugênia merece o buquê inteiro.',3500);hud()}}
+  if(stampT<=0&&P.x>650&&P.x<3350&&!stamps.length){stamps.push({dir:Math.random()<.5?1:-1,t:0,x:0,sx:0});stampT=6+Math.random()*2.5;
+    if(!window.__pen){window.__pen=1;toast('O Carimbo riscou o chão com o lápis vermelho: PULE a rasura!',3600)}}
+  for(const s of stamps){s.t+=dt;if(s.t>1.1){if(!s.go){s.go=1;s.sx=s.dir>0?camX-80:camX+CW+80;s.x=s.sx;thud()}s.x+=s.dir*540*dt;
+      if(!s.d&&Math.abs(P.x-s.x)<40&&P.y>G-34){s.d=1;shake=.3;hit()}}}
+  stamps=stamps.filter(s=>!s.go||(s.dir>0?s.x<camX+CW+160:s.x>camX-160));marks=[];
+  for(const g of PAGES){if(!g.got&&Math.abs(P.x-g.x)<34&&Math.abs((P.y-46)-g.y)<52){g.got=true;Z.pages++;pageQuote(Z.pages);addPts(g.k==='o'?40:15,g.x-camX,g.y);tone(880,.06,.05,'square');tone(1320,.12,.04,'square');if(Z.pages===1)toast(pick(NARR.pag),3000);if(Z.pages===11)toast('Onze flores da moita. Eugênia merece o buquê inteiro.',3500);hud()}}
   if(provas()===NP&&!F.porta){F.porta=true;toast('A trilha para o Rio está aberta. Mas desça?',4000)}
   floaters.forEach(f=>f.t+=dt);floaters=floaters.filter(f=>f.t<1.2);
   shake=Math.max(0,shake-dt);
 }
 /* ============ Desenho ============ */
-function drawBG(){
+function drawBGImg(){
+  const im=IMG.bgi;if(!im)return;
+  const h=Math.round(CH*1.08),w=Math.round(im.width*h/im.height),off=Math.max(0,w-CW)*Math.min(1,Math.max(0,camX/Math.max(1,WW-CW)));
+  ctx.save();ctx.beginPath();ctx.rect(0,0,CW,G);ctx.clip();ctx.drawImage(im,-off,CH-h,w,h);
+  const v=ctx.createLinearGradient(0,0,0,G);v.addColorStop(0,'rgba(20,10,5,.18)');v.addColorStop(1,'rgba(20,10,5,0)');ctx.fillStyle=v;ctx.fillRect(0,0,CW,G);ctx.restore();
+}
+function drawBG(){drawBGproc();drawBGImg()}
+function drawBGproc(){
   const sg=ctx.createLinearGradient(0,0,0,G);sg.addColorStop(0,'#7fb8b0');sg.addColorStop(.6,'#b8d8c8');sg.addColorStop(1,'#e8e6c8');ctx.fillStyle=sg;ctx.fillRect(0,0,CW,CH);
   const ridge=(k,c,a,b)=>{ctx.fillStyle=c;ctx.beginPath();ctx.moveTo(0,G);for(let x=0;x<=CW;x+=16){const wx=x+camX*k;ctx.lineTo(x,G-a-Math.abs(Math.sin(wx*.0035))*b-Math.sin(wx*.013)*b*.25)}ctx.lineTo(CW,G);ctx.closePath();ctx.fill()};
   ridge(.05,'rgba(86,130,134,.9)',200,90);ridge(.1,'rgba(60,110,100,.95)',140,70);
@@ -354,7 +409,7 @@ function drawBras(){
   ctx.restore();
 }
 function drawHipo(){}
-function drawPages(){
+function drawPages(){drawRasuras();
   ctx.save();ctx.translate(-camX,0);
   for(const g of PAGES){if(g.got)continue;const y=g.y+Math.sin(T*2+g.x)*4;ctx.save();ctx.translate(g.x,y);ctx.rotate(Math.sin(T*1.5+g.x)*.2);
     ctx.shadowColor='#ffe8f0';ctx.shadowBlur=10;ctx.fillStyle='#f6e4ee';for(let k=0;k<5;k++){ctx.beginPath();ctx.ellipse(Math.cos(k*1.257)*7,Math.sin(k*1.257)*7,6,6,0,0,7);ctx.fill()}ctx.shadowBlur=0;ctx.fillStyle='#e3a84a';ctx.beginPath();ctx.arc(0,0,4,0,7);ctx.fill();ctx.restore()}
@@ -378,14 +433,18 @@ function drawLight(){
   ctx.save();ctx.globalCompositeOperation='lighter';const g=ctx.createRadialGradient(x,y,4,x,y,210);g.addColorStop(0,'rgba(255,200,110,.45)');g.addColorStop(.5,'rgba(255,150,50,.14)');g.addColorStop(1,'rgba(255,120,30,0)');ctx.fillStyle=g;ctx.fillRect(x-210,y-210,420,420);ctx.restore();
 }
 function drawStamps(){
-  ctx.save();ctx.translate(-camX,0);
   for(const s of stamps){
-    if(s.t<.9){const a=.25+.35*Math.sin(s.t*14)**2;ctx.fillStyle='rgba(200,30,20,'+a+')';ctx.beginPath();ctx.ellipse(s.x,G,54,10,0,0,7);ctx.fill();
-      ctx.strokeStyle='rgba(255,80,60,'+a+')';ctx.lineWidth=2;ctx.setLineDash([6,6]);ctx.beginPath();ctx.moveTo(s.x-50,60);ctx.lineTo(s.x-50,G);ctx.moveTo(s.x+50,60);ctx.lineTo(s.x+50,G);ctx.stroke();ctx.setLineDash([])}
-    else if(s.t<1.2){const p=Math.min(1,(s.t-.9)/.1);const y=-200+(G-6+200)*p;ctx.fillStyle='#b8261a';ctx.fillRect(s.x-52,y-60,104,60);ctx.fillStyle='#7c1710';ctx.fillRect(s.x-12,y-140,24,82);
-      ctx.fillStyle='#f4d9c8';ctx.font='bold 14px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText('CORRIGIDO',s.x,y-24)}
+    if(!s.go){const a=.3+.5*Math.sin(s.t*16)**2,ex=s.dir>0?30:CW-30;
+      ctx.save();ctx.fillStyle='rgba(200,30,20,'+a+')';ctx.fillRect(s.dir>0?0:CW-60,G-34,60,30);ctx.fillStyle='#fff3e0';ctx.font='bold 22px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText(s.dir>0?'\u00bb!':'!\u00ab',ex,G-12);
+      ctx.fillStyle='rgba(255,70,50,'+a*.55+')';ctx.fillRect(0,G-5,CW,3);ctx.restore()}
+    else{ctx.save();ctx.translate(-camX,0);
+      const n=Math.floor(Math.abs(s.x-s.sx)/12);ctx.strokeStyle='#c4271a';ctx.lineWidth=5;ctx.lineJoin='round';ctx.beginPath();
+      for(let i=0;i<=n;i++){const x=s.sx+s.dir*i*12,y=G-14+((i%2)?-11:11)+Math.sin(T*30+i)*2;if(i)ctx.lineTo(x,y);else ctx.moveTo(x,y)}ctx.stroke();
+      ctx.translate(s.x,G-24);ctx.scale(s.dir,1);ctx.rotate(.55);
+      ctx.fillStyle='#e8b830';ctx.fillRect(-58,-6,50,12);ctx.fillStyle='#b8261a';ctx.fillRect(-66,-6,8,12);ctx.fillStyle='#d8b890';ctx.beginPath();ctx.moveTo(-8,-6);ctx.lineTo(14,0);ctx.lineTo(-8,6);ctx.closePath();ctx.fill();
+      ctx.fillStyle='#c4271a';ctx.beginPath();ctx.moveTo(6,-2.5);ctx.lineTo(14,0);ctx.lineTo(6,2.5);ctx.closePath();ctx.fill();
+      ctx.restore()}
   }
-  ctx.restore();
 }
 function drawRain(dt){
   ctx.save();ctx.globalCompositeOperation='lighter';
@@ -434,7 +493,8 @@ function iniciar(){
    '<p style="font-size:.85em;color:var(--muted)">Setas ou A/D: andar · Espaço: pular (duplo) · C: lamparina · E: ação · Esc: pausa. No celular, use os botões na tela.</p><button class="btn" id="go">Começar</button><button class="btn sec" id="back">Voltar ao Arquivo</button>');
   $('gM').onclick=()=>{S.gen='m';$('gM').classList.add('on');$('gF').classList.remove('on')};$('gF').onclick=()=>{S.gen='f';$('gF').classList.add('on');$('gM').classList.remove('on')};
   $('back').onclick=()=>{location.href='../index.html'};
-  $('go').onclick=()=>{S.nome=($('iN').value||'').trim()||'Detetive';S.turma=($('iT').value||'').trim();audio();setMute(muted);comecar()};
+  $('go').onclick=()=>{S.nome=($('iN').value||'').trim()||'Detetive';S.turma=($('iT').value||'').trim();audio();setMute(muted);comecar();if(window.__restored)toast('Progresso restaurado: você continua de onde parou.',5000)};
+  if(window.__restored){$('go').insertAdjacentHTML('afterend','<button class="btn sec" id="zero">Recomeçar do início</button>');$('zero').onclick=()=>{try{localStorage.removeItem(PROGKEY)}catch(e){}location.reload()}}
 }
 
 
@@ -443,7 +503,7 @@ function comecar(){
   ovClose();state='play';$('hud').classList.remove('hidden');hud();
   say([['narr','Subi à Tijuca para descansar, leitor, e foi ali que conheci Eugênia, a flor da moita. Procure a página rasgada com a lamparina (segure C): ela também espanta as borboletas pretas. Colha as flores, leia, converse. Depois, a trilha para o Rio.']]);
 }
-function fim(){
+function fim(){try{localStorage.removeItem(PROGKEY)}catch(e){}
   state='end';$('hud').classList.add('hidden');
   const pct=Math.round((Z.leit/Z.tot)*100);
   try{const o=JSON.parse(localStorage.getItem(SAVE)||'{}');o.zonas=o.zonas||{};o.found=o.found||{};o.done=o.done||[];
@@ -491,6 +551,11 @@ function loop(ts){
   render(dt);
 }
 window.__t={P,F,Z,PAGES,INTER,get state(){return state},set state(v){state=v},get camX(){return camX},set camX(v){camX=v},provas,startCine,fim,K};
+(function restaurarProg(){try{const r=JSON.parse(localStorage.getItem(PROGKEY)||'null');if(!r||!(r.cp>0))return;
+  cpX=r.cp;P.x=r.cp;camX=Math.max(0,Math.min(WW-CW,P.x-CW*.42));Object.assign(Z,r.Z||{});Object.assign(F,r.F||{});
+  (r.pg||[]).forEach((v,i)=>{if(v&&PAGES[i])PAGES[i].got=true});(r.rb||[]).forEach((v,i)=>{if(v&&RAS_BOARDS[i])RAS_BOARDS[i].done=true});
+  if(typeof hipo!=='undefined'&&F.hipo){hipo.on=true;hipo.landed=true;hipo.x=3440;hipo.y=G-64}
+  window.__restored=1}catch(e){}})();
 loadAll(()=>{requestAnimationFrame(loop);iniciar();hud()});
 </script>
 </body>

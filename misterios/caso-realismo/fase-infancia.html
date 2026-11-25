@@ -137,7 +137,7 @@ function setMute(m){muted=m;if(rainG)rainG.gain.value=m?0:.012;$('bMute').textCo
 let toastT=0;
 function toast(t,ms){const e=$('toast');e.textContent=t;e.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove('on'),ms||3200)}
 const NARR={queda:['Cresci como crescem os gatos: caindo de pé, quase sempre.','Caí. Menino-diabo também tropeça, leitor.','Um buraco no quintal é só um capítulo mais fundo.'],
- carimbo:['O Carimbo carimbou o leitor. Que falta de educação com quem lê.','Corrigido! Foi o que ele pensou. A palmatória do mestre era mais discreta.'],
+ carimbo:['O Carimbo riscou o leitor. Que falta de educação com quem lê.','Rasurado! Foi o que ele pensou. A palmatória do mestre era mais discreta.'],
  pag:['Uma página a mais. Há quem colecione selos; o leitor coleciona capítulos.','Página recolhida. O verme agradece a ordem.']};
 const pick=a=>a[Math.floor(Math.random()*a.length)];
 function addPts(n,x,y){Z.pts+=n;floaters.push({x,y,t:0,s:'+'+n});hud()}
@@ -204,12 +204,12 @@ const INTER=[
    await say([['bras','Cinco anos e já era "menino diabo". Aos seis, o doce de coco foi a minha obra-prima. Veja o que fiz, e não me julgue antes de ler.']]);
    await leitura({titulo:'Capítulo 11 · O Menino É Pai do Homem',cita:'Por exemplo, um dia quebrei a cabeça de uma escrava, porque me negara uma colher do doce de coco que estava fazendo, e, não contente com o malefício, deitei um punhado de cinza ao tacho, e, não satisfeito da travessura, fui dizer à minha mãe que a escrava é que estragara o doce "por pirraça"; e eu tinha apenas seis anos.',
      fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 11 (domínio público).',
-     q:{t:'O que o episódio mostra sobre o menino e sobre a sociedade em que ele vive?',o:['Que o menino fazia apenas uma travessura inocente, como toda criança.','Que o menino agride, mente e ainda culpa a escrava, e nada lhe acontece: a escravidão dá a ele um poder que ninguém questiona.','Que a escrava merecia o castigo por ter estragado o doce.','Que a mãe do menino percebeu a mentira e o castigou.'],k:1,e:'Brás machuca a escrava, estraga o doce e a acusa de "pirraça". A crueldade é contada sem remorso, e o menino não sofre consequência alguma. Machado mostra, pela frieza do narrador, a violência naturalizada da sociedade escravista.'}});
+     q:{t:'O que o episódio mostra sobre o menino e sobre a sociedade em que ele vive?',o:['Que o menino cometia apenas uma travessura inocente, própria de toda criança pequena.','Que a escrava merecia o castigo, porque havia estragado o doce e desobedecido ao menino.','Que o menino agride e mente, mas nada lhe acontece: a escravidão lhe dá poder sem limite.','Que a mãe percebeu a mentira do menino e o castigou com severidade, como mandava a regra.'],k:2,e:'Brás machuca a escrava, estraga o doce e a acusa de "pirraça". A crueldade é contada sem remorso, e o menino não sofre consequência alguma. Machado mostra, pela frieza do narrador, a violência naturalizada da sociedade escravista.'}});
    F.tacho=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'cavalo',x:1860,r:110,txt:'AÇÃO · Falar com Prudêncio',done:()=>F.cavalo,act:async()=>{
    await say([['prud','Nhonhô mandou eu ser cavalo outra vez. Dizem que hoje o dia é de festa lá em cima.'],['det','Você não precisa fazer isso. Ninguém deveria montar em ninguém.'],['prud','O sinhozinho manda, e a gente obedece. É assim que é.'],['bras','Veja, leitor, como eu era um cavalo bem montado. Prudêncio, o meu, nunca reclamou. Leia, e depois me diga o que achou.']]);
    await leitura({titulo:'Capítulo 11 · O Menino É Pai do Homem',cita:CITA11,fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 11 (domínio público).',
-     q:{t:'Por que a cena é tão forte, mesmo contada com um tom tranquilo pelo narrador?',o:['Porque o narrador demonstra arrependimento e pede perdão a Prudêncio.','Porque Brás narra a violência com naturalidade, e é a frieza dele que revela a crueldade da escravidão.','Porque Prudêncio reage e derruba o menino.','Porque a cena é um sonho de Brás, sem relação com a realidade.'],k:1,e:'Brás não vê nada de errado em montar num menino escravizado e chamá-lo de "besta". O narrador não julga; é o leitor quem percebe o horror. Esse é o efeito da ironia machadiana.'}});
+     q:{t:'Por que a cena é tão forte, mesmo contada com um tom tranquilo pelo narrador?',o:['Porque o narrador demonstra muito arrependimento e pede perdão a Prudêncio no fim.','Porque Prudêncio reage, derruba o menino e é castigado diante de todos os escravos.','Porque a cena é apenas um sonho de Brás, sem relação nenhuma com a vida real.','Porque Brás narra a violência com naturalidade: a frieza dele revela a crueldade.'],k:3,e:'Brás não vê nada de errado em montar num menino escravizado e chamá-lo de "besta". O narrador não julga; é o leitor quem percebe o horror. Esse é o efeito da ironia machadiana.'}});
    await new Promise(r=>{const pv=state;state='modal';ov('<h2>O cordel</h2><p>Prudêncio ainda tem o cordel preso nos queixos. O que você faz?</p><button class="opt" id="c1">Soltar o cordel e dizer que ele não precisa obedecer.</button><button class="opt" id="c2">Deixar como está: não é da minha conta.</button>');
      $('c1').onclick=()=>{F.solto=true;addPts(100,CW/2,200);ovClose();state=pv;r()};$('c2').onclick=()=>{ovClose();state=pv;r()}});
    if(F.solto)await say([['prud','Obrigado, moço... eu não esqueço.'],['narr','No livro, ninguém o solta. Prudêncio só será livre anos depois, e o que ele fará com essa liberdade está no capítulo 68, "O Vergalho". O menino é pai do homem, leitor, também em Prudêncio.']]);
@@ -219,17 +219,54 @@ const INTER=[
    await say([['bras','O espadim de 1814. Napoleão caía e eu só pensava na minha espada de brinquedo. Ouça o que isso me ensinou.']]);
    await leitura({titulo:'Capítulo 12 · Um Episódio de 1814',cita:'Figurei nesses dias com um espadim novo, que meu padrinho me dera no dia de Santo Antônio; e, francamente, interessava-me mais o espadim do que a queda de Bonaparte. Nunca me esqueceu esse fenômeno. Nunca mais deixei de pensar comigo que o nosso espadim é sempre maior do que a espada de Napoleão.',
      fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 12 (domínio público).',
-     q:{t:'O que o "espadim" representa nessa passagem?',o:['A coragem do menino diante da guerra.','O interesse pessoal e mesquinho de cada um, que pesa mais para a pessoa do que os grandes acontecimentos do mundo.','Um presente do pai que Brás odiava.','A admiração do menino por Napoleão.'],k:1,e:'Para o menino, o espadim novo é mais importante que a queda de Napoleão. Machado usa a imagem para falar do egoísmo: cada um olha para o próprio "espadim". A frase final vira uma lição irônica sobre a vaidade humana.'}});
+     q:{t:'O que o "espadim" representa nessa passagem?',o:['O interesse pessoal e mesquinho, que pesa mais que os grandes fatos do mundo.','A coragem do menino, que queria lutar na guerra e na queda do imperador.','Um presente do pai, que Brás odiava, e que ele guardava com muito ressentimento.','A admiração do menino por Napoleão, o herói que ele sonhava imitar quando crescesse.'],k:0,e:'Para o menino, o espadim novo é mais importante que a queda de Napoleão. Machado usa a imagem para falar do egoísmo: cada um olha para o próprio "espadim". A frase final vira uma lição irônica sobre a vaidade humana.'}});
    F.espadim=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'escola',x:3170,r:110,txt:'AÇÃO · Entrar na sala do mestre',done:()=>F.escola,act:async()=>{
    await say([['ludg','Silêncio, sevandijas! Quem pôs outra barata na minha gaveta?'],['quincas','Não fui eu, mestre. Eu estava aqui, olhando o teto, quieto como uma flor.'],['bras','Esse é Quincas Borba. Já naquele tempo, a gente via que ele daria o que falar.']]);
    await leitura({titulo:'Capítulo 13 · Um Salto',cita:'Chamava-se Ludgero o mestre; quero escrever-lhe o nome todo nesta página: Ludgero Barata, &mdash; um nome funesto, que servia aos meninos de eterno mote a chufas. [&hellip;] E fizeste isto durante vinte e três anos, calado, obscuro, pontual, metido numa casinha da rua do Piolho, sem enfadar o mundo com a tua mediocridade, até que um dia deste o grande mergulho nas trevas, e ninguém te chorou, salvo um preto velho, &mdash; ninguém, nem eu, que te devo os rudimentos da escrita.',
      fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 13 (domínio público).',
-     q:{t:'O que a frase "ninguém, nem eu, que te devo os rudimentos da escrita" revela?',o:['Que Brás chorou muito a morte do mestre.','Que Brás reconhece a própria ingratidão: ele deve ao mestre o que sabe, mas nem sequer lamentou a morte dele.','Que o mestre foi um homem rico e muito popular.','Que o "preto velho" era o único a odiar o mestre.'],k:1,e:'A confissão mostra um narrador sem pudor: ele admite que não sentiu a morte do homem que o alfabetizou. A frieza, de novo, é uma crítica irônica a uma sociedade em que os humildes morrem sem ser chorados.'}});
+     q:{t:'O que a frase "ninguém, nem eu, que te devo os rudimentos da escrita" revela?',o:['Que Brás chorou muito a morte do mestre e foi o único a lamentá-la em público.','Que Brás reconhece a ingratidão: deve ao mestre o que sabe e não o lamentou.','Que o mestre foi um homem rico e popular, lembrado por todos os alunos.','Que o “preto velho” era o único a odiar o mestre, por causa dos castigos.'],k:1,e:'A confissão mostra um narrador sem pudor: ele admite que não sentiu a morte do homem que o alfabetizou. A frieza, de novo, é uma crítica irônica a uma sociedade em que os humildes morrem sem ser chorados.'}});
    F.escola=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'porta',x:3500,r:140,txt:'AÇÃO · Dar o salto (como diz o capítulo 13)',cond:()=>provas()===NP,act:async()=>{
    await say([['bras','"Unamos agora os pés e demos um salto por cima da escola, a enfadonha escola." Pule comigo, leitor: a juventude nos espera, e com ela os amores e as moedas.']]);startCine()}}
 ];
+/* ===== Trechos do livro (opcionais): citações nas páginas + painéis rasurados ===== */
+const FRAGS=[[11, "Um poeta dizia que o menino é pai do homem. Se isto é verdade, vejamos alguns lineamentos do menino."], [11, "Da colaboração dessas duas criaturas nasceu a minha educação, que, se tinha alguma coisa boa, era no geral viciosa, incompleta, e, em partes, negativa."], [12, "Meu pai, que seria capaz de me dar o sol, se eu lho exigisse, chamou um escravo para me servir o doce; mas era tarde."], [12, "Quanto a mim, lá estava, solitário e deslembrado, a namorar uma certa compota da minha feição."], [13, "Nunca em minha infância, nunca em toda a minha vida, achei um menino mais gracioso, inventivo e travesso."], [13, "Era um gosto ver o Quincas Borba fazer de imperador nas festas do Espírito Santo."]];
+const RASURAS=[{"cap": 11, "a": "Um poeta dizia que o menino é", "k": "pai", "b": " do homem.", "o": ["filho", "irmão", "pai"]}, {"cap": 11, "a": "Cresci naturalmente, como crescem as magnólias e os", "k": "gatos", "b": ".", "o": ["cavalos", "gatos", "pássaros"]}];
+function pageQuote(n){if(n<2)return;const q=FRAGS[n-2];if(q)toast('\u201c'+q[1]+'\u201d  \u2014 Machado de Assis, cap. '+q[0],Math.min(9500,3800+q[1].length*38))}
+function rasura(c){return new Promise(res=>{
+  const prev=state;state='modal';
+  ov('<h2>Trecho rasurado \u00b7 cap. '+c.cap+'</h2><p>O Carimbo riscou uma palavra do livro. Qual delas completa a frase?</p><div class="cita">'+c.a+' <span id="rs" style="background:#1a0f0a;color:#1a0f0a;border-radius:3px;padding:0 .5em;letter-spacing:.1em;border:1px solid #8b73bd">\u2588\u2588\u2588\u2588\u2588\u2588</span>'+c.b+'</div><div id="lq"></div>');
+  let h='';c.o.slice().sort(()=>Math.random()-.5).forEach(x=>h+='<button class="opt">'+x+'</button>');$('lq').innerHTML=h;let tries=0;
+  $('lq').querySelectorAll('.opt').forEach(bt=>bt.onclick=()=>{
+    if(bt.textContent===c.k){bt.classList.add('ok');$('lq').querySelectorAll('.opt').forEach(x=>x.disabled=true);
+      const r=$('rs');r.textContent=c.k;r.style.cssText='color:#ffd98a;font-weight:bold;border-bottom:2px solid #ffd98a';
+      $('lq').insertAdjacentHTML('beforeend','<p>Frase restaurada. Machado de Assis, <i>Memórias Póstumas de Brás Cubas</i>, cap. '+c.cap+' (domínio público).</p><button class="btn" id="lok">Continuar</button>');
+      addPts(tries===0?60:20,P.x-camX,P.y-120);tone(660,.1,.05,'triangle');tone(990,.14,.04,'triangle');
+      $('lok').onclick=()=>{ovClose();state=prev;res(true)}}
+    else{tries++;bt.classList.add('bad');bt.disabled=true;blip(-3);toast('Releia a frase: qual palavra faz sentido aqui?',1800)}});
+})}
+const RAS_BOARDS=[];
+(function rasInit(){
+  const fr=[.27,.56];
+  RASURAS.forEach((c,i)=>{
+    let x=null,bd=1e9;for(const [pm,im] of [[75,150],[60,120],[45,95]]){for(let t=450;t<WW-350;t+=10){if(!onGround(t-70)||!onGround(t)||!onGround(t+70))continue;if(PLAT.some(p=>t>p.x-pm&&t<p.x+p.w+pm))continue;if(INTER.some(n=>Math.abs(n.x-t)<im))continue;if(RAS_BOARDS.some(r=>Math.abs(r.x-t)<650))continue;const d=Math.abs(t-WW*fr[i]);if(d<bd){bd=d;x=t}}if(x!=null)break}
+    if(x==null)return;const b={x,c,done:false};RAS_BOARDS.push(b);
+    INTER.push({id:'ras'+i,x,r:100,txt:'AÇÃO \u00b7 Ler o trecho rasurado (opcional)',done:()=>b.done,act:async()=>{await rasura(c);b.done=true;Z.ras=(Z.ras||0)+1;toast('Trecho restaurado e anotado no seu caderno.',2500)}});
+  });
+})();
+function drawRasuras(){
+  ctx.save();ctx.translate(-camX,0);
+  for(const b of RAS_BOARDS){if(b.x<camX-120||b.x>camX+CW+120)continue;const x=b.x,pulse=.5+.5*Math.sin(T*3+x);
+    ctx.fillStyle='#3a2616';ctx.fillRect(x-4,G-76,8,76);
+    ctx.save();ctx.translate(x,G-112);ctx.rotate(-.04);ctx.fillStyle='#efe0bd';ctx.fillRect(-52,-34,104,68);ctx.strokeStyle='#7a5a30';ctx.lineWidth=2;ctx.strokeRect(-52,-34,104,68);
+    ctx.fillStyle='#7a5a30';for(let i=0;i<4;i++)ctx.fillRect(-42,-24+i*14,84-(i%2)*18,3);
+    if(!b.done){ctx.fillStyle='#1a0f0a';ctx.fillRect(-18,-10,44,14);ctx.fillStyle='rgba(255,80,60,'+(.25+.35*pulse)+')';ctx.fillRect(-18,-10,44,14)}
+    else{ctx.fillStyle='#2f7a43';ctx.font='bold 24px sans-serif';ctx.textAlign='center';ctx.fillText('\u2713',0,9)}
+    ctx.restore();
+    if(!b.done){const g=ctx.createRadialGradient(x,G-112,6,x,G-112,90);g.addColorStop(0,'rgba(255,200,110,'+(.25*pulse)+')');g.addColorStop(1,'rgba(255,200,110,0)');ctx.fillStyle=g;ctx.fillRect(x-90,G-202,180,180)}}
+  ctx.restore();
+}
 const provas=()=>[F.ped,F.tacho,F.cavalo,F.espadim,F.escola].filter(Boolean).length;
 function nearInter(){
   let best=null,bd=1e9;
@@ -260,27 +297,45 @@ function updatePlayer(dt){
 function thud2(){if(AC)tone(90,.07,.05,'sine')}
 function fall(){
   toast(pick(NARR.queda),3200);Z.lamps--;shake=.4;
-  if(Z.lamps<=0){Z.lamps=3;Z.pts=Math.max(0,Z.pts-50);toast('Sem lamparinas. O narrador recomeça o capítulo.',3200)}
+  if(Z.lamps<=0){Z.lamps=3;toast('Sem lamparinas. Você volta ao último ponto salvo, sem perder o que já conquistou.',3200)}
   P.x=cpX;P.y=G-200;P.vy=0;P.inv=1.6;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));hud();
 }
 function hit(){
   if(P.inv>0)return;Z.lamps--;P.inv=1.8;shake=.5;P.hurt=.4;thud();toast(pick(NARR.carimbo),3000);
-  if(Z.lamps<=0){Z.lamps=3;Z.pts=Math.max(0,Z.pts-50);P.x=cpX;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));toast('Sem lamparinas. O narrador recomeça o capítulo.',3200)}hud();
+  if(Z.lamps<=0){Z.lamps=3;P.x=cpX;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));toast('Sem lamparinas. Você volta ao último ponto salvo, sem perder o que já conquistou.',3200)}hud();
 }
 /* ============ Mundo ============ */
-function updateWorld(dt){
+/* ===== Progresso salvo no meio da zona (perder não volta ao início) ===== */
+const PROGKEY='caso_realismo_prog_'+(location.pathname.split('/').pop()||'zona');let lastSave=0;
+function saveCP(){try{localStorage.setItem(PROGKEY,JSON.stringify({cp:cpX,Z:{pts:Z.pts,pages:Z.pages,leit:Z.leit,ras:Z.ras||0},F,pg:PAGES.map(g=>g.got?1:0),rb:RAS_BOARDS.map(b=>b.done?1:0)}))}catch(e){}}
+function autoCP(){
+  if(state!=='play')return;
+  if(P.y>=G-2&&P.inv<=0&&P.x>cpX+300&&onGround(P.x-40)&&onGround(P.x+40)){
+    cpX=P.x-60;saveCP();if(!window.__cpT){window.__cpT=1;toast('Ponto salvo: se perder, você volta daqui, não do início.',3500)}}
+  else if(T-lastSave>1){lastSave=T;saveCP()}
+}
+function updateWorld(dt){autoCP();
   stampT-=dt;
-  if(stampT<=0&&P.x>650&&P.x<3350){stamps.push({x:P.x+P.vx*.55+(Math.random()-.5)*60,t:0});stampT=3.6+Math.random()*2.2}
-  for(const s of stamps){s.t+=dt;if(s.t>.9&&s.t<1.12&&!s.d){s.d=1;shake=.35;thud();marks.push({x:s.x,t:5});if(Math.abs(P.x-s.x)<52&&!(P.y<G-210))hit()}}
-  stamps=stamps.filter(s=>s.t<1.9);marks=marks.filter(m=>(m.t-=dt)>0);
-  for(const g of PAGES){if(!g.got&&Math.abs(P.x-g.x)<34&&Math.abs((P.y-46)-g.y)<52){g.got=true;Z.pages++;addPts(50,g.x-camX,g.y);tone(660,.1,.05,'triangle');tone(880,.14,.04,'triangle');if(Z.pages===1)toast(pick(NARR.pag),3000);hud()}}
+  if(stampT<=0&&P.x>650&&P.x<3350&&!stamps.length){stamps.push({dir:Math.random()<.5?1:-1,t:0,x:0,sx:0});stampT=3.6+Math.random()*2.2;
+    if(!window.__pen){window.__pen=1;toast('O Carimbo riscou o chão com o lápis vermelho: PULE a rasura!',3600)}}
+  for(const s of stamps){s.t+=dt;if(s.t>1.1){if(!s.go){s.go=1;s.sx=s.dir>0?camX-80:camX+CW+80;s.x=s.sx;thud()}s.x+=s.dir*540*dt;
+      if(!s.d&&Math.abs(P.x-s.x)<40&&P.y>G-34){s.d=1;shake=.3;hit()}}}
+  stamps=stamps.filter(s=>!s.go||(s.dir>0?s.x<camX+CW+160:s.x>camX-160));marks=[];
+  for(const g of PAGES){if(!g.got&&Math.abs(P.x-g.x)<34&&Math.abs((P.y-46)-g.y)<52){g.got=true;Z.pages++;pageQuote(Z.pages);addPts(50,g.x-camX,g.y);tone(660,.1,.05,'triangle');tone(880,.14,.04,'triangle');if(Z.pages===1)toast(pick(NARR.pag),3000);hud()}}
   if(provas()===NP&&!F.porta){F.porta=true;toast('A porta da escola se abriu. Hora de dar o salto do capítulo 13.',4000)}
   floaters.forEach(f=>f.t+=dt);floaters=floaters.filter(f=>f.t<1.2);
   shake=Math.max(0,shake-dt);
 }
 /* ============ Desenho ============ */
-function drawBG(){
-  const im=IMG.bgi;
+function drawBGImg(){
+  const im=IMG.bgi;if(!im)return;
+  const h=Math.round(CH*1.08),w=Math.round(im.width*h/im.height),off=Math.max(0,w-CW)*Math.min(1,Math.max(0,camX/Math.max(1,WW-CW)));
+  ctx.save();ctx.beginPath();ctx.rect(0,0,CW,G);ctx.clip();ctx.drawImage(im,-off,CH-h,w,h);
+  const v=ctx.createLinearGradient(0,0,0,G);v.addColorStop(0,'rgba(20,10,5,.18)');v.addColorStop(1,'rgba(20,10,5,0)');ctx.fillStyle=v;ctx.fillRect(0,0,CW,G);ctx.restore();
+}
+function drawBG(){drawBGproc();drawBGImg()}
+function drawBGproc(){
+  const im=null;
   if(im){const h=CH,w=im.width*h/im.height;const off=camX*.28;
     for(let i=-1;i<4;i++){const x=i*w-(off%(w*2)),flip=((i%2)+2)%2===1;ctx.save();if(flip){ctx.translate(x+w,0);ctx.scale(-1,1);ctx.drawImage(im,0,0,w,h)}else ctx.drawImage(im,x,0,w,h);ctx.restore()}}
   else{
@@ -357,7 +412,7 @@ function drawBras(){
   ctx.restore();
 }
 function drawHipo(){}
-function drawPages(){
+function drawPages(){drawRasuras();
   ctx.save();ctx.translate(-camX,0);
   for(const g of PAGES){if(g.got)continue;const y=g.y+Math.sin(T*2+g.x)*5;ctx.save();ctx.translate(g.x,y);ctx.rotate(Math.sin(T*1.5+g.x)*.15);
     ctx.shadowColor='#ffd98a';ctx.shadowBlur=14;ctx.fillStyle='#efe0bd';ctx.fillRect(-11,-15,22,30);ctx.shadowBlur=0;ctx.fillStyle='#7a5a30';for(let i=0;i<4;i++)ctx.fillRect(-7,-9+i*6,14,2);ctx.restore()}
@@ -381,14 +436,18 @@ function drawLight(){
   ctx.save();ctx.globalCompositeOperation='lighter';const g=ctx.createRadialGradient(x,y,4,x,y,210);g.addColorStop(0,'rgba(255,200,110,.45)');g.addColorStop(.5,'rgba(255,150,50,.14)');g.addColorStop(1,'rgba(255,120,30,0)');ctx.fillStyle=g;ctx.fillRect(x-210,y-210,420,420);ctx.restore();
 }
 function drawStamps(){
-  ctx.save();ctx.translate(-camX,0);
   for(const s of stamps){
-    if(s.t<.9){const a=.25+.35*Math.sin(s.t*14)**2;ctx.fillStyle='rgba(200,30,20,'+a+')';ctx.beginPath();ctx.ellipse(s.x,G,54,10,0,0,7);ctx.fill();
-      ctx.strokeStyle='rgba(255,80,60,'+a+')';ctx.lineWidth=2;ctx.setLineDash([6,6]);ctx.beginPath();ctx.moveTo(s.x-50,60);ctx.lineTo(s.x-50,G);ctx.moveTo(s.x+50,60);ctx.lineTo(s.x+50,G);ctx.stroke();ctx.setLineDash([])}
-    else if(s.t<1.2){const p=Math.min(1,(s.t-.9)/.1);const y=-200+(G-6+200)*p;ctx.fillStyle='#b8261a';ctx.fillRect(s.x-52,y-60,104,60);ctx.fillStyle='#7c1710';ctx.fillRect(s.x-12,y-140,24,82);
-      ctx.fillStyle='#f4d9c8';ctx.font='bold 14px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText('CORRIGIDO',s.x,y-24)}
+    if(!s.go){const a=.3+.5*Math.sin(s.t*16)**2,ex=s.dir>0?30:CW-30;
+      ctx.save();ctx.fillStyle='rgba(200,30,20,'+a+')';ctx.fillRect(s.dir>0?0:CW-60,G-34,60,30);ctx.fillStyle='#fff3e0';ctx.font='bold 22px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText(s.dir>0?'\u00bb!':'!\u00ab',ex,G-12);
+      ctx.fillStyle='rgba(255,70,50,'+a*.55+')';ctx.fillRect(0,G-5,CW,3);ctx.restore()}
+    else{ctx.save();ctx.translate(-camX,0);
+      const n=Math.floor(Math.abs(s.x-s.sx)/12);ctx.strokeStyle='#c4271a';ctx.lineWidth=5;ctx.lineJoin='round';ctx.beginPath();
+      for(let i=0;i<=n;i++){const x=s.sx+s.dir*i*12,y=G-14+((i%2)?-11:11)+Math.sin(T*30+i)*2;if(i)ctx.lineTo(x,y);else ctx.moveTo(x,y)}ctx.stroke();
+      ctx.translate(s.x,G-24);ctx.scale(s.dir,1);ctx.rotate(.55);
+      ctx.fillStyle='#e8b830';ctx.fillRect(-58,-6,50,12);ctx.fillStyle='#b8261a';ctx.fillRect(-66,-6,8,12);ctx.fillStyle='#d8b890';ctx.beginPath();ctx.moveTo(-8,-6);ctx.lineTo(14,0);ctx.lineTo(-8,6);ctx.closePath();ctx.fill();
+      ctx.fillStyle='#c4271a';ctx.beginPath();ctx.moveTo(6,-2.5);ctx.lineTo(14,0);ctx.lineTo(6,2.5);ctx.closePath();ctx.fill();
+      ctx.restore()}
   }
-  ctx.restore();
 }
 function drawRain(dt){
   ctx.save();ctx.globalCompositeOperation='lighter';
@@ -437,7 +496,8 @@ function iniciar(){
    '<p style="font-size:.85em;color:var(--muted)">Setas ou A/D: andar · Espaço: pular (duplo) · C: lamparina · E: ação · Esc: pausa. No celular, use os botões na tela.</p><button class="btn" id="go">Começar</button><button class="btn sec" id="back">Voltar ao Arquivo</button>');
   $('gM').onclick=()=>{S.gen='m';$('gM').classList.add('on');$('gF').classList.remove('on')};$('gF').onclick=()=>{S.gen='f';$('gF').classList.add('on');$('gM').classList.remove('on')};
   $('back').onclick=()=>{location.href='../index.html'};
-  $('go').onclick=()=>{S.nome=($('iN').value||'').trim()||'Detetive';S.turma=($('iT').value||'').trim();audio();setMute(muted);comecar()};
+  $('go').onclick=()=>{S.nome=($('iN').value||'').trim()||'Detetive';S.turma=($('iT').value||'').trim();audio();setMute(muted);comecar();if(window.__restored)toast('Progresso restaurado: você continua de onde parou.',5000)};
+  if(window.__restored){$('go').insertAdjacentHTML('afterend','<button class="btn sec" id="zero">Recomeçar do início</button>');$('zero').onclick=()=>{try{localStorage.removeItem(PROGKEY)}catch(e){}location.reload()}}
 }
 
 
@@ -446,7 +506,7 @@ function comecar(){
   ovClose();state='play';$('hud').classList.remove('hidden');hud();
   say([['narr','Cresci como crescem as magnólias e os gatos, leitor, e talvez com menos juízo. Procure a página rasgada com a lamparina (segure C), olhe o tacho, converse com Prudêncio e leia o que fiz. Depois, dê o salto.']]);
 }
-function fim(){
+function fim(){try{localStorage.removeItem(PROGKEY)}catch(e){}
   state='end';$('hud').classList.add('hidden');
   const pct=Math.round((Z.leit/Z.tot)*100);
   try{const o=JSON.parse(localStorage.getItem(SAVE)||'{}');o.zonas=o.zonas||{};o.found=o.found||{};o.done=o.done||[];
@@ -493,6 +553,11 @@ function loop(ts){
   render(dt);
 }
 window.__t={P,F,Z,PAGES,INTER,get state(){return state},set state(v){state=v},get camX(){return camX},set camX(v){camX=v},provas,startCine,fim,K};
+(function restaurarProg(){try{const r=JSON.parse(localStorage.getItem(PROGKEY)||'null');if(!r||!(r.cp>0))return;
+  cpX=r.cp;P.x=r.cp;camX=Math.max(0,Math.min(WW-CW,P.x-CW*.42));Object.assign(Z,r.Z||{});Object.assign(F,r.F||{});
+  (r.pg||[]).forEach((v,i)=>{if(v&&PAGES[i])PAGES[i].got=true});(r.rb||[]).forEach((v,i)=>{if(v&&RAS_BOARDS[i])RAS_BOARDS[i].done=true});
+  if(typeof hipo!=='undefined'&&F.hipo){hipo.on=true;hipo.landed=true;hipo.x=3440;hipo.y=G-64}
+  window.__restored=1}catch(e){}})();
 loadAll(()=>{requestAnimationFrame(loop);iniciar();hud()});
 </script>
 </body>
