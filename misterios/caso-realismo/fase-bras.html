@@ -459,7 +459,7 @@ function comecar(){
 function fim(){
   state='end';$('hud').classList.add('hidden');
   const pct=Math.round((Z.leit/Z.tot)*100);
-  const prog={zona:1,pontos:Z.pts,paginas:Z.pages,leituras:Z.leit,quando:Date.now()};try{const o=JSON.parse(localStorage.getItem(SAVE)||'{}');if(!o.pontos||o.pontos<Z.pts)localStorage.setItem(SAVE,JSON.stringify(prog))}catch(e){}
+  try{const o=JSON.parse(localStorage.getItem(SAVE)||'{}');o.zonas=o.zonas||{};o.found=o.found||{};o.done=o.done||[];if(!o.zonas[1]||o.zonas[1]<Z.pts)o.zonas[1]=Z.pts;o.found.z1=1;o.score=Object.values(o.zonas).reduce((x,y)=>x+y,0);localStorage.setItem(SAVE,JSON.stringify(o))}catch(e){}
   enviar(pct);
   ov('<h2>Zona 1 concluída: Óbito do Autor</h2><p>Pontos: <b>'+Z.pts+'</b> · Páginas recolhidas: <b>'+Z.pages+'/8</b> · Leituras certas de primeira: <b>'+Z.leit+'/'+Z.tot+'</b></p>'+
    '<p>Você restaurou a dedicatória ao verme, contou os onze amigos e viu como Machado usa a ironia para mostrar o interesse por trás do elogio.</p>'+
