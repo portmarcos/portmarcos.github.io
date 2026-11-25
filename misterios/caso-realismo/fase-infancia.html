@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<title>Fase 1 · Zona 2 · O menino é pai do homem</title>
+<meta name="description" content="O Caso dos Narradores Trocados — Fase 1, zona 2: a infância de Brás Cubas (Memórias Póstumas, Machado de Assis).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:ital,wght@0,400;0,600;1,400&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#14100f;--paper:#efe3cf;--amber:#e3a84a;--amber2:#ffd98a;--rust:#8a2d1c;--ok:#4c8a4a;--bad:#b0301f;--muted:#bba98a;--violet:#6e5aa8}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#07050a;color:var(--paper);font-family:Lora,Georgia,serif;overflow:hidden;touch-action:none;-webkit-user-select:none;user-select:none}
+button{font-family:inherit;cursor:pointer;color:inherit}
+.hidden{display:none!important}
+#wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#game{position:relative;width:min(100vw,calc(100dvh*16/9));aspect-ratio:16/9;background:#000;box-shadow:0 0 60px #000;overflow:hidden}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+#hud{position:absolute;left:0;right:0;top:0;display:flex;align-items:center;gap:8px;padding:8px 10px;pointer-events:none;z-index:5;background:linear-gradient(180deg,rgba(10,6,12,.8),transparent)}
+.hs{font-family:'Special Elite',monospace;font-size:clamp(.7rem,1.4vw,1rem);background:rgba(18,10,20,.72);border:1px solid #5d4a7a;border-radius:8px;padding:3px 9px;white-space:nowrap}
+.hs b{color:var(--amber2)}
+.lamp{display:inline-block;width:.8em;height:1.1em;margin-left:3px;border-radius:50% 50% 45% 45%;background:radial-gradient(circle at 50% 70%,#fff3b0,#f2a83b 60%,#a45a12);box-shadow:0 0 7px rgba(255,180,70,.9);vertical-align:-.15em}
+.lamp.off{background:#2a2230;box-shadow:none}
+#hud .sp{flex:1}
+#hud button{pointer-events:auto;background:rgba(18,10,20,.72);border:1px solid #5d4a7a;border-radius:8px;height:clamp(28px,4vw,38px);min-width:clamp(28px,4vw,38px);font-size:clamp(.8rem,1.4vw,1rem)}
+#toast{position:absolute;left:50%;top:14%;transform:translateX(-50%);z-index:6;font-family:'Special Elite',monospace;font-size:clamp(.8rem,1.6vw,1.1rem);background:rgba(18,10,24,.88);border:1px solid #8b73bd;border-radius:10px;padding:8px 14px;max-width:80%;text-align:center;opacity:0;transition:opacity .3s;pointer-events:none}
+#toast.on{opacity:1}
+#prompt{position:absolute;left:50%;bottom:22%;transform:translateX(-50%);z-index:5;font-family:'Special Elite',monospace;background:rgba(18,10,24,.85);border:1px solid var(--amber);color:var(--amber2);border-radius:20px;padding:5px 14px;font-size:clamp(.75rem,1.5vw,1rem);pointer-events:none}
+#dlg{position:absolute;left:3%;right:3%;bottom:3%;z-index:7;display:flex;gap:12px;align-items:stretch;background:rgba(14,8,18,.94);border:2px solid #8b73bd;border-radius:14px;padding:10px 14px;min-height:20%}
+#dlg img{height:clamp(70px,16vw,150px);width:auto;border-radius:8px;border:1px solid #5d4a7a;object-fit:cover;aspect-ratio:3/4;background:#201428}
+#dlg .t{flex:1;display:flex;flex-direction:column;justify-content:center}
+#dlg .n{font-family:'Special Elite',monospace;color:var(--amber2);font-size:clamp(.8rem,1.5vw,1.05rem);margin-bottom:4px}
+#dlg .x{font-size:clamp(.85rem,1.8vw,1.2rem);line-height:1.45}
+#dlg .k{align-self:flex-end;font-size:.75rem;color:var(--muted);animation:bl 1s infinite}
+@keyframes bl{50%{opacity:.3}}
+.ov{position:absolute;inset:0;z-index:20;background:rgba(7,4,10,.93);display:flex;align-items:center;justify-content:center;padding:3%;overflow:auto}
+.panel{background:linear-gradient(180deg,#201630,#150e20);border:2px solid #8b73bd;border-radius:16px;padding:clamp(12px,2.4vw,26px);max-width:min(860px,100%);width:100%;box-shadow:0 12px 50px #000}
+.panel h2{font-family:'Playfair Display',serif;color:var(--amber2);font-size:clamp(1.1rem,2.8vw,1.8rem);margin-bottom:8px}
+.panel p{line-height:1.5;margin:6px 0;font-size:clamp(.85rem,1.7vw,1.1rem)}
+.cita{border-left:3px solid var(--amber);padding:8px 12px;margin:10px 0;font-style:italic;background:rgba(255,255,255,.04);font-size:clamp(.85rem,1.7vw,1.1rem);line-height:1.55}
+.src{font-size:.78rem;color:var(--muted);margin-top:-4px}
+.btn{background:linear-gradient(180deg,#e3a84a,#b0701f);color:#1a0f08;font-weight:700;border:none;border-radius:10px;padding:9px 18px;margin:6px 6px 0 0;font-size:clamp(.85rem,1.6vw,1.05rem)}
+.btn.sec{background:#2b1f3d;color:var(--paper);border:1px solid #6b55a0}
+.btn:disabled{opacity:.4;cursor:default}
+.opt{display:block;width:100%;text-align:left;background:#2b1f3d;border:1px solid #6b55a0;border-radius:10px;padding:9px 12px;margin:7px 0;font-size:clamp(.82rem,1.6vw,1.05rem);line-height:1.4}
+.opt:hover:not(:disabled){background:#3a2b52}
+.opt.ok{background:#1f4a28;border-color:#5fb36a}
+.opt.bad{background:#552018;border-color:#c0523a}
+.bar{height:6px;background:#2b1f3d;border-radius:4px;overflow:hidden;margin:8px 0}
+.bar i{display:block;height:100%;background:var(--amber);width:0}
+input[type=text]{width:100%;padding:9px 12px;border-radius:8px;border:1px solid #6b55a0;background:#120b1c;color:var(--paper);font:inherit;margin:4px 0 8px;-webkit-user-select:text;user-select:text}
+.gpick{display:flex;gap:8px;margin:6px 0 10px}
+.gpick button{flex:1;background:#2b1f3d;border:2px solid #6b55a0;border-radius:10px;padding:8px}
+.gpick button.on{border-color:var(--amber);background:#3d2b57}
+/* abertura */
+.card{position:relative;background:#e9dcc0;color:#2a1a10;border-radius:6px;padding:clamp(18px,4vw,48px);text-align:center;font-family:'Playfair Display',serif;font-weight:700;letter-spacing:.04em;line-height:1.7;box-shadow:inset 0 0 40px rgba(90,50,10,.35);font-size:clamp(.95rem,2.6vw,1.7rem)}
+.card small{display:block;font-family:'Special Elite',monospace;font-size:.5em;letter-spacing:.1em;margin-bottom:10px;opacity:.7}
+#scr{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair}
+.panelImg{width:100%;border-radius:8px;border:1px solid #5d4a7a}
+/* touch */
+#touch{position:absolute;inset:0;z-index:4;pointer-events:none}
+#touch button{pointer-events:auto;position:absolute;border-radius:50%;border:2px solid rgba(255,255,255,.35);background:rgba(20,12,30,.55);color:#fff;font-size:1.3rem;width:clamp(48px,11vw,72px);height:clamp(48px,11vw,72px);touch-action:none}
+#tL{left:2%;bottom:6%}#tR{left:calc(2% + clamp(56px,13vw,84px));bottom:6%}
+#tJ{right:2%;bottom:6%}#tA{right:calc(2% + clamp(56px,13vw,84px));bottom:6%;font-size:.8rem}#tC{right:calc(2% + clamp(28px,6.5vw,42px));bottom:calc(6% + clamp(56px,13vw,84px))}
+body:not(.touch) #touch{display:none}
+#rot{position:fixed;inset:0;z-index:99;background:#07050a;display:none;align-items:center;justify-content:center;text-align:center;padding:20px;font-size:1.2rem}
+@media (orientation:portrait) and (pointer:coarse){#rot{display:flex}}
+</style>
+</head>
+<body>
+<div id="rot">Gire o celular para jogar na horizontal.</div>
+<div id="wrap"><div id="game">
+<canvas id="cv"></canvas>
+<div id="hud" class="hidden">
+  <span class="hs" id="hLamp"></span><span class="hs">Páginas <b id="hPag">0/8</b></span><span class="hs">Pontos <b id="hPts">0</b></span>
+  <span class="hs" id="hTask"></span><span class="sp"></span>
+  <button id="bMute" title="Som (M)">♪</button><button id="bPause" title="Pausa (Esc)">II</button>
+</div>
+<div id="toast"></div><div id="prompt" class="hidden"></div>
+<div id="dlg" class="hidden"><img id="dImg" alt=""><div class="t"><div class="n" id="dNome"></div><div class="x" id="dTxt"></div></div><div class="k">Espaço ▶</div></div>
+<div id="touch"><button id="tL">◀</button><button id="tR">▶</button><button id="tJ">PULO</button><button id="tA">AÇÃO</button><button id="tC">✦</button></div>
+<div id="ov" class="ov"></div>
+</div></div>
+<script src="/assets/js/config-sheets.js"></script>
+<script>
+"use strict";
+/* ============ Constantes ============ */
+const CW=960,CH=540,G=480,WW=3700;
+const DPR=Math.min(window.devicePixelRatio||1,1.5);
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');cv.width=CW*DPR;cv.height=CH*DPR;
+const $=id=>document.getElementById(id);
+const SAVE='caso_realismo_v1';
+const SRC={det:'../caso-originais/img/q1/detetive.webp',detF:'../caso-originais/img/q1/detetive-f.webp',bras:'img/q1/bras.webp',hipo:'img/q1/hipopotamo.webp',
+ bg:'img/q1/bg-velorio.webp',bgd:'img/q1/bg-delirio.webp',retBras:'img/q1/ret-bras.webp',retDet:'../caso-originais/img/detetive.webp',retDetF:'../caso-originais/img/detetive-f.webp',
+ bgi:'img/q1/bg-infancia.webp',prud:'img/q1/prudencio.webp',retPrud:'img/q1/ret-prud-menino.webp',retQuincas:'img/q1/ret-quincas.webp',eul:'img/q1/eulalia.webp'};
+const OPCIONAL=['hq2','hq3','amigos','caixao','padre'];
+const IMG={};
+const SH={det:{w:269,h:232,s:.47},bras:{w:137,h:340,s:.37},hipo:{w:303,h:230,s:.6},prud:{w:164,h:340,s:.4}};
+function loadAll(cb){
+  const keys=Object.keys(SRC);let n=0;
+  keys.forEach(k=>{const im=new Image();im.onload=()=>{IMG[k]=im;if(++n===keys.length)cb()};im.onerror=()=>{if(++n===keys.length)cb()};im.src=SRC[k]});
+}
+function sheet(k,sh,f,x,y,flip,alpha,sc){
+  const im=IMG[k];if(!im)return;const s=sh.s*(sc||1),w=sh.w*s,h=sh.h*s;
+  ctx.save();ctx.globalAlpha=alpha==null?1:alpha;ctx.translate(x,y+3);if(flip)ctx.scale(-1,1);
+  ctx.drawImage(im,f*sh.w,0,sh.w,sh.h,-w/2,-h,w,h);ctx.restore();
+}
+/* ============ Estado ============ */
+let state='start',T=0,camX=0,shake=0,flash=0;
+const S={nome:'',turma:'',gen:'m'};
+const Z={pts:0,pages:0,lamps:3,leit:0,tot:4,enviou:false};
+const F={ped:false,tacho:false,cavalo:false,espadim:false,escola:false,porta:false,solto:false};
+const K={left:0,right:0,jump:0,lamp:0,act:0};
+const P={x:110,y:G,vx:0,vy:0,face:1,ground:true,jumps:2,inv:0,an:0,land:0,hurt:0};
+let cpX=110,lastStep=0;
+const PITS=[{x:700,w:110},{x:1250,w:130},{x:2300,w:140},{x:2900,w:120}];
+const PLAT=[{x:420,y:G-60,w:70},{x:560,y:G-110,w:70},{x:850,y:G-70,w:64},{x:1180,y:G-80,w:70},{x:1300,y:G-130,w:70},{x:1500,y:G-70,w:64},{x:1700,y:G-110,w:70},
+ {x:2140,y:G-70,w:64},{x:2260,y:G-125,w:70},{x:2420,y:G-70,w:64},{x:2760,y:G-80,w:64},{x:2880,y:G-130,w:70},{x:3040,y:G-70,w:64},{x:3380,y:G-70,w:64}];
+const PAGES=[[455,G-125],[595,G-175],[885,G-135],[1335,G-195],[1730,G-175],[2295,G-190],[2915,G-195],[3415,G-135]].map(a=>({x:a[0],y:a[1],got:false}));
+let stamps=[],stampT=3,rain=[],bolt=0,boltT=8,hint=0,hipo={on:false,x:0,y:0,t:0},cine=null,paused=false,floaters=[],marks=[];
+for(let i=0;i<240;i++)rain.push({x:Math.random()*CW*1.3,y:Math.random()*CH,v:520+Math.random()*320,l:10+Math.random()*14});
+/* ============ Áudio ============ */
+let AC=null,rainG=null,muted=false;
+function audio(){
+  if(AC)return;try{AC=new (window.AudioContext||window.webkitAudioContext)();}catch(e){return}
+  const n=AC.sampleRate*2,b=AC.createBuffer(1,n,AC.sampleRate),d=b.getChannelData(0);for(let i=0;i<n;i++)d[i]=Math.random()*2-1;
+  const s=AC.createBufferSource();s.buffer=b;s.loop=true;const f=AC.createBiquadFilter();f.type='bandpass';f.frequency.value=2600;f.Q.value=.5;
+  rainG=AC.createGain();rainG.gain.value=muted?0:.012;s.connect(f).connect(rainG).connect(AC.destination);s.start();
+}
+function noiseBurst(dur,freq,vol){if(!AC||muted)return;const n=AC.sampleRate*dur,b=AC.createBuffer(1,n,AC.sampleRate),d=b.getChannelData(0);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,2);
+  const s=AC.createBufferSource();s.buffer=b;const f=AC.createBiquadFilter();f.type='lowpass';f.frequency.value=freq;const g=AC.createGain();g.gain.value=vol;s.connect(f).connect(g).connect(AC.destination);s.start()}
+function tone(fr,dur,vol,type){if(!AC||muted)return;const o=AC.createOscillator(),g=AC.createGain();o.type=type||'square';o.frequency.value=fr;g.gain.value=vol||.04;g.gain.exponentialRampToValueAtTime(.0001,AC.currentTime+dur);o.connect(g).connect(AC.destination);o.start();o.stop(AC.currentTime+dur)}
+const thunder=()=>noiseBurst(1.8,320,.5),thud=()=>noiseBurst(.4,200,.7),blip=v=>tone(180+v*40,.05,.025,'triangle');
+function setMute(m){muted=m;if(rainG)rainG.gain.value=m?0:.012;$('bMute').textContent=m?'×':'♪'}
+/* ============ Utilidades de UI ============ */
+let toastT=0;
+function toast(t,ms){const e=$('toast');e.textContent=t;e.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove('on'),ms||3200)}
+const NARR={queda:['Cresci como crescem os gatos: caindo de pé, quase sempre.','Caí. Menino-diabo também tropeça, leitor.','Um buraco no quintal é só um capítulo mais fundo.'],
+ carimbo:['O Carimbo carimbou o leitor. Que falta de educação com quem lê.','Corrigido! Foi o que ele pensou. A palmatória do mestre era mais discreta.'],
+ pag:['Uma página a mais. Há quem colecione selos; o leitor coleciona capítulos.','Página recolhida. O verme agradece a ordem.']};
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+function addPts(n,x,y){Z.pts+=n;floaters.push({x,y,t:0,s:'+'+n});hud()}
+const NP=5;
+function hud(){
+  let l='';for(let i=0;i<3;i++)l+='<span class="lamp'+(i<Z.lamps?'':' off')+'"></span>';$('hLamp').innerHTML='Lamparinas '+l;
+  $('hPag').textContent=Z.pages+'/8';$('hPts').textContent=Z.pts;
+  $('hTask').innerHTML='Provas <b>'+provas()+'/'+NP+'</b>';
+}
+/* ============ Diálogo ============ */
+let dq=null,dI=0,typing=null,dFull='';
+function say(lines){return new Promise(res=>{
+  const prev=state;state='dialog';dq={lines,i:0,res,prev};$('dlg').classList.remove('hidden');$('prompt').classList.add('hidden');next();});}
+const WHO={bras:['Brás Cubas','retBras'],det:['Detetive',null],narr:['Narrador (o defunto)','retBras'],prud:['Prudêncio (menino)','retPrud'],quincas:['Quincas Borba','retQuincas'],ludg:['Mestre Ludgero',null]};
+function next(){
+  if(typing&&dI<dFull.length){dI=dFull.length;$('dTxt').textContent=dFull;clearInterval(typing);typing=null;return}
+  if(dq.i>=dq.lines.length){$('dlg').classList.add('hidden');state=dq.prev==='dialog'?'play':dq.prev;const r=dq.res;dq=null;r();return}
+  const [w,t]=dq.lines[dq.i++];const info=WHO[w];$('dNome').textContent=w==='det'?(S.nome||'Detetive'):info[0];
+  const ik=w==='det'?(S.gen==='f'?'retDetF':'retDet'):info[1];if(ik){$('dImg').src=SRC[ik];$('dImg').style.display=''}else $('dImg').style.display='none';
+  dFull=t;dI=0;$('dTxt').textContent='';clearInterval(typing);
+  typing=setInterval(()=>{dI++;$('dTxt').textContent=dFull.slice(0,dI);if(dI%2===0)blip(w==='det'?1:3);if(dI>=dFull.length){clearInterval(typing);typing=null}},24);
+}
+/* ============ Modais ============ */
+function ov(html){const o=$('ov');o.innerHTML='<div class="panel">'+html+'</div>';o.classList.remove('hidden')}
+function ovClose(){$('ov').classList.add('hidden');$('ov').innerHTML=''}
+function leitura(cfg){
+  return new Promise(res=>{
+    const prev=state;state='modal';const words=cfg.cita.split(/\s+/).length,secs=Math.max(8,Math.ceil(words/5));
+    ov('<h2>'+cfg.titulo+'</h2><p>Leia com calma. A pergunta aparece quando o tempo acabar.</p><div class="cita">'+cfg.cita+'</div><div class="src">'+cfg.fonte+'</div><div class="bar"><i id="lb"></i></div><div id="lq"></div>');
+    const b=$('lb');let t0=performance.now();const iv=setInterval(()=>{const p=Math.min(1,(performance.now()-t0)/(secs*1000));b.style.width=(p*100)+'%';if(p>=1){clearInterval(iv);perg()}},100);
+    function perg(){
+      const q=cfg.q;let h='<p><b>'+q.t+'</b></p>';q.o.forEach((o,i)=>h+='<button class="opt" data-i="'+i+'">'+o+'</button>');$('lq').innerHTML=h;
+      let tries=0;$('lq').querySelectorAll('.opt').forEach(bt=>bt.onclick=()=>{
+        const i=+bt.dataset.i;if(i===q.k){bt.classList.add('ok');$('lq').querySelectorAll('.opt').forEach(x=>x.disabled=true);
+          $('lq').insertAdjacentHTML('beforeend','<p>'+q.e+'</p><button class="btn" id="lok">Continuar</button>');
+          const first=tries===0;if(first){Z.leit++;addPts(100,P.x-camX,P.y-120)}else addPts(40,P.x-camX,P.y-120);
+          $('lok').onclick=()=>{ovClose();state=prev;res(first)}}
+        else{tries++;bt.classList.add('bad');bt.disabled=true;blip(-3);toast('Releia o trecho e tente de novo.',1800)}});
+    }
+  });
+}
+function restaurarFrase(){
+  return new Promise(res=>{
+    const prev=state;state='modal';
+    const frag=['Cresci;','e nisso é que a família não interveio;','cresci naturalmente,','como crescem as magnólias','e os gatos.'];
+    let ordem=frag.map((t,i)=>({t,i})).sort(()=>Math.random()-.5),prox=0,erros=0;
+    ov('<h2>A página do capítulo 11</h2><p>O Carimbo rasgou a primeira frase de "O Menino É Pai do Homem" em cinco pedaços. Toque nos pedaços na ordem certa.</p><div class="card" id="dd" style="min-height:5em"><small>CAPÍTULO XI</small><span id="ddt"></span></div><div id="fr"></div>');
+    const draw=()=>{$('ddt').innerHTML=frag.slice(0,prox).join(' ');
+      $('fr').innerHTML=ordem.filter(o=>o.i>=prox).map(o=>'<button class="opt" data-i="'+o.i+'" style="display:inline-block;width:auto;margin:5px">'+o.t+'</button>').join('');
+      $('fr').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(+b.dataset.i===prox){prox++;tone(520+prox*60,.12,.05,'triangle');draw()}else{erros++;b.classList.add('bad');tone(110,.2,.05);setTimeout(()=>b.classList.remove('bad'),500)}});
+      if(prox>=frag.length){$('fr').innerHTML='<p>Restaurada: Brás compara o próprio crescimento ao de magnólias e gatos, sem a ajuda da família. Logo em seguida ele cita um poeta, "o menino é pai do homem", para mostrar o menino que ele foi.</p><button class="btn" id="dok">Guardar a página</button>';
+        $('dok').onclick=()=>{ovClose();state=prev;addPts(erros===0?200:120,CW/2,200);res()}}};
+    draw();
+  });
+}
+
+/* ============ Interações ============ */
+const CITA11='Prudêncio, um moleque de casa, era o meu cavalo de todos os dias; punha as mãos no chão, recebia um cordel nos queixos, à guisa de freio, eu trepava-lhe ao dorso, com uma varinha na mão, fustigava-o, dava mil voltas a um e outro lado, e ele obedecia, &mdash; algumas vezes gemendo, &mdash; mas obedecia sem dizer palavra, ou, quando muito, um &mdash; "ai, nhonhô!" &mdash; ao que eu retorquia: &mdash; "Cala a boca, besta!"';
+const INTER=[
+ {id:'ped',x:1450,r:90,need:'lamp',txt:'AÇÃO · Pegar a página rasgada',done:()=>F.ped,act:async()=>{
+   await say([['det','Outra página rasgada, com o mesmo carimbo vermelho. Esta é do capítulo 11.']]);await restaurarFrase();F.ped=true;hud();
+   toast('Capítulo 11 restaurado. Provas '+provas()+'/'+NP,3500)}},
+ {id:'tacho',x:1050,r:130,txt:'AÇÃO · Olhar o tacho de doce',done:()=>F.tacho,act:async()=>{
+   await say([['bras','Cinco anos e já era "menino diabo". Aos seis, o doce de coco foi a minha obra-prima. Veja o que fiz, e não me julgue antes de ler.']]);
+   await leitura({titulo:'Capítulo 11 · O Menino É Pai do Homem',cita:'Por exemplo, um dia quebrei a cabeça de uma escrava, porque me negara uma colher do doce de coco que estava fazendo, e, não contente com o malefício, deitei um punhado de cinza ao tacho, e, não satisfeito da travessura, fui dizer à minha mãe que a escrava é que estragara o doce "por pirraça"; e eu tinha apenas seis anos.',
+     fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 11 (domínio público).',
+     q:{t:'O que o episódio mostra sobre o menino e sobre a sociedade em que ele vive?',o:['Que o menino fazia apenas uma travessura inocente, como toda criança.','Que o menino agride, mente e ainda culpa a escrava, e nada lhe acontece: a escravidão dá a ele um poder que ninguém questiona.','Que a escrava merecia o castigo por ter estragado o doce.','Que a mãe do menino percebeu a mentira e o castigou.'],k:1,e:'Brás machuca a escrava, estraga o doce e a acusa de "pirraça". A crueldade é contada sem remorso, e o menino não sofre consequência alguma. Machado mostra, pela frieza do narrador, a violência naturalizada da sociedade escravista.'}});
+   F.tacho=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
+ {id:'cavalo',x:1950,r:130,txt:'AÇÃO · Falar com Prudêncio',done:()=>F.cavalo,act:async()=>{
+   await say([['prud','Nhonhô mandou eu ser cavalo outra vez. Dizem que hoje o dia é de festa lá em cima.'],['det','Você não precisa fazer isso. Ninguém deveria montar em ninguém.'],['prud','O sinhozinho manda, e a gente obedece. É assim que é.'],['bras','Veja, leitor, como eu era um cavalo bem montado. Prudêncio, o meu, nunca reclamou. Leia, e depois me diga o que achou.']]);
+   await leitura({titulo:'Capítulo 11 · O Menino É Pai do Homem',cita:CITA11,fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 11 (domínio público).',
+     q:{t:'Por que a cena é tão forte, mesmo contada com um tom tranquilo pelo narrador?',o:['Porque o narrador demonstra arrependimento e pede perdão a Prudêncio.','Porque Brás narra a violência com naturalidade, e é a frieza dele que revela a crueldade da escravidão.','Porque Prudêncio reage e derruba o menino.','Porque a cena é um sonho de Brás, sem relação com a realidade.'],k:1,e:'Brás não vê nada de errado em montar num menino escravizado e chamá-lo de "besta". O narrador não julga; é o leitor quem percebe o horror. Esse é o efeito da ironia machadiana.'}});
+   await new Promise(r=>{const pv=state;state='modal';ov('<h2>O cordel</h2><p>Prudêncio ainda tem o cordel preso nos queixos. O que você faz?</p><button class="opt" id="c1">Soltar o cordel e dizer que ele não precisa obedecer.</button><button class="opt" id="c2">Deixar como está: não é da minha conta.</button>');
+     $('c1').onclick=()=>{F.solto=true;addPts(100,CW/2,200);ovClose();state=pv;r()};$('c2').onclick=()=>{ovClose();state=pv;r()}});
+   if(F.solto)await say([['prud','Obrigado, moço... eu não esqueço.'],['narr','No livro, ninguém o solta. Prudêncio só será livre anos depois, e o que ele fará com essa liberdade está no capítulo 68, "O Vergalho". O menino é pai do homem, leitor, também em Prudêncio.']]);
+   else await say([['narr','No livro, ninguém interrompe a cena. Anos depois, no capítulo 68, "O Vergalho", Prudêncio livre será visto fazendo com outro escravo o que fizeram com ele. Quem cala hoje ajuda a criar o amanhã.']]);
+   F.cavalo=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
+ {id:'espadim',x:2700,r:130,txt:'AÇÃO · Examinar o espadim',done:()=>F.espadim,act:async()=>{
+   await say([['bras','O espadim de 1814. Napoleão caía e eu só pensava na minha espada de brinquedo. Ouça o que isso me ensinou.']]);
+   await leitura({titulo:'Capítulo 12 · Um Episódio de 1814',cita:'Figurei nesses dias com um espadim novo, que meu padrinho me dera no dia de Santo Antônio; e, francamente, interessava-me mais o espadim do que a queda de Bonaparte. Nunca me esqueceu esse fenômeno. Nunca mais deixei de pensar comigo que o nosso espadim é sempre maior do que a espada de Napoleão.',
+     fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 12 (domínio público).',
+     q:{t:'O que o "espadim" representa nessa passagem?',o:['A coragem do menino diante da guerra.','O interesse pessoal e mesquinho de cada um, que pesa mais para a pessoa do que os grandes acontecimentos do mundo.','Um presente do pai que Brás odiava.','A admiração do menino por Napoleão.'],k:1,e:'Para o menino, o espadim novo é mais importante que a queda de Napoleão. Machado usa a imagem para falar do egoísmo: cada um olha para o próprio "espadim". A frase final vira uma lição irônica sobre a vaidade humana.'}});
+   F.espadim=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
+ {id:'escola',x:3180,r:130,txt:'AÇÃO · Entrar na sala do mestre',done:()=>F.escola,act:async()=>{
+   await say([['ludg','Silêncio, sevandijas! Quem pôs outra barata na minha gaveta?'],['quincas','Não fui eu, mestre. Eu estava aqui, olhando o teto, quieto como uma flor.'],['bras','Esse é Quincas Borba. Já naquele tempo, a gente via que ele daria o que falar.']]);
+   await leitura({titulo:'Capítulo 13 · Um Salto',cita:'Chamava-se Ludgero o mestre; quero escrever-lhe o nome todo nesta página: Ludgero Barata, &mdash; um nome funesto, que servia aos meninos de eterno mote a chufas. [&hellip;] E fizeste isto durante vinte e três anos, calado, obscuro, pontual, metido numa casinha da rua do Piolho, sem enfadar o mundo com a tua mediocridade, até que um dia deste o grande mergulho nas trevas, e ninguém te chorou, salvo um preto velho, &mdash; ninguém, nem eu, que te devo os rudimentos da escrita.',
+     fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 13 (domínio público).',
+     q:{t:'O que a frase "ninguém, nem eu, que te devo os rudimentos da escrita" revela?',o:['Que Brás chorou muito a morte do mestre.','Que Brás reconhece a própria ingratidão: ele deve ao mestre o que sabe, mas nem sequer lamentou a morte dele.','Que o mestre foi um homem rico e muito popular.','Que o "preto velho" era o único a odiar o mestre.'],k:1,e:'A confissão mostra um narrador sem pudor: ele admite que não sentiu a morte do homem que o alfabetizou. A frieza, de novo, é uma crítica irônica a uma sociedade em que os humildes morrem sem ser chorados.'}});
+   F.escola=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
+ {id:'porta',x:3500,r:140,txt:'AÇÃO · Dar o salto (como diz o capítulo 13)',cond:()=>provas()===NP,act:async()=>{
+   await say([['bras','"Unamos agora os pés e demos um salto por cima da escola, a enfadonha escola." Pule comigo, leitor: a juventude nos espera, e com ela os amores e as moedas.']]);startCine()}}
+];
+const provas=()=>[F.ped,F.tacho,F.cavalo,F.espadim,F.escola].filter(Boolean).length;
+function nearInter(){
+  let best=null,bd=1e9;
+  for(const it of INTER){
+    if(it.done&&it.done())continue;if(it.cond&&!it.cond())continue;if(it.need==='lamp'&&!K.lamp)continue;
+    const d=Math.abs(P.x-it.x);if(d<it.r&&d<bd){best=it;bd=d}}
+  return best;
+}
+/* ============ Movimento ============ */
+function onGround(x){for(const p of PITS)if(x>p.x+10&&x<p.x+p.w-10)return false;return true}
+function updatePlayer(dt){
+  const ax=K.right-K.left,sp=210;
+  P.vx+=((ax*sp)-P.vx)*Math.min(1,dt*10);if(ax)P.face=ax;
+  const py=P.y;P.x+=P.vx*dt;P.x=Math.max(30,Math.min(WW-30,P.x));
+  P.vy+=1750*dt;P.y+=P.vy*dt;
+  let land=null;
+  if(P.vy>=0){
+    if(onGround(P.x)&&py<=G+1&&P.y>=G)land=G;
+    for(const p of PLAT){if(P.x>p.x-10&&P.x<p.x+p.w+10&&py<=p.y+1&&P.y>=p.y){if(land==null||p.y<land)land=p.y}}
+  }
+  if(land!=null){if(!P.ground&&P.vy>300){P.land=.12;thud2()}P.y=land;P.vy=0;P.ground=true;P.jumps=2}else P.ground=false;
+  if(K.jump&&!P._j){P._j=1;if(P.ground||P.jumps>0){P.vy=-640;if(!P.ground)P.jumps=Math.max(0,P.jumps-1);else P.jumps=1;P.ground=false;tone(300,.08,.03,'triangle')}}
+  if(!K.jump)P._j=0;
+  P.an+=Math.abs(P.vx)*dt/38;P.inv=Math.max(0,P.inv-dt);P.land=Math.max(0,P.land-dt);
+  if(P.y>G+170)fall();
+  for(const c of [1300,2250,2950])if(P.x>c&&cpX<c)cpX=c;
+}
+function thud2(){if(AC)tone(90,.07,.05,'sine')}
+function fall(){
+  toast(pick(NARR.queda),3200);Z.lamps--;shake=.4;
+  if(Z.lamps<=0){Z.lamps=3;Z.pts=Math.max(0,Z.pts-50);toast('Sem lamparinas. O narrador recomeça o capítulo.',3200)}
+  P.x=cpX;P.y=G-200;P.vy=0;P.inv=1.6;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));hud();
+}
+function hit(){
+  if(P.inv>0)return;Z.lamps--;P.inv=1.8;shake=.5;P.hurt=.4;thud();toast(pick(NARR.carimbo),3000);
+  if(Z.lamps<=0){Z.lamps=3;Z.pts=Math.max(0,Z.pts-50);P.x=cpX;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));toast('Sem lamparinas. O narrador recomeça o capítulo.',3200)}hud();
+}
+/* ============ Mundo ============ */
+function updateWorld(dt){
+  stampT-=dt;
+  if(stampT<=0&&P.x>650&&P.x<3350){stamps.push({x:P.x+P.vx*.55+(Math.random()-.5)*60,t:0});stampT=3.6+Math.random()*2.2}
+  for(const s of stamps){s.t+=dt;if(s.t>.9&&s.t<1.12&&!s.d){s.d=1;shake=.35;thud();marks.push({x:s.x,t:5});if(Math.abs(P.x-s.x)<52&&!(P.y<G-210))hit()}}
+  stamps=stamps.filter(s=>s.t<1.9);marks=marks.filter(m=>(m.t-=dt)>0);
+  for(const g of PAGES){if(!g.got&&Math.abs(P.x-g.x)<34&&Math.abs((P.y-46)-g.y)<52){g.got=true;Z.pages++;addPts(50,g.x-camX,g.y);tone(660,.1,.05,'triangle');tone(880,.14,.04,'triangle');if(Z.pages===1)toast(pick(NARR.pag),3000);hud()}}
+  if(provas()===NP&&!F.porta){F.porta=true;toast('A porta da escola se abriu. Hora de dar o salto do capítulo 13.',4000)}
+  floaters.forEach(f=>f.t+=dt);floaters=floaters.filter(f=>f.t<1.2);
+  shake=Math.max(0,shake-dt);
+}
+/* ============ Desenho ============ */
+function drawBG(){
+  const im=IMG.bgi;
+  if(im){const h=CH,w=im.width*h/im.height;const off=camX*.28;
+    for(let i=-1;i<4;i++){const x=i*w-(off%(w*2)),flip=((i%2)+2)%2===1;ctx.save();if(flip){ctx.translate(x+w,0);ctx.scale(-1,1);ctx.drawImage(im,0,0,w,h)}else ctx.drawImage(im,x,0,w,h);ctx.restore()}}
+  else{
+    const sg=ctx.createLinearGradient(0,0,0,G);sg.addColorStop(0,'#f6c77a');sg.addColorStop(.55,'#f0a566');sg.addColorStop(1,'#c9744a');ctx.fillStyle=sg;ctx.fillRect(0,0,CW,CH);
+    ctx.fillStyle='rgba(255,236,190,.9)';ctx.beginPath();ctx.arc(760-camX*.03,120,46,0,7);ctx.fill();
+    const hill=(k,c,a,b)=>{ctx.fillStyle=c;ctx.beginPath();ctx.moveTo(0,G);for(let x=0;x<=CW;x+=20){const wx=x+camX*k;ctx.lineTo(x,G-a-Math.sin(wx*.004)*b-Math.sin(wx*.011)*b*.4)}ctx.lineTo(CW,G);ctx.closePath();ctx.fill()};
+    hill(.1,'#8b5b45',150,50);hill(.2,'#6a4332',90,38);
+    for(let i=0;i<8;i++){const wx=i*620+80-(camX*.5%4960),x=((wx%4960)+4960)%4960-300;if(x<-260||x>CW+60)continue;
+      ctx.fillStyle='#d9b88a';ctx.fillRect(x,G-190,220,130);ctx.fillStyle='#8f3d27';ctx.beginPath();ctx.moveTo(x-14,G-190);ctx.lineTo(x+110,G-250);ctx.lineTo(x+234,G-190);ctx.closePath();ctx.fill();
+      ctx.fillStyle='#4a2e20';for(let k=0;k<3;k++){ctx.fillRect(x+24+k*68,G-160,32,50)}ctx.fillStyle='rgba(255,225,150,.8)';for(let k=0;k<3;k++)ctx.fillRect(x+30+k*68,G-154,20,20)}
+    for(let i=0;i<6;i++){const wx=i*900+300-(camX*.7%5400),x=((wx%5400)+5400)%5400-200;if(x<-80||x>CW+80)continue;
+      ctx.strokeStyle='#3d2a1a';ctx.lineWidth=7;ctx.beginPath();ctx.moveTo(x,G);ctx.quadraticCurveTo(x+14,G-110,x+4,G-190);ctx.stroke();ctx.strokeStyle='#355c34';ctx.lineWidth=5;
+      for(let k=0;k<6;k++){const a=-Math.PI/2+(k-2.5)*.55;ctx.beginPath();ctx.moveTo(x+4,G-190);ctx.quadraticCurveTo(x+4+Math.cos(a)*40,G-190+Math.sin(a)*30,x+4+Math.cos(a)*70,G-190+Math.sin(a)*50+24);ctx.stroke()}}
+  }
+  ctx.save();ctx.translate(-camX,0);
+  const gg=ctx.createLinearGradient(0,G,0,CH);gg.addColorStop(0,'#b08a58');gg.addColorStop(.25,'#8a6540');gg.addColorStop(1,'#4a3220');
+  ctx.fillStyle=gg;let x0=Math.max(0,camX-20),x1=Math.min(WW,camX+CW+20);
+  let cur=x0;const pits=PITS.slice().sort((a,b)=>a.x-b.x);
+  for(const p of pits){if(p.x>cur){ctx.fillRect(cur,G,Math.min(p.x,x1)-cur,CH-G+20)}cur=Math.max(cur,p.x+p.w)}if(cur<x1)ctx.fillRect(cur,G,x1-cur,CH-G+20);
+  ctx.fillStyle='#6b8a3c';for(let x=Math.floor(x0/14)*14;x<x1;x+=14){if(!onGround(x))continue;ctx.fillRect(x,G-2,10,4+((x*7)%5))}
+  for(const p of PITS){ctx.fillStyle='#1a0f08';ctx.fillRect(p.x,G,p.w,CH-G+20);ctx.fillStyle='#5c4128';ctx.fillRect(p.x-6,G,6,CH-G);ctx.fillRect(p.x+p.w,G,6,CH-G)}
+  for(const m of marks){ctx.fillStyle='rgba(180,30,20,'+Math.min(.5,m.t/5)+')';ctx.fillRect(m.x-44,G-4,88,6)}
+  ctx.restore();
+}
+function drawPlat(){
+  ctx.save();ctx.translate(-camX,0);
+  for(const p of PLAT){const h=G-p.y;
+    const g=ctx.createLinearGradient(p.x,p.y,p.x+p.w,p.y);g.addColorStop(0,'#8a5a30');g.addColorStop(1,'#5e3b1d');ctx.fillStyle=g;ctx.fillRect(p.x,p.y,p.w,h);
+    ctx.strokeStyle='#2e1b0b';ctx.lineWidth=2;ctx.strokeRect(p.x,p.y,p.w,h);
+    ctx.fillStyle='#a97a46';ctx.fillRect(p.x,p.y,p.w,6);ctx.strokeStyle='rgba(30,16,6,.5)';ctx.lineWidth=2;
+    for(let y=p.y+22;y<G;y+=22){ctx.beginPath();ctx.moveTo(p.x,y);ctx.lineTo(p.x+p.w,y);ctx.stroke()}
+    ctx.fillStyle='#3b2412';ctx.fillRect(p.x+p.w/2-2,p.y,4,h)}
+  ctx.restore();
+}
+function drawFigures(){
+  ctx.save();ctx.translate(-camX,0);
+  /* tacho de doce de coco */
+  const tx=1050;ctx.fillStyle='#3b2412';ctx.fillRect(tx-34,G-10,68,10);
+  for(let i=0;i<3;i++){ctx.fillStyle='rgba(255,140,40,'+(.5+.3*Math.sin(T*9+i*2))+')';ctx.beginPath();ctx.moveTo(tx-22+i*20,G-8);ctx.quadraticCurveTo(tx-18+i*20,G-34-Math.sin(T*8+i)*5,tx-12+i*20,G-8);ctx.fill()}
+  ctx.fillStyle='#2a1c14';ctx.beginPath();ctx.ellipse(tx,G-44,44,22,0,0,Math.PI);ctx.fill();ctx.fillStyle='#e8d6a8';ctx.beginPath();ctx.ellipse(tx,G-44,44,10,0,0,7);ctx.fill();ctx.strokeStyle='#2a1c14';ctx.lineWidth=4;ctx.stroke();
+  ctx.fillStyle='rgba(240,240,240,.35)';for(let i=0;i<4;i++){const y=G-70-((T*30+i*24)%80);ctx.beginPath();ctx.arc(tx+Math.sin(T*2+i)*14,y,6+i,0,7);ctx.fill()}
+  if(!F.tacho){ctx.fillStyle='rgba(120,120,120,.8)';ctx.beginPath();ctx.ellipse(tx+14,G-50,8,4,0,0,7);ctx.fill()}
+  /* espadim */
+  const ex=2700;ctx.fillStyle='#6b3a22';ctx.fillRect(ex-24,G-34,48,34);ctx.fillStyle='#9c2f2f';ctx.fillRect(ex-24,G-38,48,6);
+  ctx.save();ctx.translate(ex,G-40);ctx.rotate(-.25);ctx.shadowColor='#ffd98a';ctx.shadowBlur=F.espadim?4:16;ctx.fillStyle='#d9dde2';ctx.fillRect(-2,-62,4,62);ctx.fillStyle='#e3a84a';ctx.fillRect(-14,-2,28,5);ctx.fillRect(-3,2,6,14);ctx.restore();
+  /* mestre Ludgero e Quincas na escola */
+  const lx=3180;ctx.fillStyle='#8d5b34';ctx.fillRect(lx-120,G-60,100,60);ctx.fillStyle='#5e3b1d';ctx.fillRect(lx-124,G-66,108,8);
+  ctx.fillStyle='#e9e2d0';ctx.fillRect(lx-100,G-100,56,34);ctx.fillStyle='#2a1c14';for(let i=0;i<4;i++)ctx.fillRect(lx-94,G-94+i*7,44,2);
+  ctx.save();ctx.translate(lx+20,G);const b=Math.sin(T*2)*1.5;
+  ctx.fillStyle='#2e2a30';ctx.fillRect(-18,-92+b,36,70);ctx.fillStyle='#e8c9a4';ctx.beginPath();ctx.arc(0,-104+b,14,0,7);ctx.fill();ctx.fillStyle='#e8c9a4';ctx.fillRect(-14,-110+b,28,6);
+  ctx.fillStyle='#d8d4c8';ctx.fillRect(-12,-22,10,22);ctx.fillRect(2,-22,10,22);
+  ctx.strokeStyle='#6b4a2a';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(14,-70+b);ctx.lineTo(44,-96+b);ctx.stroke();ctx.fillStyle='#9a6a38';ctx.beginPath();ctx.arc(46,-98+b,8,0,7);ctx.fill();
+  ctx.restore();
+  /* porta da escola */
+  const dx=3500;ctx.fillStyle='#6b3a22';ctx.fillRect(dx-50,G-160,100,160);ctx.fillStyle=F.porta?'#ffe7a8':'#2e1b0b';ctx.fillRect(dx-38,G-146,76,146);
+  if(F.porta){const g=ctx.createRadialGradient(dx,G-80,10,dx,G-80,110);g.addColorStop(0,'rgba(255,230,160,.55)');g.addColorStop(1,'rgba(255,200,100,0)');ctx.fillStyle=g;ctx.fillRect(dx-120,G-200,240,220)}
+  ctx.fillStyle='#e9e2d0';ctx.fillRect(dx-44,G-188,88,22);ctx.fillStyle='#2a1c14';ctx.font='bold 13px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText('ESCOLA',dx,G-172);
+  ctx.restore();
+}
+function drawBras(){
+  const bob=Math.sin(T*2)*1.5;ctx.save();ctx.translate(-camX,0);
+  /* Prudêncio menino, de quatro? sem cena de tortura: de pé, com cordel solto ou preso */
+  const x=1950;let f=F.solto?3:0;
+  if(dq&&dq.lines[dq.i-1]&&dq.lines[dq.i-1][0]==='prud'&&typing)f=[0,3][Math.floor(T*4)%2];
+  sheet('prud',SH.prud,f,x,G+bob*.4,true);
+  if(!F.solto){ctx.strokeStyle='#8a6a3a';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x-8,G-66);ctx.quadraticCurveTo(x-40,G-50,x-60,G-20);ctx.stroke()}
+  /* Brás narrador, ao lado */
+  sheet('bras',SH.bras,(dq&&dq.lines[dq.i-1]&&dq.lines[dq.i-1][0]==='bras'&&typing)?[3,3,4,3,5][Math.floor(T*5)%5]:0,x+90,G+bob,true,.8);
+  ctx.restore();
+}
+function drawHipo(){}
+function drawPages(){
+  ctx.save();ctx.translate(-camX,0);
+  for(const g of PAGES){if(g.got)continue;const y=g.y+Math.sin(T*2+g.x)*5;ctx.save();ctx.translate(g.x,y);ctx.rotate(Math.sin(T*1.5+g.x)*.15);
+    ctx.shadowColor='#ffd98a';ctx.shadowBlur=14;ctx.fillStyle='#efe0bd';ctx.fillRect(-11,-15,22,30);ctx.shadowBlur=0;ctx.fillStyle='#7a5a30';for(let i=0;i<4;i++)ctx.fillRect(-7,-9+i*6,14,2);ctx.restore()}
+  ctx.restore();
+}
+function drawClue(){
+  const it=INTER[0];if(F.ded)return;ctx.save();ctx.translate(-camX,0);
+  const near=Math.abs(P.x-it.x);const a=K.lamp?Math.max(0,1-near/260):0;
+  if(a>0){ctx.globalAlpha=a;ctx.fillStyle='#efe0bd';ctx.save();ctx.translate(it.x,G-18);ctx.rotate(-.12);ctx.fillRect(-18,-12,36,24);ctx.fillStyle='#b32818';ctx.fillRect(-14,-3,28,5);ctx.restore()}
+  ctx.restore();
+}
+function drawPlayer(){
+  let f=5;const run=Math.abs(P.vx)>25;
+  if(P.hurt>0)f=12;else if(!P.ground)f=P.vy<-150?7:8;else if(P.land>0)f=9;else if(K.lamp&&!run)f=13;else if(run)f=Math.floor(P.an)%6;
+  else if(S.gen==='f'&&IMG.detF)f=14;
+  const al=P.inv>0&&Math.sin(T*30)>0?.35:1;const fem=S.gen==='f'&&IMG.detF;
+  ctx.save();ctx.translate(-camX,0);sheet(fem?'detF':'det',SH.det,f,P.x,P.y,P.face<0,al);ctx.restore();
+}
+function drawLight(){
+  if(!K.lamp||state!=='play')return;const x=P.x+P.face*22-camX,y=P.y-46;
+  ctx.save();ctx.globalCompositeOperation='lighter';const g=ctx.createRadialGradient(x,y,4,x,y,210);g.addColorStop(0,'rgba(255,200,110,.45)');g.addColorStop(.5,'rgba(255,150,50,.14)');g.addColorStop(1,'rgba(255,120,30,0)');ctx.fillStyle=g;ctx.fillRect(x-210,y-210,420,420);ctx.restore();
+}
+function drawStamps(){
+  ctx.save();ctx.translate(-camX,0);
+  for(const s of stamps){
+    if(s.t<.9){const a=.25+.35*Math.sin(s.t*14)**2;ctx.fillStyle='rgba(200,30,20,'+a+')';ctx.beginPath();ctx.ellipse(s.x,G,54,10,0,0,7);ctx.fill();
+      ctx.strokeStyle='rgba(255,80,60,'+a+')';ctx.lineWidth=2;ctx.setLineDash([6,6]);ctx.beginPath();ctx.moveTo(s.x-50,60);ctx.lineTo(s.x-50,G);ctx.moveTo(s.x+50,60);ctx.lineTo(s.x+50,G);ctx.stroke();ctx.setLineDash([])}
+    else if(s.t<1.2){const p=Math.min(1,(s.t-.9)/.1);const y=-200+(G-6+200)*p;ctx.fillStyle='#b8261a';ctx.fillRect(s.x-52,y-60,104,60);ctx.fillStyle='#7c1710';ctx.fillRect(s.x-12,y-140,24,82);
+      ctx.fillStyle='#f4d9c8';ctx.font='bold 14px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText('CORRIGIDO',s.x,y-24)}
+  }
+  ctx.restore();
+}
+function drawRain(dt){
+  ctx.save();ctx.globalCompositeOperation='lighter';
+  for(let i=0;i<40;i++){const x=((i*113+T*14*(1+i%3))%(CW+40)),y=(i*61+Math.sin(T*.7+i)*30)%(G-40)+20;const a=.18+.16*Math.sin(T*1.3+i);ctx.fillStyle='rgba(255,230,160,'+a+')';ctx.beginPath();ctx.arc(x,y,1.6+i%3,0,7);ctx.fill()}
+  ctx.restore();
+  const g=ctx.createLinearGradient(0,0,CW,0);g.addColorStop(0,'rgba(255,190,90,.12)');g.addColorStop(1,'rgba(255,150,60,0)');ctx.fillStyle=g;ctx.fillRect(0,0,CW,CH);
+}
+function drawFloaters(){
+  ctx.save();ctx.font='bold 22px "Special Elite",monospace';ctx.textAlign='center';
+  for(const f of floaters){ctx.globalAlpha=1-f.t/1.2;ctx.fillStyle='#ffd98a';ctx.strokeStyle='#000';ctx.lineWidth=3;ctx.strokeText(f.s,f.x,f.y-f.t*40);ctx.fillText(f.s,f.x,f.y-f.t*40)}ctx.restore();
+}
+function render(dt){
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+  const sx=shake>0?(Math.random()-.5)*shake*16:0,sy=shake>0?(Math.random()-.5)*shake*10:0;ctx.save();ctx.translate(sx,sy);
+  if(state==='cine'){drawCine(dt);ctx.restore();return}
+  drawBG();drawFigures();drawBras();drawPlat();drawClue();drawPages();drawStamps();drawPlayer();drawLight();drawRain(dt);drawFloaters();
+  /* vinheta */
+  const v=ctx.createRadialGradient(CW/2,CH/2,CH*.4,CW/2,CH/2,CH*.95);v.addColorStop(0,'rgba(0,0,0,0)');v.addColorStop(1,'rgba(0,0,0,.55)');ctx.fillStyle=v;ctx.fillRect(0,0,CW,CH);
+  ctx.restore();
+}
+/* ============ Cena do salto ============ */
+function startCine(){
+  state='cine';cine={t:0,lines:[[.6,'Unamos agora os pés e demos um salto por cima da escola, a enfadonha escola.'],[3.4,'Onde aprendi a ler, escrever, contar, dar cacholetas e apanhá-las.'],[6.2,'Do outro lado do salto: o primeiro amor, e uma conta de onze contos de réis.']]};
+  $('prompt').classList.add('hidden');$('hud').classList.add('hidden');
+}
+function drawCine(dt){
+  cine.t+=dt;const t=cine.t;const im=IMG.bgi||null;
+  const sg=ctx.createLinearGradient(0,0,0,CH);sg.addColorStop(0,'#f6c77a');sg.addColorStop(1,'#c9744a');ctx.fillStyle=sg;ctx.fillRect(0,0,CW,CH);
+  if(im){const h=CH,w=im.width*h/im.height;ctx.drawImage(im,-((t*80)%w),0,w,h);ctx.drawImage(im,w-((t*80)%w),0,w,h)}
+  const p=Math.min(1,t/4);const x=120+p*620,y=G-Math.sin(p*Math.PI)*260;
+  ctx.fillStyle='rgba(60,30,10,.35)';ctx.beginPath();ctx.ellipse(x,G+8,40*(1-Math.sin(p*Math.PI)*.4),8,0,0,7);ctx.fill();
+  const dx=3500;ctx.fillStyle='#6b3a22';ctx.fillRect(500,G-190+(t>4?0:0),180,190);ctx.fillStyle='#8f3d27';ctx.beginPath();ctx.moveTo(480,G-190);ctx.lineTo(590,G-250);ctx.lineTo(700,G-190);ctx.closePath();ctx.fill();
+  const fem=S.gen==='f'&&IMG.detF;sheet(fem?'detF':'det',SH.det,t<4?8:9,x,y,false,1,1);
+  for(let i=0;i<8;i++){const xx=(i*140+t*60)%1100,yy=60+((i*53)%200)+Math.sin(t*2+i)*14;ctx.save();ctx.translate(xx,yy);ctx.rotate(Math.sin(t*2+i)*.5);ctx.fillStyle='#efe0bd';ctx.fillRect(-11,-15,22,30);ctx.fillStyle='#7a5a30';for(let k=0;k<4;k++)ctx.fillRect(-7,-9+k*6,14,2);ctx.restore()}
+  const l=cine.lines.filter(x=>t>=x[0]).pop();
+  if(l){ctx.save();ctx.fillStyle='rgba(10,5,16,.78)';ctx.fillRect(60,CH-110,CW-120,74);ctx.fillStyle='#ffd98a';ctx.font='italic 20px Lora,serif';ctx.textAlign='center';
+    const words=l[1].split(' ');let ln='',lines=[];words.forEach(w=>{if((ln+w).length>70){lines.push(ln);ln=''}ln+=w+' '});lines.push(ln);
+    lines.forEach((s,i)=>ctx.fillText(s.trim(),CW/2,CH-80+i*26));ctx.restore()}
+  const fade=Math.max(0,(t-8)/1.5);if(fade>0){ctx.fillStyle='rgba(255,250,240,'+Math.min(1,fade)+')';ctx.fillRect(0,0,CW,CH)}
+  if(t>9.6&&state==='cine')fim();
+}
+/* ============ Início, HQ, fim ============ */
+function iniciar(){
+  ov('<h2>O Caso dos Narradores Trocados</h2><p><b>Fase 1 · Zona 2: O menino é pai do homem</b> (Memórias Póstumas de Brás Cubas, Machado de Assis).</p><p>Rio de Janeiro, por volta de 1814. O Agente Carimbo rasgou os capítulos da infância de Brás. Percorra a casa e o quintal, restaure o capítulo 11 e leia o que o "menino diabo" fez.</p><p><i>Atenção: algumas passagens tratam da escravidão com a frieza do narrador. Leia com atenção: Machado faz isso de propósito.</i></p>'+
+   '<p>Seu primeiro nome ou apelido:</p><input type="text" id="iN" maxlength="16" placeholder="Nome"><input type="text" id="iT" maxlength="12" placeholder="Turma (ex.: 3º A)"><p>Detetive:</p><div class="gpick"><button id="gM" class="on">Ele</button><button id="gF">Ela</button></div>'+
+   '<p style="font-size:.85em;color:var(--muted)">Setas ou A/D: andar · Espaço: pular (duplo) · C: lamparina · E: ação · Esc: pausa. No celular, use os botões na tela.</p><button class="btn" id="go">Começar</button><button class="btn sec" id="back">Voltar ao Arquivo</button>');
+  $('gM').onclick=()=>{S.gen='m';$('gM').classList.add('on');$('gF').classList.remove('on')};$('gF').onclick=()=>{S.gen='f';$('gF').classList.add('on');$('gM').classList.remove('on')};
+  $('back').onclick=()=>{location.href='../index.html'};
+  $('go').onclick=()=>{S.nome=($('iN').value||'').trim()||'Detetive';S.turma=($('iT').value||'').trim();audio();setMute(muted);comecar()};
+}
+
+
+
+function comecar(){
+  ovClose();state='play';$('hud').classList.remove('hidden');hud();
+  say([['narr','Cresci como crescem as magnólias e os gatos, leitor, e talvez com menos juízo. Procure a página rasgada com a lamparina (segure C), olhe o tacho, converse com Prudêncio e leia o que fiz. Depois, dê o salto.']]);
+}
+function fim(){
+  state='end';$('hud').classList.add('hidden');
+  const pct=Math.round((Z.leit/Z.tot)*100);
+  try{const o=JSON.parse(localStorage.getItem(SAVE)||'{}');o.zonas=o.zonas||{};o.found=o.found||{};o.done=o.done||[];
+    if(!o.zonas[2]||o.zonas[2]<Z.pts)o.zonas[2]=Z.pts;o.found.z2=1;o.score=Object.values(o.zonas).reduce((a,b)=>a+b,0);localStorage.setItem(SAVE,JSON.stringify(o))}catch(e){}
+  enviar(pct);
+  ov('<h2>Zona 2 concluída: O menino é pai do homem</h2><p>Pontos: <b>'+Z.pts+'</b> · Páginas recolhidas: <b>'+Z.pages+'/8</b> · Leituras certas de primeira: <b>'+Z.leit+'/'+Z.tot+'</b></p>'+
+   '<p>Você restaurou o capítulo 11, viu como Brás narra a crueldade sem remorso e entendeu o "espadim": o interesse pessoal que pesa mais que a história do mundo.'+(F.solto?' E soltou o cordel de Prudêncio, algo que o livro não faz.':'')+'</p>'+
+   '<p><b>Próxima zona: Marcela e as moedas (o primeiro amor).</b> Em construção.</p><button class="btn" id="ba">Voltar ao Arquivo</button><button class="btn sec" id="rj">Jogar de novo</button>');
+  $('ba').onclick=()=>{location.href='../index.html'};$('rj').onclick=()=>location.reload();
+}
+function enviar(pct){
+  if(Z.enviou)return;Z.enviou=true;
+  try{if(typeof SHEETS_URL==='undefined'||!SHEETS_URL)return;
+    fetch(SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({atividade:'Caso 2 · Fase 1 · Zona 2 · O menino é pai do homem',nome:S.nome,turma:S.turma,acertos:Z.leit,total:Z.tot,pct:pct,abertas:'Pontos: '+Z.pts+' · Páginas: '+Z.pages+'/8'})}).catch(()=>{});}catch(e){}
+}
+/* ============ Entrada ============ */
+const KM={ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right',ArrowUp:'jump',KeyW:'jump',Space:'jump',KeyC:'lamp',KeyE:'act',Enter:'act'};
+addEventListener('keydown',e=>{
+  const k=KM[e.code];
+  if(e.code==='Escape'||e.code==='KeyP'){if(state==='play')pause(true);else if(paused)pause(false);return}
+  if(e.code==='KeyM'){setMute(!muted);return}
+  if(state==='dialog'&&(e.code==='Space'||e.code==='Enter'||e.code==='KeyE')){e.preventDefault();next();return}
+  if(!k)return;if(e.code.startsWith('Arrow')||e.code==='Space')e.preventDefault();
+  if(k==='act'){if(!K.act&&state==='play')doAct();K.act=1;return}K[k]=1;
+});
+addEventListener('keyup',e=>{const k=KM[e.code];if(k)K[k]=0});
+function doAct(){const it=nearInter();if(it)it.act()}
+function pause(on){paused=on;if(on){state='pause';ov('<h2>Pausa</h2><button class="btn" id="rs">Continuar</button><button class="btn sec" id="bk">Voltar ao Arquivo</button>');$('rs').onclick=()=>pause(false);$('bk').onclick=()=>location.href='../index.html'}else{ovClose();state='play'}}
+$('bPause').onclick=()=>{if(state==='play')pause(true)};$('bMute').onclick=()=>setMute(!muted);
+$('dlg').addEventListener('pointerdown',e=>{e.preventDefault();if(state==='dialog')next()});
+function bindT(id,k,act){const b=$(id);const on=e=>{e.preventDefault();if(act){if(state==='dialog'){next();return}if(state==='play')doAct()}else K[k]=1};const off=e=>{e.preventDefault();if(!act)K[k]=0};
+  b.addEventListener('pointerdown',on);b.addEventListener('pointerup',off);b.addEventListener('pointercancel',off);b.addEventListener('pointerleave',off)}
+bindT('tL','left');bindT('tR','right');bindT('tJ','jump');bindT('tC','lamp');bindT('tA',null,true);
+if('ontouchstart' in window||navigator.maxTouchPoints>0)document.body.classList.add('touch');
+/* ============ Laço ============ */
+let last=0;
+function loop(ts){
+  requestAnimationFrame(loop);const dt=Math.min(.05,(ts-last)/1000||.016);last=ts;T+=dt;
+  if(state==='play'){updatePlayer(dt);updateWorld(dt);
+    camX+=((P.x-CW*.42)-camX)*Math.min(1,dt*5);camX=Math.max(0,Math.min(WW-CW,camX));
+    const it=nearInter();const pr=$('prompt');if(it){pr.textContent=it.txt;pr.classList.remove('hidden')}else pr.classList.add('hidden');
+    if(K.lamp&&!K._l){K._l=1;}if(!K.lamp)K._l=0;
+  }else if(state==='dialog'){updateWorld(dt);P.vx=0}
+  render(dt);
+}
+window.__t={P,F,Z,PAGES,INTER,get state(){return state},set state(v){state=v},get camX(){return camX},set camX(v){camX=v},provas,startCine,fim,K};
+loadAll(()=>{requestAnimationFrame(loop);iniciar();hud()});
+</script>
+</body>
+</html>

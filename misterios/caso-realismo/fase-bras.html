@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<title>Fase 1 · Óbito do Autor</title>
+<meta name="description" content="O Caso dos Narradores Trocados — Fase 1: o velório de Brás Cubas (Memórias Póstumas, Machado de Assis).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:ital,wght@0,400;0,600;1,400&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#14100f;--paper:#efe3cf;--amber:#e3a84a;--amber2:#ffd98a;--rust:#8a2d1c;--ok:#4c8a4a;--bad:#b0301f;--muted:#bba98a;--violet:#6e5aa8}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#07050a;color:var(--paper);font-family:Lora,Georgia,serif;overflow:hidden;touch-action:none;-webkit-user-select:none;user-select:none}
+button{font-family:inherit;cursor:pointer;color:inherit}
+.hidden{display:none!important}
+#wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#game{position:relative;width:min(100vw,calc(100dvh*16/9));aspect-ratio:16/9;background:#000;box-shadow:0 0 60px #000;overflow:hidden}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+#hud{position:absolute;left:0;right:0;top:0;display:flex;align-items:center;gap:8px;padding:8px 10px;pointer-events:none;z-index:5;background:linear-gradient(180deg,rgba(10,6,12,.8),transparent)}
+.hs{font-family:'Special Elite',monospace;font-size:clamp(.7rem,1.4vw,1rem);background:rgba(18,10,20,.72);border:1px solid #5d4a7a;border-radius:8px;padding:3px 9px;white-space:nowrap}
+.hs b{color:var(--amber2)}
+.lamp{display:inline-block;width:.8em;height:1.1em;margin-left:3px;border-radius:50% 50% 45% 45%;background:radial-gradient(circle at 50% 70%,#fff3b0,#f2a83b 60%,#a45a12);box-shadow:0 0 7px rgba(255,180,70,.9);vertical-align:-.15em}
+.lamp.off{background:#2a2230;box-shadow:none}
+#hud .sp{flex:1}
+#hud button{pointer-events:auto;background:rgba(18,10,20,.72);border:1px solid #5d4a7a;border-radius:8px;height:clamp(28px,4vw,38px);min-width:clamp(28px,4vw,38px);font-size:clamp(.8rem,1.4vw,1rem)}
+#toast{position:absolute;left:50%;top:14%;transform:translateX(-50%);z-index:6;font-family:'Special Elite',monospace;font-size:clamp(.8rem,1.6vw,1.1rem);background:rgba(18,10,24,.88);border:1px solid #8b73bd;border-radius:10px;padding:8px 14px;max-width:80%;text-align:center;opacity:0;transition:opacity .3s;pointer-events:none}
+#toast.on{opacity:1}
+#prompt{position:absolute;left:50%;bottom:22%;transform:translateX(-50%);z-index:5;font-family:'Special Elite',monospace;background:rgba(18,10,24,.85);border:1px solid var(--amber);color:var(--amber2);border-radius:20px;padding:5px 14px;font-size:clamp(.75rem,1.5vw,1rem);pointer-events:none}
+#dlg{position:absolute;left:3%;right:3%;bottom:3%;z-index:7;display:flex;gap:12px;align-items:stretch;background:rgba(14,8,18,.94);border:2px solid #8b73bd;border-radius:14px;padding:10px 14px;min-height:20%}
+#dlg img{height:clamp(70px,16vw,150px);width:auto;border-radius:8px;border:1px solid #5d4a7a;object-fit:cover;aspect-ratio:3/4;background:#201428}
+#dlg .t{flex:1;display:flex;flex-direction:column;justify-content:center}
+#dlg .n{font-family:'Special Elite',monospace;color:var(--amber2);font-size:clamp(.8rem,1.5vw,1.05rem);margin-bottom:4px}
+#dlg .x{font-size:clamp(.85rem,1.8vw,1.2rem);line-height:1.45}
+#dlg .k{align-self:flex-end;font-size:.75rem;color:var(--muted);animation:bl 1s infinite}
+@keyframes bl{50%{opacity:.3}}
+.ov{position:absolute;inset:0;z-index:20;background:rgba(7,4,10,.93);display:flex;align-items:center;justify-content:center;padding:3%;overflow:auto}
+.panel{background:linear-gradient(180deg,#201630,#150e20);border:2px solid #8b73bd;border-radius:16px;padding:clamp(12px,2.4vw,26px);max-width:min(860px,100%);width:100%;box-shadow:0 12px 50px #000}
+.panel h2{font-family:'Playfair Display',serif;color:var(--amber2);font-size:clamp(1.1rem,2.8vw,1.8rem);margin-bottom:8px}
+.panel p{line-height:1.5;margin:6px 0;font-size:clamp(.85rem,1.7vw,1.1rem)}
+.cita{border-left:3px solid var(--amber);padding:8px 12px;margin:10px 0;font-style:italic;background:rgba(255,255,255,.04);font-size:clamp(.85rem,1.7vw,1.1rem);line-height:1.55}
+.src{font-size:.78rem;color:var(--muted);margin-top:-4px}
+.btn{background:linear-gradient(180deg,#e3a84a,#b0701f);color:#1a0f08;font-weight:700;border:none;border-radius:10px;padding:9px 18px;margin:6px 6px 0 0;font-size:clamp(.85rem,1.6vw,1.05rem)}
+.btn.sec{background:#2b1f3d;color:var(--paper);border:1px solid #6b55a0}
+.btn:disabled{opacity:.4;cursor:default}
+.opt{display:block;width:100%;text-align:left;background:#2b1f3d;border:1px solid #6b55a0;border-radius:10px;padding:9px 12px;margin:7px 0;font-size:clamp(.82rem,1.6vw,1.05rem);line-height:1.4}
+.opt:hover:not(:disabled){background:#3a2b52}
+.opt.ok{background:#1f4a28;border-color:#5fb36a}
+.opt.bad{background:#552018;border-color:#c0523a}
+.bar{height:6px;background:#2b1f3d;border-radius:4px;overflow:hidden;margin:8px 0}
+.bar i{display:block;height:100%;background:var(--amber);width:0}
+input[type=text]{width:100%;padding:9px 12px;border-radius:8px;border:1px solid #6b55a0;background:#120b1c;color:var(--paper);font:inherit;margin:4px 0 8px;-webkit-user-select:text;user-select:text}
+.gpick{display:flex;gap:8px;margin:6px 0 10px}
+.gpick button{flex:1;background:#2b1f3d;border:2px solid #6b55a0;border-radius:10px;padding:8px}
+.gpick button.on{border-color:var(--amber);background:#3d2b57}
+/* abertura */
+.card{position:relative;background:#e9dcc0;color:#2a1a10;border-radius:6px;padding:clamp(18px,4vw,48px);text-align:center;font-family:'Playfair Display',serif;font-weight:700;letter-spacing:.04em;line-height:1.7;box-shadow:inset 0 0 40px rgba(90,50,10,.35);font-size:clamp(.95rem,2.6vw,1.7rem)}
+.card small{display:block;font-family:'Special Elite',monospace;font-size:.5em;letter-spacing:.1em;margin-bottom:10px;opacity:.7}
+#scr{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair}
+.panelImg{width:100%;border-radius:8px;border:1px solid #5d4a7a}
+/* touch */
+#touch{position:absolute;inset:0;z-index:4;pointer-events:none}
+#touch button{pointer-events:auto;position:absolute;border-radius:50%;border:2px solid rgba(255,255,255,.35);background:rgba(20,12,30,.55);color:#fff;font-size:1.3rem;width:clamp(48px,11vw,72px);height:clamp(48px,11vw,72px);touch-action:none}
+#tL{left:2%;bottom:6%}#tR{left:calc(2% + clamp(56px,13vw,84px));bottom:6%}
+#tJ{right:2%;bottom:6%}#tA{right:calc(2% + clamp(56px,13vw,84px));bottom:6%;font-size:.8rem}#tC{right:calc(2% + clamp(28px,6.5vw,42px));bottom:calc(6% + clamp(56px,13vw,84px))}
+body:not(.touch) #touch{display:none}
+#rot{position:fixed;inset:0;z-index:99;background:#07050a;display:none;align-items:center;justify-content:center;text-align:center;padding:20px;font-size:1.2rem}
+@media (orientation:portrait) and (pointer:coarse){#rot{display:flex}}
+</style>
+</head>
+<body>
+<div id="rot">Gire o celular para jogar na horizontal.</div>
+<div id="wrap"><div id="game">
+<canvas id="cv"></canvas>
+<div id="hud" class="hidden">
+  <span class="hs" id="hLamp"></span><span class="hs">Páginas <b id="hPag">0/8</b></span><span class="hs">Pontos <b id="hPts">0</b></span>
+  <span class="hs" id="hTask"></span><span class="sp"></span>
+  <button id="bMute" title="Som (M)">♪</button><button id="bPause" title="Pausa (Esc)">II</button>
+</div>
+<div id="toast"></div><div id="prompt" class="hidden"></div>
+<div id="dlg" class="hidden"><img id="dImg" alt=""><div class="t"><div class="n" id="dNome"></div><div class="x" id="dTxt"></div></div><div class="k">Espaço ▶</div></div>
+<div id="touch"><button id="tL">◀</button><button id="tR">▶</button><button id="tJ">PULO</button><button id="tA">AÇÃO</button><button id="tC">✦</button></div>
+<div id="ov" class="ov"></div>
+</div></div>
+<script src="/assets/js/config-sheets.js"></script>
+<script>
+"use strict";
+/* ============ Constantes ============ */
+const CW=960,CH=540,G=480,WW=3800;
+const DPR=Math.min(window.devicePixelRatio||1,1.5);
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');cv.width=CW*DPR;cv.height=CH*DPR;
+const $=id=>document.getElementById(id);
+const SAVE='caso_realismo_v1';
+const SRC={det:'../caso-originais/img/q1/detetive.webp',detF:'../caso-originais/img/q1/detetive-f.webp',bras:'img/q1/bras.webp',hipo:'img/q1/hipopotamo.webp',
+ bg:'img/q1/bg-velorio.webp',bgd:'img/q1/bg-delirio.webp',retBras:'img/q1/ret-bras.webp',retDet:'../caso-originais/img/detetive.webp',retDetF:'../caso-originais/img/detetive-f.webp',
+ hq1:'img/q1/hq1.webp',hq2:'img/q1/hq2.webp',hq3:'img/q1/hq3.webp',amigos:'img/q1/amigos.webp',caixao:'img/q1/caixao.webp',padre:'img/q1/padre.webp'};
+const OPCIONAL=['hq1','hq2','hq3','amigos','caixao','padre'];
+const IMG={};
+const SH={det:{w:269,h:232,s:.47},bras:{w:137,h:340,s:.37},hipo:{w:303,h:230,s:.6}};
+function loadAll(cb){
+  const keys=Object.keys(SRC);let n=0;
+  keys.forEach(k=>{const im=new Image();im.onload=()=>{IMG[k]=im;if(++n===keys.length)cb()};im.onerror=()=>{if(++n===keys.length)cb()};im.src=SRC[k]});
+}
+function sheet(k,sh,f,x,y,flip,alpha,sc){
+  const im=IMG[k];if(!im)return;const s=sh.s*(sc||1),w=sh.w*s,h=sh.h*s;
+  ctx.save();ctx.globalAlpha=alpha==null?1:alpha;ctx.translate(x,y+3);if(flip)ctx.scale(-1,1);
+  ctx.drawImage(im,f*sh.w,0,sh.w,sh.h,-w/2,-h,w,h);ctx.restore();
+}
+/* ============ Estado ============ */
+let state='start',T=0,camX=0,shake=0,flash=0;
+const S={nome:'',turma:'',gen:'m'};
+const Z={pts:0,pages:0,lamps:3,leit:0,tot:3,enviou:false};
+const F={ded:false,amigos:false,fala:false,disc:false,hipo:false};
+const K={left:0,right:0,jump:0,lamp:0,act:0};
+const P={x:110,y:G,vx:0,vy:0,face:1,ground:true,jumps:2,inv:0,an:0,land:0,hurt:0};
+let cpX=110,lastStep=0;
+const PITS=[{x:950,w:120},{x:1620,w:140},{x:2230,w:120}];
+const PLAT=[ /* lápides: topo caminhável */
+ {x:420,y:G-62,w:64},{x:560,y:G-108,w:64},{x:700,y:G-62,w:64},
+ {x:880,y:G-70,w:60},{x:1010,y:G-130,w:70},{x:1130,y:G-70,w:60},
+ {x:1380,y:G-66,w:70},{x:1560,y:G-120,w:60},{x:1700,y:G-120,w:60},{x:1830,y:G-66,w:64},
+ {x:2000,y:G-76,w:64},{x:2160,y:G-130,w:60},{x:2300,y:G-76,w:60},
+ {x:3300,y:G-70,w:70}];
+const PAGES=[[300,G-120],[595,G-165],[1040,G-200],[1190,G-110],[1590,G-190],[1730,G-190],[2190,G-200],[3330,G-140]].map(a=>({x:a[0],y:a[1],got:false}));
+let stamps=[],stampT=3,rain=[],bolt=0,boltT=8,hint=0,hipo={on:false,x:0,y:0,t:0},cine=null,paused=false,floaters=[],marks=[];
+for(let i=0;i<240;i++)rain.push({x:Math.random()*CW*1.3,y:Math.random()*CH,v:520+Math.random()*320,l:10+Math.random()*14});
+/* ============ Áudio ============ */
+let AC=null,rainG=null,muted=false;
+function audio(){
+  if(AC)return;try{AC=new (window.AudioContext||window.webkitAudioContext)();}catch(e){return}
+  const n=AC.sampleRate*2,b=AC.createBuffer(1,n,AC.sampleRate),d=b.getChannelData(0);for(let i=0;i<n;i++)d[i]=Math.random()*2-1;
+  const s=AC.createBufferSource();s.buffer=b;s.loop=true;const f=AC.createBiquadFilter();f.type='bandpass';f.frequency.value=2600;f.Q.value=.5;
+  rainG=AC.createGain();rainG.gain.value=muted?0:.07;s.connect(f).connect(rainG).connect(AC.destination);s.start();
+}
+function noiseBurst(dur,freq,vol){if(!AC||muted)return;const n=AC.sampleRate*dur,b=AC.createBuffer(1,n,AC.sampleRate),d=b.getChannelData(0);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,2);
+  const s=AC.createBufferSource();s.buffer=b;const f=AC.createBiquadFilter();f.type='lowpass';f.frequency.value=freq;const g=AC.createGain();g.gain.value=vol;s.connect(f).connect(g).connect(AC.destination);s.start()}
+function tone(fr,dur,vol,type){if(!AC||muted)return;const o=AC.createOscillator(),g=AC.createGain();o.type=type||'square';o.frequency.value=fr;g.gain.value=vol||.04;g.gain.exponentialRampToValueAtTime(.0001,AC.currentTime+dur);o.connect(g).connect(AC.destination);o.start();o.stop(AC.currentTime+dur)}
+const thunder=()=>noiseBurst(1.8,320,.5),thud=()=>noiseBurst(.4,200,.7),blip=v=>tone(180+v*40,.05,.025,'triangle');
+function setMute(m){muted=m;if(rainG)rainG.gain.value=m?0:.07;$('bMute').textContent=m?'×':'♪'}
+/* ============ Utilidades de UI ============ */
+let toastT=0;
+function toast(t,ms){const e=$('toast');e.textContent=t;e.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove('on'),ms||3200)}
+const NARR={queda:['Caro leitor, até os defuntos tropeçam em covas abertas.','Caí. Com a prática, o leitor aprende a cair com dignidade.','Uma cova aberta é só uma página em branco muito funda.'],
+ carimbo:['O Carimbo carimbou o leitor. Que falta de educação com quem lê.','Corrigido! Foi o que ele pensou. Eu, que fui corrigido pelo verme, discordo.'],
+ pag:['Uma página a mais. Há quem colecione selos; o leitor coleciona capítulos.','Página recolhida. O verme agradece a ordem.']};
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+function addPts(n,x,y){Z.pts+=n;floaters.push({x,y,t:0,s:'+'+n});hud()}
+function hud(){
+  let l='';for(let i=0;i<3;i++)l+='<span class="lamp'+(i<Z.lamps?'':' off')+'"></span>';$('hLamp').innerHTML='Lamparinas '+l;
+  $('hPag').textContent=Z.pages+'/8';$('hPts').textContent=Z.pts;
+  const tasks=[F.ded,F.amigos,F.fala,F.disc].filter(Boolean).length;$('hTask').innerHTML='Provas <b>'+tasks+'/4</b>';
+}
+/* ============ Diálogo ============ */
+let dq=null,dI=0,typing=null,dFull='';
+function say(lines){return new Promise(res=>{
+  const prev=state;state='dialog';dq={lines,i:0,res,prev};$('dlg').classList.remove('hidden');$('prompt').classList.add('hidden');next();});}
+const WHO={bras:['Brás Cubas','retBras'],det:['Detetive',null],narr:['Narrador (o defunto)','retBras']};
+function next(){
+  if(typing&&dI<dFull.length){dI=dFull.length;$('dTxt').textContent=dFull;clearInterval(typing);typing=null;return}
+  if(dq.i>=dq.lines.length){$('dlg').classList.add('hidden');state=dq.prev==='dialog'?'play':dq.prev;const r=dq.res;dq=null;r();return}
+  const [w,t]=dq.lines[dq.i++];const info=WHO[w];$('dNome').textContent=w==='det'?(S.nome||'Detetive'):info[0];
+  const ik=w==='det'?(S.gen==='f'?'retDetF':'retDet'):info[1];$('dImg').src=SRC[ik];
+  dFull=t;dI=0;$('dTxt').textContent='';clearInterval(typing);
+  typing=setInterval(()=>{dI++;$('dTxt').textContent=dFull.slice(0,dI);if(dI%2===0)blip(w==='det'?1:3);if(dI>=dFull.length){clearInterval(typing);typing=null}},24);
+}
+/* ============ Modais ============ */
+function ov(html){const o=$('ov');o.innerHTML='<div class="panel">'+html+'</div>';o.classList.remove('hidden')}
+function ovClose(){$('ov').classList.add('hidden');$('ov').innerHTML=''}
+function leitura(cfg){
+  return new Promise(res=>{
+    const prev=state;state='modal';const words=cfg.cita.split(/\s+/).length,secs=Math.max(8,Math.ceil(words/5));
+    ov('<h2>'+cfg.titulo+'</h2><p>Leia com calma. A pergunta aparece quando o tempo acabar.</p><div class="cita">'+cfg.cita+'</div><div class="src">'+cfg.fonte+'</div><div class="bar"><i id="lb"></i></div><div id="lq"></div>');
+    const b=$('lb');let t0=performance.now();const iv=setInterval(()=>{const p=Math.min(1,(performance.now()-t0)/(secs*1000));b.style.width=(p*100)+'%';if(p>=1){clearInterval(iv);perg()}},100);
+    function perg(){
+      const q=cfg.q;let h='<p><b>'+q.t+'</b></p>';q.o.forEach((o,i)=>h+='<button class="opt" data-i="'+i+'">'+o+'</button>');$('lq').innerHTML=h;
+      let tries=0;$('lq').querySelectorAll('.opt').forEach(bt=>bt.onclick=()=>{
+        const i=+bt.dataset.i;if(i===q.k){bt.classList.add('ok');$('lq').querySelectorAll('.opt').forEach(x=>x.disabled=true);
+          $('lq').insertAdjacentHTML('beforeend','<p>'+q.e+'</p><button class="btn" id="lok">Continuar</button>');
+          const first=tries===0;if(first){Z.leit++;addPts(100,P.x-camX,P.y-120)}else addPts(40,P.x-camX,P.y-120);
+          $('lok').onclick=()=>{ovClose();state=prev;res(first)}}
+        else{tries++;bt.classList.add('bad');bt.disabled=true;blip(-3);toast('Releia o trecho e tente de novo.',1800)}});
+    }
+  });
+}
+function restaurarDedicatoria(){
+  return new Promise(res=>{
+    const prev=state;state='modal';
+    const frag=['AO VERME','QUE PRIMEIRO ROEU','AS FRIAS CARNES','DO MEU CADÁVER','DEDICO COMO SAUDOSA LEMBRANÇA','ESTAS MEMÓRIAS PÓSTUMAS'];
+    let ordem=frag.map((t,i)=>({t,i})).sort(()=>Math.random()-.5),prox=0,erros=0;
+    ov('<h2>A página rasgada</h2><p>O Carimbo rasgou a dedicatória em seis pedaços. Toque nos pedaços na ordem certa para restaurá-la.</p><div class="card" id="dd" style="min-height:6em"><small>MEMÓRIAS PÓSTUMAS DE BRÁS CUBAS</small><span id="ddt"></span></div><div id="fr"></div>');
+    const draw=()=>{$('ddt').innerHTML=frag.slice(0,prox).join('<br>');
+      $('fr').innerHTML=ordem.filter(o=>o.i>=prox).map(o=>'<button class="opt" data-i="'+o.i+'" style="display:inline-block;width:auto;margin:5px">'+o.t+'</button>').join('');
+      $('fr').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(+b.dataset.i===prox){prox++;tone(520+prox*60,.12,.05,'triangle');draw()}else{erros++;b.classList.add('bad');tone(110,.2,.05);setTimeout(()=>b.classList.remove('bad'),500)}});
+      if(prox>=frag.length){$('fr').innerHTML='<p>Restaurada: a dedicatória é ao <b>verme</b>, e não ao leitor, aos amigos ou à família. Machado começa o livro por uma ironia.</p><button class="btn" id="dok">Guardar a página</button>';
+        $('dok').onclick=()=>{ovClose();state=prev;addPts(erros===0?200:120,CW/2,200);res()}}};
+    draw();
+  });
+}
+function contarAmigos(){
+  return new Promise(res=>{
+    const prev=state;state='modal';
+    ov('<h2>Quantos amigos foram ao enterro?</h2><p>Conte os homens de guarda-chuva diante da cova. Só vale quem estava na fila.</p><div id="lq"></div>');
+    const opts=[9,10,11,12];let h='';opts.forEach(n=>h+='<button class="opt" data-n="'+n+'">'+n+' amigos</button>');$('lq').innerHTML=h;let tries=0;
+    $('lq').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      if(+b.dataset.n===11){b.classList.add('ok');$('lq').querySelectorAll('.opt').forEach(x=>x.disabled=true);
+        $('lq').insertAdjacentHTML('beforeend','<p>Onze, como o narrador conta no capítulo 1: "fui acompanhado ao cemitério por onze amigos. Onze amigos!" A exclamação já é uma pequena ironia.</p><button class="btn" id="lok">Continuar</button>');
+        $('lok').onclick=()=>{ovClose();state=prev;addPts(tries===0?100:40,CW/2,200);res()}}
+      else{tries++;b.classList.add('bad');b.disabled=true;blip(-3)}});
+  });
+}
+/* ============ Interações ============ */
+const INTER=[
+ {id:'ded',x:1920,r:90,need:'lamp',txt:'AÇÃO · Pegar a página rasgada',done:()=>F.ded,act:async()=>{
+   await say([['det','Há um papel rasgado debaixo da lápide... e um carimbo vermelho nele.']]);await restaurarDedicatoria();F.ded=true;hud();
+   toast('Dedicatória restaurada. Provas '+provas()+'/4',3500)}},
+ {id:'amigos',x:2560,r:200,txt:'AÇÃO · Contar os amigos',done:()=>F.amigos,act:async()=>{
+   await contarAmigos();
+   await leitura({titulo:'Capítulo 1 · Óbito do Autor',cita:'Dito isto, expirei às duas horas da tarde de uma sexta-feira do mês de agosto de 1869, na minha bela chácara de Catumbi. Tinha uns sessenta e quatro anos, rijos e prósperos, era solteiro, possuía cerca de trezentos contos e fui acompanhado ao cemitério por onze amigos. Onze amigos! Verdade é que não houve cartas nem anúncios. Acresce que chovia &mdash; peneirava &mdash; uma chuvinha miúda, triste e constante.',
+     fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 1 (domínio público).',
+     q:{t:'Por que o narrador exclama "Onze amigos!"?',o:['Porque tem orgulho do grande número de amigos que o acompanhou.','Porque ironiza: para um homem rico e "próspero", onze é pouco, e nem cartas nem anúncios houve.','Porque esqueceu de contar os parentes que também foram ao enterro.','Porque os onze eram os únicos que sabiam do seu emplasto.'],k:1,e:'A exclamação mostra o desapontamento irônico: um solteirão rico acompanhado por tão poucos, sem avisos nem cartas. É a crítica à sociedade de aparências.'}});
+   F.amigos=true;hud();toast('Amigos contados. Provas '+provas()+'/4',3500)}},
+ {id:'bras',x:3010,r:120,txt:'AÇÃO · Falar com Brás Cubas',done:()=>F.fala,act:async()=>{
+   await say([['bras','Ora, mais um leitor. Pode chegar, a chuva aqui é de graça e o assunto é por minha conta.'],['det','O senhor é Brás Cubas? O senhor está... morto.'],['bras','Perfeitamente. Morto e produtivo, que é a minha melhor combinação.'],['bras','Alguém andou riscando as minhas memórias com um carimbo vermelho. Eu sou um defunto, não um descuidado.'],['det','Foi o Agente Carimbo. Ele corrige livros que o incomodam.'],['bras','Corrigir livro de defunto! Vá lá, vou lhe contar como se começa uma obra póstuma.']]);
+   await leitura({titulo:'Capítulo 1 · Óbito do Autor',cita:'Algum tempo hesitei se devia abrir estas memórias pelo princípio ou pelo fim, isto é, se poria em primeiro lugar o meu nascimento ou a minha morte. Suposto o uso vulgar seja começar pelo nascimento, duas considerações me levaram a adotar diferente método: a primeira é que eu não sou propriamente um autor defunto, mas um defunto autor, para quem a campa foi outro berço; a segunda é que o escrito ficaria assim mais galante e mais novo.',
+     fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 1 (domínio público).',
+     q:{t:'O que muda quando Brás se diz "defunto autor" e não "autor defunto"?',o:['Nada: são duas maneiras de dizer a mesma coisa.','Ele escreve depois de morto: a morte é o ponto de partida do narrar, e a "campa" é o "berço".','Ele morreu antes de terminar o livro, e outro autor o concluiu.','Ele pretende escrever só sobre a própria infância.'],k:1,e:'"Defunto autor" é quem narra de além-túmulo. A inversão dos termos é um jogo de palavras que muda o ponto de vista: o narrador já não tem nada a perder, e por isso pode ser sincero e zombeteiro.'}});
+   await say([['bras','Gostou? Falta o discurso do meu bom amigo, ali na beira da cova. Ouça com os ouvidos de quem sabe que a chuva é só chuva.']]);
+   F.fala=true;hud();toast('Provas '+provas()+'/4',3000)}},
+ {id:'disc',x:3200,r:120,txt:'AÇÃO · Ouvir o discurso',done:()=>F.disc,act:async()=>{
+   await leitura({titulo:'Capítulo 1 · o discurso à beira da cova',cita:'"Vós, que o conhecestes, meus senhores, vós podeis dizer comigo que a natureza parece estar chorando a perda irreparável de um dos mais belos caracteres que tem honrado a humanidade. Este ar sombrio, estas gotas do céu, aquelas nuvens escuras que cobrem o azul como um crepe funéreo, tudo isso é a dor crua e má que lhe rói à natureza as mais íntimas entranhas." Bom e fiel amigo! Não, não me arrependo das vinte apólices que lhe deixei.',
+     fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 1 (domínio público).',
+     q:{t:'O que o comentário "Não me arrependo das vinte apólices que lhe deixei" revela sobre o elogio?',o:['Que o amigo foi sincero e merecia a herança.','Que o elogio foi pago: o "fiel amigo" de última hora fala bem do morto por interesse.','Que Brás pretende desfazer o testamento.','Que a natureza realmente chorava pelo defunto.'],k:1,e:'O narrador mostra que o discurso emocionado tem preço (as apólices). A chuva, que o orador chama de "natureza chorando", é só chuva. É a ironia como crítica da hipocrisia social.'}});
+   F.disc=true;hud();toast('Provas '+provas()+'/4',3000)}},
+ {id:'hipo',x:3440,r:140,txt:'AÇÃO · Montar o hipopótamo',cond:()=>hipo.on&&hipo.landed,act:async()=>{
+   await say([['bras','Aí está meu amigo de asas. Segure-se bem, caro leitor: o delírio começa onde a razão cansa.']]);startCine()}}
+];
+const provas=()=>[F.ded,F.amigos,F.fala,F.disc].filter(Boolean).length;
+function nearInter(){
+  let best=null,bd=1e9;
+  for(const it of INTER){
+    if(it.done&&it.done())continue;if(it.cond&&!it.cond())continue;if(it.need==='lamp'&&!K.lamp)continue;
+    const d=Math.abs(P.x-it.x);if(d<it.r&&d<bd){best=it;bd=d}}
+  return best;
+}
+/* ============ Movimento ============ */
+function onGround(x){for(const p of PITS)if(x>p.x+10&&x<p.x+p.w-10)return false;return true}
+function updatePlayer(dt){
+  const ax=K.right-K.left,sp=210;
+  P.vx+=((ax*sp)-P.vx)*Math.min(1,dt*10);if(ax)P.face=ax;
+  const py=P.y;P.x+=P.vx*dt;P.x=Math.max(30,Math.min(WW-30,P.x));
+  P.vy+=1750*dt;P.y+=P.vy*dt;
+  let land=null;
+  if(P.vy>=0){
+    if(onGround(P.x)&&py<=G+1&&P.y>=G)land=G;
+    for(const p of PLAT){if(P.x>p.x-10&&P.x<p.x+p.w+10&&py<=p.y+1&&P.y>=p.y){if(land==null||p.y<land)land=p.y}}
+  }
+  if(land!=null){if(!P.ground&&P.vy>300){P.land=.12;thud2()}P.y=land;P.vy=0;P.ground=true;P.jumps=2}else P.ground=false;
+  if(K.jump&&!P._j){P._j=1;if(P.ground||P.jumps>0){P.vy=-640;if(!P.ground)P.jumps=Math.max(0,P.jumps-1);else P.jumps=1;P.ground=false;tone(300,.08,.03,'triangle')}}
+  if(!K.jump)P._j=0;
+  P.an+=Math.abs(P.vx)*dt/38;P.inv=Math.max(0,P.inv-dt);P.land=Math.max(0,P.land-dt);
+  if(P.y>G+170)fall();
+  for(const c of [1300,2300,3000])if(P.x>c&&cpX<c)cpX=c;
+}
+function thud2(){if(AC)tone(90,.07,.05,'sine')}
+function fall(){
+  toast(pick(NARR.queda),3200);Z.lamps--;shake=.4;
+  if(Z.lamps<=0){Z.lamps=3;Z.pts=Math.max(0,Z.pts-50);toast('Sem lamparinas. O narrador recomeça o capítulo.',3200)}
+  P.x=cpX;P.y=G-200;P.vy=0;P.inv=1.6;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));hud();
+}
+function hit(){
+  if(P.inv>0)return;Z.lamps--;P.inv=1.8;shake=.5;P.hurt=.4;thud();toast(pick(NARR.carimbo),3000);
+  if(Z.lamps<=0){Z.lamps=3;Z.pts=Math.max(0,Z.pts-50);P.x=cpX;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));toast('Sem lamparinas. O narrador recomeça o capítulo.',3200)}hud();
+}
+/* ============ Mundo ============ */
+function updateWorld(dt){
+  /* carimbos */
+  stampT-=dt;
+  if(stampT<=0&&P.x>650&&P.x<3350){
+    stamps.push({x:P.x+P.vx*.55+(Math.random()-.5)*60,t:0});stampT=3.4+Math.random()*2.2;
+  }
+  for(const s of stamps){s.t+=dt;if(s.t>.9&&s.t<1.12&&!s.d){s.d=1;shake=.35;thud();marks.push({x:s.x,t:5});
+      if(Math.abs(P.x-s.x)<52&&!(P.y<G-210))hit()}}
+  stamps=stamps.filter(s=>s.t<1.9);marks=marks.filter(m=>(m.t-=dt)>0);
+  /* páginas */
+  for(const g of PAGES){if(!g.got&&Math.abs(P.x-g.x)<34&&Math.abs((P.y-46)-g.y)<52){g.got=true;Z.pages++;addPts(50,g.x-camX,g.y);tone(660,.1,.05,'triangle');tone(880,.14,.04,'triangle');if(Z.pages===1)toast(pick(NARR.pag),3000);hud()}}
+  /* trovão */
+  boltT-=dt;if(boltT<=0){bolt=.35;boltT=9+Math.random()*7;flash=1;setTimeout(thunder,350)}
+  bolt=Math.max(0,bolt-dt);flash=Math.max(0,flash-dt*2.2);
+  /* chegada do hipopótamo */
+  if(provas()===4&&!F.hipo){F.hipo=true;hipo.on=true;hipo.x=P.x+700;hipo.y=60;hipo.t=0;toast('Algo bate asas por cima das lápides...',3500)}
+  if(hipo.on){hipo.t+=dt;const tx=3440,ty=G-64;if(!hipo.landed){hipo.x+=(tx-hipo.x)*Math.min(1,dt*1.6);hipo.y+=(ty-hipo.y)*Math.min(1,dt*1.8);
+      if(Math.abs(hipo.x-tx)<8&&Math.abs(hipo.y-ty)<8){hipo.landed=true;toast('O hipopótamo pousou. Vá até ele e aperte AÇÃO.',4000)}}}
+  floaters.forEach(f=>f.t+=dt);floaters=floaters.filter(f=>f.t<1.2);
+  shake=Math.max(0,shake-dt);
+}
+/* ============ Desenho ============ */
+function drawBG(){
+  const im=IMG.bg;
+  if(im){const h=CH,w=im.width*h/im.height;const off=camX*.28;
+    for(let i=-1;i<4;i++){const x=i*w-(off%(w*2)),flip=((i%2)+2)%2===1;ctx.save();if(flip){ctx.translate(x+w,0);ctx.scale(-1,1);ctx.drawImage(im,0,0,w,h)}else ctx.drawImage(im,x,0,w,h);ctx.restore()}}
+  else{ctx.fillStyle='#223';ctx.fillRect(0,0,CW,CH)}
+  /* névoa */
+  const g=ctx.createLinearGradient(0,CH*.45,0,CH);g.addColorStop(0,'rgba(20,24,30,0)');g.addColorStop(1,'rgba(20,24,30,.65)');ctx.fillStyle=g;ctx.fillRect(0,CH*.45,CW,CH*.55);
+  /* chão */
+  ctx.save();ctx.translate(-camX,0);
+  const gg=ctx.createLinearGradient(0,G,0,CH);gg.addColorStop(0,'#3a2c20');gg.addColorStop(.2,'#241810');gg.addColorStop(1,'#0e0906');
+  ctx.fillStyle=gg;let x0=Math.max(0,camX-20),x1=Math.min(WW,camX+CW+20);
+  let cur=x0;const pits=PITS.slice().sort((a,b)=>a.x-b.x);
+  for(const p of pits){if(p.x>cur){ctx.fillRect(cur,G,Math.min(p.x,x1)-cur,CH-G+20)}cur=Math.max(cur,p.x+p.w)}if(cur<x1)ctx.fillRect(cur,G,x1-cur,CH-G+20);
+  ctx.fillStyle='#4f6b3c';for(let x=Math.floor(x0/14)*14;x<x1;x+=14){if(!onGround(x))continue;ctx.fillRect(x,G-2,10,4+((x*7)%5))}
+  for(const p of PITS){ctx.fillStyle='#050305';ctx.fillRect(p.x,G,p.w,CH-G+20);ctx.fillStyle='#2b1c12';ctx.fillRect(p.x-6,G,6,CH-G);ctx.fillRect(p.x+p.w,G,6,CH-G);
+    ctx.fillStyle='rgba(120,90,60,.5)';ctx.fillRect(p.x-12,G-6,12,6);ctx.fillRect(p.x+p.w,G-6,14,6)}
+  for(const m of marks){ctx.fillStyle='rgba(180,30,20,'+Math.min(.5,m.t/5)+')';ctx.fillRect(m.x-44,G-4,88,6)}
+  ctx.restore();
+}
+function drawPlat(){
+  ctx.save();ctx.translate(-camX,0);
+  for(const p of PLAT){const h=G-p.y+4;
+    const g=ctx.createLinearGradient(p.x,p.y,p.x+p.w,p.y+h);g.addColorStop(0,'#777a80');g.addColorStop(1,'#43464d');ctx.fillStyle=g;
+    ctx.beginPath();ctx.moveTo(p.x,G+2);ctx.lineTo(p.x,p.y+16);ctx.quadraticCurveTo(p.x+p.w/2,p.y-14,p.x+p.w,p.y+16);ctx.lineTo(p.x+p.w,G+2);ctx.closePath();ctx.fill();
+    ctx.strokeStyle='#22252b';ctx.lineWidth=2;ctx.stroke();
+    ctx.fillStyle='#2d3036';ctx.fillRect(p.x+p.w/2-1.5,p.y+8,3,16);ctx.fillRect(p.x+p.w/2-7,p.y+13,14,3);
+    ctx.fillStyle='rgba(60,110,60,.55)';ctx.fillRect(p.x,G-8,p.w,8)}
+  ctx.restore();
+}
+function drawFigures(){
+  ctx.save();ctx.translate(-camX,0);
+  /* onze amigos */
+  for(let i=0;i<11;i++){const x=2380+i*38,sw=Math.sin(T*.8+i)*1.2;const k=IMG.amigos;
+    if(k){const f=i%6,w=k.width/6;const s=130/k.height;ctx.drawImage(k,f*w,0,w,k.height,x-w*s/2,G-k.height*s+3,w*s,k.height*s)}}
+  const cx=3110;
+  if(IMG.caixao){const k=IMG.caixao,s=110/k.height;ctx.drawImage(k,cx-k.width*s/2,G-k.height*s+4,k.width*s,k.height*s)}
+  ctx.restore();
+}
+function drawBras(){
+  const x=3010,bob=Math.sin(T*2)*1.5;let f=0;if(dq&&dq.lines[dq.i-1]&&dq.lines[dq.i-1][0]==='bras'&&typing)f=[3,3,4,3,5][Math.floor(T*5)%5];else if(F.fala)f=4;
+  ctx.save();ctx.translate(-camX,0);sheet('bras',SH.bras,f,x,G+bob,true);ctx.restore();
+}
+function drawHipo(){
+  if(!hipo.on)return;const k=IMG.hipo;if(!k)return;
+  ctx.save();ctx.translate(-camX,0);
+  const flying=!hipo.landed;const f=flying?Math.floor(T*10)%6:(Math.floor(T*.7)%2?8:9);
+  sheet('hipo',SH.hipo,f,hipo.x,hipo.y+(flying?Math.sin(T*4)*6:0),true);ctx.restore();
+}
+function drawPages(){
+  ctx.save();ctx.translate(-camX,0);
+  for(const g of PAGES){if(g.got)continue;const y=g.y+Math.sin(T*2+g.x)*5;ctx.save();ctx.translate(g.x,y);ctx.rotate(Math.sin(T*1.5+g.x)*.15);
+    ctx.shadowColor='#ffd98a';ctx.shadowBlur=14;ctx.fillStyle='#efe0bd';ctx.fillRect(-11,-15,22,30);ctx.shadowBlur=0;ctx.fillStyle='#7a5a30';for(let i=0;i<4;i++)ctx.fillRect(-7,-9+i*6,14,2);ctx.restore()}
+  ctx.restore();
+}
+function drawClue(){
+  const it=INTER[0];if(F.ded)return;ctx.save();ctx.translate(-camX,0);
+  const near=Math.abs(P.x-it.x);const a=K.lamp?Math.max(0,1-near/260):0;
+  if(a>0){ctx.globalAlpha=a;ctx.fillStyle='#efe0bd';ctx.save();ctx.translate(it.x,G-18);ctx.rotate(-.12);ctx.fillRect(-18,-12,36,24);ctx.fillStyle='#b32818';ctx.fillRect(-14,-3,28,5);ctx.restore()}
+  ctx.restore();
+}
+function drawPlayer(){
+  let f=5;const run=Math.abs(P.vx)>25;
+  if(P.hurt>0)f=12;else if(!P.ground)f=P.vy<-150?7:8;else if(P.land>0)f=9;else if(K.lamp&&!run)f=13;else if(run)f=Math.floor(P.an)%6;
+  else if(S.gen==='f'&&IMG.detF)f=14;
+  const al=P.inv>0&&Math.sin(T*30)>0?.35:1;const fem=S.gen==='f'&&IMG.detF;
+  ctx.save();ctx.translate(-camX,0);sheet(fem?'detF':'det',SH.det,f,P.x,P.y,P.face<0,al);ctx.restore();
+}
+function drawLight(){
+  if(!K.lamp||state!=='play')return;const x=P.x+P.face*22-camX,y=P.y-46;
+  ctx.save();ctx.globalCompositeOperation='lighter';const g=ctx.createRadialGradient(x,y,4,x,y,210);g.addColorStop(0,'rgba(255,200,110,.45)');g.addColorStop(.5,'rgba(255,150,50,.14)');g.addColorStop(1,'rgba(255,120,30,0)');ctx.fillStyle=g;ctx.fillRect(x-210,y-210,420,420);ctx.restore();
+}
+function drawStamps(){
+  ctx.save();ctx.translate(-camX,0);
+  for(const s of stamps){
+    if(s.t<.9){const a=.25+.35*Math.sin(s.t*14)**2;ctx.fillStyle='rgba(200,30,20,'+a+')';ctx.beginPath();ctx.ellipse(s.x,G,54,10,0,0,7);ctx.fill();
+      ctx.strokeStyle='rgba(255,80,60,'+a+')';ctx.lineWidth=2;ctx.setLineDash([6,6]);ctx.beginPath();ctx.moveTo(s.x-50,60);ctx.lineTo(s.x-50,G);ctx.moveTo(s.x+50,60);ctx.lineTo(s.x+50,G);ctx.stroke();ctx.setLineDash([])}
+    else if(s.t<1.2){const p=Math.min(1,(s.t-.9)/.1);const y=-200+(G-6+200)*p;ctx.fillStyle='#b8261a';ctx.fillRect(s.x-52,y-60,104,60);ctx.fillStyle='#7c1710';ctx.fillRect(s.x-12,y-140,24,82);
+      ctx.fillStyle='#f4d9c8';ctx.font='bold 14px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText('CORRIGIDO',s.x,y-24)}
+  }
+  ctx.restore();
+}
+function drawRain(dt){
+  ctx.strokeStyle='rgba(190,205,225,.35)';ctx.lineWidth=1;ctx.beginPath();
+  for(const r of rain){r.x-=70*dt;r.y+=r.v*dt;if(r.y>CH){r.y=-20;r.x=Math.random()*CW*1.3}if(r.x<-20)r.x+=CW*1.3;ctx.moveTo(r.x,r.y);ctx.lineTo(r.x+r.l*.14,r.y+r.l)}ctx.stroke();
+  if(flash>0){ctx.fillStyle='rgba(230,235,255,'+(flash*.55)+')';ctx.fillRect(0,0,CW,CH)}
+}
+function drawFloaters(){
+  ctx.save();ctx.font='bold 22px "Special Elite",monospace';ctx.textAlign='center';
+  for(const f of floaters){ctx.globalAlpha=1-f.t/1.2;ctx.fillStyle='#ffd98a';ctx.strokeStyle='#000';ctx.lineWidth=3;ctx.strokeText(f.s,f.x,f.y-f.t*40);ctx.fillText(f.s,f.x,f.y-f.t*40)}ctx.restore();
+}
+function render(dt){
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+  const sx=shake>0?(Math.random()-.5)*shake*16:0,sy=shake>0?(Math.random()-.5)*shake*10:0;ctx.save();ctx.translate(sx,sy);
+  if(state==='cine'){drawCine(dt);ctx.restore();return}
+  drawBG();drawFigures();drawBras();drawPlat();drawClue();drawPages();drawHipo();drawStamps();drawPlayer();drawLight();drawRain(dt);drawFloaters();
+  /* vinheta */
+  const v=ctx.createRadialGradient(CW/2,CH/2,CH*.4,CW/2,CH/2,CH*.95);v.addColorStop(0,'rgba(0,0,0,0)');v.addColorStop(1,'rgba(0,0,0,.55)');ctx.fillStyle=v;ctx.fillRect(0,0,CW,CH);
+  ctx.restore();
+}
+/* ============ Cena do delírio (voo) ============ */
+function startCine(){
+  state='cine';cine={t:0,lines:[[.8,'O delírio começou. Segure-se, caro leitor.'],[3.2,'Os séculos passam por baixo de nós, como páginas viradas por quem tem pressa.'],[6.2,'Adiante ficam a infância, as moedas de Marcela e uma coxa que eu não quis amar.']]};
+  $('prompt').classList.add('hidden');$('hud').classList.add('hidden');
+}
+function drawCine(dt){
+  cine.t+=dt;const t=cine.t;const bgv=IMG.bg,bgd=IMG.bgd;
+  const a=Math.max(0,Math.min(1,(t-1)/2.5));
+  const draw=(im,al,pan)=>{if(!im)return;const h=CH,w=im.width*h/im.height;ctx.globalAlpha=al;for(let i=-1;i<3;i++)ctx.drawImage(im,i*w-(pan%w),0,w,h);ctx.globalAlpha=1};
+  ctx.fillStyle='#10091a';ctx.fillRect(0,0,CW,CH);
+  draw(bgv,1-a,t*60);draw(bgd,a,t*140);
+  for(let i=0;i<8;i++){const x=(i*190-t*(260+i*20))%1200;const xx=x<-100?x+1200:x;const y=60+((i*83)%300)+Math.sin(t*2+i)*14;ctx.save();ctx.translate(xx,y);ctx.rotate(Math.sin(t*2+i)*.5);ctx.fillStyle='#efe0bd';ctx.fillRect(-11,-15,22,30);ctx.fillStyle='#7a5a30';for(let k=0;k<4;k++)ctx.fillRect(-7,-9+k*6,14,2);ctx.restore()}
+  const hx=CW*.42+Math.sin(t*1.4)*14,hy=CH*.5+Math.sin(t*3)*14;
+  sheet('hipo',SH.hipo,Math.floor(t*10)%6,hx,hy+60,true,1,1.5);
+  ctx.save();const fem=S.gen==='f'&&IMG.detF;sheet(fem?'detF':'det',SH.det,fem?14:5,hx-18,hy-8,false,1,.9);ctx.restore();
+  if(rain){ctx.fillStyle='rgba(8,4,14,'+Math.max(0,.4-a*.4)+')';ctx.fillRect(0,0,CW,CH)}
+  const l=cine.lines.filter(x=>t>=x[0]).pop();
+  if(l){ctx.save();ctx.fillStyle='rgba(10,5,16,.78)';ctx.fillRect(60,CH-110,CW-120,74);ctx.fillStyle='#ffd98a';ctx.font='italic 20px Lora,serif';ctx.textAlign='center';
+    const txt=l[1],max=70;const words=txt.split(' ');let ln='',lines=[];words.forEach(w=>{if((ln+w).length>max){lines.push(ln);ln=''}ln+=w+' '});lines.push(ln);
+    lines.forEach((s,i)=>ctx.fillText(s.trim(),CW/2,CH-80+i*26));ctx.restore()}
+  const fade=Math.max(0,(t-8)/1.5);if(fade>0){ctx.fillStyle='rgba(255,250,240,'+Math.min(1,fade)+')';ctx.fillRect(0,0,CW,CH)}
+  if(t>9.6&&state==='cine')fim();
+}
+/* ============ Início, HQ, fim ============ */
+function iniciar(){
+  ov('<h2>O Caso dos Narradores Trocados</h2><p><b>Fase 1 · Óbito do Autor</b> (Memórias Póstumas de Brás Cubas, Machado de Assis).</p><p>Rio de Janeiro, 1869. O Agente Carimbo anda corrigindo os livros do Realismo e riscou as memórias de um defunto. Investigue o velório.</p>'+
+   '<p>Seu primeiro nome ou apelido:</p><input type="text" id="iN" maxlength="16" placeholder="Nome"><input type="text" id="iT" maxlength="12" placeholder="Turma (ex.: 3º A)"><p>Detetive:</p><div class="gpick"><button id="gM" class="on">Ele</button><button id="gF">Ela</button></div>'+
+   '<p style="font-size:.85em;color:var(--muted)">Setas ou A/D: andar · Espaço: pular (duplo) · C: lamparina · E: ação · Esc: pausa. No celular, use os botões na tela.</p><button class="btn" id="go">Começar</button><button class="btn sec" id="back">Voltar ao Arquivo</button>');
+  $('gM').onclick=()=>{S.gen='m';$('gM').classList.add('on');$('gF').classList.remove('on')};$('gF').onclick=()=>{S.gen='f';$('gF').classList.add('on');$('gM').classList.remove('on')};
+  $('back').onclick=()=>{location.href='../index.html'};
+  $('go').onclick=()=>{S.nome=($('iN').value||'').trim()||'Detetive';S.turma=($('iT').value||'').trim();audio();setMute(muted);abertura()};
+}
+function abertura(){
+  state='comic';let p=0;const hq2=IMG.hq2,hq3=IMG.hq3;
+  const paineis=[
+   ()=>{if(!IMG.hq1){p++;return paineis[p]()}ov('<h2>O narrador</h2><img class="panelImg" src="'+SRC.hq1+'"><button class="btn" id="nx">Continuar</button>');$('nx').onclick=()=>{p++;paineis[p]()}},
+   ()=>{ov('<h2>1. A dedicatória</h2><p>O Carimbo passou por cima da primeira página do livro. Raspe o carimbo com o dedo ou o mouse para ler.</p><div style="position:relative"><div class="card"><small>MEMÓRIAS PÓSTUMAS DE BRÁS CUBAS</small>AO VERME<br>QUE PRIMEIRO ROEU<br>AS FRIAS CARNES<br>DO MEU CADÁVER<br>DEDICO COMO SAUDOSA LEMBRANÇA<br>ESTAS MEMÓRIAS PÓSTUMAS</div><canvas id="scr"></canvas></div><div id="sm"></div><button class="btn sec" id="pul">Pular</button>');
+     scratch();$('pul').onclick=()=>{p++;paineis[p]()}},
+   ()=>{ov('<h2>2. Agosto de 1869</h2>'+(hq2?'<img class="panelImg" src="'+SRC.hq2+'">':'<div class="card" style="font-size:clamp(.85rem,2vw,1.3rem)"><small>CATUMBI, RIO DE JANEIRO</small>Onze homens de casaca, uma chuvinha miúda e um defunto que não parou de falar.</div>')+'<p>Brás Cubas morreu aos 64 anos. Foi ao cemitério acompanhado por onze amigos e escreveu, depois, a própria história.</p><button class="btn" id="nx">Continuar</button>');$('nx').onclick=()=>{p++;paineis[p]()}},
+   ()=>{ov('<h2>3. O delírio</h2>'+(hq3?'<img class="panelImg" src="'+SRC.hq3+'">':'<div class="card" style="font-size:clamp(.85rem,2vw,1.3rem)"><small>A FEBRE</small>Antes de morrer, um hipopótamo entrou pelo quarto e o levou pelos séculos.</div>')+'<p>Para entrar nesse delírio, você precisa provar que viu o velório: restaure a dedicatória, conte os amigos e ouça o discurso.</p><button class="btn" id="nx">Entrar no velório</button>');$('nx').onclick=()=>{ovClose();comecar()}}
+  ];
+  paineis[0]();
+}
+function scratch(){
+  const c=$('scr');if(!c)return;const r=c.parentElement.getBoundingClientRect();c.width=Math.max(300,r.width);c.height=Math.max(180,r.height);
+  const g=c.getContext('2d');g.fillStyle='rgba(176,38,24,.92)';g.fillRect(0,0,c.width,c.height);
+  g.save();g.translate(c.width/2,c.height/2);g.rotate(-.12);g.fillStyle='rgba(255,230,220,.9)';g.font='bold '+Math.round(c.height*.22)+'px "Special Elite",monospace';g.textAlign='center';g.fillText('CORRIGIDO',0,c.height*.07);
+  g.strokeStyle='rgba(255,230,220,.8)';g.lineWidth=5;g.strokeRect(-c.width*.36,-c.height*.2,c.width*.72,c.height*.4);g.restore();
+  g.globalCompositeOperation='destination-out';let down=false,n=0,fin=false;
+  const pos=e=>{const b=c.getBoundingClientRect();return[(e.clientX-b.left)*c.width/b.width,(e.clientY-b.top)*c.height/b.height]};
+  const sc=e=>{if(!down||fin)return;const[x,y]=pos(e);g.beginPath();g.arc(x,y,Math.max(16,c.height*.09),0,7);g.fill();tone(200+Math.random()*60,.03,.01,'sawtooth');
+    if(++n%8===0){const d=g.getImageData(0,0,c.width,c.height).data;let cl=0,tot=0;for(let i=3;i<d.length;i+=4*61){tot++;if(d[i]<40)cl++}
+      if(cl/tot>.7){fin=true;g.clearRect(0,0,c.width,c.height);$('sm').innerHTML='<p>Restaurada, por enquanto. O verme continua sendo o destinatário.</p><button class="btn" id="nx0">Continuar</button>';$('pul').classList.add('hidden');$('nx0').onclick=()=>{ovClose();abertura2()}}}};
+  c.addEventListener('pointerdown',e=>{down=true;c.setPointerCapture(e.pointerId);sc(e)});c.addEventListener('pointermove',sc);c.addEventListener('pointerup',()=>down=false);
+}
+function abertura2(){state='comic';const hq2=IMG.hq2,hq3=IMG.hq3;let p=0;
+  const a=[()=>{ov('<h2>2. Agosto de 1869</h2>'+(hq2?'<img class="panelImg" src="'+SRC.hq2+'">':'<div class="card" style="font-size:clamp(.85rem,2vw,1.3rem)"><small>CATUMBI, RIO DE JANEIRO</small>Onze homens de casaca, uma chuvinha miúda e um defunto que não parou de falar.</div>')+'<p>Brás Cubas morreu aos 64 anos. Foi ao cemitério acompanhado por onze amigos e escreveu, depois, a própria história.</p><button class="btn" id="nx">Continuar</button>');$('nx').onclick=()=>{p++;a[p]()}},
+   ()=>{ov('<h2>3. O delírio</h2>'+(hq3?'<img class="panelImg" src="'+SRC.hq3+'">':'<div class="card" style="font-size:clamp(.85rem,2vw,1.3rem)"><small>A FEBRE</small>Antes de morrer, um hipopótamo entrou pelo quarto e o levou pelos séculos.</div>')+'<p>Para entrar nesse delírio, prove que viu o velório: restaure a dedicatória, conte os amigos e ouça o discurso.</p><button class="btn" id="nx">Entrar no velório</button>');$('nx').onclick=()=>{ovClose();comecar()}}];
+  a[0]();
+}
+function comecar(){
+  state='play';$('hud').classList.remove('hidden');hud();
+  say([['narr','Caro leitor, o morto sou eu e o enterro é meu. Mas quem anda pelo cemitério é você: ache a página rasgada com a lamparina (segure C), conte meus amigos e fale comigo ao lado da cova.']]);
+}
+function fim(){
+  state='end';$('hud').classList.add('hidden');
+  const pct=Math.round((Z.leit/Z.tot)*100);
+  try{const o=JSON.parse(localStorage.getItem(SAVE)||'{}');o.zonas=o.zonas||{};o.found=o.found||{};o.done=o.done||[];if(!o.zonas[1]||o.zonas[1]<Z.pts)o.zonas[1]=Z.pts;o.found.z1=1;o.score=Object.values(o.zonas).reduce((x,y)=>x+y,0);localStorage.setItem(SAVE,JSON.stringify(o))}catch(e){}
+  enviar(pct);
+  ov('<h2>Zona 1 concluída: Óbito do Autor</h2><p>Pontos: <b>'+Z.pts+'</b> · Páginas recolhidas: <b>'+Z.pages+'/8</b> · Leituras certas de primeira: <b>'+Z.leit+'/'+Z.tot+'</b></p>'+
+   '<p>Você restaurou a dedicatória ao verme, contou os onze amigos e viu como Machado usa a ironia para mostrar o interesse por trás do elogio.</p>'+
+   '<p><b>Próxima zona: a infância de Brás (Prudêncio e o menino-diabo).</b> Em construção.</p><button class="btn" id="ba">Voltar ao Arquivo</button><button class="btn sec" id="rj">Jogar de novo</button>');
+  $('ba').onclick=()=>{location.href='../index.html'};$('rj').onclick=()=>location.reload();
+}
+function enviar(pct){
+  if(Z.enviou)return;Z.enviou=true;
+  try{if(typeof SHEETS_URL==='undefined'||!SHEETS_URL)return;
+    fetch(SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({atividade:'Caso 2 · Fase 1 · Óbito do Autor',nome:S.nome,turma:S.turma,acertos:Z.leit,total:Z.tot,pct:pct,abertas:'Pontos: '+Z.pts+' · Páginas: '+Z.pages+'/8'})}).catch(()=>{});}catch(e){}
+}
+/* ============ Entrada ============ */
+const KM={ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right',ArrowUp:'jump',KeyW:'jump',Space:'jump',KeyC:'lamp',KeyE:'act',Enter:'act'};
+addEventListener('keydown',e=>{
+  const k=KM[e.code];
+  if(e.code==='Escape'||e.code==='KeyP'){if(state==='play')pause(true);else if(paused)pause(false);return}
+  if(e.code==='KeyM'){setMute(!muted);return}
+  if(state==='dialog'&&(e.code==='Space'||e.code==='Enter'||e.code==='KeyE')){e.preventDefault();next();return}
+  if(!k)return;if(e.code.startsWith('Arrow')||e.code==='Space')e.preventDefault();
+  if(k==='act'){if(!K.act&&state==='play')doAct();K.act=1;return}K[k]=1;
+});
+addEventListener('keyup',e=>{const k=KM[e.code];if(k)K[k]=0});
+function doAct(){const it=nearInter();if(it)it.act()}
+function pause(on){paused=on;if(on){state='pause';ov('<h2>Pausa</h2><button class="btn" id="rs">Continuar</button><button class="btn sec" id="bk">Voltar ao Arquivo</button>');$('rs').onclick=()=>pause(false);$('bk').onclick=()=>location.href='../index.html'}else{ovClose();state='play'}}
+$('bPause').onclick=()=>{if(state==='play')pause(true)};$('bMute').onclick=()=>setMute(!muted);
+$('dlg').addEventListener('pointerdown',e=>{e.preventDefault();if(state==='dialog')next()});
+function bindT(id,k,act){const b=$(id);const on=e=>{e.preventDefault();if(act){if(state==='dialog'){next();return}if(state==='play')doAct()}else K[k]=1};const off=e=>{e.preventDefault();if(!act)K[k]=0};
+  b.addEventListener('pointerdown',on);b.addEventListener('pointerup',off);b.addEventListener('pointercancel',off);b.addEventListener('pointerleave',off)}
+bindT('tL','left');bindT('tR','right');bindT('tJ','jump');bindT('tC','lamp');bindT('tA',null,true);
+if('ontouchstart' in window||navigator.maxTouchPoints>0)document.body.classList.add('touch');
+/* ============ Laço ============ */
+let last=0;
+function loop(ts){
+  requestAnimationFrame(loop);const dt=Math.min(.05,(ts-last)/1000||.016);last=ts;T+=dt;
+  if(state==='play'){updatePlayer(dt);updateWorld(dt);
+    camX+=((P.x-CW*.42)-camX)*Math.min(1,dt*5);camX=Math.max(0,Math.min(WW-CW,camX));
+    const it=nearInter();const pr=$('prompt');if(it){pr.textContent=it.txt;pr.classList.remove('hidden')}else pr.classList.add('hidden');
+    if(K.lamp&&!K._l){K._l=1;}if(!K.lamp)K._l=0;
+  }else if(state==='dialog'){updateWorld(dt);P.vx=0}
+  render(dt);
+}
+window.__t={P,F,Z,PAGES,INTER,get state(){return state},set state(v){state=v},get camX(){return camX},set camX(v){camX=v},provas,startCine,fim,hipo,K};
+loadAll(()=>{requestAnimationFrame(loop);iniciar();hud()});
+</script>
+</body>
+</html>
