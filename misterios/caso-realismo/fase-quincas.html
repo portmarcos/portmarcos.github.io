@@ -313,15 +313,24 @@ function updatePlayer(dt){
 function thud2(){if(AC)tone(90,.07,.05,'sine')}
 function fall(){
   toast(pick(NARR.queda),3200);Z.lamps--;shake=.4;
-  if(Z.lamps<=0){Z.lamps=3;Z.pts=Math.max(0,Z.pts-50);toast('Sem lamparinas. O narrador recomeça o capítulo.',3200)}
+  if(Z.lamps<=0){Z.lamps=3;toast('Sem lamparinas. Você volta ao último ponto salvo, sem perder o que já conquistou.',3200)}
   P.x=cpX;P.y=G-200;P.vy=0;P.inv=1.6;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));hud();
 }
 function hit(){
   if(P.inv>0)return;Z.lamps--;P.inv=1.8;shake=.5;P.hurt=.4;thud();toast(pick(NARR.carimbo),3000);
-  if(Z.lamps<=0){Z.lamps=3;Z.pts=Math.max(0,Z.pts-50);P.x=cpX;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));toast('Sem lamparinas. O narrador recomeça o capítulo.',3200)}hud();
+  if(Z.lamps<=0){Z.lamps=3;P.x=cpX;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));toast('Sem lamparinas. Você volta ao último ponto salvo, sem perder o que já conquistou.',3200)}hud();
 }
 /* ============ Mundo ============ */
-function updateWorld(dt){
+/* ===== Progresso salvo no meio da zona (perder não volta ao início) ===== */
+const PROGKEY='caso_realismo_prog_'+(location.pathname.split('/').pop()||'zona');let lastSave=0;
+function saveCP(){try{localStorage.setItem(PROGKEY,JSON.stringify({cp:cpX,Z:{pts:Z.pts,pages:Z.pages,leit:Z.leit,ras:Z.ras||0},F,pg:PAGES.map(g=>g.got?1:0),rb:RAS_BOARDS.map(b=>b.done?1:0)}))}catch(e){}}
+function autoCP(){
+  if(state!=='play')return;
+  if(P.y>=G-2&&P.inv<=0&&P.x>cpX+300&&onGround(P.x-40)&&onGround(P.x+40)){
+    cpX=P.x-60;saveCP();if(!window.__cpT){window.__cpT=1;toast('Ponto salvo: se perder, você volta daqui, não do início.',3500)}}
+  else if(T-lastSave>1){lastSave=T;saveCP()}
+}
+function updateWorld(dt){autoCP();
   stampT-=dt;
   crowdT-=dt;if(crowdT<=0&&P.x>600&&P.x<3350){const n=2+Math.floor(Math.random()*2);for(let k=0;k<n;k++)crowd.push({x:camX+CW+60+k*58,v:-(135+Math.random()*30),t:Math.random()*5,h:96+Math.random()*26,u:Math.random()<.4,d:0});crowdT=5+Math.random()*2.5}
   for(const c of crowd){c.x+=c.v*dt;c.t+=dt;if(!c.d&&Math.abs(P.x-c.x)<26&&P.y>G-70&&P.inv<=0&&state==='play'){c.d=1;hit();P.vx=-120}}
@@ -486,7 +495,8 @@ function iniciar(){
    '<p style="font-size:.85em;color:var(--muted)">Setas ou A/D: andar · Espaço: pular (duplo) · C: lamparina · E: ação · Esc: pausa. No celular, use os botões na tela.</p><button class="btn" id="go">Começar</button><button class="btn sec" id="back">Voltar ao Arquivo</button>');
   $('gM').onclick=()=>{S.gen='m';$('gM').classList.add('on');$('gF').classList.remove('on')};$('gF').onclick=()=>{S.gen='f';$('gF').classList.add('on');$('gM').classList.remove('on')};
   $('back').onclick=()=>{location.href='../index.html'};
-  $('go').onclick=()=>{S.nome=($('iN').value||'').trim()||'Detetive';S.turma=($('iT').value||'').trim();audio();setMute(muted);comecar()};
+  $('go').onclick=()=>{S.nome=($('iN').value||'').trim()||'Detetive';S.turma=($('iT').value||'').trim();audio();setMute(muted);comecar();if(window.__restored)toast('Progresso restaurado: você continua de onde parou.',5000)};
+  if(window.__restored){$('go').insertAdjacentHTML('afterend','<button class="btn sec" id="zero">Recomeçar do início</button>');$('zero').onclick=()=>{try{localStorage.removeItem(PROGKEY)}catch(e){}location.reload()}}
 }
 
 
@@ -495,7 +505,7 @@ function comecar(){
   ovClose();state='play';$('hud').classList.remove('hidden');hud();
   say([['narr','Quincas Borba voltou com uma filosofia nova, leitor, e com um frango. Procure a página rasgada com a lamparina (segure C), pule a multidão da "terceira força" e ouça o que ele tem a dizer. No fim, Dona Plácida.']]);
 }
-function fim(){
+function fim(){try{localStorage.removeItem(PROGKEY)}catch(e){}
   state='end';$('hud').classList.add('hidden');
   const pct=Math.round((Z.leit/Z.tot)*100);
   try{const o=JSON.parse(localStorage.getItem(SAVE)||'{}');o.zonas=o.zonas||{};o.found=o.found||{};o.done=o.done||[];
@@ -542,6 +552,11 @@ function loop(ts){
   render(dt);
 }
 window.__t={LOBO,P,F,Z,PAGES,INTER,get state(){return state},set state(v){state=v},get camX(){return camX},set camX(v){camX=v},provas,startCine,fim,K};
+(function restaurarProg(){try{const r=JSON.parse(localStorage.getItem(PROGKEY)||'null');if(!r||!(r.cp>0))return;
+  cpX=r.cp;P.x=r.cp;camX=Math.max(0,Math.min(WW-CW,P.x-CW*.42));Object.assign(Z,r.Z||{});Object.assign(F,r.F||{});
+  (r.pg||[]).forEach((v,i)=>{if(v&&PAGES[i])PAGES[i].got=true});(r.rb||[]).forEach((v,i)=>{if(v&&RAS_BOARDS[i])RAS_BOARDS[i].done=true});
+  if(typeof hipo!=='undefined'&&F.hipo){hipo.on=true;hipo.landed=true;hipo.x=3440;hipo.y=G-64}
+  window.__restored=1}catch(e){}})();
 loadAll(()=>{requestAnimationFrame(loop);iniciar();hud()});
 </script>
 </body>

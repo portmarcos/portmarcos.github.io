@@ -252,12 +252,12 @@ function updatePlayer(dt){
 function thud2(){if(AC)tone(90,.07,.05,'sine')}
 function fall(){
   toast(pick(NARR.queda),3200);Z.lamps--;shake=.4;
-  if(Z.lamps<=0){Z.lamps=3;Z.pts=Math.max(0,Z.pts-50);toast('Sem lamparinas. O narrador recomeça o capítulo.',3200)}
+  if(Z.lamps<=0){Z.lamps=3;toast('Sem lamparinas. Você volta ao último ponto salvo, sem perder o que já conquistou.',3200)}
   P.x=cpX;P.y=G-200;P.vy=0;P.inv=1.6;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));hud();
 }
 function hit(){
   if(P.inv>0)return;Z.lamps--;P.inv=1.8;shake=.5;P.hurt=.4;thud();toast(pick(NARR.carimbo),3000);
-  if(Z.lamps<=0){Z.lamps=3;Z.pts=Math.max(0,Z.pts-50);P.x=cpX;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));toast('Sem lamparinas. O narrador recomeça o capítulo.',3200)}hud();
+  if(Z.lamps<=0){Z.lamps=3;P.x=cpX;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));toast('Sem lamparinas. Você volta ao último ponto salvo, sem perder o que já conquistou.',3200)}hud();
 }
 /* ============ Mundo ============ */
 function spawnAtk(r){
