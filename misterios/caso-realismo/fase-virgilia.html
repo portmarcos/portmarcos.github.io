@@ -110,14 +110,13 @@ function sheet(k,sh,f,x,y,flip,alpha,sc){
 let state='start',T=0,camX=0,shake=0,flash=0;
 const S={nome:'',turma:'',gen:'m'};
 const Z={pts:0,pages:0,lamps:3,leit:0,tot:5,enviou:false};
-const F={ped:false,retrato:false,aguia:false,nariz:false,pontos:false,porta:false};
+const F={des:false,ped:false,retrato:false,aguia:false,nariz:false,pontos:false,porta:false};
 const LOBO={x:2450,dir:1,pause:0,on:true,seen:0};const BUSH=[{x:2480},{x:2800},{x:3080}];let hidden=false;
 const K={left:0,right:0,jump:0,lamp:0,act:0};
 const P={x:110,y:G,vx:0,vy:0,face:1,ground:true,jumps:2,inv:0,an:0,land:0,hurt:0};
 let cpX=110,lastStep=0;
 const PITS=[{x:700,w:110},{x:1250,w:130},{x:2300,w:140},{x:2900,w:120}];
-const PLAT=[{x:420,y:G-60,w:70},{x:560,y:G-110,w:70},{x:850,y:G-70,w:64},{x:1180,y:G-80,w:70},{x:1300,y:G-130,w:70},{x:1500,y:G-70,w:64},{x:1700,y:G-110,w:70},
- {x:2140,y:G-70,w:64},{x:2260,y:G-125,w:70},{x:2420,y:G-70,w:64},{x:2760,y:G-80,w:64},{x:2880,y:G-130,w:70},{x:3040,y:G-70,w:64},{x:3380,y:G-70,w:64}];
+const PLAT=[]; /* sem plataformas de caixa */
 const PAGES=[[455,G-125,'o'],[595,G-175,'o'],[885,G-135,'c'],[1335,G-195,'c'],[1730,G-175,'o'],[2295,G-190,'c'],[2915,G-195,'o'],[3415,G-135,'o'],[250,G-40,'c'],[1600,G-40,'c'],[2650,G-40,'o']].map(a=>({x:a[0],y:a[1],k:a[2],got:false}));
 let stamps=[],stampT=3,rain=[],bolt=0,boltT=8,hint=0,hipo={on:false,x:0,y:0,t:0},cine=null,paused=false,floaters=[],marks=[];
 for(let i=0;i<240;i++)rain.push({x:Math.random()*CW*1.3,y:Math.random()*CH,v:520+Math.random()*320,l:10+Math.random()*14});
@@ -142,7 +141,7 @@ const NARR={queda:['Até a rua da Gamboa tem as suas covas, leitor.','Caí. O pa
  pag:['Um bilhete dobrado. O adultério precisa de papel e de tinta.','Bilhete guardado. O vizinho não viu, leitor.']};
 const pick=a=>a[Math.floor(Math.random()*a.length)];
 function addPts(n,x,y){Z.pts+=n;floaters.push({x,y,t:0,s:'+'+n});hud()}
-const NP=5;
+const NP=6;
 function hud(){
   let l='';for(let i=0;i<3;i++)l+='<span class="lamp'+(i<Z.lamps?'':' off')+'"></span>';$('hLamp').innerHTML='Lamparinas '+l;
   $('hPag').textContent=Z.pages+'/11';$('hPts').textContent=Z.pts;
@@ -199,7 +198,7 @@ const FONTE='Machado de Assis, Memórias Póstumas de Brás Cubas, cap. ';
 const INTER=[
  {id:'ped',x:1050,r:90,need:'lamp',txt:'AÇÃO · Pegar a página rasgada',done:()=>F.ped,act:async()=>{
    await say([['det','Outra página rasgada. Fala de uma águia e de um pavão.']]);await restaurarFrase();F.ped=true;hud();
-   toast('Capítulo 43 restaurado. Provas '+provas()+'/'+NP,3500)}},
+   toast('Capítulo 43 restaurado. Provas '+provas()+'/'+(typeof NP!=='undefined'?NP:5),3500)}},
  {id:'retrato',x:900,r:140,txt:'AÇÃO · Conhecer Virgília',done:()=>F.retrato,act:async()=>{
    await say([['bras','Virgília. A mesma senhora que, em 1869, devia assistir aos meus últimos dias. Mas então ela tinha uns quinze ou dezesseis anos.'],['vir','Pois não, doutor. Meu pai disse que o senhor viria jantar.']]);
    await leitura({titulo:'Capítulo 27 · Virgília?',cita:'Não digo que já lhe coubesse a primazia da beleza, entre as mocinhas do tempo, porque isto não é romance, em que o autor sobredoura a realidade e fecha os olhos às sardas e espinhas; mas também não digo que lhe maculasse o rosto nenhuma sarda ou espinha, não. Era bonita, fresca, saída das mãos da natureza.',
@@ -268,8 +267,9 @@ function drawRasuras(){
     if(!b.done){const g=ctx.createRadialGradient(x,G-112,6,x,G-112,90);g.addColorStop(0,'rgba(255,200,110,'+(.25*pulse)+')');g.addColorStop(1,'rgba(255,200,110,0)');ctx.fillStyle=g;ctx.fillRect(x-90,G-202,180,180)}}
   ctx.restore();
 }
-const provas=()=>[F.ped,F.retrato,F.aguia,F.nariz,F.pontos].filter(Boolean).length;
+const provas=()=>[F.ped,F.retrato,F.aguia,F.nariz,F.pontos,F.des].filter(Boolean).length;
 function nearInter(){
+  if(DES.on)return null;
   let best=null,bd=1e9;
   for(const it of INTER){
     if(it.done&&it.done())continue;if(it.cond&&!it.cond())continue;if(it.need==='lamp'&&!K.lamp)continue;
@@ -315,7 +315,7 @@ function autoCP(){
     cpX=P.x-60;saveCP();if(!window.__cpT){window.__cpT=1;toast('Ponto salvo: se perder, você volta daqui, não do início.',3500)}}
   else if(T-lastSave>1){lastSave=T;saveCP()}
 }
-function updateWorld(dt){autoCP();
+function updateWorld(dt){autoCP();updDes(dt);
   stampT-=dt;
   hidden=false;for(const bh of BUSH){if(Math.abs(P.x-bh.x)<42&&P.ground&&Math.abs(P.vx)<25)hidden=true}
   if(LOBO.on&&state==='play'){
@@ -323,7 +323,7 @@ function updateWorld(dt){autoCP();
     const reading=LOBO.pause>0;const dx=P.x-LOBO.x;
     if(!reading&&!hidden&&dx*LOBO.dir>0&&Math.abs(dx)<300&&Math.abs(P.y-G)<120&&P.inv<=0){LOBO.seen=1.2;hit();toast('Lobo Neves viu você! Esconda-se quieto atrás de uma moita.',3000);P.x=Math.min(P.x,cpX>2300?cpX:2250);P.x=Math.max(P.x,30);LOBO.dir=1;LOBO.x=2400}}
   LOBO.seen=Math.max(0,LOBO.seen-dt);
-  if(stampT<=0&&P.x>650&&P.x<3350&&!stamps.length){stamps.push({dir:Math.random()<.5?1:-1,t:0,x:0,sx:0});stampT=6+Math.random()*2.5;
+  if(false&&stampT<=0&&P.x>650&&P.x<3350&&!stamps.length){stamps.push({dir:Math.random()<.5?1:-1,t:0,x:0,sx:0});stampT=6+Math.random()*2.5;
     if(!window.__pen){window.__pen=1;toast('O Carimbo riscou o chão com o lápis vermelho: PULE a rasura!',3600)}}
   for(const s of stamps){s.t+=dt;if(s.t>1.1){if(!s.go){s.go=1;s.sx=s.dir>0?camX-80:camX+CW+80;s.x=s.sx;thud()}s.x+=s.dir*540*dt;
       if(!s.d&&Math.abs(P.x-s.x)<40&&P.y>G-34){s.d=1;shake=.3;hit()}}}
@@ -444,7 +444,7 @@ function render(dt){
   ctx.setTransform(DPR,0,0,DPR,0,0);
   const sx=shake>0?(Math.random()-.5)*shake*16:0,sy=shake>0?(Math.random()-.5)*shake*10:0;ctx.save();ctx.translate(sx,sy);
   if(state==='cine'){drawCine(dt);ctx.restore();return}
-  drawBG();drawFigures();drawBras();drawPlat();drawClue();drawPages();drawStamps();drawPlayer();drawBushes();drawLight();drawRain(dt);drawFloaters();
+  drawBG();drawFigures();drawBras();drawPlat();drawDes();drawClue();drawPages();drawStamps();drawPlayer();drawBushes();drawLight();drawRain(dt);drawFloaters();
   ctx.save();ctx.globalCompositeOperation='color';ctx.fillStyle='rgba(172,118,56,.55)';ctx.fillRect(0,0,CW,CH);ctx.restore();
   /* vinheta */
   const v=ctx.createRadialGradient(CW/2,CH/2,CH*.4,CW/2,CH/2,CH*.95);v.addColorStop(0,'rgba(0,0,0,0)');v.addColorStop(1,'rgba(22,10,2,.6)');ctx.fillStyle=v;ctx.fillRect(0,0,CW,CH);
@@ -583,6 +583,70 @@ function drawEscolaDoor(dx){
   ctx.fillStyle=SEP.d;ctx.font='bold 14px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText('ESCOLA',dx,y+14);
 }
 
+/* ============ DESAFIO ORIGINAL DA ZONA (agilidade) ============ */
+const DCFG={"m": "dive", "x0": 1480, "act": "Juntar as penas da águia", "title": "A ÁGUIA DE VIRGÍLIA", "tip": "Junte as 5 penas. A águia marca o ponto de mergulho com uma sombra no chão: saia dali na hora!", "intro": "Há uma águia sobre o jardim, leitor, e ela solta penas ao voar. Junte cinco, mas repare na sombra que cresce no chão: é onde ela vai cair.", "win": [["bras", "Cinco penas, e a águia sem uma unha em mim. Virgília teria aprovado a precisão; Machado, a ironia."]]};
+const DES={on:false,t:0,x0:DCFG.x0,x1:DCFG.x0+900,list:[],pits:null,cp:0,ex:0,got:0,n:0};
+(function nudge(){const bad=x=>PITS.some(p=>x>p.x-70&&x<p.x+p.w+70)||(typeof RAS_BOARDS!=='undefined'&&RAS_BOARDS.some(b=>Math.abs(b.x-x)<170))||INTER.some(n=>Math.abs(n.x-x)<n.r+60);
+  let x=DES.x0,k=0;while(bad(x)&&k<60){x+=40;k++}DES.x0=x;DES.x1=x+900})();
+INTER.push({id:'des',x:DES.x0,r:80,txt:'AÇÃO · '+DCFG.act,cond:()=>!DES.on,done:()=>F.des,act:()=>startDes()});
+function dGlow(x,y,r){const g=ctx.createRadialGradient(x,y,4,x,y,r);g.addColorStop(0,'rgba(255,238,190,.5)');g.addColorStop(1,'rgba(255,238,190,0)');ctx.fillStyle=g;ctx.fillRect(x-r,y-r,2*r,2*r)}
+const dRand=(a,b)=>a+Math.random()*(b-a);
+async function startDes(){
+  await say([[DCFG.who||'bras',DCFG.intro]]);
+  DES.on=true;DES.t=0;DES.list=[];DES.ex=0;DES.got=0;DES.n=0;DES.sp=1.2;DES.pits=PITS.splice(0);DES.cp=cpX;cpX=DES.x0+30;
+  P.x=DES.x0+40;P.y=G;P.vy=0;P.vx=0;P.inv=1;camX=Math.max(0,Math.min(WW-CW,P.x-CW*.3));
+  MECH.init&&MECH.init();toast(DCFG.tip,5200);
+}
+function endDes(win){
+  DES.on=false;DES.list=[];PITS.push(...DES.pits);DES.pits=null;cpX=DES.cp;P.x=DES.x0;P.y=G;P.vy=0;P.vx=0;P.inv=1.5;camX=Math.max(0,Math.min(WW-CW,P.x-CW*.3));
+  if(!win)return;
+  F.des=true;addPts(350,CW/2,200);if(Z.lamps<3)Z.lamps++;hud();tone(660,.12,.05,'triangle');tone(990,.16,.04,'triangle');
+  say(DCFG.win).then(()=>toast('Desafio vencido! Provas '+provas()+'/'+(typeof NP!=='undefined'?NP:5),3500));
+}
+function updDes(dt){
+  if(!DES.on||state!=='play')return;
+  DES.t+=dt;P.x=Math.max(DES.x0+15,Math.min(DES.x1-15,P.x));
+  if(MECH.upd(dt)===true)endDes(true);
+}
+const dpx=()=>P.x,dpy=()=>P.y-44;
+function dInCam(x,m){return x>camX-(m||60)&&x<camX+CW+(m||60)}
+/* ---- marcos de início e fim ---- */
+function dPost(x,col){ctx.fillStyle=SEP.m;ctx.fillRect(x-4,G-120,8,120);ctx.fillStyle=col;ctx.beginPath();ctx.moveTo(x+4,G-120);ctx.lineTo(x+46,G-104);ctx.lineTo(x+4,G-88);ctx.closePath();ctx.fill();ctx.strokeStyle=SEP.d;ctx.lineWidth=2;ctx.strokeRect(x-4,G-120,8,120)}
+function drawDes(){
+  if(!DES.on)return;ctx.save();ctx.translate(-camX,0);
+  dPost(DES.x0,'#6a4824');if(MECH.goal)dPost(DES.x1,'#b3541c');
+  MECH.draw();ctx.restore();
+  /* faixa de título */
+  ctx.save();ctx.fillStyle='rgba(20,12,6,.78)';ctx.fillRect(CW/2-330,124,660,40);ctx.strokeStyle='#9a7545';ctx.lineWidth=2;ctx.strokeRect(CW/2-330,124,660,40);
+  ctx.fillStyle='#e6d2a6';ctx.font='15px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText(DCFG.title,CW/2,142);
+  ctx.fillStyle='#caa468';ctx.font='13px "Special Elite",monospace';ctx.fillText(MECH.hud(),CW/2,158);ctx.restore();
+}
+const dProg=()=>Math.max(0,Math.min(1,(P.x-DES.x0)/(DES.x1-DES.x0)));
+const MECH={};
+
+MECH.goal=false;MECH.hud=()=>'Junte as 5 penas · penas: '+DES.got+'/5 · a sombra no chão avisa o mergulho';
+MECH.init=()=>{DES.f=[[140,0],[300,1],[470,0],[640,1],[800,0]].map(a=>({x:DES.x0+a[0],y:a[1]?G-150:G-40,got:0}));DES.e=[{x:DES.x0+200,y:G-320,st:'c',t:1.6,tx:0,off:0},{x:DES.x0+700,y:G-340,st:'c',t:3,tx:0,off:1,off2:1}]};
+MECH.upd=dt=>{
+  for(const f of DES.f)if(!f.got&&Math.abs(P.x-f.x)<30&&Math.abs(dpy()-f.y)<48){f.got=1;DES.got++;addPts(40,f.x-camX,f.y);tone(880,.07,.05,'triangle');tone(1320,.1,.04,'triangle')}
+  DES.e.forEach((e,i)=>{if(i===1&&DES.got<3)return;e.t-=dt;
+    if(e.st==='c'){e.x+=(P.x+Math.sin(T*1.3+i*3)*120-e.x)*Math.min(1,dt*1.5);e.y=G-320+Math.sin(T*2+i)*16;if(e.t<=0){e.st='a';e.tx=Math.max(DES.x0+30,Math.min(DES.x1-30,P.x+P.vx*.5));e.t=.95-DES.got*.05}}
+    else if(e.st==='a'){e.x+=(e.tx-e.x)*Math.min(1,dt*6);}
+    if(e.st==='a'&&e.t<=0){e.st='d';e.x=e.tx}
+    else if(e.st==='d'){e.y+=1150*dt;if(Math.abs(P.x-e.tx)<36&&e.y>P.y-96&&e.y<P.y+4&&!e.hit){e.hit=1;hit()}if(e.y>=G-18){e.st='r';e.t=.5;thud2()}}
+    else if(e.st==='r'){if(e.t<=0){e.y-=520*dt;if(e.y<G-320){e.st='c';e.t=dRand(1.6,2.6)-DES.got*.15;e.hit=0}}}});
+  return DES.got>=5;
+};
+MECH.draw=()=>{
+  for(const f of DES.f){if(f.got)continue;dGlow(f.x,f.y,40);ctx.save();ctx.translate(f.x,f.y+Math.sin(T*3+f.x)*4);ctx.rotate(-.6);ctx.fillStyle='#f1e7c9';ctx.strokeStyle=SEP.d;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-18,0);ctx.quadraticCurveTo(0,-12,18,-2);ctx.quadraticCurveTo(0,6,-18,0);ctx.fill();ctx.stroke();ctx.beginPath();ctx.moveTo(-20,2);ctx.lineTo(16,-2);ctx.stroke();ctx.restore()}
+  DES.e.forEach((e,i)=>{if(i===1&&DES.got<3)return;
+    if(e.st==='a'||e.st==='d'){const a=e.st==='a'?1-e.t/.95:1;ctx.fillStyle='rgba(20,10,4,'+(.25+a*.4)+')';ctx.beginPath();ctx.ellipse(e.tx,G-1,16+a*26,4+a*3,0,0,7);ctx.fill();ctx.strokeStyle='rgba(160,40,20,'+(.2+a*.4)+')';ctx.setLineDash([5,6]);ctx.beginPath();ctx.moveTo(e.tx,e.y+20);ctx.lineTo(e.tx,G-4);ctx.stroke();ctx.setLineDash([])}
+    const fl=Math.sin(T*10+i)*(e.st==='d'?.2:.7);ctx.save();ctx.translate(e.x,e.y);if(e.st==='d')ctx.rotate(Math.PI);ctx.fillStyle='#20140a';ctx.strokeStyle='#caa468';ctx.lineWidth=1.4;
+    ctx.beginPath();ctx.ellipse(0,0,16,10,0,0,7);ctx.fill();ctx.stroke();ctx.beginPath();ctx.ellipse(18,-4,8,6,0,0,7);ctx.fill();ctx.stroke();ctx.fillStyle='#caa468';ctx.beginPath();ctx.moveTo(25,-4);ctx.lineTo(33,-1);ctx.lineTo(25,0);ctx.fill();
+    for(const s of [-1,1]){ctx.fillStyle='#20140a';ctx.beginPath();ctx.moveTo(-4,0);ctx.quadraticCurveTo(-30*s+0,-40*fl-6,-60*s,-14*fl+8);ctx.quadraticCurveTo(-30*s,6,-4,6);ctx.closePath();ctx.fill();ctx.stroke()}ctx.restore()});
+};
+
+
+window.__d={DES,startDes,endDes,MECH,updDes};
 /* ============ Entrada ============ */
 const KM={ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right',ArrowUp:'jump',KeyW:'jump',Space:'jump',KeyC:'lamp',KeyE:'act',Enter:'act'};
 addEventListener('keydown',e=>{

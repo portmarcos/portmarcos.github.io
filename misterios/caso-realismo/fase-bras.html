@@ -110,17 +110,12 @@ function sheet(k,sh,f,x,y,flip,alpha,sc){
 let state='start',T=0,camX=0,shake=0,flash=0;
 const S={nome:'',turma:'',gen:'m'};
 const Z={pts:0,pages:0,lamps:3,leit:0,tot:3,enviou:false};
-const F={ded:false,amigos:false,fala:false,disc:false,hipo:false};
+const F={des:false,ded:false,amigos:false,fala:false,disc:false,hipo:false};
 const K={left:0,right:0,jump:0,lamp:0,act:0};
 const P={x:110,y:G,vx:0,vy:0,face:1,ground:true,jumps:2,inv:0,an:0,land:0,hurt:0};
 let cpX=110,lastStep=0;
 const PITS=[{x:950,w:120},{x:1620,w:140},{x:2230,w:120}];
-const PLAT=[ /* lápides: topo caminhável */
- {x:420,y:G-62,w:64},{x:560,y:G-108,w:64},{x:700,y:G-62,w:64},
- {x:880,y:G-70,w:60},{x:1010,y:G-130,w:70},{x:1130,y:G-70,w:60},
- {x:1380,y:G-66,w:70},{x:1560,y:G-120,w:60},{x:1700,y:G-120,w:60},{x:1830,y:G-66,w:64},
- {x:2000,y:G-76,w:64},{x:2160,y:G-130,w:60},{x:2300,y:G-76,w:60},
- {x:3300,y:G-70,w:70}];
+const PLAT=[]; /* sem plataformas de caixa */
 const PAGES=[[300,G-120],[595,G-165],[1040,G-200],[1190,G-110],[1590,G-190],[1730,G-190],[2190,G-200],[3330,G-140]].map(a=>({x:a[0],y:a[1],got:false}));
 let stamps=[],stampT=3,rain=[],bolt=0,boltT=8,hint=0,hipo={on:false,x:0,y:0,t:0},cine=null,paused=false,floaters=[],marks=[];
 for(let i=0;i<240;i++)rain.push({x:Math.random()*CW*1.3,y:Math.random()*CH,v:520+Math.random()*320,l:10+Math.random()*14});
@@ -148,7 +143,7 @@ function addPts(n,x,y){Z.pts+=n;floaters.push({x,y,t:0,s:'+'+n});hud()}
 function hud(){
   let l='';for(let i=0;i<3;i++)l+='<span class="lamp'+(i<Z.lamps?'':' off')+'"></span>';$('hLamp').innerHTML='Lamparinas '+l;
   $('hPag').textContent=Z.pages+'/8';$('hPts').textContent=Z.pts;
-  const tasks=[F.ded,F.amigos,F.fala,F.disc].filter(Boolean).length;$('hTask').innerHTML='Provas <b>'+tasks+'/4</b>';
+  const tasks=[F.ded,F.amigos,F.fala,F.disc,F.des].filter(Boolean).length;$('hTask').innerHTML='Provas <b>'+tasks+'/4</b>';
 }
 /* ============ Diálogo ============ */
 let dq=null,dI=0,typing=null,dFull='';
@@ -212,25 +207,25 @@ function contarAmigos(){
 const INTER=[
  {id:'ded',x:1920,r:90,need:'lamp',txt:'AÇÃO · Pegar a página rasgada',done:()=>F.ded,act:async()=>{
    await say([['det','Há um papel rasgado debaixo da lápide... e um carimbo vermelho nele.']]);await restaurarDedicatoria();F.ded=true;hud();
-   toast('Dedicatória restaurada. Provas '+provas()+'/4',3500)}},
+   toast('Dedicatória restaurada. Provas '+provas()+'/5',3500)}},
  {id:'amigos',x:2560,r:200,txt:'AÇÃO · Contar os amigos',done:()=>F.amigos,act:async()=>{
    await contarAmigos();
    await leitura({titulo:'Capítulo 1 · Óbito do Autor',cita:'Dito isto, expirei às duas horas da tarde de uma sexta-feira do mês de agosto de 1869, na minha bela chácara de Catumbi. Tinha uns sessenta e quatro anos, rijos e prósperos, era solteiro, possuía cerca de trezentos contos e fui acompanhado ao cemitério por onze amigos. Onze amigos! Verdade é que não houve cartas nem anúncios. Acresce que chovia &mdash; peneirava &mdash; uma chuvinha miúda, triste e constante.',
      fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 1 (domínio público).',
      q:{t:'Por que o narrador exclama "Onze amigos!"?',o:['Porque se orgulha da multidão que o acompanhou até o cemitério.','Porque os onze eram os únicos que conheciam o segredo do seu emplasto.','Porque ironiza: para um homem tão rico, onze é um número miserável.','Porque esqueceu de incluir os parentes que também foram ao enterro.'],k:2,e:'A exclamação mostra o desapontamento irônico: um solteirão rico acompanhado por tão poucos, sem avisos nem cartas. É a crítica à sociedade de aparências.'}});
-   F.amigos=true;hud();toast('Amigos contados. Provas '+provas()+'/4',3500)}},
+   F.amigos=true;hud();toast('Amigos contados. Provas '+provas()+'/5',3500)}},
  {id:'bras',x:3010,r:120,txt:'AÇÃO · Falar com Brás Cubas',done:()=>F.fala,act:async()=>{
    await say([['bras','Ora, mais um leitor. Pode chegar, a chuva aqui é de graça e o assunto é por minha conta.'],['det','O senhor é Brás Cubas? O senhor está... morto.'],['bras','Perfeitamente. Morto e produtivo, que é a minha melhor combinação.'],['bras','Alguém andou riscando as minhas memórias com um carimbo vermelho. Eu sou um defunto, não um descuidado.'],['det','Foi o Agente Carimbo. Ele corrige livros que o incomodam.'],['bras','Corrigir livro de defunto! Vá lá, vou lhe contar como se começa uma obra póstuma.']]);
    await leitura({titulo:'Capítulo 1 · Óbito do Autor',cita:'Algum tempo hesitei se devia abrir estas memórias pelo princípio ou pelo fim, isto é, se poria em primeiro lugar o meu nascimento ou a minha morte. Suposto o uso vulgar seja começar pelo nascimento, duas considerações me levaram a adotar diferente método: a primeira é que eu não sou propriamente um autor defunto, mas um defunto autor, para quem a campa foi outro berço; a segunda é que o escrito ficaria assim mais galante e mais novo.',
      fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 1 (domínio público).',
      q:{t:'O que muda quando Brás se diz "defunto autor" e não "autor defunto"?',o:['Ele escreve depois de morto: a morte é o ponto de partida da narração.','Nada muda: as duas expressões significam a mesma coisa, só em outra ordem.','Ele morreu antes de terminar o livro, e um amigo escreveu o resto.','Ele pretende escrever somente sobre a infância e a juventude.'],k:0,e:'"Defunto autor" é quem narra de além-túmulo. A inversão dos termos é um jogo de palavras que muda o ponto de vista: o narrador já não tem nada a perder, e por isso pode ser sincero e zombeteiro.'}});
    await say([['bras','Gostou? Falta o discurso do meu bom amigo, ali na beira da cova. Ouça com os ouvidos de quem sabe que a chuva é só chuva.']]);
-   F.fala=true;hud();toast('Provas '+provas()+'/4',3000)}},
+   F.fala=true;hud();toast('Provas '+provas()+'/5',3000)}},
  {id:'disc',x:3200,r:120,txt:'AÇÃO · Ouvir o discurso',done:()=>F.disc,act:async()=>{
    await leitura({titulo:'Capítulo 1 · o discurso à beira da cova',cita:'"Vós, que o conhecestes, meus senhores, vós podeis dizer comigo que a natureza parece estar chorando a perda irreparável de um dos mais belos caracteres que tem honrado a humanidade. Este ar sombrio, estas gotas do céu, aquelas nuvens escuras que cobrem o azul como um crepe funéreo, tudo isso é a dor crua e má que lhe rói à natureza as mais íntimas entranhas." Bom e fiel amigo! Não, não me arrependo das vinte apólices que lhe deixei.',
      fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 1 (domínio público).',
      q:{t:'O que o comentário "Não me arrependo das vinte apólices que lhe deixei" revela sobre o elogio?',o:['Que o amigo foi sincero e achava que o morto merecia a herança recebida.','Que Brás pretende desfazer o testamento depois de ouvir o discurso.','Que a natureza de fato chorava pela perda de um grande caráter.','Que o elogio foi comprado: o “fiel amigo” fala bem por interesse.'],k:3,e:'O narrador mostra que o discurso emocionado tem preço (as apólices). A chuva, que o orador chama de "natureza chorando", é só chuva. É a ironia como crítica da hipocrisia social.'}});
-   F.disc=true;hud();toast('Provas '+provas()+'/4',3000)}},
+   F.disc=true;hud();toast('Provas '+provas()+'/5',3000)}},
  {id:'hipo',x:3440,r:140,txt:'AÇÃO · Montar o hipopótamo',cond:()=>hipo.on&&hipo.landed,act:async()=>{
    await say([['bras','Aí está meu amigo de asas. Segure-se bem, caro leitor: o delírio começa onde a razão cansa.']]);
    await leitura({titulo:'Capítulo 7 · O Delírio (leitura obrigatória para partir)',cita:'Ultimamente, restituído à forma humana, vi chegar um hipopótamo, que me arrebatou. Deixei-me ir, calado, não sei se por medo ou confiança; mas, dentro em pouco, a carreira de tal modo se tornou vertiginosa, que me atrevi a interrogá-lo, e com alguma arte lhe disse que a viagem me parecia sem destino. — Engana-se, replicou o animal, nós vamos à origem dos séculos.',
@@ -275,8 +270,9 @@ function drawRasuras(){
     if(!b.done){const g=ctx.createRadialGradient(x,G-112,6,x,G-112,90);g.addColorStop(0,'rgba(255,200,110,'+(.25*pulse)+')');g.addColorStop(1,'rgba(255,200,110,0)');ctx.fillStyle=g;ctx.fillRect(x-90,G-202,180,180)}}
   ctx.restore();
 }
-const provas=()=>[F.ded,F.amigos,F.fala,F.disc].filter(Boolean).length;
+const provas=()=>[F.ded,F.amigos,F.fala,F.disc,F.des].filter(Boolean).length;
 function nearInter(){
+  if(DES.on)return null;
   let best=null,bd=1e9;
   for(const it of INTER){
     if(it.done&&it.done())continue;if(it.cond&&!it.cond())continue;if(it.need==='lamp'&&!K.lamp)continue;
@@ -322,10 +318,10 @@ function autoCP(){
     cpX=P.x-60;saveCP();if(!window.__cpT){window.__cpT=1;toast('Ponto salvo: se perder, você volta daqui, não do início.',3500)}}
   else if(T-lastSave>1){lastSave=T;saveCP()}
 }
-function updateWorld(dt){autoCP();
+function updateWorld(dt){autoCP();updDes(dt);
   /* carimbos */
   stampT-=dt;
-  if(stampT<=0&&P.x>650&&P.x<3350&&!stamps.length){stamps.push({dir:Math.random()<.5?1:-1,t:0,x:0,sx:0});stampT=3.4+Math.random()*2.2;
+  if(false&&stampT<=0&&P.x>650&&P.x<3350&&!stamps.length){stamps.push({dir:Math.random()<.5?1:-1,t:0,x:0,sx:0});stampT=3.4+Math.random()*2.2;
     if(!window.__pen){window.__pen=1;toast('O Carimbo riscou o chão com o lápis vermelho: PULE a rasura!',3600)}}
   for(const s of stamps){s.t+=dt;if(s.t>1.1){if(!s.go){s.go=1;s.sx=s.dir>0?camX-80:camX+CW+80;s.x=s.sx;thud()}s.x+=s.dir*540*dt;
       if(!s.d&&Math.abs(P.x-s.x)<40&&P.y>G-34){s.d=1;shake=.3;hit()}}}
@@ -336,7 +332,7 @@ function updateWorld(dt){autoCP();
   boltT-=dt;if(boltT<=0){bolt=.35;boltT=9+Math.random()*7;flash=1;setTimeout(thunder,350)}
   bolt=Math.max(0,bolt-dt);flash=Math.max(0,flash-dt*2.2);
   /* chegada do hipopótamo */
-  if(provas()===4&&!F.hipo){F.hipo=true;hipo.on=true;hipo.x=P.x+700;hipo.y=60;hipo.t=0;toast('Algo bate asas por cima das lápides... O caminho de saída é o hipopótamo, no fim do cemitério.',4500)}
+  if(provas()===5&&!F.hipo){F.hipo=true;hipo.on=true;hipo.x=P.x+700;hipo.y=60;hipo.t=0;toast('Algo bate asas por cima das lápides... O caminho de saída é o hipopótamo, no fim do cemitério.',4500)}
   if(hipo.on){hipo.t+=dt;const tx=3440,ty=G-64;if(!hipo.landed){hipo.x+=(tx-hipo.x)*Math.min(1,dt*1.6);hipo.y+=(ty-hipo.y)*Math.min(1,dt*1.8);
       if(Math.abs(hipo.x-tx)<8&&Math.abs(hipo.y-ty)<8){hipo.landed=true;toast('O hipopótamo pousou. Vá até ele e aperte AÇÃO.',4000)}}}
   floaters.forEach(f=>f.t+=dt);floaters=floaters.filter(f=>f.t<1.2);
@@ -422,7 +418,7 @@ function render(dt){
   ctx.setTransform(DPR,0,0,DPR,0,0);
   const sx=shake>0?(Math.random()-.5)*shake*16:0,sy=shake>0?(Math.random()-.5)*shake*10:0;ctx.save();ctx.translate(sx,sy);
   if(state==='cine'){drawCine(dt);ctx.restore();return}
-  drawBG();drawFigures();drawBras();drawPlat();drawClue();drawPages();drawHipo();drawStamps();drawPlayer();drawLight();drawRain(dt);drawFloaters();
+  drawBG();drawFigures();drawBras();drawPlat();drawDes();drawClue();drawPages();drawHipo();drawStamps();drawPlayer();drawLight();drawRain(dt);drawFloaters();
   ctx.save();ctx.globalCompositeOperation='color';ctx.fillStyle='rgba(172,118,56,.55)';ctx.fillRect(0,0,CW,CH);ctx.restore();
   /* vinheta */
   const v=ctx.createRadialGradient(CW/2,CH/2,CH*.4,CW/2,CH/2,CH*.95);v.addColorStop(0,'rgba(0,0,0,0)');v.addColorStop(1,'rgba(22,10,2,.6)');ctx.fillStyle=v;ctx.fillRect(0,0,CW,CH);
@@ -586,6 +582,65 @@ function drawEscolaDoor(dx){
   ctx.fillStyle=SEP.d;ctx.font='bold 14px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText('ESCOLA',dx,y+14);
 }
 
+/* ============ DESAFIO ORIGINAL DA ZONA (agilidade) ============ */
+const DCFG={"m": "swarm", "x0": 1300, "act": "Enfrentar a revoada", "title": "REVOADA DE BORBOLETAS PRETAS", "tip": "Borboletas pretas! Desvie delas (cada toque apaga uma lamparina). Segure C: a luz as afasta.", "intro": "Borboletas pretas, leitor: as mensageiras do agouro. Elas não mordem, mas cada uma que te toca apaga uma lamparina. Aguente a revoada até o fim e use a luz da lamparina (tecla C) para afastá-las.", "win": [["bras", "Você atravessou a revoada. Eu, que já fui defunto autor, nunca vi borboleta mais pontual do que essas."]]};
+const DES={on:false,t:0,x0:DCFG.x0,x1:DCFG.x0+900,list:[],pits:null,cp:0,ex:0,got:0,n:0};
+(function nudge(){const bad=x=>PITS.some(p=>x>p.x-70&&x<p.x+p.w+70)||(typeof RAS_BOARDS!=='undefined'&&RAS_BOARDS.some(b=>Math.abs(b.x-x)<170))||INTER.some(n=>Math.abs(n.x-x)<n.r+60);
+  let x=DES.x0,k=0;while(bad(x)&&k<60){x+=40;k++}DES.x0=x;DES.x1=x+900})();
+INTER.push({id:'des',x:DES.x0,r:80,txt:'AÇÃO · '+DCFG.act,cond:()=>!DES.on,done:()=>F.des,act:()=>startDes()});
+const dRand=(a,b)=>a+Math.random()*(b-a);
+async function startDes(){
+  await say([[DCFG.who||'bras',DCFG.intro]]);
+  DES.on=true;DES.t=0;DES.list=[];DES.ex=0;DES.got=0;DES.n=0;DES.sp=1.2;DES.pits=PITS.splice(0);DES.cp=cpX;cpX=DES.x0+30;
+  P.x=DES.x0+40;P.y=G;P.vy=0;P.vx=0;P.inv=1;camX=Math.max(0,Math.min(WW-CW,P.x-CW*.3));
+  MECH.init&&MECH.init();toast(DCFG.tip,5200);
+}
+function endDes(win){
+  DES.on=false;DES.list=[];PITS.push(...DES.pits);DES.pits=null;cpX=DES.cp;P.x=DES.x0;P.y=G;P.vy=0;P.vx=0;P.inv=1.5;camX=Math.max(0,Math.min(WW-CW,P.x-CW*.3));
+  if(!win)return;
+  F.des=true;addPts(350,CW/2,200);if(Z.lamps<3)Z.lamps++;hud();tone(660,.12,.05,'triangle');tone(990,.16,.04,'triangle');
+  say(DCFG.win).then(()=>toast('Desafio vencido! Provas '+provas()+'/'+(typeof NP!=='undefined'?NP:5),3500));
+}
+function updDes(dt){
+  if(!DES.on||state!=='play')return;
+  DES.t+=dt;P.x=Math.max(DES.x0+15,Math.min(DES.x1-15,P.x));
+  if(MECH.upd(dt)===true)endDes(true);
+}
+const dpx=()=>P.x,dpy=()=>P.y-44;
+function dInCam(x,m){return x>camX-(m||60)&&x<camX+CW+(m||60)}
+/* ---- marcos de início e fim ---- */
+function dPost(x,col){ctx.fillStyle=SEP.m;ctx.fillRect(x-4,G-120,8,120);ctx.fillStyle=col;ctx.beginPath();ctx.moveTo(x+4,G-120);ctx.lineTo(x+46,G-104);ctx.lineTo(x+4,G-88);ctx.closePath();ctx.fill();ctx.strokeStyle=SEP.d;ctx.lineWidth=2;ctx.strokeRect(x-4,G-120,8,120)}
+function drawDes(){
+  if(!DES.on)return;ctx.save();ctx.translate(-camX,0);
+  dPost(DES.x0,'#6a4824');if(MECH.goal)dPost(DES.x1,'#b3541c');
+  MECH.draw();ctx.restore();
+  /* faixa de título */
+  ctx.save();ctx.fillStyle='rgba(20,12,6,.78)';ctx.fillRect(CW/2-330,124,660,40);ctx.strokeStyle='#9a7545';ctx.lineWidth=2;ctx.strokeRect(CW/2-330,124,660,40);
+  ctx.fillStyle='#e6d2a6';ctx.font='15px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText(DCFG.title,CW/2,142);
+  ctx.fillStyle='#caa468';ctx.font='13px "Special Elite",monospace';ctx.fillText(MECH.hud(),CW/2,158);ctx.restore();
+}
+const dProg=()=>Math.max(0,Math.min(1,(P.x-DES.x0)/(DES.x1-DES.x0)));
+const MECH={};
+
+MECH.goal=false;MECH.dur=28;MECH.hud=()=>'Sobreviva '+Math.max(0,Math.ceil(MECH.dur-DES.t))+' s · segure C: a luz espanta as borboletas';
+MECH.init=()=>{DES.w=[0,0,0]};
+function bfly(x,y,vx){DES.list.push({x,y,y0:y,vx,ph:Math.random()*6})}
+MECH.upd=dt=>{
+  DES.sp-=dt;if(DES.sp<=0){DES.sp=Math.max(.16,.55-DES.t*.012);const s=Math.random()<.82?1:-1;bfly(s>0?camX+CW+30:camX-30,G-40-Math.random()*210,-s*dRand(150,280))}
+  [9,16,22].forEach((tt,i)=>{if(DES.t>tt&&!DES.w[i]){DES.w[i]=1;const gap=Math.floor(Math.random()*7)+1;toast('Revoada! Procure o vão.',1800);for(let k=0;k<10;k++){if(Math.abs(k-gap)<1.2)continue;bfly(camX+CW+30+k*6,G-30-k*22,-250)}}});
+  for(const b of DES.list){b.x+=b.vx*dt;b.ph+=dt*9;b.y=b.y0+Math.sin(b.ph*.5)*38;
+    if(K.lamp){const lx=P.x+P.face*22,ly=P.y-46,dx=b.x-lx,dy=b.y-ly,d=Math.hypot(dx,dy);if(d<130){b.y0+=(dy>=0?1:-1)*320*dt;b.x+=(dx>=0?1:-1)*120*dt}}
+    if(!b.dead&&Math.hypot(P.x-b.x,dpy()-b.y)<30){b.dead=1;hit()}
+    if(b.x<camX-160||b.x>camX+CW+240)b.dead=1}
+  DES.list=DES.list.filter(b=>!b.dead);
+  return DES.t>=MECH.dur;
+};
+MECH.draw=()=>{for(const b of DES.list){const f=Math.abs(Math.sin(b.ph)),w=16*f+3;ctx.save();ctx.translate(b.x,b.y);ctx.scale(1.6,1.6);ctx.fillStyle='#120b06';ctx.strokeStyle='#c9a46a';ctx.lineWidth=1;
+  for(const s of [-1,1]){ctx.beginPath();ctx.ellipse(s*w*.55,-3,w*.6,11,s*.35,0,7);ctx.fill();ctx.stroke()}
+  ctx.fillStyle='#000';ctx.fillRect(-1.5,-9,3,20);ctx.restore()}};
+
+
+window.__d={DES,startDes,endDes,MECH,updDes};
 /* ============ Entrada ============ */
 const KM={ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right',ArrowUp:'jump',KeyW:'jump',Space:'jump',KeyC:'lamp',KeyE:'act',Enter:'act'};
 addEventListener('keydown',e=>{

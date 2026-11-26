@@ -110,14 +110,13 @@ function sheet(k,sh,f,x,y,flip,alpha,sc){
 let state='start',T=0,camX=0,shake=0,flash=0;
 const S={nome:'',turma:'',gen:'m'};
 const Z={pts:0,pages:0,lamps:3,leit:0,tot:4,enviou:false};
-const F={ped:false,fases:false,inveja:false,frango:false,placida:false,porta:false,ajudou:false};
+const F={des:false,ped:false,fases:false,inveja:false,frango:false,placida:false,porta:false,ajudou:false};
 const LOBO={x:0,dir:1,pause:0,on:false,seen:0};const BUSH=[];let hidden=false;let crowd=[],crowdT=1e9;
 const K={left:0,right:0,jump:0,lamp:0,act:0};
 const P={x:110,y:G,vx:0,vy:0,face:1,ground:true,jumps:2,inv:0,an:0,land:0,hurt:0};
 let cpX=110,lastStep=0;
 const PITS=[{x:700,w:110},{x:1250,w:130},{x:2300,w:140},{x:2900,w:120}];
-const PLAT=[{x:420,y:G-60,w:70},{x:560,y:G-110,w:70},{x:850,y:G-70,w:64},{x:1180,y:G-80,w:70},{x:1300,y:G-130,w:70},{x:1500,y:G-70,w:64},{x:1700,y:G-110,w:70},
- {x:2140,y:G-70,w:64},{x:2260,y:G-125,w:70},{x:2420,y:G-70,w:64},{x:2760,y:G-80,w:64},{x:2880,y:G-130,w:70},{x:3040,y:G-70,w:64},{x:3380,y:G-70,w:64}];
+const PLAT=[]; /* sem plataformas de caixa */
 const PAGES=[[455,G-125,'o'],[595,G-175,'o'],[885,G-135,'c'],[1335,G-195,'c'],[1730,G-175,'o'],[2295,G-190,'c'],[2915,G-195,'o'],[3415,G-135,'o'],[250,G-40,'c'],[1600,G-40,'c'],[2650,G-40,'o']].map(a=>({x:a[0],y:a[1],k:a[2],got:false}));
 let stamps=[],stampT=3,rain=[],bolt=0,boltT=8,hint=0,hipo={on:false,x:0,y:0,t:0},cine=null,paused=false,floaters=[],marks=[];
 for(let i=0;i<240;i++)rain.push({x:Math.random()*CW*1.3,y:Math.random()*CH,v:520+Math.random()*320,l:10+Math.random()*14});
@@ -142,7 +141,7 @@ const NARR={queda:['Até o salão tem as suas covas, leitor.','Caí. Nhã-loló 
  pag:['Uma folha do salão. A voz era mimosa.','Folha guardada. Nhã-loló comia tão pouco.']};
 const pick=a=>a[Math.floor(Math.random()*a.length)];
 function addPts(n,x,y){Z.pts+=n;floaters.push({x,y,t:0,s:'+'+n});hud()}
-const NP=5;
+const NP=6;
 function hud(){
   let l='';for(let i=0;i<3;i++)l+='<span class="lamp'+(i<Z.lamps?'':' off')+'"></span>';$('hLamp').innerHTML='Lamparinas '+l;
   $('hPag').textContent=Z.pages+'/11';$('hPts').textContent=Z.pts;
@@ -203,7 +202,7 @@ const FONTE='Machado de Assis, Memórias Póstumas de Brás Cubas, cap. ';
 const INTER=[
  {id:'ped',x:1050,r:90,need:'lamp',txt:'AÇÃO · Pegar a página rasgada',done:()=>F.ped,act:async()=>{
    await say([['det','Mais uma página rasgada. Desta vez, o Carimbo cobriu o nome de uma moça.']]);await restaurarFrase();F.ped=true;hud();
-   toast('Capítulo 93 restaurado. Provas '+provas()+'/'+NP,3500)}},
+   toast('Capítulo 93 restaurado. Provas '+provas()+'/'+(typeof NP!=='undefined'?NP:5),3500)}},
  {id:'fases',x:900,r:140,txt:'AÇÃO · O jantar de Sabina',done:()=>F.fases,act:async()=>{
    await say([['bras','Que suplício foi o jantar! Sabina me sentou ao pé da filha do Damasceno.'],['eul','Boa noite.']]);
    await leitura({titulo:'Capítulo 93 · O Jantar',cita:'&mdash; Muito simpática, não é? acudiu ela; falta-lhe um pouco mais de corte. Mas que coração! é uma pérola. Bem boa noiva para você. &mdash; Não gosto de pérolas. &mdash; Casmurro! Para quando é que você se guarda? [&hellip;] Pois, meu rico, quer você queira quer não, há de casar com Nhá-loló.',
@@ -271,8 +270,9 @@ function drawRasuras(){
     if(!b.done){const g=ctx.createRadialGradient(x,G-112,6,x,G-112,90);g.addColorStop(0,'rgba(255,200,110,'+(.25*pulse)+')');g.addColorStop(1,'rgba(255,200,110,0)');ctx.fillStyle=g;ctx.fillRect(x-90,G-202,180,180)}}
   ctx.restore();
 }
-const provas=()=>[F.ped,F.fases,F.inveja,F.frango,F.placida].filter(Boolean).length;
+const provas=()=>[F.ped,F.fases,F.inveja,F.frango,F.placida,F.des].filter(Boolean).length;
 function nearInter(){
+  if(DES.on)return null;
   let best=null,bd=1e9;
   for(const it of INTER){
     if(it.done&&it.done())continue;if(it.cond&&!it.cond())continue;if(it.need==='lamp'&&!K.lamp)continue;
@@ -318,12 +318,12 @@ function autoCP(){
     cpX=P.x-60;saveCP();if(!window.__cpT){window.__cpT=1;toast('Ponto salvo: se perder, você volta daqui, não do início.',3500)}}
   else if(T-lastSave>1){lastSave=T;saveCP()}
 }
-function updateWorld(dt){autoCP();
+function updateWorld(dt){autoCP();updDes(dt);
   stampT-=dt;
   crowdT-=dt;if(crowdT<=0&&P.x>600&&P.x<3350){const n=2+Math.floor(Math.random()*2);for(let k=0;k<n;k++)crowd.push({x:camX+CW+60+k*58,v:-(135+Math.random()*30),t:Math.random()*5,h:96+Math.random()*26,u:Math.random()<.4,d:0});crowdT=5+Math.random()*2.5}
   for(const c of crowd){c.x+=c.v*dt;c.t+=dt;if(!c.d&&Math.abs(P.x-c.x)<26&&P.y>G-70&&P.inv<=0&&state==='play'){c.d=1;hit();P.vx=-120}}
   crowd=crowd.filter(c=>c.x>camX-120);
-  if(stampT<=0&&P.x>650&&P.x<3350&&!stamps.length){stamps.push({dir:Math.random()<.5?1:-1,t:0,x:0,sx:0});stampT=6+Math.random()*2.5;
+  if(false&&stampT<=0&&P.x>650&&P.x<3350&&!stamps.length){stamps.push({dir:Math.random()<.5?1:-1,t:0,x:0,sx:0});stampT=6+Math.random()*2.5;
     if(!window.__pen){window.__pen=1;toast('O Carimbo riscou o chão com o lápis vermelho: PULE a rasura!',3600)}}
   for(const s of stamps){s.t+=dt;if(s.t>1.1){if(!s.go){s.go=1;s.sx=s.dir>0?camX-80:camX+CW+80;s.x=s.sx;thud()}s.x+=s.dir*540*dt;
       if(!s.d&&Math.abs(P.x-s.x)<40&&P.y>G-34){s.d=1;shake=.3;hit()}}}
@@ -428,7 +428,7 @@ function render(dt){
   ctx.setTransform(DPR,0,0,DPR,0,0);
   const sx=shake>0?(Math.random()-.5)*shake*16:0,sy=shake>0?(Math.random()-.5)*shake*10:0;ctx.save();ctx.translate(sx,sy);
   if(state==='cine'){drawCine(dt);ctx.restore();return}
-  drawBG();drawFigures();drawBras();drawPlat();drawClue();drawPages();drawStamps();drawPlayer();drawBushes();drawLight();drawRain(dt);drawFloaters();
+  drawBG();drawFigures();drawBras();drawPlat();drawDes();drawClue();drawPages();drawStamps();drawPlayer();drawBushes();drawLight();drawRain(dt);drawFloaters();
   ctx.save();ctx.globalCompositeOperation='color';ctx.fillStyle='rgba(172,118,56,.55)';ctx.fillRect(0,0,CW,CH);ctx.restore();
   /* vinheta */
   const v=ctx.createRadialGradient(CW/2,CH/2,CH*.4,CW/2,CH/2,CH*.95);v.addColorStop(0,'rgba(0,0,0,0)');v.addColorStop(1,'rgba(22,10,2,.6)');ctx.fillStyle=v;ctx.fillRect(0,0,CW,CH);
@@ -563,6 +563,64 @@ function drawEscolaDoor(dx){
   ctx.fillStyle=SEP.d;ctx.font='bold 14px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText('ESCOLA',dx,y+14);
 }
 
+/* ============ DESAFIO ORIGINAL DA ZONA (agilidade) ============ */
+const DCFG={"m": "tiles", "x0": 1480, "act": "Dançar a valsa do salão", "title": "A VALSA DE NHÃ-LOLÓ", "tip": "O ladrilho amarelo vai acender e queimar. Saia dele (ou pule!) quando o brilho avisar. Sobreviva às 8 rodadas.", "intro": "Nhã-loló gostava de valsa, leitor. Hoje o salão está febril: os ladrilhos acendem antes de queimar. Saia deles quando o brilho avisar e dance as oito rodadas.", "win": [["bras", "Oito rodadas e nenhuma queimadura. A valsa acabou, leitor, e a moça ficou. Machado sabia como terminar uma festa sem terminar uma história."]]};
+const DES={on:false,t:0,x0:DCFG.x0,x1:DCFG.x0+900,list:[],pits:null,cp:0,ex:0,got:0,n:0};
+(function nudge(){const bad=x=>PITS.some(p=>x>p.x-70&&x<p.x+p.w+70)||(typeof RAS_BOARDS!=='undefined'&&RAS_BOARDS.some(b=>Math.abs(b.x-x)<170))||INTER.some(n=>Math.abs(n.x-x)<n.r+60);
+  let x=DES.x0,k=0;while(bad(x)&&k<60){x+=40;k++}DES.x0=x;DES.x1=x+900})();
+INTER.push({id:'des',x:DES.x0,r:80,txt:'AÇÃO · '+DCFG.act,cond:()=>!DES.on,done:()=>F.des,act:()=>startDes()});
+const dRand=(a,b)=>a+Math.random()*(b-a);
+async function startDes(){
+  await say([[DCFG.who||'bras',DCFG.intro]]);
+  DES.on=true;DES.t=0;DES.list=[];DES.ex=0;DES.got=0;DES.n=0;DES.sp=1.2;DES.pits=PITS.splice(0);DES.cp=cpX;cpX=DES.x0+30;
+  P.x=DES.x0+40;P.y=G;P.vy=0;P.vx=0;P.inv=1;camX=Math.max(0,Math.min(WW-CW,P.x-CW*.3));
+  MECH.init&&MECH.init();toast(DCFG.tip,5200);
+}
+function endDes(win){
+  DES.on=false;DES.list=[];PITS.push(...DES.pits);DES.pits=null;cpX=DES.cp;P.x=DES.x0;P.y=G;P.vy=0;P.vx=0;P.inv=1.5;camX=Math.max(0,Math.min(WW-CW,P.x-CW*.3));
+  if(!win)return;
+  F.des=true;addPts(350,CW/2,200);if(Z.lamps<3)Z.lamps++;hud();tone(660,.12,.05,'triangle');tone(990,.16,.04,'triangle');
+  say(DCFG.win).then(()=>toast('Desafio vencido! Provas '+provas()+'/'+(typeof NP!=='undefined'?NP:5),3500));
+}
+function updDes(dt){
+  if(!DES.on||state!=='play')return;
+  DES.t+=dt;P.x=Math.max(DES.x0+15,Math.min(DES.x1-15,P.x));
+  if(MECH.upd(dt)===true)endDes(true);
+}
+const dpx=()=>P.x,dpy=()=>P.y-44;
+function dInCam(x,m){return x>camX-(m||60)&&x<camX+CW+(m||60)}
+/* ---- marcos de início e fim ---- */
+function dPost(x,col){ctx.fillStyle=SEP.m;ctx.fillRect(x-4,G-120,8,120);ctx.fillStyle=col;ctx.beginPath();ctx.moveTo(x+4,G-120);ctx.lineTo(x+46,G-104);ctx.lineTo(x+4,G-88);ctx.closePath();ctx.fill();ctx.strokeStyle=SEP.d;ctx.lineWidth=2;ctx.strokeRect(x-4,G-120,8,120)}
+function drawDes(){
+  if(!DES.on)return;ctx.save();ctx.translate(-camX,0);
+  dPost(DES.x0,'#6a4824');if(MECH.goal)dPost(DES.x1,'#b3541c');
+  MECH.draw();ctx.restore();
+  /* faixa de título */
+  ctx.save();ctx.fillStyle='rgba(20,12,6,.78)';ctx.fillRect(CW/2-330,124,660,40);ctx.strokeStyle='#9a7545';ctx.lineWidth=2;ctx.strokeRect(CW/2-330,124,660,40);
+  ctx.fillStyle='#e6d2a6';ctx.font='15px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText(DCFG.title,CW/2,142);
+  ctx.fillStyle='#caa468';ctx.font='13px "Special Elite",monospace';ctx.fillText(MECH.hud(),CW/2,158);ctx.restore();
+}
+const dProg=()=>Math.max(0,Math.min(1,(P.x-DES.x0)/(DES.x1-DES.x0)));
+const MECH={};
+
+MECH.goal=false;MECH.R=8;MECH.hud=()=>'Valsa '+Math.min(MECH.R,DES.n)+'/'+MECH.R+' · saia do ladrilho quando ele acender';
+MECH.tw=()=>Math.floor((DES.x1-DES.x0-60)/8);MECH.tx=i=>DES.x0+30+i*MECH.tw();
+MECH.init=()=>{DES.s=Array(8).fill(0);DES.rt=2.2;DES.ph='wait'};
+MECH.upd=dt=>{
+  DES.rt-=dt;
+  if(DES.ph==='wait'&&DES.rt<=0){const k=Math.min(5,2+Math.floor(DES.n/2));const idx=[0,1,2,3,4,5,6,7].sort(()=>Math.random()-.5).slice(0,k);DES.s=DES.s.map((_,i)=>idx.includes(i)?1:0);DES.ph='warn';DES.rt=Math.max(.55,.95-DES.n*.05);tone(440,.1,.03,'triangle')}
+  else if(DES.ph==='warn'&&DES.rt<=0){DES.s=DES.s.map(v=>v?2:0);DES.ph='hot';DES.rt=.5;thud()}
+  else if(DES.ph==='hot'){const i=Math.floor((P.x-MECH.tx(0))/MECH.tw());if(DES.s[i]===2&&P.y>G-22&&!P._tHit){P._tHit=1;hit()}if(DES.rt<=0){DES.s.fill(0);DES.ph='wait';DES.rt=1.1;DES.n++;P._tHit=0}}
+  return DES.n>=MECH.R&&DES.ph==='wait';
+};
+MECH.draw=()=>{
+  for(let i=0;i<8;i++){const x=MECH.tx(i),w=MECH.tw(),s=DES.s[i]||0;ctx.fillStyle=s===2?'#c4421a':s===1?'#e8c25a':(i%2?'#8c6232':'#a37a46');ctx.fillRect(x,G-6,w-2,10);ctx.strokeStyle=SEP.d;ctx.lineWidth=2;ctx.strokeRect(x,G-6,w-2,10);
+    if(s){ctx.save();ctx.globalCompositeOperation='lighter';const g=ctx.createLinearGradient(0,G-6,0,G-(s===2?120:50));g.addColorStop(0,s===2?'rgba(255,120,40,.75)':'rgba(255,220,120,.4)');g.addColorStop(1,'rgba(255,120,40,0)');ctx.fillStyle=g;ctx.fillRect(x,G-(s===2?120:50),w-2,(s===2?114:44));ctx.restore();
+      ctx.fillStyle='#fff3d0';ctx.font='bold 22px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText(s===2?'✶':'!',x+w/2,G-14)}}
+};
+
+
+window.__d={DES,startDes,endDes,MECH,updDes};
 /* ============ Entrada ============ */
 const KM={ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right',ArrowUp:'jump',KeyW:'jump',Space:'jump',KeyC:'lamp',KeyE:'act',Enter:'act'};
 addEventListener('keydown',e=>{

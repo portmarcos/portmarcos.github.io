@@ -199,7 +199,7 @@ const CITA11='Prudêncio, um moleque de casa, era o meu cavalo de todos os dias;
 const INTER=[
  {id:'ped',x:1450,r:90,need:'lamp',txt:'AÇÃO · Pegar a página rasgada',done:()=>F.ped,act:async()=>{
    await say([['det','Outra página rasgada, com o mesmo carimbo vermelho. Esta é do capítulo 11.']]);await restaurarFrase();F.ped=true;hud();
-   toast('Capítulo 11 restaurado. Provas '+provas()+'/'+NP,3500)}},
+   toast('Capítulo 11 restaurado. Provas '+provas()+'/'+(typeof NP!=='undefined'?NP:5),3500)}},
  {id:'tacho',x:1050,r:130,txt:'AÇÃO · Olhar o tacho de doce',done:()=>F.tacho,act:async()=>{
    await say([['bras','Cinco anos e já era "menino diabo". Aos seis, o doce de coco foi a minha obra-prima. Veja o que fiz, e não me julgue antes de ler.']]);
    await leitura({titulo:'Capítulo 11 · O Menino É Pai do Homem',cita:'Por exemplo, um dia quebrei a cabeça de uma escrava, porque me negara uma colher do doce de coco que estava fazendo, e, não contente com o malefício, deitei um punhado de cinza ao tacho, e, não satisfeito da travessura, fui dizer à minha mãe que a escrava é que estragara o doce "por pirraça"; e eu tinha apenas seis anos.',
