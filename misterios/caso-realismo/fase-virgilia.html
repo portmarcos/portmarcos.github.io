@@ -62,7 +62,7 @@ input[type=text]{width:100%;padding:9px 12px;border-radius:8px;border:1px solid 
 #touch{position:absolute;inset:0;z-index:4;pointer-events:none}
 #touch button{pointer-events:auto;position:absolute;border-radius:50%;border:2px solid rgba(255,255,255,.35);background:rgba(34,20,9,.6);color:#fff;font-size:1.3rem;width:clamp(48px,11vw,72px);height:clamp(48px,11vw,72px);touch-action:none}
 #tL{left:2%;bottom:6%}#tR{left:calc(2% + clamp(56px,13vw,84px));bottom:6%}
-#tJ{right:2%;bottom:6%}#tA{right:calc(2% + clamp(56px,13vw,84px));bottom:6%;font-size:.8rem}#tC{right:calc(2% + clamp(28px,6.5vw,42px));bottom:calc(6% + clamp(56px,13vw,84px))}
+#tJ{right:2%;bottom:6%}#tA{right:calc(2% + clamp(56px,13vw,84px));bottom:6%;font-size:.8rem}#tX{right:calc(2% + clamp(112px,26vw,168px));bottom:6%;font-size:.7rem}#tC{right:calc(2% + clamp(28px,6.5vw,42px));bottom:calc(6% + clamp(56px,13vw,84px))}
 body:not(.touch) #touch{display:none}
 #rot{position:fixed;inset:0;z-index:99;background:#0a0603;display:none;align-items:center;justify-content:center;text-align:center;padding:20px;font-size:1.2rem}
 @media (orientation:portrait) and (pointer:coarse){#rot{display:flex}}
@@ -79,7 +79,7 @@ body:not(.touch) #touch{display:none}
 </div>
 <div id="toast"></div><div id="prompt" class="hidden"></div>
 <div id="dlg" class="hidden"><img id="dImg" alt=""><div class="t"><div class="n" id="dNome"></div><div class="x" id="dTxt"></div></div><div class="k">Espaço ▶</div></div>
-<div id="touch"><button id="tL">◀</button><button id="tR">▶</button><button id="tJ">PULO</button><button id="tA">AÇÃO</button><button id="tC">✦</button></div>
+<div id="touch"><button id="tL">◀</button><button id="tR">▶</button><button id="tJ">PULO</button><button id="tA">AÇÃO</button><button id="tC">✦</button><button id="tX">BILHETE</button></div>
 <div id="ov" class="ov"></div>
 </div></div>
 <script src="/assets/js/config-sheets.js"></script>
@@ -110,14 +110,13 @@ function sheet(k,sh,f,x,y,flip,alpha,sc){
 let state='start',T=0,camX=0,shake=0,flash=0;
 const S={nome:'',turma:'',gen:'m'};
 const Z={pts:0,pages:0,lamps:3,leit:0,tot:5,enviou:false};
-const F={ped:false,retrato:false,aguia:false,nariz:false,pontos:false,porta:false};
+const F={des:false,ped:false,retrato:false,aguia:false,nariz:false,pontos:false,porta:false};
 const LOBO={x:2450,dir:1,pause:0,on:true,seen:0};const BUSH=[{x:2480},{x:2800},{x:3080}];let hidden=false;
-const K={left:0,right:0,jump:0,lamp:0,act:0};
+const K={left:0,right:0,jump:0,lamp:0,act:0,atk:0};
 const P={x:110,y:G,vx:0,vy:0,face:1,ground:true,jumps:2,inv:0,an:0,land:0,hurt:0};
 let cpX=110,lastStep=0;
 const PITS=[{x:700,w:110},{x:1250,w:130},{x:2300,w:140},{x:2900,w:120}];
-const PLAT=[{x:420,y:G-60,w:70},{x:560,y:G-110,w:70},{x:850,y:G-70,w:64},{x:1180,y:G-80,w:70},{x:1300,y:G-130,w:70},{x:1500,y:G-70,w:64},{x:1700,y:G-110,w:70},
- {x:2140,y:G-70,w:64},{x:2260,y:G-125,w:70},{x:2420,y:G-70,w:64},{x:2760,y:G-80,w:64},{x:2880,y:G-130,w:70},{x:3040,y:G-70,w:64},{x:3380,y:G-70,w:64}];
+const PLAT=[]; /* sem plataformas de caixa */
 const PAGES=[[455,G-125,'o'],[595,G-175,'o'],[885,G-135,'c'],[1335,G-195,'c'],[1730,G-175,'o'],[2295,G-190,'c'],[2915,G-195,'o'],[3415,G-135,'o'],[250,G-40,'c'],[1600,G-40,'c'],[2650,G-40,'o']].map(a=>({x:a[0],y:a[1],k:a[2],got:false}));
 let stamps=[],stampT=3,rain=[],bolt=0,boltT=8,hint=0,hipo={on:false,x:0,y:0,t:0},cine=null,paused=false,floaters=[],marks=[];
 for(let i=0;i<240;i++)rain.push({x:Math.random()*CW*1.3,y:Math.random()*CH,v:520+Math.random()*320,l:10+Math.random()*14});
@@ -142,7 +141,7 @@ const NARR={queda:['Até a rua da Gamboa tem as suas covas, leitor.','Caí. O pa
  pag:['Um bilhete dobrado. O adultério precisa de papel e de tinta.','Bilhete guardado. O vizinho não viu, leitor.']};
 const pick=a=>a[Math.floor(Math.random()*a.length)];
 function addPts(n,x,y){Z.pts+=n;floaters.push({x,y,t:0,s:'+'+n});hud()}
-const NP=5;
+const NP=6;
 function hud(){
   let l='';for(let i=0;i<3;i++)l+='<span class="lamp'+(i<Z.lamps?'':' off')+'"></span>';$('hLamp').innerHTML='Lamparinas '+l;
   $('hPag').textContent=Z.pages+'/11';$('hPts').textContent=Z.pts;
@@ -199,7 +198,7 @@ const FONTE='Machado de Assis, Memórias Póstumas de Brás Cubas, cap. ';
 const INTER=[
  {id:'ped',x:1050,r:90,need:'lamp',txt:'AÇÃO · Pegar a página rasgada',done:()=>F.ped,act:async()=>{
    await say([['det','Outra página rasgada. Fala de uma águia e de um pavão.']]);await restaurarFrase();F.ped=true;hud();
-   toast('Capítulo 43 restaurado. Provas '+provas()+'/'+NP,3500)}},
+   toast('Capítulo 43 restaurado. Provas '+provas()+'/'+(typeof NP!=='undefined'?NP:5),3500)}},
  {id:'retrato',x:900,r:140,txt:'AÇÃO · Conhecer Virgília',done:()=>F.retrato,act:async()=>{
    await say([['bras','Virgília. A mesma senhora que, em 1869, devia assistir aos meus últimos dias. Mas então ela tinha uns quinze ou dezesseis anos.'],['vir','Pois não, doutor. Meu pai disse que o senhor viria jantar.']]);
    await leitura({titulo:'Capítulo 27 · Virgília?',cita:'Não digo que já lhe coubesse a primazia da beleza, entre as mocinhas do tempo, porque isto não é romance, em que o autor sobredoura a realidade e fecha os olhos às sardas e espinhas; mas também não digo que lhe maculasse o rosto nenhuma sarda ou espinha, não. Era bonita, fresca, saída das mãos da natureza.',
@@ -229,7 +228,7 @@ const INTER=[
      q:{t:'Por que Machado substitui as falas dos amantes por pontinhos?',o:['Porque o diálogo dos amantes repete o de Adão e Eva: o leitor completa o que o narrador cala.','Por um erro de impressão que a editora nunca corrigiu nas edições seguintes do livro.','Porque o capítulo ficou inacabado e o autor não teve tempo de reescrevê-lo antes de morrer.','Porque Brás e Virgília estavam brigados e, por isso, não trocaram palavra alguma entre si.'],k:0,e:'O capítulo é um recurso metalinguístico e irônico: a ausência de texto é o texto. Machado joga com o leitor, deixando a imaginação preencher o que o decoro não permitia dizer. O "velho diálogo de Adão e Eva" mostra que o amor é sempre o mesmo, em qualquer época.'}});
    F.pontos=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'porta',x:3500,r:140,txt:'AÇÃO · Voltar para casa de madrugada',cond:()=>provas()===NP,act:async()=>{
-   await say([['bras','Saí dali a saborear o beijo. Não pude dormir. Ouvi as horas todas da noite.']]);startCine()}}
+   await say([['bras','Saí dali a saborear o beijo. Não pude dormir. Ouvi as horas todas da noite.'],['lobo','Boa madrugada, Brás. Eu serei marquês, e a minha águia não divide o poleiro com pavões.'],['bras','Leitor, uma confissão: no livro não houve duelo algum. Lobo Neves tinha medo da opinião, não da espada. Mas a noite é minha, e eu a reescrevo.']]);startDuel()}}
 ];
 /* ===== Trechos do livro (opcionais): citações nas páginas + painéis rasurados ===== */
 const FRAGS=[[27, "Aí tem o leitor, em poucas linhas, o retrato físico e moral da pessoa que devia influir mais tarde na minha vida; era aquilo com dezesseis anos."], [27, "Deixa lá dizer o Pascal que o homem é um caniço pensante."], [43, "Talvez cinco beijos; mas dez que fossem não queria dizer coisa nenhuma."], [49, "Já meditaste alguma vez no destino do nariz, amado leitor?"], [53, "Há umas plantas que nascem e crescem depressa; outras são tardias e pecas."], [53, "O nosso amor era daquelas; brotou com tal ímpeto e tanta seiva, que, dentro em pouco, era a mais vasta, folhuda e exuberante criatura dos bosques."]];
@@ -268,8 +267,9 @@ function drawRasuras(){
     if(!b.done){const g=ctx.createRadialGradient(x,G-112,6,x,G-112,90);g.addColorStop(0,'rgba(255,200,110,'+(.25*pulse)+')');g.addColorStop(1,'rgba(255,200,110,0)');ctx.fillStyle=g;ctx.fillRect(x-90,G-202,180,180)}}
   ctx.restore();
 }
-const provas=()=>[F.ped,F.retrato,F.aguia,F.nariz,F.pontos].filter(Boolean).length;
+const provas=()=>[F.ped,F.retrato,F.aguia,F.nariz,F.pontos,F.des].filter(Boolean).length;
 function nearInter(){
+  if(DES.on||duel.on)return null;
   let best=null,bd=1e9;
   for(const it of INTER){
     if(it.done&&it.done())continue;if(it.cond&&!it.cond())continue;if(it.need==='lamp'&&!K.lamp)continue;
@@ -315,7 +315,7 @@ function autoCP(){
     cpX=P.x-60;saveCP();if(!window.__cpT){window.__cpT=1;toast('Ponto salvo: se perder, você volta daqui, não do início.',3500)}}
   else if(T-lastSave>1){lastSave=T;saveCP()}
 }
-function updateWorld(dt){autoCP();
+function updateWorld(dt){autoCP();updDes(dt);updBil(dt);updateDuel(dt);
   stampT-=dt;
   hidden=false;for(const bh of BUSH){if(Math.abs(P.x-bh.x)<42&&P.ground&&Math.abs(P.vx)<25)hidden=true}
   if(LOBO.on&&state==='play'){
@@ -323,7 +323,7 @@ function updateWorld(dt){autoCP();
     const reading=LOBO.pause>0;const dx=P.x-LOBO.x;
     if(!reading&&!hidden&&dx*LOBO.dir>0&&Math.abs(dx)<300&&Math.abs(P.y-G)<120&&P.inv<=0){LOBO.seen=1.2;hit();toast('Lobo Neves viu você! Esconda-se quieto atrás de uma moita.',3000);P.x=Math.min(P.x,cpX>2300?cpX:2250);P.x=Math.max(P.x,30);LOBO.dir=1;LOBO.x=2400}}
   LOBO.seen=Math.max(0,LOBO.seen-dt);
-  if(stampT<=0&&P.x>650&&P.x<3350&&!stamps.length){stamps.push({dir:Math.random()<.5?1:-1,t:0,x:0,sx:0});stampT=6+Math.random()*2.5;
+  if(false&&stampT<=0&&P.x>650&&P.x<3350&&!stamps.length){stamps.push({dir:Math.random()<.5?1:-1,t:0,x:0,sx:0});stampT=6+Math.random()*2.5;
     if(!window.__pen){window.__pen=1;toast('O Carimbo riscou o chão com o lápis vermelho: PULE a rasura!',3600)}}
   for(const s of stamps){s.t+=dt;if(s.t>1.1){if(!s.go){s.go=1;s.sx=s.dir>0?camX-80:camX+CW+80;s.x=s.sx;thud()}s.x+=s.dir*540*dt;
       if(!s.d&&Math.abs(P.x-s.x)<40&&P.y>G-34){s.d=1;shake=.3;hit()}}}
@@ -444,7 +444,7 @@ function render(dt){
   ctx.setTransform(DPR,0,0,DPR,0,0);
   const sx=shake>0?(Math.random()-.5)*shake*16:0,sy=shake>0?(Math.random()-.5)*shake*10:0;ctx.save();ctx.translate(sx,sy);
   if(state==='cine'){drawCine(dt);ctx.restore();return}
-  drawBG();drawFigures();drawBras();drawPlat();drawClue();drawPages();drawStamps();drawPlayer();drawBushes();drawLight();drawRain(dt);drawFloaters();
+  drawBG();drawFigures();drawBras();drawPlat();drawDes();drawDuel();drawClue();drawPages();drawStamps();drawPlayer();drawBushes();drawLight();drawRain(dt);drawFloaters();drawDuelHud();
   ctx.save();ctx.globalCompositeOperation='color';ctx.fillStyle='rgba(172,118,56,.55)';ctx.fillRect(0,0,CW,CH);ctx.restore();
   /* vinheta */
   const v=ctx.createRadialGradient(CW/2,CH/2,CH*.4,CW/2,CH/2,CH*.95);v.addColorStop(0,'rgba(0,0,0,0)');v.addColorStop(1,'rgba(22,10,2,.6)');ctx.fillStyle=v;ctx.fillRect(0,0,CW,CH);
@@ -583,8 +583,178 @@ function drawEscolaDoor(dx){
   ctx.fillStyle=SEP.d;ctx.font='bold 14px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText('ESCOLA',dx,y+14);
 }
 
+/* ============ DESAFIO ORIGINAL DA ZONA (agilidade) ============ */
+const DCFG={"m": "dive", "x0": 1480, "act": "Juntar as penas da águia", "title": "A ÁGUIA DE VIRGÍLIA", "tip": "Junte as 5 penas. A águia marca o ponto de mergulho com uma sombra no chão: saia dali na hora!", "intro": "Há uma águia sobre o jardim, leitor, e ela solta penas ao voar. Junte cinco, mas repare na sombra que cresce no chão: é onde ela vai cair.", "win": [["bras", "Cinco penas, e a águia sem uma unha em mim. Virgília teria aprovado a precisão; Machado, a ironia."]]};
+const DES={on:false,t:0,x0:DCFG.x0,x1:DCFG.x0+900,list:[],pits:null,cp:0,ex:0,got:0,n:0};
+(function nudge(){const bad=x=>PITS.some(p=>x>p.x-70&&x<p.x+p.w+70)||(typeof RAS_BOARDS!=='undefined'&&RAS_BOARDS.some(b=>Math.abs(b.x-x)<170))||INTER.some(n=>Math.abs(n.x-x)<n.r+60);
+  let x=DES.x0,k=0;while(bad(x)&&k<60){x+=40;k++}DES.x0=x;DES.x1=x+900})();
+INTER.push({id:'des',x:DES.x0,r:80,txt:'AÇÃO · '+DCFG.act,cond:()=>!DES.on,done:()=>F.des,act:()=>startDes()});
+function dGlow(x,y,r){const g=ctx.createRadialGradient(x,y,4,x,y,r);g.addColorStop(0,'rgba(255,238,190,.5)');g.addColorStop(1,'rgba(255,238,190,0)');ctx.fillStyle=g;ctx.fillRect(x-r,y-r,2*r,2*r)}
+const dRand=(a,b)=>a+Math.random()*(b-a);
+async function startDes(){
+  await say([[DCFG.who||'bras',DCFG.intro]]);
+  DES.on=true;DES.t=0;DES.list=[];DES.ex=0;DES.got=0;DES.n=0;DES.sp=1.2;DES.pits=PITS.splice(0);DES.cp=cpX;cpX=DES.x0+30;
+  P.x=DES.x0+40;P.y=G;P.vy=0;P.vx=0;P.inv=1;camX=Math.max(0,Math.min(WW-CW,P.x-CW*.3));
+  MECH.init&&MECH.init();toast(DCFG.tip,5200);
+}
+function endDes(win){
+  DES.on=false;DES.list=[];PITS.push(...DES.pits);DES.pits=null;cpX=DES.cp;P.x=DES.x0;P.y=G;P.vy=0;P.vx=0;P.inv=1.5;camX=Math.max(0,Math.min(WW-CW,P.x-CW*.3));
+  if(!win)return;
+  F.des=true;addPts(350,CW/2,200);if(Z.lamps<3)Z.lamps++;hud();tone(660,.12,.05,'triangle');tone(990,.16,.04,'triangle');
+  say(DCFG.win).then(()=>toast('Desafio vencido! Provas '+provas()+'/'+(typeof NP!=='undefined'?NP:5),3500));
+}
+function updDes(dt){
+  if(!DES.on||state!=='play')return;
+  DES.t+=dt;P.x=Math.max(DES.x0+15,Math.min(DES.x1-15,P.x));
+  if(MECH.upd(dt)===true)endDes(true);
+}
+const dpx=()=>P.x,dpy=()=>P.y-44;
+function dInCam(x,m){return x>camX-(m||60)&&x<camX+CW+(m||60)}
+/* ---- marcos de início e fim ---- */
+function dPost(x,col){ctx.fillStyle=SEP.m;ctx.fillRect(x-4,G-120,8,120);ctx.fillStyle=col;ctx.beginPath();ctx.moveTo(x+4,G-120);ctx.lineTo(x+46,G-104);ctx.lineTo(x+4,G-88);ctx.closePath();ctx.fill();ctx.strokeStyle=SEP.d;ctx.lineWidth=2;ctx.strokeRect(x-4,G-120,8,120)}
+function drawDes(){
+  if(!DES.on)return;ctx.save();ctx.translate(-camX,0);
+  dPost(DES.x0,'#6a4824');if(MECH.goal)dPost(DES.x1,'#b3541c');
+  MECH.draw();ctx.restore();
+  /* faixa de título */
+  ctx.save();ctx.fillStyle='rgba(20,12,6,.78)';ctx.fillRect(CW/2-330,124,660,40);ctx.strokeStyle='#9a7545';ctx.lineWidth=2;ctx.strokeRect(CW/2-330,124,660,40);
+  ctx.fillStyle='#e6d2a6';ctx.font='15px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText(DCFG.title,CW/2,142);
+  ctx.fillStyle='#caa468';ctx.font='13px "Special Elite",monospace';ctx.fillText(MECH.hud(),CW/2,158);ctx.restore();
+}
+const dProg=()=>Math.max(0,Math.min(1,(P.x-DES.x0)/(DES.x1-DES.x0)));
+const MECH={};
+
+MECH.goal=false;MECH.hud=()=>'Junte as 5 penas · penas: '+DES.got+'/5 · a sombra no chão avisa o mergulho';
+MECH.init=()=>{DES.f=[[140,0],[300,1],[470,0],[640,1],[800,0]].map(a=>({x:DES.x0+a[0],y:a[1]?G-150:G-40,got:0}));DES.e=[{x:DES.x0+200,y:G-320,st:'c',t:1.6,tx:0,off:0},{x:DES.x0+700,y:G-340,st:'c',t:3,tx:0,off:1,off2:1}]};
+MECH.upd=dt=>{
+  for(const f of DES.f)if(!f.got&&Math.abs(P.x-f.x)<30&&Math.abs(dpy()-f.y)<48){f.got=1;DES.got++;addPts(40,f.x-camX,f.y);tone(880,.07,.05,'triangle');tone(1320,.1,.04,'triangle')}
+  DES.e.forEach((e,i)=>{if(i===1&&DES.got<3)return;e.t-=dt;
+    if(e.st==='c'){e.x+=(P.x+Math.sin(T*1.3+i*3)*120-e.x)*Math.min(1,dt*1.5);e.y=G-320+Math.sin(T*2+i)*16;if(e.t<=0){e.st='a';e.tx=Math.max(DES.x0+30,Math.min(DES.x1-30,P.x+P.vx*.5));e.t=.95-DES.got*.05}}
+    else if(e.st==='a'){e.x+=(e.tx-e.x)*Math.min(1,dt*6);}
+    if(e.st==='a'&&e.t<=0){e.st='d';e.x=e.tx}
+    else if(e.st==='d'){e.y+=1150*dt;if(Math.abs(P.x-e.tx)<36&&e.y>P.y-96&&e.y<P.y+4&&!e.hit){e.hit=1;hit()}if(e.y>=G-18){e.st='r';e.t=.5;thud2()}}
+    else if(e.st==='r'){if(e.t<=0){e.y-=520*dt;if(e.y<G-320){e.st='c';e.t=dRand(1.6,2.6)-DES.got*.15;e.hit=0}}}});
+  return DES.got>=5;
+};
+MECH.draw=()=>{
+  for(const f of DES.f){if(f.got)continue;dGlow(f.x,f.y,40);ctx.save();ctx.translate(f.x,f.y+Math.sin(T*3+f.x)*4);ctx.rotate(-.6);ctx.fillStyle='#f1e7c9';ctx.strokeStyle=SEP.d;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-18,0);ctx.quadraticCurveTo(0,-12,18,-2);ctx.quadraticCurveTo(0,6,-18,0);ctx.fill();ctx.stroke();ctx.beginPath();ctx.moveTo(-20,2);ctx.lineTo(16,-2);ctx.stroke();ctx.restore()}
+  DES.e.forEach((e,i)=>{if(i===1&&DES.got<3)return;
+    if(e.st==='a'||e.st==='d'){const a=e.st==='a'?1-e.t/.95:1;ctx.fillStyle='rgba(20,10,4,'+(.25+a*.4)+')';ctx.beginPath();ctx.ellipse(e.tx,G-1,16+a*26,4+a*3,0,0,7);ctx.fill();ctx.strokeStyle='rgba(160,40,20,'+(.2+a*.4)+')';ctx.setLineDash([5,6]);ctx.beginPath();ctx.moveTo(e.tx,e.y+20);ctx.lineTo(e.tx,G-4);ctx.stroke();ctx.setLineDash([])}
+    const fl=Math.sin(T*10+i)*(e.st==='d'?.2:.7);ctx.save();ctx.translate(e.x,e.y);if(e.st==='d')ctx.rotate(Math.PI);ctx.fillStyle='#20140a';ctx.strokeStyle='#caa468';ctx.lineWidth=1.4;
+    ctx.beginPath();ctx.ellipse(0,0,16,10,0,0,7);ctx.fill();ctx.stroke();ctx.beginPath();ctx.ellipse(18,-4,8,6,0,0,7);ctx.fill();ctx.stroke();ctx.fillStyle='#caa468';ctx.beginPath();ctx.moveTo(25,-4);ctx.lineTo(33,-1);ctx.lineTo(25,0);ctx.fill();
+    for(const s of [-1,1]){ctx.fillStyle='#20140a';ctx.beginPath();ctx.moveTo(-4,0);ctx.quadraticCurveTo(-30*s+0,-40*fl-6,-60*s,-14*fl+8);ctx.quadraticCurveTo(-30*s,6,-4,6);ctx.closePath();ctx.fill();ctx.stroke()}ctx.restore()});
+};
+
+
+window.__d={DES,startDes,endDes,MECH,updDes};
 /* ============ Entrada ============ */
-const KM={ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right',ArrowUp:'jump',KeyW:'jump',Space:'jump',KeyC:'lamp',KeyE:'act',Enter:'act'};
+/* ============ Duelo com Lobo Neves (invenção do jogo: no livro não há duelo) ============ */
+const BIL=[];let bilCd=0;
+const duel={on:false,won:false,hp:8,max:8,bx:3590,stun:0,flash:0,proj:[],asked:{6:0,4:0,2:0},t:0,at:2.2,at2:4,dash:0,dst:'idle',dd:6};
+const DUELQ={
+ 6:{titulo:'Golpe de ambição · Capítulo 58',cita:'Um dia confessou-me que trazia uma triste carcoma na existência; faltava-lhe a glória pública.',
+    q:{t:'O que a "carcoma" revela sobre Lobo Neves?',o:['Que ele sofre de uma doença física que o impede de trabalhar.','Que a ambição de glória pública o rói por dentro, como o bicho que corrói a madeira.','Que ele está feliz com a vida e só queria agradecer a Brás.','Que ele pretende abandonar a política e viver recolhido.'],k:1,e:'"Carcoma" é o inseto que rói a madeira: a falta de glória o consome por dentro. A ambição política é o motor do personagem, e é por ela que ele aceita a presidência da província.'}},
+ 4:{titulo:'Golpe do decreto · Capítulo 110',cita:'Uma semana depois, Lobo Neves foi nomeado presidente de província. Agarrei-me à esperança da recusa, se o decreto viesse outra vez datado de 13; trouxe, porém, a data de 31, e esta simples transposição de algarismos eliminou deles a substância diabólica. Que profundas que são as molas da vida!',
+    q:{t:'Por que Brás esperava que o decreto trouxesse a data 13?',o:['Porque 13 era o dia do aniversário de Virgília e ele queria homenageá-la.','Porque o número, tido como de azar, faria Lobo Neves recusar o cargo e talvez ficar.','Porque o decreto com 13 daria a Brás um emprego no governo da província.','Porque a data 13 provava que o decreto era falso e podia ser anulado.'],k:1,e:'Brás se agarra à superstição: o 13, número "diabólico", levaria o marido a recusar a presidência e a manter Virgília por perto. A troca para 31 desfaz a esperança, e o narrador ironiza as "molas da vida".'}},
+ 2:{titulo:'Golpe final · Capítulo 112',cita:'[&hellip;] tinha medo - não medo de mim, nem de si, nem do código, nem da consciência; tinha medo da opinião.',
+    q:{t:'O que segura Lobo Neves, segundo o narrador?',o:['O medo da espada de Brás e da morte num duelo.','A consciência pesada, que o faz perdoar a esposa.','O medo do que dirá a opinião pública, o "tribunal anônimo", e não a lei ou a consciência.','O amor por Virgília, que o impede de ver qualquer defeito nela.'],k:2,e:'A opinião, esse tribunal invisível, é o único limite que Lobo Neves respeita. Por isso ele finge ignorância: separar-se ou vingar-se exporia a família. Mais um retrato machadiano das aparências sociais.'}}
+};
+function firePapel(){
+  if(!duel.on||state!=='play'||bilCd>0)return;bilCd=.4;
+  BIL.push({x:P.x+P.face*20,y:P.y-46,vx:P.face*660,life:.9});tone(560,.07,.035,'triangle');tone(840,.05,.02,'triangle');
+}
+function updBil(dt){
+  if(state!=='play')return;bilCd=Math.max(0,bilCd-dt);
+  if(duel.on){if(K.atk&&!K._a){K._a=1;firePapel()}if(!K.atk)K._a=0}
+  for(const b of BIL){b.x+=b.vx*dt;b.life-=dt}
+  for(let i=BIL.length-1;i>=0;i--)if(BIL[i].life<=0)BIL.splice(i,1);
+}
+function startDuel(){
+  duel.on=true;duel.won=false;duel.hp=duel.max;duel.proj=[];duel.asked={6:0,4:0,2:0};duel.at=2.2;duel.at2=4;duel.stun=0;duel.flash=0;duel.dst='idle';duel.dd=6;duel.bx=3590;
+  LOBO.on=false;P.x=3150;P.vx=0;cpX=3040;BIL.length=0;
+  toast('Duelo! X, F ou botão BILHETE lança bilhetes. Pule o decreto 13 (o 31 é inofensivo) e fuja das cartas anônimas.',6000);hud();
+}
+function spawnDecreto(){
+  const arc=duel.hp<=5&&Math.random()<.4,n=Math.random()<.55?13:31;
+  duel.proj.push({t:'d',n,x:duel.bx-60,y:arc?G-170:G-50,w:.5,vx:-(240+(8-duel.hp)*14),vy:arc?-120:0,rot:0});
+}
+function spawnCarta(){duel.proj.push({t:'c',x:Math.max(3060,Math.min(3490,P.x+P.vx*.35)),y:-30,w:.95,vy:0})}
+function dmgBoss(n){
+  if(duel.flash>0||duel.hp<=0)return;duel.hp=Math.max(0,duel.hp-n);duel.flash=.55;shake=.25;thud();addPts(25,duel.bx-camX,G-230);
+  if(duel.hp<=0)return winDuel();
+  for(const k of [6,4,2])if(duel.hp<=k&&!duel.asked[k]){duel.asked[k]=1;askDuel(k);break}
+}
+async function askDuel(k){
+  duel.proj=[];BIL.length=0;const d=DUELQ[k];
+  const first=await leitura({titulo:d.titulo,cita:d.cita,fonte:FONTE+(k===6?'58':k===4?'110':'112')+' (domínio público).',q:d.q});
+  if(first){duel.stun=4.5;toast('Acertou de primeira! Lobo Neves fica atordoado e perde mais um golpe de ambição.',3600);duel.hp=Math.max(0,duel.hp-1);if(duel.hp<=0)winDuel()}
+  else{Z.lamps=Math.max(1,Z.lamps-1);hud();toast('Errou antes de acertar: a leitura custou uma lamparina e o Lobo Neves se recompôs.',3800)}
+}
+async function winDuel(){
+  duel.on=false;duel.won=true;duel.proj=[];BIL.length=0;addPts(400,duel.bx-camX,G-260);shake=.6;thud();F.lobo=true;
+  await new Promise(r=>setTimeout(r,700));
+  await say([['lobo','Basta. Marquês sem opinião a favor não é marquês. Leve a sua águia, Brás. Eu tenho um jantar e uma reputação.'],['bras','O leitor repare: o marido venceu pelo medo da opinião, e perdeu pela mesma razão. Machado não precisava de espada.']]);
+  startCine();
+}
+function updateDuel(dt){
+  if(!duel.on||state!=='play')return;duel.t+=dt;
+  P.x=Math.max(3040,Math.min(3500,P.x));
+  duel.flash=Math.max(0,duel.flash-dt);duel.stun=Math.max(0,duel.stun-dt);
+  const ph=duel.hp>=5?1:duel.hp>=3?.8:.64;
+  if(duel.stun<=0){
+    if(duel.dst==='idle'){duel.at-=dt;duel.at2-=dt;
+      if(duel.at<=0){spawnDecreto();duel.at=(2.4+Math.random()*.9)*ph}
+      if(duel.hp<=5&&duel.at2<=0){spawnCarta();duel.at2=(2.8+Math.random()*.8)*ph}
+      if(duel.hp<=4){duel.dd-=dt;if(duel.dd<=0){duel.dst='warn';duel.dt=1;duel.dd=7}}}
+    else if(duel.dst==='warn'){duel.dt-=dt;if(duel.dt<=0)duel.dst='go'}
+    else if(duel.dst==='go'){duel.bx-=430*dt;if(duel.bx<=3280)duel.dst='back'}
+    else if(duel.dst==='back'){duel.bx+=170*dt;if(duel.bx>=3590){duel.bx=3590;duel.dst='idle'}}
+    if((duel.dst==='go'||duel.dst==='back')&&Math.abs(P.x-duel.bx)<50&&P.y>G-110)hit()}
+  for(const p of duel.proj){
+    if(p.w>0){p.w-=dt;continue}
+    if(p.t==='d'){p.rot+=dt*3;p.vy+=(p.y<G-60?500:0)*dt;p.x+=p.vx*dt;p.y+=p.vy*dt;if(p.y>G-50){p.y=G-50;p.vy=0}
+      if(Math.abs(P.x-p.x)<28&&Math.abs((P.y-40)-p.y)<34){
+        if(p.n===13)hit();else{addPts(15,p.x-camX,p.y-30);tone(660,.08,.04,'triangle')}
+        p.dead=1}}
+    else if(p.t==='c'){p.vy+=1900*dt;p.y+=p.vy*dt;if(p.y>=G-6){p.dead=1;thud2()}
+      else if(Math.abs(P.x-p.x)<22&&p.y>P.y-86&&p.y<P.y+4){hit();p.dead=1}}
+    if(p.x<2950)p.dead=1;
+    for(const b of BIL)if(b.life>0&&p.t==='d'&&Math.abs(b.x-p.x)<28&&Math.abs(b.y-p.y)<42){b.life=0;p.dead=1;addPts(10,p.x-camX,p.y)}}
+  duel.proj=duel.proj.filter(p=>!p.dead);
+  for(const b of BIL)if(b.life>0&&Math.abs(b.x-duel.bx)<60&&b.y>G-260&&b.y<G-30){b.life=0;dmgBoss(1)}
+}
+function drawDuel(){
+  if(!duel.on&&!BIL.length)return;
+  ctx.save();ctx.translate(-camX,0);
+  if(duel.on||duel.won){
+    const bx=duel.bx,sh=duel.flash>0?Math.sin(T*70)*5:0;
+    if(duel.dst==='warn'){ctx.fillStyle='rgba(120,30,20,.5)';ctx.beginPath();ctx.moveTo(bx-30,G-10);ctx.lineTo(3280,G-30);ctx.lineTo(3280,G+4);ctx.closePath();ctx.fill();ctx.fillStyle='#5a1a10';ctx.font='bold 34px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText('!',bx,G-190)}
+    dGlow(bx,G-110,110);
+    const f=duel.stun>0?3:(duel.dst==='go'?(Math.floor(T*8)%2):(Math.floor(T*2)%2));
+    sheet('lobo',SH.lobo,f,bx+sh,G,true,duel.flash>0&&Math.floor(T*30)%2?.45:1,1.5);
+  }
+  for(const p of duel.proj){
+    if(p.t==='d'){
+      if(p.w>0){ctx.fillStyle='rgba(60,30,10,.35)';ctx.fillRect(p.x-12,p.y-12,24,3);continue}
+      ctx.save();ctx.translate(p.x,p.y);ctx.rotate(Math.sin(p.rot)*.12);
+      ctx.fillStyle=p.n===13?'#d8b890':'#f2e4b4';ctx.fillRect(-22,-16,44,32);ctx.strokeStyle=SEP.d;ctx.lineWidth=2;ctx.strokeRect(-22,-16,44,32);
+      ctx.fillStyle=p.n===13?'#8a1c14':'#a8812a';ctx.beginPath();ctx.arc(14,10,7,0,7);ctx.fill();ctx.stroke();
+      ctx.fillStyle=SEP.d;ctx.font='bold 17px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText(String(p.n),-4,5);ctx.restore()}
+    else if(p.t==='c'){
+      if(p.w>0){ctx.fillStyle='rgba(60,30,10,.4)';ctx.beginPath();ctx.ellipse(p.x,G,16+Math.sin(T*20)*2,4,0,0,7);ctx.fill();continue}
+      ctx.save();ctx.translate(p.x,p.y);ctx.rotate(.4);ctx.fillStyle='#e9dcc0';ctx.fillRect(-14,-9,28,18);ctx.strokeStyle=SEP.d;ctx.lineWidth=2;ctx.strokeRect(-14,-9,28,18);ctx.beginPath();ctx.moveTo(-14,-9);ctx.lineTo(0,2);ctx.lineTo(14,-9);ctx.stroke();ctx.restore()}}
+  for(const b of BIL){ctx.save();ctx.translate(b.x,b.y);ctx.rotate(b.life*14);ctx.fillStyle='#f4ead0';ctx.fillRect(-9,-7,18,14);ctx.strokeStyle=SEP.d;ctx.lineWidth=1.6;ctx.strokeRect(-9,-7,18,14);ctx.restore()}
+  ctx.restore();
+}
+function drawDuelHud(){
+  if(!duel.on)return;const w=340,x=CW/2-w/2,y=CH-30;ctx.save();
+  ctx.fillStyle='rgba(20,12,6,.8)';ctx.fillRect(x-8,y-26,w+16,50);ctx.strokeStyle='#9a7545';ctx.lineWidth=2;ctx.strokeRect(x-8,y-26,w+16,50);
+  ctx.fillStyle='#e6d2a6';ctx.font='13px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText('AMBIÇÃO DO LOBO NEVES',CW/2,y-9);
+  for(let i=0;i<duel.max;i++){const sx=x+i*(w/duel.max)+2,sw=w/duel.max-4;ctx.fillStyle=i<duel.hp?'#8a1c14':'rgba(255,255,255,.08)';ctx.fillRect(sx,y,sw,12);ctx.strokeStyle=SEP.d;ctx.lineWidth=1.5;ctx.strokeRect(sx,y,sw,12)}
+  ctx.restore();
+}
+
+const KM={ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right',ArrowUp:'jump',KeyW:'jump',Space:'jump',KeyC:'lamp',KeyX:'atk',KeyF:'atk',KeyE:'act',Enter:'act'};
 addEventListener('keydown',e=>{
   const k=KM[e.code];
   if(e.code==='Escape'||e.code==='KeyP'){if(state==='play')pause(true);else if(paused)pause(false);return}
@@ -600,20 +770,20 @@ $('bPause').onclick=()=>{if(state==='play')pause(true)};$('bMute').onclick=()=>s
 $('dlg').addEventListener('pointerdown',e=>{e.preventDefault();if(state==='dialog')next()});
 function bindT(id,k,act){const b=$(id);const on=e=>{e.preventDefault();if(act){if(state==='dialog'){next();return}if(state==='play')doAct()}else K[k]=1};const off=e=>{e.preventDefault();if(!act)K[k]=0};
   b.addEventListener('pointerdown',on);b.addEventListener('pointerup',off);b.addEventListener('pointercancel',off);b.addEventListener('pointerleave',off)}
-bindT('tL','left');bindT('tR','right');bindT('tJ','jump');bindT('tC','lamp');bindT('tA',null,true);
+bindT('tL','left');bindT('tR','right');bindT('tJ','jump');bindT('tC','lamp');bindT('tX','atk');bindT('tA',null,true);
 if('ontouchstart' in window||navigator.maxTouchPoints>0)document.body.classList.add('touch');
 /* ============ Laço ============ */
 let last=0;
 function loop(ts){
   requestAnimationFrame(loop);const dt=Math.min(.05,(ts-last)/1000||.016);last=ts;T+=dt;
   if(state==='play'){updatePlayer(dt);updateWorld(dt);
-    camX+=((P.x-CW*.42)-camX)*Math.min(1,dt*5);camX=Math.max(0,Math.min(WW-CW,camX));
+    camX+=(((duel.on?WW-CW:P.x-CW*.42))-camX)*Math.min(1,dt*5);camX=Math.max(0,Math.min(WW-CW,camX));
     const it=nearInter();const pr=$('prompt');if(it){pr.textContent=it.txt;pr.classList.remove('hidden')}else pr.classList.add('hidden');
     if(K.lamp&&!K._l){K._l=1;}if(!K.lamp)K._l=0;
   }else if(state==='dialog'){updateWorld(dt);P.vx=0}
   render(dt);
 }
-window.__t={LOBO,P,F,Z,PAGES,INTER,get state(){return state},set state(v){state=v},get camX(){return camX},set camX(v){camX=v},provas,startCine,fim,K};
+window.__t={duel,startDuel,BIL,LOBO,P,F,Z,PAGES,INTER,get state(){return state},set state(v){state=v},get camX(){return camX},set camX(v){camX=v},provas,startCine,fim,K};
 (function restaurarProg(){try{const r=JSON.parse(localStorage.getItem(PROGKEY)||'null');if(!r||!(r.cp>0))return;
   cpX=r.cp;P.x=r.cp;camX=Math.max(0,Math.min(WW-CW,P.x-CW*.42));Object.assign(Z,r.Z||{});Object.assign(F,r.F||{});
   (r.pg||[]).forEach((v,i)=>{if(v&&PAGES[i])PAGES[i].got=true});(r.rb||[]).forEach((v,i)=>{if(v&&RAS_BOARDS[i])RAS_BOARDS[i].done=true});
