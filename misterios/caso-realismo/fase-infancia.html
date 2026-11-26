@@ -93,9 +93,11 @@ const $=id=>document.getElementById(id);
 const SAVE='caso_realismo_v1';
 const SRC={det:'../caso-originais/img/q1/detetive.webp',detF:'../caso-originais/img/q1/detetive-f.webp',bras:'img/q1/bras.webp',hipo:'img/q1/hipopotamo.webp',
  bg:'img/q1/bg-velorio.webp',bgd:'img/q1/bg-delirio.webp',retBras:'img/q1/ret-bras.webp',retDet:'../caso-originais/img/detetive.webp',retDetF:'../caso-originais/img/detetive-f.webp',
- bgi:'img/q1/bg-infancia.webp',prud:'img/q1/prudencio.webp',retPrud:'img/q1/ret-prud-menino.webp',retQuincas:'img/q1/ret-quincas.webp',eul:'img/q1/eulalia.webp',ludg:'img/q1/ludgero-retrato.webp',ludgA:'img/q1/ludgero.webp'};
+ bgi:'img/q1/bg-infancia.webp',prud:'img/q1/prudencio.webp',retPrud:'img/q1/ret-prud-menino.webp',retQuincas:'img/q1/ret-quincas.webp',eul:'img/q1/eulalia.webp',ludg:'img/q1/ludgero-retrato.webp',ludgA:'img/q1/ludgero.webp',
+ z_lp:'img/q1/z2/ludgero-poses.webp',z_dl:'img/q1/z2/det-luta.webp',z_dlf:'img/q1/z2/detf-luta.webp',z_bar:'img/q1/z2/barata.webp',z_men:'img/q1/z2/menino.webp',z_mesa:'img/q1/z2/mesa.webp',z_lousa:'img/q1/z2/lousa.webp',z_tacho:'img/q1/z2/tacho.webp',z_esp:'img/q1/z2/espadim.webp',z_p0:'img/q1/z2/porta-fechada.webp',z_p1:'img/q1/z2/porta-aberta.webp',z_cxb:'img/q1/z2/cx-baixa.webp',z_cxm:'img/q1/z2/cx-media.webp',z_cxa:'img/q1/z2/cx-alta.webp',z_bar2:'img/q1/z2/barril.webp',z_chao:'img/q1/z2/chao.webp',z_palm:'img/q1/z2/palm-a.webp',z_giz:'img/q1/z2/giz.webp',z_gizq:'img/q1/z2/giz-quebrado.webp',z_pena:'img/q1/z2/pena.webp'};
 const OPCIONAL=['hq2','hq3','amigos','caixao','padre'];
 const IMG={};
+const Z2S={lp:{w:267,h:413,n:10},dl:{w:225,h:386,n:12},dlf:{w:196,h:400,n:12},bar:{w:378,h:322,n:6},men:{w:563,h:507,n:6}};
 const SH={det:{w:269,h:232,s:.47},bras:{w:137,h:340,s:.37},hipo:{w:303,h:230,s:.6},prud:{w:164,h:340,s:.5}};
 function loadAll(cb){
   const keys=Object.keys(SRC);let n=0;
@@ -110,7 +112,7 @@ function sheet(k,sh,f,x,y,flip,alpha,sc){
 let state='start',T=0,camX=0,shake=0,flash=0;
 const S={nome:'',turma:'',gen:'m'};
 const Z={pts:0,pages:0,lamps:3,leit:0,tot:4,enviou:false};
-const F={ped:false,tacho:false,cavalo:false,espadim:false,escola:false,porta:false,solto:false};
+const F={ped:false,tacho:false,cavalo:false,espadim:false,escola:false,porta:false,solto:false,b0:false,b1:false,b2:false,b3:false,gaveta:false};
 const K={left:0,right:0,jump:0,lamp:0,act:0};
 const P={x:110,y:G,vx:0,vy:0,face:1,ground:true,jumps:2,inv:0,an:0,land:0,hurt:0};
 let cpX=110,lastStep=0;
@@ -221,12 +223,61 @@ const INTER=[
      fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 12 (domínio público).',
      q:{t:'O que o "espadim" representa nessa passagem?',o:['O interesse pessoal e mesquinho, que pesa mais que os grandes fatos do mundo.','A coragem do menino, que queria lutar na guerra e na queda do imperador.','Um presente do pai, que Brás odiava, e que ele guardava com muito ressentimento.','A admiração do menino por Napoleão, o herói que ele sonhava imitar quando crescesse.'],k:0,e:'Para o menino, o espadim novo é mais importante que a queda de Napoleão. Machado usa a imagem para falar do egoísmo: cada um olha para o próprio "espadim". A frase final vira uma lição irônica sobre a vaidade humana.'}});
    F.espadim=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
+ {id:'b0',x:300,r:75,need:'lamp',txt:'AÇÃO · Pegar o bilhete amassado',done:()=>F.b0,act:()=>pegaBilhete(0)},
+ {id:'b1',x:880,r:75,need:'lamp',txt:'AÇÃO · Pegar o bilhete amassado',done:()=>F.b1,act:()=>pegaBilhete(1)},
+ {id:'b2',x:1650,r:75,need:'lamp',txt:'AÇÃO · Pegar o bilhete amassado',done:()=>F.b2,act:()=>pegaBilhete(2)},
+ {id:'b3',x:2480,r:75,need:'lamp',txt:'AÇÃO · Pegar o bilhete amassado',done:()=>F.b3,act:()=>pegaBilhete(3)},
+ {id:'gaveta',x:3395,r:105,txt:'AÇÃO · Abrir a gaveta do Mestre',cond:()=>F.escola&&!duel.on,done:()=>F.gaveta,act:()=>gaveta()},
  {id:'escola',x:3250,r:150,txt:'AÇÃO · Enfrentar o mestre Ludgero',cond:()=>!duel.on,done:()=>F.escola,act:async()=>{
    await say([['ludg','Silêncio, sevandijas! Quem pôs outra barata na minha gaveta?'],['quincas','Não fui eu, mestre. Eu estava aqui, olhando o teto, quieto como uma flor.'],['bras','Esse é Quincas Borba. Já naquele tempo, a gente via que ele daria o que falar.'],['ludg','Quem escreve na minha lousa paga com a palmatória! Defenda-se, menino-diabo!']]);
    startDuel()}},
- {id:'porta',x:3560,r:150,txt:'AÇÃO · Dar o salto (como diz o capítulo 13)',cond:()=>provas()===NP,act:async()=>{
+ {id:'porta',x:3600,r:150,txt:'AÇÃO · Dar o salto (como diz o capítulo 13)',cond:()=>provas()===NP,act:async()=>{
    await say([['bras','"Unamos agora os pés e demos um salto por cima da escola, a enfadonha escola." Pule comigo, leitor: a juventude nos espera, e com ela os amores e as moedas.']]);startCine()}}
 ];
+/* ===== Mistério: a barata na gaveta do Mestre (dedução, opcional) ===== */
+const BILH=[{x:300,q:'Quincas Borba',t:'Eu não pus a barata na gaveta. Foi o Tomé.'},{x:880,q:'Tomé',t:'Foi o Dionísio. Eu vi quando ele saiu da sala.'},{x:1650,q:'Dionísio',t:'O Tomé está mentindo.'},{x:2480,q:'Brás',t:'Eu não fui.'}];
+const bilCount=()=>[F.b0,F.b1,F.b2,F.b3].filter(Boolean).length;
+async function pegaBilhete(i){
+  F['b'+i]=true;hud();addPts(30,CW/2,260);tone(700,.08,.05,'triangle');
+  if(bilCount()===1)await say([['bras','Um bilhete amassado, escrito por um menino da escola. Alguém pôs uma barata na gaveta do Mestre Ludgero, leitor, e a turma inteira jura inocência. Guarde este papel: quatro deles contam uma história.']]);
+  toast('Bilhete de '+BILH[i].q+': “'+BILH[i].t+'”  ('+bilCount()+'/4)',5200);
+  if(bilCount()===4)setTimeout(()=>toast('Os quatro bilhetes! Derrote o mestre e abra a gaveta dele.',4200),5300);
+}
+function drawBilhetes(){
+  ctx.save();ctx.translate(-camX,0);
+  BILH.forEach((b,i)=>{if(F['b'+i]||b.x<camX-40||b.x>camX+CW+40)return;
+    const lit=K.lamp?Math.max(0,1-Math.abs(P.x-b.x)/260):0,a=Math.min(1,.16+.1*Math.sin(T*3+i)+lit*1.1);
+    ctx.save();ctx.globalAlpha=a;ctx.translate(b.x,G-16);ctx.rotate(-.15+i*.1);
+    if(lit>.2){glow(0,0,48)}
+    ctx.fillStyle='#efe0bd';ctx.strokeStyle=SEP.d;ctx.lineWidth=1.6;ctx.fillRect(-14,-10,28,20);ctx.strokeRect(-14,-10,28,20);
+    ctx.strokeStyle='rgba(60,36,14,.7)';ctx.beginPath();for(let k=0;k<3;k++){ctx.moveTo(-9,-5+k*5);ctx.lineTo(9-k*3,-5+k*5)}ctx.stroke();ctx.restore()});
+  ctx.restore();
+}
+async function gaveta(){
+  if(bilCount()<4){await say([['ludg','Trancada, e a chave se perdeu. Só abro quando me provarem quem foi. Reúna os bilhetes dos meus alunos: estão espalhados pela rua. Use a lamparina (tecla C) para achá-los.']]);toast('Bilhetes achados: '+bilCount()+'/4',3200);return}
+  await say([['ludg','Quatro bilhetes, quatro alunos. Minha regra: nesta turma só um dos quatro diz a verdade. Prove-me quem pôs a barata e a gaveta se abre.']]);
+  const pts=await new Promise(res=>{
+    const prev=state;state='modal';let t1=0,t2=0;
+    const lista=BILH.map(b=>'<div class="cita"><b>'+b.q+':</b> “'+b.t+'”</div>').join('');
+    const nota='<p style="font-size:.85em;opacity:.8">Tomé e Dionísio são colegas inventados para este jogo; Quincas Borba e Brás vêm do romance. O enigma é original.</p>';
+    const dicas=['Dica: teste cada suspeito. Se ele fosse o culpado, quantas declarações ficariam verdadeiras? Só pode ficar UMA.','Dica: duas declarações se contradizem (a de Tomé e a de Dionísio). Se uma é verdadeira, a outra é falsa. Isso diz algo sobre as outras duas.'];
+    const step2=()=>{
+      const op=[['As declarações de Tomé e Dionísio se contradizem, então uma delas é a única verdadeira. Logo as de Quincas e de Brás são falsas, e “Eu não fui” falso significa que Brás foi.',1],['Porque Brás é o narrador do livro, e todo narrador mente.',0],['Porque Brás tinha fama de menino diabo, então só pode ter sido ele.',0],['Porque Quincas acusou Tomé, e quem acusa os outros costuma ser inocente.',0]].sort(()=>Math.random()-.5);
+      ov('<h2>Prove o raciocínio</h2><p>Brás é o culpado. Qual argumento <b>prova</b> isso, sem apelar para fama ou palpite?</p><div id="lq">'+op.map((o,i)=>'<button class="opt" data-i="'+i+'">'+o[0]+'</button>').join('')+'</div><p id="fb" style="opacity:.9"></p>');
+      document.querySelectorAll('#lq .opt').forEach(bt=>bt.onclick=()=>{
+        if(op[+bt.dataset.i][1]){bt.classList.add('ok');document.querySelectorAll('#lq .opt').forEach(x=>x.disabled=true);
+          $('fb').innerHTML='Isso mesmo: duas declarações contraditórias não podem ser falsas ao mesmo tempo, então a única verdadeira está entre elas. <button class="btn" id="lok">Abrir a gaveta</button>';
+          tone(660,.1,.05,'triangle');tone(990,.14,.04,'triangle');$('lok').onclick=()=>{ovClose();state=prev;res(Math.max(60,250-70*t1-40*t2))}}
+        else{t2++;bt.classList.add('bad');bt.disabled=true;blip(-3);$('fb').textContent='Esse argumento não prova nada: é fama, palpite ou generalização. Procure o que a lógica das declarações obriga.'}})};
+    ov('<h2>O mistério da gaveta</h2><p>Alguém pôs uma barata na gaveta do Mestre Ludgero. Regra do mestre: <b>só UMA destas quatro declarações é verdadeira</b>; as outras três são mentira.</p>'+lista+'<p><b>Quem pôs a barata?</b></p><div id="lq">'+[['Quincas Borba','Q'],['Tomé','T'],['Dionísio','D'],['Brás','B']].map(q=>'<button class="opt" data-k="'+q[1]+'">'+q[0]+'</button>').join('')+'</div><p id="dica" style="opacity:.9"></p>'+nota);
+    document.querySelectorAll('#lq .opt').forEach(bt=>bt.onclick=()=>{
+      if(bt.dataset.k==='B'){tone(660,.1,.05,'triangle');step2()}
+      else{t1++;bt.classList.add('bad');bt.disabled=true;blip(-3);$('dica').textContent=dicas[Math.min(t1-1,1)]}});
+  });
+  F.gaveta=true;addPts(pts,CW/2,200);if(Z.lamps<3)Z.lamps++;else addPts(100,CW/2,240);hud();
+  await say([['bras','Fui eu, leitor. Confesso sem rubor: pus a barata na gaveta e ainda escrevi “Eu não fui” com a letra mais redonda que tinha. Narrador em primeira pessoa também mente quando lhe convém.'],['ludg','(a gaveta se abre) Sevandija! Mas aqui dentro há algo que não é meu...'],['narr','Ao lado da barata, uma página dobrada com um carimbo vermelho, o mesmo das páginas rasgadas: “NÃO CONFIE EM NENHUM NARRADOR.” Quem a deixou ali? O caso dos narradores trocados está só começando.']]);
+  toast('Mistério resolvido! +'+pts+' pontos',3500);
+}
 /* ===== Trechos do livro (opcionais): citações nas páginas + painéis rasurados ===== */
 const FRAGS=[[11, "Um poeta dizia que o menino é pai do homem. Se isto é verdade, vejamos alguns lineamentos do menino."], [11, "Da colaboração dessas duas criaturas nasceu a minha educação, que, se tinha alguma coisa boa, era no geral viciosa, incompleta, e, em partes, negativa."], [12, "Meu pai, que seria capaz de me dar o sol, se eu lho exigisse, chamou um escravo para me servir o doce; mas era tarde."], [12, "Quanto a mim, lá estava, solitário e deslembrado, a namorar uma certa compota da minha feição."], [13, "Nunca em minha infância, nunca em toda a minha vida, achei um menino mais gracioso, inventivo e travesso."], [13, "Era um gosto ver o Quincas Borba fazer de imperador nas festas do Espírito Santo."]];
 const RASURAS=[{"cap": 11, "a": "Um poeta dizia que o menino é", "k": "pai", "b": " do homem.", "o": ["filho", "irmão", "pai"]}, {"cap": 11, "a": "Cresci naturalmente, como crescem as magnólias e os", "k": "gatos", "b": ".", "o": ["cavalos", "gatos", "pássaros"]}];
@@ -311,7 +362,7 @@ function autoCP(){
     cpX=P.x-60;saveCP();if(!window.__cpT){window.__cpT=1;toast('Ponto salvo: se perder, você volta daqui, não do início.',3500)}}
   else if(T-lastSave>1){lastSave=T;saveCP()}
 }
-function updateWorld(dt){autoCP();updateEnemies(dt);updateDuel(dt);
+function updateWorld(dt){autoCP();if(!window.__mh&&P.x>200&&!F.b0){window.__mh=1;toast('Mistério: alguém pôs uma barata na gaveta do mestre. Há bilhetes escondidos pela rua. Segure C (lamparina) para achá-los.',6000)}updateEnemies(dt);updateDuel(dt);
   stampT-=dt;
   if(false){stamps.push({dir:Math.random()<.5?1:-1,t:0,x:0,sx:0});stampT=3.6+Math.random()*2.2;
     if(!window.__pen){window.__pen=1;toast('O Carimbo riscou o chão com o lápis vermelho: PULE a rasura!',3600)}}
@@ -356,8 +407,8 @@ function glow(x,y,r){const g=ctx.createRadialGradient(x,y,6,x,y,r);g.addColorSto
 function drawFigures(){
   ctx.save();ctx.translate(-camX,0);
   drawTacho(1050);drawEspadim(2700);
-  drawEscolaDoor(3560);
-  if(F.porta){glow(3560,G-80,150)}
+  drawEscolaDoor(3600);
+  if(F.porta){glow(3600,G-80,150)}
   drawLudgero();
   ctx.restore();
 }
@@ -391,7 +442,12 @@ function drawPlayer(){
   if(P.hurt>0)f=12;else if(!P.ground)f=P.vy<-150?7:8;else if(P.land>0)f=9;else if(K.lamp&&!run)f=13;else if(run)f=Math.floor(P.an)%6;
   else if(S.gen==='f'&&IMG.detF)f=14;
   const al=P.inv>0&&Math.sin(T*30)>0?.35:1;const fem=S.gen==='f'&&IMG.detF;
-  ctx.save();ctx.translate(-camX,0);sheet(fem?'detF':'det',SH.det,f,P.x,P.y,P.face<0,al);ctx.restore();
+  const dk=fem?'z_dlf':'z_dl',DS=Z2S[fem?'dlf':'dl'];let nf=-1;
+  if(IMG[dk]){if(P.hurt>0)nf=7;else if(P.act&&P.act.u>T&&(P.ground||P.act.f===3||P.act.f===10))nf=P.act.f;else if(P.act&&P.act.u>T&&P.act.f===11)nf=11}
+  ctx.save();ctx.translate(-camX,0);
+  if(nf>=0){const k=.29,w=DS.w*k,h=DS.h*k;ctx.globalAlpha=al;ctx.translate(P.x,P.y+3);if(P.face<0)ctx.scale(-1,1);ctx.drawImage(IMG[dk],nf*DS.w,0,DS.w,DS.h,-w/2,-h,w,h)}
+  else sheet(fem?'detF':'det',SH.det,f,P.x,P.y,P.face<0,al);
+  ctx.restore();
 }
 function drawLight(){
   if(!K.lamp||state!=='play')return;const x=P.x+P.face*22-camX,y=P.y-46;
@@ -425,7 +481,7 @@ function render(dt){
   ctx.setTransform(DPR,0,0,DPR,0,0);
   const sx=shake>0?(Math.random()-.5)*shake*16:0,sy=shake>0?(Math.random()-.5)*shake*10:0;ctx.save();ctx.translate(sx,sy);
   if(state==='cine'){drawCine(dt);ctx.restore();return}
-  drawBG();drawFigures();drawBras();drawPlat();drawClue();drawPages();drawPlayer();drawCombat();drawLight();drawRain(dt);drawFloaters();
+  drawBG();drawFigures();drawBras();drawPlat();drawClue();drawBilhetes();drawPages();drawPlayer();drawCombat();drawLight();drawRain(dt);drawFloaters();
   ctx.save();ctx.globalCompositeOperation='color';ctx.fillStyle='rgba(172,118,56,.55)';ctx.fillRect(0,0,CW,CH);ctx.restore();
   /* vinheta */
   const v=ctx.createRadialGradient(CW/2,CH/2,CH*.4,CW/2,CH/2,CH*.95);v.addColorStop(0,'rgba(0,0,0,0)');v.addColorStop(1,'rgba(22,10,2,.6)');ctx.fillStyle=v;ctx.fillRect(0,0,CW,CH);
@@ -476,7 +532,7 @@ function fim(){try{localStorage.removeItem(PROGKEY)}catch(e){}
     if(!o.zonas[2]||o.zonas[2]<Z.pts)o.zonas[2]=Z.pts;o.found.z2=1;o.score=Object.values(o.zonas).reduce((a,b)=>a+b,0);localStorage.setItem(SAVE,JSON.stringify(o))}catch(e){}
   enviar(pct);
   ov('<h2>Zona 2 concluída: O menino é pai do homem</h2><p>Pontos: <b>'+Z.pts+'</b> · Páginas recolhidas: <b>'+Z.pages+'/8</b> · Leituras certas de primeira: <b>'+Z.leit+'/'+Z.tot+'</b></p>'+
-   '<p>Você restaurou o capítulo 11, viu como Brás narra a crueldade sem remorso e entendeu o "espadim": o interesse pessoal que pesa mais que a história do mundo.'+(F.solto?' E soltou o cordel de Prudêncio, algo que o livro não faz.':'')+'</p>'+
+   '<p>Você restaurou o capítulo 11, viu como Brás narra a crueldade sem remorso e entendeu o "espadim": o interesse pessoal que pesa mais que a história do mundo.'+(F.solto?' E soltou o cordel de Prudêncio, algo que o livro não faz.':'')+(F.gaveta?' Resolveu o mistério da gaveta por dedução: duas declarações contraditórias não podem ser falsas ao mesmo tempo.':'')+'</p>'+
    '<p><b>Próxima zona: Marcela e as moedas (o primeiro amor).</b> Em construção.</p><button class="btn" id="ba">Voltar ao Arquivo</button><button class="btn sec" id="rj">Jogar de novo</button>');
   $('ba').onclick=()=>{location.href='../index.html'};$('rj').onclick=()=>location.reload();
 }
@@ -496,6 +552,8 @@ function drawGroundSepia(){
   const x0=Math.max(0,camX-20),x1=Math.min(WW,camX+CW+20);
   const gg=ctx.createLinearGradient(0,G,0,CH);gg.addColorStop(0,'#9c7440');gg.addColorStop(.35,'#6a4824');gg.addColorStop(1,'#2a1a0c');
   for(const [a,b] of groundSegs(x0,x1)){
+    if(IMG.z_chao){ctx.save();ctx.beginPath();ctx.rect(a,G-16,b-a,CH-G+40);ctx.clip();ctx.fillStyle='#4a301a';ctx.fillRect(a,G,b-a,CH-G+20);
+      const th=96,tw=Math.round(IMG.z_chao.width*th/IMG.z_chao.height);for(let tx=Math.floor(a/tw)*tw;tx<b;tx+=tw)ctx.drawImage(IMG.z_chao,tx,G-16,tw+1,th);ctx.restore();continue}
     ctx.fillStyle=gg;ctx.fillRect(a,G,b-a,CH-G+20);
     ctx.save();ctx.beginPath();ctx.rect(a,G,b-a,CH-G+20);ctx.clip();
     for(let r=0;r<4;r++){const y=G+4+r*17,off=(r%2)*29,sw=58;
@@ -514,6 +572,7 @@ function drawGroundSepia(){
 }
 function drawCrate(p){
   const x=p.x,y=p.y,w=p.w,h=G-p.y;
+  if(IMG.z_cxb){const r=w/h,k=r>1?'z_cxb':h>=100?'z_cxa':(rnd(p.x)>.5?'z_cxm':'z_bar2');ctx.drawImage(IMG[k],x-5,y-3,w+10,h+5);return}
   const g=ctx.createLinearGradient(x,0,x+w,0);g.addColorStop(0,'#a37a46');g.addColorStop(.55,'#85592c');g.addColorStop(1,'#5e3d1d');ctx.fillStyle=g;ctx.fillRect(x,y,w,h);
   const n=Math.max(2,Math.round(h/24));
   for(let i=1;i<n;i++){const yy=y+i*h/n;ctx.strokeStyle='rgba(28,16,7,.7)';ctx.lineWidth=1.6;ctx.beginPath();ctx.moveTo(x,yy);ctx.lineTo(x+w,yy);ctx.stroke()}
@@ -527,6 +586,7 @@ function drawCrate(p){
 }
 function drawPlat(){ctx.save();ctx.translate(-camX,0);for(const p of PLAT){if(p.x>camX+CW+40||p.x+p.w<camX-40)continue;drawCrate(p)}ctx.restore()}
 function drawTacho(tx){
+  if(IMG.z_tacho){const im=IMG.z_tacho,w=150,h=im.height*w/im.width;glow(tx,G-70,110);ctx.drawImage(im,tx-w/2,G+4-h,w,h);return}
   ctx.fillStyle=SEP.m;ctx.fillRect(tx-36,G-8,72,8);ctx.strokeStyle=SEP.d;ctx.lineWidth=2;ctx.strokeRect(tx-36,G-8,72,8);
   ctx.fillStyle=SEP.d;for(const dx of [-24,24]){ctx.fillRect(tx+dx-4,G-30,8,22)}
   for(let i=0;i<3;i++){const f=Math.sin(T*8+i*2);ctx.beginPath();ctx.moveTo(tx-20+i*20,G-8);ctx.quadraticCurveTo(tx-26+i*20,G-26-f*5,tx-18+i*20,G-40-f*6);ctx.quadraticCurveTo(tx-8+i*20,G-26,tx-4+i*20,G-8);ctx.closePath();ctx.fillStyle='rgba(246,214,140,'+(.7+.2*f)+')';ctx.fill();ctx.strokeStyle=SEP.d;ctx.lineWidth=1.4;ctx.stroke()}
@@ -540,6 +600,7 @@ function drawTacho(tx){
 }
 function drawEspadim(ex){
   glow(ex,G-70,90);
+  if(IMG.z_esp){const im=IMG.z_esp,w=130,h=im.height*w/im.width;if(!F.espadim){ctx.save();ctx.shadowColor='#f6dfa0';ctx.shadowBlur=22;ctx.drawImage(im,ex-w/2,G+3-h,w,h);ctx.restore()}else ctx.drawImage(im,ex-w/2,G+3-h,w,h);return}
   const g=ctx.createLinearGradient(ex-26,0,ex+26,0);g.addColorStop(0,'#9a6f3e');g.addColorStop(1,'#5e3d1d');ctx.fillStyle=g;ctx.fillRect(ex-26,G-36,52,36);
   ctx.strokeStyle='rgba(28,16,7,.7)';ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(ex-26,G-24);ctx.lineTo(ex+26,G-24);ctx.stroke();hatch(ex-26,G-36,52,36,-.9,4,SEP.d,.3,1);
   ctx.fillStyle='#caa468';ctx.fillRect(ex-26,G-38,52,5);ctx.strokeStyle=SEP.d;ctx.lineWidth=2.4;ctx.strokeRect(ex-26,G-38,52,38);ctx.fillStyle=SEP.d;ctx.fillRect(ex-4,G-24,8,8);
@@ -548,6 +609,7 @@ function drawEspadim(ex){
   ctx.fillStyle='#b88c52';ctx.fillRect(-15,-2,30,6);ctx.strokeRect(-15,-2,30,6);ctx.fillStyle='#4a3017';ctx.fillRect(-3.5,4,7,16);ctx.strokeRect(-3.5,4,7,16);ctx.beginPath();ctx.arc(0,22,4.5,0,7);ctx.fillStyle='#b88c52';ctx.fill();ctx.stroke();ctx.restore();
 }
 function drawEscolaDoor(dx){
+  if(IMG.z_p0){const im=F.porta?IMG.z_p1:IMG.z_p0,h=214,w=im.width*h/im.height;ctx.drawImage(im,dx-w/2,G+4-h,w,h);return}
   const w=136,h=196,x=dx-w/2,y=G-h;
   const outer=new Path2D();outer.moveTo(x-10,G);outer.lineTo(x-10,y+50);outer.arc(dx,y+50,w/2+10,Math.PI,0);outer.lineTo(x+w+10,G);outer.closePath();
   const sg=ctx.createLinearGradient(x,0,x+w,0);sg.addColorStop(0,'#a8834d');sg.addColorStop(1,'#6a4a26');ctx.fillStyle=sg;ctx.fill(outer);ctx.save();ctx.clip(outer);
@@ -576,10 +638,10 @@ const DUELQ={
     q:{t:'A vida é "a mestra das últimas letras". Que diferença o narrador aponta entre o mestre e ela?',o:['O mestre era injusto e cruel; a vida, ao contrário, sempre trata a todos com justiça.','O mestre queria só decorar lições; a vida não exige nenhuma disciplina de ninguém.','O mestre assustava sem irritar; a vida, ao exigir o mesmo, também provoca zanga.','O mestre ensinava por prazer; a vida ensina só por castigo e nunca por obrigação.'],k:2,e:'Os dois cobram "lição de cor e compostura". Mas o mestre dava só medo, e a vida, a mestra das últimas letras, dá medo e zanga. Por isso até o velho Ludgero ganha ternura na memória de Brás.'}}
 };
 function firePena(){
-  if(state!=='play'||penCd>0)return;penCd=.38;
+  if(state!=='play'||penCd>0)return;penCd=.38;P.act={f:P.ground?1:3,u:T+.3};
   PENS.push({x:P.x+P.face*22,y:P.y-46,vx:P.face*650,life:.8,r:0});tone(540,.07,.035,'triangle');tone(820,.05,.02,'triangle');
 }
-function killRoach(r,why){r.dead=.45;addPts(20,r.x-camX,G-30);thud2();if(!window.__roachK){window.__roachK=1;toast('Barata esmagada. Ludgero Barata não aprovaria o trocadilho, leitor.',2800)}}
+function killRoach(r,why){r.dead=.45;if(P.vy>60)P.act={f:10,u:T+.4};addPts(20,r.x-camX,G-30);thud2();if(!window.__roachK){window.__roachK=1;toast('Barata esmagada. Ludgero Barata não aprovaria o trocadilho, leitor.',2800)}}
 function updateEnemies(dt){
   if(state!=='play')return;penCd=Math.max(0,penCd-dt);
   if(K.atk&&!K._a){K._a=1;firePena()}if(!K.atk)K._a=0;
@@ -601,9 +663,9 @@ function startDuel(){
 }
 function spawnPalm(){
   const arc=duel.hp<=4&&Math.random()<.45;
-  duel.proj.push({t:arc?'a':'r',x:duel.bx-70,y:arc?G-150:G-96,w:.62,vx:-(arc?330:250+(6-duel.hp)*16),vy:arc?-230:0,rot:0});
+  duel.pf=arc?4:3;duel.pt=.5;duel.proj.push({t:arc?'a':'r',x:duel.bx-70,y:arc?G-150:G-96,w:.62,vx:-(arc?330:250+(6-duel.hp)*16),vy:arc?-230:0,rot:0});
 }
-function spawnChalk(){duel.proj.push({t:'g',x:Math.max(3050,Math.min(3400,P.x+P.vx*.35)),y:-30,w:.95,vy:0})}
+function spawnChalk(){duel.pf=6;duel.pt=.5;duel.proj.push({t:'g',x:Math.max(3050,Math.min(3400,P.x+P.vx*.35)),y:-30,w:.95,vy:0})}
 function dmgBoss(n){
   if(duel.flash>0||duel.hp<=0)return;duel.hp=Math.max(0,duel.hp-n);duel.flash=.55;shake=.25;thud();addPts(25,duel.bx-camX,G-230);
   if(duel.hp<=0)return winDuel();
@@ -616,13 +678,13 @@ async function askDuel(k){
   else toast('Certo, mas o mestre se recompõe. Acerte de primeira na próxima para atordoá-lo.',3200);
 }
 function winDuel(){
-  duel.on=false;duel.won=true;duel.proj=[];PENS.length=0;addPts(200,duel.bx-camX,G-260);shake=.6;thud();
+  P.act={f:11,u:T+4};duel.on=false;duel.won=true;duel.proj=[];PENS.length=0;addPts(200,duel.bx-camX,G-260);shake=.6;thud();
   setTimeout(()=>escolaFim(),700);
 }
 function updateDuel(dt){
   if(!duel.on||state!=='play')return;duel.t+=dt;
   P.x=Math.max(3035,Math.min(3410,P.x));
-  duel.flash=Math.max(0,duel.flash-dt);duel.stun=Math.max(0,duel.stun-dt);
+  duel.pt=Math.max(0,(duel.pt||0)-dt);duel.flash=Math.max(0,duel.flash-dt);duel.stun=Math.max(0,duel.stun-dt);
   if(duel.stun<=0){const r=duel.hp>=5?1:duel.hp>=3?.8:.64;duel.at-=dt;duel.at2-=dt;
     if(duel.at<=0){spawnPalm();duel.at=(2.5+Math.random()*.9)*r}
     if(duel.hp<=4&&duel.at2<=0){spawnChalk();duel.at2=(2.6+Math.random()*.8)*r}}
@@ -651,45 +713,41 @@ function buildBust(){
   const c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');x.drawImage(im,0,0);x.globalCompositeOperation='destination-in';x.drawImage(m,0,0);IMG.ludgB=c;
 }
 function drawLudgero(){
-  const bx=duel.bx,slump=duel.won?18:0;
+  const bx=duel.bx,slump=duel.won?10:0;
   if(bx<camX-200||bx>camX+CW+200)return;
+  const lp=IMG.z_lp;
+  if(IMG.z_lousa){const im=IMG.z_lousa,w=330,h=im.height*w/im.width;ctx.drawImage(im,bx-95-w/2,G+2-h,w,h)}
   glow(bx,G-170,140);
-  const sh=duel.flash>0?Math.sin(T*70)*5:0,bob=Math.sin(T*1.6)*1.6,tilt=duel.stun>0?Math.sin(T*8)*.07:(duel.won?.09:0);
-  ctx.save();ctx.translate(bx+sh,G-70+slump);ctx.rotate(tilt);
-  if(IMG.ludgA){const im=IMG.ludgA,h=280,w=im.width*h/im.height;ctx.drawImage(im,-w/2,-h+bob+70,w,h)}
-  else if(IMG.ludgB){const s=270;ctx.drawImage(IMG.ludgB,-s/2,-s+28+bob,s,s)}
-  if(duel.flash>0){ctx.globalAlpha=Math.min(.5,duel.flash);ctx.fillStyle='#8a1e0a';ctx.beginPath();ctx.ellipse(0,-150,64,86,0,0,7);ctx.fill();ctx.globalAlpha=1}
+  const sh=duel.flash>0?Math.sin(T*70)*5:0,bob=Math.sin(T*1.6)*1.4;
+  let fr=0;const tp=duel.proj.find(p=>p.w>0);
+  if(duel.won)fr=9;else if(duel.stun>0)fr=8;else if(duel.flash>0)fr=7;else if(duel.pt>0)fr=duel.pf;else if(tp)fr=tp.t==='g'?5:2;else if(duel.on&&Math.sin(T*.9)>.93)fr=1;
+  ctx.save();ctx.translate(bx+sh,G-60+slump);
+  if(lp){const S=Z2S.lp,k=.62,w=S.w*k,h=S.h*k;ctx.drawImage(lp,fr*S.w,0,S.w,S.h,-w/2,-h+bob,w,h)}
+  else if(IMG.ludgB){const s2=270;ctx.drawImage(IMG.ludgB,-s2/2,-s2+28+bob-10,s2,s2)}
   ctx.restore();
-  if(duel.stun>0){ctx.fillStyle='#f3dd9a';ctx.strokeStyle=SEP.d;ctx.lineWidth=1.4;ctx.font='bold 22px serif';ctx.textAlign='center';for(let i=0;i<3;i++){const a=T*4+i*2.1;ctx.strokeText('✦',bx+Math.cos(a)*44,G-250+Math.sin(a)*10);ctx.fillText('✦',bx+Math.cos(a)*44,G-250+Math.sin(a)*10)}}
-  /* telégrafo do ataque */
-  if(duel.on&&duel.stun<=0){const w=duel.proj.find(p=>p.w>0);if(w){const a=Math.sin(T*30)>0;ctx.save();ctx.translate(bx-70,G-96-(.62-w.w)*0);drawPalm({x:0,y:-14,rot:-.5+Math.sin(T*40)*.15});ctx.restore();if(a){ctx.fillStyle='#a22c12';ctx.strokeStyle=SEP.d;ctx.lineWidth=2;ctx.font='bold 54px "Special Elite",monospace';ctx.textAlign='center';ctx.lineWidth=4;ctx.strokeText('!',bx+110,G-250);ctx.fillText('!',bx+110,G-250)}}}
+  if(duel.stun>0){ctx.fillStyle='#f3dd9a';ctx.strokeStyle=SEP.d;ctx.lineWidth=1.4;ctx.font='bold 22px serif';ctx.textAlign='center';for(let i=0;i<3;i++){const a=T*4+i*2.1;ctx.strokeText('✦',bx+Math.cos(a)*44,G-300+Math.sin(a)*10);ctx.fillText('✦',bx+Math.cos(a)*44,G-300+Math.sin(a)*10)}}
+  if(duel.on&&duel.stun<=0){const w=duel.proj.find(p=>p.w>0);if(w&&Math.sin(T*30)>0){ctx.fillStyle='#a22c12';ctx.strokeStyle=SEP.d;ctx.font='bold 54px "Special Elite",monospace';ctx.textAlign='center';ctx.lineWidth=4;ctx.strokeText('!',bx+130,G-250);ctx.fillText('!',bx+130,G-250)}}
   /* mesa */
+  if(IMG.z_mesa){const im=IMG.z_mesa,w=244,h=im.height*w/im.width;ctx.drawImage(im,bx-w/2,G+2-h,w,h);return}
   const x=bx-112,y=G-72,w=224;
   const g=ctx.createLinearGradient(x,0,x+w,0);g.addColorStop(0,'#8c6232');g.addColorStop(1,'#5a3a1b');ctx.fillStyle=g;ctx.fillRect(x,y,w,72);
-  ctx.strokeStyle='rgba(28,16,7,.6)';ctx.lineWidth=1.4;for(let i=1;i<4;i++){ctx.beginPath();ctx.moveTo(x+i*w/4,y+10);ctx.lineTo(x+i*w/4,G);ctx.stroke()}
-  hatch(x+w*.5,y,w*.5,72,-.9,5,SEP.d,.3,1);
   ctx.fillStyle='#caa468';ctx.fillRect(x-8,y-6,w+16,9);ctx.strokeStyle=SEP.d;ctx.lineWidth=2.4;ctx.strokeRect(x-8,y-6,w+16,9);ctx.strokeRect(x,y+3,w,69);
-  ctx.fillStyle='#4a3017';ctx.fillRect(bx-26,y+20,52,26);ctx.strokeRect(bx-26,y+20,52,26);ctx.fillStyle='#caa468';ctx.fillRect(bx-6,y+30,12,6);ctx.strokeRect(bx-6,y+30,12,6);
-  /* livros e tinteiro */
-  const bk=[['#6a2a18',-86,10],['#3a4a28',-72,12],['#5a3a1b',-58,9]];for(const [c,dx,hh] of bk){ctx.fillStyle=c;ctx.fillRect(bx+dx,y-6-hh*2.4,12,hh*2.4);ctx.strokeStyle=SEP.d;ctx.lineWidth=1.6;ctx.strokeRect(bx+dx,y-6-hh*2.4,12,hh*2.4)}
-  ctx.fillStyle='#1c1007';ctx.beginPath();ctx.roundRect?ctx.roundRect(bx+70,y-22,18,16,3):ctx.rect(bx+70,y-22,18,16);ctx.fill();ctx.strokeStyle='#e6d2a6';ctx.lineWidth=1.6;ctx.beginPath();ctx.moveTo(bx+86,y-22);ctx.lineTo(bx+104,y-44);ctx.stroke();
 }
-function drawPalm(p){ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.fillStyle='#8c6232';ctx.strokeStyle=SEP.d;ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(0,-14,13,17,0,0,7);ctx.fill();ctx.stroke();
-  ctx.fillStyle=SEP.d;for(const [hx,hy] of [[0,-24],[-6,-16],[6,-16],[-4,-8],[4,-8]]){ctx.beginPath();ctx.arc(hx,hy,2.3,0,7);ctx.fill()}
+function drawPalm(p){ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);
+  if(IMG.z_palm){ctx.drawImage(IMG.z_palm,-19,-46,38,66);ctx.restore();return}
+  ctx.fillStyle='#8c6232';ctx.strokeStyle=SEP.d;ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(0,-14,13,17,0,0,7);ctx.fill();ctx.stroke();
   ctx.fillStyle='#6e4a24';ctx.fillRect(-4,0,8,26);ctx.strokeRect(-4,0,8,26);ctx.restore()}
 function drawChalk(p){
   if(p.w>0){const a=1-p.w/.95;ctx.save();ctx.fillStyle='rgba(20,10,4,'+(.25+a*.35)+')';ctx.beginPath();ctx.ellipse(p.x,G-1,10+a*18,3+a*3,0,0,7);ctx.fill();ctx.strokeStyle='rgba(20,10,4,.6)';ctx.setLineDash([4,5]);ctx.beginPath();ctx.moveTo(p.x,0);ctx.lineTo(p.x,G-4);ctx.globalAlpha=.25+a*.3;ctx.stroke();ctx.restore();return}
-  ctx.save();ctx.translate(p.x,p.y);ctx.rotate(.3);ctx.fillStyle='#f1e7c9';ctx.strokeStyle=SEP.d;ctx.lineWidth=2;ctx.fillRect(-4,-20,8,40);ctx.strokeRect(-4,-20,8,40);ctx.restore();
+  ctx.save();ctx.translate(p.x,p.y);ctx.rotate(.3+p.y*.01);if(IMG.z_giz){ctx.drawImage(IMG.z_giz,-24,-19,48,38)}else{ctx.fillStyle='#f1e7c9';ctx.strokeStyle=SEP.d;ctx.lineWidth=2;ctx.fillRect(-4,-20,8,40);ctx.strokeRect(-4,-20,8,40)}ctx.restore();
 }
 function drawRoach(r){
-  const x=r.x,y=G-2,s=r.dead>0?(r.dead/.45):1;
-  ctx.save();ctx.translate(x,y);if(r.d<0)ctx.scale(-1,1);ctx.scale(1,r.dead>0?.35*s+.1:1);
-  ctx.strokeStyle=SEP.d;ctx.lineWidth=1.6;ctx.beginPath();for(let k=0;k<3;k++){const lx=-8+k*8,sw=Math.sin(r.ph+k*2)*5;ctx.moveTo(lx,-6);ctx.lineTo(lx+sw,2);ctx.moveTo(lx,-6);ctx.lineTo(lx-sw*.6-4,0)}ctx.stroke();
-  const g=ctx.createLinearGradient(0,-18,0,-2);g.addColorStop(0,'#8c5a24');g.addColorStop(1,'#3a2410');ctx.fillStyle=g;ctx.beginPath();ctx.ellipse(0,-9,16,8,0,0,7);ctx.fill();ctx.stroke();
-  ctx.beginPath();ctx.moveTo(-14,-9);ctx.lineTo(12,-9);ctx.stroke();hatch(-14,-16,28,12,.6,3,'#e6d2a6',.25,1);
-  ctx.fillStyle='#2a1809';ctx.beginPath();ctx.ellipse(17,-9,6,5,0,0,7);ctx.fill();ctx.stroke();
-  ctx.beginPath();ctx.moveTo(20,-12);ctx.quadraticCurveTo(30,-22+Math.sin(r.ph*.5)*3,36,-14);ctx.moveTo(20,-7);ctx.quadraticCurveTo(30,-4,35,-8);ctx.stroke();
-  ctx.restore();
+  const x=r.x,im=IMG.z_bar;
+  if(im){const S=Z2S.bar,w=84,h=S.h*w/S.w;const dead=r.dead>0;const scared=Math.abs(P.x-r.x)<150&&P.y>G-60;
+    const f=dead?5:scared?4:Math.floor(r.ph*.5)%4;
+    ctx.save();ctx.translate(x,G+6);if(r.d>0)ctx.scale(-1,1);if(dead)ctx.globalAlpha=Math.max(0,r.dead/.45);
+    ctx.drawImage(im,f*S.w,0,S.w,S.h,-w/2,-h,w,h);ctx.restore();return}
+  ctx.save();ctx.translate(x,G-2);ctx.fillStyle='#3a2410';ctx.beginPath();ctx.ellipse(0,-9,16,8,0,0,7);ctx.fill();ctx.restore();
 }
 function drawCombat(){
   ctx.save();ctx.translate(-camX,0);
@@ -697,10 +755,9 @@ function drawCombat(){
   for(const p of duel.proj){if(p.t==='g'){drawChalk(p);continue}
     if(p.w>0)continue;drawPalm(p)}
   if(duel.dust)for(const d of duel.dust){ctx.fillStyle='rgba(240,228,196,'+(.6-d.t)+')';for(let i=0;i<5;i++){ctx.beginPath();ctx.arc(d.x+(i-2)*8*(1+d.t*3),G-4-d.t*18*(i%2+1),3+d.t*8,0,7);ctx.fill()}}
-  for(const p of PENS){ctx.save();ctx.translate(p.x,p.y);ctx.rotate(Math.sign(p.vx)*.15+Math.sin(p.r)*.06);if(p.vx<0)ctx.scale(-1,1);
-    ctx.strokeStyle=SEP.d;ctx.lineWidth=2;ctx.fillStyle='#f1e7c9';ctx.beginPath();ctx.moveTo(-20,2);ctx.quadraticCurveTo(-10,-12,8,-2);ctx.quadraticCurveTo(-6,2,-20,2);ctx.fill();ctx.stroke();
-    ctx.beginPath();ctx.moveTo(-14,0);ctx.lineTo(10,-1);ctx.stroke();ctx.fillStyle=SEP.d;ctx.beginPath();ctx.moveTo(10,-3);ctx.lineTo(16,-1);ctx.lineTo(10,1);ctx.closePath();ctx.fill();
-    ctx.fillStyle='rgba(28,16,7,.6)';for(let i=1;i<4;i++){ctx.beginPath();ctx.arc(-20-i*8,1+Math.sin(p.r+i)*1.5,2.2-i*.4,0,7);ctx.fill()}ctx.restore()}
+  for(const p of PENS){ctx.save();ctx.translate(p.x,p.y);ctx.rotate(Math.sin(p.r)*.05);if(p.vx<0)ctx.scale(-1,1);
+    if(IMG.z_pena){ctx.drawImage(IMG.z_pena,-30,-20,60,40)}else{ctx.fillStyle='#f1e7c9';ctx.strokeStyle=SEP.d;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-20,2);ctx.quadraticCurveTo(-10,-12,8,-2);ctx.quadraticCurveTo(-6,2,-20,2);ctx.fill();ctx.stroke()}
+    ctx.restore()}
   ctx.restore();
   if(duel.on){const w=340,x=CW/2-w/2,y=CH-30;ctx.save();ctx.fillStyle='rgba(20,12,6,.8)';ctx.fillRect(x-8,y-26,w+16,50);ctx.strokeStyle='#9a7545';ctx.lineWidth=2;ctx.strokeRect(x-8,y-26,w+16,50);
     ctx.fillStyle='#e6d2a6';ctx.font='13px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText('PACIÊNCIA DO MESTRE LUDGERO',CW/2,y-9);
@@ -712,7 +769,7 @@ async function escolaFim(){
    await leitura({titulo:'Capítulo 13 · Um Salto',cita:'Chamava-se Ludgero o mestre; quero escrever-lhe o nome todo nesta página: Ludgero Barata, &mdash; um nome funesto, que servia aos meninos de eterno mote a chufas. [&hellip;] E fizeste isto durante vinte e três anos, calado, obscuro, pontual, metido numa casinha da rua do Piolho, sem enfadar o mundo com a tua mediocridade, até que um dia deste o grande mergulho nas trevas, e ninguém te chorou, salvo um preto velho, &mdash; ninguém, nem eu, que te devo os rudimentos da escrita.',
      fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 13 (domínio público).',
      q:{t:'O que a frase "ninguém, nem eu, que te devo os rudimentos da escrita" revela?',o:['Que Brás chorou muito a morte do mestre e foi o único a lamentá-la em público.','Que Brás reconhece a ingratidão: deve ao mestre o que sabe e não o lamentou.','Que o mestre foi um homem rico e popular, lembrado por todos os alunos.','Que o “preto velho” era o único a odiar o mestre, por causa dos castigos.'],k:1,e:'A confissão mostra um narrador sem pudor: ele admite que não sentiu a morte do homem que o alfabetizou. A frieza, de novo, é uma crítica irônica a uma sociedade em que os humildes morrem sem ser chorados.'}});
-   F.escola=true;hud();toast('Provas '+provas()+'/'+NP,3000)}
+   F.escola=true;hud();toast('Provas '+provas()+'/'+NP+(F.gaveta?'':'  ·  A gaveta do mestre ainda está trancada.'),3500)}
 
 /* ============ Entrada ============ */
 const KM={ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right',ArrowUp:'jump',KeyW:'jump',Space:'jump',KeyC:'lamp',KeyX:'atk',KeyF:'atk',KeyE:'act',Enter:'act'};
