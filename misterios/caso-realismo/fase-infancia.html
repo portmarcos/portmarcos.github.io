@@ -38,6 +38,7 @@ button{font-family:inherit;cursor:pointer;color:inherit}
 .panel{background:linear-gradient(180deg,#2a1b0e,#1b1109);border:2px solid #9a7545;border-radius:16px;padding:clamp(12px,2.4vw,26px);max-width:min(860px,100%);width:100%;box-shadow:0 12px 50px #000}
 .panel h2{font-family:'Playfair Display',serif;color:var(--amber2);font-size:clamp(1.1rem,2.8vw,1.8rem);margin-bottom:8px}
 .panel p{line-height:1.5;margin:6px 0;font-size:clamp(.85rem,1.7vw,1.1rem)}
+.cita mark{background:#e8c25a;color:#1b1007;padding:0 3px;border-radius:3px;font-style:normal}
 .cita{border-left:3px solid var(--amber);padding:8px 12px;margin:10px 0;font-style:italic;background:rgba(255,255,255,.04);font-size:clamp(.85rem,1.7vw,1.1rem);line-height:1.55}
 .src{font-size:.78rem;color:var(--muted);margin-top:-4px}
 .btn{background:linear-gradient(180deg,#e3a84a,#b0701f);color:#1a0f08;font-weight:700;border:none;border-radius:10px;padding:9px 18px;margin:6px 6px 0 0;font-size:clamp(.85rem,1.6vw,1.05rem)}
@@ -75,7 +76,7 @@ body:not(.touch) #touch{display:none}
 <div id="hud" class="hidden">
   <span class="hs" id="hLamp"></span><span class="hs">Páginas <b id="hPag">0/8</b></span><span class="hs">Pontos <b id="hPts">0</b></span>
   <span class="hs" id="hTask"></span><span class="sp"></span>
-  <button id="bMute" title="Som (M)">♪</button><button id="bPause" title="Pausa (Esc)">II</button>
+  <button id="bMute" title="Som (M)">♪</button><button id="bCad" title="Caderno de provas (N)" style="width:auto;padding:0 10px">Caderno</button><button id="bPause" title="Pausa (Esc)">II</button>
 </div>
 <div id="toast"></div><div id="prompt" class="hidden"></div>
 <div id="dlg" class="hidden"><img id="dImg" alt=""><div class="t"><div class="n" id="dNome"></div><div class="x" id="dTxt"></div></div><div class="k">Espaço ▶</div></div>
@@ -117,7 +118,7 @@ function drawPart(){ctx.save();ctx.translate(-camX,0);for(const p of PART){const
 let state='start',T=0,camX=0,shake=0,flash=0;
 const S={nome:'',turma:'',gen:'m'};
 const Z={pts:0,pages:0,lamps:3,leit:0,tot:4,enviou:false};
-const F={ped:false,tacho:false,cavalo:false,espadim:false,escola:false,porta:false,solto:false,b0:false,b1:false,b2:false,b3:false,gaveta:false};
+const F={cl:{},vered:false,ped:false,tacho:false,cavalo:false,espadim:false,escola:false,porta:false,solto:false,b0:false,b1:false,b2:false,b3:false,gaveta:false};
 const K={left:0,right:0,jump:0,lamp:0,act:0};
 const P={x:110,y:G,vx:0,vy:0,face:1,ground:true,jumps:2,inv:0,an:0,land:0,hurt:0};
 let cpX=110,lastStep=0;
@@ -180,7 +181,7 @@ function leitura(cfg){
       let tries=0;$('lq').querySelectorAll('.opt').forEach(bt=>bt.onclick=()=>{
         const i=+bt.dataset.i;if(i===q.k){bt.classList.add('ok');$('lq').querySelectorAll('.opt').forEach(x=>x.disabled=true);
           $('lq').insertAdjacentHTML('beforeend','<p>'+q.e+'</p><button class="btn" id="lok">Continuar</button>');
-          const first=tries===0;if(first){Z.leit++;addPts(100,P.x-camX,P.y-120)}else addPts(40,P.x-camX,P.y-120);
+          const first=tries===0;if(cfg.re){addPts(30,P.x-camX,P.y-120)}else if(first){Z.leit++;addPts(100,P.x-camX,P.y-120)}else addPts(40,P.x-camX,P.y-120);
           $('lok').onclick=()=>{ovClose();state=prev;res(first)}}
         else{tries++;bt.classList.add('bad');bt.disabled=true;blip(-3);toast('Releia o trecho e tente de novo.',1800)}});
     }
@@ -205,18 +206,18 @@ function restaurarFrase(){
 const CITA11='Prudêncio, um moleque de casa, era o meu cavalo de todos os dias; punha as mãos no chão, recebia um cordel nos queixos, à guisa de freio, eu trepava-lhe ao dorso, com uma varinha na mão, fustigava-o, dava mil voltas a um e outro lado, e ele obedecia, &mdash; algumas vezes gemendo, &mdash; mas obedecia sem dizer palavra, ou, quando muito, um &mdash; "ai, nhonhô!" &mdash; ao que eu retorquia: &mdash; "Cala a boca, besta!"';
 const INTER=[
  {id:'ped',x:1450,r:90,need:'lamp',txt:'AÇÃO · Pegar a página rasgada',done:()=>F.ped,act:async()=>{
-   await say([['det','Outra página rasgada, com o mesmo carimbo vermelho. Esta é do capítulo 11.']]);await restaurarFrase();F.ped=true;hud();
+   await say([['det','Outra página rasgada, com o mesmo carimbo vermelho. Esta é do capítulo 11.']]);await restaurarFrase();F.ped=true;F.cl.ped=2;hud();
    toast('Capítulo 11 restaurado. Provas '+provas()+'/'+(typeof NP!=='undefined'?NP:5),3500)}},
  {id:'tacho',x:1050,r:130,txt:'AÇÃO · Olhar o tacho de doce',done:()=>F.tacho,act:async()=>{
    await say([['bras','Cinco anos e já era "menino diabo". Aos seis, o doce de coco foi a minha obra-prima. Veja o que fiz, e não me julgue antes de ler.']]);
-   await leitura({titulo:'Capítulo 11 · O Menino É Pai do Homem',cita:'Por exemplo, um dia quebrei a cabeça de uma escrava, porque me negara uma colher do doce de coco que estava fazendo, e, não contente com o malefício, deitei um punhado de cinza ao tacho, e, não satisfeito da travessura, fui dizer à minha mãe que a escrava é que estragara o doce "por pirraça"; e eu tinha apenas seis anos.',
+   await provaLeitura('tacho',{titulo:'Capítulo 11 · O Menino É Pai do Homem',cita:'Por exemplo, um dia quebrei a cabeça de uma escrava, porque me negara uma colher do doce de coco que estava fazendo, e, não contente com o malefício, deitei um punhado de cinza ao tacho, e, não satisfeito da travessura, fui dizer à minha mãe que a escrava é que estragara o doce "por pirraça"; e eu tinha apenas seis anos.',
      fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 11 (domínio público).',
-     q:{t:'O que o episódio mostra sobre o menino e sobre a sociedade em que ele vive?',o:['Que o menino cometia apenas uma travessura inocente, própria de toda criança pequena.','Que a escrava merecia o castigo, porque havia estragado o doce e desobedecido ao menino.','Que o menino agride e mente, mas nada lhe acontece: a escravidão lhe dá poder sem limite.','Que a mãe percebeu a mentira do menino e o castigou com severidade, como mandava a regra.'],k:2,e:'Brás machuca a escrava, estraga o doce e a acusa de "pirraça". A crueldade é contada sem remorso, e o menino não sofre consequência alguma. Machado mostra, pela frieza do narrador, a violência naturalizada da sociedade escravista.'}});
+     q:{t:'O que o episódio mostra sobre o menino e sobre a sociedade em que ele vive?',o:['Que o menino cometia apenas uma travessura inocente, própria de toda criança pequena.','Que a escrava merecia o castigo, porque havia estragado o doce e desobedecido ao menino.','Que o menino agride e mente, mas nada lhe acontece: a escravidão lhe dá poder sem limite.','Que a mãe percebeu a mentira do menino e o castigou com severidade, como mandava a regra.'],k:2,e:'Brás machuca a escrava, estraga o doce e a acusa de "pirraça". A crueldade é contada sem remorso, e o menino não sofre consequência alguma. Machado mostra, pela frieza do narrador, a violência naturalizada da sociedade escravista.'}},"fui dizer à minha mãe que a escrava é que estragara o doce")
    F.tacho=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'cavalo',x:1860,r:110,txt:'AÇÃO · Falar com Prudêncio',done:()=>F.cavalo,act:async()=>{
    await say([['prud','Nhonhô mandou eu ser cavalo outra vez. Dizem que hoje o dia é de festa lá em cima.'],['det','Você não precisa fazer isso. Ninguém deveria montar em ninguém.'],['prud','O sinhozinho manda, e a gente obedece. É assim que é.'],['bras','Veja, leitor, como eu era um cavalo bem montado. Prudêncio, o meu, nunca reclamou. Leia, e depois me diga o que achou.']]);
-   await leitura({titulo:'Capítulo 11 · O Menino É Pai do Homem',cita:CITA11,fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 11 (domínio público).',
-     q:{t:'Por que a cena é tão forte, mesmo contada com um tom tranquilo pelo narrador?',o:['Porque o narrador demonstra muito arrependimento e pede perdão a Prudêncio no fim.','Porque Prudêncio reage, derruba o menino e é castigado diante de todos os escravos.','Porque a cena é apenas um sonho de Brás, sem relação nenhuma com a vida real.','Porque Brás narra a violência com naturalidade: a frieza dele revela a crueldade.'],k:3,e:'Brás não vê nada de errado em montar num menino escravizado e chamá-lo de "besta". O narrador não julga; é o leitor quem percebe o horror. Esse é o efeito da ironia machadiana.'}});
+   await provaLeitura('cavalo',{titulo:'Capítulo 11 · O Menino É Pai do Homem',cita:CITA11,fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 11 (domínio público).',
+     q:{t:'Por que a cena é tão forte, mesmo contada com um tom tranquilo pelo narrador?',o:['Porque o narrador demonstra muito arrependimento e pede perdão a Prudêncio no fim.','Porque Prudêncio reage, derruba o menino e é castigado diante de todos os escravos.','Porque a cena é apenas um sonho de Brás, sem relação nenhuma com a vida real.','Porque Brás narra a violência com naturalidade: a frieza dele revela a crueldade.'],k:3,e:'Brás não vê nada de errado em montar num menino escravizado e chamá-lo de "besta". O narrador não julga; é o leitor quem percebe o horror. Esse é o efeito da ironia machadiana.'}},"Prudêncio, um moleque de casa, era o meu cavalo de todos os dias")
    await new Promise(r=>{const pv=state;state='modal';ov('<h2>O cordel</h2><p>Prudêncio ainda tem o cordel preso nos queixos. O que você faz?</p><button class="opt" id="c1">Soltar o cordel e dizer que ele não precisa obedecer.</button><button class="opt" id="c2">Deixar como está: não é da minha conta.</button>');
      $('c1').onclick=()=>{F.solto=true;addPts(100,CW/2,200);ovClose();state=pv;r()};$('c2').onclick=()=>{ovClose();state=pv;r()}});
    if(F.solto)await say([['prud','Obrigado, moço... eu não esqueço.'],['narr','No livro, ninguém o solta. Prudêncio só será livre anos depois, e o que ele fará com essa liberdade está no capítulo 68, "O Vergalho". O menino é pai do homem, leitor, também em Prudêncio.']]);
@@ -224,9 +225,9 @@ const INTER=[
    F.cavalo=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'espadim',x:2700,r:130,txt:'AÇÃO · Examinar o espadim',done:()=>F.espadim,act:async()=>{
    await say([['bras','O espadim de 1814. Napoleão caía e eu só pensava na minha espada de brinquedo. Ouça o que isso me ensinou.']]);
-   await leitura({titulo:'Capítulo 12 · Um Episódio de 1814',cita:'Figurei nesses dias com um espadim novo, que meu padrinho me dera no dia de Santo Antônio; e, francamente, interessava-me mais o espadim do que a queda de Bonaparte. Nunca me esqueceu esse fenômeno. Nunca mais deixei de pensar comigo que o nosso espadim é sempre maior do que a espada de Napoleão.',
+   await provaLeitura('espadim',{titulo:'Capítulo 12 · Um Episódio de 1814',cita:'Figurei nesses dias com um espadim novo, que meu padrinho me dera no dia de Santo Antônio; e, francamente, interessava-me mais o espadim do que a queda de Bonaparte. Nunca me esqueceu esse fenômeno. Nunca mais deixei de pensar comigo que o nosso espadim é sempre maior do que a espada de Napoleão.',
      fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 12 (domínio público).',
-     q:{t:'O que o "espadim" representa nessa passagem?',o:['O interesse pessoal e mesquinho, que pesa mais que os grandes fatos do mundo.','A coragem do menino, que queria lutar na guerra e na queda do imperador.','Um presente do pai, que Brás odiava, e que ele guardava com muito ressentimento.','A admiração do menino por Napoleão, o herói que ele sonhava imitar quando crescesse.'],k:0,e:'Para o menino, o espadim novo é mais importante que a queda de Napoleão. Machado usa a imagem para falar do egoísmo: cada um olha para o próprio "espadim". A frase final vira uma lição irônica sobre a vaidade humana.'}});
+     q:{t:'O que o "espadim" representa nessa passagem?',o:['O interesse pessoal e mesquinho, que pesa mais que os grandes fatos do mundo.','A coragem do menino, que queria lutar na guerra e na queda do imperador.','Um presente do pai, que Brás odiava, e que ele guardava com muito ressentimento.','A admiração do menino por Napoleão, o herói que ele sonhava imitar quando crescesse.'],k:0,e:'Para o menino, o espadim novo é mais importante que a queda de Napoleão. Machado usa a imagem para falar do egoísmo: cada um olha para o próprio "espadim". A frase final vira uma lição irônica sobre a vaidade humana.'}},"interessava-me mais o espadim do que a queda de Bonaparte")
    F.espadim=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'b0',x:300,r:75,need:'lamp',txt:'AÇÃO · Pegar o bilhete amassado',done:()=>F.b0,act:()=>pegaBilhete(0)},
  {id:'b1',x:880,r:75,need:'lamp',txt:'AÇÃO · Pegar o bilhete amassado',done:()=>F.b1,act:()=>pegaBilhete(1)},
@@ -779,17 +780,58 @@ function drawCombat(){
 
 async function escolaFim(){
    await say([['ludg','Basta! Em vinte e três anos de magistério, nunca fui vencido por uma pena de escrever. Passe, sevandija, passe.'],['bras','O leitor repare: a palmatória do mestre assustava, mas não zangava. A vida, mestra das últimas letras, faz as duas coisas.']]);
-   await leitura({titulo:'Capítulo 13 · Um Salto',cita:'Chamava-se Ludgero o mestre; quero escrever-lhe o nome todo nesta página: Ludgero Barata, &mdash; um nome funesto, que servia aos meninos de eterno mote a chufas. [&hellip;] E fizeste isto durante vinte e três anos, calado, obscuro, pontual, metido numa casinha da rua do Piolho, sem enfadar o mundo com a tua mediocridade, até que um dia deste o grande mergulho nas trevas, e ninguém te chorou, salvo um preto velho, &mdash; ninguém, nem eu, que te devo os rudimentos da escrita.',
+   await provaLeitura('escola',{titulo:'Capítulo 13 · Um Salto',cita:'Chamava-se Ludgero o mestre; quero escrever-lhe o nome todo nesta página: Ludgero Barata, &mdash; um nome funesto, que servia aos meninos de eterno mote a chufas. [&hellip;] E fizeste isto durante vinte e três anos, calado, obscuro, pontual, metido numa casinha da rua do Piolho, sem enfadar o mundo com a tua mediocridade, até que um dia deste o grande mergulho nas trevas, e ninguém te chorou, salvo um preto velho, &mdash; ninguém, nem eu, que te devo os rudimentos da escrita.',
      fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 13 (domínio público).',
-     q:{t:'O que a frase "ninguém, nem eu, que te devo os rudimentos da escrita" revela?',o:['Que Brás chorou muito a morte do mestre e foi o único a lamentá-la em público.','Que Brás reconhece a ingratidão: deve ao mestre o que sabe e não o lamentou.','Que o mestre foi um homem rico e popular, lembrado por todos os alunos.','Que o “preto velho” era o único a odiar o mestre, por causa dos castigos.'],k:1,e:'A confissão mostra um narrador sem pudor: ele admite que não sentiu a morte do homem que o alfabetizou. A frieza, de novo, é uma crítica irônica a uma sociedade em que os humildes morrem sem ser chorados.'}});
+     q:{t:'O que a frase "ninguém, nem eu, que te devo os rudimentos da escrita" revela?',o:['Que Brás chorou muito a morte do mestre e foi o único a lamentá-la em público.','Que Brás reconhece a ingratidão: deve ao mestre o que sabe e não o lamentou.','Que o mestre foi um homem rico e popular, lembrado por todos os alunos.','Que o “preto velho” era o único a odiar o mestre, por causa dos castigos.'],k:1,e:'A confissão mostra um narrador sem pudor: ele admite que não sentiu a morte do homem que o alfabetizou. A frieza, de novo, é uma crítica irônica a uma sociedade em que os humildes morrem sem ser chorados.'}},"ninguém te chorou, salvo um preto velho")
+   if(!F.vered)await veredito();
    F.escola=true;hud();toast('Provas '+provas()+'/'+NP+(F.gaveta?'':'  ·  A gaveta do mestre ainda está trancada.'),3500)}
 
+/* ============ Caso fechado: leituras como provas ============ */
+const CASO_CFG={"prova": {"ped": "No capítulo 11 o narrador avisa que vai mostrar \"alguns lineamentos do menino\": o homem se explica pelo menino.", "tacho": "Aos seis anos Brás feriu uma escrava e a acusou de \"pirraça\": quem sofreu foi ela, não ele.", "cavalo": "Prudêncio era o \"cavalo de todos os dias\": gemia, obedecia calado e levava a varinha do menino.", "espadim": "O menino se interessava mais pelo espadim do que pela queda de Bonaparte: o interesse próprio vem primeiro.", "escola": "Ninguém chorou o mestre Ludgero, \"salvo um preto velho\"; Brás reconhece que nem ele o lamentou."}, "nome": {"ped": "O poeta e o menino", "tacho": "O tacho de doce", "cavalo": "O cavalo Prudêncio", "espadim": "O espadim de 1814", "escola": "O mestre Ludgero"}, "pergunta": "quem pagava pelas maldades do menino Brás?", "conclusao": "em casa, quem pagava pelas maldades do menino Brás eram os escravizados, nunca ele.", "certas": ["tacho", "cavalo"], "fecho": "<b>O tacho</b> mostra a escrava ferida e acusada; <b>o cavalo</b> mostra Prudêncio fustigado e calado. Nas duas cenas o menino manda e quem paga é outro. O espadim e o mestre falam de egoísmo e ingratidão, mas não de quem arcava com a conta, e a frase do poeta só anuncia a tese. É o que o capítulo 68 vai cobrar: o menino é pai do homem.", "nota": "Brás, Prudêncio e Ludgero vêm do romance (Machado de Assis, domínio público); o enigma é original do jogo.", "dicas": ["Procure as provas em que alguém SOFRE por causa do menino.", "Duas provas mostram pessoas escravizadas pagando pelo que Brás fez ou quis: a do doce e a do brinquedo de cavalinho."]};
+const CASO=CASO_CFG.prova,CASO_NOME=CASO_CFG.nome;
+async function provaLeitura(id,cfg,hl){
+  F.cl=F.cl||{};
+  const first=await leitura(cfg);
+  if(first){F.cl[id]=2;toast('Prova guardada no caderno: '+CASO_NOME[id],2600);return true}
+  F.cl[id]=1;
+  await say([['narr','A prova ficou borrada no caderno, leitor. Releia o trecho destacado e responda de novo.']]);
+  const ok=await leitura(Object.assign({},cfg,{re:true,titulo:'Releitura · '+CASO_NOME[id],cita:hl&&cfg.cita.includes(hl)?cfg.cita.replace(hl,'<mark>'+hl+'</mark>'):cfg.cita}));
+  if(!ok){Z.lamps=Math.max(1,Z.lamps-1);hud();toast('Errou de novo: perdeu 1 lamparina, mas a prova foi recuperada.',3600)}
+  else toast('Prova recuperada: '+CASO_NOME[id],2600);
+  F.cl[id]=2;return false;
+}
+function caderno(){
+  if(state!=='play')return;const prev=state;state='modal';
+  let h='<h2 style="margin:.2em 0">Caderno de provas</h2><p style="margin:.3em 0;font-size:.9em">Cada leitura certa guarda uma prova do caso: <b>'+CASO_CFG.pergunta+'</b></p>';
+  for(const k of Object.keys(CASO)){const st=F.cl&&F.cl[k];h+='<div class="card" style="padding:8px 12px;margin:6px 0;font-size:.88em;line-height:1.35"><b>'+CASO_NOME[k]+'</b><br>'+(st===2?CASO[k]:st===1?'▒▒▒▒▒▒ (prova borrada: releia o trecho)':'<i>ainda não encontrada</i>')+'</div>'}
+  ov(h+'<button class="btn" id="cdx">Fechar</button>');$('cdx').onclick=()=>{ovClose();state=prev};
+}
+function veredito(){return new Promise(res=>{
+  const prev=state;state='modal';const sel=new Set(),keys=Object.keys(CASO);let erros=0;
+  const draw=msg=>{
+    ov('<h2 style="margin:.2em 0">Fechar o caso</h2><p style="margin:.3em 0;font-size:.92em"><b>Conclusão a provar:</b> '+CASO_CFG.conclusao+' Escolha as <b>duas</b> provas do caderno que sustentam isso.</p>'+keys.map(k=>'<button class="opt'+(sel.has(k)?' ok':'')+'" data-k="'+k+'" style="padding:7px 10px;margin:4px 0;font-size:.88em"><b>'+CASO_NOME[k]+'.</b> '+(F.cl&&F.cl[k]===2?CASO[k]:'(prova ainda não encontrada)')+'</button>').join('')+(msg?'<p style="font-size:.9em">'+msg+'</p>':'')+'<button class="btn" id="vd">Fechar o caso</button>');
+    $('ov').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const k=b.dataset.k;if(sel.has(k))sel.delete(k);else if(sel.size<2)sel.add(k);draw(msg)});
+    $('vd').onclick=()=>{
+      if(sel.size!==2){draw('Escolha exatamente duas provas.');return}
+      const certo=CASO_CFG.certas.every(k=>sel.has(k));
+      if(certo||erros>=2){
+        if(!certo){sel.clear();CASO_CFG.certas.forEach(k=>sel.add(k))}
+        const pts=certo?Math.max(100,400-erros*100):100;
+        ov('<h2>Caso fechado</h2><p>'+(certo?'Provas certas. ':'Era esta a combinação. ')+CASO_CFG.fecho+'</p><p style="font-size:.85em;opacity:.8">'+CASO_CFG.nota+'</p><button class="btn" id="vok">Continuar (+'+pts+')</button>');
+        $('vok').onclick=()=>{ovClose();state=prev;F.vered=true;addPts(pts,CW/2,200);toast('Caso fechado! +'+pts+' pontos',3200);res()};return}
+      erros++;sel.clear();
+      draw('Ainda não. '+CASO_CFG.dicas[Math.min(erros-1,1)]);
+    };
+  };
+  draw('');
+})}
 /* ============ Entrada ============ */
 const KM={ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right',ArrowUp:'jump',KeyW:'jump',Space:'jump',KeyC:'lamp',ShiftLeft:'dash',ShiftRight:'dash',KeyK:'dash',KeyX:'atk',KeyF:'atk',KeyE:'act',Enter:'act'};
 addEventListener('keydown',e=>{
   const k=KM[e.code];
   if(e.code==='Escape'||e.code==='KeyP'){if(state==='play')pause(true);else if(paused)pause(false);return}
   if(e.code==='KeyM'){setMute(!muted);return}
+  if(e.code==='KeyN'){caderno();return}
   if(state==='dialog'&&(e.code==='Space'||e.code==='Enter'||e.code==='KeyE')){e.preventDefault();next();return}
   if(!k)return;if(e.code.startsWith('Arrow')||e.code==='Space')e.preventDefault();
   if(k==='act'){if(!K.act&&state==='play')doAct();K.act=1;return}K[k]=1;
@@ -797,7 +839,7 @@ addEventListener('keydown',e=>{
 addEventListener('keyup',e=>{const k=KM[e.code];if(k)K[k]=0});
 function doAct(){const it=nearInter();if(it)it.act()}
 function pause(on){paused=on;if(on){state='pause';ov('<h2>Pausa</h2><button class="btn" id="rs">Continuar</button><button class="btn sec" id="bk">Voltar ao Arquivo</button>');$('rs').onclick=()=>pause(false);$('bk').onclick=()=>location.href='../index.html'}else{ovClose();state='play'}}
-$('bPause').onclick=()=>{if(state==='play')pause(true)};$('bMute').onclick=()=>setMute(!muted);
+$('bCad').onclick=()=>caderno();$('bPause').onclick=()=>{if(state==='play')pause(true)};$('bMute').onclick=()=>setMute(!muted);
 $('dlg').addEventListener('pointerdown',e=>{e.preventDefault();if(state==='dialog')next()});
 function bindT(id,k,act){const b=$(id);const on=e=>{e.preventDefault();if(act){if(state==='dialog'){next();return}if(state==='play')doAct()}else K[k]=1};const off=e=>{e.preventDefault();if(!act)K[k]=0};
   b.addEventListener('pointerdown',on);b.addEventListener('pointerup',off);b.addEventListener('pointercancel',off);b.addEventListener('pointerleave',off)}
@@ -814,7 +856,7 @@ function loop(ts){
   }else if(state==='dialog'){updateWorld(dt);P.vx=0}
   render(dt);
 }
-window.__t={duel,startDuel,PENS,ROACH,P,F,Z,PAGES,INTER,get state(){return state},set state(v){state=v},get camX(){return camX},set camX(v){camX=v},provas,startCine,fim,K};
+window.__t={provaLeitura,caderno,veredito,CASO,duel,startDuel,PENS,ROACH,P,F,Z,PAGES,INTER,get state(){return state},set state(v){state=v},get camX(){return camX},set camX(v){camX=v},provas,startCine,fim,K};
 (function restaurarProg(){try{const r=JSON.parse(localStorage.getItem(PROGKEY)||'null');if(!r||!(r.cp>0))return;
   cpX=r.cp;P.x=r.cp;camX=Math.max(0,Math.min(WW-CW,P.x-CW*.42+(P.look||0)*.6));Object.assign(Z,r.Z||{});Object.assign(F,r.F||{});
   (r.pg||[]).forEach((v,i)=>{if(v&&PAGES[i])PAGES[i].got=true});(r.rb||[]).forEach((v,i)=>{if(v&&RAS_BOARDS[i])RAS_BOARDS[i].done=true});
