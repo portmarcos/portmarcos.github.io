@@ -1,15 +1,112 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>O Caso dos Narradores Trocados</title>
-<style>body{margin:0;min-height:100vh;background:#120b1c;color:#efe3cf;font-family:Georgia,serif;display:flex;align-items:center;justify-content:center;padding:20px}
-.p{max-width:560px;background:#1d1430;border:2px solid #8b73bd;border-radius:16px;padding:26px}h1{color:#ffd98a;font-size:1.6rem;margin:0 0 6px}a.z{display:block;margin:10px 0;padding:12px 16px;background:#2b1f3d;border:1px solid #6b55a0;border-radius:10px;color:inherit;text-decoration:none}a.z:hover{background:#3a2b52}small{color:#bba98a}</style></head>
-<body><div class="p"><h1>O Caso dos Narradores Trocados</h1><p><small>Realismo e Naturalismo · Fase 1: Memórias Póstumas de Brás Cubas</small></p>
-<a class="z" href="fase-bras.html"><b>Zona 1 · Óbito do Autor</b><br><small>O velório, a dedicatória, o hipopótamo.</small></a>
-<a class="z" href="fase-infancia.html"><b>Zona 2 · O menino é pai do homem</b><br><small>O tacho, Prudêncio, o espadim, o mestre Ludgero.</small></a>
-<a class="z" href="fase-marcela.html"><b>Zona 3 · Marcela e os onze contos</b><br><small>O corcel, o asno, os joalheiros e a conta do amor.</small></a>
-<a class="z" href="fase-coimbra.html"><b>Zona 4 · Coimbra e o almocreve</b><br><small>O diploma, os jumentos e a gratidão regateada.</small></a>
-<a class="z" href="fase-tijuca.html"><b>Zona 5 · A flor da moita</b><br><small>Eugênia, a borboleta preta e o ridículo de casar.</small></a>
-<a class="z" href="fase-virgilia.html"><b>Zona 6 · Virgília, a águia e o pavão</b><br><small>Furtividade, a ponta do nariz, o capítulo dos pontinhos e o duelo com Lobo Neves.</small></a>
-<a class="z" href="fase-quincas.html"><b>Zona 7 · Quincas Borba e o Humanitismo</b><br><small>A multidão da terceira força, o frango e a utilidade relativa de Dona Plácida.</small></a>
-<a class="z" href="fase-marcela-velha.html"><b>Zona 8 · A Quarta Edição</b><br><small>Marcela envelhecida na rua dos Ourives: a teoria das edições e o verme do lucro.</small></a>
-<a class="z" href="fase-eulalia.html"><b>Zona 9 · Nhã-loló</b><br><small>O jantar, o morro abaixo e o epitáfio de Eulália.</small></a>
-<a class="z" href="fase-pandora.html"><b>Chefe · Pandora, a Natureza</b><br><small>Mãe e inimiga: desvie das negativas, do frio e das vinhas e responda para feri-la.</small></a>
-<a class="z" href="../index.html"><small>Voltar ao Arquivo</small></a></div></body></html>
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>O Caso dos Narradores Trocados · Índice</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+:root{--tinta:#2a2118;--papel:#eadbb0;--vinho:#7a1f1f;--ouro:#d6aa50}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--tinta);font-family:Lora,Georgia,serif;background:radial-gradient(ellipse at 80% 90%,#4a2d14 0,#1a0f08 45%,#0a0503 100%);display:flex;justify-content:center;padding:28px 14px 60px;overflow-x:hidden}
+.vela{position:fixed;right:5vw;bottom:6vh;width:70px;height:150px;pointer-events:none;opacity:.9}
+.vela i{position:absolute;left:30px;bottom:70px;width:10px;height:26px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:radial-gradient(#fff3cf 20%,#ffd27a 60%);box-shadow:0 0 60px 28px rgba(255,170,70,.35);animation:fl 1.4s infinite alternate ease-in-out}
+.vela b{position:absolute;left:22px;bottom:0;width:26px;height:75px;background:#d8c8a0;border-radius:3px}
+@keyframes fl{from{transform:scale(1,.92) translateX(-.5px)}to{transform:scale(.92,1.08) translateX(.8px)}}
+.livro{position:relative;width:100%;max-width:760px;background:linear-gradient(90deg,#c9ae78 0,#eadbb0 4%,#f0e3bc 50%,#eadbb0 96%,#c9ae78 100%);border-radius:4px 10px 10px 4px;padding:44px 48px 52px;box-shadow:0 0 0 6px #4a1a14,0 0 0 8px #d6aa50,0 30px 70px rgba(0,0,0,.65),inset 0 0 60px rgba(120,80,30,.35);animation:abre .9s ease both}
+.livro:before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background-image:radial-gradient(rgba(90,55,20,.18) 1px,transparent 1.4px);background-size:5px 5px;opacity:.5}
+@keyframes abre{from{opacity:0;transform:perspective(1200px) rotateX(10deg) translateY(30px) scale(.96)}to{opacity:1;transform:none}}
+.fita{position:absolute;top:-8px;right:56px;width:22px;height:110px;background:linear-gradient(#a82626,#7a1616);clip-path:polygon(0 0,100% 0,100% 100%,50% 88%,0 100%);box-shadow:0 4px 8px rgba(0,0,0,.4)}
+.cab{text-align:center;position:relative}
+.cab small{display:block;font-size:.72rem;letter-spacing:.22em;color:#6b4a28;font-weight:600}
+h1{margin:6px 0 2px;font-size:clamp(1.55rem,5vw,2.2rem);font-weight:700;letter-spacing:.01em}
+.sub{font-style:italic;color:#5a3a1c;margin:0 0 6px}
+.orn{font-size:1.4rem;color:#8a6a3a;margin:2px 0 4px}
+.pro{margin:16px auto 6px;display:flex;align-items:center;gap:14px;justify-content:center;flex-wrap:wrap}
+.anel{--p:0;width:74px;height:74px;border-radius:50%;background:conic-gradient(var(--vinho) calc(var(--p)*1%),rgba(90,55,20,.22) 0);display:grid;place-items:center;position:relative}
+.anel:after{content:"";position:absolute;inset:8px;border-radius:50%;background:#efe2ba}
+.anel b{position:relative;z-index:1;font-size:1.15rem}
+.pro .tx{text-align:left;font-size:.92rem;line-height:1.45}
+.pro .tx em{display:block;color:#6b4a28}
+.cont{display:inline-block;margin:14px 0 4px;padding:13px 26px;background:linear-gradient(#8a2323,#661414);color:#fbeed0;text-decoration:none;border-radius:6px;font-weight:700;letter-spacing:.04em;box-shadow:0 4px 0 #3d0c0c,0 8px 18px rgba(0,0,0,.4);transition:transform .15s,box-shadow .15s}
+.cont:hover{transform:translateY(-2px);box-shadow:0 6px 0 #3d0c0c,0 12px 22px rgba(0,0,0,.45)}
+.cont small{display:block;font-weight:400;font-size:.74rem;letter-spacing:.02em;opacity:.85;margin-top:2px}
+/* trilha */
+.trilha{position:relative;height:78px;margin:20px 6px 6px}
+.trilha svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.no{position:absolute;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:.8rem;font-weight:700;text-decoration:none;color:var(--tinta);background:#e6d6a6;border:2px solid #8a6a3a;transition:transform .18s}
+.no:hover{transform:translate(-50%,-50%) scale(1.25)}
+.no.ok{background:var(--vinho);border-color:#4a0f0f;color:#fbeed0}
+.no.prox{background:#ffd98a;border-color:#b3761a;animation:pulsa 1.4s infinite}
+.no.boss{width:38px;height:38px}
+@keyframes pulsa{0%,100%{box-shadow:0 0 0 0 rgba(255,190,80,.7)}50%{box-shadow:0 0 0 9px rgba(255,190,80,0)}}
+.sep{display:flex;align-items:center;gap:10px;margin:18px 0 4px;color:#6b4a28;font-size:.7rem;letter-spacing:.3em;font-weight:600}
+.sep:before,.sep:after{content:"";flex:1;height:1px;background:rgba(90,55,20,.4)}
+/* índice */
+.lista{list-style:none;margin:0;padding:0}
+.lista li{opacity:0;transform:translateY(8px);animation:sobe .5s ease forwards}
+@keyframes sobe{to{opacity:1;transform:none}}
+a.ln{display:flex;align-items:baseline;gap:8px;padding:10px 6px;text-decoration:none;color:inherit;border-radius:4px;position:relative;transition:background .15s,padding-left .15s}
+a.ln:hover{background:rgba(122,31,31,.08);padding-left:14px}
+.cap{font-weight:600;font-size:.8rem;letter-spacing:.06em;color:#6b4a28;min-width:70px}
+.tt{font-weight:700;font-size:1.04rem}
+.pt{flex:1;border-bottom:2px dotted rgba(90,55,20,.5);transform:translateY(-4px);min-width:16px}
+.es{font-size:.72rem;font-weight:700;letter-spacing:.08em;white-space:nowrap}
+.es.ok{color:var(--vinho)}.es.and{color:#a0661a}.es.no2{color:rgba(90,55,20,.55);font-weight:600}
+.ds{display:block;font-style:italic;font-size:.86rem;color:#5a3a1c;margin:-4px 0 4px 78px;padding-right:8px;font-weight:400}
+.sl{display:inline-block;border:2px solid var(--vinho);color:var(--vinho);border-radius:50%;width:22px;height:22px;text-align:center;line-height:18px;font-size:.7rem;transform:rotate(-12deg);margin-right:2px}
+li.boss a.ln{margin-top:8px;border:2px solid rgba(122,31,31,.55);border-radius:8px;background:linear-gradient(rgba(122,31,31,.1),rgba(122,31,31,.04))}
+li.boss .tt{color:var(--vinho)}
+li.prox a.ln{background:rgba(255,200,100,.28);outline:1px dashed rgba(179,118,26,.8)}
+li.prox .fl{position:absolute;left:-28px;top:6px;font-size:1.1rem}
+.rod{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:26px;font-size:.84rem;color:#5a3a1c}
+.rod a{color:var(--vinho);font-weight:600}
+@media(max-width:560px){.livro{padding:34px 18px 40px;box-shadow:0 0 0 4px #4a1a14,0 0 0 6px #d6aa50,0 20px 50px rgba(0,0,0,.6),inset 0 0 40px rgba(120,80,30,.35)}.ds{margin-left:0}.cap{min-width:54px}.fita{right:24px}.vela{display:none}li.prox .fl{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.lista li{opacity:1;transform:none}}
+</style></head>
+<body>
+<div class="vela" aria-hidden="true"><i></i><b></b></div>
+<main class="livro">
+ <div class="fita" aria-hidden="true"></div>
+ <header class="cab"><small>MACHADO DE ASSIS · MEMÓRIAS PÓSTUMAS DE BRÁS CUBAS</small>
+  <h1>O Caso dos Narradores Trocados</h1><p class="sub">Índice das zonas · o Agente Carimbo rasgou os capítulos; restaure cada um.</p><div class="orn">❦</div></header>
+ <div class="pro"><div class="anel" id="anel"><b id="anelN">0/10</b></div><div class="tx" id="proTx"></div></div>
+ <div style="text-align:center"><a class="cont" id="cont" href="fase-bras.html">Começar a leitura<small>Zona 1 · Óbito do Autor</small></a></div>
+ <div class="trilha" id="trilha"><svg viewBox="0 0 700 78" preserveAspectRatio="none" aria-hidden="true"><path id="caminho" d="M14 40 C 60 4, 100 76, 150 40 S 240 4, 290 40 S 380 76, 430 40 S 520 4, 570 40 S 650 60, 690 40" fill="none" stroke="rgba(90,55,20,.55)" stroke-width="2.5" stroke-dasharray="2 7" stroke-linecap="round"/></svg></div>
+ <div class="sep">ÍNDICE</div>
+ <ul class="lista" id="lista"></ul>
+ <div class="rod"><span id="pts"></span><a href="../index.html">‹ Voltar ao Arquivo de Mistérios</a></div>
+</main>
+<script>
+var ZS=[
+ ['fase-bras.html','I','Óbito do Autor','O velório, a dedicatória, o hipopótamo.'],
+ ['fase-infancia.html','XI','O Menino É Pai do Homem','O tacho, Prudêncio, o espadim, o mestre Ludgero.'],
+ ['fase-marcela.html','XV','Marcela','O corcel, o asno, os joalheiros e a conta do amor.'],
+ ['fase-coimbra.html','XXI','O Almocreve','O diploma, os jumentos e a gratidão regateada.'],
+ ['fase-tijuca.html','XXX','A Flor da Moita','Eugênia, a borboleta preta e o ridículo de casar.'],
+ ['fase-virgilia.html','LV','O Velho Diálogo de Adão e Eva','Furtividade, a ponta do nariz, os pontinhos e o duelo com Lobo Neves.'],
+ ['fase-quincas.html','CXVII','O Humanitismo','A multidão da terceira força, o frango e a utilidade de Dona Plácida.'],
+ ['fase-marcela-velha.html','XXXVIII','A Quarta Edição','Marcela envelhecida na rua dos Ourives: a teoria das edições e o verme do lucro.'],
+ ['fase-eulalia.html','XCIII','O Jantar','Nhã-loló, o morro abaixo e o epitáfio de Eulália.'],
+ ['fase-pandora.html','CLX','Das Negativas','Pandora, a Natureza: mãe e inimiga. Desvie das negativas, do frio e das vinhas e responda para feri-la.']
+];
+var sv={};try{sv=JSON.parse(localStorage.getItem('caso_realismo_v1')||'{}')||{}}catch(e){}
+var found=sv.found||{},pts=sv.zonas||{};
+function andamento(f){try{var r=JSON.parse(localStorage.getItem('caso_realismo_prog_'+f)||'null');return !!(r&&r.cp>0)}catch(e){return false}}
+var feitos=0,prox=-1;
+ZS.forEach(function(z,i){if(found['z'+(i+1)])feitos++;else if(prox<0)prox=i});
+document.getElementById('anel').style.setProperty('--p',feitos*10);document.getElementById('anelN').textContent=feitos+'/10';
+var score=0;Object.keys(pts).forEach(function(k){score+=pts[k]||0});
+var pat=score>=2200?'Inspetor(a)-chefe':score>=1700?'Detetive titular':score>=1100?'Investigador(a)':'Aprendiz de detetive';
+document.getElementById('proTx').innerHTML='<b>'+feitos+' de 10 capítulos restaurados</b><em>'+score+' pontos · '+pat+'</em>';
+document.getElementById('pts').textContent=feitos===10?'Livro completo. Brás pode descansar em paz (ou quase).':'Cada capítulo restaurado ganha um selo.';
+var c=document.getElementById('cont');
+if(prox>=0){var z=ZS[prox];c.href=z[0];c.innerHTML=(feitos||andamento(z[0])?'Continuar a leitura':'Começar a leitura')+'<small>Zona '+(prox+1)+' · '+z[2]+(andamento(z[0])?' · progresso salvo':'')+'</small>'}
+else{c.href='fase-bras.html';c.innerHTML='Reler o livro<small>Voltar ao capítulo I</small>'}
+var L=document.getElementById('lista'),T=document.getElementById('trilha'),P=document.getElementById('caminho'),tot=P.getTotalLength();
+ZS.forEach(function(z,i){
+  var ok=!!found['z'+(i+1)],and=!ok&&andamento(z[0]),isP=i===prox,boss=i===9;
+  var li=document.createElement('li');li.style.animationDelay=(.5+i*.07)+'s';li.className=(boss?'boss ':'')+(isP?'prox':'');
+  var st=ok?'<span class="es ok"><span class="sl">✓</span> RESTAURADO · '+(pts[i+1]||0)+' pts</span>':and?'<span class="es and">EM ANDAMENTO</span>':'<span class="es no2">'+(boss?'CHEFE FINAL':'RASGADO')+'</span>';
+  li.innerHTML=(isP?'<span class="fl" aria-hidden="true">🔖</span>':'')+'<a class="ln" href="'+z[0]+'"><span class="cap">Cap. '+z[1]+'</span><span class="tt">'+z[2]+'</span><span class="pt"></span>'+st+'</a><span class="ds">'+z[3]+'</span>';
+  L.appendChild(li);
+  var pnt=P.getPointAtLength(tot*i/9),a=document.createElement('a');a.href=z[0];a.title='Zona '+(i+1)+' · '+z[2];
+  a.className='no'+(ok?' ok':'')+(isP?' prox':'')+(boss?' boss':'');a.textContent=ok?'✓':(boss?'☠':(i+1));
+  a.style.left=(pnt.x/700*100)+'%';a.style.top=(pnt.y/78*100)+'%';T.appendChild(a)});
+</script>
+</body></html>
