@@ -96,11 +96,14 @@ const SRC={det:'../caso-originais/img/q1/detetive.webp',detF:'../caso-originais/
  bgi:'img/q1/bg-infancia.webp',vir:'img/q1/virgilia.webp',retVir:'img/q1/ret-virgilia.webp',lobo:'img/q1/lobo.webp',retLobo:'img/q1/ret-lobo.webp'};
 const OPCIONAL=['hq2','hq3','amigos','caixao','padre'];
 const IMG={};
+Object.assign(SRC,{dPena:'img/q1/d/pena.webp',dAgu:'img/q1/d/aguia.webp'});
 const SH={det:{w:269,h:232,s:.47},bras:{w:137,h:340,s:.37},hipo:{w:303,h:230,s:.6},vir:{w:196,h:340,s:.37},lobo:{w:186,h:340,s:.37}};
 function loadAll(cb){
   const keys=Object.keys(SRC);let n=0;
   keys.forEach(k=>{const im=new Image();im.onload=()=>{IMG[k]=im;if(++n===keys.length)cb()};im.onerror=()=>{if(++n===keys.length)cb()};im.src=SRC[k]});
 }
+/* Arte final dos desafios (img/q1/d). dI: desenha o quadro f de uma tira (cw×ch) centrado em x,y. */
+function dImg(k,f,cw,ch,x,y,w,h,rot,alpha,flip){const im=IMG[k];if(!im)return;ctx.save();ctx.globalAlpha=alpha==null?1:alpha;ctx.translate(x,y);if(rot)ctx.rotate(rot);if(flip)ctx.scale(-1,1);ctx.drawImage(im,f*cw,0,cw,ch,-w/2,-h/2,w,h);ctx.restore()}
 function sheet(k,sh,f,x,y,flip,alpha,sc){
   const im=IMG[k];if(!im)return;const s=sh.s*(sc||1),w=sh.w*s,h=sh.h*s;
   ctx.save();ctx.globalAlpha=alpha==null?1:alpha;ctx.translate(x,y+3);if(flip)ctx.scale(-1,1);
@@ -646,6 +649,14 @@ MECH.draw=()=>{
 };
 
 
+MECH.drawOld=MECH.draw;
+MECH.draw=()=>{if(!IMG.dPena||!IMG.dAgu){MECH.drawOld();return}
+  for(const f of DES.f){if(f.got)continue;dGlow(f.x,f.y,40);dImg('dPena',0,119,120,f.x,f.y+Math.sin(T*3+f.x)*4,52,52,Math.sin(T*2+f.x)*.15)}
+  DES.e.forEach((e,i)=>{if(i===1&&DES.got<3)return;
+    if(e.st==='a'||e.st==='d'){const a=e.st==='a'?1-e.t/.95:1;ctx.fillStyle='rgba(20,10,4,'+(.25+a*.4)+')';ctx.beginPath();ctx.ellipse(e.tx,G-1,16+a*26,4+a*3,0,0,7);ctx.fill();ctx.strokeStyle='rgba(160,40,20,'+(.2+a*.4)+')';ctx.setLineDash([5,6]);ctx.beginPath();ctx.moveTo(e.tx,e.y+20);ctx.lineTo(e.tx,G-4);ctx.stroke();ctx.setLineDash([])}
+    if(e.st==='c'||e.st==='r'){if(Math.abs(P.x-e.x)>8)e.fx=P.x<e.x}
+    const fr=e.st==='a'?3:e.st==='d'?4:e.st==='r'?5:[0,1,2,1][Math.floor(T*6+i)&3];
+    dImg('dAgu',fr,199,204,e.x,e.y,150,154,e.st==='d'?Math.PI/2*(e.fx?-1:1)*0:0,1,!!e.fx)});};
 window.__d={DES,startDes,endDes,MECH,updDes};
 /* ============ Entrada ============ */
 /* ============ Duelo com Lobo Neves (invenção do jogo: no livro não há duelo) ============ */

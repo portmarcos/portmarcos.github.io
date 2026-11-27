@@ -96,11 +96,14 @@ const SRC={det:'../caso-originais/img/q1/detetive.webp',detF:'../caso-originais/
  bgi:'img/q1/bg-infancia.webp',marc:'img/q1/marcela.webp',retMarc:'img/q1/ret-marcela.webp'};
 const OPCIONAL=['hq2','hq3','amigos','caixao','padre'];
 const IMG={};
+Object.assign(SRC,{dCol:'img/q1/d/coluna.webp',dLan:'img/q1/d/lanterna.webp',dXav:'img/q1/d/xavier.webp'});
 const SH={det:{w:269,h:232,s:.47},bras:{w:137,h:340,s:.37},hipo:{w:303,h:230,s:.6},marc:{w:242,h:340,s:.37}};
 function loadAll(cb){
   const keys=Object.keys(SRC);let n=0;
   keys.forEach(k=>{const im=new Image();im.onload=()=>{IMG[k]=im;if(++n===keys.length)cb()};im.onerror=()=>{if(++n===keys.length)cb()};im.src=SRC[k]});
 }
+/* Arte final dos desafios (img/q1/d). dI: desenha o quadro f de uma tira (cw×ch) centrado em x,y. */
+function dImg(k,f,cw,ch,x,y,w,h,rot,alpha,flip){const im=IMG[k];if(!im)return;ctx.save();ctx.globalAlpha=alpha==null?1:alpha;ctx.translate(x,y);if(rot)ctx.rotate(rot);if(flip)ctx.scale(-1,1);ctx.drawImage(im,f*cw,0,cw,ch,-w/2,-h/2,w,h);ctx.restore()}
 function sheet(k,sh,f,x,y,flip,alpha,sc){
   const im=IMG[k];if(!im)return;const s=sh.s*(sc||1),w=sh.w*s,h=sh.h*s;
   ctx.save();ctx.globalAlpha=alpha==null?1:alpha;ctx.translate(x,y+3);if(flip)ctx.scale(-1,1);
@@ -612,7 +615,7 @@ MECH.lamps=()=>[{x:DES.x0+300,per:3.3,ph:0},{x:DES.x0+640,per:2.6,ph:1.6}];
 MECH.ang=l=>Math.sin(T*6.283/l.per+l.ph)*.62;
 MECH.inCone=l=>{const a=MECH.ang(l),L=430,pvx=l.x,pvy=G-340,x=P.x-pvx,y=dpy()-pvy;const ca=Math.cos(a),sa=Math.sin(a);const along=x*sa+y*ca,across=x*ca-y*sa;return along>20&&along<L&&Math.abs(across)<along*.3+14};
 MECH.upd=dt=>{
-  const hid=Math.abs(P.vx)<30&&P.y>G-10&&MECH.cols().some(c=>Math.abs(P.x-c)<30);
+  const hid=Math.abs(P.vx)<30&&P.y>G-10&&MECH.cols().some(c=>Math.abs(P.x-c)<36);
   const seen=!hid&&MECH.lamps().some(MECH.inCone);
   DES.ex=seen?DES.ex+dt:Math.max(0,DES.ex-dt*1.5);
   if(DES.ex>.55){DES.ex=0;hit();P.x=DES.x0+40;toast('A lanterna te achou! Volte ao começo.',2200)}
@@ -629,6 +632,16 @@ MECH.draw=()=>{
 };
 
 
+MECH.drawOld=MECH.draw;
+MECH.draw=()=>{if(!IMG.dCol||!IMG.dLan){MECH.drawOld();return}
+  const xv=DES.x1-130,xf=(Math.sin(T*.9)>.93)?1:(Math.sin(T*.37+1)>.96?3:0);if(IMG.dXav)dImg('dXav',xf,215,304,xv,G-100,150,212,0,1,true);
+  for(const c of MECH.cols())dImg('dCol',0,95,240,c,G-98,78,196);
+  for(const l of MECH.lamps()){const a=MECH.ang(l),L=430,pvx=l.x,pvy=G-340,ca=Math.cos(a),sa=Math.sin(a);
+    ctx.save();ctx.translate(pvx,pvy-6);ctx.rotate(-a);ctx.drawImage(IMG.dLan,-26,-4,52,89);ctx.restore();
+    ctx.save();ctx.globalCompositeOperation='lighter';const g=ctx.createLinearGradient(pvx,pvy,pvx+sa*L,pvy+ca*L);g.addColorStop(0,'rgba(255,225,140,.55)');g.addColorStop(1,'rgba(255,200,90,.06)');ctx.fillStyle=g;
+    ctx.beginPath();ctx.moveTo(pvx,pvy+60*ca);const e1=a-.3,e2=a+.3;ctx.lineTo(pvx+Math.sin(e1)*L*1.04,pvy+Math.cos(e1)*L*1.04);ctx.lineTo(pvx+Math.sin(e2)*L*1.04,pvy+Math.cos(e2)*L*1.04);ctx.closePath();ctx.fill();ctx.restore()}
+  if(DES.ex>0){ctx.fillStyle='rgba(20,12,6,.8)';ctx.fillRect(P.x-26,P.y-112,52,8);ctx.fillStyle='#c4271a';ctx.fillRect(P.x-25,P.y-111,50*Math.min(1,DES.ex/.55),6)}
+  ctx.fillStyle='#e6d2a6';ctx.font='bold 16px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText('SACADA DE MARCELA',DES.x1-70,G-136);};
 window.__d={DES,startDes,endDes,MECH,updDes};
 /* ============ Entrada ============ */
 const KM={ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right',ArrowUp:'jump',KeyW:'jump',Space:'jump',KeyC:'lamp',KeyE:'act',Enter:'act'};

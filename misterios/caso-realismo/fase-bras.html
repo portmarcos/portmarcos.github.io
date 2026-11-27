@@ -96,11 +96,14 @@ const SRC={det:'../caso-originais/img/q1/detetive.webp',detF:'../caso-originais/
  hq1:'img/q1/hq1.webp',hq2:'img/q1/hq2.webp',hq3:'img/q1/hq3.webp',amigos:'img/q1/amigos.webp',caixao:'img/q1/caixao.webp',padre:'img/q1/padre.webp'};
 const OPCIONAL=['hq1','hq2','hq3','amigos','caixao','padre'];
 const IMG={};
+Object.assign(SRC,{dBorb:'img/q1/d/borboleta.webp'});
 const SH={det:{w:269,h:232,s:.47},bras:{w:137,h:340,s:.37},hipo:{w:303,h:230,s:.6}};
 function loadAll(cb){
   const keys=Object.keys(SRC);let n=0;
   keys.forEach(k=>{const im=new Image();im.onload=()=>{IMG[k]=im;if(++n===keys.length)cb()};im.onerror=()=>{if(++n===keys.length)cb()};im.src=SRC[k]});
 }
+/* Arte final dos desafios (img/q1/d). dI: desenha o quadro f de uma tira (cw×ch) centrado em x,y. */
+function dImg(k,f,cw,ch,x,y,w,h,rot,alpha,flip){const im=IMG[k];if(!im)return;ctx.save();ctx.globalAlpha=alpha==null?1:alpha;ctx.translate(x,y);if(rot)ctx.rotate(rot);if(flip)ctx.scale(-1,1);ctx.drawImage(im,f*cw,0,cw,ch,-w/2,-h/2,w,h);ctx.restore()}
 function sheet(k,sh,f,x,y,flip,alpha,sc){
   const im=IMG[k];if(!im)return;const s=sh.s*(sc||1),w=sh.w*s,h=sh.h*s;
   ctx.save();ctx.globalAlpha=alpha==null?1:alpha;ctx.translate(x,y+3);if(flip)ctx.scale(-1,1);
@@ -640,6 +643,9 @@ MECH.draw=()=>{for(const b of DES.list){const f=Math.abs(Math.sin(b.ph)),w=16*f+
   ctx.fillStyle='#000';ctx.fillRect(-1.5,-9,3,20);ctx.restore()}};
 
 
+MECH.drawOld=MECH.draw;
+MECH.draw=()=>{if(!IMG.dBorb){MECH.drawOld();return}
+  for(const b of DES.list){const fr=[1,2,3,2][Math.floor(T*9+b.ph*2)&3];dImg('dBorb',fr,180,132,b.x,b.y,104,76,Math.sin(T*3+b.ph)*.12,1,b.vx<0)}};
 window.__d={DES,startDes,endDes,MECH,updDes};
 /* ============ Entrada ============ */
 const KM={ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right',ArrowUp:'jump',KeyW:'jump',Space:'jump',KeyC:'lamp',KeyE:'act',Enter:'act'};

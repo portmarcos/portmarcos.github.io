@@ -96,11 +96,14 @@ const SRC={det:'../caso-originais/img/q1/detetive.webp',detF:'../caso-originais/
  bgi:'img/q1/bg-estrada-coimbra.webp',marc:'img/q1/marcela.webp',retMarc:'img/q1/ret-marcela.webp',almo:'img/q1/almocreve.webp'};
 const OPCIONAL=['hq2','hq3','amigos','caixao','padre'];
 const IMG={};
+Object.assign(SRC,{dLiv:'img/q1/d/livros.webp'});
 const SH={det:{w:269,h:232,s:.47},bras:{w:137,h:340,s:.37},hipo:{w:303,h:230,s:.6},marc:{w:242,h:340,s:.37}};
 function loadAll(cb){
   const keys=Object.keys(SRC);let n=0;
   keys.forEach(k=>{const im=new Image();im.onload=()=>{IMG[k]=im;if(++n===keys.length)cb()};im.onerror=()=>{if(++n===keys.length)cb()};im.src=SRC[k]});
 }
+/* Arte final dos desafios (img/q1/d). dI: desenha o quadro f de uma tira (cw×ch) centrado em x,y. */
+function dImg(k,f,cw,ch,x,y,w,h,rot,alpha,flip){const im=IMG[k];if(!im)return;ctx.save();ctx.globalAlpha=alpha==null?1:alpha;ctx.translate(x,y);if(rot)ctx.rotate(rot);if(flip)ctx.scale(-1,1);ctx.drawImage(im,f*cw,0,cw,ch,-w/2,-h/2,w,h);ctx.restore()}
 function sheet(k,sh,f,x,y,flip,alpha,sc){
   const im=IMG[k];if(!im)return;const s=sh.s*(sc||1),w=sh.w*s,h=sh.h*s;
   ctx.save();ctx.globalAlpha=alpha==null?1:alpha;ctx.translate(x,y+3);if(flip)ctx.scale(-1,1);
@@ -634,6 +637,13 @@ MECH.draw=()=>{
 };
 
 
+MECH.drawOld=MECH.draw;
+MECH.draw=()=>{if(!IMG.dLiv){MECH.drawOld();return}
+  if(DES.dust)for(const d of DES.dust){const al=Math.max(0,1-d.t*2);ctx.save();ctx.globalAlpha=al;ctx.drawImage(IMG.dLiv,330,0,160,100,d.x-56,G-66,112,70);ctx.restore();
+    ctx.fillStyle='rgba(240,228,196,'+(.5-d.t)+')';for(let i=0;i<4;i++){ctx.beginPath();ctx.arc(d.x+(i-1.5)*14*(1+d.t*3),G-6-d.t*20*(i%2+1),3+d.t*7,0,7);ctx.fill()}}
+  for(const b of DES.list){if(b.w>0){const a=1-b.w/.95;ctx.save();ctx.fillStyle='rgba(20,10,4,'+(.25+a*.4)+')';ctx.beginPath();ctx.ellipse(b.x,G-1,14+a*20,3+a*3,0,0,7);ctx.fill();ctx.strokeStyle='rgba(20,10,4,.6)';ctx.setLineDash([4,5]);ctx.globalAlpha=.25+a*.3;ctx.beginPath();ctx.moveTo(b.x,0);ctx.lineTo(b.x,G-4);ctx.stroke();ctx.restore();continue}
+    dImg('dLiv',b.c%3,110,140,b.x,b.y,66,84,b.r)}
+  ctx.fillStyle='#e6d2a6';ctx.font='bold 16px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText('PORTÃO DA UNIVERSIDADE',DES.x1-70,G-136);};
 window.__d={DES,startDes,endDes,MECH,updDes};
 /* ============ Entrada ============ */
 const KM={ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right',ArrowUp:'jump',KeyW:'jump',Space:'jump',KeyC:'lamp',KeyE:'act',Enter:'act'};
