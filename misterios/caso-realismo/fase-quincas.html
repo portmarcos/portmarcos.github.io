@@ -38,6 +38,7 @@ button{font-family:inherit;cursor:pointer;color:inherit}
 .panel{background:linear-gradient(180deg,#2a1b0e,#1b1109);border:2px solid #9a7545;border-radius:16px;padding:clamp(12px,2.4vw,26px);max-width:min(860px,100%);width:100%;box-shadow:0 12px 50px #000}
 .panel h2{font-family:'Playfair Display',serif;color:var(--amber2);font-size:clamp(1.1rem,2.8vw,1.8rem);margin-bottom:8px}
 .panel p{line-height:1.5;margin:6px 0;font-size:clamp(.85rem,1.7vw,1.1rem)}
+.cita mark{background:#e8c25a;color:#1b1007;padding:0 3px;border-radius:3px;font-style:normal}
 .cita{border-left:3px solid var(--amber);padding:8px 12px;margin:10px 0;font-style:italic;background:rgba(255,255,255,.04);font-size:clamp(.85rem,1.7vw,1.1rem);line-height:1.55}
 .src{font-size:.78rem;color:var(--muted);margin-top:-4px}
 .btn{background:linear-gradient(180deg,#e3a84a,#b0701f);color:#1a0f08;font-weight:700;border:none;border-radius:10px;padding:9px 18px;margin:6px 6px 0 0;font-size:clamp(.85rem,1.6vw,1.05rem)}
@@ -75,7 +76,7 @@ body:not(.touch) #touch{display:none}
 <div id="hud" class="hidden">
   <span class="hs" id="hLamp"></span><span class="hs">Folhas <b id="hPag">0/11</b></span><span class="hs">Pontos <b id="hPts">0</b></span>
   <span class="hs" id="hTask"></span><span class="sp"></span>
-  <button id="bMute" title="Som (M)">♪</button><button id="bPause" title="Pausa (Esc)">II</button>
+  <button id="bMute" title="Som (M)">♪</button><button id="bCad" title="Caderno de provas (N)" style="width:auto;padding:0 10px">Caderno</button><button id="bPause" title="Pausa (Esc)">II</button>
 </div>
 <div id="toast"></div><div id="prompt" class="hidden"></div>
 <div id="dlg" class="hidden"><img id="dImg" alt=""><div class="t"><div class="n" id="dNome"></div><div class="x" id="dTxt"></div></div><div class="k">Espaço ▶</div></div>
@@ -118,7 +119,7 @@ function drawPart(){ctx.save();ctx.translate(-camX,0);for(const p of PART){const
 let state='start',T=0,camX=0,shake=0,flash=0;
 const S={nome:'',turma:'',gen:'m'};
 const Z={pts:0,pages:0,lamps:3,leit:0,tot:4,enviou:false};
-const F={des:false,ped:false,fases:false,inveja:false,frango:false,placida:false,porta:false,ajudou:false};
+const F={cl:{},vered:false,des:false,ped:false,fases:false,inveja:false,frango:false,placida:false,porta:false,ajudou:false};
 const LOBO={x:0,dir:1,pause:0,on:false,seen:0};const BUSH=[];let hidden=false;let crowd=[],crowdT=4;
 const K={left:0,right:0,jump:0,lamp:0,act:0};
 const P={x:110,y:G,vx:0,vy:0,face:1,ground:true,jumps:2,inv:0,an:0,land:0,hurt:0};
@@ -181,7 +182,7 @@ function leitura(cfg){
       let tries=0;$('lq').querySelectorAll('.opt').forEach(bt=>bt.onclick=()=>{
         const i=+bt.dataset.i;if(i===q.k){bt.classList.add('ok');$('lq').querySelectorAll('.opt').forEach(x=>x.disabled=true);
           $('lq').insertAdjacentHTML('beforeend','<p>'+q.e+'</p><button class="btn" id="lok">Continuar</button>');
-          const first=tries===0;if(first){Z.leit++;addPts(100,P.x-camX,P.y-120)}else addPts(40,P.x-camX,P.y-120);
+          const first=tries===0;if(cfg.re){addPts(30,P.x-camX,P.y-120)}else if(first){Z.leit++;addPts(100,P.x-camX,P.y-120)}else addPts(40,P.x-camX,P.y-120);
           $('lok').onclick=()=>{ovClose();state=prev;res(first)}}
         else{tries++;bt.classList.add('bad');bt.disabled=true;blip(-3);toast('Releia o trecho e tente de novo.',1800)}});
     }
@@ -217,6 +218,45 @@ function restaurarFrase(){
 }
 /* ============ Interações ============ */
 const FONTE='Machado de Assis, Memórias Póstumas de Brás Cubas, cap. ';
+/* ============ Caso fechado: leituras como provas ============ */
+const CASO_CFG={"prova": {"fases": "Quincas expõe o Humanitismo: Humanitas é \"o mesmo homem repartido por todos os homens\".", "inveja": "Para o Humanitismo, \"a inveja não é senão uma admiração que luta\": por isso \"a inveja é uma virtude\".", "frango": "O frango do almoço veio do milho de um africano comprado, de navio, de marinheiros: tudo isso é parte do almoço de Quincas.", "placida": "Brás acha Dona Plácida como um \"molho de ossos\" e conclui que a vida dela teve \"utilidade\": serviu aos amores com Virgília."}, "nome": {"fases": "A definição de Humanitas", "inveja": "A inveja virtuosa", "frango": "O frango do almoço", "placida": "A utilidade de Plácida"}, "pergunta": "para que serve o Humanitismo?", "conclusao": "Quincas e Brás usam a filosofia para ficarem tranquilos diante do sofrimento dos outros.", "certas": ["frango", "placida"], "fecho": "O <b>frango</b> transforma o trabalho e a venda de um africano em etapa do almoço; <b>Dona Plácida</b> vira \"útil\" porque serviu aos amores de Brás. Nas duas cenas o sofrimento alheio é explicado de modo a deixar o narrador em paz. A definição de Humanitas e a inveja-virtude são teoria, sem vítima.", "nota": "Brás, Quincas Borba e Dona Plácida vêm do romance (Machado de Assis, domínio público); o enigma é original do jogo.", "dicas": ["Procure as provas em que há uma pessoa sofrendo e alguém que dá um bom motivo para isso.", "Uma é a cadeia que leva ao frango do almoço; a outra, a velha encontrada num catre."]};
+const CASO=CASO_CFG.prova,CASO_NOME=CASO_CFG.nome;
+async function provaLeitura(id,cfg,hl){
+  F.cl=F.cl||{};
+  const first=await leitura(cfg);
+  if(first){F.cl[id]=2;toast('Prova guardada no caderno: '+CASO_NOME[id],2600);return true}
+  F.cl[id]=1;
+  await say([['narr','A prova ficou borrada no caderno, leitor. Releia o trecho destacado e responda de novo.']]);
+  const ok=await leitura(Object.assign({},cfg,{re:true,titulo:'Releitura · '+CASO_NOME[id],cita:hl&&cfg.cita.includes(hl)?cfg.cita.replace(hl,'<mark>'+hl+'</mark>'):cfg.cita}));
+  if(!ok){Z.lamps=Math.max(1,Z.lamps-1);hud();toast('Errou de novo: perdeu 1 lamparina, mas a prova foi recuperada.',3600)}
+  else toast('Prova recuperada: '+CASO_NOME[id],2600);
+  F.cl[id]=2;return false;
+}
+function caderno(){
+  if(state!=='play')return;const prev=state;state='modal';
+  let h='<h2 style="margin:.2em 0">Caderno de provas</h2><p style="margin:.3em 0;font-size:.9em">Cada leitura certa guarda uma prova do caso: <b>'+CASO_CFG.pergunta+'</b></p>';
+  for(const k of Object.keys(CASO)){const st=F.cl&&F.cl[k];h+='<div class="card" style="padding:8px 12px;margin:6px 0;font-size:.88em;line-height:1.35"><b>'+CASO_NOME[k]+'</b><br>'+(st===2?CASO[k]:st===1?'▒▒▒▒▒▒ (prova borrada: releia o trecho)':'<i>ainda não encontrada</i>')+'</div>'}
+  ov(h+'<button class="btn" id="cdx">Fechar</button>');$('cdx').onclick=()=>{ovClose();state=prev};
+}
+function veredito(){return new Promise(res=>{
+  const prev=state;state='modal';const sel=new Set(),keys=Object.keys(CASO);let erros=0;
+  const draw=msg=>{
+    ov('<h2 style="margin:.2em 0">Fechar o caso</h2><p style="margin:.3em 0;font-size:.92em"><b>Conclusão a provar:</b> '+CASO_CFG.conclusao+' Escolha as <b>duas</b> provas do caderno que sustentam isso.</p>'+keys.map(k=>'<button class="opt'+(sel.has(k)?' ok':'')+'" data-k="'+k+'" style="padding:7px 10px;margin:4px 0;font-size:.88em"><b>'+CASO_NOME[k]+'.</b> '+(F.cl&&F.cl[k]===2?CASO[k]:'(prova ainda não encontrada)')+'</button>').join('')+(msg?'<p style="font-size:.9em">'+msg+'</p>':'')+'<button class="btn" id="vd">Fechar o caso</button>');
+    $('ov').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const k=b.dataset.k;if(sel.has(k))sel.delete(k);else if(sel.size<2)sel.add(k);draw(msg)});
+    $('vd').onclick=()=>{
+      if(sel.size!==2){draw('Escolha exatamente duas provas.');return}
+      const certo=CASO_CFG.certas.every(k=>sel.has(k));
+      if(certo||erros>=2){
+        if(!certo){sel.clear();CASO_CFG.certas.forEach(k=>sel.add(k))}
+        const pts=certo?Math.max(100,400-erros*100):100;
+        ov('<h2>Caso fechado</h2><p>'+(certo?'Provas certas. ':'Era esta a combinação. ')+CASO_CFG.fecho+'</p><p style="font-size:.85em;opacity:.8">'+CASO_CFG.nota+'</p><button class="btn" id="vok">Continuar (+'+pts+')</button>');
+        $('vok').onclick=()=>{ovClose();state=prev;F.vered=true;addPts(pts,CW/2,200);toast('Caso fechado! +'+pts+' pontos',3200);res()};return}
+      erros++;sel.clear();
+      draw('Ainda não. '+CASO_CFG.dicas[Math.min(erros-1,1)]);
+    };
+  };
+  draw('');
+})}
 const INTER=[
  {id:'ped',x:1050,r:90,need:'lamp',txt:'AÇÃO · Pegar a página rasgada',done:()=>F.ped,act:async()=>{
    await say([['det','Outra página rasgada. O carimbo cobre uma palavra estranha: Humanitas.']]);await restaurarFrase();F.ped=true;hud();
@@ -224,21 +264,21 @@ const INTER=[
  {id:'fases',x:900,r:140,txt:'AÇÃO · Ouvir Quincas Borba',done:()=>F.fases,act:async()=>{
    await say([['qui','Meu caro Brás, vou lhe expor o Humanitismo, sistema de filosofia destinado a arruinar todos os demais sistemas.'],['bras','Quincas Borba, o meu colega de escola, o das baratas. Voltou da loucura e da fortuna com uma filosofia nova.']]);
    await ordenarFases();
-   await leitura({titulo:'Capítulo 117 · O Humanitismo',cita:'Quanto ao Quincas Borba, expôs-me enfim o Humanitismo, sistema de filosofia destinado a arruinar todos os demais sistemas. &mdash; Humanitas, dizia ele, o princípio das coisas, não é outro senão o mesmo homem repartido por todos os homens.',
+   await provaLeitura('fases',{titulo:'Capítulo 117 · O Humanitismo',cita:'Quanto ao Quincas Borba, expôs-me enfim o Humanitismo, sistema de filosofia destinado a arruinar todos os demais sistemas. &mdash; Humanitas, dizia ele, o princípio das coisas, não é outro senão o mesmo homem repartido por todos os homens.',
      fonte:FONTE+'117 (domínio público).',
-     q:{t:'O que Machado ironiza ao criar o "Humanitismo", sistema "destinado a arruinar todos os demais"?',o:['A importância da filosofia na educação dos jovens brasileiros do Império.','A religião indiana, com seus muitos deuses, seus rituais e suas peregrinações.','O estudo da história do Brasil, ensinado nas escolas e academias do século XIX.','As filosofias do século XIX, que pretendiam explicar tudo.'],k:3,e:'O Humanitismo imita a linguagem solene dos sistemas filosóficos e científicos do século XIX (positivismo, evolucionismo, determinismo), mas leva as ideias ao absurdo. Machado faz paródia: o sistema serve para justificar qualquer coisa.'}});
+     q:{t:'O que Machado ironiza ao criar o "Humanitismo", sistema "destinado a arruinar todos os demais"?',o:['A importância da filosofia na educação dos jovens brasileiros do Império.','A religião indiana, com seus muitos deuses, seus rituais e suas peregrinações.','O estudo da história do Brasil, ensinado nas escolas e academias do século XIX.','As filosofias do século XIX, que pretendiam explicar tudo.'],k:3,e:'O Humanitismo imita a linguagem solene dos sistemas filosóficos e científicos do século XIX (positivismo, evolucionismo, determinismo), mas leva as ideias ao absurdo. Machado faz paródia: o sistema serve para justificar qualquer coisa.'}},"o mesmo homem repartido por todos os homens")
    F.fases=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'inveja',x:1750,r:140,txt:'AÇÃO · A inveja é uma virtude',done:()=>F.inveja,act:async()=>{
    await say([['qui','Queres uma prova da superioridade do meu sistema? Contempla a inveja.'],['det','Mas a inveja não é um defeito?'],['qui','Esquece as retóricas rafadas, estuda a inveja, esse sentimento tão sutil e tão nobre.']]);
-   await leitura({titulo:'Capítulo 117 · O Humanitismo',cita:'Sendo cada homem uma redução de Humanitas, é claro que nenhum homem é fundamentalmente oposto a outro homem, quaisquer que sejam as aparências contrárias. [&hellip;] Se entendeste bem, facilmente compreenderás que a inveja não é senão uma admiração que luta, e sendo a luta a grande função do gênero humano, todos os sentimentos belicosos são os mais adequados à sua felicidade. Daí vem que a inveja é uma virtude.',
+   await provaLeitura('inveja',{titulo:'Capítulo 117 · O Humanitismo',cita:'Sendo cada homem uma redução de Humanitas, é claro que nenhum homem é fundamentalmente oposto a outro homem, quaisquer que sejam as aparências contrárias. [&hellip;] Se entendeste bem, facilmente compreenderás que a inveja não é senão uma admiração que luta, e sendo a luta a grande função do gênero humano, todos os sentimentos belicosos são os mais adequados à sua felicidade. Daí vem que a inveja é uma virtude.',
      fonte:FONTE+'117 (domínio público).',
-     q:{t:'Como o Humanitismo justifica que "a inveja é uma virtude"?',o:['Mostrando que a inveja traz benefícios práticos, comprovados na vida cotidiana.','Por raciocínio em cadeia: tudo é Humanitas, a luta é sua função, logo a inveja é boa.','Citando trechos da Bíblia que elogiam a inveja como força de progresso entre os homens.','Provando com estatísticas e experimentos feitos em laboratório, na Europa, por sábios.'],k:1,e:'O raciocínio tem a aparência de rigor ("a clareza da exposição, a lógica dos princípios"), mas leva a conclusões absurdas. É a crítica de Machado à ideia de que uma teoria "científica" pode justificar o que se queira, inclusive a violência e a inveja.'}});
+     q:{t:'Como o Humanitismo justifica que "a inveja é uma virtude"?',o:['Mostrando que a inveja traz benefícios práticos, comprovados na vida cotidiana.','Por raciocínio em cadeia: tudo é Humanitas, a luta é sua função, logo a inveja é boa.','Citando trechos da Bíblia que elogiam a inveja como força de progresso entre os homens.','Provando com estatísticas e experimentos feitos em laboratório, na Europa, por sábios.'],k:1,e:'O raciocínio tem a aparência de rigor ("a clareza da exposição, a lógica dos princípios"), mas leva a conclusões absurdas. É a crítica de Machado à ideia de que uma teoria "científica" pode justificar o que se queira, inclusive a violência e a inveja.'}},"a inveja é uma virtude")
    F.inveja=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'frango',x:2600,r:140,txt:'AÇÃO · O frango de Quincas Borba',done:()=>F.frango,act:async()=>{
    await say([['qui','Mas eu não quero outro documento da sublimidade do meu sistema, senão este mesmo frango.'],['bras','Ele trincava a asa com filosófica serenidade.']]);
-   await leitura({titulo:'Capítulo 117 · O Humanitismo',cita:'Este frango, que eu almocei agora mesmo, nutriu-se de milho, que foi plantado por um africano, suponhamos, importado de Angola. Nasceu esse africano, cresceu, foi vendido; um navio o trouxe, um navio construído de madeira cortada no mato por dez ou doze homens, levado por velas, que oito ou dez homens teceram [&hellip;]',
+   await provaLeitura('frango',{titulo:'Capítulo 117 · O Humanitismo',cita:'Este frango, que eu almocei agora mesmo, nutriu-se de milho, que foi plantado por um africano, suponhamos, importado de Angola. Nasceu esse africano, cresceu, foi vendido; um navio o trouxe, um navio construído de madeira cortada no mato por dez ou doze homens, levado por velas, que oito ou dez homens teceram [&hellip;]',
      fonte:FONTE+'117 (domínio público).',
-     q:{t:'Qual é o efeito de explicar o frango pela história do africano "importado de Angola"?',o:['Mostrar que o frango era de ótima qualidade e vinha de um criadouro muito bem cuidado.','Elogiar a produção de milho e a fartura das fazendas do interior, que alimentavam o Rio.','Mostrar que o sistema trata a escravidão como peça da engrenagem, sem ver o sofrimento.','Defender o fim do tráfico de escravos, mostrando à elite os males que ele causava.'],k:2,e:'A cadeia de causas termina em justificar o jantar. O africano "foi vendido; um navio o trouxe" é descrito como mais uma peça. Machado faz o personagem revelar, sem perceber, a violência social que sustenta a vida dos poderosos.'}});
+     q:{t:'Qual é o efeito de explicar o frango pela história do africano "importado de Angola"?',o:['Mostrar que o frango era de ótima qualidade e vinha de um criadouro muito bem cuidado.','Elogiar a produção de milho e a fartura das fazendas do interior, que alimentavam o Rio.','Mostrar que o sistema trata a escravidão como peça da engrenagem, sem ver o sofrimento.','Defender o fim do tráfico de escravos, mostrando à elite os males que ele causava.'],k:2,e:'A cadeia de causas termina em justificar o jantar. O africano "foi vendido; um navio o trouxe" é descrito como mais uma peça. Machado faz o personagem revelar, sem perceber, a violência social que sustenta a vida dos poderosos.'}},"foi plantado por um africano")
    F.frango=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'placida',x:3200,r:140,txt:'AÇÃO · Dona Plácida',done:()=>F.placida,act:async()=>{
    await say([['bras','Dona Plácida, a que nos acobertou nos amores com Virgília. Anos depois, achei-a num estado lastimável.'],['pla','Doutor... eu não pedi nada.']]);
@@ -246,11 +286,11 @@ const INTER=[
      $('c1').onclick=()=>{ovClose();state=pv;r(true)};$('c2').onclick=()=>{ovClose();state=pv;r(false)}});
    F.ajudou=aj;if(aj)addPts(100,CW/2,200);
    await say([['narr',aj?'Foi mais longe do que eu, leitor. Eu lhe dei algum dinheiro e a mandei para a Misericórdia, onde ela morreu uma semana depois.':'Foi o que eu fiz: dei-lhe algum dinheiro. No dia seguinte fi-la transportar para a Misericórdia, onde ela morreu uma semana depois.']]);
-   await leitura({titulo:'Capítulo 144 · Utilidade Relativa',cita:'Depois do almoço fui à casa de Dona Plácida; achei um molho de ossos, envolto em molambos, estendido sobre um catre velho e nauseabundo; dei-lhe algum dinheiro. [&hellip;] Mas adverti logo que, se não fosse Dona Plácida, talvez os meus amores com Virgília tivessem sido interrompidos [&hellip;]; tal foi, portanto, a utilidade da vida de Dona Plácida. Utilidade relativa, convenho; mas que diacho há absoluto nesse mundo?',
+   await provaLeitura('placida',{titulo:'Capítulo 144 · Utilidade Relativa',cita:'Depois do almoço fui à casa de Dona Plácida; achei um molho de ossos, envolto em molambos, estendido sobre um catre velho e nauseabundo; dei-lhe algum dinheiro. [&hellip;] Mas adverti logo que, se não fosse Dona Plácida, talvez os meus amores com Virgília tivessem sido interrompidos [&hellip;]; tal foi, portanto, a utilidade da vida de Dona Plácida. Utilidade relativa, convenho; mas que diacho há absoluto nesse mundo?',
      fonte:FONTE+'144 (domínio público).',
-     q:{t:'O que a frase "Utilidade relativa, convenho; mas que diacho há absoluto nesse mundo?" revela?',o:['Que Brás usa a filosofia para justificar a própria indiferença diante da pobre.','Que Brás sente profundo remorso e se arrepende de tudo o que fez àquela mulher pobre.','Que Dona Plácida enriqueceu no fim da vida, graças à generosa ajuda de Brás Cubas.','Que Brás deixou toda a sua herança para Dona Plácida em testamento, por gratidão.'],k:0,e:'Brás reduz a vida de Dona Plácida à sua "utilidade" para ele, e se consola com a relatividade de tudo. É a aplicação prática do Humanitismo: uma desculpa filosófica para a indiferença diante da miséria e da exploração.'}});
+     q:{t:'O que a frase "Utilidade relativa, convenho; mas que diacho há absoluto nesse mundo?" revela?',o:['Que Brás usa a filosofia para justificar a própria indiferença diante da pobre.','Que Brás sente profundo remorso e se arrepende de tudo o que fez àquela mulher pobre.','Que Dona Plácida enriqueceu no fim da vida, graças à generosa ajuda de Brás Cubas.','Que Brás deixou toda a sua herança para Dona Plácida em testamento, por gratidão.'],k:0,e:'Brás reduz a vida de Dona Plácida à sua "utilidade" para ele, e se consola com a relatividade de tudo. É a aplicação prática do Humanitismo: uma desculpa filosófica para a indiferença diante da miséria e da exploração.'}},"tal foi, portanto, a utilidade da vida de Dona Plácida")
    F.placida=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
- {id:'porta',x:3500,r:140,txt:'AÇÃO · Seguir para o delírio final',cond:()=>provas()===NP,act:async()=>{
+ {id:'porta',x:3500,r:140,txt:'AÇÃO · Seguir para o delírio final',cond:()=>provas()===NP,act:async()=>{if(!F.vered)await veredito();
    await say([['bras','A terceira força que me chamava ao bulício era a impaciência de luzir. Mas o emplasto não veio.']]);startCine()}}
 ];
 /* ===== Trechos do livro (opcionais): citações nas páginas + painéis rasurados ===== */
@@ -678,6 +718,7 @@ addEventListener('keydown',e=>{
   const k=KM[e.code];
   if(e.code==='Escape'||e.code==='KeyP'){if(state==='play')pause(true);else if(paused)pause(false);return}
   if(e.code==='KeyM'){setMute(!muted);return}
+  if(e.code==='KeyN'){caderno();return}
   if(state==='dialog'&&(e.code==='Space'||e.code==='Enter'||e.code==='KeyE')){e.preventDefault();next();return}
   if(!k)return;if(e.code.startsWith('Arrow')||e.code==='Space')e.preventDefault();
   if(k==='act'){if(!K.act&&state==='play')doAct();K.act=1;return}K[k]=1;
@@ -685,7 +726,7 @@ addEventListener('keydown',e=>{
 addEventListener('keyup',e=>{const k=KM[e.code];if(k)K[k]=0});
 function doAct(){const it=nearInter();if(it)it.act()}
 function pause(on){paused=on;if(on){state='pause';ov('<h2>Pausa</h2><button class="btn" id="rs">Continuar</button><button class="btn sec" id="bk">Voltar ao Arquivo</button>');$('rs').onclick=()=>pause(false);$('bk').onclick=()=>location.href='../index.html'}else{ovClose();state='play'}}
-$('bPause').onclick=()=>{if(state==='play')pause(true)};$('bMute').onclick=()=>setMute(!muted);
+$('bCad').onclick=()=>caderno();$('bPause').onclick=()=>{if(state==='play')pause(true)};$('bMute').onclick=()=>setMute(!muted);
 $('dlg').addEventListener('pointerdown',e=>{e.preventDefault();if(state==='dialog')next()});
 function bindT(id,k,act){const b=$(id);const on=e=>{e.preventDefault();if(act){if(state==='dialog'){next();return}if(state==='play')doAct()}else K[k]=1};const off=e=>{e.preventDefault();if(!act)K[k]=0};
   b.addEventListener('pointerdown',on);b.addEventListener('pointerup',off);b.addEventListener('pointercancel',off);b.addEventListener('pointerleave',off)}
@@ -702,7 +743,7 @@ function loop(ts){
   }else if(state==='dialog'){updateWorld(dt);P.vx=0}
   render(dt);
 }
-window.__t={LOBO,P,F,Z,PAGES,INTER,get state(){return state},set state(v){state=v},get camX(){return camX},set camX(v){camX=v},provas,startCine,fim,K};
+window.__t={provaLeitura,caderno,veredito,CASO,LOBO,P,F,Z,PAGES,INTER,get state(){return state},set state(v){state=v},get camX(){return camX},set camX(v){camX=v},provas,startCine,fim,K};
 (function restaurarProg(){try{const r=JSON.parse(localStorage.getItem(PROGKEY)||'null');if(!r||!(r.cp>0))return;
   cpX=r.cp;P.x=r.cp;camX=Math.max(0,Math.min(WW-CW,P.x-CW*.42+(P.look||0)*.6));Object.assign(Z,r.Z||{});Object.assign(F,r.F||{});
   (r.pg||[]).forEach((v,i)=>{if(v&&PAGES[i])PAGES[i].got=true});(r.rb||[]).forEach((v,i)=>{if(v&&RAS_BOARDS[i])RAS_BOARDS[i].done=true});

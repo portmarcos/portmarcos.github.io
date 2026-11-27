@@ -38,6 +38,7 @@ button{font-family:inherit;cursor:pointer;color:inherit}
 .panel{background:linear-gradient(180deg,#2a1b0e,#1b1109);border:2px solid #9a7545;border-radius:16px;padding:clamp(12px,2.4vw,26px);max-width:min(860px,100%);width:100%;box-shadow:0 12px 50px #000}
 .panel h2{font-family:'Playfair Display',serif;color:var(--amber2);font-size:clamp(1.1rem,2.8vw,1.8rem);margin-bottom:8px}
 .panel p{line-height:1.5;margin:6px 0;font-size:clamp(.85rem,1.7vw,1.1rem)}
+.cita mark{background:#e8c25a;color:#1b1007;padding:0 3px;border-radius:3px;font-style:normal}
 .cita{border-left:3px solid var(--amber);padding:8px 12px;margin:10px 0;font-style:italic;background:rgba(255,255,255,.04);font-size:clamp(.85rem,1.7vw,1.1rem);line-height:1.55}
 .src{font-size:.78rem;color:var(--muted);margin-top:-4px}
 .btn{background:linear-gradient(180deg,#e3a84a,#b0701f);color:#1a0f08;font-weight:700;border:none;border-radius:10px;padding:9px 18px;margin:6px 6px 0 0;font-size:clamp(.85rem,1.6vw,1.05rem)}
@@ -75,7 +76,7 @@ body:not(.touch) #touch{display:none}
 <div id="hud" class="hidden">
   <span class="hs" id="hLamp"></span><span class="hs">Contos <b id="hPag">0/11</b></span><span class="hs">Pontos <b id="hPts">0</b></span>
   <span class="hs" id="hTask"></span><span class="sp"></span>
-  <button id="bMute" title="Som (M)">♪</button><button id="bPause" title="Pausa (Esc)">II</button>
+  <button id="bMute" title="Som (M)">♪</button><button id="bCad" title="Caderno de provas (N)" style="width:auto;padding:0 10px">Caderno</button><button id="bPause" title="Pausa (Esc)">II</button>
 </div>
 <div id="toast"></div><div id="prompt" class="hidden"></div>
 <div id="dlg" class="hidden"><img id="dImg" alt=""><div class="t"><div class="n" id="dNome"></div><div class="x" id="dTxt"></div></div><div class="k">Espaço ▶</div></div>
@@ -118,7 +119,7 @@ function drawPart(){ctx.save();ctx.translate(-camX,0);for(const p of PART){const
 let state='start',T=0,camX=0,shake=0,flash=0;
 const S={nome:'',turma:'',gen:'m'};
 const Z={pts:0,pages:0,lamps:3,leit:0,tot:4,enviou:false};
-const F={des:false,ped:false,rossio:false,asno:false,reflex:false,contos:false,porta:false,digno:false};
+const F={cl:{},vered:false,des:false,ped:false,rossio:false,asno:false,reflex:false,contos:false,porta:false,digno:false};
 const K={left:0,right:0,jump:0,lamp:0,act:0};
 const P={x:110,y:G,vx:0,vy:0,face:1,ground:true,jumps:2,inv:0,an:0,land:0,hurt:0};
 let cpX=110,lastStep=0;
@@ -180,7 +181,7 @@ function leitura(cfg){
       let tries=0;$('lq').querySelectorAll('.opt').forEach(bt=>bt.onclick=()=>{
         const i=+bt.dataset.i;if(i===q.k){bt.classList.add('ok');$('lq').querySelectorAll('.opt').forEach(x=>x.disabled=true);
           $('lq').insertAdjacentHTML('beforeend','<p>'+q.e+'</p><button class="btn" id="lok">Continuar</button>');
-          const first=tries===0;if(first){Z.leit++;addPts(100,P.x-camX,P.y-120)}else addPts(40,P.x-camX,P.y-120);
+          const first=tries===0;if(cfg.re){addPts(30,P.x-camX,P.y-120)}else if(first){Z.leit++;addPts(100,P.x-camX,P.y-120)}else addPts(40,P.x-camX,P.y-120);
           $('lok').onclick=()=>{ovClose();state=prev;res(first)}}
         else{tries++;bt.classList.add('bad');bt.disabled=true;blip(-3);toast('Releia o trecho e tente de novo.',1800)}});
     }
@@ -202,39 +203,78 @@ function restaurarFrase(){
 }
 /* ============ Interações ============ */
 const FONTE='Machado de Assis, Memórias Póstumas de Brás Cubas, cap. ';
+/* ============ Caso fechado: leituras como provas ============ */
+const CASO_CFG={"prova": {"rossio": "No Rossio Grande o amor chega como no romantismo antigo, com botas, esporas e corcel; o realismo vai tirar esse enfeite.", "asno": "Foram trinta dias do \"asno da paciência\" até Marcela, e o amor não era de graça: foi preciso coligir, multiplicar e até inventar dinheiro.", "reflex": "Marcela \"não morria, vivia\" de amores pelo Xavier: o sentimento dela era o de quem vive bem.", "contos": "Marcela o amou por \"quinze meses e onze contos de réis\": até a salva de prata da mucama fazia parte da conta."}, "nome": {"rossio": "O corcel do Rossio", "asno": "O asno da paciência", "reflex": "A reflexão imoral", "contos": "Os onze contos"}, "pergunta": "quanto custou o amor de Marcela?", "conclusao": "Brás pagou caro pelo amor de Marcela. Ache a prova de COMO ele arranjou o dinheiro e a de QUANTO gastou.", "certas": ["asno", "contos"], "fecho": "O <b>asno</b> mostra o esforço de arranjar dinheiro; os <b>contos</b> mostram a conta, em números: quinze meses, onze contos. O corcel do Rossio e a reflexão sobre Xavier falam do romantismo e do sentimento de Marcela, não do preço que Brás pagou.", "nota": "Brás, Marcela e Xavier vêm do romance (Machado de Assis, domínio público); o enigma é original do jogo.", "dicas": ["Procure as provas sobre o dinheiro de Brás, e não sobre o sentimento de Marcela.", "Uma prova mostra COMO ele arranjou o dinheiro; a outra, QUANTO gastou, com números."]};
+const CASO=CASO_CFG.prova,CASO_NOME=CASO_CFG.nome;
+async function provaLeitura(id,cfg,hl){
+  F.cl=F.cl||{};
+  const first=await leitura(cfg);
+  if(first){F.cl[id]=2;toast('Prova guardada no caderno: '+CASO_NOME[id],2600);return true}
+  F.cl[id]=1;
+  await say([['narr','A prova ficou borrada no caderno, leitor. Releia o trecho destacado e responda de novo.']]);
+  const ok=await leitura(Object.assign({},cfg,{re:true,titulo:'Releitura · '+CASO_NOME[id],cita:hl&&cfg.cita.includes(hl)?cfg.cita.replace(hl,'<mark>'+hl+'</mark>'):cfg.cita}));
+  if(!ok){Z.lamps=Math.max(1,Z.lamps-1);hud();toast('Errou de novo: perdeu 1 lamparina, mas a prova foi recuperada.',3600)}
+  else toast('Prova recuperada: '+CASO_NOME[id],2600);
+  F.cl[id]=2;return false;
+}
+function caderno(){
+  if(state!=='play')return;const prev=state;state='modal';
+  let h='<h2 style="margin:.2em 0">Caderno de provas</h2><p style="margin:.3em 0;font-size:.9em">Cada leitura certa guarda uma prova do caso: <b>'+CASO_CFG.pergunta+'</b></p>';
+  for(const k of Object.keys(CASO)){const st=F.cl&&F.cl[k];h+='<div class="card" style="padding:8px 12px;margin:6px 0;font-size:.88em;line-height:1.35"><b>'+CASO_NOME[k]+'</b><br>'+(st===2?CASO[k]:st===1?'▒▒▒▒▒▒ (prova borrada: releia o trecho)':'<i>ainda não encontrada</i>')+'</div>'}
+  ov(h+'<button class="btn" id="cdx">Fechar</button>');$('cdx').onclick=()=>{ovClose();state=prev};
+}
+function veredito(){return new Promise(res=>{
+  const prev=state;state='modal';const sel=new Set(),keys=Object.keys(CASO);let erros=0;
+  const draw=msg=>{
+    ov('<h2 style="margin:.2em 0">Fechar o caso</h2><p style="margin:.3em 0;font-size:.92em"><b>Conclusão a provar:</b> '+CASO_CFG.conclusao+' Escolha as <b>duas</b> provas do caderno que sustentam isso.</p>'+keys.map(k=>'<button class="opt'+(sel.has(k)?' ok':'')+'" data-k="'+k+'" style="padding:7px 10px;margin:4px 0;font-size:.88em"><b>'+CASO_NOME[k]+'.</b> '+(F.cl&&F.cl[k]===2?CASO[k]:'(prova ainda não encontrada)')+'</button>').join('')+(msg?'<p style="font-size:.9em">'+msg+'</p>':'')+'<button class="btn" id="vd">Fechar o caso</button>');
+    $('ov').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const k=b.dataset.k;if(sel.has(k))sel.delete(k);else if(sel.size<2)sel.add(k);draw(msg)});
+    $('vd').onclick=()=>{
+      if(sel.size!==2){draw('Escolha exatamente duas provas.');return}
+      const certo=CASO_CFG.certas.every(k=>sel.has(k));
+      if(certo||erros>=2){
+        if(!certo){sel.clear();CASO_CFG.certas.forEach(k=>sel.add(k))}
+        const pts=certo?Math.max(100,400-erros*100):100;
+        ov('<h2>Caso fechado</h2><p>'+(certo?'Provas certas. ':'Era esta a combinação. ')+CASO_CFG.fecho+'</p><p style="font-size:.85em;opacity:.8">'+CASO_CFG.nota+'</p><button class="btn" id="vok">Continuar (+'+pts+')</button>');
+        $('vok').onclick=()=>{ovClose();state=prev;F.vered=true;addPts(pts,CW/2,200);toast('Caso fechado! +'+pts+' pontos',3200);res()};return}
+      erros++;sel.clear();
+      draw('Ainda não. '+CASO_CFG.dicas[Math.min(erros-1,1)]);
+    };
+  };
+  draw('');
+})}
 const INTER=[
  {id:'ped',x:1050,r:90,need:'lamp',txt:'AÇÃO · Pegar a página rasgada',done:()=>F.ped,act:async()=>{
    await say([['det','Uma página rasgada com o carimbo vermelho. Está escrito "onze contos".']]);await restaurarFrase();F.ped=true;hud();
    toast('Capítulo 17 restaurado. Provas '+provas()+'/'+(typeof NP!=='undefined'?NP:5),3500)}},
  {id:'rossio',x:900,r:130,txt:'AÇÃO · Rossio Grande, noite das luminárias',done:()=>F.rossio,act:async()=>{
    await say([['bras','Dezessete anos, botas, esporas e chicote. Eu era um corcel de balada, leitor. Foi na noite das luminárias que vi Marcela.']]);
-   await leitura({titulo:'Capítulo 14 · O Primeiro Beijo',cita:'Ao cabo, era um lindo garção, lindo e audaz, que entrava na vida de botas e esporas, chicote na mão e sangue nas veias, cavalgando um corcel nervoso, rijo, veloz, como o corcel das antigas baladas, que o romantismo foi buscar ao castelo medieval [&hellip;] O pior é que o estafaram a tal ponto, que foi preciso deitá-lo à margem, onde o realismo o veio achar, comido de lazeira e vermes, e, por compaixão, o transportou para os seus livros.',
+   await provaLeitura('rossio',{titulo:'Capítulo 14 · O Primeiro Beijo',cita:'Ao cabo, era um lindo garção, lindo e audaz, que entrava na vida de botas e esporas, chicote na mão e sangue nas veias, cavalgando um corcel nervoso, rijo, veloz, como o corcel das antigas baladas, que o romantismo foi buscar ao castelo medieval [&hellip;] O pior é que o estafaram a tal ponto, que foi preciso deitá-lo à margem, onde o realismo o veio achar, comido de lazeira e vermes, e, por compaixão, o transportou para os seus livros.',
      fonte:FONTE+'14 (domínio público).',
-     q:{t:'O que Machado ironiza ao dizer que o realismo achou o "corcel" do romantismo "comido de lazeira e vermes"?',o:['Que o Romantismo foi bem-sucedido e ainda tinha muito a oferecer aos escritores.','Que as convenções românticas se desgastaram de tanto uso e chegam esgotadas ao Realismo.','Que Brás Cubas era um autêntico cavaleiro medieval e montava um corcel de verdade.','Que o Realismo nunca usou cavalos nos seus livros por preferir cenas urbanas.'],k:1,e:'O "corcel das antigas baladas" é o amor idealizado do Romantismo. Machado diz que ele foi tão usado que o Realismo o encontrou arruinado e o recolheu "por compaixão". É uma brincadeira que também funciona como crítica literária dentro do romance.'}});
+     q:{t:'O que Machado ironiza ao dizer que o realismo achou o "corcel" do romantismo "comido de lazeira e vermes"?',o:['Que o Romantismo foi bem-sucedido e ainda tinha muito a oferecer aos escritores.','Que as convenções românticas se desgastaram de tanto uso e chegam esgotadas ao Realismo.','Que Brás Cubas era um autêntico cavaleiro medieval e montava um corcel de verdade.','Que o Realismo nunca usou cavalos nos seus livros por preferir cenas urbanas.'],k:1,e:'O "corcel das antigas baladas" é o amor idealizado do Romantismo. Machado diz que ele foi tão usado que o Realismo o encontrou arruinado e o recolheu "por compaixão". É uma brincadeira que também funciona como crítica literária dentro do romance.'}},"o realismo o veio achar")
    F.rossio=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'asno',x:1750,r:130,txt:'AÇÃO · Ler sobre o asno da paciência',done:()=>F.asno,act:async()=>{
    await say([['bras','Do corcel passei ao asno. Gastei trinta dias para chegar ao coração dela, e muito mais para chegar ao fim da herança de meu pai.']]);
-   await leitura({titulo:'Capítulo 15 · Marcela',cita:'Gastei trinta dias para ir do Rossio Grande ao coração de Marcela, não já cavalgando o corcel do cego desejo, mas o asno da paciência, a um tempo manhoso e teimoso. [&hellip;] Era meu universo; mas, ai triste! não o era de graça. Foi-me preciso coligir dinheiro, multiplicá-lo, inventá-lo.',
+   await provaLeitura('asno',{titulo:'Capítulo 15 · Marcela',cita:'Gastei trinta dias para ir do Rossio Grande ao coração de Marcela, não já cavalgando o corcel do cego desejo, mas o asno da paciência, a um tempo manhoso e teimoso. [&hellip;] Era meu universo; mas, ai triste! não o era de graça. Foi-me preciso coligir dinheiro, multiplicá-lo, inventá-lo.',
      fonte:FONTE+'15 (domínio público).',
-     q:{t:'O que a troca do "corcel" pelo "asno" indica sobre essa paixão?',o:['Que a conquista foi rápida e exigiu muita coragem física do jovem apaixonado.','Que Marcela preferia a companhia de animais à de rapazes, e por isso o dispensou.','Que Brás desistiu de Marcela logo no início, por falta de dinheiro e de ânimo.','Que o amor deixou de ser arrebatamento e passou a exigir paciência e dinheiro.'],k:3,e:'O cavalo (arrebatamento) dá lugar ao asno (paciência e teimosia). E logo a seguir o narrador confessa que o amor "não era de graça": foi preciso arranjar dinheiro. O Realismo mostra o interesse por trás do sentimento.'}});
+     q:{t:'O que a troca do "corcel" pelo "asno" indica sobre essa paixão?',o:['Que a conquista foi rápida e exigiu muita coragem física do jovem apaixonado.','Que Marcela preferia a companhia de animais à de rapazes, e por isso o dispensou.','Que Brás desistiu de Marcela logo no início, por falta de dinheiro e de ânimo.','Que o amor deixou de ser arrebatamento e passou a exigir paciência e dinheiro.'],k:3,e:'O cavalo (arrebatamento) dá lugar ao asno (paciência e teimosia). E logo a seguir o narrador confessa que o amor "não era de graça": foi preciso arranjar dinheiro. O Realismo mostra o interesse por trás do sentimento.'}},"Foi-me preciso coligir dinheiro, multiplicá-lo, inventá-lo")
    F.asno=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'reflex',x:2600,r:130,txt:'AÇÃO · Uma reflexão imoral',done:()=>F.reflex,act:async()=>{
    await say([['bras','Cuidado, leitor: o próximo capítulo é uma "reflexão imoral". Eu mesmo confesso que ela é mais obscura do que imoral.']]);
-   await leitura({titulo:'Capítulo 16 · Uma Reflexão Imoral',cita:'Cuido haver dito, no capítulo 13, que Marcela morria de amores pelo Xavier. Não morria, vivia. Viver não é a mesma coisa que morrer; assim o afirmam todos os joalheiros desse mundo, gente muito vista na gramática. Bons joalheiros, que seria do amor se não fossem os vossos dixes e fiados?',
+   await provaLeitura('reflex',{titulo:'Capítulo 16 · Uma Reflexão Imoral',cita:'Cuido haver dito, no capítulo 13, que Marcela morria de amores pelo Xavier. Não morria, vivia. Viver não é a mesma coisa que morrer; assim o afirmam todos os joalheiros desse mundo, gente muito vista na gramática. Bons joalheiros, que seria do amor se não fossem os vossos dixes e fiados?',
      fonte:FONTE+'16 (domínio público).',
-     q:{t:'O que Brás quer dizer com "Não morria, vivia" e com a referência aos joalheiros?',o:['Que o amor de Marcela vivia de joias e presentes, como bem sabem os joalheiros.','Que Marcela era muito saudável e não corria perigo de vida, apesar das aparências.','Que Xavier morreu pouco depois e deixou a fortuna inteira para Marcela, a viúva.','Que Marcela odiava joias e preferia receber dinheiro em espécie dos amantes.'],k:0,e:'O jogo de palavras (morrer de amores / viver) leva ao comércio: o "amor" de Marcela se sustenta pelos presentes que ganha. Os joalheiros, que vendem os "dixes e fiados", são a testemunha irônica. É a crítica ao interesse econômico por trás do sentimento.'}});
+     q:{t:'O que Brás quer dizer com "Não morria, vivia" e com a referência aos joalheiros?',o:['Que o amor de Marcela vivia de joias e presentes, como bem sabem os joalheiros.','Que Marcela era muito saudável e não corria perigo de vida, apesar das aparências.','Que Xavier morreu pouco depois e deixou a fortuna inteira para Marcela, a viúva.','Que Marcela odiava joias e preferia receber dinheiro em espécie dos amantes.'],k:0,e:'O jogo de palavras (morrer de amores / viver) leva ao comércio: o "amor" de Marcela se sustenta pelos presentes que ganha. Os joalheiros, que vendem os "dixes e fiados", são a testemunha irônica. É a crítica ao interesse econômico por trás do sentimento.'}},"Não morria, vivia.")
    F.reflex=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'contos',x:3200,r:140,txt:'AÇÃO · Falar com Marcela',done:()=>F.contos,act:async()=>{
    await say([['marc','Ah, é você. Trouxe a joia que prometeu, ou veio de novo me falar de amor?'],['bras','Foi nesse ponto que meu pai descobriu os meus onze contos de réis, leitor. A salva de prata em que o refresco me foi servido fazia parte da conta.'],['marc','Seu pai quer mandá-lo para a Europa? Que pena. Não posso ir: meu pobre pai morreu por Napoleão.'],['det','Qual pai, o hortelão ou o advogado?'],['marc','Não me aborreça.']]);
-   await leitura({titulo:'Capítulo 17 · Do Trapézio e Outras Coisas',cita:'Marcela amou-me durante quinze meses e onze contos de réis; nada menos. [&hellip;] Trouxe-lho a mucama, numa salva de prata, que fazia parte dos meus onze contos.',
+   await provaLeitura('contos',{titulo:'Capítulo 17 · Do Trapézio e Outras Coisas',cita:'Marcela amou-me durante quinze meses e onze contos de réis; nada menos. [&hellip;] Trouxe-lho a mucama, numa salva de prata, que fazia parte dos meus onze contos.',
      fonte:FONTE+'17 (domínio público).',
-     q:{t:'Qual é o efeito de medir o amor em "quinze meses e onze contos de réis"?',o:['Mostra que o narrador era exato, econômico e muito organizado em tudo o que fazia na vida.','Revela que Marcela devolveu o dinheiro ao final, arrependida de tudo o que havia feito.','Trata o amor como negócio, contado em tempo e dinheiro; o “nada menos” reforça a ironia.','Indica que Brás ainda tinha esperança de ser correspondido e de reatar a relação.'],k:2,e:'A precisão contábil ("nada menos") é o humor ácido de Machado: o romance de Brás vira uma conta. A ironia atinge a ideia de amor romântico, mostrando que, para Marcela, o afeto tinha preço.'}});
+     q:{t:'Qual é o efeito de medir o amor em "quinze meses e onze contos de réis"?',o:['Mostra que o narrador era exato, econômico e muito organizado em tudo o que fazia na vida.','Revela que Marcela devolveu o dinheiro ao final, arrependida de tudo o que havia feito.','Trata o amor como negócio, contado em tempo e dinheiro; o “nada menos” reforça a ironia.','Indica que Brás ainda tinha esperança de ser correspondido e de reatar a relação.'],k:2,e:'A precisão contábil ("nada menos") é o humor ácido de Machado: o romance de Brás vira uma conta. A ironia atinge a ideia de amor romântico, mostrando que, para Marcela, o afeto tinha preço.'}},"quinze meses e onze contos de réis")
    await new Promise(r=>{const pv=state;state='modal';ov('<h2>"Não me aborreça."</h2><p>Marcela acaba de dizer isso e vai para a alcova. Como você reage?</p><button class="opt" id="c1">Sair com dignidade, sem implorar e sem gritar.</button><button class="opt" id="c2">Implorar, como o Brás do livro: "não hás de entrar".</button>');
      $('c1').onclick=()=>{F.digno=true;addPts(100,CW/2,200);ovClose();state=pv;r()};$('c2').onclick=()=>{ovClose();state=pv;r()}});
    if(F.digno)await say([['narr','Você saiu com dignidade, leitor, o que eu não fiz. Eu gastei duas mortais horas a vaguear pelas ruas, desatinado. Em compensação, você ficou com o resto dos contos.']]);
    else await say([['narr','Foi exatamente o que eu fiz: gritei, supliquei, ofereci. Marcela se fechou na alcova. A paixão cega nos dá mais vergonha ao relembrar do que ao viver.']]);
    F.contos=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
- {id:'porta',x:3500,r:140,txt:'AÇÃO · Embarcar para a Europa',cond:()=>provas()===NP,act:async()=>{
+ {id:'porta',x:3500,r:140,txt:'AÇÃO · Embarcar para a Europa',cond:()=>provas()===NP,act:async()=>{if(!F.vered)await veredito();
    await say([['bras','"Desta vez vais para a Europa", disse meu pai. Coimbra me esperava, e eu fui, deixando atrás os onze contos e a linda Marcela.']]);startCine()}}
 ];
 /* ===== Trechos do livro (opcionais): citações nas páginas + painéis rasurados ===== */
@@ -662,6 +702,7 @@ addEventListener('keydown',e=>{
   const k=KM[e.code];
   if(e.code==='Escape'||e.code==='KeyP'){if(state==='play')pause(true);else if(paused)pause(false);return}
   if(e.code==='KeyM'){setMute(!muted);return}
+  if(e.code==='KeyN'){caderno();return}
   if(state==='dialog'&&(e.code==='Space'||e.code==='Enter'||e.code==='KeyE')){e.preventDefault();next();return}
   if(!k)return;if(e.code.startsWith('Arrow')||e.code==='Space')e.preventDefault();
   if(k==='act'){if(!K.act&&state==='play')doAct();K.act=1;return}K[k]=1;
@@ -669,7 +710,7 @@ addEventListener('keydown',e=>{
 addEventListener('keyup',e=>{const k=KM[e.code];if(k)K[k]=0});
 function doAct(){const it=nearInter();if(it)it.act()}
 function pause(on){paused=on;if(on){state='pause';ov('<h2>Pausa</h2><button class="btn" id="rs">Continuar</button><button class="btn sec" id="bk">Voltar ao Arquivo</button>');$('rs').onclick=()=>pause(false);$('bk').onclick=()=>location.href='../index.html'}else{ovClose();state='play'}}
-$('bPause').onclick=()=>{if(state==='play')pause(true)};$('bMute').onclick=()=>setMute(!muted);
+$('bCad').onclick=()=>caderno();$('bPause').onclick=()=>{if(state==='play')pause(true)};$('bMute').onclick=()=>setMute(!muted);
 $('dlg').addEventListener('pointerdown',e=>{e.preventDefault();if(state==='dialog')next()});
 function bindT(id,k,act){const b=$(id);const on=e=>{e.preventDefault();if(act){if(state==='dialog'){next();return}if(state==='play')doAct()}else K[k]=1};const off=e=>{e.preventDefault();if(!act)K[k]=0};
   b.addEventListener('pointerdown',on);b.addEventListener('pointerup',off);b.addEventListener('pointercancel',off);b.addEventListener('pointerleave',off)}
@@ -686,7 +727,7 @@ function loop(ts){
   }else if(state==='dialog'){updateWorld(dt);P.vx=0}
   render(dt);
 }
-window.__t={P,F,Z,PAGES,INTER,get state(){return state},set state(v){state=v},get camX(){return camX},set camX(v){camX=v},provas,startCine,fim,K};
+window.__t={provaLeitura,caderno,veredito,CASO,P,F,Z,PAGES,INTER,get state(){return state},set state(v){state=v},get camX(){return camX},set camX(v){camX=v},provas,startCine,fim,K};
 (function restaurarProg(){try{const r=JSON.parse(localStorage.getItem(PROGKEY)||'null');if(!r||!(r.cp>0))return;
   cpX=r.cp;P.x=r.cp;camX=Math.max(0,Math.min(WW-CW,P.x-CW*.42+(P.look||0)*.6));Object.assign(Z,r.Z||{});Object.assign(F,r.F||{});
   (r.pg||[]).forEach((v,i)=>{if(v&&PAGES[i])PAGES[i].got=true});(r.rb||[]).forEach((v,i)=>{if(v&&RAS_BOARDS[i])RAS_BOARDS[i].done=true});
