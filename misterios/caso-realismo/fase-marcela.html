@@ -83,7 +83,7 @@ body:not(.touch) #touch{display:none}
 <div id="touch"><button id="tL">◀</button><button id="tR">▶</button><button id="tJ">PULO</button><button id="tA">AÇÃO</button><button id="tS">DASH</button><button id="tC">✦</button></div>
 <div id="ov" class="ov"></div>
 </div></div>
-<script src="/assets/js/config-sheets.js"></script>
+<script src="/assets/js/config-sheets.js"></script><script src="transicao.js"></script>
 <script>
 "use strict";
 /* ============ Constantes ============ */
@@ -537,7 +537,7 @@ function fim(){try{localStorage.removeItem(PROGKEY)}catch(e){}
   ov('<h2>Zona 3 concluída: Marcela e os onze contos</h2><p>Pontos: <b>'+Z.pts+'</b> · Contos reunidos: <b>'+Z.pages+'/11</b> · Leituras certas de primeira: <b>'+Z.leit+'/'+Z.tot+'</b></p>'+
    '<p>Você viu o corcel romântico virar asno, leu a "reflexão imoral" dos joalheiros e entendeu a ironia do amor contado em "quinze meses e onze contos de réis".'+(F.digno?' E saiu com dignidade, algo que Brás não conseguiu.':'')+'</p>'+
    '<p><b>Próxima zona: Coimbra e o almocreve.</b> Em construção.</p><button class="btn" id="ba">Voltar ao Arquivo</button><button class="btn sec" id="rj">Jogar de novo</button>');
-  $('ba').onclick=()=>{location.href='../index.html'};$('rj').onclick=()=>location.reload();
+  $('ba').onclick=()=>{location.href='../index.html'};$('rj').onclick=()=>location.reload(); if(window.Trans)Trans.fim();
 }
 function enviar(pct){
   if(Z.enviou)return;Z.enviou=true;

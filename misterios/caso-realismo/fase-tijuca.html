@@ -83,7 +83,7 @@ body:not(.touch) #touch{display:none}
 <div id="touch"><button id="tL">◀</button><button id="tR">▶</button><button id="tJ">PULO</button><button id="tA">AÇÃO</button><button id="tS">DASH</button><button id="tC">✦</button></div>
 <div id="ov" class="ov"></div>
 </div></div>
-<script src="/assets/js/config-sheets.js"></script>
+<script src="/assets/js/config-sheets.js"></script><script src="transicao.js"></script>
 <script>
 "use strict";
 /* ============ Constantes ============ */
@@ -552,7 +552,7 @@ function fim(){try{localStorage.removeItem(PROGKEY)}catch(e){}
    '<p>Você viu Brás zombar da "superstição" das duas mulheres e depois matar uma borboleta preta com uma toalha, tratar a deficiência de Eugênia como um "enigma" da natureza e fugir do "ridículo de casar" com ela.'+(F.gentil?' Diante de Eugênia, você tratou a deficiência com naturalidade, ao contrário de Brás.':'')+(F.poupou?' E poupou a borboleta.':'')+'</p>'+
    '<p>Eugênia é a personagem mais digna da cena: ela entende tudo e diz "faz bem". O preconceito está no narrador e na sociedade dele, não nela.</p>'+
    '<p><b>Próxima zona: Virgília e a casinha da Gamboa.</b> Em construção.</p><button class="btn" id="ba">Voltar ao Arquivo</button><button class="btn sec" id="rj">Jogar de novo</button>');
-  $('ba').onclick=()=>{location.href='../index.html'};$('rj').onclick=()=>location.reload();
+  $('ba').onclick=()=>{location.href='../index.html'};$('rj').onclick=()=>location.reload(); if(window.Trans)Trans.fim();
 }
 function enviar(pct){
   if(Z.enviou)return;Z.enviou=true;
