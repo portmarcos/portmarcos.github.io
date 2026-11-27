@@ -96,11 +96,14 @@ const SRC={det:'../caso-originais/img/q1/detetive.webp',detF:'../caso-originais/
  bgi:'img/q1/bg-infancia.webp',mv:'img/q1/marcela-velha.webp',retMv:'img/q1/ret-marcela-velha.webp',bgz:'img/q1/bg-ourives.webp'};
 const OPCIONAL=['hq2','hq3','amigos','caixao','padre'];
 const IMG={};
+Object.assign(SRC,{dPre:'img/q1/d/prensa.webp'});
 const SH={det:{w:269,h:232,s:.47},bras:{w:137,h:340,s:.37},hipo:{w:303,h:230,s:.6},mv:{w:215,h:340,s:.37}};
 function loadAll(cb){
   const keys=Object.keys(SRC);let n=0;
   keys.forEach(k=>{const im=new Image();im.onload=()=>{IMG[k]=im;if(++n===keys.length)cb()};im.onerror=()=>{if(++n===keys.length)cb()};im.src=SRC[k]});
 }
+/* Arte final dos desafios (img/q1/d). dI: desenha o quadro f de uma tira (cw×ch) centrado em x,y. */
+function dImg(k,f,cw,ch,x,y,w,h,rot,alpha,flip){const im=IMG[k];if(!im)return;ctx.save();ctx.globalAlpha=alpha==null?1:alpha;ctx.translate(x,y);if(rot)ctx.rotate(rot);if(flip)ctx.scale(-1,1);ctx.drawImage(im,f*cw,0,cw,ch,-w/2,-h/2,w,h);ctx.restore()}
 function sheet(k,sh,f,x,y,flip,alpha,sc){
   const im=IMG[k];if(!im)return;const s=sh.s*(sc||1),w=sh.w*s,h=sh.h*s;
   ctx.save();ctx.globalAlpha=alpha==null?1:alpha;ctx.translate(x,y+3);if(flip)ctx.scale(-1,1);
@@ -621,6 +624,15 @@ MECH.draw=()=>{
 };
 
 
+MECH.drawOld=MECH.draw;
+MECH.draw=()=>{if(!IMG.dPre){MECH.drawOld();return}
+  MECH.xs().forEach((x,i)=>{const u=MECH.ph(i),d=Math.max(0,Math.min(1,MECH.low(u))),bottom=G-130+d*130,sh=u>1&&u<1.2?Math.sin(T*60)*2:0;
+    const fr=d>.9?3:(u>.7&&u<1.4)?1:d>.3?2:0;
+    ctx.fillStyle='#2a1a0c';ctx.fillRect(x-6,0,12,bottom-110);
+    dImg('dPre',fr,144,190,x+sh,bottom-66,100,132);
+    if(u>.7&&u<1.4){ctx.fillStyle='rgba(180,40,20,'+(.25+.3*Math.sin(T*30)**2)+')';ctx.fillRect(x-42,G-3,84,5)}
+    if(u>1.4&&u<1.9&&d>.9){ctx.fillStyle='rgba(240,228,196,.5)';for(let k=0;k<4;k++){ctx.beginPath();ctx.arc(x+(k-1.5)*26,G-4,5,0,7);ctx.fill()}}});
+  ctx.fillStyle='#e6d2a6';ctx.font='bold 16px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText('SAÍDA DA OFICINA',DES.x1-70,G-136);};
 window.__d={DES,startDes,endDes,MECH,updDes};
 /* ============ Entrada ============ */
 const KM={ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right',ArrowUp:'jump',KeyW:'jump',Space:'jump',KeyC:'lamp',KeyE:'act',Enter:'act'};
