@@ -236,7 +236,7 @@ const INTER=[
      q:{t:'O que a pergunta sobre o "doge" mostra?',o:['Que Brás era historiador, especialista em Veneza e na história dos doges.','Que o jovem, embriagado de Romantismo, vive mais nos livros que na vida.','Que o locandeiro era o próprio doge, disfarçado para testar o viajante.','Que Brás queria ficar para sempre na Itália, longe da família e do Brasil.'],k:1,e:'O doge já não existia: Brás vivia no passado dos versos de Byron. Machado ri do sentimentalismo romântico, e o narrador ri de si mesmo, o que reforça o Realismo irônico do livro.'}});
    F.volta=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'porta',x:3500,r:140,txt:'AÇÃO · Embarcar de volta ao Rio',cond:()=>provas()===NP,act:async()=>{
-   await say([['bras','"Vem; se não vieres depressa acharás tua mãe morta!", escrevia meu pai. Disparei como uma bala na direção do Rio de Janeiro.']]);startCine()}}
+   await say([['bras','"Vem; se não vieres depressa acharás tua mãe morta!", escrevia meu pai. Disparei como uma bala na direção do Rio de Janeiro.']]);startPier()}}
 ];
 /* ===== Trechos do livro (opcionais): citações nas páginas + painéis rasurados ===== */
 const FRAGS=[[20, "A ambição, dado que fosse águia, quebrou nessa ocasião o ovo, e desvendou a pupila fulva e penetrante."], [20, "Adeus, amores! adeus, Marcela; dias de delírio, joias sem preço, vida sem regime, adeus."], [22, "Teria de escrever um diário de viagem e não umas memórias, como estas são, nas quais só entra a substância da vida."], [22, "Jumento de uma figa, cortaste-me o fio às reflexões."], [21, "O almocreve salvara-me talvez a vida; era positivo; eu sentia-o no sangue que me agitava o coração."], [20, "E foi assim que desembarquei em Lisboa e segui para Coimbra."]];
@@ -277,7 +277,7 @@ function drawRasuras(){
 }
 const provas=()=>[F.ped,F.ambicao,F.coimbra,F.almo,F.volta,F.des].filter(Boolean).length;
 function nearInter(){
-  if(DES.on)return null;
+  if(DES.on||PIER.on)return null;
   let best=null,bd=1e9;
   for(const it of INTER){
     if(it.done&&it.done())continue;if(it.cond&&!it.cond())continue;if(it.need==='lamp'&&!K.lamp)continue;
@@ -313,6 +313,7 @@ function updatePlayer(dt){
 }
 function thud2(){if(AC)tone(90,.07,.05,'sine')}
 function fall(){
+  if(PIER.on){PIER.t+=2;toast('Caiu na água do cais! Perdeu 2 s.',1300);const pt=[2300,2900].filter(x=>x<P.x+50).pop()||2200;P.x=pt-50;P.y=G-200;P.vy=0;P.vx=0;P.inv=1;shake=.3;camX=Math.max(0,Math.min(WW-CW,P.x-CW*.42));return}
   toast(pick(NARR.queda),3200);Z.lamps--;shake=.4;
   if(Z.lamps<=0){Z.lamps=3;toast('Sem lamparinas. Você volta ao último ponto salvo, sem perder o que já conquistou.',3200)}
   P.x=cpX;P.y=G-200;P.vy=0;P.inv=1.6;camX=Math.max(0,Math.min(WW-CW,P.x-CW/2));hud();
@@ -331,7 +332,7 @@ function autoCP(){
     cpX=P.x-60;saveCP();if(!window.__cpT){window.__cpT=1;toast('Ponto salvo: se perder, você volta daqui, não do início.',3500)}}
   else if(T-lastSave>1){lastSave=T;saveCP()}
 }
-function updateWorld(dt){autoCP();updDes(dt);
+function updateWorld(dt){autoCP();updDes(dt);updPier(dt);
   stampT-=dt;
   jumT-=dt;if(jumT<=0&&P.x>600&&P.x<3350){jumentos.push({x:camX+CW+120,v:-(330+Math.random()*80),t:0,d:0});jumT=5.5+Math.random()*3}
   for(const j of jumentos){j.x+=j.v*dt;j.t+=dt;if(!j.d&&Math.abs(P.x-j.x)<46&&P.y>G-46){j.d=1;hit()}}
@@ -453,11 +454,47 @@ function render(dt){
   ctx.setTransform(DPR,0,0,DPR,0,0);
   const sx=shake>0?(Math.random()-.5)*shake*16:0,sy=shake>0?(Math.random()-.5)*shake*10:0;ctx.save();ctx.translate(sx,sy);
   if(state==='cine'){drawCine(dt);ctx.restore();return}
-  drawBG();drawFigures();drawBras();drawPlat();drawDes();drawClue();drawPages();drawStamps();drawPlayer();drawPart();drawLight();drawRain(dt);drawFloaters();
+  drawBG();drawFigures();drawBras();drawPlat();drawDes();drawPier();drawClue();drawPages();drawStamps();drawPlayer();drawPart();drawLight();drawRain(dt);drawFloaters();
   ctx.save();ctx.globalCompositeOperation='color';ctx.fillStyle='rgba(172,118,56,.55)';ctx.fillRect(0,0,CW,CH);ctx.restore();
   /* vinheta */
   const v=ctx.createRadialGradient(CW/2,CH/2,CH*.4,CW/2,CH/2,CH*.95);v.addColorStop(0,'rgba(0,0,0,0)');v.addColorStop(1,'rgba(22,10,2,.6)');ctx.fillStyle=v;ctx.fillRect(0,0,CW,CH);
   ctx.restore();
+}
+/* ============ Corrida ao cais (Coimbra → Rio) ============ */
+const PIER={on:false,t:0,lim:18,fails:0,bar:[],nx:1,horn:0};
+function startPier(){
+  PIER.on=true;PIER.t=0;PIER.lim=18+PIER.fails*4;PIER.bar=[];PIER.nx=1.2;PIER.horn=0;P.x=2150;P.y=G;P.vx=0;P.vy=0;P.inv=0;
+  camX=Math.max(0,Math.min(WW-CW,P.x-CW*.3));$('prompt').classList.add('hidden');shake=.4;
+  tone(110,.7,.07,'sawtooth');toast('O navio vai partir! Corra até o cais: pule os barris, atravesse as docas e use Shift para o dash.',5200);
+}
+function updPier(dt){
+  if(!PIER.on)return;
+  PIER.t+=dt;PIER.nx-=dt;PIER.horn+=dt;stamps=[];
+  if(PIER.horn>6){PIER.horn=0;tone(110,.6,.06,'sawtooth')}
+  if(PIER.nx<=0){PIER.nx=1.3+Math.random()*1.3;PIER.bar.push({x:camX+CW+70,vx:-(250+Math.random()*90),rot:0,hit:0})}
+  for(const b of PIER.bar){b.x+=b.vx*dt;b.rot+=b.vx*dt/19;
+    if(!b.hit&&Math.abs(P.x-b.x)<26&&P.y>G-32&&P.inv<=0){b.hit=1;PIER.t+=2;P.vx=-380;P.inv=1;shake=.3;thud();toast('Um barril! Perdeu 2 s.',1000)}}
+  PIER.bar=PIER.bar.filter(b=>b.x>camX-90);
+  if(P.x>=3470){PIER.on=false;PIER.bar=[];addPts(Math.max(50,Math.round((PIER.lim-PIER.t)*20)),CW/2,200);startCine();return}
+  if(PIER.t>=PIER.lim){PIER.fails++;PIER.t=0;PIER.lim=18+PIER.fails*4;PIER.bar=[];P.x=2150;P.y=G;P.vx=0;P.vy=0;camX=Math.max(0,Math.min(WW-CW,P.x-CW*.3));
+    tone(110,.8,.07,'sawtooth');toast('O navio apitou e já largava... Tente de novo: o marinheiro dá mais tempo!',3800)}
+}
+function drawPier(){
+  if(!PIER.on)return;
+  const f=Math.min(1,PIER.t/PIER.lim),dx=3500,sx=dx+90+f*150;
+  ctx.save();ctx.translate(-camX,0);
+  ctx.fillStyle='#17222f';ctx.fillRect(dx+20,G-6,700,CH);
+  ctx.fillStyle='#2b1a0e';ctx.beginPath();ctx.moveTo(sx-20,G-60);ctx.lineTo(sx+420,G-60);ctx.lineTo(sx+370,G+16);ctx.lineTo(sx+30,G+16);ctx.closePath();ctx.fill();
+  ctx.strokeStyle='#caa468';ctx.lineWidth=2;ctx.stroke();
+  for(const mx of [sx+110,sx+260]){ctx.fillStyle='#2a1c14';ctx.fillRect(mx,G-280,8,222);ctx.fillStyle='rgba(239,224,192,.92)';ctx.beginPath();ctx.moveTo(mx+8,G-270);ctx.quadraticCurveTo(mx+70+Math.sin(T*2)*6,G-190,mx+8,G-100);ctx.closePath();ctx.fill()}
+  ctx.fillStyle='rgba(200,200,190,'+(.25+.1*Math.sin(T*3))+')';for(let i=0;i<5;i++){ctx.beginPath();ctx.arc(sx+330+i*16-f*20,G-90-i*22-(T*30%20),10+i*4,0,7);ctx.fill()}
+  /* prancha que se ergue conforme o tempo passa */
+  ctx.save();ctx.translate(dx+8,G-22);ctx.rotate(-f*.55);ctx.fillStyle='#8a6a3a';ctx.fillRect(0,-4,sx-dx+10,8);ctx.restore();
+  for(const b of PIER.bar){ctx.save();ctx.translate(b.x,G-19);ctx.rotate(b.rot);ctx.fillStyle='#6a4824';ctx.strokeStyle='#1c1007';ctx.lineWidth=2.4;ctx.beginPath();ctx.arc(0,0,19,0,7);ctx.fill();ctx.stroke();ctx.strokeStyle='#caa468';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-19,-6);ctx.lineTo(19,-6);ctx.moveTo(-19,6);ctx.lineTo(19,6);ctx.stroke();ctx.restore()}
+  ctx.restore();
+  /* HUD do relógio do navio */
+  ctx.save();ctx.fillStyle='rgba(20,12,6,.8)';ctx.fillRect(CW/2-150,132,300,14);ctx.fillStyle=f>.75?'#c4271a':'#e8c25a';ctx.fillRect(CW/2-148,134,296*(1-f),10);
+  ctx.fillStyle='#e6d2a6';ctx.font='bold 14px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText('O NAVIO PARTE EM '+Math.max(0,Math.ceil(PIER.lim-PIER.t))+' s',CW/2,126);ctx.restore();
 }
 /* ============ Cena do cais ============ */
 function startCine(){
@@ -657,6 +694,7 @@ MECH.draw=()=>{if(!IMG.dLiv){MECH.drawOld();return}
   for(const b of DES.list){if(b.w>0){const a=1-b.w/.95;ctx.save();ctx.fillStyle='rgba(20,10,4,'+(.25+a*.4)+')';ctx.beginPath();ctx.ellipse(b.x,G-1,14+a*20,3+a*3,0,0,7);ctx.fill();ctx.strokeStyle='rgba(20,10,4,.6)';ctx.setLineDash([4,5]);ctx.globalAlpha=.25+a*.3;ctx.beginPath();ctx.moveTo(b.x,0);ctx.lineTo(b.x,G-4);ctx.stroke();ctx.restore();continue}
     dImg('dLiv',b.c%3,110,140,b.x,b.y,66,84,b.r)}
   ctx.fillStyle='#e6d2a6';ctx.font='bold 16px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText('PORTÃO DA UNIVERSIDADE',DES.x1-70,G-136);};
+window.__p={PIER,startPier};
 window.__d={DES,startDes,endDes,MECH,updDes};
 /* ============ Entrada ============ */
 const KM={ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right',ArrowUp:'jump',KeyW:'jump',Space:'jump',KeyC:'lamp',ShiftLeft:'dash',ShiftRight:'dash',KeyK:'dash',KeyE:'act',Enter:'act'};
