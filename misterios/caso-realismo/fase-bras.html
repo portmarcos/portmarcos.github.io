@@ -38,6 +38,7 @@ button{font-family:inherit;cursor:pointer;color:inherit}
 .panel{background:linear-gradient(180deg,#2a1b0e,#1b1109);border:2px solid #9a7545;border-radius:16px;padding:clamp(12px,2.4vw,26px);max-width:min(860px,100%);width:100%;box-shadow:0 12px 50px #000}
 .panel h2{font-family:'Playfair Display',serif;color:var(--amber2);font-size:clamp(1.1rem,2.8vw,1.8rem);margin-bottom:8px}
 .panel p{line-height:1.5;margin:6px 0;font-size:clamp(.85rem,1.7vw,1.1rem)}
+.cita mark{background:#e8c25a;color:#1b1007;padding:0 3px;border-radius:3px;font-style:normal}
 .cita{border-left:3px solid var(--amber);padding:8px 12px;margin:10px 0;font-style:italic;background:rgba(255,255,255,.04);font-size:clamp(.85rem,1.7vw,1.1rem);line-height:1.55}
 .src{font-size:.78rem;color:var(--muted);margin-top:-4px}
 .btn{background:linear-gradient(180deg,#e3a84a,#b0701f);color:#1a0f08;font-weight:700;border:none;border-radius:10px;padding:9px 18px;margin:6px 6px 0 0;font-size:clamp(.85rem,1.6vw,1.05rem)}
@@ -75,7 +76,7 @@ body:not(.touch) #touch{display:none}
 <div id="hud" class="hidden">
   <span class="hs" id="hLamp"></span><span class="hs">Páginas <b id="hPag">0/8</b></span><span class="hs">Pontos <b id="hPts">0</b></span>
   <span class="hs" id="hTask"></span><span class="sp"></span>
-  <button id="bMute" title="Som (M)">♪</button><button id="bPause" title="Pausa (Esc)">II</button>
+  <button id="bMute" title="Som (M)">♪</button><button id="bCad" title="Caderno de provas (N)" style="width:auto;padding:0 10px">Caderno</button><button id="bPause" title="Pausa (Esc)">II</button>
 </div>
 <div id="toast"></div><div id="prompt" class="hidden"></div>
 <div id="dlg" class="hidden"><img id="dImg" alt=""><div class="t"><div class="n" id="dNome"></div><div class="x" id="dTxt"></div></div><div class="k">Espaço ▶</div></div>
@@ -118,7 +119,7 @@ function drawPart(){ctx.save();ctx.translate(-camX,0);for(const p of PART){const
 let state='start',T=0,camX=0,shake=0,flash=0;
 const S={nome:'',turma:'',gen:'m'};
 const Z={pts:0,pages:0,lamps:3,leit:0,tot:3,enviou:false};
-const F={des:false,ded:false,amigos:false,fala:false,disc:false,hipo:false};
+const F={cl:{},vered:false,des:false,ded:false,amigos:false,fala:false,disc:false,hipo:false};
 const K={left:0,right:0,jump:0,lamp:0,act:0};
 const P={x:110,y:G,vx:0,vy:0,face:1,ground:true,jumps:2,inv:0,an:0,land:0,hurt:0};
 let cpX=110,lastStep=0;
@@ -179,7 +180,7 @@ function leitura(cfg){
       let tries=0;$('lq').querySelectorAll('.opt').forEach(bt=>bt.onclick=()=>{
         const i=+bt.dataset.i;if(i===q.k){bt.classList.add('ok');$('lq').querySelectorAll('.opt').forEach(x=>x.disabled=true);
           $('lq').insertAdjacentHTML('beforeend','<p>'+q.e+'</p><button class="btn" id="lok">Continuar</button>');
-          const first=tries===0;if(first){Z.leit++;addPts(100,P.x-camX,P.y-120)}else addPts(40,P.x-camX,P.y-120);
+          const first=tries===0;if(cfg.re){addPts(30,P.x-camX,P.y-120)}else if(first){Z.leit++;addPts(100,P.x-camX,P.y-120)}else addPts(40,P.x-camX,P.y-120);
           $('lok').onclick=()=>{ovClose();state=prev;res(first)}}
         else{tries++;bt.classList.add('bad');bt.disabled=true;blip(-3);toast('Releia o trecho e tente de novo.',1800)}});
     }
@@ -211,31 +212,71 @@ function contarAmigos(){
       else{tries++;b.classList.add('bad');b.disabled=true;blip(-3)}});
   });
 }
+/* ============ Caso fechado: leituras como provas ============ */
+const CASO={dedic:'A obra é dedicada "ao verme que primeiro roeu as frias carnes do meu cadáver": nenhuma lisonja a ninguém.',amigos:'Só onze pessoas acompanharam o enterro, sem cartas nem anúncios, embora o morto tivesse cerca de trezentos contos.',fala:'Quem narra já está morto: não tem o que ganhar nem perder ao contar.',disc:'O orador que chorou o "belo caráter" do morto recebera dele vinte apólices.'};
+const CASO_NOME={dedic:'A dedicatória',amigos:'Os onze amigos',fala:'O defunto autor',disc:'O discurso'};
+async function provaLeitura(id,cfg,hl){
+  F.cl=F.cl||{};
+  const first=await leitura(cfg);
+  if(first){F.cl[id]=2;toast('Prova guardada no caderno: '+CASO_NOME[id],2600);return true}
+  F.cl[id]=1;
+  await say([['narr','A prova ficou borrada no caderno, leitor. Releia o trecho destacado e responda de novo.']]);
+  const ok=await leitura(Object.assign({},cfg,{re:true,titulo:'Releitura · '+CASO_NOME[id],cita:hl&&cfg.cita.includes(hl)?cfg.cita.replace(hl,'<mark>'+hl+'</mark>'):cfg.cita}));
+  if(!ok){Z.lamps=Math.max(1,Z.lamps-1);hud();toast('Errou de novo: perdeu 1 lamparina, mas a prova foi recuperada.',3600)}
+  else toast('Prova recuperada: '+CASO_NOME[id],2600);
+  F.cl[id]=2;return false;
+}
+function caderno(){
+  if(state!=='play')return;const prev=state;state='modal';
+  let h='<h2 style="margin:.2em 0">Caderno de provas</h2><p style="margin:.3em 0;font-size:.9em">Cada leitura certa guarda uma prova do caso: <b>por que o luto no enterro de Brás foi tão pobre?</b></p>';
+  for(const k of Object.keys(CASO)){const st=F.cl&&F.cl[k];h+='<div class="card" style="padding:8px 12px;margin:6px 0;font-size:.88em;line-height:1.35"><b>'+CASO_NOME[k]+'</b><br>'+(st===2?CASO[k]:st===1?'▒▒▒▒▒▒ (prova borrada: releia o trecho)':'<i>ainda não encontrada</i>')+'</div>'}
+  ov(h+'<button class="btn" id="cdx">Fechar</button>');$('cdx').onclick=()=>{ovClose();state=prev};
+}
+function veredito(){return new Promise(res=>{
+  const prev=state;state='modal';const sel=new Set(),keys=Object.keys(CASO);let erros=0;
+  const draw=msg=>{
+    ov('<h2>Fechar o caso</h2><p><b>Conclusão a provar:</b> o luto no enterro de Brás foi de aparência e de interesse, não de sentimento. Escolha as <b>duas</b> provas do caderno que sustentam isso.</p>'+keys.map(k=>'<button class="opt'+(sel.has(k)?' ok':'')+'" data-k="'+k+'"><b>'+CASO_NOME[k]+'.</b> '+(F.cl&&F.cl[k]===2?CASO[k]:'(prova perdida)')+'</button>').join('')+(msg?'<p>'+msg+'</p>':'')+'<button class="btn" id="vd">Concluir</button>');
+    $('ov').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const k=b.dataset.k;if(sel.has(k))sel.delete(k);else if(sel.size<2)sel.add(k);draw(msg)});
+    $('vd').onclick=()=>{
+      if(sel.size!==2){draw('Escolha exatamente duas provas.');return}
+      const certo=sel.has('amigos')&&sel.has('disc');
+      if(certo||erros>=2){
+        if(!certo){sel.clear();sel.add('amigos');sel.add('disc')}
+        const pts=certo?Math.max(100,400-erros*100):100;
+        ov('<h2>Caso fechado</h2><p>'+(certo?'Provas certas.':'Era esta a combinação.')+' <b>Os onze amigos</b> mostram quem foi ao enterro: poucos, sem convite. <b>O discurso</b> mostra por que alguém chorou: vinte apólices. O defunto autor só pode dizer isso porque já não tem nada a perder, e a dedicatória ao verme confirma o tom, mas nenhuma das duas fala do luto dos outros.</p><p>Ironia de Machado: o elogio fúnebre tem preço.</p><button class="btn" id="vok">Continuar</button>');
+        $('vok').onclick=()=>{ovClose();state=prev;F.vered=true;addPts(pts,CW/2,200);toast('Caso fechado! +'+pts+' pontos',3200);res()};return}
+      erros++;sel.clear();
+      draw(erros===1?'Ainda não. Dica 1: procure as provas que falam dos OUTROS (os presentes ao enterro), e não de Brás.':'Ainda não. Dica 2: uma prova mostra quem foi ao enterro; a outra, quem falou bem do morto e por quê.');
+    };
+  };
+  draw('');
+})}
 /* ============ Interações ============ */
 const INTER=[
  {id:'ded',x:1920,r:90,need:'lamp',txt:'AÇÃO · Pegar a página rasgada',done:()=>F.ded,act:async()=>{
-   await say([['det','Há um papel rasgado debaixo da lápide... e um carimbo vermelho nele.']]);await restaurarDedicatoria();F.ded=true;hud();
+   await say([['det','Há um papel rasgado debaixo da lápide... e um carimbo vermelho nele.']]);await restaurarDedicatoria();F.ded=true;F.cl.dedic=2;hud();
    toast('Dedicatória restaurada. Provas '+provas()+'/5',3500)}},
  {id:'amigos',x:2560,r:200,txt:'AÇÃO · Contar os amigos',done:()=>F.amigos,act:async()=>{
    await contarAmigos();
-   await leitura({titulo:'Capítulo 1 · Óbito do Autor',cita:'Dito isto, expirei às duas horas da tarde de uma sexta-feira do mês de agosto de 1869, na minha bela chácara de Catumbi. Tinha uns sessenta e quatro anos, rijos e prósperos, era solteiro, possuía cerca de trezentos contos e fui acompanhado ao cemitério por onze amigos. Onze amigos! Verdade é que não houve cartas nem anúncios. Acresce que chovia &mdash; peneirava &mdash; uma chuvinha miúda, triste e constante.',
+   await provaLeitura('amigos',{titulo:'Capítulo 1 · Óbito do Autor',cita:'Dito isto, expirei às duas horas da tarde de uma sexta-feira do mês de agosto de 1869, na minha bela chácara de Catumbi. Tinha uns sessenta e quatro anos, rijos e prósperos, era solteiro, possuía cerca de trezentos contos e fui acompanhado ao cemitério por onze amigos. Onze amigos! Verdade é que não houve cartas nem anúncios. Acresce que chovia &mdash; peneirava &mdash; uma chuvinha miúda, triste e constante.',
      fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 1 (domínio público).',
-     q:{t:'Por que o narrador exclama "Onze amigos!"?',o:['Porque se orgulha da multidão que o acompanhou até o cemitério.','Porque os onze eram os únicos que conheciam o segredo do seu emplasto.','Porque ironiza: para um homem tão rico, onze é um número miserável.','Porque esqueceu de incluir os parentes que também foram ao enterro.'],k:2,e:'A exclamação mostra o desapontamento irônico: um solteirão rico acompanhado por tão poucos, sem avisos nem cartas. É a crítica à sociedade de aparências.'}});
+     q:{t:'Por que o narrador exclama "Onze amigos!"?',o:['Porque se orgulha da multidão que o acompanhou até o cemitério.','Porque os onze eram os únicos que conheciam o segredo do seu emplasto.','Porque ironiza: para um homem tão rico, onze é um número miserável.','Porque esqueceu de incluir os parentes que também foram ao enterro.'],k:2,e:'A exclamação mostra o desapontamento irônico: um solteirão rico acompanhado por tão poucos, sem avisos nem cartas. É a crítica à sociedade de aparências.'}},'não houve cartas nem anúncios')
    F.amigos=true;hud();toast('Amigos contados. Provas '+provas()+'/5',3500)}},
  {id:'bras',x:3010,r:120,txt:'AÇÃO · Falar com Brás Cubas',done:()=>F.fala,act:async()=>{
    await say([['bras','Ora, mais um leitor. Pode chegar, a chuva aqui é de graça e o assunto é por minha conta.'],['det','O senhor é Brás Cubas? O senhor está... morto.'],['bras','Perfeitamente. Morto e produtivo, que é a minha melhor combinação.'],['bras','Alguém andou riscando as minhas memórias com um carimbo vermelho. Eu sou um defunto, não um descuidado.'],['det','Foi o Agente Carimbo. Ele corrige livros que o incomodam.'],['bras','Corrigir livro de defunto! Vá lá, vou lhe contar como se começa uma obra póstuma.']]);
-   await leitura({titulo:'Capítulo 1 · Óbito do Autor',cita:'Algum tempo hesitei se devia abrir estas memórias pelo princípio ou pelo fim, isto é, se poria em primeiro lugar o meu nascimento ou a minha morte. Suposto o uso vulgar seja começar pelo nascimento, duas considerações me levaram a adotar diferente método: a primeira é que eu não sou propriamente um autor defunto, mas um defunto autor, para quem a campa foi outro berço; a segunda é que o escrito ficaria assim mais galante e mais novo.',
+   await provaLeitura('fala',{titulo:'Capítulo 1 · Óbito do Autor',cita:'Algum tempo hesitei se devia abrir estas memórias pelo princípio ou pelo fim, isto é, se poria em primeiro lugar o meu nascimento ou a minha morte. Suposto o uso vulgar seja começar pelo nascimento, duas considerações me levaram a adotar diferente método: a primeira é que eu não sou propriamente um autor defunto, mas um defunto autor, para quem a campa foi outro berço; a segunda é que o escrito ficaria assim mais galante e mais novo.',
      fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 1 (domínio público).',
-     q:{t:'O que muda quando Brás se diz "defunto autor" e não "autor defunto"?',o:['Ele escreve depois de morto: a morte é o ponto de partida da narração.','Nada muda: as duas expressões significam a mesma coisa, só em outra ordem.','Ele morreu antes de terminar o livro, e um amigo escreveu o resto.','Ele pretende escrever somente sobre a infância e a juventude.'],k:0,e:'"Defunto autor" é quem narra de além-túmulo. A inversão dos termos é um jogo de palavras que muda o ponto de vista: o narrador já não tem nada a perder, e por isso pode ser sincero e zombeteiro.'}});
+     q:{t:'O que muda quando Brás se diz "defunto autor" e não "autor defunto"?',o:['Ele escreve depois de morto: a morte é o ponto de partida da narração.','Nada muda: as duas expressões significam a mesma coisa, só em outra ordem.','Ele morreu antes de terminar o livro, e um amigo escreveu o resto.','Ele pretende escrever somente sobre a infância e a juventude.'],k:0,e:'"Defunto autor" é quem narra de além-túmulo. A inversão dos termos é um jogo de palavras que muda o ponto de vista: o narrador já não tem nada a perder, e por isso pode ser sincero e zombeteiro.'}},'um defunto autor, para quem a campa foi outro berço')
    await say([['bras','Gostou? Falta o discurso do meu bom amigo, ali na beira da cova. Ouça com os ouvidos de quem sabe que a chuva é só chuva.']]);
    F.fala=true;hud();toast('Provas '+provas()+'/5',3000)}},
  {id:'disc',x:3200,r:120,txt:'AÇÃO · Ouvir o discurso',done:()=>F.disc,act:async()=>{
-   await leitura({titulo:'Capítulo 1 · o discurso à beira da cova',cita:'"Vós, que o conhecestes, meus senhores, vós podeis dizer comigo que a natureza parece estar chorando a perda irreparável de um dos mais belos caracteres que tem honrado a humanidade. Este ar sombrio, estas gotas do céu, aquelas nuvens escuras que cobrem o azul como um crepe funéreo, tudo isso é a dor crua e má que lhe rói à natureza as mais íntimas entranhas." Bom e fiel amigo! Não, não me arrependo das vinte apólices que lhe deixei.',
+   await provaLeitura('disc',{titulo:'Capítulo 1 · o discurso à beira da cova',cita:'"Vós, que o conhecestes, meus senhores, vós podeis dizer comigo que a natureza parece estar chorando a perda irreparável de um dos mais belos caracteres que tem honrado a humanidade. Este ar sombrio, estas gotas do céu, aquelas nuvens escuras que cobrem o azul como um crepe funéreo, tudo isso é a dor crua e má que lhe rói à natureza as mais íntimas entranhas." Bom e fiel amigo! Não, não me arrependo das vinte apólices que lhe deixei.',
      fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 1 (domínio público).',
-     q:{t:'O que o comentário "Não me arrependo das vinte apólices que lhe deixei" revela sobre o elogio?',o:['Que o amigo foi sincero e achava que o morto merecia a herança recebida.','Que Brás pretende desfazer o testamento depois de ouvir o discurso.','Que a natureza de fato chorava pela perda de um grande caráter.','Que o elogio foi comprado: o “fiel amigo” fala bem por interesse.'],k:3,e:'O narrador mostra que o discurso emocionado tem preço (as apólices). A chuva, que o orador chama de "natureza chorando", é só chuva. É a ironia como crítica da hipocrisia social.'}});
+     q:{t:'O que o comentário "Não me arrependo das vinte apólices que lhe deixei" revela sobre o elogio?',o:['Que o amigo foi sincero e achava que o morto merecia a herança recebida.','Que Brás pretende desfazer o testamento depois de ouvir o discurso.','Que a natureza de fato chorava pela perda de um grande caráter.','Que o elogio foi comprado: o “fiel amigo” fala bem por interesse.'],k:3,e:'O narrador mostra que o discurso emocionado tem preço (as apólices). A chuva, que o orador chama de "natureza chorando", é só chuva. É a ironia como crítica da hipocrisia social.'}},'me arrependo das vinte apólices que lhe deixei')
    F.disc=true;hud();toast('Provas '+provas()+'/5',3000)}},
  {id:'hipo',x:3440,r:140,txt:'AÇÃO · Montar o hipopótamo',cond:()=>hipo.on&&hipo.landed,act:async()=>{
    await say([['bras','Aí está meu amigo de asas. Segure-se bem, caro leitor: o delírio começa onde a razão cansa.']]);
+   if(!F.vered)await veredito();
    await leitura({titulo:'Capítulo 7 · O Delírio (leitura obrigatória para partir)',cita:'Ultimamente, restituído à forma humana, vi chegar um hipopótamo, que me arrebatou. Deixei-me ir, calado, não sei se por medo ou confiança; mas, dentro em pouco, a carreira de tal modo se tornou vertiginosa, que me atrevi a interrogá-lo, e com alguma arte lhe disse que a viagem me parecia sem destino. — Engana-se, replicou o animal, nós vamos à origem dos séculos.',
      fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 7 (domínio público).',
      q:{t:'Para onde o hipopótamo diz que levará Brás Cubas?',o:['Ao cemitério de São João Batista, para o enterro.','À casa de Virgília, para o último encontro.','À origem dos séculos: o delírio é uma viagem pelo tempo.','Ao Hospício, onde Brás ficará internado.'],k:2,e:'O animal corrige o narrador: não é um passeio comum, é uma viagem "à origem dos séculos", o início do delírio.'}});
@@ -666,6 +707,7 @@ addEventListener('keydown',e=>{
   const k=KM[e.code];
   if(e.code==='Escape'||e.code==='KeyP'){if(state==='play')pause(true);else if(paused)pause(false);return}
   if(e.code==='KeyM'){setMute(!muted);return}
+  if(e.code==='KeyN'){caderno();return}
   if(state==='dialog'&&(e.code==='Space'||e.code==='Enter'||e.code==='KeyE')){e.preventDefault();next();return}
   if(!k)return;if(e.code.startsWith('Arrow')||e.code==='Space')e.preventDefault();
   if(k==='act'){if(!K.act&&state==='play')doAct();K.act=1;return}K[k]=1;
@@ -673,7 +715,7 @@ addEventListener('keydown',e=>{
 addEventListener('keyup',e=>{const k=KM[e.code];if(k)K[k]=0});
 function doAct(){const it=nearInter();if(it)it.act()}
 function pause(on){paused=on;if(on){state='pause';ov('<h2>Pausa</h2><button class="btn" id="rs">Continuar</button><button class="btn sec" id="bk">Voltar ao Arquivo</button>');$('rs').onclick=()=>pause(false);$('bk').onclick=()=>location.href='../index.html'}else{ovClose();state='play'}}
-$('bPause').onclick=()=>{if(state==='play')pause(true)};$('bMute').onclick=()=>setMute(!muted);
+$('bCad').onclick=()=>caderno();$('bPause').onclick=()=>{if(state==='play')pause(true)};$('bMute').onclick=()=>setMute(!muted);
 $('dlg').addEventListener('pointerdown',e=>{e.preventDefault();if(state==='dialog')next()});
 function bindT(id,k,act){const b=$(id);const on=e=>{e.preventDefault();if(act){if(state==='dialog'){next();return}if(state==='play')doAct()}else K[k]=1};const off=e=>{e.preventDefault();if(!act)K[k]=0};
   b.addEventListener('pointerdown',on);b.addEventListener('pointerup',off);b.addEventListener('pointercancel',off);b.addEventListener('pointerleave',off)}
@@ -690,7 +732,7 @@ function loop(ts){
   }else if(state==='dialog'){updateWorld(dt);P.vx=0}
   render(dt);
 }
-window.__t={P,F,Z,PAGES,INTER,get state(){return state},set state(v){state=v},get camX(){return camX},set camX(v){camX=v},provas,startCine,fim,hipo,K};
+window.__t={provaLeitura,caderno,veredito,CASO,P,F,Z,PAGES,INTER,get state(){return state},set state(v){state=v},get camX(){return camX},set camX(v){camX=v},provas,startCine,fim,hipo,K};
 (function restaurarProg(){try{const r=JSON.parse(localStorage.getItem(PROGKEY)||'null');if(!r||!(r.cp>0))return;
   cpX=r.cp;P.x=r.cp;camX=Math.max(0,Math.min(WW-CW,P.x-CW*.42+(P.look||0)*.6));Object.assign(Z,r.Z||{});Object.assign(F,r.F||{});
   (r.pg||[]).forEach((v,i)=>{if(v&&PAGES[i])PAGES[i].got=true});(r.rb||[]).forEach((v,i)=>{if(v&&RAS_BOARDS[i])RAS_BOARDS[i].done=true});
