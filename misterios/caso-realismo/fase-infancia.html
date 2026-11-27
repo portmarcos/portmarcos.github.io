@@ -83,7 +83,7 @@ body:not(.touch) #touch{display:none}
 <div id="touch"><button id="tL">◀</button><button id="tR">▶</button><button id="tJ">PULO</button><button id="tA">AÇÃO</button><button id="tS">DASH</button><button id="tC">✦</button><button id="tX">PENA</button></div>
 <div id="ov" class="ov"></div>
 </div></div>
-<script src="/assets/js/config-sheets.js"></script><script src="transicao.js"></script>
+<script src="/assets/js/config-sheets.js"></script><script src="transicao.js"></script><script src="musica.js"></script>
 <script>
 "use strict";
 /* ============ Constantes ============ */
@@ -502,11 +502,12 @@ function render(dt){
   ctx.restore();
 }
 /* ============ Cena do salto ============ */
-function startCine(){
+var CNdone=0;function startCine(){
   state='cine';cine={t:0,lines:[[.6,'Unamos agora os pés e demos um salto por cima da escola, a enfadonha escola.'],[3.4,'Onde aprendi a ler, escrever, contar, dar cacholetas e apanhá-las.'],[6.2,'Do outro lado do salto: o primeiro amor, e uma conta de onze contos de réis.']]};
   $('prompt').classList.add('hidden');$('hud').classList.add('hidden');
 }
-function drawCine(dt){
+function drawCine(dt){if(window.Trans&&Trans.cine){CNdone=0;Trans.cine(ctx,cine,dt,CW,CH,function(){if(state==='cine')fim()});return}drawCineOld(dt)}
+function drawCineOld(dt){
   cine.t+=dt;const t=cine.t;const im=IMG.bgi||null;
   const sg=ctx.createLinearGradient(0,0,0,CH);sg.addColorStop(0,'#f6c77a');sg.addColorStop(1,'#c9744a');ctx.fillStyle=sg;ctx.fillRect(0,0,CW,CH);
   if(im){const h=CH,w=im.width*h/im.height;ctx.drawImage(im,-((t*80)%w),0,w,h);ctx.drawImage(im,w-((t*80)%w),0,w,h)}
