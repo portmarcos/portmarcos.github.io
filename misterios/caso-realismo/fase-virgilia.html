@@ -83,7 +83,7 @@ body:not(.touch) #touch{display:none}
 <div id="touch"><button id="tL">◀</button><button id="tR">▶</button><button id="tJ">PULO</button><button id="tA">AÇÃO</button><button id="tS">DASH</button><button id="tC">✦</button><button id="tX">BILHETE</button></div>
 <div id="ov" class="ov"></div>
 </div></div>
-<script src="/assets/js/config-sheets.js"></script>
+<script src="/assets/js/config-sheets.js"></script><script src="transicao.js"></script>
 <script>
 "use strict";
 /* ============ Constantes ============ */
@@ -554,7 +554,7 @@ function fim(){try{localStorage.removeItem(PROGKEY)}catch(e){}
   ov('<h2>Zona 6 concluída: Virgília, a águia e o pavão</h2><p>Pontos: <b>'+Z.pts+'</b> · Bilhetes: <b>'+Z.pages+'/11</b> · Leituras certas de primeira: <b>'+Z.leit+'/'+Z.tot+'</b></p>'+
    '<p>Você viu Virgília escolher a águia (Lobo Neves) pelo título de marquesa, leu a filosofia do egoísmo ("a ponta do nariz") e o capítulo feito só de pontinhos, uma das invenções mais ousadas da literatura brasileira.</p>'+
    '<p><b>Próxima zona: Quincas Borba e o Humanitismo, e depois o chefe Pandora.</b> Em construção.</p><button class="btn" id="ba">Voltar ao Arquivo</button><button class="btn sec" id="rj">Jogar de novo</button>');
-  $('ba').onclick=()=>{location.href='../index.html'};$('rj').onclick=()=>location.reload();
+  $('ba').onclick=()=>{location.href='../index.html'};$('rj').onclick=()=>location.reload(); if(window.Trans)Trans.fim();
 }
 function enviar(pct){
   if(Z.enviou)return;Z.enviou=true;
