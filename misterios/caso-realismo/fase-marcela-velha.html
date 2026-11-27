@@ -83,7 +83,7 @@ body:not(.touch) #touch{display:none}
 <div id="touch"><button id="tL">◀</button><button id="tR">▶</button><button id="tJ">PULO</button><button id="tA">AÇÃO</button><button id="tS">DASH</button><button id="tC">✦</button></div>
 <div id="ov" class="ov"></div>
 </div></div>
-<script src="/assets/js/config-sheets.js"></script><script src="transicao.js"></script>
+<script src="/assets/js/config-sheets.js"></script><script src="transicao.js"></script><script src="musica.js"></script>
 <script>
 "use strict";
 /* ============ Constantes ============ */
@@ -555,11 +555,12 @@ function drawLoja(){
   const v=ctx.createRadialGradient(CW/2,CH/2,CH*.4,CW/2,CH/2,CH*.95);v.addColorStop(0,'rgba(0,0,0,0)');v.addColorStop(1,'rgba(22,10,2,.6)');ctx.fillStyle=v;ctx.fillRect(0,0,CW,CH);
 }
 /* ============ Cena do cais ============ */
-function startCine(){
+var CNdone=0;function startCine(){
   state='cine';cine={t:0,lines:[[.6,'Não era esta certamente a Marcela de 1822; mas a beleza de outro tempo valia uma terça parte dos meus sacrifícios?'],[4.2,'Os meus é que não souberam ver-lha; eram olhos da primeira edição.'],[7.4,'A verdade é que eu me sentia pungido e aborrecido, ao mesmo tempo, e ansiava por me ver fora daquela casa.']]};
   $('prompt').classList.add('hidden');$('hud').classList.add('hidden');
 }
-function drawCine(dt){
+function drawCine(dt){if(window.Trans&&Trans.cine){CNdone=0;Trans.cine(ctx,cine,dt,CW,CH,function(){if(state==='cine')fim()});return}drawCineOld(dt)}
+function drawCineOld(dt){
   cine.t+=dt;const t=cine.t;
   const sg=ctx.createLinearGradient(0,0,0,CH);sg.addColorStop(0,'#150f2e');sg.addColorStop(1,'#d9b890');ctx.fillStyle=sg;ctx.fillRect(0,0,CW,CH);
   const im=IMG.bgz;if(im){const W=Math.round(CH*im.width/im.height);ctx.globalAlpha=.55;ctx.drawImage(im,(CW-W)/2,0,W,CH);ctx.globalAlpha=1}
