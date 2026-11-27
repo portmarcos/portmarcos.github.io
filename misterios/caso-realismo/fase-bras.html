@@ -38,6 +38,7 @@ button{font-family:inherit;cursor:pointer;color:inherit}
 .panel{background:linear-gradient(180deg,#2a1b0e,#1b1109);border:2px solid #9a7545;border-radius:16px;padding:clamp(12px,2.4vw,26px);max-width:min(860px,100%);width:100%;box-shadow:0 12px 50px #000}
 .panel h2{font-family:'Playfair Display',serif;color:var(--amber2);font-size:clamp(1.1rem,2.8vw,1.8rem);margin-bottom:8px}
 .panel p{line-height:1.5;margin:6px 0;font-size:clamp(.85rem,1.7vw,1.1rem)}
+.cita mark{background:#e8c25a;color:#1b1007;padding:0 3px;border-radius:3px;font-style:normal}
 .cita{border-left:3px solid var(--amber);padding:8px 12px;margin:10px 0;font-style:italic;background:rgba(255,255,255,.04);font-size:clamp(.85rem,1.7vw,1.1rem);line-height:1.55}
 .src{font-size:.78rem;color:var(--muted);margin-top:-4px}
 .btn{background:linear-gradient(180deg,#e3a84a,#b0701f);color:#1a0f08;font-weight:700;border:none;border-radius:10px;padding:9px 18px;margin:6px 6px 0 0;font-size:clamp(.85rem,1.6vw,1.05rem)}
@@ -62,7 +63,7 @@ input[type=text]{width:100%;padding:9px 12px;border-radius:8px;border:1px solid 
 #touch{position:absolute;inset:0;z-index:4;pointer-events:none}
 #touch button{pointer-events:auto;position:absolute;border-radius:50%;border:2px solid rgba(255,255,255,.35);background:rgba(34,20,9,.6);color:#fff;font-size:1.3rem;width:clamp(48px,11vw,72px);height:clamp(48px,11vw,72px);touch-action:none}
 #tL{left:2%;bottom:6%}#tR{left:calc(2% + clamp(56px,13vw,84px));bottom:6%}
-#tJ{right:2%;bottom:6%}#tA{right:calc(2% + clamp(56px,13vw,84px));bottom:6%;font-size:.8rem}#tC{right:calc(2% + clamp(28px,6.5vw,42px));bottom:calc(6% + clamp(56px,13vw,84px))}
+#tJ{right:2%;bottom:6%}#tA{right:calc(2% + clamp(56px,13vw,84px));bottom:6%;font-size:.8rem}#tS{right:calc(2% + clamp(84px,19vw,126px));bottom:calc(6% + clamp(28px,6.5vw,42px));font-size:.65rem}#tC{right:calc(2% + clamp(28px,6.5vw,42px));bottom:calc(6% + clamp(56px,13vw,84px))}
 body:not(.touch) #touch{display:none}
 #rot{position:fixed;inset:0;z-index:99;background:#0a0603;display:none;align-items:center;justify-content:center;text-align:center;padding:20px;font-size:1.2rem}
 @media (orientation:portrait) and (pointer:coarse){#rot{display:flex}}
@@ -75,11 +76,11 @@ body:not(.touch) #touch{display:none}
 <div id="hud" class="hidden">
   <span class="hs" id="hLamp"></span><span class="hs">Páginas <b id="hPag">0/8</b></span><span class="hs">Pontos <b id="hPts">0</b></span>
   <span class="hs" id="hTask"></span><span class="sp"></span>
-  <button id="bMute" title="Som (M)">♪</button><button id="bPause" title="Pausa (Esc)">II</button>
+  <button id="bMute" title="Som (M)">♪</button><button id="bCad" title="Caderno de provas (N)" style="width:auto;padding:0 10px">Caderno</button><button id="bPause" title="Pausa (Esc)">II</button>
 </div>
 <div id="toast"></div><div id="prompt" class="hidden"></div>
 <div id="dlg" class="hidden"><img id="dImg" alt=""><div class="t"><div class="n" id="dNome"></div><div class="x" id="dTxt"></div></div><div class="k">Espaço ▶</div></div>
-<div id="touch"><button id="tL">◀</button><button id="tR">▶</button><button id="tJ">PULO</button><button id="tA">AÇÃO</button><button id="tC">✦</button></div>
+<div id="touch"><button id="tL">◀</button><button id="tR">▶</button><button id="tJ">PULO</button><button id="tA">AÇÃO</button><button id="tS">DASH</button><button id="tC">✦</button></div>
 <div id="ov" class="ov"></div>
 </div></div>
 <script src="/assets/js/config-sheets.js"></script>
@@ -109,11 +110,16 @@ function sheet(k,sh,f,x,y,flip,alpha,sc){
   ctx.save();ctx.globalAlpha=alpha==null?1:alpha;ctx.translate(x,y+3);if(flip)ctx.scale(-1,1);
   ctx.drawImage(im,f*sh.w,0,sh.w,sh.h,-w/2,-h,w,h);ctx.restore();
 }
+/* ===== Game feel: partículas (poeira, dash) ===== */
+const PART=[];
+function puff(x,y,n,k,col){for(let i=0;i<n;i++)PART.push({x:x+(Math.random()-.5)*14,y:y-2,vx:(Math.random()-.5)*90*(k||1),vy:-20-Math.random()*60*(k||1),t:0,l:.35+Math.random()*.3,r:2+Math.random()*3,c:col||'rgba(236,222,190,'})}
+function updPart(dt){for(const p of PART){p.t+=dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=120*dt}for(let i=PART.length-1;i>=0;i--)if(PART[i].t>=PART[i].l)PART.splice(i,1)}
+function drawPart(){ctx.save();ctx.translate(-camX,0);for(const p of PART){const a=1-p.t/p.l;ctx.fillStyle=p.c+(a*.6)+')';ctx.beginPath();ctx.arc(p.x,p.y,p.r*(1+p.t*1.5),0,7);ctx.fill()}ctx.restore()}
 /* ============ Estado ============ */
 let state='start',T=0,camX=0,shake=0,flash=0;
 const S={nome:'',turma:'',gen:'m'};
 const Z={pts:0,pages:0,lamps:3,leit:0,tot:3,enviou:false};
-const F={des:false,ded:false,amigos:false,fala:false,disc:false,hipo:false};
+const F={cl:{},vered:false,des:false,ded:false,amigos:false,fala:false,disc:false,hipo:false};
 const K={left:0,right:0,jump:0,lamp:0,act:0};
 const P={x:110,y:G,vx:0,vy:0,face:1,ground:true,jumps:2,inv:0,an:0,land:0,hurt:0};
 let cpX=110,lastStep=0;
@@ -174,7 +180,7 @@ function leitura(cfg){
       let tries=0;$('lq').querySelectorAll('.opt').forEach(bt=>bt.onclick=()=>{
         const i=+bt.dataset.i;if(i===q.k){bt.classList.add('ok');$('lq').querySelectorAll('.opt').forEach(x=>x.disabled=true);
           $('lq').insertAdjacentHTML('beforeend','<p>'+q.e+'</p><button class="btn" id="lok">Continuar</button>');
-          const first=tries===0;if(first){Z.leit++;addPts(100,P.x-camX,P.y-120)}else addPts(40,P.x-camX,P.y-120);
+          const first=tries===0;if(cfg.re){addPts(30,P.x-camX,P.y-120)}else if(first){Z.leit++;addPts(100,P.x-camX,P.y-120)}else addPts(40,P.x-camX,P.y-120);
           $('lok').onclick=()=>{ovClose();state=prev;res(first)}}
         else{tries++;bt.classList.add('bad');bt.disabled=true;blip(-3);toast('Releia o trecho e tente de novo.',1800)}});
     }
@@ -206,31 +212,71 @@ function contarAmigos(){
       else{tries++;b.classList.add('bad');b.disabled=true;blip(-3)}});
   });
 }
+/* ============ Caso fechado: leituras como provas ============ */
+const CASO={dedic:'A obra é dedicada "ao verme que primeiro roeu as frias carnes do meu cadáver": nenhuma lisonja a ninguém.',amigos:'Só onze pessoas acompanharam o enterro, sem cartas nem anúncios, embora o morto tivesse cerca de trezentos contos.',fala:'Quem narra já está morto: não tem o que ganhar nem perder ao contar.',disc:'O orador que chorou o "belo caráter" do morto recebera dele vinte apólices.'};
+const CASO_NOME={dedic:'A dedicatória',amigos:'Os onze amigos',fala:'O defunto autor',disc:'O discurso'};
+async function provaLeitura(id,cfg,hl){
+  F.cl=F.cl||{};
+  const first=await leitura(cfg);
+  if(first){F.cl[id]=2;toast('Prova guardada no caderno: '+CASO_NOME[id],2600);return true}
+  F.cl[id]=1;
+  await say([['narr','A prova ficou borrada no caderno, leitor. Releia o trecho destacado e responda de novo.']]);
+  const ok=await leitura(Object.assign({},cfg,{re:true,titulo:'Releitura · '+CASO_NOME[id],cita:hl&&cfg.cita.includes(hl)?cfg.cita.replace(hl,'<mark>'+hl+'</mark>'):cfg.cita}));
+  if(!ok){Z.lamps=Math.max(1,Z.lamps-1);hud();toast('Errou de novo: perdeu 1 lamparina, mas a prova foi recuperada.',3600)}
+  else toast('Prova recuperada: '+CASO_NOME[id],2600);
+  F.cl[id]=2;return false;
+}
+function caderno(){
+  if(state!=='play')return;const prev=state;state='modal';
+  let h='<h2 style="margin:.2em 0">Caderno de provas</h2><p style="margin:.3em 0;font-size:.9em">Cada leitura certa guarda uma prova do caso: <b>por que o luto no enterro de Brás foi tão pobre?</b></p>';
+  for(const k of Object.keys(CASO)){const st=F.cl&&F.cl[k];h+='<div class="card" style="padding:8px 12px;margin:6px 0;font-size:.88em;line-height:1.35"><b>'+CASO_NOME[k]+'</b><br>'+(st===2?CASO[k]:st===1?'▒▒▒▒▒▒ (prova borrada: releia o trecho)':'<i>ainda não encontrada</i>')+'</div>'}
+  ov(h+'<button class="btn" id="cdx">Fechar</button>');$('cdx').onclick=()=>{ovClose();state=prev};
+}
+function veredito(){return new Promise(res=>{
+  const prev=state;state='modal';const sel=new Set(),keys=Object.keys(CASO);let erros=0;
+  const draw=msg=>{
+    ov('<h2>Fechar o caso</h2><p><b>Conclusão a provar:</b> o luto no enterro de Brás foi de aparência e de interesse, não de sentimento. Escolha as <b>duas</b> provas do caderno que sustentam isso.</p>'+keys.map(k=>'<button class="opt'+(sel.has(k)?' ok':'')+'" data-k="'+k+'"><b>'+CASO_NOME[k]+'.</b> '+(F.cl&&F.cl[k]===2?CASO[k]:'(prova perdida)')+'</button>').join('')+(msg?'<p>'+msg+'</p>':'')+'<button class="btn" id="vd">Concluir</button>');
+    $('ov').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const k=b.dataset.k;if(sel.has(k))sel.delete(k);else if(sel.size<2)sel.add(k);draw(msg)});
+    $('vd').onclick=()=>{
+      if(sel.size!==2){draw('Escolha exatamente duas provas.');return}
+      const certo=sel.has('amigos')&&sel.has('disc');
+      if(certo||erros>=2){
+        if(!certo){sel.clear();sel.add('amigos');sel.add('disc')}
+        const pts=certo?Math.max(100,400-erros*100):100;
+        ov('<h2>Caso fechado</h2><p>'+(certo?'Provas certas.':'Era esta a combinação.')+' <b>Os onze amigos</b> mostram quem foi ao enterro: poucos, sem convite. <b>O discurso</b> mostra por que alguém chorou: vinte apólices. O defunto autor só pode dizer isso porque já não tem nada a perder, e a dedicatória ao verme confirma o tom, mas nenhuma das duas fala do luto dos outros.</p><p>Ironia de Machado: o elogio fúnebre tem preço.</p><button class="btn" id="vok">Continuar</button>');
+        $('vok').onclick=()=>{ovClose();state=prev;F.vered=true;addPts(pts,CW/2,200);toast('Caso fechado! +'+pts+' pontos',3200);res()};return}
+      erros++;sel.clear();
+      draw(erros===1?'Ainda não. Dica 1: procure as provas que falam dos OUTROS (os presentes ao enterro), e não de Brás.':'Ainda não. Dica 2: uma prova mostra quem foi ao enterro; a outra, quem falou bem do morto e por quê.');
+    };
+  };
+  draw('');
+})}
 /* ============ Interações ============ */
 const INTER=[
  {id:'ded',x:1920,r:90,need:'lamp',txt:'AÇÃO · Pegar a página rasgada',done:()=>F.ded,act:async()=>{
-   await say([['det','Há um papel rasgado debaixo da lápide... e um carimbo vermelho nele.']]);await restaurarDedicatoria();F.ded=true;hud();
+   await say([['det','Há um papel rasgado debaixo da lápide... e um carimbo vermelho nele.']]);await restaurarDedicatoria();F.ded=true;F.cl.dedic=2;hud();
    toast('Dedicatória restaurada. Provas '+provas()+'/5',3500)}},
  {id:'amigos',x:2560,r:200,txt:'AÇÃO · Contar os amigos',done:()=>F.amigos,act:async()=>{
    await contarAmigos();
-   await leitura({titulo:'Capítulo 1 · Óbito do Autor',cita:'Dito isto, expirei às duas horas da tarde de uma sexta-feira do mês de agosto de 1869, na minha bela chácara de Catumbi. Tinha uns sessenta e quatro anos, rijos e prósperos, era solteiro, possuía cerca de trezentos contos e fui acompanhado ao cemitério por onze amigos. Onze amigos! Verdade é que não houve cartas nem anúncios. Acresce que chovia &mdash; peneirava &mdash; uma chuvinha miúda, triste e constante.',
+   await provaLeitura('amigos',{titulo:'Capítulo 1 · Óbito do Autor',cita:'Dito isto, expirei às duas horas da tarde de uma sexta-feira do mês de agosto de 1869, na minha bela chácara de Catumbi. Tinha uns sessenta e quatro anos, rijos e prósperos, era solteiro, possuía cerca de trezentos contos e fui acompanhado ao cemitério por onze amigos. Onze amigos! Verdade é que não houve cartas nem anúncios. Acresce que chovia &mdash; peneirava &mdash; uma chuvinha miúda, triste e constante.',
      fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 1 (domínio público).',
-     q:{t:'Por que o narrador exclama "Onze amigos!"?',o:['Porque se orgulha da multidão que o acompanhou até o cemitério.','Porque os onze eram os únicos que conheciam o segredo do seu emplasto.','Porque ironiza: para um homem tão rico, onze é um número miserável.','Porque esqueceu de incluir os parentes que também foram ao enterro.'],k:2,e:'A exclamação mostra o desapontamento irônico: um solteirão rico acompanhado por tão poucos, sem avisos nem cartas. É a crítica à sociedade de aparências.'}});
+     q:{t:'Por que o narrador exclama "Onze amigos!"?',o:['Porque se orgulha da multidão que o acompanhou até o cemitério.','Porque os onze eram os únicos que conheciam o segredo do seu emplasto.','Porque ironiza: para um homem tão rico, onze é um número miserável.','Porque esqueceu de incluir os parentes que também foram ao enterro.'],k:2,e:'A exclamação mostra o desapontamento irônico: um solteirão rico acompanhado por tão poucos, sem avisos nem cartas. É a crítica à sociedade de aparências.'}},'não houve cartas nem anúncios')
    F.amigos=true;hud();toast('Amigos contados. Provas '+provas()+'/5',3500)}},
  {id:'bras',x:3010,r:120,txt:'AÇÃO · Falar com Brás Cubas',done:()=>F.fala,act:async()=>{
    await say([['bras','Ora, mais um leitor. Pode chegar, a chuva aqui é de graça e o assunto é por minha conta.'],['det','O senhor é Brás Cubas? O senhor está... morto.'],['bras','Perfeitamente. Morto e produtivo, que é a minha melhor combinação.'],['bras','Alguém andou riscando as minhas memórias com um carimbo vermelho. Eu sou um defunto, não um descuidado.'],['det','Foi o Agente Carimbo. Ele corrige livros que o incomodam.'],['bras','Corrigir livro de defunto! Vá lá, vou lhe contar como se começa uma obra póstuma.']]);
-   await leitura({titulo:'Capítulo 1 · Óbito do Autor',cita:'Algum tempo hesitei se devia abrir estas memórias pelo princípio ou pelo fim, isto é, se poria em primeiro lugar o meu nascimento ou a minha morte. Suposto o uso vulgar seja começar pelo nascimento, duas considerações me levaram a adotar diferente método: a primeira é que eu não sou propriamente um autor defunto, mas um defunto autor, para quem a campa foi outro berço; a segunda é que o escrito ficaria assim mais galante e mais novo.',
+   await provaLeitura('fala',{titulo:'Capítulo 1 · Óbito do Autor',cita:'Algum tempo hesitei se devia abrir estas memórias pelo princípio ou pelo fim, isto é, se poria em primeiro lugar o meu nascimento ou a minha morte. Suposto o uso vulgar seja começar pelo nascimento, duas considerações me levaram a adotar diferente método: a primeira é que eu não sou propriamente um autor defunto, mas um defunto autor, para quem a campa foi outro berço; a segunda é que o escrito ficaria assim mais galante e mais novo.',
      fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 1 (domínio público).',
-     q:{t:'O que muda quando Brás se diz "defunto autor" e não "autor defunto"?',o:['Ele escreve depois de morto: a morte é o ponto de partida da narração.','Nada muda: as duas expressões significam a mesma coisa, só em outra ordem.','Ele morreu antes de terminar o livro, e um amigo escreveu o resto.','Ele pretende escrever somente sobre a infância e a juventude.'],k:0,e:'"Defunto autor" é quem narra de além-túmulo. A inversão dos termos é um jogo de palavras que muda o ponto de vista: o narrador já não tem nada a perder, e por isso pode ser sincero e zombeteiro.'}});
+     q:{t:'O que muda quando Brás se diz "defunto autor" e não "autor defunto"?',o:['Ele escreve depois de morto: a morte é o ponto de partida da narração.','Nada muda: as duas expressões significam a mesma coisa, só em outra ordem.','Ele morreu antes de terminar o livro, e um amigo escreveu o resto.','Ele pretende escrever somente sobre a infância e a juventude.'],k:0,e:'"Defunto autor" é quem narra de além-túmulo. A inversão dos termos é um jogo de palavras que muda o ponto de vista: o narrador já não tem nada a perder, e por isso pode ser sincero e zombeteiro.'}},'um defunto autor, para quem a campa foi outro berço')
    await say([['bras','Gostou? Falta o discurso do meu bom amigo, ali na beira da cova. Ouça com os ouvidos de quem sabe que a chuva é só chuva.']]);
    F.fala=true;hud();toast('Provas '+provas()+'/5',3000)}},
  {id:'disc',x:3200,r:120,txt:'AÇÃO · Ouvir o discurso',done:()=>F.disc,act:async()=>{
-   await leitura({titulo:'Capítulo 1 · o discurso à beira da cova',cita:'"Vós, que o conhecestes, meus senhores, vós podeis dizer comigo que a natureza parece estar chorando a perda irreparável de um dos mais belos caracteres que tem honrado a humanidade. Este ar sombrio, estas gotas do céu, aquelas nuvens escuras que cobrem o azul como um crepe funéreo, tudo isso é a dor crua e má que lhe rói à natureza as mais íntimas entranhas." Bom e fiel amigo! Não, não me arrependo das vinte apólices que lhe deixei.',
+   await provaLeitura('disc',{titulo:'Capítulo 1 · o discurso à beira da cova',cita:'"Vós, que o conhecestes, meus senhores, vós podeis dizer comigo que a natureza parece estar chorando a perda irreparável de um dos mais belos caracteres que tem honrado a humanidade. Este ar sombrio, estas gotas do céu, aquelas nuvens escuras que cobrem o azul como um crepe funéreo, tudo isso é a dor crua e má que lhe rói à natureza as mais íntimas entranhas." Bom e fiel amigo! Não, não me arrependo das vinte apólices que lhe deixei.',
      fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 1 (domínio público).',
-     q:{t:'O que o comentário "Não me arrependo das vinte apólices que lhe deixei" revela sobre o elogio?',o:['Que o amigo foi sincero e achava que o morto merecia a herança recebida.','Que Brás pretende desfazer o testamento depois de ouvir o discurso.','Que a natureza de fato chorava pela perda de um grande caráter.','Que o elogio foi comprado: o “fiel amigo” fala bem por interesse.'],k:3,e:'O narrador mostra que o discurso emocionado tem preço (as apólices). A chuva, que o orador chama de "natureza chorando", é só chuva. É a ironia como crítica da hipocrisia social.'}});
+     q:{t:'O que o comentário "Não me arrependo das vinte apólices que lhe deixei" revela sobre o elogio?',o:['Que o amigo foi sincero e achava que o morto merecia a herança recebida.','Que Brás pretende desfazer o testamento depois de ouvir o discurso.','Que a natureza de fato chorava pela perda de um grande caráter.','Que o elogio foi comprado: o “fiel amigo” fala bem por interesse.'],k:3,e:'O narrador mostra que o discurso emocionado tem preço (as apólices). A chuva, que o orador chama de "natureza chorando", é só chuva. É a ironia como crítica da hipocrisia social.'}},'me arrependo das vinte apólices que lhe deixei')
    F.disc=true;hud();toast('Provas '+provas()+'/5',3000)}},
  {id:'hipo',x:3440,r:140,txt:'AÇÃO · Montar o hipopótamo',cond:()=>hipo.on&&hipo.landed,act:async()=>{
    await say([['bras','Aí está meu amigo de asas. Segure-se bem, caro leitor: o delírio começa onde a razão cansa.']]);
+   if(!F.vered)await veredito();
    await leitura({titulo:'Capítulo 7 · O Delírio (leitura obrigatória para partir)',cita:'Ultimamente, restituído à forma humana, vi chegar um hipopótamo, que me arrebatou. Deixei-me ir, calado, não sei se por medo ou confiança; mas, dentro em pouco, a carreira de tal modo se tornou vertiginosa, que me atrevi a interrogá-lo, e com alguma arte lhe disse que a viagem me parecia sem destino. — Engana-se, replicou o animal, nós vamos à origem dos séculos.',
      fonte:'Machado de Assis, Memórias Póstumas de Brás Cubas, cap. 7 (domínio público).',
      q:{t:'Para onde o hipopótamo diz que levará Brás Cubas?',o:['Ao cemitério de São João Batista, para o enterro.','À casa de Virgília, para o último encontro.','À origem dos séculos: o delírio é uma viagem pelo tempo.','Ao Hospício, onde Brás ficará internado.'],k:2,e:'O animal corrige o narrador: não é um passeio comum, é uma viagem "à origem dos séculos", o início do delírio.'}});
@@ -286,17 +332,25 @@ function nearInter(){
 function onGround(x){for(const p of PITS)if(x>p.x+10&&x<p.x+p.w-10)return false;return true}
 function updatePlayer(dt){
   const ax=K.right-K.left,sp=210;
-  P.vx+=((ax*sp)-P.vx)*Math.min(1,dt*10);if(ax)P.face=ax;
+  if(ax)P.face=ax;updPart(dt);
+  P.look=(P.look||0)+(((P.face||1)*80+P.vx*.2)-(P.look||0))*Math.min(1,dt*2.5);
+  P.dcd=Math.max(0,(P.dcd||0)-dt);
+  if(K.dash&&!P._d){P._d=1;if(P.dcd<=0&&(P.ground||!P.adsh)){P.dsh=.17;P.dcd=.8;P.dd=P.face||1;P.vy=0;if(!P.ground)P.adsh=1;P.inv=Math.max(P.inv||0,.35);tone(520,.1,.04,'sawtooth')}}
+  if(!K.dash)P._d=0;
+  if(P.dsh>0){P.dsh-=dt;P.vx=P.dd*640;puff(P.x-P.dd*10,P.y-40,1,.4,'rgba(255,214,120,')}else{P.vx+=((ax*sp)-P.vx)*Math.min(1,dt*10);if(ax&&P.ground&&Math.abs(P.vx)>150&&Math.random()<dt*12)puff(P.x,P.y,1,.5)}
   const py=P.y;P.x+=P.vx*dt;P.x=Math.max(30,Math.min(WW-30,P.x));
-  P.vy+=1750*dt;P.y+=P.vy*dt;
+  P.vy+=(P.dsh>0?0:1750)*dt;P.y+=P.vy*dt;
   let land=null;
   if(P.vy>=0){
     if(onGround(P.x)&&py<=G+1&&P.y>=G)land=G;
     for(const p of PLAT){if(P.x>p.x-10&&P.x<p.x+p.w+10&&py<=p.y+1&&P.y>=p.y){if(land==null||p.y<land)land=p.y}}
   }
-  if(land!=null){if(!P.ground&&P.vy>300){P.land=.12;thud2()}P.y=land;P.vy=0;P.ground=true;P.jumps=2}else P.ground=false;
-  if(K.jump&&!P._j){P._j=1;if(P.ground||P.jumps>0){P.vy=-640;if(!P.ground)P.jumps=Math.max(0,P.jumps-1);else P.jumps=1;P.ground=false;tone(300,.08,.03,'triangle')}}
-  if(!K.jump)P._j=0;
+  if(land!=null){if(!P.ground&&P.vy>300){P.land=.12;thud2();puff(P.x,land,7,1.2)}P.y=land;P.vy=0;P.ground=true;P.jumps=2;P.adsh=0}else P.ground=false;
+  P.coy=P.ground?.11:Math.max(0,(P.coy||0)-dt);
+  if(K.jump&&!P._j){P._j=1;P.jbuf=.13}
+  P.jbuf=Math.max(0,(P.jbuf||0)-dt);
+  if(P.jbuf>0&&(P.coy>0||P.jumps>0)){const gr=P.coy>0;P.jbuf=0;P.vy=-640;if(gr)P.jumps=1;else P.jumps=Math.max(0,P.jumps-1);P.coy=0;P.ground=false;P._up=1;puff(P.x,P.y,gr?5:3,.8);tone(300,.08,.03,'triangle')}
+  if(!K.jump){P._j=0;if(P._up&&P.vy<-240)P.vy*=.6;P._up=0}
   P.an+=Math.abs(P.vx)*dt/38;P.inv=Math.max(0,P.inv-dt);P.land=Math.max(0,P.land-dt);P.hurt=Math.max(0,(P.hurt||0)-dt);
   if(P.y>G+170)fall();
   for(const c of [1300,2300,3000])if(P.x>c&&cpX<c)cpX=c;
@@ -421,7 +475,7 @@ function render(dt){
   ctx.setTransform(DPR,0,0,DPR,0,0);
   const sx=shake>0?(Math.random()-.5)*shake*16:0,sy=shake>0?(Math.random()-.5)*shake*10:0;ctx.save();ctx.translate(sx,sy);
   if(state==='cine'){drawCine(dt);ctx.restore();return}
-  drawBG();drawFigures();drawBras();drawPlat();drawDes();drawClue();drawPages();drawHipo();drawStamps();drawPlayer();drawLight();drawRain(dt);drawFloaters();
+  drawBG();drawFigures();drawBras();drawPlat();drawDes();drawClue();drawPages();drawHipo();drawStamps();drawPlayer();drawPart();drawLight();drawRain(dt);drawFloaters();
   ctx.save();ctx.globalCompositeOperation='color';ctx.fillStyle='rgba(172,118,56,.55)';ctx.fillRect(0,0,CW,CH);ctx.restore();
   /* vinheta */
   const v=ctx.createRadialGradient(CW/2,CH/2,CH*.4,CW/2,CH/2,CH*.95);v.addColorStop(0,'rgba(0,0,0,0)');v.addColorStop(1,'rgba(22,10,2,.6)');ctx.fillStyle=v;ctx.fillRect(0,0,CW,CH);
@@ -454,7 +508,7 @@ function drawCine(dt){
 function iniciar(){
   ov('<h2>O Caso dos Narradores Trocados</h2><p><b>Fase 1 · Óbito do Autor</b> (Memórias Póstumas de Brás Cubas, Machado de Assis).</p><p>Rio de Janeiro, 1869. O Agente Carimbo anda corrigindo os livros do Realismo e riscou as memórias de um defunto. Investigue o velório.</p>'+
    '<p>Seu primeiro nome ou apelido:</p><input type="text" id="iN" maxlength="16" placeholder="Nome"><input type="text" id="iT" maxlength="12" placeholder="Turma (ex.: 3º A)"><p>Detetive:</p><div class="gpick"><button id="gM" class="on">Ele</button><button id="gF">Ela</button></div>'+
-   '<p style="font-size:.85em;color:var(--muted)">Setas ou A/D: andar · Espaço: pular (duplo) · C: lamparina · E: ação · Esc: pausa. No celular, use os botões na tela.</p><button class="btn" id="go">Começar</button><button class="btn sec" id="back">Voltar ao Arquivo</button>');
+   '<p style="font-size:.85em;color:var(--muted)">Setas ou A/D: andar · Espaço: pular (duplo) · Shift: dash · C: lamparina · E: ação · Esc: pausa. No celular, use os botões na tela.</p><button class="btn" id="go">Começar</button><button class="btn sec" id="back">Voltar ao Arquivo</button>');
   $('gM').onclick=()=>{S.gen='m';$('gM').classList.add('on');$('gF').classList.remove('on')};$('gF').onclick=()=>{S.gen='f';$('gF').classList.add('on');$('gM').classList.remove('on')};
   $('back').onclick=()=>{location.href='../index.html'};
   $('go').onclick=()=>{S.nome=($('iN').value||'').trim()||'Detetive';S.turma=($('iT').value||'').trim();audio();setMute(muted);abertura();if(window.__restored)toast('Progresso restaurado: você continua de onde parou.',5000)};
@@ -648,11 +702,12 @@ MECH.draw=()=>{if(!IMG.dBorb){MECH.drawOld();return}
   for(const b of DES.list){const fr=[1,2,3,2][Math.floor(T*9+b.ph*2)&3];dImg('dBorb',fr,180,132,b.x,b.y,104,76,Math.sin(T*3+b.ph)*.12,1,b.vx<0)}};
 window.__d={DES,startDes,endDes,MECH,updDes};
 /* ============ Entrada ============ */
-const KM={ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right',ArrowUp:'jump',KeyW:'jump',Space:'jump',KeyC:'lamp',KeyE:'act',Enter:'act'};
+const KM={ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right',ArrowUp:'jump',KeyW:'jump',Space:'jump',KeyC:'lamp',ShiftLeft:'dash',ShiftRight:'dash',KeyK:'dash',KeyE:'act',Enter:'act'};
 addEventListener('keydown',e=>{
   const k=KM[e.code];
   if(e.code==='Escape'||e.code==='KeyP'){if(state==='play')pause(true);else if(paused)pause(false);return}
   if(e.code==='KeyM'){setMute(!muted);return}
+  if(e.code==='KeyN'){caderno();return}
   if(state==='dialog'&&(e.code==='Space'||e.code==='Enter'||e.code==='KeyE')){e.preventDefault();next();return}
   if(!k)return;if(e.code.startsWith('Arrow')||e.code==='Space')e.preventDefault();
   if(k==='act'){if(!K.act&&state==='play')doAct();K.act=1;return}K[k]=1;
@@ -660,26 +715,26 @@ addEventListener('keydown',e=>{
 addEventListener('keyup',e=>{const k=KM[e.code];if(k)K[k]=0});
 function doAct(){const it=nearInter();if(it)it.act()}
 function pause(on){paused=on;if(on){state='pause';ov('<h2>Pausa</h2><button class="btn" id="rs">Continuar</button><button class="btn sec" id="bk">Voltar ao Arquivo</button>');$('rs').onclick=()=>pause(false);$('bk').onclick=()=>location.href='../index.html'}else{ovClose();state='play'}}
-$('bPause').onclick=()=>{if(state==='play')pause(true)};$('bMute').onclick=()=>setMute(!muted);
+$('bCad').onclick=()=>caderno();$('bPause').onclick=()=>{if(state==='play')pause(true)};$('bMute').onclick=()=>setMute(!muted);
 $('dlg').addEventListener('pointerdown',e=>{e.preventDefault();if(state==='dialog')next()});
 function bindT(id,k,act){const b=$(id);const on=e=>{e.preventDefault();if(act){if(state==='dialog'){next();return}if(state==='play')doAct()}else K[k]=1};const off=e=>{e.preventDefault();if(!act)K[k]=0};
   b.addEventListener('pointerdown',on);b.addEventListener('pointerup',off);b.addEventListener('pointercancel',off);b.addEventListener('pointerleave',off)}
-bindT('tL','left');bindT('tR','right');bindT('tJ','jump');bindT('tC','lamp');bindT('tA',null,true);
+bindT('tL','left');bindT('tR','right');bindT('tJ','jump');bindT('tC','lamp');bindT('tS','dash');bindT('tA',null,true);
 if('ontouchstart' in window||navigator.maxTouchPoints>0)document.body.classList.add('touch');
 /* ============ Laço ============ */
 let last=0;
 function loop(ts){
   requestAnimationFrame(loop);const dt=Math.min(.05,(ts-last)/1000||.016);last=ts;T+=dt;
   if(state==='play'){updatePlayer(dt);updateWorld(dt);
-    camX+=((P.x-CW*.42)-camX)*Math.min(1,dt*5);camX=Math.max(0,Math.min(WW-CW,camX));
+    camX+=((P.x-CW*.42+(P.look||0)*.6)-camX)*Math.min(1,dt*5);camX=Math.max(0,Math.min(WW-CW,camX));
     const it=nearInter();const pr=$('prompt');if(it){pr.textContent=it.txt;pr.classList.remove('hidden')}else pr.classList.add('hidden');
     if(K.lamp&&!K._l){K._l=1;}if(!K.lamp)K._l=0;
   }else if(state==='dialog'){updateWorld(dt);P.vx=0}
   render(dt);
 }
-window.__t={P,F,Z,PAGES,INTER,get state(){return state},set state(v){state=v},get camX(){return camX},set camX(v){camX=v},provas,startCine,fim,hipo,K};
+window.__t={provaLeitura,caderno,veredito,CASO,P,F,Z,PAGES,INTER,get state(){return state},set state(v){state=v},get camX(){return camX},set camX(v){camX=v},provas,startCine,fim,hipo,K};
 (function restaurarProg(){try{const r=JSON.parse(localStorage.getItem(PROGKEY)||'null');if(!r||!(r.cp>0))return;
-  cpX=r.cp;P.x=r.cp;camX=Math.max(0,Math.min(WW-CW,P.x-CW*.42));Object.assign(Z,r.Z||{});Object.assign(F,r.F||{});
+  cpX=r.cp;P.x=r.cp;camX=Math.max(0,Math.min(WW-CW,P.x-CW*.42+(P.look||0)*.6));Object.assign(Z,r.Z||{});Object.assign(F,r.F||{});
   (r.pg||[]).forEach((v,i)=>{if(v&&PAGES[i])PAGES[i].got=true});(r.rb||[]).forEach((v,i)=>{if(v&&RAS_BOARDS[i])RAS_BOARDS[i].done=true});
   if(typeof hipo!=='undefined'&&F.hipo){hipo.on=true;hipo.landed=true;hipo.x=3440;hipo.y=G-64}
   window.__restored=1}catch(e){}})();

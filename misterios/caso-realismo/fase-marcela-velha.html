@@ -62,7 +62,7 @@ input[type=text]{width:100%;padding:9px 12px;border-radius:8px;border:1px solid 
 #touch{position:absolute;inset:0;z-index:4;pointer-events:none}
 #touch button{pointer-events:auto;position:absolute;border-radius:50%;border:2px solid rgba(255,255,255,.35);background:rgba(34,20,9,.6);color:#fff;font-size:1.3rem;width:clamp(48px,11vw,72px);height:clamp(48px,11vw,72px);touch-action:none}
 #tL{left:2%;bottom:6%}#tR{left:calc(2% + clamp(56px,13vw,84px));bottom:6%}
-#tJ{right:2%;bottom:6%}#tA{right:calc(2% + clamp(56px,13vw,84px));bottom:6%;font-size:.8rem}#tC{right:calc(2% + clamp(28px,6.5vw,42px));bottom:calc(6% + clamp(56px,13vw,84px))}
+#tJ{right:2%;bottom:6%}#tA{right:calc(2% + clamp(56px,13vw,84px));bottom:6%;font-size:.8rem}#tS{right:calc(2% + clamp(84px,19vw,126px));bottom:calc(6% + clamp(28px,6.5vw,42px));font-size:.65rem}#tC{right:calc(2% + clamp(28px,6.5vw,42px));bottom:calc(6% + clamp(56px,13vw,84px))}
 body:not(.touch) #touch{display:none}
 #rot{position:fixed;inset:0;z-index:99;background:#0a0603;display:none;align-items:center;justify-content:center;text-align:center;padding:20px;font-size:1.2rem}
 @media (orientation:portrait) and (pointer:coarse){#rot{display:flex}}
@@ -79,7 +79,7 @@ body:not(.touch) #touch{display:none}
 </div>
 <div id="toast"></div><div id="prompt" class="hidden"></div>
 <div id="dlg" class="hidden"><img id="dImg" alt=""><div class="t"><div class="n" id="dNome"></div><div class="x" id="dTxt"></div></div><div class="k">Espaço ▶</div></div>
-<div id="touch"><button id="tL">◀</button><button id="tR">▶</button><button id="tJ">PULO</button><button id="tA">AÇÃO</button><button id="tC">✦</button></div>
+<div id="touch"><button id="tL">◀</button><button id="tR">▶</button><button id="tJ">PULO</button><button id="tA">AÇÃO</button><button id="tS">DASH</button><button id="tC">✦</button></div>
 <div id="ov" class="ov"></div>
 </div></div>
 <script src="/assets/js/config-sheets.js"></script>
@@ -109,6 +109,11 @@ function sheet(k,sh,f,x,y,flip,alpha,sc){
   ctx.save();ctx.globalAlpha=alpha==null?1:alpha;ctx.translate(x,y+3);if(flip)ctx.scale(-1,1);
   ctx.drawImage(im,f*sh.w,0,sh.w,sh.h,-w/2,-h,w,h);ctx.restore();
 }
+/* ===== Game feel: partículas (poeira, dash) ===== */
+const PART=[];
+function puff(x,y,n,k,col){for(let i=0;i<n;i++)PART.push({x:x+(Math.random()-.5)*14,y:y-2,vx:(Math.random()-.5)*90*(k||1),vy:-20-Math.random()*60*(k||1),t:0,l:.35+Math.random()*.3,r:2+Math.random()*3,c:col||'rgba(236,222,190,'})}
+function updPart(dt){for(const p of PART){p.t+=dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=120*dt}for(let i=PART.length-1;i>=0;i--)if(PART[i].t>=PART[i].l)PART.splice(i,1)}
+function drawPart(){ctx.save();ctx.translate(-camX,0);for(const p of PART){const a=1-p.t/p.l;ctx.fillStyle=p.c+(a*.6)+')';ctx.beginPath();ctx.arc(p.x,p.y,p.r*(1+p.t*1.5),0,7);ctx.fill()}ctx.restore()}
 /* ============ Estado ============ */
 let state='start',T=0,camX=0,shake=0,flash=0;
 const S={nome:'',turma:'',gen:'m'};
@@ -212,13 +217,13 @@ const INTER=[
      fonte:FONTE+'38 (domínio público).',
      q:{t:'O que Brás Cubas faz ao comparar a sua vida a "edições" de um livro?',o:['Descreve a sua antiga profissão de editor e a rotina de uma tipografia do Rio de Janeiro.','Conta a história de um livro que escreveu na juventude e que nunca chegou a publicar.','Critica a má qualidade das impressões feitas no Brasil naquele tempo e a falta de papel.','Usa uma metáfora: cada fase da vida é uma “edição” que corrige a anterior, com erros.'],k:3,e:'A "teoria das edições humanas" compara o homem a um livro que vai sendo revisto: a juventude é a "primeira edição", cheia de erros. O narrador ri de si mesmo e mostra que a aparência elegante (a "encadernação") esconde os defeitos. É um traço do humor e da metalinguagem machadiana.'}});
    F.fases=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
- {id:'inveja',x:1750,r:140,txt:'AÇÃO · O rosto de Marcela',done:()=>F.inveja,act:async()=>{
+ {id:'inveja',loja:true,x:700,r:95,txt:'AÇÃO · O rosto de Marcela',done:()=>F.inveja,act:async()=>{
    await say([['bras','Ao fundo, por trás do balcão, uma mulher. Eu não a conheci logo.'],['mv','Quer comprar alguma coisa?']]);
    await leitura({titulo:'Capítulo 38 · A Quarta Edição',cita:'Não podia ter sido feia; ao contrário, via-se que fora bonita, e não pouco bonita; mas a doença e uma velhice precoce destruíram-lhe a flor das graças. As bexigas tinham sido terríveis; os sinais, grandes e muitos, faziam saliências e encarnas, declives e aclives, e davam uma sensação de lixa grossa, enormemente grossa.',
      fonte:FONTE+'38 (domínio público; ortografia atualizada em um verbo).',
      q:{t:'Que efeito produz a descrição minuciosa do rosto marcado de Marcela?',o:['Elogia a beleza romântica de Marcela, que se conservava mesmo depois da doença.','Mostra, sem idealizar, a ação do tempo e da doença: é o contraste do Realismo.','Ensina ao leitor como tratar a varíola e evitar que ela deixe marcas no rosto.','Revela que Marcela enriqueceu e passou a viver com muito luxo e conforto.'],k:1,e:'Machado descreve o rosto com detalhes concretos ("lixa grossa", "saliências e declives") e sem sentimentalismo. O olhar realista não idealiza a mulher que fora tão desejada: mostra como a doença e o tempo desfazem as ilusões do passado.'}});
    F.inveja=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
- {id:'frango',x:2600,r:140,txt:'AÇÃO · Conversar com Marcela',done:()=>F.frango,act:async()=>{
+ {id:'frango',loja:true,x:470,r:95,txt:'AÇÃO · Conversar com Marcela',done:()=>F.frango,act:async()=>{
    await say([['mv','Deu-me uma cadeira, e, com o balcão permeio, falou-me longamente da vida que levara...'],['bras','Sentia-me pungido e aborrecido, ao mesmo tempo. Ansiava por me ver fora daquela casa.']]);
    const ok=await escolher('Como você trata Marcela?','Escuto com respeito e não demonstro repugnância, mesmo que a aparência dela me choque.','Fico por pouco tempo e saio depressa, como Brás.');
    if(ok){F.ajudou=true;addPts(100,CW/2,200)}
@@ -227,7 +232,7 @@ const INTER=[
      fonte:FONTE+'38 (domínio público; trecho abreviado).',
      q:{t:'O que significa "eram olhos da primeira edição"?',o:['Que Brás tinha má visão quando era jovem e só enxergava bem de muito perto.','Que Marcela ainda tinha os mesmos olhos de antes, intactos apesar da doença e dos anos.','Que, na juventude, Brás não percebeu a cobiça de Marcela: era ingênuo e cheio de ilusões.','Que Brás comparava os olhos dela aos de uma personagem de livro que lera na juventude.'],k:2,e:'Retomando a metáfora das edições, Brás admite que o jovem Brás, o da "primeira edição", não via a verdade: a "flama da cobiça" já ardia nos olhos de Marcela. A frase une humor e autocrítica: a juventude é uma edição cheia de erros.'}});
    F.frango=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
- {id:'placida',x:3200,r:140,txt:'AÇÃO · O vidro do relógio',done:()=>F.placida,act:async()=>{
+ {id:'placida',loja:true,x:870,r:80,txt:'AÇÃO · O vidro do relógio',done:()=>F.placida,act:async()=>{
    await say([['mv','Chamou um moleque, deu-lhe o relógio, e mandou-o comprar o vidro. E me afiançou que me daria finas joias por preços baratos.'],['bras','Entrei a desconfiar que não padecera nenhum desastre, e que negociava com o único fim de acudir à paixão do lucro.']]);
    await leitura({titulo:'Capítulo 38 · A Quarta Edição',cita:'Entrei a desconfiar que não padecera nenhum desastre (salvo a moléstia), que tinha o dinheiro a bom recado, e que negociava com o único fim de acudir à paixão do lucro, que era o verme roedor daquela existência; foi isso mesmo que me disseram depois.',
      fonte:FONTE+'38 (domínio público).',
@@ -274,11 +279,12 @@ function drawRasuras(){
   ctx.restore();
 }
 const provas=()=>[F.ped,F.fases,F.inveja,F.frango,F.placida,F.des].filter(Boolean).length;
+const LOJA={on:false,out:1750};
 function nearInter(){
   if(DES.on)return null;
   let best=null,bd=1e9;
   for(const it of INTER){
-    if(it.done&&it.done())continue;if(it.cond&&!it.cond())continue;if(it.need==='lamp'&&!K.lamp)continue;
+    if(!!it.loja!==LOJA.on)continue;if(it.done&&it.done())continue;if(it.cond&&!it.cond())continue;if(it.need==='lamp'&&!K.lamp)continue;
     const d=Math.abs(P.x-it.x);if(d<it.r&&d<bd){best=it;bd=d}}
   return best;
 }
@@ -286,17 +292,25 @@ function nearInter(){
 function onGround(x){for(const p of PITS)if(x>p.x+10&&x<p.x+p.w-10)return false;return true}
 function updatePlayer(dt){
   const ax=K.right-K.left,sp=210;
-  P.vx+=((ax*sp)-P.vx)*Math.min(1,dt*10);if(ax)P.face=ax;
+  if(ax)P.face=ax;updPart(dt);
+  P.look=(P.look||0)+(((P.face||1)*80+P.vx*.2)-(P.look||0))*Math.min(1,dt*2.5);
+  P.dcd=Math.max(0,(P.dcd||0)-dt);
+  if(K.dash&&!P._d){P._d=1;if(P.dcd<=0&&(P.ground||!P.adsh)){P.dsh=.17;P.dcd=.8;P.dd=P.face||1;P.vy=0;if(!P.ground)P.adsh=1;P.inv=Math.max(P.inv||0,.35);tone(520,.1,.04,'sawtooth')}}
+  if(!K.dash)P._d=0;
+  if(P.dsh>0){P.dsh-=dt;P.vx=P.dd*640;puff(P.x-P.dd*10,P.y-40,1,.4,'rgba(255,214,120,')}else{P.vx+=((ax*sp)-P.vx)*Math.min(1,dt*10);if(ax&&P.ground&&Math.abs(P.vx)>150&&Math.random()<dt*12)puff(P.x,P.y,1,.5)}
   const py=P.y;P.x+=P.vx*dt;P.x=Math.max(30,Math.min(WW-30,P.x));
-  P.vy+=1750*dt;P.y+=P.vy*dt;
+  P.vy+=(P.dsh>0?0:1750)*dt;P.y+=P.vy*dt;
   let land=null;
   if(P.vy>=0){
     if(onGround(P.x)&&py<=G+1&&P.y>=G)land=G;
     for(const p of PLAT){if(P.x>p.x-10&&P.x<p.x+p.w+10&&py<=p.y+1&&P.y>=p.y){if(land==null||p.y<land)land=p.y}}
   }
-  if(land!=null){if(!P.ground&&P.vy>300){P.land=.12;thud2()}P.y=land;P.vy=0;P.ground=true;P.jumps=2}else P.ground=false;
-  if(K.jump&&!P._j){P._j=1;if(P.ground||P.jumps>0){P.vy=-640;if(!P.ground)P.jumps=Math.max(0,P.jumps-1);else P.jumps=1;P.ground=false;tone(300,.08,.03,'triangle')}}
-  if(!K.jump)P._j=0;
+  if(land!=null){if(!P.ground&&P.vy>300){P.land=.12;thud2();puff(P.x,land,7,1.2)}P.y=land;P.vy=0;P.ground=true;P.jumps=2;P.adsh=0}else P.ground=false;
+  P.coy=P.ground?.11:Math.max(0,(P.coy||0)-dt);
+  if(K.jump&&!P._j){P._j=1;P.jbuf=.13}
+  P.jbuf=Math.max(0,(P.jbuf||0)-dt);
+  if(P.jbuf>0&&(P.coy>0||P.jumps>0)){const gr=P.coy>0;P.jbuf=0;P.vy=-640;if(gr)P.jumps=1;else P.jumps=Math.max(0,P.jumps-1);P.coy=0;P.ground=false;P._up=1;puff(P.x,P.y,gr?5:3,.8);tone(300,.08,.03,'triangle')}
+  if(!K.jump){P._j=0;if(P._up&&P.vy<-240)P.vy*=.6;P._up=0}
   P.an+=Math.abs(P.vx)*dt/38;P.inv=Math.max(0,P.inv-dt);P.land=Math.max(0,P.land-dt);P.hurt=Math.max(0,(P.hurt||0)-dt);
   if(P.y>G+170)fall();
   for(const c of [1300,2250])if(P.x>c&&cpX<c)cpX=c;
@@ -321,7 +335,7 @@ function autoCP(){
     cpX=P.x-60;saveCP();if(!window.__cpT){window.__cpT=1;toast('Ponto salvo: se perder, você volta daqui, não do início.',3500)}}
   else if(T-lastSave>1){lastSave=T;saveCP()}
 }
-function updateWorld(dt){autoCP();updDes(dt);
+function updateWorld(dt){if(LOJA.on)return;autoCP();updDes(dt);
   stampT-=dt;
   crowdT-=dt;if(crowdT<=0&&P.x>600&&P.x<3350){const n=2+Math.floor(Math.random()*2);for(let k=0;k<n;k++)crowd.push({x:camX+CW+60+k*58,v:-(135+Math.random()*30),t:Math.random()*5,h:96+Math.random()*26,u:Math.random()<.4,d:0});crowdT=5+Math.random()*2.5}
   for(const c of crowd){c.x+=c.v*dt;c.t+=dt;if(!c.d&&Math.abs(P.x-c.x)<26&&P.y>G-70&&P.inv<=0&&state==='play'){c.d=1;hit();P.vx=-120}}
@@ -431,11 +445,74 @@ function render(dt){
   ctx.setTransform(DPR,0,0,DPR,0,0);
   const sx=shake>0?(Math.random()-.5)*shake*16:0,sy=shake>0?(Math.random()-.5)*shake*10:0;ctx.save();ctx.translate(sx,sy);
   if(state==='cine'){drawCine(dt);ctx.restore();return}
-  drawBG();drawFigures();drawBras();drawPlat();drawDes();drawClue();drawPages();drawStamps();drawPlayer();drawBushes();drawLight();drawRain(dt);drawFloaters();
+  if(LOJA.on){drawLoja();ctx.restore();return}
+  drawBG();drawFigures();drawBras();drawPlat();drawDes();drawClue();drawPages();drawStamps();drawPlayer();drawPart();drawBushes();drawLight();drawRain(dt);drawFloaters();
   ctx.save();ctx.globalCompositeOperation='color';ctx.fillStyle='rgba(172,118,56,.55)';ctx.fillRect(0,0,CW,CH);ctx.restore();
   /* vinheta */
   const v=ctx.createRadialGradient(CW/2,CH/2,CH*.4,CW/2,CH/2,CH*.95);v.addColorStop(0,'rgba(0,0,0,0)');v.addColorStop(1,'rgba(22,10,2,.6)');ctx.fillStyle=v;ctx.fillRect(0,0,CW,CH);
   ctx.restore();
+}
+/* ============ Joalheria (interior da Rua dos Ourives) ============ */
+async function enterLoja(){
+  await say([['narr','Entrei numa loja para consertar o vidro do relógio, leitor, e encontrei o meu passado atrás do balcão.']]);
+  LOJA.on=true;P.x=130;P.y=G;P.vx=0;P.vy=0;P.face=1;camX=0;toast('Dentro da joalheria: converse com Marcela, observe o balcão e a vitrine.',4200);
+}
+async function sairLoja(){
+  const falta=['inveja','frango','placida'].filter(k=>!F[k]).length;
+  await say([['bras',falta?'Ainda tenho o que ouvir aqui dentro, leitor.':'Saí dali aliviado, e com a certeza de que a beleza de outro tempo não paga a conta.']]);
+  LOJA.on=false;P.x=LOJA.out;P.y=G;P.vx=0;P.vy=0;camX=Math.max(0,Math.min(WW-CW,P.x-CW*.42));hud();
+}
+function updLoja(dt){
+  const ax=K.right-K.left;P.vx+=((ax*170)-P.vx)*Math.min(1,dt*10);if(ax)P.face=ax;
+  P.x=Math.max(60,Math.min(CW-50,P.x+P.vx*dt));P.y=G;P.vy=0;P.ground=true;camX=0;
+  P.an+=Math.abs(P.vx)*dt/38;P.inv=Math.max(0,P.inv-dt);P.land=0;P.hurt=0;
+  if(ax&&Math.abs(P.vx)>120&&Math.random()<dt*10)puff(P.x,P.y,1,.4);updPart(dt);
+  floaters.forEach(f=>f.t+=dt);floaters=floaters.filter(f=>f.t<1.2);shake=Math.max(0,shake-dt);
+}
+INTER.push(
+ {id:'lojain',x:1750,r:140,txt:'AÇÃO · Entrar na joalheria',done:()=>false,act:()=>enterLoja()},
+ {id:'lojaout',loja:true,x:70,r:80,txt:'AÇÃO · Sair para a rua',done:()=>false,act:()=>sairLoja()},
+ {id:'vitrine',loja:true,x:290,r:80,txt:'AÇÃO · Olhar a vitrine',done:()=>F.vit,act:async()=>{
+   await say([['det','Anéis, broches e um relógio sem vidro. As etiquetas de preço estão riscadas e escritas de novo, mais altas.'],['bras','Joias finas por preços baratos, dizia ela. A vitrine contava outra história, leitor.']]);
+   F.vit=true;addPts(30,CW/2,200);toast('Pista: os preços foram trocados. Marcela negocia, e não por acaso.',3600)}}
+);
+function drawLoja(){
+  const t=T;
+  let g=ctx.createLinearGradient(0,0,0,CH);g.addColorStop(0,'#2e1d0f');g.addColorStop(1,'#5e4024');ctx.fillStyle=g;ctx.fillRect(0,0,CW,CH);
+  ctx.fillStyle='rgba(0,0,0,.14)';for(let x=0;x<CW;x+=52)ctx.fillRect(x,0,26,G-72);
+  ctx.fillStyle='#24150a';ctx.fillRect(0,G-72,CW,72);ctx.fillStyle='#8a6034';ctx.fillRect(0,G-76,CW,5);
+  ctx.fillStyle='#1f1209';ctx.fillRect(0,G,CW,CH-G);ctx.strokeStyle='rgba(255,220,150,.08)';ctx.lineWidth=2;for(let x=-40;x<CW+40;x+=70){ctx.beginPath();ctx.moveTo(x,G);ctx.lineTo(x-30,CH);ctx.stroke()}
+  /* janela e feixe de luz */
+  ctx.fillStyle='#d9b87a';ctx.fillRect(360,86,150,170);ctx.fillStyle='#1b1d28';ctx.fillRect(368,94,134,154);ctx.fillStyle='#d9b87a';ctx.fillRect(432,94,6,154);ctx.fillRect(368,166,134,6);
+  ctx.save();ctx.globalCompositeOperation='lighter';const lg=ctx.createLinearGradient(430,100,540,G);lg.addColorStop(0,'rgba(255,214,140,.32)');lg.addColorStop(1,'rgba(255,214,140,0)');ctx.fillStyle=lg;ctx.beginPath();ctx.moveTo(380,110);ctx.lineTo(490,110);ctx.lineTo(640,G);ctx.lineTo(420,G);ctx.closePath();ctx.fill();ctx.restore();
+  /* prateleiras com relógios e caixas */
+  for(const [sx,sy,w] of [[150,150,190],[150,235,190],[640,120,300],[640,205,300]]){ctx.fillStyle='#4a2e16';ctx.fillRect(sx,sy,w,8);ctx.fillStyle='#2a190c';ctx.fillRect(sx,sy+8,w,4)}
+  for(let i=0;i<5;i++){ctx.fillStyle=['#7a2a1c','#2c4a3a','#4a3a6a','#8a6a2a','#5a3a1c'][i];ctx.fillRect(160+i*34,128,26,22);ctx.fillRect(160+i*34,213,26,22)}
+  for(let i=0;i<7;i++){const cx=668+i*40,cy=96;ctx.fillStyle='#e8d6a8';ctx.beginPath();ctx.arc(cx,cy,13,0,7);ctx.fill();ctx.strokeStyle='#3a2410';ctx.lineWidth=2;ctx.stroke();const a=t*(1+i*.07);ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+Math.cos(a)*9,cy+Math.sin(a)*9);ctx.moveTo(cx,cy);ctx.lineTo(cx+Math.cos(a/12)*6,cy+Math.sin(a/12)*6);ctx.stroke()}
+  for(let i=0;i<6;i++){ctx.fillStyle='#ffd98a';ctx.beginPath();ctx.arc(670+i*46,191,4+(i%2),0,7);ctx.fill()}
+  /* porta à esquerda */
+  ctx.fillStyle='#3a2410';ctx.fillRect(18,G-210,104,210);ctx.fillStyle='#1b1d28';ctx.fillRect(28,G-200,84,200);ctx.fillStyle='rgba(255,200,120,.5)';ctx.fillRect(28,G-200,84,200);ctx.fillStyle='#e8d6a8';ctx.beginPath();ctx.arc(96,G-100,4,0,7);ctx.fill();
+  /* vitrine de joias */
+  const vx=225;ctx.fillStyle='#4a2e16';ctx.fillRect(vx,G-150,130,150);ctx.fillStyle='rgba(170,210,230,.28)';ctx.fillRect(vx+8,G-142,114,100);ctx.strokeStyle='#d9b87a';ctx.lineWidth=2;ctx.strokeRect(vx+8,G-142,114,100);
+  for(let i=0;i<5;i++){const jx=vx+22+i*21,jy=G-96+(i%2)*12;ctx.fillStyle=['#ffd98a','#d8e8ff','#ff9a8a','#ffd98a','#b8f0c8'][i];ctx.beginPath();ctx.arc(jx,jy,5,0,7);ctx.fill();const sp=Math.max(0,Math.sin(t*3+i*1.7));if(sp>.8){ctx.strokeStyle='rgba(255,250,220,'+(sp-.6)+')';ctx.beginPath();ctx.moveTo(jx-9,jy);ctx.lineTo(jx+9,jy);ctx.moveTo(jx,jy-9);ctx.lineTo(jx,jy+9);ctx.stroke()}}
+  /* mesa e cadeira */
+  ctx.fillStyle='#5a3a20';ctx.fillRect(420,G-46,100,8);ctx.fillRect(430,G-38,8,38);ctx.fillRect(502,G-38,8,38);ctx.fillStyle='#6a4626';ctx.fillRect(540,G-70,12,70);ctx.fillRect(540,G-70,50,10);ctx.fillRect(578,G-70,12,70);
+  /* Marcela atrás do balcão */
+  sheet('mv',SH.mv,5,790,G-60,false,1,1.35);
+  /* balcão */
+  ctx.fillStyle='#5a3a20';ctx.fillRect(630,G-86,300,78);ctx.fillStyle='#8a6034';ctx.fillRect(622,G-96,316,12);ctx.fillStyle='rgba(180,220,255,.25)';ctx.fillRect(640,G-90,280,34);
+  for(let i=0;i<6;i++){const jx=660+i*46;ctx.fillStyle=['#ffd98a','#d8e8ff','#ff9a8a'][i%3];ctx.beginPath();ctx.arc(jx,G-72,5,0,7);ctx.fill()}
+  ctx.fillStyle='#e8d6a8';ctx.beginPath();ctx.arc(870,G-112,14,0,7);ctx.fill();ctx.strokeStyle='#3a2410';ctx.lineWidth=2.4;ctx.stroke();ctx.beginPath();ctx.moveTo(870,G-112);ctx.lineTo(870,G-124);ctx.stroke();
+  drawPlayer();drawPart();
+  /* lampião oscilante */
+  const lx=480+Math.sin(t*.9)*14;ctx.strokeStyle='#2a1a0c';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(480,0);ctx.lineTo(lx,70);ctx.stroke();ctx.fillStyle='#caa468';ctx.fillRect(lx-12,70,24,26);
+  ctx.save();ctx.globalCompositeOperation='lighter';const gl=ctx.createRadialGradient(lx,84,6,lx,84,260);gl.addColorStop(0,'rgba(255,214,130,.55)');gl.addColorStop(1,'rgba(255,170,70,0)');ctx.fillStyle=gl;ctx.fillRect(0,0,CW,CH);ctx.restore();
+  for(let i=0;i<26;i++){const px=(i*137+t*10*(1+i%3))%CW,py=(i*71+Math.sin(t+i)*20)%G;ctx.fillStyle='rgba(255,236,190,'+(.1+.1*Math.sin(t*2+i))+')';ctx.fillRect(px,py,2,2)}
+  /* marcadores de interação */
+  for(const it of INTER){if(!it.loja||(it.done&&it.done())||it.id==='lojaout')continue;const a=.5+.4*Math.sin(t*4);ctx.strokeStyle='rgba(255,226,150,'+a+')';ctx.lineWidth=2;ctx.beginPath();ctx.arc(it.x,G-150,9+Math.sin(t*4)*2,0,7);ctx.stroke()}
+  drawFloaters();
+  ctx.save();ctx.globalCompositeOperation='color';ctx.fillStyle='rgba(172,118,56,.55)';ctx.fillRect(0,0,CW,CH);ctx.restore();
+  const v=ctx.createRadialGradient(CW/2,CH/2,CH*.4,CW/2,CH/2,CH*.95);v.addColorStop(0,'rgba(0,0,0,0)');v.addColorStop(1,'rgba(22,10,2,.6)');ctx.fillStyle=v;ctx.fillRect(0,0,CW,CH);
 }
 /* ============ Cena do cais ============ */
 function startCine(){
@@ -459,7 +536,7 @@ function drawCine(dt){
 function iniciar(){
   ov('<h2>O Caso dos Narradores Trocados</h2><p><b>Fase 1 · Zona 8: A Quarta Edição</b> (Memórias Póstumas de Brás Cubas, Machado de Assis).</p><p>Rua dos Ourives, Rio de Janeiro. Brás deixa cair o vidro do relógio e entra numa joalheria empoeirada, onde reencontra Marcela, agora envelhecida. O Agente Carimbo rasgou o capítulo 38. Recolha as folhas, restaure a página e entenda por que Machado fala em "edições" da vida.</p>'+
    '<p>Seu primeiro nome ou apelido:</p><input type="text" id="iN" maxlength="16" placeholder="Nome"><input type="text" id="iT" maxlength="12" placeholder="Turma (ex.: 3º A)"><p>Detetive:</p><div class="gpick"><button id="gM" class="on">Ele</button><button id="gF">Ela</button></div>'+
-   '<p style="font-size:.85em;color:var(--muted)">Setas ou A/D: andar · Espaço: pular (duplo) · C: lamparina · E: ação · Esc: pausa. No celular, use os botões na tela.</p><button class="btn" id="go">Começar</button><button class="btn sec" id="back">Voltar ao Arquivo</button>');
+   '<p style="font-size:.85em;color:var(--muted)">Setas ou A/D: andar · Espaço: pular (duplo) · Shift: dash · C: lamparina · E: ação · Esc: pausa. No celular, use os botões na tela.</p><button class="btn" id="go">Começar</button><button class="btn sec" id="back">Voltar ao Arquivo</button>');
   $('gM').onclick=()=>{S.gen='m';$('gM').classList.add('on');$('gF').classList.remove('on')};$('gF').onclick=()=>{S.gen='f';$('gF').classList.add('on');$('gM').classList.remove('on')};
   $('back').onclick=()=>{location.href='../index.html'};
   $('go').onclick=()=>{S.nome=($('iN').value||'').trim()||'Detetive';S.turma=($('iT').value||'').trim();audio();setMute(muted);comecar();if(window.__restored)toast('Progresso restaurado: você continua de onde parou.',5000)};
@@ -635,7 +712,7 @@ MECH.draw=()=>{if(!IMG.dPre){MECH.drawOld();return}
   ctx.fillStyle='#e6d2a6';ctx.font='bold 16px "Special Elite",monospace';ctx.textAlign='center';ctx.fillText('SAÍDA DA OFICINA',DES.x1-70,G-136);};
 window.__d={DES,startDes,endDes,MECH,updDes};
 /* ============ Entrada ============ */
-const KM={ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right',ArrowUp:'jump',KeyW:'jump',Space:'jump',KeyC:'lamp',KeyE:'act',Enter:'act'};
+const KM={ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right',ArrowUp:'jump',KeyW:'jump',Space:'jump',KeyC:'lamp',ShiftLeft:'dash',ShiftRight:'dash',KeyK:'dash',KeyE:'act',Enter:'act'};
 addEventListener('keydown',e=>{
   const k=KM[e.code];
   if(e.code==='Escape'||e.code==='KeyP'){if(state==='play')pause(true);else if(paused)pause(false);return}
@@ -651,22 +728,23 @@ $('bPause').onclick=()=>{if(state==='play')pause(true)};$('bMute').onclick=()=>s
 $('dlg').addEventListener('pointerdown',e=>{e.preventDefault();if(state==='dialog')next()});
 function bindT(id,k,act){const b=$(id);const on=e=>{e.preventDefault();if(act){if(state==='dialog'){next();return}if(state==='play')doAct()}else K[k]=1};const off=e=>{e.preventDefault();if(!act)K[k]=0};
   b.addEventListener('pointerdown',on);b.addEventListener('pointerup',off);b.addEventListener('pointercancel',off);b.addEventListener('pointerleave',off)}
-bindT('tL','left');bindT('tR','right');bindT('tJ','jump');bindT('tC','lamp');bindT('tA',null,true);
+bindT('tL','left');bindT('tR','right');bindT('tJ','jump');bindT('tC','lamp');bindT('tS','dash');bindT('tA',null,true);
 if('ontouchstart' in window||navigator.maxTouchPoints>0)document.body.classList.add('touch');
 /* ============ Laço ============ */
 let last=0;
 function loop(ts){
   requestAnimationFrame(loop);const dt=Math.min(.05,(ts-last)/1000||.016);last=ts;T+=dt;
-  if(state==='play'){updatePlayer(dt);updateWorld(dt);
-    camX+=((P.x-CW*.42)-camX)*Math.min(1,dt*5);camX=Math.max(0,Math.min(WW-CW,camX));
+  if(state==='play'&&LOJA.on){updLoja(dt);const it=nearInter();const pr=$('prompt');if(it){pr.textContent=it.txt;pr.classList.remove('hidden')}else pr.classList.add('hidden')}
+  else if(state==='play'){updatePlayer(dt);updateWorld(dt);
+    camX+=((P.x-CW*.42+(P.look||0)*.6)-camX)*Math.min(1,dt*5);camX=Math.max(0,Math.min(WW-CW,camX));
     const it=nearInter();const pr=$('prompt');if(it){pr.textContent=it.txt;pr.classList.remove('hidden')}else pr.classList.add('hidden');
     if(K.lamp&&!K._l){K._l=1;}if(!K.lamp)K._l=0;
   }else if(state==='dialog'){updateWorld(dt);P.vx=0}
   render(dt);
 }
-window.__t={LOBO,P,F,Z,PAGES,INTER,get state(){return state},set state(v){state=v},get camX(){return camX},set camX(v){camX=v},provas,startCine,fim,K};
+window.__t={LOJA,enterLoja:()=>enterLoja(),LOBO,P,F,Z,PAGES,INTER,get state(){return state},set state(v){state=v},get camX(){return camX},set camX(v){camX=v},provas,startCine,fim,K};
 (function restaurarProg(){try{const r=JSON.parse(localStorage.getItem(PROGKEY)||'null');if(!r||!(r.cp>0))return;
-  cpX=r.cp;P.x=r.cp;camX=Math.max(0,Math.min(WW-CW,P.x-CW*.42));Object.assign(Z,r.Z||{});Object.assign(F,r.F||{});
+  cpX=r.cp;P.x=r.cp;camX=Math.max(0,Math.min(WW-CW,P.x-CW*.42+(P.look||0)*.6));Object.assign(Z,r.Z||{});Object.assign(F,r.F||{});
   (r.pg||[]).forEach((v,i)=>{if(v&&PAGES[i])PAGES[i].got=true});(r.rb||[]).forEach((v,i)=>{if(v&&RAS_BOARDS[i])RAS_BOARDS[i].done=true});
   if(typeof hipo!=='undefined'&&F.hipo){hipo.on=true;hipo.landed=true;hipo.x=3440;hipo.y=G-64}
   window.__restored=1}catch(e){}})();
