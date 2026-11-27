@@ -38,6 +38,7 @@ button{font-family:inherit;cursor:pointer;color:inherit}
 .panel{background:linear-gradient(180deg,#2a1b0e,#1b1109);border:2px solid #9a7545;border-radius:16px;padding:clamp(12px,2.4vw,26px);max-width:min(860px,100%);width:100%;box-shadow:0 12px 50px #000}
 .panel h2{font-family:'Playfair Display',serif;color:var(--amber2);font-size:clamp(1.1rem,2.8vw,1.8rem);margin-bottom:8px}
 .panel p{line-height:1.5;margin:6px 0;font-size:clamp(.85rem,1.7vw,1.1rem)}
+.cita mark{background:#e8c25a;color:#1b1007;padding:0 3px;border-radius:3px;font-style:normal}
 .cita{border-left:3px solid var(--amber);padding:8px 12px;margin:10px 0;font-style:italic;background:rgba(255,255,255,.04);font-size:clamp(.85rem,1.7vw,1.1rem);line-height:1.55}
 .src{font-size:.78rem;color:var(--muted);margin-top:-4px}
 .btn{background:linear-gradient(180deg,#e3a84a,#b0701f);color:#1a0f08;font-weight:700;border:none;border-radius:10px;padding:9px 18px;margin:6px 6px 0 0;font-size:clamp(.85rem,1.6vw,1.05rem)}
@@ -75,7 +76,7 @@ body:not(.touch) #touch{display:none}
 <div id="hud" class="hidden">
   <span class="hs" id="hLamp"></span><span class="hs">Bilhetes <b id="hPag">0/11</b></span><span class="hs">Pontos <b id="hPts">0</b></span>
   <span class="hs" id="hTask"></span><span class="sp"></span>
-  <button id="bMute" title="Som (M)">♪</button><button id="bPause" title="Pausa (Esc)">II</button>
+  <button id="bMute" title="Som (M)">♪</button><button id="bCad" title="Caderno de provas (N)" style="width:auto;padding:0 10px">Caderno</button><button id="bPause" title="Pausa (Esc)">II</button>
 </div>
 <div id="toast"></div><div id="prompt" class="hidden"></div>
 <div id="dlg" class="hidden"><img id="dImg" alt=""><div class="t"><div class="n" id="dNome"></div><div class="x" id="dTxt"></div></div><div class="k">Espaço ▶</div></div>
@@ -118,7 +119,7 @@ function drawPart(){ctx.save();ctx.translate(-camX,0);for(const p of PART){const
 let state='start',T=0,camX=0,shake=0,flash=0;
 const S={nome:'',turma:'',gen:'m'};
 const Z={pts:0,pages:0,lamps:3,leit:0,tot:5,enviou:false};
-const F={des:false,ped:false,retrato:false,aguia:false,nariz:false,pontos:false,porta:false};
+const F={cl:{},vered:false,des:false,ped:false,retrato:false,aguia:false,nariz:false,pontos:false,porta:false};
 const LOBO={x:2450,dir:1,pause:0,on:true,seen:0};const BUSH=[{x:2480},{x:2800},{x:3080}];let hidden=false;
 const K={left:0,right:0,jump:0,lamp:0,act:0,atk:0};
 const P={x:110,y:G,vx:0,vy:0,face:1,ground:true,jumps:2,inv:0,an:0,land:0,hurt:0};
@@ -181,7 +182,7 @@ function leitura(cfg){
       let tries=0;$('lq').querySelectorAll('.opt').forEach(bt=>bt.onclick=()=>{
         const i=+bt.dataset.i;if(i===q.k){bt.classList.add('ok');$('lq').querySelectorAll('.opt').forEach(x=>x.disabled=true);
           $('lq').insertAdjacentHTML('beforeend','<p>'+q.e+'</p><button class="btn" id="lok">Continuar</button>');
-          const first=tries===0;if(first){Z.leit++;addPts(100,P.x-camX,P.y-120)}else addPts(40,P.x-camX,P.y-120);
+          const first=tries===0;if(cfg.re){addPts(30,P.x-camX,P.y-120)}else if(first){Z.leit++;addPts(100,P.x-camX,P.y-120)}else addPts(40,P.x-camX,P.y-120);
           $('lok').onclick=()=>{ovClose();state=prev;res(first)}}
         else{tries++;bt.classList.add('bad');bt.disabled=true;blip(-3);toast('Releia o trecho e tente de novo.',1800)}});
     }
@@ -203,39 +204,78 @@ function restaurarFrase(){
 }
 /* ============ Interações ============ */
 const FONTE='Machado de Assis, Memórias Póstumas de Brás Cubas, cap. ';
+/* ============ Caso fechado: leituras como provas ============ */
+const CASO_CFG={"prova": {"retrato": "Virgília era \"bonita, fresca\", sem sarda ou espinha, mas o narrador avisa que isto \"não é romance\", que sobredoura a realidade.", "aguia": "Virgília pergunta quando Lobo Neves será ministro e o faz prometer \"marquesa\": elege a águia e deixa o pavão com o espanto.", "nariz": "O faquir olha a ponta do nariz para ver a luz celeste: cada homem contempla o próprio nariz, e é isso que equilibra a sociedade.", "beijo": "O beijo ao portão da chácara veio com \"uma hipocrisia paciente e sistemática\", único freio de uma paixão sem freio.", "dialogo": "No \"velho diálogo de Adão e Eva\", Brás e Virgília falam só em reticências: o que não se diz também conta."}, "nome": {"retrato": "O retrato de Virgília", "aguia": "A águia e o pavão", "nariz": "A ponta do nariz", "beijo": "O beijo no portão", "dialogo": "O diálogo mudo"}, "pergunta": "o que governa o caso de Brás e Virgília?", "conclusao": "o caso de Brás e Virgília é governado por ambição e por hipocrisia. Ache uma prova de cada uma.", "certas": ["aguia", "beijo"], "fecho": "A <b>águia</b> mostra a ambição: Virgília escolhe quem será marquês. O <b>beijo</b> traz a \"hipocrisia paciente e sistemática\". O retrato, o nariz e o diálogo mudo falam de vaidade e de silêncio, mas não dessas duas forças.", "nota": "Brás, Virgília e Lobo Neves vêm do romance (Machado de Assis, domínio público); o enigma é original do jogo.", "dicas": ["Uma prova mostra o desejo de subir na vida; a outra, o fingimento que sustenta o caso.", "A ambição está na escolha entre a águia e o pavão; o fingimento, no beijo ao portão."]};
+const CASO=CASO_CFG.prova,CASO_NOME=CASO_CFG.nome;
+async function provaLeitura(id,cfg,hl){
+  F.cl=F.cl||{};
+  const first=await leitura(cfg);
+  if(first){F.cl[id]=2;toast('Prova guardada no caderno: '+CASO_NOME[id],2600);return true}
+  F.cl[id]=1;
+  await say([['narr','A prova ficou borrada no caderno, leitor. Releia o trecho destacado e responda de novo.']]);
+  const ok=await leitura(Object.assign({},cfg,{re:true,titulo:'Releitura · '+CASO_NOME[id],cita:hl&&cfg.cita.includes(hl)?cfg.cita.replace(hl,'<mark>'+hl+'</mark>'):cfg.cita}));
+  if(!ok){Z.lamps=Math.max(1,Z.lamps-1);hud();toast('Errou de novo: perdeu 1 lamparina, mas a prova foi recuperada.',3600)}
+  else toast('Prova recuperada: '+CASO_NOME[id],2600);
+  F.cl[id]=2;return false;
+}
+function caderno(){
+  if(state!=='play')return;const prev=state;state='modal';
+  let h='<h2 style="margin:.2em 0">Caderno de provas</h2><p style="margin:.3em 0;font-size:.9em">Cada leitura certa guarda uma prova do caso: <b>'+CASO_CFG.pergunta+'</b></p>';
+  for(const k of Object.keys(CASO)){const st=F.cl&&F.cl[k];h+='<div class="card" style="padding:8px 12px;margin:6px 0;font-size:.88em;line-height:1.35"><b>'+CASO_NOME[k]+'</b><br>'+(st===2?CASO[k]:st===1?'▒▒▒▒▒▒ (prova borrada: releia o trecho)':'<i>ainda não encontrada</i>')+'</div>'}
+  ov(h+'<button class="btn" id="cdx">Fechar</button>');$('cdx').onclick=()=>{ovClose();state=prev};
+}
+function veredito(){return new Promise(res=>{
+  const prev=state;state='modal';const sel=new Set(),keys=Object.keys(CASO);let erros=0;
+  const draw=msg=>{
+    ov('<h2 style="margin:.2em 0">Fechar o caso</h2><p style="margin:.3em 0;font-size:.92em"><b>Conclusão a provar:</b> '+CASO_CFG.conclusao+' Escolha as <b>duas</b> provas do caderno que sustentam isso.</p>'+keys.map(k=>'<button class="opt'+(sel.has(k)?' ok':'')+'" data-k="'+k+'" style="padding:7px 10px;margin:4px 0;font-size:.88em"><b>'+CASO_NOME[k]+'.</b> '+(F.cl&&F.cl[k]===2?CASO[k]:'(prova ainda não encontrada)')+'</button>').join('')+(msg?'<p style="font-size:.9em">'+msg+'</p>':'')+'<button class="btn" id="vd">Fechar o caso</button>');
+    $('ov').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const k=b.dataset.k;if(sel.has(k))sel.delete(k);else if(sel.size<2)sel.add(k);draw(msg)});
+    $('vd').onclick=()=>{
+      if(sel.size!==2){draw('Escolha exatamente duas provas.');return}
+      const certo=CASO_CFG.certas.every(k=>sel.has(k));
+      if(certo||erros>=2){
+        if(!certo){sel.clear();CASO_CFG.certas.forEach(k=>sel.add(k))}
+        const pts=certo?Math.max(100,400-erros*100):100;
+        ov('<h2>Caso fechado</h2><p>'+(certo?'Provas certas. ':'Era esta a combinação. ')+CASO_CFG.fecho+'</p><p style="font-size:.85em;opacity:.8">'+CASO_CFG.nota+'</p><button class="btn" id="vok">Continuar (+'+pts+')</button>');
+        $('vok').onclick=()=>{ovClose();state=prev;F.vered=true;addPts(pts,CW/2,200);toast('Caso fechado! +'+pts+' pontos',3200);res()};return}
+      erros++;sel.clear();
+      draw('Ainda não. '+CASO_CFG.dicas[Math.min(erros-1,1)]);
+    };
+  };
+  draw('');
+})}
 const INTER=[
  {id:'ped',x:1050,r:90,need:'lamp',txt:'AÇÃO · Pegar a página rasgada',done:()=>F.ped,act:async()=>{
    await say([['det','Outra página rasgada. Fala de uma águia e de um pavão.']]);await restaurarFrase();F.ped=true;hud();
    toast('Capítulo 43 restaurado. Provas '+provas()+'/'+(typeof NP!=='undefined'?NP:5),3500)}},
  {id:'retrato',x:900,r:140,txt:'AÇÃO · Conhecer Virgília',done:()=>F.retrato,act:async()=>{
    await say([['bras','Virgília. A mesma senhora que, em 1869, devia assistir aos meus últimos dias. Mas então ela tinha uns quinze ou dezesseis anos.'],['vir','Pois não, doutor. Meu pai disse que o senhor viria jantar.']]);
-   await leitura({titulo:'Capítulo 27 · Virgília?',cita:'Não digo que já lhe coubesse a primazia da beleza, entre as mocinhas do tempo, porque isto não é romance, em que o autor sobredoura a realidade e fecha os olhos às sardas e espinhas; mas também não digo que lhe maculasse o rosto nenhuma sarda ou espinha, não. Era bonita, fresca, saída das mãos da natureza.',
+   await provaLeitura('retrato',{titulo:'Capítulo 27 · Virgília?',cita:'Não digo que já lhe coubesse a primazia da beleza, entre as mocinhas do tempo, porque isto não é romance, em que o autor sobredoura a realidade e fecha os olhos às sardas e espinhas; mas também não digo que lhe maculasse o rosto nenhuma sarda ou espinha, não. Era bonita, fresca, saída das mãos da natureza.',
      fonte:FONTE+'27 (domínio público).',
-     q:{t:'O que significa dizer que "isto não é romance, em que o autor sobredoura a realidade e fecha os olhos às sardas e espinhas"?',o:['Que o narrador pretende escrever um romance romântico, idealizando as personagens.','Que o narrador não vai “sobredourar” a realidade, ao contrário do romance idealista.','Que Virgília tinha muitas sardas e espinhas, que o narrador descreve em detalhes.','Que o livro é um tratado científico sobre doenças da pele, escrito por um médico.'],k:1,e:'Machado faz uma declaração de método: o romance romântico idealiza e "sobredoura" a realidade, mas as Memórias Póstumas pretendem mostrar a vida com as suas "sardas e espinhas". É o Realismo falando de si mesmo, com humor.'}});
+     q:{t:'O que significa dizer que "isto não é romance, em que o autor sobredoura a realidade e fecha os olhos às sardas e espinhas"?',o:['Que o narrador pretende escrever um romance romântico, idealizando as personagens.','Que o narrador não vai “sobredourar” a realidade, ao contrário do romance idealista.','Que Virgília tinha muitas sardas e espinhas, que o narrador descreve em detalhes.','Que o livro é um tratado científico sobre doenças da pele, escrito por um médico.'],k:1,e:'Machado faz uma declaração de método: o romance romântico idealiza e "sobredoura" a realidade, mas as Memórias Póstumas pretendem mostrar a vida com as suas "sardas e espinhas". É o Realismo falando de si mesmo, com humor.'}},"não é romance")
    F.retrato=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'aguia',x:1750,r:140,txt:'AÇÃO · Lobo Neves aparece',done:()=>F.aguia,act:async()=>{
    await say([['bras','E então apareceu Lobo Neves, um homem que não era mais esbelto que eu, nem mais elegante, nem mais lido. Mas me arrebatou Virgília e a candidatura.'],['vir','Promete que algum dia me fará baronesa?'],['lobo','Marquesa, porque eu serei marquês.']]);
-   await leitura({titulo:'Capítulo 43 · Marquesa, Porque Eu Serei Marquês',cita:'Virgília perguntou ao Lobo Neves, a sorrir, quando seria ele ministro. &mdash; Pela minha vontade, já; pela dos outros, daqui a um ano. Virgília replicou: &mdash; Promete que algum dia me fará baronesa? &mdash; Marquesa, porque eu serei marquês. Desde então fiquei perdido. Virgília comparou a águia e o pavão, e elegeu a águia, deixando o pavão com o seu espanto.',
+   await provaLeitura('aguia',{titulo:'Capítulo 43 · Marquesa, Porque Eu Serei Marquês',cita:'Virgília perguntou ao Lobo Neves, a sorrir, quando seria ele ministro. &mdash; Pela minha vontade, já; pela dos outros, daqui a um ano. Virgília replicou: &mdash; Promete que algum dia me fará baronesa? &mdash; Marquesa, porque eu serei marquês. Desde então fiquei perdido. Virgília comparou a águia e o pavão, e elegeu a águia, deixando o pavão com o seu espanto.',
      fonte:FONTE+'43 (domínio público).',
-     q:{t:'O que a escolha de Virgília entre a "águia" e o "pavão" revela?',o:['Que a escolha foi pela ambição social: ela prefere quem promete ser marquês.','Que ela decidiu pelo amor sincero, mesmo sabendo do risco de perder a posição.','Que Brás era bem mais rico do que Lobo Neves, e por isso Virgília o preferiu.','Que Virgília não sabia diferenciar aves e escolheu ao acaso, sem refletir.'],k:0,e:'As aves são comparação irônica: a águia (poderosa, ascendente) vence o pavão (vaidoso). A pergunta sobre o título nobre mostra que o casamento é negócio de poder. É o Realismo desmontando o romance idealizado.'}});
+     q:{t:'O que a escolha de Virgília entre a "águia" e o "pavão" revela?',o:['Que a escolha foi pela ambição social: ela prefere quem promete ser marquês.','Que ela decidiu pelo amor sincero, mesmo sabendo do risco de perder a posição.','Que Brás era bem mais rico do que Lobo Neves, e por isso Virgília o preferiu.','Que Virgília não sabia diferenciar aves e escolheu ao acaso, sem refletir.'],k:0,e:'As aves são comparação irônica: a águia (poderosa, ascendente) vence o pavão (vaidoso). A pergunta sobre o título nobre mostra que o casamento é negócio de poder. É o Realismo desmontando o romance idealizado.'}},"Marquesa, porque eu serei marquês")
    F.aguia=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'nariz',x:2600,r:140,txt:'AÇÃO · A ponta do nariz',done:()=>F.nariz,act:async()=>{
    await say([['bras','Preste atenção, leitor: este capítulo trata de narizes, e de uma filosofia que me valeu muito na vida.']]);
-   await leitura({titulo:'Capítulo 49 · A Ponta do Nariz',cita:'Bastou-me atentar no costume do faquir. Sabe o leitor que o faquir gasta longas horas a olhar para a ponta do nariz, com o fim único de ver a luz celeste. [&hellip;] Cada homem tem necessidade e poder de contemplar o seu próprio nariz, para o fim de ver a luz celeste, e tal contemplação, cujo efeito é a subordinação do universo a um nariz somente, constitui o equilíbrio das sociedades.',
+   await provaLeitura('nariz',{titulo:'Capítulo 49 · A Ponta do Nariz',cita:'Bastou-me atentar no costume do faquir. Sabe o leitor que o faquir gasta longas horas a olhar para a ponta do nariz, com o fim único de ver a luz celeste. [&hellip;] Cada homem tem necessidade e poder de contemplar o seu próprio nariz, para o fim de ver a luz celeste, e tal contemplação, cujo efeito é a subordinação do universo a um nariz somente, constitui o equilíbrio das sociedades.',
      fonte:FONTE+'49 (domínio público).',
-     q:{t:'O que Machado ironiza com a "contemplação do próprio nariz"?',o:['A busca espiritual dos faquires indianos, que ele elogia como modelo de vida.','A anatomia humana e o estudo do rosto, feito pelos médicos e cientistas da época.','A ciência europeia, que tentava explicar o comportamento pela forma do nariz.','O egocentrismo: cada um vê o mundo a partir de si, e o narrador faz disso uma lei.'],k:3,e:'"Subordinação do universo a um nariz somente" é a síntese do egoísmo. O narrador faz do egocentrismo uma filosofia que "equilibra as sociedades". É a ironia machadiana que expõe, em tom sério, uma verdade incômoda.'}});
+     q:{t:'O que Machado ironiza com a "contemplação do próprio nariz"?',o:['A busca espiritual dos faquires indianos, que ele elogia como modelo de vida.','A anatomia humana e o estudo do rosto, feito pelos médicos e cientistas da época.','A ciência europeia, que tentava explicar o comportamento pela forma do nariz.','O egocentrismo: cada um vê o mundo a partir de si, e o narrador faz disso uma lei.'],k:3,e:'"Subordinação do universo a um nariz somente" é a síntese do egoísmo. O narrador faz do egocentrismo uma filosofia que "equilibra as sociedades". É a ironia machadiana que expõe, em tom sério, uma verdade incômoda.'}},"a olhar para a ponta do nariz")
    F.nariz=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
  {id:'pontos',x:3200,r:140,txt:'AÇÃO · O beijo e os pontinhos',done:()=>F.pontos,act:async()=>{
    await say([['bras','Foi ao portão da chácara, à vista das estrelas. O primeiro beijo de Virgília, trêmula de medo.'],['vir','Shh. Lobo Neves pode estar na janela.']]);
-   await leitura({titulo:'Capítulo 53',cita:'Em certa noite, abotoou-se a flor, ou o beijo, se assim lhe quiserem chamar, um beijo que ela me deu, trêmula, &mdash; coitadinha, &mdash; trêmula de medo, porque era ao portão da chácara, à vista das estrelas [&hellip;] &mdash; uma hipocrisia paciente e sistemática, único freio de uma paixão sem freio.',
+   await provaLeitura('beijo',{titulo:'Capítulo 53',cita:'Em certa noite, abotoou-se a flor, ou o beijo, se assim lhe quiserem chamar, um beijo que ela me deu, trêmula, &mdash; coitadinha, &mdash; trêmula de medo, porque era ao portão da chácara, à vista das estrelas [&hellip;] &mdash; uma hipocrisia paciente e sistemática, único freio de uma paixão sem freio.',
      fonte:FONTE+'53 (domínio público).',
-     q:{t:'O que significa "uma hipocrisia paciente e sistemática, único freio de uma paixão sem freio"?',o:['Que o amor deles era moderado e discreto, o que explica por que durou tanto tempo.','Que Virgília não sentia nada por Brás e apenas fingia amor para obter vantagens.','Que os amantes agem com cuidado para não serem descobertos: a única regra é fingir.','Que a paixão deles era controlada pela religião e pelo medo do pecado e do inferno.'],k:2,e:'Os amantes só se contêm pelo fingimento: a hipocrisia "sistemática" é o que mantém o adultério escondido, e a paixão corre sem outro freio. O narrador descreve a relação sem moralizar: o julgamento fica por conta do leitor.'}});
+     q:{t:'O que significa "uma hipocrisia paciente e sistemática, único freio de uma paixão sem freio"?',o:['Que o amor deles era moderado e discreto, o que explica por que durou tanto tempo.','Que Virgília não sentia nada por Brás e apenas fingia amor para obter vantagens.','Que os amantes agem com cuidado para não serem descobertos: a única regra é fingir.','Que a paixão deles era controlada pela religião e pelo medo do pecado e do inferno.'],k:2,e:'Os amantes só se contêm pelo fingimento: a hipocrisia "sistemática" é o que mantém o adultério escondido, e a paixão corre sem outro freio. O narrador descreve a relação sem moralizar: o julgamento fica por conta do leitor.'}},"uma hipocrisia paciente e sistemática")
    await say([['bras','E há o capítulo 55, "O Velho Diálogo de Adão e Eva". Quando o amor chega ao ponto máximo, a linguagem emudece.']]);
-   await leitura({titulo:'Capítulo 55 · O Velho Diálogo de Adão e Eva',cita:'Brás Cubas<br>.......?<br>Virgília<br>.......<br>Brás Cubas<br>....................<br>..........<br>Virgília<br>..................!<br>Brás Cubas<br>...............',
+   await provaLeitura('dialogo',{titulo:'Capítulo 55 · O Velho Diálogo de Adão e Eva',cita:'Brás Cubas<br>.......?<br>Virgília<br>.......<br>Brás Cubas<br>....................<br>..........<br>Virgília<br>..................!<br>Brás Cubas<br>...............',
      fonte:FONTE+'55 (domínio público). O capítulo é feito só de pontinhos, falas sem palavras.',
-     q:{t:'Por que Machado substitui as falas dos amantes por pontinhos?',o:['Porque o diálogo dos amantes repete o de Adão e Eva: o leitor completa o que o narrador cala.','Por um erro de impressão que a editora nunca corrigiu nas edições seguintes do livro.','Porque o capítulo ficou inacabado e o autor não teve tempo de reescrevê-lo antes de morrer.','Porque Brás e Virgília estavam brigados e, por isso, não trocaram palavra alguma entre si.'],k:0,e:'O capítulo é um recurso metalinguístico e irônico: a ausência de texto é o texto. Machado joga com o leitor, deixando a imaginação preencher o que o decoro não permitia dizer. O "velho diálogo de Adão e Eva" mostra que o amor é sempre o mesmo, em qualquer época.'}});
+     q:{t:'Por que Machado substitui as falas dos amantes por pontinhos?',o:['Porque o diálogo dos amantes repete o de Adão e Eva: o leitor completa o que o narrador cala.','Por um erro de impressão que a editora nunca corrigiu nas edições seguintes do livro.','Porque o capítulo ficou inacabado e o autor não teve tempo de reescrevê-lo antes de morrer.','Porque Brás e Virgília estavam brigados e, por isso, não trocaram palavra alguma entre si.'],k:0,e:'O capítulo é um recurso metalinguístico e irônico: a ausência de texto é o texto. Machado joga com o leitor, deixando a imaginação preencher o que o decoro não permitia dizer. O "velho diálogo de Adão e Eva" mostra que o amor é sempre o mesmo, em qualquer época.'}},"")
    F.pontos=true;hud();toast('Provas '+provas()+'/'+NP,3000)}},
- {id:'porta',x:3500,r:140,txt:'AÇÃO · Voltar para casa de madrugada',cond:()=>provas()===NP,act:async()=>{
+ {id:'porta',x:3500,r:140,txt:'AÇÃO · Voltar para casa de madrugada',cond:()=>provas()===NP,act:async()=>{if(!F.vered)await veredito();
    await say([['bras','Saí dali a saborear o beijo. Não pude dormir. Ouvi as horas todas da noite.'],['lobo','Boa madrugada, Brás. Eu serei marquês, e a minha águia não divide o poleiro com pavões.'],['bras','Leitor, uma confissão: no livro não houve duelo algum. Lobo Neves tinha medo da opinião, não da espada. Mas a noite é minha, e eu a reescrevo.']]);startDuel()}}
 ];
 /* ===== Trechos do livro (opcionais): citações nas páginas + painéis rasurados ===== */
@@ -783,6 +823,7 @@ addEventListener('keydown',e=>{
   const k=KM[e.code];
   if(e.code==='Escape'||e.code==='KeyP'){if(state==='play')pause(true);else if(paused)pause(false);return}
   if(e.code==='KeyM'){setMute(!muted);return}
+  if(e.code==='KeyN'){caderno();return}
   if(state==='dialog'&&(e.code==='Space'||e.code==='Enter'||e.code==='KeyE')){e.preventDefault();next();return}
   if(!k)return;if(e.code.startsWith('Arrow')||e.code==='Space')e.preventDefault();
   if(k==='act'){if(!K.act&&state==='play')doAct();K.act=1;return}K[k]=1;
@@ -790,7 +831,7 @@ addEventListener('keydown',e=>{
 addEventListener('keyup',e=>{const k=KM[e.code];if(k)K[k]=0});
 function doAct(){const it=nearInter();if(it)it.act()}
 function pause(on){paused=on;if(on){state='pause';ov('<h2>Pausa</h2><button class="btn" id="rs">Continuar</button><button class="btn sec" id="bk">Voltar ao Arquivo</button>');$('rs').onclick=()=>pause(false);$('bk').onclick=()=>location.href='../index.html'}else{ovClose();state='play'}}
-$('bPause').onclick=()=>{if(state==='play')pause(true)};$('bMute').onclick=()=>setMute(!muted);
+$('bCad').onclick=()=>caderno();$('bPause').onclick=()=>{if(state==='play')pause(true)};$('bMute').onclick=()=>setMute(!muted);
 $('dlg').addEventListener('pointerdown',e=>{e.preventDefault();if(state==='dialog')next()});
 function bindT(id,k,act){const b=$(id);const on=e=>{e.preventDefault();if(act){if(state==='dialog'){next();return}if(state==='play')doAct()}else K[k]=1};const off=e=>{e.preventDefault();if(!act)K[k]=0};
   b.addEventListener('pointerdown',on);b.addEventListener('pointerup',off);b.addEventListener('pointercancel',off);b.addEventListener('pointerleave',off)}
@@ -807,7 +848,7 @@ function loop(ts){
   }else if(state==='dialog'){updateWorld(dt);P.vx=0}
   render(dt);
 }
-window.__t={duel,startDuel,BIL,LOBO,P,F,Z,PAGES,INTER,get state(){return state},set state(v){state=v},get camX(){return camX},set camX(v){camX=v},provas,startCine,fim,K};
+window.__t={provaLeitura,caderno,veredito,CASO,duel,startDuel,BIL,LOBO,P,F,Z,PAGES,INTER,get state(){return state},set state(v){state=v},get camX(){return camX},set camX(v){camX=v},provas,startCine,fim,K};
 (function restaurarProg(){try{const r=JSON.parse(localStorage.getItem(PROGKEY)||'null');if(!r||!(r.cp>0))return;
   cpX=r.cp;P.x=r.cp;camX=Math.max(0,Math.min(WW-CW,P.x-CW*.42+(P.look||0)*.6));Object.assign(Z,r.Z||{});Object.assign(F,r.F||{});
   (r.pg||[]).forEach((v,i)=>{if(v&&PAGES[i])PAGES[i].got=true});(r.rb||[]).forEach((v,i)=>{if(v&&RAS_BOARDS[i])RAS_BOARDS[i].done=true});
